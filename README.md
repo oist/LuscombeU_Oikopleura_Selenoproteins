@@ -68,7 +68,7 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | Set | Source |
 |---|---|
 | *O. dioica* OKI2018_I68 genome and RefSeq annotation | GCF_907165135.1 |
-| *O. dioica* OSKA2016 genome and annotation | to be filled in `config/genomes.tsv` |
+| *O. dioica* OSKA2016 genome and annotation | ANISEED archives listed in `config/archives.tsv`; the download links are currently broken, so place copies of the archives in `data/downloads/` (checked by md5) |
 | *O. dioica* OdB3 genome and annotation | GCA_000209535.1 |
 | Other appendicularians (Naville et al. 2019) | GCA_004367895.1, GCA_004367875.1, GCA_004367855.1, GCA_004367955.1, GCA_004367975.1, GCA_004368075.1 |
 | Other tunicates (SECIS non-target controls) | GCF_018327825.1, GCA_054131345.1, GCF_964204865.1, GCF_965202585.1 |

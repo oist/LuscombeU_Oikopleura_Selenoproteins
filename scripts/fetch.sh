@@ -21,10 +21,34 @@ fetch_url () {  # url destination md5
     if [[ ! -s $dest ]]; then curl -fL --retry 3 -o "$dest.part" "$url" && mv "$dest.part" "$dest"; fi
     if [[ -n $md5 ]]; then echo "$md5  $dest" | md5sum -c --quiet - || { echo "MD5 mismatch: $dest"; fail=1; }; fi
 }
+# files distributed inside archives (config/archives.tsv). A copy placed by hand in data/downloads/ is used when
+# the download fails; the archive and the extracted file are checked against their md5 sums.
+mkdir -p data/downloads
+while IFS=$'\t' read -r archive url md5 member dest member_md5 notes; do
+    z=data/downloads/$archive
+    if [[ ! -s $z ]]; then
+        if ! { curl -fL --retry 3 -o "$z.part" "$url" && mv "$z.part" "$z"; }; then
+            rm -f "$z.part"; echo "MISSING $z: download failed ($url); place a copy of the archive there"; fail=1; continue
+        fi
+    fi
+    if [[ $md5 != PLACEHOLDER* ]] && ! echo "$md5  $z" | md5sum -c --quiet -; then
+        echo "MD5 mismatch: $z (an error page instead of the archive?)"; fail=1; continue
+    fi
+    [[ $member == PLACEHOLDER* ]] && { echo "SKIP $dest: archive member not yet filled in config/archives.tsv"; fail=1; continue; }
+    [[ -s $dest ]] && continue
+    mkdir -p "$(dirname "$dest")"
+    unzip -p "$z" "$member" > "$dest.tmp"
+    if [[ -n $member_md5 ]] && ! echo "$member_md5  $dest.tmp" | md5sum -c --quiet -; then
+        echo "MD5 mismatch: $member in $z"; rm -f "$dest.tmp"; fail=1; continue
+    fi
+    if [[ $dest == *.gz ]]; then gzip -n -c "$dest.tmp" > "$dest"; rm "$dest.tmp"; else mv "$dest.tmp" "$dest"; fi
+done < <(tail -n +2 config/archives.tsv)
+
 # genomes (and annotations)
 tail -n +2 config/genomes.tsv | while IFS=$'\t' read -r id species assembly source acc annot md5 role notes; do
     out=data/genomes/$id
     mkdir -p "$out"
+    [[ $source == archive ]] && continue      # fetched from config/archives.tsv above
     if [[ $source == ncbi ]]; then
         if [[ ! -s $out/genome.fna.gz ]]; then
             datasets download genome accession "$acc" --include genome,gff3 --filename "$out/ncbi.zip"
