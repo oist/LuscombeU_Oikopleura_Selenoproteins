@@ -24,6 +24,20 @@ make stage2
 make figures
 ```
 
+### On a Slurm cluster
+
+Scripts that run as batch jobs carry generic `#SBATCH` headers (job name, CPUs, memory, time limit, log file named
+`<job name>-<job id>.log` in the submission directory). Submit them from the repository root and give site-specific
+options (partition, account) on the command line:
+
+```bash
+sbatch [--partition=<data transfer partition>] scripts/fetch.sh
+for g in OKI OSKA OdB3 Olon Oalb Ovan Bsty Mery Fbor; do sbatch [options] stage1/run_genome.sh $g; done
+make stage1                           # after the jobs: collects the per-genome outputs (steps already done are skipped)
+```
+
+Command-line options override the header values.
+
 ## Data
 
 | Set | Source |

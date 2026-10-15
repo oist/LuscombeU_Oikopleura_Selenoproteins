@@ -1,6 +1,7 @@
 # Stage 1 — published tools and parameters
 
-Run with `make stage1` from the top directory (or `make -C stage1 GENOMES="OKI OSKA"`). Per genome
+Run with `make stage1` from the top directory (or `make -C stage1 GENOMES="OKI OSKA"`), or submit one Slurm job
+per genome with `sbatch stage1/run_genome.sh <id>` from the top directory, then run `make stage1` to collect. Per genome
 (`run_genome.sh`, outputs in `work/stage1/<id>/`, each step skipped when its output exists):
 
 | Step | Tool | Output |

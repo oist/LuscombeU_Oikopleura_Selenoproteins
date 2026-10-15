@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
+#SBATCH --job-name=stage1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=16G
+#SBATCH --time=2-00:00:00
+#SBATCH --output=%x-%j.log
 # Stage 1 for one genome: Selenoprofiles, miniprot Sec codons, Rfam RF00031 SECIS, Secmarker tRNA-Sec,
 # and (when an annotation exists) the annotation check. Each step is skipped when its output exists.
-# usage: run_genome.sh <genome id>     environment: CPUS (default 1); SELENOPROFILES_CACHE (optional directory
-#        with <id>.selenoprofiles.gtf from an earlier run of the same version and profiles, to avoid re-running it)
+# usage, from the repository root: stage1/run_genome.sh <genome id>, or sbatch [options] stage1/run_genome.sh <genome id>
+# environment: CPUS (default: the Slurm allocation, else 1); MINIPROT_CHUNK (bases per miniprot index, default
+#   120 Mb, about 3 GB of RAM); SELENOPROFILES_CACHE (optional directory with <id>.selenoprofiles.gtf from an earlier
+#   run of the same version and profiles, to avoid re-running it)
 set -euo pipefail
 id=$1
-R=$(cd "$(dirname "$0")/.." && pwd)
+# Repository root: under Slurm the script runs from a spool copy, so use the submission directory.
+if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname "$0")/.." && pwd); fi
+[[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
 B=$R/stage1/bin
 W=$R/work/stage1/$id; mkdir -p "$W"; cd "$W"
 G=$R/data/genomes/$id/genome.fna.gz
 Q=$R/work/stage1/queries.faa
 DATA=$R/data/references/selenoprofiles_data
-CPUS=${CPUS:-1}
-CHUNK=120000000      # miniprot index of at most 120 Mb per run (about 3 GB of RAM)
+CPUS=${CPUS:-${SLURM_CPUS_PER_TASK:-1}}
+CHUNK=${MINIPROT_CHUNK:-120000000}
 
 # 1. Selenoprofiles 4.5.8, profiles eukarya,machinery
 if [[ ! -s $id.selenoprofiles.gtf ]]; then

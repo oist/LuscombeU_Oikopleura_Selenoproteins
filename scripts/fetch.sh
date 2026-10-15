@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
+#SBATCH --job-name=fetch
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=4G
+#SBATCH --time=12:00:00
+#SBATCH --output=%x-%j.log
 # Download the public data listed in config/*.tsv into data/ and check md5 sums when given.
 # Requirements: NCBI datasets CLI (for "ncbi" rows), curl, unzip, md5sum.
+# Run from the repository root: scripts/fetch.sh, or sbatch [--partition=<data transfer partition>] scripts/fetch.sh
 set -euo pipefail
-cd "$(dirname "$0")/.."
+# Repository root: under Slurm the script runs from a spool copy, so use the submission directory.
+if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname "$0")/.." && pwd); fi
+[[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
+cd "$R"
 mkdir -p data/genomes data/transcripts data/references
 fail=0
 fetch_url () {  # url destination md5
