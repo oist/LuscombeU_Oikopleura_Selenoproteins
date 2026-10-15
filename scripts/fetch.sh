@@ -19,6 +19,22 @@ fail=0
 # blank() turns them back into empty strings.
 rows () { tail -n +2 "$1" | awk -F'\t' -v OFS='\t' '{for (i = 1; i <= NF; i++) if ($i == "") $i = "-"; print}'; }
 blank () { local v; for v in "$@"; do [[ ${!v} == - ]] && printf -v "$v" ''; done; return 0; }
+# Download url to dest (gzip-compressed, whatever the source compression) unless dest exists; then check the md5 of
+# the uncompressed content when given.
+decompress () { case $1 in *.bz2) if command -v lbzip2 > /dev/null; then lbzip2 -dc; else bzip2 -dc; fi ;; *.gz) gzip -dc ;; *) cat ;; esac; }
+get_file () {  # url dest md5_uncompressed
+    local url=$1 dest=$2 md5=${3:-}
+    if [[ ! -s $dest ]]; then
+        mkdir -p "$(dirname "$dest")"
+        if ! { curl -fL --retry 3 -o "$dest.download" "$url" && decompress "$url" < "$dest.download" | gzip -n > "$dest.part"; }; then
+            rm -f "$dest.download" "$dest.part"; echo "MISSING $dest: download failed ($url)"; fail=1; return
+        fi
+        rm -f "$dest.download"; mv "$dest.part" "$dest"
+    fi
+    if [[ -n $md5 ]] && ! gzip -dcf "$dest" | md5sum | grep -q "^$md5 "; then
+        echo "MD5 mismatch: $dest (expected $md5 for the uncompressed content)"; fail=1
+    fi
+}
 fetch_url () {  # url destination md5
     local url=$1 dest=$2 md5=${3:-}
     if [[ $url == PLACEHOLDER* ]]; then echo "SKIP $dest: source URL not yet filled in config ($url)"; fail=1; return; fi
@@ -79,15 +95,16 @@ done
 rows config/transcripts.tsv | while IFS=$'\t' read -r id genome desc source url md5 notes; do
     blank id genome desc source url md5 notes
     dest=data/transcripts/$id.fa.gz
-    if [[ ! -s $dest ]]; then
-        if [[ $source == manual || $url == PLACEHOLDER* ]]; then
-            echo "MISSING $dest: no download source yet; place a copy there (plain or gzipped)"; fail=1; continue
-        fi
-        curl -fL --retry 3 -o "$dest.part" "$url" && mv "$dest.part" "$dest" || { rm -f "$dest.part"; echo "MISSING $dest: download failed ($url)"; fail=1; continue; }
+    if [[ ! -s $dest && ( $source == manual || $url == PLACEHOLDER* ) ]]; then
+        echo "MISSING $dest: no download source yet; place a copy there (plain or gzipped)"; fail=1; continue
     fi
-    if [[ -n $md5 ]] && ! gzip -dcf "$dest" | md5sum | grep -q "^$md5 "; then
-        echo "MD5 mismatch: $dest (expected $md5 for the uncompressed content)"; fail=1
-    fi
+    get_file "$url" "$dest" "$md5"
+done
+
+# other annotation files (config/extra_files.tsv)
+rows config/extra_files.tsv | while IFS=$'\t' read -r id genome desc url md5 dest notes; do
+    blank id genome desc url md5 dest notes
+    get_file "$url" "$dest" "$md5"
 done
 # references (Rfam model and seed; Selenoprofiles profiles)
 fetch_url https://rfam.org/family/RF00031/cm data/references/RF00031.cm ""
