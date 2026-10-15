@@ -59,4 +59,14 @@ A=$(ls "$R/data/genomes/$id"/annotation.gff3* 2>/dev/null | head -1 || true)
 if [[ -n $A && ! -s $id.sec_annotation.tsv ]]; then
     python3 "$B/sec_annotation_check.py" --sample "$id" --selenoprofiles-gtf "$id.selenoprofiles.gtf" --annotation "$A" --prefix "$id"
 fi
+# 6. Transcript evidence (genomes with rows in config/transcripts.tsv): spliced alignment, Sec codon in an exon
+labels=(); alns=()
+while IFS=$'\t' read -r tid tgenome rest; do
+    [[ $tgenome == "$id" && -s $R/data/transcripts/$tid.fa.gz ]] || continue
+    [[ -s $tid.alignments.tsv ]] || { python3 "$B/map_transcripts.py" --genome "$G" --transcripts "$R/data/transcripts/$tid.fa.gz" --output "$tid.alignments.tsv.part" && mv "$tid.alignments.tsv.part" "$tid.alignments.tsv"; }
+    labels+=("$tid"); alns+=("$tid.alignments.tsv")
+done < <(tail -n +2 "$R/config/transcripts.tsv")
+if (( ${#labels[@]} )) && [[ ! -s $id.transcript_support.tsv ]]; then
+    python3 "$B/transcript_support.py" --sites "$id.sec_sites.tsv" --alignments "${alns[@]}" --labels "${labels[@]}" --output "$id.transcript_support.tsv"
+fi
 echo "stage 1 done: $id"

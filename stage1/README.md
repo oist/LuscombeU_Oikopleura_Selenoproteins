@@ -10,6 +10,7 @@ Run with `make stage1` from the top directory (or `make -C stage1 GENOMES="OKI O
 | 3 | Sec sites merged (`bin/secis_windows.py`), Rfam RF00031 with Infernal 1.1.5 on the 3 kb downstream of each Sec codon | `<id>.sec_sites.tsv`, `<id>.secis_rf00031.tbl` |
 | 4 | Secmarker 1.0.0 | `secmarker/trnasec.gff` |
 | 5 | Annotation check, classes of Ticó et al. 2026 (`bin/sec_annotation_check.py`), when an annotation exists | `<id>.sec_annotation.tsv` |
+| 6 | Transcript evidence for genomes listed in `config/transcripts.tsv`: spliced alignment (minimap2 through mappy, `bin/map_transcripts.py`), Sec codon inside an exon (`bin/transcript_support.py`) | `<tid>.alignments.tsv`, `<id>.transcript_support.tsv` |
 
 `bin/collect.py` writes `results/tables/stage1_sec_sites.tsv`, `stage1_summary.tsv` and `stage1_annotation.tsv`.
 
@@ -19,5 +20,3 @@ profiles instead of re-running Selenoprofiles.
 Scripts `profile_queries.py`, `sec_check.py` and `sec_annotation_check.py` come from the selenoprotein annotation
 pipeline (`selenoproteins`, branch `public-data`).
 
-To be added: transcript evidence for the three *O. dioica* assemblies (OKI2018 transcriptome, OSKA2016 transcripts,
-OdB3 ESTs).

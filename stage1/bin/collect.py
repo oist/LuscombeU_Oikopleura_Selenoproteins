@@ -14,7 +14,7 @@ def main():
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
     sites_out = open(f"{a.out_dir}/stage1_sec_sites.tsv", "w")
-    sites_out.write("genome\tsite\tcontig\tsec_codon_start\tstrand\tfamilies\tsources\trf00031_bits\n")
+    sites_out.write("genome\tsite\tcontig\tsec_codon_start\tstrand\tfamilies\tsources\trf00031_bits\ttranscript_support\n")
     summ = ["genome\tsites\tselenoprofiles\tminiprot\tboth\trf00031_ge20\trf00031_ge_ga\ttrnasec_loci\ttrnasec_best_bits"]
     annot_rows, annot_header = [], None
     for g in a.genomes:
@@ -24,8 +24,12 @@ def main():
             if l.startswith("#"): continue
             f = l.split(); best[f[0]] = max(best.get(f[0], 0.0), float(f[14]))
         rows = list(csv.DictReader(open(f"{d}/{g}.sec_sites.tsv"), delimiter="\t"))
+        tx = {}
+        if os.path.exists(f"{d}/{g}.transcript_support.tsv"):
+            for t in csv.DictReader(open(f"{d}/{g}.transcript_support.tsv"), delimiter="\t"):
+                tx[t["site"]] = ";".join(f"{k[:-2]}:{v}" for k, v in t.items() if k.endswith("_n"))
         for r in rows:
-            sites_out.write(f"{g}\t{r['site']}\t{r['contig']}\t{r['sec_codon_start']}\t{r['strand']}\t{r['families']}\t{r['sources']}\t{best.get(r['site'], 0.0):.1f}\n")
+            sites_out.write(f"{g}\t{r['site']}\t{r['contig']}\t{r['sec_codon_start']}\t{r['strand']}\t{r['families']}\t{r['sources']}\t{best.get(r['site'], 0.0):.1f}\t{tx.get(r['site'], '')}\n")
         src = [set(r["sources"].split(",")) for r in rows]
         trna = []
         for gff in glob.glob(f"{d}/secmarker/**/*.gff", recursive=True) + glob.glob(f"{d}/secmarker/*.gff"):
