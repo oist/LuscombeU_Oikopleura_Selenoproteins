@@ -15,6 +15,10 @@ if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname 
 cd "$R"
 mkdir -p data/genomes data/transcripts data/references
 fail=0
+# Rows of a TSV file without its header. Empty fields become "-" because read(1) merges consecutive tabs;
+# blank() turns them back into empty strings.
+rows () { tail -n +2 "$1" | awk -F'\t' -v OFS='\t' '{for (i = 1; i <= NF; i++) if ($i == "") $i = "-"; print}'; }
+blank () { local v; for v in "$@"; do [[ ${!v} == - ]] && printf -v "$v" ''; done; return 0; }
 fetch_url () {  # url destination md5
     local url=$1 dest=$2 md5=${3:-}
     if [[ $url == PLACEHOLDER* ]]; then echo "SKIP $dest: source URL not yet filled in config ($url)"; fail=1; return; fi
@@ -25,27 +29,34 @@ fetch_url () {  # url destination md5
 # the download fails; the archive and the extracted file are checked against their md5 sums.
 mkdir -p data/downloads
 while IFS=$'\t' read -r archive url md5 member dest member_md5 notes; do
+    blank archive url md5 member dest member_md5 notes
+    if [[ -s $dest ]]; then              # extracted earlier, or placed by hand: check the uncompressed content
+        if [[ -n $member_md5 ]] && ! gzip -dcf "$dest" | md5sum | grep -q "^$member_md5 "; then
+            echo "MD5 mismatch: $dest (expected $member_md5 for the uncompressed content)"; fail=1
+        fi
+        continue
+    fi
     z=data/downloads/$archive
     if [[ ! -s $z ]]; then
         if ! { curl -fL --retry 3 -o "$z.part" "$url" && mv "$z.part" "$z"; }; then
-            rm -f "$z.part"; echo "MISSING $z: download failed ($url); place a copy of the archive there"; fail=1; continue
+            rm -f "$z.part"; echo "MISSING $dest: download of $archive failed; place a copy of the archive in $z, or the file itself in $dest"; fail=1; continue
         fi
     fi
-    if [[ $md5 != PLACEHOLDER* ]] && ! echo "$md5  $z" | md5sum -c --quiet -; then
+    if [[ -n $md5 ]] && ! echo "$md5  $z" | md5sum -c --quiet -; then
         echo "MD5 mismatch: $z (an error page instead of the archive?)"; fail=1; continue
     fi
     [[ $member == PLACEHOLDER* ]] && { echo "SKIP $dest: archive member not yet filled in config/archives.tsv"; fail=1; continue; }
-    [[ -s $dest ]] && continue
     mkdir -p "$(dirname "$dest")"
     unzip -p "$z" "$member" > "$dest.tmp"
     if [[ -n $member_md5 ]] && ! echo "$member_md5  $dest.tmp" | md5sum -c --quiet -; then
         echo "MD5 mismatch: $member in $z"; rm -f "$dest.tmp"; fail=1; continue
     fi
     if [[ $dest == *.gz ]]; then gzip -n -c "$dest.tmp" > "$dest"; rm "$dest.tmp"; else mv "$dest.tmp" "$dest"; fi
-done < <(tail -n +2 config/archives.tsv)
+done < <(rows config/archives.tsv)
 
 # genomes (and annotations)
-tail -n +2 config/genomes.tsv | while IFS=$'\t' read -r id species assembly source acc annot md5 role notes; do
+rows config/genomes.tsv | while IFS=$'\t' read -r id species assembly source acc annot md5 role notes; do
+    blank id species assembly source acc annot md5 role notes
     out=data/genomes/$id
     mkdir -p "$out"
     [[ $source == archive ]] && continue      # fetched from config/archives.tsv above
@@ -64,7 +75,8 @@ tail -n +2 config/genomes.tsv | while IFS=$'\t' read -r id species assembly sour
     fi
 done
 # transcripts
-tail -n +2 config/transcripts.tsv | while IFS=$'\t' read -r id genome desc source url md5 notes; do
+rows config/transcripts.tsv | while IFS=$'\t' read -r id genome desc source url md5 notes; do
+    blank id genome desc source url md5 notes
     fetch_url "$url" "data/transcripts/$id.fa.gz" "$md5"
 done
 # references (Rfam model and seed; Selenoprofiles profiles)
