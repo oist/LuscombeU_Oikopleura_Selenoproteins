@@ -40,7 +40,7 @@ dependencies:
   - bioconda::infernal=1.1.5
   - bioconda::mafft=7.520
   - bioconda::mappy=2.30
-  - bioconda::miniprot=0.11
+  - bioconda::miniprot=0.18        # the pipeline module pins 0.11, whose builds need zlib < 1.3 (conflicts with viennarna)
   - bioconda::multiqc=1.35
   - bioconda::obonet=1.3.0
   - bioconda::seqkit=2.13.0
