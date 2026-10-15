@@ -5,7 +5,8 @@
 #SBATCH --time=12:00:00
 #SBATCH --output=%x-%j.log
 # Download the public data listed in config/*.tsv into data/ and check md5 sums when given.
-# Requirements: NCBI datasets CLI (for "ncbi" rows), curl, unzip, md5sum.
+# Requirements: NCBI datasets command-line tool (for "ncbi" rows), curl, unzip, tar, gzip, md5sum (all in the
+# image built from environment.yml; see "Before running" in README.md).
 # Run from the repository root: scripts/fetch.sh, or sbatch [--partition=<data transfer partition>] scripts/fetch.sh
 set -euo pipefail
 # Repository root: under Slurm the script runs from a spool copy, so use the submission directory.
@@ -45,7 +46,12 @@ done
 # references (Rfam model and seed; Selenoprofiles profiles)
 fetch_url https://rfam.org/family/RF00031/cm data/references/RF00031.cm ""
 fetch_url https://rfam.org/family/RF00031/alignment data/references/RF00031.sto ""
-[[ -d data/references/selenoprotein_profiles ]] || git clone -q --depth 1 --branch v1.3.0 https://github.com/marco-mariotti/selenoprotein_profiles data/references/selenoprotein_profiles
+# Selenoprofiles profiles at the commit used by the pipeline's test profile
+if [[ ! -d data/references/selenoprofiles_data ]]; then
+    mkdir -p data/references/selenoprofiles_data
+    curl -fsL https://codeload.github.com/mariottigenomicslab/selenoprotein_profiles/tar.gz/4829bc969570587c222f1ce4721038fd75c804a0 \
+        | tar -xz --strip-components=1 -C data/references/selenoprofiles_data
+fi
 md5sum data/genomes/*/genome.fna.gz data/transcripts/*.fa.gz 2>/dev/null > data/MD5SUMS || true
 echo "Done. Checksums of downloaded files: data/MD5SUMS"
 exit $fail

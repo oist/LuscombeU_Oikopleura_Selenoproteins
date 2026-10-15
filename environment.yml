@@ -1,20 +1,55 @@
-# Software environment (versions used for the analysis). Create with: conda env create -f environment.yml
+# Software for this repository and for every process of the pipeline oist/LuscombeU_Selenoproteins_Pipeline.
+# All versions are pinned so that the same environment can be built as a container image with Wave:
+#   wave --conda-file environment.yml --freeze --await                  # Docker image
+#   wave --conda-file environment.yml --freeze --await --singularity    # Singularity image
+# It can also be created with a conda-forge installer (Miniforge): conda env create -f environment.yml
 name: oikopleura-selenoproteins
 channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python=3.12
-  - biopython=1.88
-  - scipy=1.17
-  - matplotlib
-  - infernal=1.1.5
-  - hmmer=3.4
-  - miniprot=0.11
-  - seqkit=2.3
-  - exonerate=2.4
-  - viennarna=2.5
-  - mappy=2.31          # minimap2 Python binding, splice-aware transcript alignment
-  - ncbi-datasets-cli
-  - make
-  # Selenoprofiles 4.5.8 and Secmarker: Bioconda recipes pending; see docs/install.md
+  # shell tools (the container base image provides almost none)
+  - conda-forge::coreutils=9.5
+  - conda-forge::findutils=4.10.0
+  - conda-forge::gawk=5.4.1
+  - conda-forge::grep=3.12
+  - conda-forge::gzip=1.14
+  - conda-forge::lbzip2=2.5
+  - conda-forge::sed=4.9
+  - conda-forge::tar=1.35
+  - conda-forge::make=4.4.1
+  - conda-forge::curl=8.20.0
+  - conda-forge::unzip=6.0
+  - conda-forge::ncbi-datasets-cli=18.18.0
+  # Python
+  - conda-forge::python=3.12.11
+  - conda-forge::pip=26.2.1
+  - conda-forge::biopython=1.88
+  - conda-forge::matplotlib=3.10.6
+  - conda-forge::natsort=8.4.0
+  - conda-forge::networkx=3.6.1
+  - conda-forge::numpy=2.4.4
+  - conda-forge::pandas=2.2.3
+  - conda-forge::requests=2.33.1
+  - conda-forge::scipy=1.17.0
+  - conda-forge::tabulate=0.10.0
+  # sequence analysis
+  - bioconda::blast-legacy=2.2.26
+  - bioconda::exonerate=2.4.0
+  - bioconda::hmmer=3.4
+  - bioconda::infernal=1.1.5
+  - bioconda::mafft=7.520
+  - bioconda::mappy=2.30
+  - bioconda::miniprot=0.11
+  - bioconda::multiqc=1.35
+  - bioconda::obonet=1.3.0
+  - bioconda::seqkit=2.13.0
+  - bioconda::trnascan-se=2.0.13
+  - bioconda::viennarna=2.7.2
+  - bioconda::wise2=2.4.1
+  - pip:
+      - easyterm==1.0.1
+      - pyranges1==1.1.4
+      - ruranges==0.0.12
+      - secmarker==1.0.0
+      - selenoprofiles4==4.5.8

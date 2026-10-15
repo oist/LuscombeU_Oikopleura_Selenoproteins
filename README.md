@@ -12,12 +12,29 @@ Code to reproduce the census of selenoprotein genes in appendicularian genomes, 
 Data are not stored here: `scripts/fetch.sh` downloads them (see `config/`). Large outputs go to `work/`, which is
 ignored by git; small result tables used for the figures are kept in `results/tables/`.
 
+## Before running
+
+All the software is listed, with pinned versions, in `environment.yml`. There are three ways to provide it.
+
+1. **Container image (recommended; no installation).** Build it once with Wave from `environment.yml` (commands at the
+   top of the file), then fill in the image addresses in `scripts/run_in_container.sh` and
+   `conf/pipeline_single_container.config`. Run each step through the wrapper, which uses Singularity or Apptainer:
+   `scripts/run_in_container.sh make curation`. Directories outside the repository that `data/` links point to must
+   be bound (`export SINGULARITY_BIND=<directory>`).
+2. **Environment modules.** On a cluster that provides the tools as modules, load them before running the scripts.
+   Module names vary between sites; for example, `scripts/fetch.sh` needs the NCBI datasets command-line tool
+   (at OIST: `ml bioinfo-ugrp-modules Other/ncbi-datasets-cli`), curl, unzip, tar and gzip.
+3. **conda-forge installer** (Miniforge), where allowed: `conda env create -f environment.yml`, then
+   `conda activate oikopleura-selenoproteins`.
+
+Also: `git config core.hooksPath .githooks` refuses commits of files larger than 1 MB.
+
 ## Run
 
+From the repository root (prefix each `make` with `scripts/run_in_container.sh` when using the image):
+
 ```bash
-conda env create -f environment.yml && conda activate oikopleura-selenoproteins
-git config core.hooksPath .githooks   # refuses commits of files larger than 1 MB
-make fetch                            # needs network; some sources are still placeholders (see below)
+make fetch          # needs network; some sources are still placeholders (see Data)
 make stage1
 make curation
 make stage2
@@ -28,15 +45,23 @@ make figures
 
 Scripts that run as batch jobs carry generic `#SBATCH` headers (job name, CPUs, memory, time limit, log file named
 `<job name>-<job id>.log` in the submission directory). Submit them from the repository root and give site-specific
-options (partition, account) on the command line:
+options (partition, account) on the command line, which also overrides the header values:
 
 ```bash
 sbatch [--partition=<data transfer partition>] scripts/fetch.sh
 for g in OKI OSKA OdB3 Olon Oalb Ovan Bsty Mery Fbor; do sbatch [options] stage1/run_genome.sh $g; done
-make stage1                           # after the jobs: collects the per-genome outputs (steps already done are skipped)
+sbatch [options] scripts/run_in_container.sh make stage1     # collects the per-genome outputs
 ```
 
-Command-line options override the header values.
+### The pipeline in the same image
+
+`conf/pipeline_single_container.config` makes every process of `oist/LuscombeU_Selenoproteins_Pipeline` use the image
+built from `environment.yml` instead of the per-module images:
+
+```bash
+nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profile> \
+    -c conf/pipeline_single_container.config --input <samplesheet> --outdir <directory>
+```
 
 ## Data
 

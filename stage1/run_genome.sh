@@ -30,7 +30,8 @@ if [[ ! -s $id.selenoprofiles.gtf ]]; then
     else
         export HOME=$W; selenoprofiles -setup > /dev/null
         gunzip -c "$G" > target.fa; mkdir -p tmp
-        selenoprofiles -o sp_results -t target.fa -s "$id" -p eukarya,machinery -selenoprofiles_data_dir "$DATA" \
+        if [[ -d $DATA/selenoprotein_profiles ]]; then data_option=(-selenoprofiles_data_dir "$DATA"); else data_option=(-profiles_folder "$DATA"); fi
+        selenoprofiles -o sp_results -t target.fa -s "$id" -p eukarya,machinery "${data_option[@]}" \
             -temp tmp -ncpus "$CPUS" -output_gtf_file "$id.selenoprofiles.gtf" -output_fasta_file "$id.selenoprofiles.faa"
         rm -rf tmp sp_results target.fa target.fa.n?? formatdb.log
     fi
