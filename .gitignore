@@ -1,0 +1,20 @@
+# data and large outputs never go to git
+data/
+work/
+results/*
+!results/tables/
+results/tables/*
+!results/tables/*.tsv
+!results/tables/README.md
+*.fa
+*.fna
+*.fasta
+*.gz
+*.cm
+*.cm.i1*
+*.h3?
+*.sto
+*.bam
+*.paf
+*.tbl
+__pycache__/

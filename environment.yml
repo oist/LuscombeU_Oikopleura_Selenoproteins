@@ -1,0 +1,20 @@
+# Software environment (versions used for the analysis). Create with: conda env create -f environment.yml
+name: oikopleura-selenoproteins
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - biopython=1.88
+  - scipy=1.17
+  - matplotlib
+  - infernal=1.1.5
+  - hmmer=3.4
+  - miniprot=0.11
+  - seqkit=2.3
+  - exonerate=2.4
+  - viennarna=2.5
+  - mappy=2.31          # minimap2 Python binding, splice-aware transcript alignment
+  - ncbi-datasets-cli
+  - make
+  # Selenoprofiles 4.5.8 and Secmarker: Bioconda recipes pending; see docs/install.md
