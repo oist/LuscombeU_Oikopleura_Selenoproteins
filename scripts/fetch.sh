@@ -74,10 +74,20 @@ rows config/genomes.tsv | while IFS=$'\t' read -r id species assembly source acc
         url=${annot%% *}; [[ -n $url ]] && fetch_url "$url" "$out/annotation.gff3" ""
     fi
 done
-# transcripts
+# transcripts: downloaded, or placed by hand when there is no public source (source "manual"); in both cases the
+# file is checked by the md5 of its uncompressed content
 rows config/transcripts.tsv | while IFS=$'\t' read -r id genome desc source url md5 notes; do
     blank id genome desc source url md5 notes
-    fetch_url "$url" "data/transcripts/$id.fa.gz" "$md5"
+    dest=data/transcripts/$id.fa.gz
+    if [[ ! -s $dest ]]; then
+        if [[ $source == manual || $url == PLACEHOLDER* ]]; then
+            echo "MISSING $dest: no download source yet; place a copy there (plain or gzipped)"; fail=1; continue
+        fi
+        curl -fL --retry 3 -o "$dest.part" "$url" && mv "$dest.part" "$dest" || { rm -f "$dest.part"; echo "MISSING $dest: download failed ($url)"; fail=1; continue; }
+    fi
+    if [[ -n $md5 ]] && ! gzip -dcf "$dest" | md5sum | grep -q "^$md5 "; then
+        echo "MD5 mismatch: $dest (expected $md5 for the uncompressed content)"; fail=1
+    fi
 done
 # references (Rfam model and seed; Selenoprofiles profiles)
 fetch_url https://rfam.org/family/RF00031/cm data/references/RF00031.cm ""
