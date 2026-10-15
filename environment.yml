@@ -25,7 +25,7 @@ dependencies:
   - conda-forge::python=3.12.11
   - conda-forge::pip=26.2.1
   - conda-forge::biopython=1.88
-  - conda-forge::matplotlib=3.10.6
+  - conda-forge::matplotlib-base=3.10.6   # without the Qt interface, whose libraries conflict with python 3.12.11 and curl
   - conda-forge::natsort=8.4.0
   - conda-forge::networkx=3.6.1
   - conda-forge::numpy=2.4.4
