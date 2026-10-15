@@ -63,7 +63,7 @@ fi
 labels=(); alns=()
 while IFS=$'\t' read -r tid tgenome rest; do
     [[ $tgenome == "$id" && -s $R/data/transcripts/$tid.fa.gz ]] || continue
-    [[ -s $tid.alignments.tsv ]] || { python3 "$B/map_transcripts.py" --genome "$G" --transcripts "$R/data/transcripts/$tid.fa.gz" --output "$tid.alignments.tsv.part" && mv "$tid.alignments.tsv.part" "$tid.alignments.tsv"; }
+    [[ -s $tid.alignments.tsv ]] || python3 "$B/map_transcripts.py" --genome "$G" --transcripts "$R/data/transcripts/$tid.fa.gz" --output "$tid.alignments.tsv"
     labels+=("$tid"); alns+=("$tid.alignments.tsv")
 done < <(tail -n +2 "$R/config/transcripts.tsv")
 if (( ${#labels[@]} )) && [[ ! -s $id.transcript_support.tsv ]]; then
