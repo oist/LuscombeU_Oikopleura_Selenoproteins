@@ -79,6 +79,10 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | OdB3 operon annotation (Denoeud et al. 2010) | Genoscope `operons_GGB.gff.bz2` (`config/extra_files.tsv`) |
 | Rfam RF00031, Selenoprofiles profiles v1.3.0 | `config/references.tsv` |
 
+**Assembly name.** The OKI2018 assembly is named `OKI2018_I68` at NCBI (GCF_907165135.1) because of a typo: it is
+the `OKI2018_I69` assembly of Bliznina et al. 2021, where I69 identifies the sequenced *O. dioica* individual. This
+repository uses `OKI2018_I68`, the NCBI name, throughout.
+
 ## Layout
 
 | Path | Contents |

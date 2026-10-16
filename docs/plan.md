@@ -30,3 +30,8 @@ assembly comparison) and notes on assembly errors (recorded, not fixed).
 ## Figures
 
 Built from `results/tables/` only.
+
+## Notes for the manuscript
+
+- State that `OKI2018_I68` (NCBI GCF_907165135.1) is the `OKI2018_I69` assembly of Bliznina et al. 2021 (I69: the
+  sequenced individual; I68 is a typo in the NCBI record), and that the NCBI name is used for consistency.
