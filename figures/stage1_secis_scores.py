@@ -93,7 +93,13 @@ def main():
     ap.add_argument("--model-name", default="RF00031")
     ap.add_argument("--baseline", default="", help="curation table: adds the 3' sequences of the curated Sec genes")
     ap.add_argument("--seed", type=int, default=0, help="offset for the random windows")
+    ap.add_argument("--replot", action="store_true", help="only redraw the figure from --table")
     a = ap.parse_args()
+    if a.replot:
+        ga = next((float(l.split()[1]) for l in open(a.cm) if l.startswith("GA ")), 0.0)
+        rows = [(r["genome"], r["group"], r["sequence"], int(r["length"]), float(r["best_bits"]) if r["best_bits"] else None,
+                 None, None) for r in __import__("csv").DictReader(open(a.table), delimiter="\t")]
+        return plot(rows, ga, a.figure, a.model_name)
     ga = next((float(l.split()[1]) for l in open(a.cm) if l.startswith("GA ")), 0.0)
     rows = []
     for g in GENOMES:
@@ -122,6 +128,7 @@ def plot(rows, ga, prefix, model_name="RF00031"):
     ticks = {"curated Sec gene": "curated\nSec genes", "selenocysteine": "Sec\npredictions",
              "other prediction": "other\npredictions", "random window": "random\nwindows"}
     fig, axes = plt.subplots(3, 3, figsize=(10, 9), sharey=True)
+    top = max(50, max((r[4] or 0) for r in rows) + 10)
     rng = random.Random(0)
     data = defaultdict(list)
     for g, grp, _, length, sc, _, _ in rows: data[(g, grp)].append(-3 + rng.uniform(-1.5, 1.5) if sc is None else sc)
@@ -130,17 +137,17 @@ def plot(rows, ga, prefix, model_name="RF00031"):
             ys = data[(g, grp)]
             ax.scatter([k + rng.uniform(-0.25, 0.25) for _ in ys], ys, s=6, alpha=0.6, color=colours[grp], linewidths=0)
             above = sum(1 for y in ys if y >= 20)
-            if ys: ax.text(k, 47, f"{above}/{len(ys)}", ha="center", fontsize=7)
+            if ys: ax.text(k, top - 4, f"{above}/{len(ys)}", ha="center", fontsize=7)
         if ga: ax.axhline(ga, color="black", lw=0.8, ls="--")
         ax.axhline(20, color="black", lw=0.5, ls=":")
         ax.axhspan(-5, -0.5, color="#ecf0f1", zorder=0)
         ax.set_title(NAMES[g], fontsize=9, style="italic"); ax.set_xticks(range(len(groups)))
         ax.set_xticklabels([ticks[x] for x in groups], fontsize=7)
-        ax.set_ylim(-5, max(50, max((r[4] or 0) for r in rows) + 8))
-    for ax in axes[:, 0]: ax.set_ylabel("best RF00031 score (bits)", fontsize=8)
-    thr = f"gathering threshold, {ga:g} bits" if ga else "no gathering threshold"
+        ax.set_ylim(-5, top)
+    for ax in axes[:, 0]: ax.set_ylabel(f"best {model_name} score (bits)", fontsize=8)
+    thr = f"dashed: gathering threshold, {ga:g} bits; " if ga else ""
     fig.suptitle(f"{model_name} scores of the Selenoprofiles 3′ sequences and of random genomic windows\n"
-                 f"(dashed: {thr}; dotted: 20 bits; grey band: no hit; numbers: sequences ≥ 20 bits)", fontsize=9)
+                 f"({thr}dotted: 20 bits; grey band: no hit; numbers: sequences ≥ 20 bits)", fontsize=9)
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     for ext in ("png", "pdf"): fig.savefig(f"{prefix}.{ext}", dpi=200)
 
