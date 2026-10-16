@@ -69,30 +69,96 @@ models from the three assemblies differ, and assemblies can contain gaps, duplic
 must distinguish: the prediction method fails, the annotation pipeline fails, or the assembly is wrong at that
 locus.
 
-<!-- Part 3: rationale for stage 1 -->
+<!-- Part 3: aims and approach -->
 
 Here we establish the selenoproteome of *O. dioica*, and we use the genomes of six other appendicularian species,
-together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. We also
-document what is needed to annotate these genes reliably. We proceed in two stages. In stage 1, we apply current
-tools with their default parameters. For this, we wrote a pipeline that combines Selenoprofiles, protein alignments
-with miniprot [REF: miniprot], the Rfam SECIS model and tRNA-Sec searches, and that compares the predicted Sec codons
-with the public annotations and with transcript evidence. Stage 1 answers two questions: how many selenoprotein genes do
-default tools find, and which ones do they miss? To answer them, we built a curated baseline from the three
-*O. dioica* assemblies. Because they come from closely related cryptic species, a gene present in two assemblies and
-absent from the third is first checked for an assembly or annotation problem, and transcripts from each population
-test the Sec codons directly. The genes and SECIS elements that stage 1 misses define the changes tested
-in stage 2: a SECIS covariance model built from appendicularian elements, lineage-specific reference proteins and
-profile searches for divergent genes. Stage 2 then gives the selenoproteome of *O. dioica* and, from the genomes of
-six other species [@Naville2019], whose assemblies are often too fragmented for a complete census, a baseline for
-appendicularians. The *Ciona* selenoproteome [@Jiang2010; @Romagne2014] serves as the tunicate reference to which
-this baseline is compared.
+together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. Because no
+tool had been tested on these genomes, we proceeded in two stages. We first measured what current methods find with
+their default parameters, against a baseline curated from the three *O. dioica* assemblies; the genes and SECIS
+elements they missed defined the adaptations tested in the second stage.
+
+# Methods
+
+<!-- Stage 2 subsections are placeholders until stage 2 is run. -->
+
+## Genome assemblies, annotations and transcripts
+
+We analysed three assemblies of *O. dioica*: OKI2018 (RefSeq GCF_907165135.1, with its RefSeq annotation)
+[@Bliznina2021], OSKA2016 (genome and transcript models from the ANISEED download archives
+`Oidioi_genome_fasta_gff3.zip` and `Oidioi_transcripts_fasta_gff3.zip`) [@Wang2020] and OdB3 (GenBank
+GCA_000209535.1, with its GenBank annotation) [@Denoeud2010]. At NCBI, the OKI2018 assembly is named OKI2018_I68;
+it is the OKI2018_I69 assembly of Bliznina et al. [-@Bliznina2021], I69 being the identifier of the sequenced
+individual, and we use the NCBI name for consistency with the database. The six other appendicularian genomes are
+those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_004367875.1), *Oikopleura vanhoeffeni*
+(GCA_004367855.1), *Bathochordaeus stygius* (GCA_004367955.1), *Mesochordaeus erythrocephalus* (GCA_004367975.1) and
+*Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation. As non-target genomes
+for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
+(GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1).
+
+Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
+by Bliznina et al. [-@Bliznina2021] (109,877 sequences; to be added to its Zenodo record [REF: Zenodo record 4604144]); for OSKA2016,
+the Trinity assembly of Wang et al. [-@Wang2015] (GEO GSE64421, 86,898 sequences); for OdB3, the cDNA collection of
+the genome project (Genoscope, 207,355 sequences: 7,862 clone contigs and 199,493 single reads) [@Denoeud2010],
+also distributed by the now offline OikoBase. All files were retrieved by a script that checks their MD5 sums.
+
+## Selenoprotein gene pipeline
+
+We wrote a Nextflow [REF: Nextflow] pipeline, based on the nf-core template [REF: nf-core], that runs the following
+steps on each genome; all tools run from container images, and stage 1 used release 0.1.2 with default parameters.
+
+*Selenoprotein genes.* Selenoprofiles 4.5.8 [@Mariotti2010; @Tico2026] searched the profiles of eukaryotic
+selenoprotein families and of the Sec machinery (profile sets `eukarya` and `machinery`), with the Selenoprofiles data
+set (profiles, Gene Ontology tables and UniRef50 tag database) downloaded from its server; the MD5 sums of the
+archives used are recorded. Independently, miniprot 0.11 [REF: miniprot] aligned to the genome the Sec-containing
+sequences of the same profiles. A TGA codon was called a Sec codon when miniprot aligned it to a query Sec, or
+when the query Sec was the first residue after the end of the alignment and the next genomic codon was TGA, since
+miniprot tends to stop before a C-terminal Sec. Sec codons found by both methods at the same position were merged.
+
+*SECIS elements.* Infernal 1.1.5 [REF: Infernal] `cmsearch` searched, with the Rfam SECIS model RF00031
+[REF: Rfam], the 6,000 nucleotides downstream of each Selenoprofiles prediction, at the Rfam gathering threshold.
+A SECIS element counted as support for a prediction, not as a filter.
+
+*tRNA-Sec.* Secmarker 1.0.0 [@Santesmasses2017] and `cmsearch` with the Rfam tRNA-Sec model RF01852 (gathering
+threshold) searched each genome. Predictions overlapping on the same strand were merged into loci; a locus was
+considered supported when found by both tools and, where Secmarker reported it, carrying the discriminator base G73.
+
+*Annotation check.* For the genomes with an annotation, each Sec codon predicted by Selenoprofiles was classified
+according to the annotated coding sequences overlapping it, following the classes of Ticó et al. [-@Tico2026]: well
+annotated (Sec codon inside the CDS, in frame, with or without Sec declared), stop codon (CDS ending at the Sec
+codon), skipped (CDS on both sides of the codon but not over it), upstream or downstream (CDS entirely on one side),
+out of frame, spliced (CDS boundary inside the codon) or absent. The same predictions were also assessed with
+`selenoprofiles assess`, identifying annotated transcripts by the `Parent` of their CDS features.
+
+*Transcript support.* Transcripts were aligned to their genome with minimap2 2.30 [REF: minimap2] (`-x splice
+--secondary=no`). A transcript supported a Sec codon when the three nucleotides of the codon lay inside one aligned
+exon of its primary alignment; for each codon we recorded the number of supporting transcripts and the extension of
+the longest one 3′ of the codon.
+
+Results of all genomes were summarised with MultiQC [REF: MultiQC].
+
+## Baseline curation
+
+<!-- To complete: reference proteins, Sec context, criteria; tables in curation/ of the analysis repository. -->
+
+The baseline lists, for each of the three *O. dioica* assemblies, the Sec codons of the selenoprotein genes, placed
+by aligning curated reference proteins and checking the residues around the Sec, and supported by transcripts and
+by comparison between assemblies. Assembly errors at a gene were recorded, not corrected.
+
+## Stage 2
+
+<!-- To write after stage 2: SECIS covariance model (seeds, held-out tests, non-target genomes, thresholds,
+covariation); lineage reference proteins and profile HMMs; re-calling. -->
+
+## Data and code availability
+
+The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.1.2 for
+stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>.
+[Zenodo DOIs to add.]
 
 <!--
 Notes for the next pieces
-- Data: the NCBI assembly OKI2018_I68 (GCF_907165135.1) is the OKI2018_I69 assembly of Bliznina et al. 2021 (I69 is
-  the sequenced individual; I68 is a typo in the NCBI record); we use the NCBI name.
 - References to add: review of Sec insertion; Sec biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
-  minimap2; Nextflow; nf-core. Selenoprofiles 4 is described in Tico2026.
+  minimap2; Nextflow; nf-core; MultiQC; Zenodo record of the OKI2018 transcriptome.
 - SelenoDB 2.0 and the Selenoprofiles expectation table were used for the chordate comparison (Ciona gene lists;
   vertebrates); say so in the Methods.
 -->
