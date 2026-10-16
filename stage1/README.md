@@ -21,12 +21,13 @@ Run from the repository root:
 
 ```bash
 export NXF_WORK=/path/to/scratch/selenoproteins-stage1    # Nextflow work directory: see below
-PROFILE=singularity stage1/run.sh            # or an institutional profile; add -resume to continue a run
+PROFILE=singularity stage1/run.sh            # or an institutional profile; resumes the previous run by default
 make stage1                                  # collect the tables
 make curation                                # compare with the baseline
 ```
 
 **Work directory.** Nextflow keeps the intermediate files of every task in `NXF_WORK`, by default
 `work/stage1/nextflow` inside the repository. On a cluster, set it to the file system meant for such files and keep
-the same value for `-resume`; `run.sh` prints the directory it uses. The pipeline outputs, which `make stage1` reads,
+the same value between runs, since `run.sh` resumes from the cached results by default (`RESUME=false` to
+recompute everything); `run.sh` prints the directory it uses. The pipeline outputs, which `make stage1` reads,
 go to `work/stage1/pipeline`. Neither directory is tracked by git.

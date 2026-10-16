@@ -64,7 +64,12 @@ make figures
 
 Scripts that run as batch jobs carry generic `#SBATCH` headers (job name prefixed with `selenoproteins-`, CPUs,
 memory, time limit, log file named `<job name>-<job id>.log` in the submission directory). Submit them from the repository root and give site-specific
-options (partition, account) on the command line, which also overrides the header values:
+options (partition, account) on the command line, which also overrides the header values.
+The Nextflow driver (`stage1/run.sh`) writes its history and log in the repository root and publishes the pipeline
+outputs under `work/`: as a batch job it needs the repository on a file system that compute nodes can write; if the
+repository is on storage that is read-only for compute nodes, run the driver on a login or interactive node.
+
+
 
 ```bash
 sbatch [--partition=<data transfer partition>] scripts/fetch.sh
