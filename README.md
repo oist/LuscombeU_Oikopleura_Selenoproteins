@@ -69,7 +69,7 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | Set | Source |
 |---|---|
 | *O. dioica* OKI2018_I68 genome and RefSeq annotation | GCF_907165135.1 |
-| *O. dioica* OSKA2016 genome and annotation | ANISEED archives listed in `config/archives.tsv`; the download links are currently broken, so place copies of the archives in `data/downloads/` (checked by md5) |
+| *O. dioica* OSKA2016 genome and annotation | ANISEED archives `Oidioi_genome_fasta_gff3.zip` and `Oidioi_transcripts_fasta_gff3.zip` (`config/archives.tsv`); the ANISEED download links are currently broken: place copies in `data/downloads/` (checked by md5); a Zenodo copy is planned |
 | *O. dioica* OdB3 genome and annotation | GCA_000209535.1 |
 | Other appendicularians (Naville et al. 2019) | *Oikopleura longicauda* GCA_004367895.1, *Oikopleura albicans* GCA_004367875.1, *Oikopleura vanhoeffeni* GCA_004367855.1, *Bathochordaeus stygius* GCA_004367955.1, *Mesochordaeus erythrocephalus* GCA_004367975.1, *Fritillaria borealis* GCA_004368075.1 |
 | Other tunicates (SECIS non-target controls) | *Ciona intestinalis* GCF_018327825.1, *Ciona savignyi* GCA_054131345.1, *Styela clava* GCF_964204865.1, *Thalia democratica* GCF_965202585.1 |
