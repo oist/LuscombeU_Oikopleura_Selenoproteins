@@ -5,7 +5,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --output=%x-%j.log
 # Stage 1: run the selenoprotein pipeline with its default parameters on all the genomes of stage1/samplesheet.csv:
-# nine appendicularian assemblies, five other tunicates and three vertebrates (positive controls), in one run.
+# nine appendicularian assemblies, six other tunicates and three vertebrates (positive controls), in one run.
 # This job only drives Nextflow; the tasks run where the Nextflow profile sends them.
 # usage, from the repository root:
 #   NXF_WORK=<work directory> PROFILE=<profile> stage1/run.sh [extra Nextflow options]

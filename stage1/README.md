@@ -1,8 +1,8 @@
 # Stage 1 — the pipeline with its default parameters
 
-The samplesheet lists seventeen genomes, analysed in one run: the nine appendicularian assemblies (three of
-*O. dioica*, with their annotations and transcripts, and six other species), five other tunicates (*Ciona
-intestinalis* and *C. savignyi*, *Halocynthia roretzi*, *Styela clava*, *Thalia democratica*) and three vertebrates as
+The samplesheet lists eighteen genomes, analysed in one run: the nine appendicularian assemblies (three of
+*O. dioica*, with their annotations and transcripts, and six other species), six other tunicates (*Ciona
+intestinalis*, *C. robusta* and *C. savignyi*, *Halocynthia roretzi*, *Styela clava*, *Thalia democratica*) and three vertebrates as
 positive controls (human, mouse, zebrafish), with their RefSeq annotations where available.
 
 Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, release 0.2.0, set in `run.sh`) on

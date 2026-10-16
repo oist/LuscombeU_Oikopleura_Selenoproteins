@@ -225,7 +225,8 @@ those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_0
 *Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation. As non-target genomes
 for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
 (GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). These tunicates,
-with *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the default settings, to compare the
+with *Ciona robusta* (KH assembly, GCF_000224145.3, the genome of the published *Ciona* selenoproteome, formerly named
+*C. intestinalis*) and *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the default settings, to compare the
 appendicularians with other tunicates. As positive controls for the default settings, we used the human
 (GRCh38.p14, GCF_000001405.40), mouse (GRCm39, GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes, with
 their RefSeq annotations.
