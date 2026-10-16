@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=fetch
+#SBATCH --job-name=selenoproteins-fetch
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
 #SBATCH --time=12:00:00

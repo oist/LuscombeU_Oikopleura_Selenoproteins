@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=stage1
+#SBATCH --job-name=selenoproteins-stage1
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
 #SBATCH --time=3-00:00:00

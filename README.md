@@ -44,8 +44,8 @@ make figures
 
 ### On a Slurm cluster
 
-Scripts that run as batch jobs carry generic `#SBATCH` headers (job name, CPUs, memory, time limit, log file named
-`<job name>-<job id>.log` in the submission directory). Submit them from the repository root and give site-specific
+Scripts that run as batch jobs carry generic `#SBATCH` headers (job name prefixed with `selenoproteins-`, CPUs,
+memory, time limit, log file named `<job name>-<job id>.log` in the submission directory). Submit them from the repository root and give site-specific
 options (partition, account) on the command line, which also overrides the header values:
 
 ```bash
