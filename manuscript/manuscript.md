@@ -40,17 +40,17 @@ survey of metazoan SECIS elements and contains no tunicate sequence [@Lambert200
 divergent genomes is not known in advance.
 
 The appendicularian *Oikopleura dioica* is a planktonic tunicate found in the oceans worldwide [@Masunaga2020].
-Appendicularians are abundant in the zooplankton, and through their filter-feeding houses take part in the cycling
-of carbon and other elements in the ocean [REF: appendicularians in ocean biomass and fluxes], so that their
-metabolism matters beyond their own biology. The short life cycle, transparent body and invariant embryonic cell
+Appendicularians are among the most abundant zooplankton, and the filter-feeding houses that they discard
+contribute to the vertical flux of carbon in the ocean [@Masunaga2022; REF: primary sources, for example Alldredge
+2005 and Robison et al. 2005], so that their metabolism matters beyond their own biology. The short life cycle, transparent body and invariant embryonic cell
 lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small and compact genome, which
 has lost many genes conserved in other chordates, makes it a model for evolution by gene loss [@Denoeud2010;
 @Albalat2016]. In such a genome, an accurate gene census is a prerequisite: a gene missing from an annotation is
 otherwise indistinguishable from a gene lost in evolution. Three genome assemblies are public: OdB3 from a Norwegian
 population [@Denoeud2010], OSKA2016 from the main islands of Japan [@Wang2020] and OKI2018 from Okinawa
-[@Bliznina2021]. Animals from the main islands of Japan and from Okinawa do not interbreed [REF: Masunaga et al.,
-crossing experiments], and the three populations differ so much in genome structure that they have been proposed to
-be cryptic species [@Plessy2024]. How their annotations represent selenoprotein genes has not been examined.
+[@Bliznina2021]. Ribosomal and mitochondrial sequences place the three populations in distinct clades, animals
+from Okinawa and from the main islands of Japan do not interbreed [@Masunaga2022], and their genomes differ so much
+in structure that the populations have been proposed to be cryptic species [@Plessy2024]. How their annotations represent selenoprotein genes has not been examined.
 
 Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
 has 19 selenoprotein genes [@Jiang2010]; a Sec-containing deiodinase was characterised in *Halocynthia roretzi*
