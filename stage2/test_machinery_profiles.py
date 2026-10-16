@@ -32,8 +32,8 @@ def main():
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--out", default="work/stage2/machinery_test")
     a = ap.parse_args()
-    profiles = sorted(os.path.abspath(p) for p in glob.glob(f"{a.profiles_dir}/*_app.fa"))
-    fams = [os.path.basename(p)[:-len("_app.fa")] for p in profiles]
+    profiles = sorted(os.path.abspath(p) for p in glob.glob(f"{a.profiles_dir}/*.fa"))
+    fams = [os.path.basename(p)[:-len(".fa")] for p in profiles]
     data = os.path.abspath(a.data)
     os.makedirs(a.out, exist_ok=True)
     home = tempfile.mkdtemp(); env = dict(os.environ, HOME=home)
@@ -56,7 +56,7 @@ def main():
         o.write("genome\tfamily\tstage1_standard_profile\tappendicularian_profile\n")
         for g in a.genomes:
             if not os.path.exists(f"{a.out}/{g}.gtf"): continue
-            s1, s2 = labels(f"{a.stage1}/{g}.selenoprofiles.gtf"), labels(f"{a.out}/{g}.gtf", "_app")
+            s1, s2 = labels(f"{a.stage1}/{g}.selenoprofiles.gtf"), labels(f"{a.out}/{g}.gtf")
             fmt = lambda c: ",".join(f"{n} {lab}" for lab, n in sorted(c.items())) or "-"
             for f in fams: o.write(f"{g}\t{f}\t{fmt(s1.get(f, {}))}\t{fmt(s2.get(f, {}))}\n")
     shutil.rmtree(home, ignore_errors=True)

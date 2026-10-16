@@ -51,7 +51,8 @@ secis: secis-stage1 secis-model secis-stage2
 #   sbatch --cpus-per-task=4 scripts/run_in_container.sh make machinery
 machinery-profiles:
 	python3 stage2/build_machinery_profiles.py --out work/stage2/machinery_profiles
-	@mkdir -p results/models/machinery_profiles && cp work/stage2/machinery_profiles/*_app.fa* work/stage2/machinery_profiles/members.tsv results/models/machinery_profiles/
+	@mkdir -p results/models/machinery_profiles && cp work/stage2/machinery_profiles/*.fa* work/stage2/machinery_profiles/members.tsv results/models/machinery_profiles/ && \
+	    tar -czf results/models/appendicularia_machinery_profiles.tar.gz -C work/stage2/machinery_profiles $$(cd work/stage2/machinery_profiles && ls *.fa *.fa.config *.fa.profile_data)
 
 machinery-test:
 	python3 stage2/test_machinery_profiles.py --profiles-dir work/stage2/machinery_profiles --out work/stage2/machinery_test

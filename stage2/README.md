@@ -43,3 +43,27 @@ Replicates write only to their `SECIS_OUT` directory; the files in `results/` ar
 
 Other options of `build_secis_model.py` (`--help`): training genomes, seed threshold of round 0, number of background
 windows, maximum number of rounds, calibration length of the intermediate rounds.
+
+## Appendicularian profiles of the Sec machinery
+
+`build_machinery_profiles.py` extends each standard Selenoprofiles profile of the machinery set (SEPHS2, pstk, SecS,
+eEFsec, SBP2, secp43) with appendicularian proteins: the stage 1 predictions labelled "homologue" or "selenocysteine"
+that are at least half the median profile length, and the curated transcript proteins of
+`curation/machinery_proteins.faa`. They are added with `mafft --add --keeplength`, so the columns and the standard
+configuration remain valid, and the profile is rebuilt with `selenoprofiles build`. OdB3 contributes no sequence and
+serves as the test genome. The profiles keep the standard names, so that they can replace the standard ones.
+
+`test_machinery_profiles.py` runs Selenoprofiles with these profiles on the nine genomes and compares the
+predictions, by label, with stage 1 (`results/tables/stage2_machinery_profiles_test.tsv`).
+
+```bash
+sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make machinery
+```
+
+| Target | Output | Time on 1 CPU (measured) |
+|---|---|---|
+| `machinery-profiles` | `work/stage2/machinery_profiles/`; copied to `results/models/machinery_profiles/` and `results/models/appendicularia_machinery_profiles.tar.gz` | 2 min |
+| `machinery-test` | `work/stage2/machinery_test/` (resumable per genome); `results/tables/stage2_machinery_profiles_test.tsv` | about 75 min for the nine genomes |
+
+The committed test table was produced with the same profile alignments under the names `<family>_app`, before the
+profiles took the standard names; a rerun of `make machinery-test` regenerates it with the current files.

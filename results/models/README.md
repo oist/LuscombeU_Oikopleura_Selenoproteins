@@ -4,6 +4,8 @@
 |---|---|
 | `appendicularia_secis.cm` | appendicularian SECIS covariance model (Infernal 1.1.5, calibrated), built by `make secis-model` |
 | `appendicularia_secis.sto` | its seed alignment (73 sequences) |
+| `machinery_profiles/` | appendicularian Selenoprofiles profiles of the Sec machinery (SEPHS2, pstk, SecS, eEFsec, SBP2, secp43), with the standard names: aligned sequences (`.fa`), configuration (`.fa.config`) and the list of added sequences (`members.tsv`); built by `make machinery-profiles` |
+| `appendicularia_machinery_profiles.tar.gz` | the same profiles with their precomputed `.profile_data`, as passed to the pipeline (`--selenoprofiles_overrides`) and deposited on Zenodo |
 | `appendicularia_secis.seeds.fa` | the seed sequences; their names give genome, prediction and position in its 3′ sequence |
 
 The model file records its build date and command line, so it changes at each build; to check that a rebuild

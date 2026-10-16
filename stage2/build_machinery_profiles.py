@@ -9,10 +9,11 @@ appendicularian proteins:
 The added proteins are aligned with MAFFT --add --keeplength, which keeps the columns of the standard alignment, so
 that column-based options of the standard configuration remain valid. The extended alignment is then built into a
 profile with "selenoprofiles build", loading the standard configuration (filters, tags) and using all sequences as
-BLAST queries. Profiles are named <family>_app.
+BLAST queries. Profiles keep the standard names (SEPHS2, pstk, ...), so that they can replace the standard ones in a
+copy of the Selenoprofiles data (see the pipeline option --selenoprofiles_overrides).
 
 Held-out genomes (default: OdB3) contribute no sequence, so that they can test the profiles.
-Outputs in --out: <family>_app.fa and its Selenoprofiles files, and members.tsv (every candidate sequence, with the
+Outputs in --out: <family>.fa and its Selenoprofiles files, and members.tsv (every candidate sequence, with the
 reason it was kept or not).
 """
 import argparse, os, re, shutil, statistics, subprocess, tempfile
@@ -71,7 +72,7 @@ def main():
             why = "held-out genome" if g in a.held_out else ""
             log.append((fam, "curated", g, src, len(s), "yes" if not why else "no", why or "kept"))
             if not why: members.append((f"{g}_curated_{len(members)}", s))
-        name = f"{fam}_app"
+        name = fam
         with tempfile.TemporaryDirectory() as d:
             add = f"{d}/add.fa"
             with open(add, "w") as o:
