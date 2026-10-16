@@ -13,6 +13,9 @@ genes or families, to cite and to compare with:
 |---|---|
 | Mariotti et al. 2015 (`Mariotti2015`) | selenophosphate synthetase evolution across the tree of life. Reports *O. dioica* (OdB3) as having a single SPS gene, the ancestral Sec-containing SPS2 with a SECIS and the ancestral intron structure, without the Gly isoform found in ascidians: our SEPHS2 is therefore a known Sec gene. Also reports stem–loops (SRE) next to the UGA of UGA-containing SPS genes |
 | Esposito et al. 2021 (`Esposito2021`) | iodothyronine deiodinases (DIO) in non-vertebrate chordates |
+| Darras 2021 (`Darras2021`) | review of deiodinase evolution: deiodinases in all chordates; in tunicates, cites the Sec-containing ascidian enzyme of *Halocynthia roretzi* and partial ascidian sequences suggesting at least two deiodinase homologs. No statement about *Oikopleura* |
+| Shepherdley et al. 2004 (`Shepherdley2004`) | first tunicate deiodinase characterised (*H. roretzi*): Sec-dependent outer-ring activity, SECIS in the 3′ UTR |
+| Jiang et al. 2012 (`Jiang2012`) | selenoproteomes of six invertebrates (sponge, placozoan, sea anemone, limpet, annelid, amphioxus); no tunicate |
 | Trenz et al. 2021 (`Trenz2021`) | glutathione peroxidase evolution; Sec and Cys forms |
 | Baclaocos et al. 2019 (`Baclaocos2019`) | SELENOP evolution in metazoans |
 | Mariotti et al. 2012 (`Mariotti2012`) | vertebrate selenoproteomes, for the chordate comparison |
