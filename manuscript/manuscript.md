@@ -7,75 +7,72 @@ bibliography: references.bib
 
 # Introduction
 
-<!-- Part 1: justification -->
+<!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
-Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Because
-gene prediction programs read UGA as a stop, selenoprotein genes are often truncated, split or missing in genome
-annotations [@Mariotti2015]. In vertebrates, a systematic comparison found that only 5% of selenoprotein genes are
-correctly annotated in GenBank and 11% in Ensembl; RefSeq, which applies a dedicated selenoprotein pipeline, reaches
-77%, with most remaining errors in families whose Sec is near the C-terminus [@Tico2026]. Outside vertebrates, and for
-genomes without such a pipeline, the situation is largely unmeasured.
-
-The appendicularian *Oikopleura dioica* is a planktonic tunicate, part of the sister group of vertebrates. Its short
-life cycle, transparent body and invariant embryonic cell lineages make it a model for developmental biology
-[@Wang2020], and its very small and compact genome makes it a model for genome evolution [@Denoeud2010;
-@Naville2019]. Three chromosome-scale or scaffold-level assemblies are public: OdB3 from a Norwegian population
-[@Denoeud2010], OSKA2016 from a Japanese population [@Wang2020] and OKI2018 from an individual collected in Okinawa
-[@Bliznina2021]. These populations differ so much in genome structure that they have been proposed to be cryptic
-species [@Plessy2024]. Each assembly has its own gene annotation, produced by a different pipeline. The RefSeq
-annotation of OKI2018 comes from the NCBI pipeline, which handles selenoprotein genes well in vertebrates
-[@Tico2026]; how the three annotations represent selenoprotein genes in *O. dioica* has not been examined.
-
-A census of selenoprotein genes is part of the basic description of a model organism. Selenoproteins include
-glutathione peroxidases, thioredoxin reductases and iodothyronine deiodinases, enzymes of redox homeostasis and of
-thyroid hormone metabolism; studies of these functions in *O. dioica* start from the list of genes and their correct
-protein sequences. The census also matters beyond *O. dioica*: selenoprotein sets differ between animal lineages
-through gene losses and replacements of Sec by cysteine [@Mariotti2012; @Jiang2012], and appendicularians, with
-their fast-evolving genomes, have not been surveyed. Previous studies included *O. dioica* only for single families:
-its selenophosphate synthetase SEPHS2 is a Sec gene with a SECIS element [@Mariotti2015].
-
-<!-- Part 2: background for the reader -->
-
-Sec insertion requires a dedicated machinery. In eukaryotes, a stem–loop structure in the 3′ untranslated region of
+Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Sec is a
+more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms the catalytic site:
+glutathione peroxidases and thioredoxin reductases maintain redox homeostasis, and iodothyronine deiodinases activate
+and inactivate thyroid hormones [REF: review of selenoprotein functions]. Selenoprotein sets differ between animal
+lineages, which have lost selenoprotein genes or replaced their Sec by cysteine [@Mariotti2012; @Jiang2012]. Sec is
+inserted by a dedicated machinery. In eukaryotes, a stem–loop structure in the 3′ untranslated region of
 selenoprotein mRNAs, the SECIS element, is bound by SECIS-binding protein 2, which recruits the Sec-specific
 elongation factor eEFSec and the Sec-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic Sec insertion].
 Sec is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by PSTK, then converted to selenocysteinyl-tRNA-Sec
-by SecS, using selenophosphate produced by SEPHS2 [REF: Sec biosynthesis on tRNA]. Additional RNA structures next to
-the UGA, the Sec redefinition elements, can stimulate UGA recoding [@Howard2005]. A genome that encodes
-selenoproteins is therefore expected to also encode tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec and SECIS-binding protein 2.
+by SecS, using selenophosphate made by SEPHS2 [REF: Sec biosynthesis on tRNA]. A genome that encodes selenoproteins
+is therefore expected to also encode tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec and SECIS-binding protein 2; the
+Sec machinery also includes associated factors such as SECp43 [REF: SECp43].
 
-Selenoprotein genes are predicted by homology rather than by ab initio gene finding. Selenoprofiles aligns curated
-protein profiles of each selenoprotein family to a genome and labels the predictions with Sec, cysteine or other
-residues at the Sec position [@Mariotti2010; @Tico2026]. Selenoprofiles does not require a SECIS element; SECIS
-elements are searched separately, for example with covariance models such as the Rfam SECIS family, whose seed
-derives from a survey of metazoan SECIS elements [@Lambert2002; REF: Rfam; REF: Infernal], or with SECISearch3
-[REF: SECISearch3]. tRNA-Sec genes are found with dedicated covariance models [@Santesmasses2017]. The Rfam SECIS
-seed contains no tunicate sequence, and how these methods perform on divergent genomes is not known in advance.
+Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
+in genome annotations [@Mariotti2015]. The errors propagate to every analysis that starts from annotated proteins or
+transcripts: a selenoprotein absent from an annotation cannot be found in a proteomic search, quantified in a
+transcriptome, assigned to an orthologous group or counted among gene losses [REF: example of a selenoprotein missed
+in an omics analysis]. Because they affect one class of genes, these errors also bias comparisons between species.
+In public databases, most selenoprotein genes are misannotated unless a dedicated pipeline is used, and even then
+about one in five remains wrong [@Tico2026]. Outside vertebrates, and for genomes without such a pipeline, the
+situation is largely unmeasured.
 
-Tunicate selenoproteins are known mostly from ascidians. The selenoproteome of *Ciona intestinalis* comprises 19
-genes [@Jiang2010], and SelenoDB 2.0 provides automatic annotations of selenoprotein genes and of their cysteine
-homologs for 58 animal genomes, including *Ciona* [@Romagne2014]. A Sec-containing deiodinase with a 3′ UTR SECIS
-element was characterised in *Halocynthia roretzi* [@Shepherdley2004], and in ascidians the selenophosphate
-synthetase gene evolved through alternative isoforms and a retroposed copy [@Mariotti2015]. A survey of the thyroid hormone toolkit
-across chordates reported one deiodinase per non-vertebrate chordate and noted that tunicate deiodinase sequences in
-public databases often lack parts of the protein, calling for better annotation [@Esposito2021].
+Programs dedicated to selenoproteins find their genes either by homology to known selenoprotein families, such as
+Selenoprofiles [@Mariotti2010; @Tico2026], or from SECIS elements, such as Seblastian, which predicts
+selenoprotein genes upstream of the SECIS elements found by SECISearch3 [@Mariotti2013]; tRNA-Sec genes have their
+own detectors [@Santesmasses2017]. These methods were built from well-studied lineages, and the SECIS models in
+particular from vertebrate and other model genomes: the seed of the Rfam SECIS family, for example, derives from a
+survey of metazoan SECIS elements and contains no tunicate sequence [@Lambert2002; REF: Rfam]. How they perform on
+divergent genomes is not known in advance.
 
-*O. dioica* adds difficulties to selenoprotein annotation. Its genome is compact, and many of its genes are
-transcribed as operons whose polycistronic transcripts are resolved by trans-splicing of a spliced leader to the
-downstream cistrons; the same leader is also added to the 5′ end of many monocistronic transcripts [@Ganot2004;
-@Wang2015]. Part of its introns use non-canonical GA–AG splice sites [@Denoeud2010], which gene prediction programs
-built for canonical GT–AG introns model poorly, so that de novo gene models are often wrong at these introns. Gene
-models from the three assemblies differ, and assemblies can contain gaps, duplicated haplotypes and local errors. A selenoprotein gene can therefore be missed for three reasons that a survey
-must distinguish: the prediction method fails, the annotation pipeline fails, or the assembly is wrong at that
-locus.
+The appendicularian *Oikopleura dioica* is a planktonic tunicate found in the oceans worldwide [@Masunaga2020].
+Appendicularians are abundant in the zooplankton, and through their filter-feeding houses take part in the cycling
+of carbon and other elements in the ocean [REF: appendicularians in ocean biomass and fluxes], so that their
+metabolism matters beyond their own biology. The short life cycle, transparent body and invariant embryonic cell
+lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small and compact genome, which
+has lost many genes conserved in other chordates, makes it a model for evolution by gene loss [@Denoeud2010;
+@Albalat2016]. In such a genome, an accurate gene census is a prerequisite: a gene missing from an annotation is
+otherwise indistinguishable from a gene lost in evolution. Three genome assemblies are public: OdB3 from a Norwegian
+population [@Denoeud2010], OSKA2016 from the main islands of Japan [@Wang2020] and OKI2018 from Okinawa
+[@Bliznina2021]. Animals from the main islands of Japan and from Okinawa do not interbreed [REF: Masunaga et al.,
+crossing experiments], and the three populations differ so much in genome structure that they have been proposed to
+be cryptic species [@Plessy2024]. How their annotations represent selenoprotein genes has not been examined.
 
-<!-- Part 3: aims and approach -->
+Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
+has 19 selenoprotein genes [@Jiang2010]; a Sec-containing deiodinase was characterised in *Halocynthia roretzi*
+[@Shepherdley2004]; and in ascidians the selenophosphate synthetase gene acquired an alternative isoform that does
+not carry Sec, later separated into its own gene by retroposition [@Mariotti2015]. A survey of the thyroid hormone
+toolkit across chordates found that tunicate deiodinase sequences in public databases often lack parts of the
+protein [@Esposito2021], an example of how annotation errors limit comparative studies. Appendicularians have not
+been surveyed; *O. dioica* appears in previous studies only for single families, such as its selenophosphate
+synthetase SEPHS2, a Sec gene with a SECIS element [@Mariotti2015].
+
+*O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
+operons whose transcripts are resolved by trans-splicing [@Ganot2004; REF: operons in ascidians], and part of its
+introns use non-canonical GA–AG splice sites, which gene predictors model poorly [@Denoeud2010]. A selenoprotein gene
+can therefore be missed for three reasons that a survey must distinguish: the prediction method fails, the
+annotation pipeline fails, or the assembly is wrong at that locus.
 
 Here we establish the selenoproteome of *O. dioica*, and we use the genomes of six other appendicularian species,
-together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. Because no
-tool had been tested on these genomes, we proceeded in two stages. We first measured what current methods find with
-their default parameters, against a baseline curated from the three *O. dioica* assemblies; the genes and SECIS
-elements they missed defined the adaptations tested in the second stage.
+together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. We built a
+pipeline that combines the detection of selenoprotein genes, of their Sec machinery and of SECIS elements with
+annotation and transcript evidence. With their default parameters, current tools did not recover this baseline in
+appendicularian genomes; we provide lineage-specific models and settings that do, and the data to evaluate them. We
+hope that these data will help build defaults that apply to more lineages.
 
 # Results
 

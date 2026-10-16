@@ -44,8 +44,13 @@ Built from `results/tables/` only.
 - tRNA-Sec: standard tools are enough (Secmarker and RF01852 find at least one supported locus in every genome); no
   special-casing.
 - Multiple copies of a gene (tRNA-Sec loci, eEFSec, SEPHS2) in some appendicularian assemblies may come from
-  incomplete haplotype purging or from contamination. TODO: ask Charles for the reference documenting this, and cite
-  it where copy numbers are discussed.
+  incomplete haplotype purging or from contamination: the B. stygius assembly may be contaminated by M.
+  erythrocephalus (Pichon et al. 2019, F1000Research, doi:10.12688/f1000research.21551.2; cite where copy numbers or
+  B. stygius results are discussed).
+- Fragmented assemblies: the pipeline may miss genes whose locus is broken by the assembly (current long-read
+  assemblies do not have this problem); the analysis shows such genes as fragments (for example PSTK in
+  O. longicauda, B. stygius and M. erythrocephalus) to validate the baseline. At the end, review the assemblies and
+  drop those of too low quality that add little phylogenetically.
 - Open: which genes form the machinery set (minimum: tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec, SBP2; possible: SECp43,
   SCLY).
 - SECIS model, when rebuilt from the complete pool (restoring what the earlier analysis behind the slides had):
