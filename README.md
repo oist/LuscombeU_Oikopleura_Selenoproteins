@@ -35,6 +35,7 @@ From the repository root (prefix each `make` with `scripts/run_in_container.sh` 
 
 ```bash
 make fetch          # needs network; some sources are still placeholders (see Data)
+PROFILE=<profile> stage1/run.sh   # the pipeline (Nextflow)
 make stage1
 make curation
 make stage2
@@ -49,8 +50,8 @@ options (partition, account) on the command line, which also overrides the heade
 
 ```bash
 sbatch [--partition=<data transfer partition>] scripts/fetch.sh
-for g in OKI OSKA OdB3 Olon Oalb Ovan Bsty Mery Fbor; do sbatch [options] stage1/run_genome.sh $g; done
-sbatch [options] scripts/run_in_container.sh make stage1     # collects the per-genome outputs
+PROFILE=<profile> sbatch [options] stage1/run.sh                # Nextflow driver for the stage 1 pipeline run
+sbatch [options] scripts/run_in_container.sh make stage1       # collects its outputs
 ```
 
 ### The pipeline in the same image
