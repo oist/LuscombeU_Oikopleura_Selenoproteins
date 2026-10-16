@@ -67,3 +67,6 @@ Built from `results/tables/` only.
 
 - Write "selenocysteine" when the amino acid is meant alone; keep "Sec" only inside names (tRNA-Sec, eEFSec, SecS)
   and in the first definition, "selenocysteine (Sec)".
+- Give the gene symbol (human HGNC symbol) at the first mention of each gene, and the full name at the first mention
+  of a symbol (for example "SECIS-binding protein 2 (SECISBP2)", "selenoprotein T (SELENOT)"); expand every acronym at
+  its first use (for example "selenocysteine insertion sequence (SECIS)").

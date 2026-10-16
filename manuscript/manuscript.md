@@ -9,19 +9,21 @@ bibliography: references.bib
 
 <!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
-Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenocysteine is a
-more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms the catalytic site:
-glutathione peroxidases and thioredoxin reductases maintain redox homeostasis, and iodothyronine deiodinases activate
-and inactivate thyroid hormones [REF: review of selenoprotein functions]. Selenoprotein sets differ between animal
-lineages, which have lost selenoprotein genes or replaced their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. selenocysteine is
-inserted by a dedicated machinery. In eukaryotes, a stem–loop structure in the 3′ untranslated region of
-selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS) element, is bound by SECIS-binding
-protein 2, which recruits the selenocysteine-specific
-elongation factor eEFSec and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic selenocysteine insertion].
-Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by PSTK, then converted to selenocysteinyl-tRNA-Sec
-by SecS, using selenophosphate made by SEPHS2 [REF: selenocysteine biosynthesis on tRNA]. A genome that encodes selenoproteins
-is therefore expected to also encode tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec and SECIS-binding protein 2; the
-selenocysteine machinery also includes associated factors such as SECp43 [REF: SECp43].
+Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon.
+Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms
+the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox homeostasis, and
+iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [REF: review of selenoprotein functions].
+Selenoprotein sets differ between animal lineages, which have lost selenoprotein genes or replaced their
+selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In
+eukaryotes, a stem–loop structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion
+sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
+elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec (TRU-TCA1-1) to the UGA codon [REF: review
+of eukaryotic selenocysteine insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated
+by O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase
+(SecS, encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine
+biosynthesis on tRNA]. A genome that encodes selenoproteins is therefore expected to also encode tRNA-Sec, SEPHS2,
+PSTK, SecS, eEFSec and SECIS-binding protein 2; the selenocysteine machinery also includes associated factors such as
+SECp43 (TRNAU1AP) [REF: SECp43].
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
 in genome annotations [@Mariotti2015]. The errors propagate to every analysis that starts from annotated proteins or
@@ -118,12 +120,12 @@ OKI2018 and 18 of 21 of OdB3 scored at least 20 bits, but these sequences were u
 performance. In the held-out *F. borealis*, only 8 of 19 selenocysteine predictions reached 20 bits, and 3 reached 25 bits.
 
 Across the three *O. dioica* assemblies, 42 of 53 curated selenoprotein genes scored at least 25 bits. Below 25 bits were
-SELENOT in all three assemblies, SEPHS2 in OKI2018 and OdB3, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
-24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the selenocysteine codon lies far upstream of the stop
+selenoprotein T (SELENOT) in all three assemblies, SEPHS2 in OKI2018 and OdB3, selenoprotein O (SELENOO) in OKI2018 and OSKA2016, selenoprotein K (SELENOK) in OKI2018 and OdB3 (23.4 and
+24.9 bits), and selenoprotein F (SELENOF) in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the selenocysteine codon lies far upstream of the stop
 codon, so that the 6,000 nucleotides scored after the selenocysteine codon may not reach the SECIS element. Outside the selenocysteine
 predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits. Seventeen of them belong to
 selenoprotein families and either do not cover the selenocysteine position ("unaligned": GPX, DIO, SEPHS2, SELENOT and others) or
-carry another residue there (SELENOW with isoleucine, tyrosine or leucine), as expected if some are selenoprotein genes that
+carry another residue there (selenoprotein W (SELENOW) with isoleucine, tyrosine or leucine), as expected if some are selenoprotein genes that
 Selenoprofiles did not recognise as such, including SEPHS2 of OSKA2016 (labelled "pseudo"). Only two are cysteine
 homologs, both in *F. borealis* and at 25.5 bits, the level of its best random window; none of the cysteine homologs
 of the eight other genomes reached 25 bits.
@@ -136,6 +138,10 @@ shuffled sequences; threshold; the 19 other predictions; the curated genes below
 <!-- Stage 2 subsections are placeholders until stage 2 is run. -->
 
 ## Genome assemblies, annotations and transcripts
+
+Genes are named by the symbols of their human orthologs (HGNC), given at their first mention; appendicularian
+orthologs take the same symbols, and selenoprotein families the root of their members' symbols (for example GPX for
+glutathione peroxidases).
 
 We analysed three assemblies of *O. dioica*: OKI2018 (RefSeq GCF_907165135.1, with its RefSeq annotation)
 [@Bliznina2021], OSKA2016 (genome and transcript models from the ANISEED download archives
@@ -166,7 +172,7 @@ set (profiles, Gene Ontology tables and UniRef50 tag database) downloaded from i
 archives used are recorded. Independently, miniprot 0.11 [REF: miniprot] aligned to the genome the selenocysteine-containing
 sequences of the same profiles. A TGA codon was called a selenocysteine codon when miniprot aligned it to a query selenocysteine, or
 when the query selenocysteine was the first residue after the end of the alignment and the next genomic codon was TGA, since
-miniprot tends to stop before a C-terminal selenocysteine. selenocysteine codons found by both methods at the same position were merged.
+miniprot tends to stop before a C-terminal selenocysteine. Selenocysteine codons found by both methods at the same position were merged.
 
 *SECIS elements.* Infernal 1.1.5 [REF: Infernal] `cmsearch` searched, with the Rfam SECIS model RF00031
 [REF: Rfam], the 6,000 nucleotides downstream of each Selenoprofiles prediction, at the Rfam gathering threshold.
