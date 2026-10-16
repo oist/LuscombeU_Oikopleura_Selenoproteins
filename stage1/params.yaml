@@ -1,5 +1,6 @@
 # Stage 1: the pipeline with its default parameters (Selenoprofiles profiles eukarya,machinery; Rfam RF00031 at its
-# gathering threshold; Secmarker and cmsearch for tRNA-Sec), on local copies of the reference files (scripts/fetch.sh).
+# gathering threshold; Secmarker and cmsearch for tRNA-Sec), on local copies of the reference files (scripts/fetch.sh):
+# the complete Selenoprofiles data, as "selenoprofiles -download" assembles it, and the two Rfam models.
 # Paths are relative to the repository root, from which the pipeline is launched.
 input: stage1/samplesheet.csv
 outdir: work/stage1/pipeline

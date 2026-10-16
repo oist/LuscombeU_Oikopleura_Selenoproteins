@@ -118,16 +118,34 @@ done < <(rows config/extra_files.tsv)
 fetch_url https://rfam.org/family/RF00031/cm data/references/RF00031.cm ""
 fetch_url https://rfam.org/family/RF00031/alignment data/references/RF00031.sto ""
 fetch_url https://rfam.org/family/RF01852/cm data/references/RF01852.cm ""
-# Selenoprofiles profiles at the commit used by the pipeline's test profile
-if [[ ! -d data/references/selenoprofiles_data ]]; then
-    rm -rf data/references/selenoprofiles_data.part; mkdir -p data/references/selenoprofiles_data.part
-    if curl -fsL https://codeload.github.com/mariottigenomicslab/selenoprotein_profiles/tar.gz/4829bc969570587c222f1ce4721038fd75c804a0 \
-        | tar -xz --strip-components=1 -C data/references/selenoprofiles_data.part; then
-        mv data/references/selenoprofiles_data.part data/references/selenoprofiles_data
+# Selenoprofiles data, as "selenoprofiles -download" assembles it: profiles, Gene Ontology tables and the UniRef50
+# tag database formatted for BLAST (formatdb, from blast-legacy). The three archives are kept in
+# data/downloads/selenoprofiles/ and checked against config/references.tsv when a checksum is recorded there.
+SP=data/references/selenoprofiles_data
+SP_URL=${SELENOPROFILES_DATA_URL:-https://mariottigenomicslab.bio.ub.edu/selenoprofiles_data}
+if [[ ! -s $SP/uniref50_seleno_sim.fasta.psq ]]; then
+    mkdir -p data/downloads/selenoprofiles
+    ok=1
+    for f in selenoprotein_profiles.tar.gz gene_ontology.tar.gz uniref50_seleno_sim.fasta.gz; do
+        fetch_url "$SP_URL/$f" "data/downloads/selenoprofiles/$f" "$(awk -F'\t' -v f="$f" '$4 ~ "/"f"$" {print $6}' config/references.tsv)"
+        [[ -s data/downloads/selenoprofiles/$f ]] || ok=0
+    done
+    if (( ok )) && ! command -v formatdb > /dev/null; then
+        echo "MISSING $SP: formatdb (blast-legacy) is needed to format the UniRef50 tag database; rerun inside the image:"
+        echo "        scripts/run_in_container.sh scripts/fetch.sh"
+        ok=0; fail=1
+    fi
+    if (( ok )); then
+        rm -rf "$SP.part"; mkdir -p "$SP.part"
+        tar -xzf data/downloads/selenoprofiles/selenoprotein_profiles.tar.gz -C "$SP.part"
+        tar -xzf data/downloads/selenoprofiles/gene_ontology.tar.gz -C "$SP.part"
+        gzip -dc data/downloads/selenoprofiles/uniref50_seleno_sim.fasta.gz > "$SP.part/uniref50_seleno_sim.fasta"
+        (cd "$SP.part" && formatdb -i uniref50_seleno_sim.fasta -p T -l formatdb.log)
+        rm -rf "$SP"; mv "$SP.part" "$SP"
     else
-        rm -rf data/references/selenoprofiles_data.part; echo "MISSING data/references/selenoprofiles_data: download failed"; fail=1
+        fail=1
     fi
 fi
-md5sum data/genomes/*/genome.fna.gz data/transcripts/*.fa.gz 2>/dev/null > data/MD5SUMS || true
+md5sum data/genomes/*/genome.fna.gz data/transcripts/*.fa.gz data/downloads/*/* data/downloads/*.zip 2>/dev/null > data/MD5SUMS || true
 echo "Done. Checksums of downloaded files: data/MD5SUMS"
 exit $fail

@@ -23,7 +23,9 @@ All the software is listed, with pinned versions, in `environment.yml`. There ar
    be bound (`export SINGULARITY_BIND=<directory>`).
 2. **Environment modules.** On a cluster that provides the tools as modules, load them before running the scripts.
    Module names vary between sites; for example, `scripts/fetch.sh` needs the NCBI datasets command-line tool
-   (at OIST: `ml bioinfo-ugrp-modules Other/ncbi-datasets-cli`), curl, unzip, tar and gzip.
+   (at OIST: `ml bioinfo-ugrp-modules Other/ncbi-datasets-cli`), curl, unzip, tar, gzip, and `formatdb` from
+   blast-legacy to format the Selenoprofiles UniRef50 tag database; without `formatdb`, run it inside the image:
+   `scripts/run_in_container.sh scripts/fetch.sh`.
 3. **conda-forge installer** (Miniforge), where allowed: `conda env create -f environment.yml`, then
    `conda activate oikopleura-selenoproteins`.
 
@@ -93,7 +95,7 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | OKI2018 transcriptome (Bliznina et al. 2021) | not yet public; to be added to Zenodo record 4604144 |
 | OdB3 cDNA (Denoeud et al. 2010) | Genoscope `cDNA.fa.bz2` (OikoBase, which also distributed them, is offline) |
 | OdB3 operon annotation (Denoeud et al. 2010) | Genoscope `operons_GGB.gff.bz2` (`config/extra_files.tsv`) |
-| Rfam RF00031, Selenoprofiles profiles v1.3.0 | `config/references.tsv` |
+| Rfam RF00031 and RF01852; Selenoprofiles data (profiles, Gene Ontology, UniRef50 tag database) from the Selenoprofiles server | `config/references.tsv` |
 
 **Assembly name.** The OKI2018 assembly is named `OKI2018_I68` at NCBI (GCF_907165135.1) because of a typo: it is
 the `OKI2018_I69` assembly of Bliznina et al. 2021, where I69 identifies the sequenced *O. dioica* individual. This
