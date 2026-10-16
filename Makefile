@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation stage2 figures check clean
+.PHONY: all fetch stage1 stage1-secis curation stage2 figures check clean
 all: stage1 curation stage2 figures
 
 fetch:
@@ -25,8 +25,12 @@ curation:
 stage2:
 	$(MAKE) -C stage2 GENOMES="$(GENOMES_BASELINE) $(GENOMES_COMPARISON)" NONTARGET="$(GENOMES_NONTARGET)"
 
+# RF00031 scores without threshold in the 3' regions of the stage 1 predictions (needs Infernal: run in the image)
+stage1-secis:
+	python3 stage1/rf00031_scores.py --outdir work/stage1/pipeline --out results/tables/stage1_rf00031_scores.tsv
+
 figures:
-	$(MAKE) -C figures
+	python3 figures/stage1_rf00031_scores.py --out results/figures/stage1_rf00031_scores
 
 check:
 	scripts/check_sizes.sh
