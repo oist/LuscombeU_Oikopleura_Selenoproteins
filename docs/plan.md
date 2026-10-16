@@ -48,3 +48,12 @@ Built from `results/tables/` only.
   it where copy numbers are discussed.
 - Open: which genes form the machinery set (minimum: tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec, SBP2; possible: SECp43,
   SCLY).
+- SECIS model, when rebuilt from the complete pool (restoring what the earlier analysis behind the slides had):
+  1. 90% identity filter on the seeds (and one seed per genomic locus);
+  2. leave-one-species-out evaluation;
+  3. non-selenoprotein 3' regions and shuffled genomes as backgrounds;
+  4. whole-genome and non-target (Ciona, Styela, Thalia) scans, to set the thresholds;
+  5. covariation of the base pairs.
+- Machinery (in progress): appendicularian Selenoprofiles profiles (<family>_app) built from the standard profiles
+  plus appendicularian proteins (stage 1 predictions, curated transcripts), OdB3 held out; tested by Selenoprofiles
+  on the nine genomes against stage 1; then deposited (Zenodo) and passed to the pipeline as extra profiles.

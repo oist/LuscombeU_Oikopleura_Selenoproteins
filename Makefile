@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test check clean
 all: stage1 curation secis
 
 fetch:
@@ -46,6 +46,18 @@ secis-stage2:
 	    --table results/tables/stage2_secis_scores.tsv --figure figures/stage2_secis_scores
 
 secis: secis-stage1 secis-model secis-stage2
+
+# Machinery: appendicularian Selenoprofiles profiles, and their test on the genomes (Selenoprofiles in the image)
+#   sbatch --cpus-per-task=4 scripts/run_in_container.sh make machinery
+machinery-profiles:
+	python3 stage2/build_machinery_profiles.py --out work/stage2/machinery_profiles
+	@mkdir -p results/models/machinery_profiles && cp work/stage2/machinery_profiles/*_app.fa* work/stage2/machinery_profiles/members.tsv results/models/machinery_profiles/
+
+machinery-test:
+	python3 stage2/test_machinery_profiles.py --profiles-dir work/stage2/machinery_profiles --out work/stage2/machinery_test
+	cp work/stage2/machinery_test/comparison.tsv results/tables/stage2_machinery_profiles_test.tsv
+
+machinery: machinery-profiles machinery-test
 
 check:
 	scripts/check_sizes.sh
