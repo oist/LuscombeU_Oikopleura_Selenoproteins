@@ -52,38 +52,47 @@ derives from a survey of metazoan SECIS elements [@Lambert2002; REF: Rfam; REF: 
 [REF: SECISearch3]. tRNA-Sec genes are found with dedicated covariance models [@Santesmasses2017]. The Rfam SECIS
 seed contains no tunicate sequence, and how these methods perform on divergent genomes is not known in advance.
 
-Tunicate selenoproteins are known mostly from ascidians. A Sec-containing deiodinase with a 3′ UTR SECIS element was
-characterised in *Halocynthia roretzi* [@Shepherdley2004], and in ascidians the selenophosphate synthetase gene
-evolved through alternative isoforms and a retroposed copy [@Mariotti2015]. A survey of the thyroid hormone toolkit
+Tunicate selenoproteins are known mostly from ascidians. The selenoproteome of *Ciona intestinalis* comprises 19
+genes [@Jiang2010], and SelenoDB 2.0 provides automatic annotations of selenoprotein genes and of their cysteine
+homologs for 58 animal genomes, including *Ciona* [@Romagne2014]. A Sec-containing deiodinase with a 3′ UTR SECIS
+element was characterised in *Halocynthia roretzi* [@Shepherdley2004], and in ascidians the selenophosphate
+synthetase gene evolved through alternative isoforms and a retroposed copy [@Mariotti2015]. A survey of the thyroid hormone toolkit
 across chordates reported one deiodinase per non-vertebrate chordate and noted that tunicate deiodinase sequences in
 public databases often lack parts of the protein, calling for better annotation [@Esposito2021].
 
-*O. dioica* adds difficulties to selenoprotein annotation. Its genes are compact, many of them are organised in
-operons, and a large fraction of its transcripts receive a 5′ trans-spliced leader [@Denoeud2010; @Wang2015;
-REF: operons in *O. dioica*]. Gene models from the three assemblies differ, and assemblies can contain gaps,
-duplicated haplotypes and local errors. A selenoprotein gene can therefore be missed for three reasons that a survey
+*O. dioica* adds difficulties to selenoprotein annotation. Its genome is compact, and many of its genes are
+transcribed as operons whose polycistronic transcripts are resolved by trans-splicing of a spliced leader to the
+downstream cistrons; the same leader is also added to the 5′ end of many monocistronic transcripts [@Ganot2004;
+@Wang2015]. Part of its introns use non-canonical GA–AG splice sites [@Denoeud2010], which gene prediction programs
+built for canonical GT–AG introns model poorly, so that de novo gene models are often wrong at these introns. Gene
+models from the three assemblies differ, and assemblies can contain gaps, duplicated haplotypes and local errors. A selenoprotein gene can therefore be missed for three reasons that a survey
 must distinguish: the prediction method fails, the annotation pipeline fails, or the assembly is wrong at that
 locus.
 
 <!-- Part 3: rationale for stage 1 -->
 
-Here we establish the selenoproteome of *O. dioica* and of six other appendicularian species, and we document what
-is needed to annotate it reliably. We proceed in two stages. In stage 1, we apply current tools with their default
-parameters, through a single pipeline that combines Selenoprofiles, protein alignments with miniprot
-[REF: miniprot], the Rfam SECIS model and tRNA-Sec searches, and that compares the predicted Sec codons with the
-public annotations and with transcript evidence. Stage 1 answers two questions: how many selenoprotein genes do
+Here we establish the selenoproteome of *O. dioica*, and we use the genomes of six other appendicularian species,
+together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. We also
+document what is needed to annotate these genes reliably. We proceed in two stages. In stage 1, we apply current
+tools with their default parameters. For this, we wrote a pipeline that combines Selenoprofiles, protein alignments
+with miniprot [REF: miniprot], the Rfam SECIS model and tRNA-Sec searches, and that compares the predicted Sec codons
+with the public annotations and with transcript evidence. Stage 1 answers two questions: how many selenoprotein genes do
 default tools find, and which ones do they miss? To answer them, we built a curated baseline from the three
 *O. dioica* assemblies. Because they come from closely related cryptic species, a gene present in two assemblies and
 absent from the third is first checked for an assembly or annotation problem, and transcripts from each population
 test the Sec codons directly. The genes and SECIS elements that stage 1 misses define the changes tested
 in stage 2: a SECIS covariance model built from appendicularian elements, lineage-specific reference proteins and
-profile searches for divergent genes. Stage 2 then provides the selenoproteome of nine appendicularian genomes:
-the three *O. dioica* assemblies and those of six other species [@Naville2019].
+profile searches for divergent genes. Stage 2 then gives the selenoproteome of *O. dioica* and, from the genomes of
+six other species [@Naville2019], whose assemblies are often too fragmented for a complete census, a baseline for
+appendicularians. The *Ciona* selenoproteome [@Jiang2010; @Romagne2014] serves as the tunicate reference to which
+this baseline is compared.
 
 <!--
 Notes for the next pieces
 - Data: the NCBI assembly OKI2018_I68 (GCF_907165135.1) is the OKI2018_I69 assembly of Bliznina et al. 2021 (I69 is
   the sequenced individual; I68 is a typo in the NCBI record); we use the NCBI name.
 - References to add: review of Sec insertion; Sec biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
-  minimap2; Nextflow; nf-core; primary reference for operons in O. dioica. Selenoprofiles 4 is described in Tico2026.
+  minimap2; Nextflow; nf-core. Selenoprofiles 4 is described in Tico2026.
+- SelenoDB 2.0 and the Selenoprofiles expectation table were used for the chordate comparison (Ciona gene lists;
+  vertebrates); say so in the Methods.
 -->
