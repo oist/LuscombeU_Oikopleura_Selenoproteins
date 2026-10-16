@@ -116,7 +116,8 @@ fall in a correctly annotated coding sequence in the RefSeq annotation of OKI201
 annotation and none of 21 in the OdB3 annotation; in the other cases, the annotated coding sequence ends at the codon,
 skips it, lies on one side of it or is absent.
 
-<!-- Positive controls: stage 1 on human, mouse, zebrafish and Ciona intestinalis (to add after the run on Deigo). -->
+<!-- Other tunicates (Ciona intestinalis and savignyi, Halocynthia roretzi, Styela clava, Thalia democratica) and
+positive controls (human, mouse, zebrafish): stage 1 with default settings, to add after the runs on Deigo. -->
 
 ## Appendicularian profiles recover the selenocysteine machinery
 
@@ -223,10 +224,11 @@ those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_0
 (GCA_004367855.1), *Bathochordaeus stygius* (GCA_004367955.1), *Mesochordaeus erythrocephalus* (GCA_004367975.1) and
 *Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation. As non-target genomes
 for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
-(GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). As positive
-controls for the default settings, we used the human (GRCh38.p14, GCF_000001405.40), mouse (GRCm39,
-GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes and that of *C. intestinalis*, with their RefSeq
-annotations.
+(GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). These tunicates,
+with *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the default settings, to compare the
+appendicularians with other tunicates. As positive controls for the default settings, we used the human
+(GRCh38.p14, GCF_000001405.40), mouse (GRCm39, GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes, with
+their RefSeq annotations.
 
 Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
 by Bliznina et al. [-@Bliznina2021] (109,877 sequences; to be added to its Zenodo record [REF: Zenodo record 4604144]); for OSKA2016,
