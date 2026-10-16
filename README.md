@@ -73,7 +73,7 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | *O. dioica* OdB3 genome and annotation | GCA_000209535.1 |
 | Other appendicularians (Naville et al. 2019) | GCA_004367895.1, GCA_004367875.1, GCA_004367855.1, GCA_004367955.1, GCA_004367975.1, GCA_004368075.1 |
 | Other tunicates (SECIS non-target controls) | GCF_018327825.1, GCA_054131345.1, GCF_964204865.1, GCF_965202585.1 |
-| OSKA2016 transcripts (Wang et al. 2015) | GEO GSE64421 supplementary file |
+| OSKA2016 transcripts (Wang et al. 2015) | GEO GSE64421 supplementary file `GSE64421_transcripts.trinity.fasta.gz` |
 | OKI2018 transcriptome (Bliznina et al. 2021) | not yet public; to be deposited on Zenodo |
 | OdB3 cDNA (Denoeud et al. 2010) | Genoscope `cDNA.fa.bz2` (OikoBase, which also distributed them, is offline) |
 | OdB3 operon annotation (Denoeud et al. 2010) | Genoscope `operons_GGB.gff.bz2` (`config/extra_files.tsv`) |
