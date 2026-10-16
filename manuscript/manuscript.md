@@ -239,7 +239,8 @@ also distributed by the now offline OikoBase. All files were retrieved by a scri
 ## Selenoprotein gene pipeline
 
 We wrote a Nextflow [REF: Nextflow] pipeline, based on the nf-core template [REF: nf-core], that runs the following
-steps on each genome; all tools run from container images, and stage 1 used release 0.1.2 with default parameters.
+steps on each genome; all tools run from container images. Stage 1 analysed all genomes (appendicularians,
+other tunicates and vertebrate controls) in one run of release 0.2.0 with default parameters.
 
 *Selenoprotein genes.* Selenoprofiles 4.5.8 [@Mariotti2010; @Tico2026] searched the profiles of eukaryotic
 selenoprotein families and of the selenocysteine machinery (profile sets `eukarya` and `machinery`), with the Selenoprofiles data

@@ -77,7 +77,6 @@ done < <(rows config/archives.tsv)
 # genomes (and annotations)
 while IFS=$'\t' read -r id species assembly source acc annot md5 role notes; do
     blank id species assembly source acc annot md5 role notes
-    if [[ $role == control && ${FETCH_CONTROLS:-0} != 1 ]]; then continue; fi   # large vertebrate genomes, on request
     out=data/genomes/$id
     mkdir -p "$out"
     [[ $source == archive ]] && continue      # fetched from config/archives.tsv above

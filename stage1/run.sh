@@ -4,7 +4,8 @@
 #SBATCH --mem=8G
 #SBATCH --time=3-00:00:00
 #SBATCH --output=%x-%j.log
-# Stage 1: run the selenoprotein pipeline on the nine appendicularian genomes with its default parameters.
+# Stage 1: run the selenoprotein pipeline with its default parameters on all the genomes of stage1/samplesheet.csv:
+# nine appendicularian assemblies, five other tunicates and three vertebrates (positive controls), in one run.
 # This job only drives Nextflow; the tasks run where the Nextflow profile sends them.
 # usage, from the repository root:
 #   NXF_WORK=<work directory> PROFILE=<profile> stage1/run.sh [extra Nextflow options]
@@ -15,10 +16,6 @@
 #             keep the same value when resuming.
 #   PROFILE   required: container engine or institutional Nextflow profile.
 #   PIPELINE_REVISION  default: the release analysed (below).
-#   STAGE1_SET  "appendicularians" (default: stage1/samplesheet.csv, outputs in work/stage1/pipeline), "tunicates"
-#             (stage1/samplesheet_tunicates.csv: Ciona intestinalis and savignyi, Halocynthia, Styela, Thalia; outputs
-#             in work/stage1/tunicates) or "controls" (stage1/samplesheet_controls.csv: human, mouse and zebrafish;
-#             outputs in work/stage1/controls; fetch them first with FETCH_CONTROLS=1 scripts/fetch.sh).
 #   RESUME    default true: the run resumes from the cached results of the previous run (Nextflow -resume), which
 #             changes nothing on a first run. Set RESUME=false to recompute every task.
 # To run every task in the image built from environment.yml, add: -c conf/pipeline_single_container.config
@@ -30,18 +27,11 @@ if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname 
 [[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
 cd "$R"
 : "${PROFILE:?set PROFILE to a Nextflow profile (for example singularity, or an institutional profile)}"
-PIPELINE_REVISION=${PIPELINE_REVISION:-0.1.2}
+PIPELINE_REVISION=${PIPELINE_REVISION:-0.2.0}
 export NXF_WORK=${NXF_WORK:-$R/work/stage1/nextflow}
 echo "Nextflow work directory (NXF_WORK): $NXF_WORK"
 echo "Pipeline outputs: $R/work/stage1/pipeline"
-set_args=()
-case ${STAGE1_SET:-appendicularians} in
-    appendicularians) ;;
-    tunicates) set_args=(--input stage1/samplesheet_tunicates.csv --outdir work/stage1/tunicates) ;;
-    controls) set_args=(--input stage1/samplesheet_controls.csv --outdir work/stage1/controls) ;;
-    *) echo "STAGE1_SET must be appendicularians, tunicates or controls" >&2; exit 1 ;;
-esac
 resume=()
 if [[ ${RESUME:-true} == true && " $* " != *" -resume "* ]]; then resume=(-resume); fi
 nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r "$PIPELINE_REVISION" -profile "$PROFILE" \
-    -params-file stage1/params.yaml ${set_args[@]+"${set_args[@]}"} ${resume[@]+"${resume[@]}"} "$@"
+    -params-file stage1/params.yaml ${resume[@]+"${resume[@]}"} "$@"

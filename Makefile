@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 stage1-tunicates stage1-controls curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test machinery-fragments machinery-census check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test machinery-fragments machinery-census check clean
 all: stage1 curation secis
 
 fetch:
@@ -17,12 +17,6 @@ stage1:
 	@test -d work/stage1/pipeline/compare || { echo "No pipeline output in work/stage1/pipeline: run stage1/run.sh first"; exit 1; }
 	python3 stage1/collect.py --outdir work/stage1/pipeline --out-dir results/tables
 
-# Stage 1 on other tunicates and on vertebrate controls: run STAGE1_SET=tunicates (or controls) stage1/run.sh first
-stage1-tunicates:
-	python3 stage1/collect.py --outdir work/stage1/tunicates --out-dir results/tables --prefix stage1_tunicates
-
-stage1-controls:
-	python3 stage1/collect.py --outdir work/stage1/controls --out-dir results/tables --prefix stage1_controls
 
 # Baseline: reviewed decisions in curation/*.tsv, checked against stage 1 outputs
 curation:
