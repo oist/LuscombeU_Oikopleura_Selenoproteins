@@ -15,7 +15,8 @@ glutathione peroxidases and thioredoxin reductases maintain redox homeostasis, a
 and inactivate thyroid hormones [REF: review of selenoprotein functions]. Selenoprotein sets differ between animal
 lineages, which have lost selenoprotein genes or replaced their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. selenocysteine is
 inserted by a dedicated machinery. In eukaryotes, a stem–loop structure in the 3′ untranslated region of
-selenoprotein mRNAs, the SECIS element, is bound by SECIS-binding protein 2, which recruits the selenocysteine-specific
+selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS) element, is bound by SECIS-binding
+protein 2, which recruits the selenocysteine-specific
 elongation factor eEFSec and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic selenocysteine insertion].
 Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by PSTK, then converted to selenocysteinyl-tRNA-Sec
 by SecS, using selenophosphate made by SEPHS2 [REF: selenocysteine biosynthesis on tRNA]. A genome that encodes selenoproteins
