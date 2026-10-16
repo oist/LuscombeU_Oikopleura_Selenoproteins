@@ -20,10 +20,13 @@ the nine appendicularian genomes, with the parameters a new user would get:
 Run from the repository root:
 
 ```bash
+export NXF_WORK=/path/to/scratch/selenoproteins-stage1    # Nextflow work directory: see below
 PROFILE=singularity stage1/run.sh            # or an institutional profile; add -resume to continue a run
 make stage1                                  # collect the tables
 make curation                                # compare with the baseline
 ```
 
-The pipeline outputs go to `work/stage1/pipeline` and its work directory to `work/stage1/nextflow` (override with
-`NXF_WORK`); neither is tracked by git.
+**Work directory.** Nextflow keeps the intermediate files of every task in `NXF_WORK`, by default
+`work/stage1/nextflow` inside the repository. On a cluster, set it to the file system meant for such files and keep
+the same value for `-resume`; `run.sh` prints the directory it uses. The pipeline outputs, which `make stage1` reads,
+go to `work/stage1/pipeline`. Neither directory is tracked by git.

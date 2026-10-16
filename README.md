@@ -31,11 +31,27 @@ Also: `git config core.hooksPath .githooks` refuses commits of files larger than
 
 ## Run
 
+### Where Nextflow writes its intermediate files: `NXF_WORK`
+
+The pipeline runs (`stage1/run.sh`, and later stage 2) write every intermediate file of every task to a Nextflow
+work directory: copies of the genomes, alignments, search results. By default it is `work/<stage>/nextflow` inside
+the repository. **On a cluster, set `NXF_WORK` to the file system meant for such files** (often a scratch or
+high-performance file system, as required by the site), and keep it for the whole run, including `-resume`:
+
+```bash
+export NXF_WORK=/path/to/scratch/selenoproteins-work      # before stage1/run.sh, or in front of the command
+```
+
+Only the work directory goes there; the pipeline outputs used by the analysis stay in `work/<stage>/pipeline`.
+Delete the work directory once the run is complete and its outputs collected.
+
+### Steps
+
 From the repository root (prefix each `make` with `scripts/run_in_container.sh` when using the image):
 
 ```bash
 make fetch          # needs network; some sources are still placeholders (see Data)
-PROFILE=<profile> stage1/run.sh   # the pipeline (Nextflow)
+NXF_WORK=<work directory> PROFILE=<profile> stage1/run.sh   # the pipeline (Nextflow)
 make stage1
 make curation
 make stage2
@@ -50,8 +66,8 @@ options (partition, account) on the command line, which also overrides the heade
 
 ```bash
 sbatch [--partition=<data transfer partition>] scripts/fetch.sh
-PROFILE=<profile> sbatch [options] stage1/run.sh                # Nextflow driver for the stage 1 pipeline run
-sbatch [options] scripts/run_in_container.sh make stage1       # collects its outputs
+NXF_WORK=<work directory> PROFILE=<profile> sbatch [options] stage1/run.sh   # Nextflow driver (stage 1)
+sbatch [options] scripts/run_in_container.sh make stage1                       # collects its outputs
 ```
 
 ### The pipeline in the same image
