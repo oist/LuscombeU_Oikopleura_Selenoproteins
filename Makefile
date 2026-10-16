@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test check clean
+.PHONY: all fetch stage1 stage1-controls curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test machinery-fragments machinery-census check clean
 all: stage1 curation secis
 
 fetch:
@@ -16,6 +16,10 @@ fetch:
 stage1:
 	@test -d work/stage1/pipeline/compare || { echo "No pipeline output in work/stage1/pipeline: run stage1/run.sh first"; exit 1; }
 	python3 stage1/collect.py --outdir work/stage1/pipeline --out-dir results/tables
+
+# Stage 1 on the control genomes (human, mouse, zebrafish, Ciona): run STAGE1_SET=controls stage1/run.sh first
+stage1-controls:
+	python3 stage1/collect.py --outdir work/stage1/controls --out-dir results/tables --prefix stage1_controls
 
 # Baseline: reviewed decisions in curation/*.tsv, checked against stage 1 outputs
 curation:
@@ -58,7 +62,14 @@ machinery-test:
 	python3 stage2/test_machinery_profiles.py --profiles-dir work/stage2/machinery_profiles --out work/stage2/machinery_test
 	cp work/stage2/machinery_test/comparison.tsv results/tables/stage2_machinery_profiles_test.tsv
 
-machinery: machinery-profiles machinery-test
+machinery-fragments:
+	python3 stage2/machinery_fragments.py --profiles-dir work/stage2/machinery_profiles --test-dir work/stage2/machinery_test --out work/stage2/machinery_fragments
+	cp work/stage2/machinery_fragments/fragments.tsv results/tables/stage2_machinery_fragments.tsv
+
+machinery-census:
+	python3 stage2/machinery_census.py --test-dir work/stage2/machinery_test --fragments work/stage2/machinery_fragments/fragments.tsv
+
+machinery: machinery-profiles machinery-test machinery-fragments machinery-census
 
 check:
 	scripts/check_sizes.sh

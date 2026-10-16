@@ -65,5 +65,8 @@ sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh m
 | `machinery-profiles` | `work/stage2/machinery_profiles/`; copied to `results/models/machinery_profiles/` and `results/models/appendicularia_machinery_profiles.tar.gz` | 2 min |
 | `machinery-test` | `work/stage2/machinery_test/` (resumable per genome); `results/tables/stage2_machinery_profiles_test.tsv` | about 75 min for the nine genomes |
 
+| `machinery-fragments` | PSTK predictions discarded by Selenoprofiles in the genomes without a PSTK prediction, classified by blastp against the PSTK found elsewhere and KTI12 (`curation/machinery_outgroups.faa`); `results/tables/stage2_machinery_fragments.tsv` | about 5 min per genome |
+| `machinery-census` | census per gene and genome, `results/tables/stage2_machinery_census.tsv` and `.md` (the table of the manuscript) | seconds |
+
 The committed test table was produced with the same profile alignments under the names `<family>_app`, before the
 profiles took the standard names; a rerun of `make machinery-test` regenerates it with the current files.

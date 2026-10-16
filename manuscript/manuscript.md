@@ -79,7 +79,65 @@ hope that these data will help build defaults that apply to more lineages.
 
 # Results
 
-<!-- Stage 1 gene recovery (baseline_vs_stage1) to be written before this subsection. Figures to be numbered. -->
+<!-- Figures to be numbered. -->
+
+## A pipeline for selenoprotein genes, their machinery and SECIS elements
+
+We wrote a Nextflow pipeline that brings together, for each genome, the evidence needed to annotate selenoprotein
+genes (Figure PIPELINE, tube map). It predicts selenoprotein genes and the genes of the selenocysteine machinery with
+Selenoprofiles; aligns independently the selenocysteine-containing sequences of the same profiles with miniprot and
+calls the selenocysteine codons that they align to; searches SECIS elements downstream of each prediction; and
+searches tRNA-Sec genes with two methods. When a gene annotation is given, it classifies each predicted
+selenocysteine codon according to the annotated coding sequence that overlaps it, and when transcripts are given, it
+counts those that support the codon. A MultiQC report summarises the results of all genomes. By default, the pipeline
+uses the settings of the underlying tools: the eukaryotic and machinery profile sets of Selenoprofiles for eukaryotes,
+the Rfam SECIS model at its gathering threshold, and the Rfam tRNA-Sec model together with Secmarker.
+
+The pipeline's test runs every process on three small genomes. On human chromosome 22, it predicted selenoprotein O
+(SELENOO) with its selenocysteine codon, found by both Selenoprofiles and miniprot, supported by a transcript and
+correctly annotated in a test annotation; in the yeast genome, which has no selenoprotein, it predicted none.
+Chromosome 22 carries no tRNA-Sec gene. The SECIS element of human SELENOO scored only 16 bits with the Rfam model,
+below its gathering threshold of 35 bits; the test therefore lowers the threshold to 15 bits so that the SECIS search
+is exercised.
+
+## Default settings miss part of the selenoproteome of *O. dioica*
+
+We ran the pipeline with its default settings on the three *O. dioica* assemblies and the genomes of six other
+appendicularians, and compared its predictions with a baseline of 18 selenoprotein genes curated in each
+*O. dioica* assembly (Methods). The pipeline found 13 of the 18 selenocysteine codons in OKI2018, 14 in OSKA2016 and 13
+in OdB3, nearly all through Selenoprofiles; miniprot found 6, 6 and 3. Transcripts supported almost all the codons
+found (13 of 13, 14 of 14 and 12 of 13). Two genes were missed in all three assemblies: selenoprotein K (SELENOK), and
+SEPHS2, which Selenoprofiles predicted but without calling its selenocysteine codon. Other genes were missed in one or
+two assemblies, for reasons that include assembly gaps. No SECIS element reached the gathering threshold in any of the
+nine genomes (see below), whereas tRNA-Sec was found, by both methods, in every genome.
+
+The public annotations represent these genes poorly. Of the selenocysteine codons predicted by Selenoprofiles, 5 of 12
+fall in a correctly annotated coding sequence in the RefSeq annotation of OKI2018, none of 14 in the OSKA2016
+annotation and none of 21 in the OdB3 annotation; in the other cases, the annotated coding sequence ends at the codon,
+skips it, lies on one side of it or is absent.
+
+<!-- Positive controls: stage 1 on human, mouse, zebrafish and Ciona intestinalis (to add after the run on Deigo). -->
+
+## Appendicularian profiles recover the selenocysteine machinery
+
+With the standard profiles, Selenoprofiles did not find PSTK in any of the three *O. dioica* assemblies, although its
+transcripts are expressed, and did not call the selenocysteine codon of SEPHS2. We therefore extended each profile of
+the machinery set with appendicularian proteins: the predictions of the standard profiles in the appendicularian
+genomes, and the PSTK and SEPHS2 proteins reconstructed from *O. dioica* transcripts (Methods). The OdB3 assembly
+contributed no sequence and served as a test. With these profiles, the machinery was found in every *O. dioica*
+assembly, including PSTK, whose predicted gene models in OKI2018 and OdB3 match the curated ones, and SEPHS2 with its
+selenocysteine codon (Table MACHINERY). In the fragmented assemblies of *O. longicauda*, *B. stygius* and
+*M. erythrocephalus*, PSTK was predicted only as fragments, which Selenoprofiles discards but which match the PSTK of
+other appendicularians more closely than its relative KTI12. In *F. borealis*, we found no convincing PSTK. SECp43
+(TRNAU1AP) was found only in *F. borealis*.
+
+<!-- MACHINERY_TABLE -->
+
+Table MACHINERY. Selenocysteine machinery found with the appendicularian profiles. "Selenocysteine": SEPHS2 predicted
+with its selenocysteine codon; "found": predicted; "partial": predicted only with an in-frame stop codon or frameshift,
+or without alignment at the selenocysteine position; "fragment": discarded by Selenoprofiles but supported by
+similarity (Methods); for tRNA-Sec, loci found by both methods. Several copies in an assembly may reflect duplicated
+haplotypes or contamination [@Pichon2019].
 
 ## The Rfam SECIS model does not separate appendicularian SECIS elements from genomic background
 
@@ -153,7 +211,10 @@ those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_0
 (GCA_004367855.1), *Bathochordaeus stygius* (GCA_004367955.1), *Mesochordaeus erythrocephalus* (GCA_004367975.1) and
 *Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation. As non-target genomes
 for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
-(GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1).
+(GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). As positive
+controls for the default settings, we used the human (GRCh38.p14, GCF_000001405.40), mouse (GRCm39,
+GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes and that of *C. intestinalis*, with their RefSeq
+annotations.
 
 Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
 by Bliznina et al. [-@Bliznina2021] (109,877 sequences; to be added to its Zenodo record [REF: Zenodo record 4604144]); for OSKA2016,
@@ -194,7 +255,10 @@ out of frame, spliced (CDS boundary inside the codon) or absent. The same predic
 exon of its primary alignment; for each codon we recorded the number of supporting transcripts and the extension of
 the longest one 3′ of the codon.
 
-Results of all genomes were summarised with MultiQC [REF: MultiQC].
+Results of all genomes were summarised with MultiQC [REF: MultiQC]. The pipeline's test profile runs every process
+on human chromosome 22 (with an annotation of SELENOO and a transcript covering its selenocysteine codon), the yeast
+genome and a fragment of the *Escherichia coli* genome, with the SECIS threshold lowered to 15 bits; modules and
+pipeline are also tested with nf-test [REF: nf-test].
 
 ## Baseline curation
 
@@ -203,6 +267,26 @@ Results of all genomes were summarised with MultiQC [REF: MultiQC].
 The baseline lists, for each of the three *O. dioica* assemblies, the selenocysteine codons of the selenoprotein genes, placed
 by aligning curated reference proteins and checking the residues around the selenocysteine, and supported by transcripts and
 by comparison between assemblies. Assembly errors at a gene were recorded, not corrected.
+
+## Appendicularian profiles of the selenocysteine machinery
+
+Each Selenoprofiles profile of the machinery set (SEPHS2, PSTK, SecS, eEFSec, SECIS-binding protein 2 and SECp43) was
+extended with appendicularian proteins: the predictions of the standard profiles in the appendicularian genomes other
+than OdB3, labelled "homologue" or "selenocysteine" and at least half as long as the median sequence of the profile,
+and the proteins reconstructed from *O. dioica* transcripts (PSTK from the OKI2018 and OSKA2016 transcriptomes, SEPHS2
+with its selenocysteine from the OSKA2016 transcriptome). The added proteins were aligned to the standard profile with
+MAFFT `--add --keeplength` [REF: MAFFT], which keeps the columns of the profile and therefore its configuration, and
+the extended alignments were built into profiles with `selenoprofiles build`, using all their sequences as BLAST
+queries. The profiles keep the standard names; given to the pipeline with `--selenoprofiles_overrides`, they replace
+the standard profiles of the same name.
+
+## Census of the selenocysteine machinery
+
+We ran Selenoprofiles with these profiles on the nine genomes. For each genome without a PSTK prediction, we
+reran Selenoprofiles with the PSTK profile, keeping the predictions that its last filter discards, and compared
+each of them (blastp [REF: BLAST]) with the PSTK proteins found in the other genomes and with KTI12, a related
+kinase. This test needs proteins of a related family to compare with, and was not applied to the other genes. A discarded prediction counted as a fragment of the gene when its best hit was a protein of
+the gene with an E-value of at most 10^-10^. tRNA-Sec loci were those of stage 1 found by both methods.
 
 ## SECIS scores against genomic background
 
