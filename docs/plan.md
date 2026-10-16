@@ -70,3 +70,14 @@ Built from `results/tables/` only.
 - Give the gene symbol (human HGNC symbol) at the first mention of each gene, and the full name at the first mention
   of a symbol (for example "SECIS-binding protein 2 (SECISBP2)", "selenoprotein T (SELENOT)"); expand every acronym at
   its first use (for example "selenocysteine insertion sequence (SECIS)").
+- Orthology of the machinery genes (to establish before the paper; outside the pipeline, in stage2/orthology/):
+  1. first pass for every predicted gene: reciprocal best hit against a reference proteome that contains the related
+     families (human RefSeq proteome, from the control genomes), recording the best and second-best hits;
+  2. for each machinery gene, a maximum-likelihood tree (IQ-TREE) of the appendicularian proteins with orthologs from
+     other tunicates and vertebrates and with the closest related family as outgroup (PSTK with KTI12; eEFSec with
+     eEF1A and other translation GTPases; SEPHS2 with the SPS1-type paralogs of Mariotti et al. 2015; SECISBP2 with
+     SECISBP2L; SECp43 with other RRM proteins such as TIA1); fast-evolving appendicularian sequences need models that
+     resist long-branch attraction (for example LG+C20 or site removal);
+  3. diagnostic features where they exist: selenocysteine or cysteine at the catalytic site of SEPHS2 (SPS2-type),
+     the domain IV extension of eEFSec, the domain architecture (Pfam);
+  synteny is of little use in O. dioica (scrambled genomes), except between its cryptic species.
