@@ -52,6 +52,21 @@ def background(genome, n, length, seed):
     return out
 
 
+def curated(table, genome):
+    """6,000 nt downstream of each curated Sec codon (strand-aware), from the genome."""
+    import csv
+    rows = [r for r in csv.DictReader(open(table), delimiter="\t") if r["genome"] == genome and r["status"] == "sec"]
+    if not rows: return []
+    want = {r["contig"] for r in rows}
+    seqs = {n.split()[0]: s for n, s in read_fasta(f"data/genomes/{genome}/genome.fna.gz") if n.split()[0] in want}
+    out = []
+    for r in rows:
+        q, p = seqs[r["contig"]], int(r["sec_codon"])
+        w = q[p - 1:p - 1 + 6000] if r["strand"] == "+" else q[max(0, p + 2 - 6000):p + 2].translate(COMP)[::-1]
+        out.append((f"curated:{r['gene']}", w))
+    return out
+
+
 def best_scores(cm, records, cpus):
     with tempfile.TemporaryDirectory() as d:
         fa, tbl = f"{d}/in.fa", f"{d}/out.tbl"
@@ -75,28 +90,37 @@ def main():
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--table", default="results/tables/stage1_secis_scores.tsv")
     ap.add_argument("--figure", default="figures/stage1_secis_scores")
+    ap.add_argument("--model-name", default="RF00031")
+    ap.add_argument("--baseline", default="", help="curation table: adds the 3' sequences of the curated Sec genes")
+    ap.add_argument("--seed", type=int, default=0, help="offset for the random windows")
     a = ap.parse_args()
-    ga = float(next(l.split()[1] for l in open(a.cm) if l.startswith("GA ")))
+    ga = next((float(l.split()[1]) for l in open(a.cm) if l.startswith("GA ")), 0.0)
     rows = []
     for g in GENOMES:
         tp = list(read_fasta(f"{a.pipeline}/selenoprofiles/{g}.three_prime.fa"))
-        bg = background(f"data/genomes/{g}/genome.fna.gz", a.background, 6000, seed=GENOMES.index(g))
+        bg = background(f"data/genomes/{g}/genome.fna.gz", a.background, 6000, seed=a.seed + GENOMES.index(g))
         recs = [(h, s, "selenocysteine" if label(h) == "selenocysteine" else "other prediction") for h, s in tp] + \
                [(h, s, "random window") for h, s in bg]
+        if a.baseline:
+            recs += [(h, s, "curated Sec gene") for h, s in curated(a.baseline, g)]
         for (h, s, grp), (sc, b, e) in zip(recs, best_scores(a.cm, [(h, s) for h, s, _ in recs], a.cpus)):
             rows.append((g, grp, h.split()[0], len(s), sc, b, e))
         print(g, len(tp), "3' sequences,", len(bg), "random windows", flush=True)
     with open(a.table, "w") as o:
         o.write("genome\tgroup\tsequence\tlength\tbest_bits\tstart\tend\n")
         for r in rows: o.write("\t".join("" if x is None else str(x) for x in r) + "\n")
-    plot(rows, ga, a.figure)
+    plot(rows, ga, a.figure, a.model_name)
 
 
-def plot(rows, ga, prefix):
+def plot(rows, ga, prefix, model_name="RF00031"):
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    groups = ["selenocysteine", "other prediction", "random window"]
-    colours = {"selenocysteine": "#c0392b", "other prediction": "#7f8c8d", "random window": "#2c3e50"}
+    groups = [g for g in ["curated Sec gene", "selenocysteine", "other prediction", "random window"]
+              if any(r[1] == g for r in rows)]
+    colours = {"curated Sec gene": "#e67e22", "selenocysteine": "#c0392b", "other prediction": "#7f8c8d",
+               "random window": "#2c3e50"}
+    ticks = {"curated Sec gene": "curated\nSec genes", "selenocysteine": "Sec\npredictions",
+             "other prediction": "other\npredictions", "random window": "random\nwindows"}
     fig, axes = plt.subplots(3, 3, figsize=(10, 9), sharey=True)
     rng = random.Random(0)
     data = defaultdict(list)
@@ -106,16 +130,17 @@ def plot(rows, ga, prefix):
             ys = data[(g, grp)]
             ax.scatter([k + rng.uniform(-0.25, 0.25) for _ in ys], ys, s=6, alpha=0.6, color=colours[grp], linewidths=0)
             above = sum(1 for y in ys if y >= 20)
-            ax.text(k, 47, f"{above}/{len(ys)}", ha="center", fontsize=7)
-        ax.axhline(ga, color="black", lw=0.8, ls="--"); ax.axhline(20, color="black", lw=0.5, ls=":")
+            if ys: ax.text(k, 47, f"{above}/{len(ys)}", ha="center", fontsize=7)
+        if ga: ax.axhline(ga, color="black", lw=0.8, ls="--")
+        ax.axhline(20, color="black", lw=0.5, ls=":")
         ax.axhspan(-5, -0.5, color="#ecf0f1", zorder=0)
-        ax.set_title(NAMES[g], fontsize=9, style="italic"); ax.set_xticks(range(3))
-        ax.set_xticklabels(["Sec\npredictions", "other\npredictions", "random\nwindows"], fontsize=7)
-        ax.set_ylim(-5, 50)
+        ax.set_title(NAMES[g], fontsize=9, style="italic"); ax.set_xticks(range(len(groups)))
+        ax.set_xticklabels([ticks[x] for x in groups], fontsize=7)
+        ax.set_ylim(-5, max(50, max((r[4] or 0) for r in rows) + 8))
     for ax in axes[:, 0]: ax.set_ylabel("best RF00031 score (bits)", fontsize=8)
-    fig.suptitle(f"RF00031 scores of the Selenoprofiles 3′ sequences and of random genomic windows\n"
-                 f"(dashed: gathering threshold, {ga:g} bits; dotted: 20 bits; grey band: no hit; "
-                 f"numbers: sequences ≥ 20 bits)", fontsize=9)
+    thr = f"gathering threshold, {ga:g} bits" if ga else "no gathering threshold"
+    fig.suptitle(f"{model_name} scores of the Selenoprofiles 3′ sequences and of random genomic windows\n"
+                 f"(dashed: {thr}; dotted: 20 bits; grey band: no hit; numbers: sequences ≥ 20 bits)", fontsize=9)
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     for ext in ("png", "pdf"): fig.savefig(f"{prefix}.{ext}", dpi=200)
 
