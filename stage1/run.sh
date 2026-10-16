@@ -26,7 +26,7 @@ if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname 
 [[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
 cd "$R"
 : "${PROFILE:?set PROFILE to a Nextflow profile (for example singularity, or an institutional profile)}"
-PIPELINE_REVISION=${PIPELINE_REVISION:-0.1.1}
+PIPELINE_REVISION=${PIPELINE_REVISION:-0.1.2}
 export NXF_WORK=${NXF_WORK:-$R/work/stage1/nextflow}
 echo "Nextflow work directory (NXF_WORK): $NXF_WORK"
 echo "Pipeline outputs: $R/work/stage1/pipeline"

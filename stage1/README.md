@@ -1,6 +1,6 @@
 # Stage 1 — the pipeline with its default parameters
 
-Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, release 0.1.1, set in `run.sh`) on
+Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, release 0.1.2, set in `run.sh`) on
 the nine appendicularian genomes, with the parameters a new user would get:
 
 - Selenoprofiles 4.5.8, profiles `eukarya,machinery`;
@@ -16,6 +16,13 @@ the nine appendicularian genomes, with the parameters a new user would get:
 | `params.yaml` | pipeline parameters: local copies of the Selenoprofiles profiles and of the two Rfam models |
 | `run.sh` | Nextflow driver (SBATCH headers); `PROFILE=<profile> stage1/run.sh` or `PROFILE=<profile> sbatch stage1/run.sh` |
 | `collect.py` | pipeline outputs → `results/tables/stage1_*.tsv` (run by `make stage1`) |
+
+Before the real run, run the pipeline's own test with the same release and profile; it exercises every process on
+small public genomes in a few minutes and catches problems with container images or the site configuration:
+
+```bash
+nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r 0.1.2 -profile test,<profile> --outdir <test directory>
+```
 
 Run from the repository root:
 
