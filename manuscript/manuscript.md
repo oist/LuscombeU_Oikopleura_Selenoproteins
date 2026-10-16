@@ -77,6 +77,54 @@ tool had been tested on these genomes, we proceeded in two stages. We first meas
 their default parameters, against a baseline curated from the three *O. dioica* assemblies; the genes and SECIS
 elements they missed defined the adaptations tested in the second stage.
 
+# Results
+
+<!-- Stage 1 gene recovery (baseline_vs_stage1) to be written before this subsection. Figures to be numbered. -->
+
+## The Rfam SECIS model does not separate appendicularian SECIS elements from genomic background
+
+In stage 1, no SECIS element reached the Rfam gathering threshold (35 bits) downstream of any selenoprotein gene
+predicted in the nine genomes. To see whether the threshold alone was too strict, we scored with the same model,
+without threshold, the 3′ sequences of all Selenoprofiles predictions and, as background, 200 random genomic windows
+of the same length per genome (Figure SECIS-1).
+
+Of the 143 3′ sequences that follow predictions with a Sec codon, 96 (67%) had no hit at all, even when every hit
+of at least 0 bits was reported. This was not caused by short sequences: in the two chromosome-scale *O. dioica*
+assemblies, where the 3′ sequences have their full length, 13 of 26 had no hit. The remaining 47 scored from 11 to
+31 bits; 18 reached 20 bits, and none reached the threshold. Random windows rarely had a hit (45 of 1,800), but those
+hits reached 22.6 bits. Lowering the threshold to 20 bits would therefore have recovered at most four SECIS elements
+per genome while accepting background hits, and most selenoprotein 3′ sequences would still have no hit. The Rfam
+model does not recognise most appendicularian SECIS elements, rather than recognising them below its threshold.
+
+## An appendicularian SECIS model built from the stage 1 predictions
+
+We built a new covariance model from the stage 1 outputs alone, by iterative bootstrap (Methods). Training used the
+110 3′ sequences that follow predictions with a Sec codon in seven oikopleurid genomes: OKI2018 and OdB3 for
+*O. dioica*, *O. longicauda*, *O. albicans*, *O. vanhoeffeni*, *B. stygius* and *M. erythrocephalus*. The OSKA2016
+assembly of *O. dioica* and the genome of *F. borealis*, a fritillariid, were kept out of training as controls. The
+initial seeds were the 26 training sequences whose best Rfam hit reached 15 bits. After five rounds, in which each
+new model was used to collect the training hits that score above every background window, the set of seeds no
+longer changed: 73 hits, in 73 of the 110 training sequences. The seeds lie close to the predicted stop codons (median
+152 nucleotides downstream; quartiles 74 and 388) and are 60 to 75 nucleotides long.
+
+We evaluated the final model on new random windows and on the curated *O. dioica* Sec genes (Figure SECIS-2). Of
+1,800 random windows, 8 had a hit of at least 20 bits and 1 of at least 25 bits (27.3 bits, in *F. borealis*); in
+the three *O. dioica* assemblies, no random window exceeded 20.8 bits. Hits downstream of Sec genes reached 62 bits.
+In the held-out OSKA2016 assembly, 12 of the 14 Sec predictions and 15 of the 18 curated Sec genes had a hit of at
+least 25 bits, against a best background window of 18.1 bits. In the training genomes, 12 of 12 Sec predictions of
+OKI2018 and 18 of 21 of OdB3 scored at least 20 bits, but these sequences were used for training and overstate the
+performance. In the held-out *F. borealis*, only 8 of 19 Sec predictions reached 20 bits, and 3 reached 25 bits.
+
+Across the three *O. dioica* assemblies, 42 of 53 curated Sec genes scored at least 25 bits. Below 25 bits were
+SEPHS2 and SELENOT in all three assemblies, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
+24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the Sec codon lies far upstream of the stop
+codon, so that the 6,000 nucleotides scored after the Sec codon may not reach the SECIS element. Outside the Sec
+predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits; they include predictions
+of Sec genes that Selenoprofiles did not label as such, and are examined below.
+
+<!-- Next: leave-one-genome-out models for the training genomes; genome-wide scans of non-target tunicates and
+shuffled sequences; threshold; the 19 other predictions; the curated genes below 25 bits; F. borealis. -->
+
 # Methods
 
 <!-- Stage 2 subsections are placeholders until stage 2 is run. -->
@@ -144,10 +192,36 @@ The baseline lists, for each of the three *O. dioica* assemblies, the Sec codons
 by aligning curated reference proteins and checking the residues around the Sec, and supported by transcripts and
 by comparison between assemblies. Assembly errors at a gene were recorded, not corrected.
 
+## SECIS scores against genomic background
+
+For each prediction, Selenoprofiles writes the sequence downstream of the predicted coding sequence, up to 6,000
+nucleotides or the end of the contig. We scored these 3′ sequences with Infernal 1.1.5 `cmsearch` on their top
+strand, with the default filters, reporting all hits of at least 0 bits, and kept the best score of each sequence.
+Predictions were grouped into those with a Sec codon (label "selenocysteine") and the others (cysteine homologs,
+predictions not aligned at the Sec position, homologs of the Sec machinery). As background, we drew from each genome
+200 windows of 6,000 nucleotides, at positions chosen uniformly over the contigs of at least that length and on a
+random strand, and scored them the same way. For the curated *O. dioica* Sec genes, we scored the 6,000 nucleotides
+that follow each Sec codon on its strand.
+
+## Appendicularian SECIS model
+
+Training sequences were the 3′ sequences that follow Selenoprofiles predictions labelled "selenocysteine" in seven
+oikopleurid genomes (OKI2018, OdB3, *O. longicauda*, *O. albicans*, *O. vanhoeffeni*, *B. stygius* and
+*M. erythrocephalus*); OSKA2016 and *F. borealis* were held out. The background for training was 200 random windows
+per training genome, drawn as above with a different random seed from the windows used for evaluation. Round 0
+selected, as seeds, the best RF00031 hit of each training sequence scoring at least 15 bits. Each round then aligned
+the seeds to the current model with `cmalign` (in the first round, RF00031, from which the consensus secondary
+structure is inherited), built a model with `cmbuild` (default options), calibrated it with `cmcalibrate -L 0.2`, and
+searched the training sequences and the background with `cmsearch` as above. The next seeds were the best hits of
+the training sequences scoring above the best background hit of that round. Rounds stopped when the set of seed
+sequences did not change, which happened at round 5; the best background hit was 29.3, 23.7, 21.6, 21.0 and 24.8 bits
+in rounds 1 to 5. The final model was built from the last seeds and calibrated with default `cmcalibrate` settings.
+The procedure is implemented in `stage2/build_secis_model.py` of the analysis repository.
+
 ## Stage 2
 
-<!-- To write after stage 2: SECIS covariance model (seeds, held-out tests, non-target genomes, thresholds,
-covariation); lineage reference proteins and profile HMMs; re-calling. -->
+<!-- To write after stage 2: leave-one-genome-out evaluation; non-target genomes; threshold; lineage reference
+proteins and profile HMMs; re-calling. -->
 
 ## Data and code availability
 
