@@ -73,7 +73,8 @@ Built from `results/tables/` only.
 - Orthology of the machinery genes (to establish before the paper; outside the pipeline, in stage2/orthology/):
   1. first pass for every predicted gene: reciprocal best hit against a reference proteome that contains the related
      families (human RefSeq proteome, from the control genomes), recording the best and second-best hits;
-  2. for each machinery gene, a maximum-likelihood tree (IQ-TREE) of the appendicularian proteins with orthologs from
+  2. for the ambiguous cases of step 1 (decided 2026-10-17: reciprocal best hits first, phylogeny only where they
+     are ambiguous), a maximum-likelihood tree (IQ-TREE) of the appendicularian proteins with orthologs from
      other tunicates and vertebrates and with the closest related family as outgroup (PSTK with KTI12; eEFSec with
      eEF1A and other translation GTPases; SEPHS2 with the SPS1-type paralogs of Mariotti et al. 2015; SECISBP2 with
      SECISBP2L; SECp43 with other RRM proteins such as TIA1); fast-evolving appendicularian sequences need models that
