@@ -12,7 +12,7 @@ genes or families, to cite and to compare with:
 | Work | Relevance |
 |---|---|
 | Mariotti et al. 2015 (`Mariotti2015`) | selenophosphate synthetase evolution across the tree of life. Reports *O. dioica* (OdB3) as having a single SPS gene, the ancestral Sec-containing SPS2 with a SECIS and the ancestral intron structure, without the Gly isoform found in ascidians: our SEPHS2 is therefore a known Sec gene. Also reports stem–loops (SRE) next to the UGA of UGA-containing SPS genes |
-| Esposito et al. 2021 (`Esposito2021`) | iodothyronine deiodinases (DIO) in non-vertebrate chordates |
+| Esposito et al. 2021 (`Esposito2021`) | thyroid hormone toolkit (TPO, DIO, THR) in chordates, from UniProt and ANISEED proteins. Reports a single DIO homolog per non-vertebrate chordate (none in one species), and the absence of the catalytic globular domain and its RPLYXXFGS motif from all tunicate DIOs, which they take as a possible sign of different catalytic sites while calling for better structural annotation. Species names are missing from the full-text extraction used here: whether *O. dioica* is among the species, and with how many DIOs, is to be checked in the article's tables and figures. If it is, our two Sec-containing *O. dioica* DIO genes, and the annotation errors we document, bear directly on both statements |
 | Darras 2021 (`Darras2021`) | review of deiodinase evolution: deiodinases in all chordates; in tunicates, cites the Sec-containing ascidian enzyme of *Halocynthia roretzi* and partial ascidian sequences suggesting at least two deiodinase homologs. No statement about *Oikopleura* |
 | Shepherdley et al. 2004 (`Shepherdley2004`) | first tunicate deiodinase characterised (*H. roretzi*): Sec-dependent outer-ring activity, SECIS in the 3′ UTR |
 | Jiang et al. 2012 (`Jiang2012`) | selenoproteomes of six invertebrates (sponge, placozoan, sea anemone, limpet, annelid, amphioxus); no tunicate |
@@ -24,4 +24,4 @@ genes or families, to cite and to compare with:
 | Ticó et al. 2026 (`Tico2026`) | annotation classes used here; for vertebrates, RefSeq (with a dedicated selenoprotein pipeline) is correct for most selenoprotein genes, Ensembl and GenBank for few: a contrast with the *O. dioica* RefSeq annotation |
 
 Not yet identified: Sreelatha et al. 2018 (SELENOO/SelO as an AMPylase; the title used in the query was wrong).
-Still to read for statements about *O. dioica*: Esposito et al. 2021 (deiodinases).
+Still to check: the species list of Esposito et al. 2021 (see above).
