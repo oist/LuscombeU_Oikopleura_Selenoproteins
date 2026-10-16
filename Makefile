@@ -11,9 +11,11 @@ all: stage1 curation stage2 figures
 fetch:
 	scripts/fetch.sh
 
-# Stage 1: published tools with their default or published parameters
+# Stage 1: the pipeline with its default parameters. Run stage1/run.sh first (Nextflow; see stage1/README.md);
+# this target collects its outputs into results/tables/.
 stage1:
-	$(MAKE) -C stage1 GENOMES="$(GENOMES_BASELINE) $(GENOMES_COMPARISON)"
+	@test -d work/stage1/pipeline/compare || { echo "No pipeline output in work/stage1/pipeline: run stage1/run.sh first"; exit 1; }
+	python3 stage1/collect.py --outdir work/stage1/pipeline --out-dir results/tables
 
 # Baseline: reviewed decisions in curation/*.tsv, checked against stage 1 outputs
 curation:

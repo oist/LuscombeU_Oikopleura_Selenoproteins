@@ -1,23 +1,29 @@
-# Stage 1 — published tools and parameters
+# Stage 1 — the pipeline with its default parameters
 
-Run with `make stage1` from the top directory (or `make -C stage1 GENOMES="OKI OSKA"`), or submit one Slurm job
-per genome with `sbatch stage1/run_genome.sh <id>` from the top directory, then run `make stage1` to collect. Per genome
-(`run_genome.sh`, outputs in `work/stage1/<id>/`, each step skipped when its output exists):
+Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, revision pinned in `run.sh`) on
+the nine appendicularian genomes, with the parameters a new user would get:
 
-| Step | Tool | Output |
-|---|---|---|
-| 1 | Selenoprofiles 4.5.8, profiles `eukarya,machinery` | `<id>.selenoprofiles.gtf` |
-| 2 | miniprot 0.11 (`-I`), queries = Sec-containing profile sequences (`bin/profile_queries.py`), Sec codons with `bin/sec_check.py` | `<id>.sec_check.tsv` |
-| 3 | Sec sites merged (`bin/secis_windows.py`), Rfam RF00031 with Infernal 1.1.5 on the 3 kb downstream of each Sec codon | `<id>.sec_sites.tsv`, `<id>.secis_rf00031.tbl` |
-| 4 | Secmarker 1.0.0 | `secmarker/trnasec.gff` |
-| 5 | Annotation check, classes of Ticó et al. 2026 (`bin/sec_annotation_check.py`), when an annotation exists | `<id>.sec_annotation.tsv` |
-| 6 | Transcript evidence for genomes listed in `config/transcripts.tsv`: spliced alignment (minimap2 through mappy, `bin/map_transcripts.py`), Sec codon inside an exon (`bin/transcript_support.py`) | `<tid>.alignments.tsv`, `<id>.transcript_support.tsv` |
+- Selenoprofiles 4.5.8, profiles `eukarya,machinery`;
+- miniprot alignment of the Sec-containing profile sequences, Sec codons by Sec-context matching;
+- Rfam RF00031 (SECIS) on the 3′ sequence of each Selenoprofiles prediction, at the Rfam gathering threshold;
+- Secmarker and cmsearch (Rfam RF01852) for tRNA-Sec;
+- for the three *O. dioica* assemblies, the annotation check (classes of Ticó et al. 2026) and the transcript
+  support of each Sec codon (OKI2018 transcriptome, OSKA2016 transcripts, OdB3 cDNA).
 
-`bin/collect.py` writes `results/tables/stage1_sec_sites.tsv`, `stage1_summary.tsv` and `stage1_annotation.tsv`.
+| File | Contents |
+|---|---|
+| `samplesheet.csv` | genomes, annotations and transcripts, as paths under `data/` (from `scripts/fetch.sh`) |
+| `params.yaml` | pipeline parameters: local copies of the Selenoprofiles profiles and of the two Rfam models |
+| `run.sh` | Nextflow driver (SBATCH headers); `PROFILE=<profile> stage1/run.sh` or `PROFILE=<profile> sbatch stage1/run.sh` |
+| `collect.py` | pipeline outputs → `results/tables/stage1_*.tsv` (run by `make stage1`) |
 
-`SELENOPROFILES_CACHE=<dir>` reuses `<id>.selenoprofiles.gtf` files from an earlier run of the same version and
-profiles instead of re-running Selenoprofiles.
+Run from the repository root:
 
-Scripts `profile_queries.py`, `sec_check.py` and `sec_annotation_check.py` come from the selenoprotein annotation
-pipeline (`selenoproteins`, branch `public-data`).
+```bash
+PROFILE=singularity stage1/run.sh            # or an institutional profile; add -resume to continue a run
+make stage1                                  # collect the tables
+make curation                                # compare with the baseline
+```
 
+The pipeline outputs go to `work/stage1/pipeline` and its work directory to `work/stage1/nextflow` (override with
+`NXF_WORK`); neither is tracked by git.

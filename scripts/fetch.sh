@@ -109,6 +109,7 @@ done
 # references (Rfam model and seed; Selenoprofiles profiles)
 fetch_url https://rfam.org/family/RF00031/cm data/references/RF00031.cm ""
 fetch_url https://rfam.org/family/RF00031/alignment data/references/RF00031.sto ""
+fetch_url https://rfam.org/family/RF01852/cm data/references/RF01852.cm ""
 # Selenoprofiles profiles at the commit used by the pipeline's test profile
 if [[ ! -d data/references/selenoprofiles_data ]]; then
     mkdir -p data/references/selenoprofiles_data
