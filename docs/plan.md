@@ -62,3 +62,8 @@ Built from `results/tables/` only.
 - Machinery (in progress): appendicularian Selenoprofiles profiles (<family>_app) built from the standard profiles
   plus appendicularian proteins (stage 1 predictions, curated transcripts), OdB3 held out; tested by Selenoprofiles
   on the nine genomes against stage 1; then deposited (Zenodo) and passed to the pipeline as extra profiles.
+
+## Manuscript style
+
+- Write "selenocysteine" when the amino acid is meant alone; keep "Sec" only inside names (tRNA-Sec, eEFSec, SecS)
+  and in the first definition, "selenocysteine (Sec)".

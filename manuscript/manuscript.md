@@ -9,18 +9,18 @@ bibliography: references.bib
 
 <!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
-Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Sec is a
+Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenocysteine is a
 more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms the catalytic site:
 glutathione peroxidases and thioredoxin reductases maintain redox homeostasis, and iodothyronine deiodinases activate
 and inactivate thyroid hormones [REF: review of selenoprotein functions]. Selenoprotein sets differ between animal
-lineages, which have lost selenoprotein genes or replaced their Sec by cysteine [@Mariotti2012; @Jiang2012]. Sec is
+lineages, which have lost selenoprotein genes or replaced their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. selenocysteine is
 inserted by a dedicated machinery. In eukaryotes, a stem–loop structure in the 3′ untranslated region of
-selenoprotein mRNAs, the SECIS element, is bound by SECIS-binding protein 2, which recruits the Sec-specific
-elongation factor eEFSec and the Sec-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic Sec insertion].
-Sec is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by PSTK, then converted to selenocysteinyl-tRNA-Sec
-by SecS, using selenophosphate made by SEPHS2 [REF: Sec biosynthesis on tRNA]. A genome that encodes selenoproteins
+selenoprotein mRNAs, the SECIS element, is bound by SECIS-binding protein 2, which recruits the selenocysteine-specific
+elongation factor eEFSec and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic selenocysteine insertion].
+Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by PSTK, then converted to selenocysteinyl-tRNA-Sec
+by SecS, using selenophosphate made by SEPHS2 [REF: selenocysteine biosynthesis on tRNA]. A genome that encodes selenoproteins
 is therefore expected to also encode tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec and SECIS-binding protein 2; the
-Sec machinery also includes associated factors such as SECp43 [REF: SECp43].
+selenocysteine machinery also includes associated factors such as SECp43 [REF: SECp43].
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
 in genome annotations [@Mariotti2015]. The errors propagate to every analysis that starts from annotated proteins or
@@ -53,13 +53,13 @@ from Okinawa and from the main islands of Japan do not interbreed [@Masunaga2022
 in structure that the populations have been proposed to be cryptic species [@Plessy2024]. How their annotations represent selenoprotein genes has not been examined.
 
 Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
-has 19 selenoprotein genes [@Jiang2010]; a Sec-containing deiodinase was characterised in *Halocynthia roretzi*
+has 19 selenoprotein genes [@Jiang2010]; a selenocysteine-containing deiodinase was characterised in *Halocynthia roretzi*
 [@Shepherdley2004]; and in ascidians the selenophosphate synthetase gene acquired an alternative isoform that does
-not carry Sec, later separated into its own gene by retroposition [@Mariotti2015]. A survey of the thyroid hormone
+not carry selenocysteine, later separated into its own gene by retroposition [@Mariotti2015]. A survey of the thyroid hormone
 toolkit across chordates found that tunicate deiodinase sequences in public databases often lack parts of the
 protein [@Esposito2021], an example of how annotation errors limit comparative studies. Appendicularians have not
 been surveyed; *O. dioica* appears in previous studies only for single families, such as its selenophosphate
-synthetase SEPHS2, a Sec gene with a SECIS element [@Mariotti2015].
+synthetase SEPHS2, a selenoprotein gene with a SECIS element [@Mariotti2015].
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
 operons whose transcripts are resolved by trans-splicing [@Ganot2004; REF: operons in ascidians], and part of its
@@ -69,7 +69,7 @@ annotation pipeline fails, or the assembly is wrong at that locus.
 
 Here we establish the selenoproteome of *O. dioica*, and we use the genomes of six other appendicularian species,
 together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. We built a
-pipeline that combines the detection of selenoprotein genes, of their Sec machinery and of SECIS elements with
+pipeline that combines the detection of selenoprotein genes, of their selenocysteine machinery and of SECIS elements with
 annotation and transcript evidence. With their default parameters, current tools did not recover this baseline in
 appendicularian genomes; we provide lineage-specific models and settings that do, and the data to evaluate them. We
 hope that these data will help build defaults that apply to more lineages.
@@ -83,13 +83,13 @@ hope that these data will help build defaults that apply to more lineages.
 In stage 1, no SECIS element reached the Rfam gathering threshold (35 bits) downstream of any selenoprotein gene
 predicted in the nine genomes. To see whether the threshold alone was too strict, we scored with the same model,
 without threshold, the 3′ sequences of all Selenoprofiles predictions and, as background, 200 random genomic windows
-of the same length per genome (Figure SECIS-1). Predictions fall into two groups: 143 with a Sec codon, and 578
-others. The others are mostly homologs with cysteine at the Sec position (375, of which 235 in the EhSEP2 family),
-predictions whose alignment does not cover the Sec position of their profile (122, labelled "unaligned"), homologs of
-Sec machinery proteins that are not selenoproteins (40, such as eEFSec and SECIS-binding protein 2), and predictions
-with another amino acid or a stop codon at the Sec position (41).
+of the same length per genome (Figure SECIS-1). Predictions fall into two groups: 143 with a selenocysteine codon (below, selenocysteine
+predictions), and 578 others. The others are mostly homologs with cysteine at the selenocysteine position (375, of which 235 in the EhSEP2 family),
+predictions whose alignment does not cover the selenocysteine position of their profile (122, labelled "unaligned"), homologs of
+selenocysteine machinery proteins that are not selenoproteins (40, such as eEFSec and SECIS-binding protein 2), and predictions
+with another amino acid or a stop codon at the selenocysteine position (41).
 
-Of the 143 3′ sequences that follow predictions with a Sec codon, 96 (67%) had no hit at all, even when every hit
+Of the 143 3′ sequences that follow predictions with a selenocysteine codon, 96 (67%) had no hit at all, even when every hit
 of at least 0 bits was reported. This was not caused by fragmented assemblies separating coding sequences from their UTRs: in the
 chromosome-scale assembly OKI2018, 5 of 12 had no hit. The remaining 47 scored from 12 to
 31 bits; 18 reached 20 bits, and none reached the threshold. Random windows rarely had a hit (45 of 1,800), but those
@@ -100,7 +100,7 @@ model does not recognise most appendicularian SECIS elements, rather than recogn
 ## An appendicularian SECIS model built from the stage 1 predictions
 
 We built a new covariance model from the stage 1 outputs alone, by iterative bootstrap (Methods). Training used the
-110 3′ sequences that follow predictions with a Sec codon in seven oikopleurid genomes: OKI2018 and OdB3 for
+110 3′ sequences that follow predictions with a selenocysteine codon in seven oikopleurid genomes: OKI2018 and OdB3 for
 *O. dioica*, *O. longicauda*, *O. albicans*, *O. vanhoeffeni*, *B. stygius* and *M. erythrocephalus*. The OSKA2016
 assembly of *O. dioica* and the genome of *F. borealis*, a fritillariid, were kept out of training as controls. The
 initial seeds were the 26 training sequences whose best Rfam hit reached 15 bits. After five rounds, in which each
@@ -108,21 +108,21 @@ new model was used to collect the training hits that score above every backgroun
 longer changed: 73 hits, in 73 of the 110 training sequences. The seeds lie close to the predicted stop codons (median
 152 nucleotides downstream; quartiles 74 and 388) and are 60 to 75 nucleotides long.
 
-We evaluated the final model on new random windows and on the curated *O. dioica* Sec genes (Figure SECIS-2). Of
+We evaluated the final model on new random windows and on the curated *O. dioica* selenoprotein genes (Figure SECIS-2). Of
 1,800 random windows, 8 had a hit of at least 20 bits and 1 of at least 25 bits (27.3 bits, in *F. borealis*); in
-the three *O. dioica* assemblies, no random window exceeded 20.8 bits. Hits downstream of Sec genes reached 62 bits.
-In the held-out OSKA2016 assembly, 12 of the 14 Sec predictions and 15 of the 18 curated Sec genes had a hit of at
-least 25 bits, against a best background window of 18.1 bits. In the training genomes, 12 of 12 Sec predictions of
+the three *O. dioica* assemblies, no random window exceeded 20.8 bits. Hits downstream of selenoprotein genes reached 62 bits.
+In the held-out OSKA2016 assembly, 12 of the 14 selenocysteine predictions and 15 of the 18 curated selenoprotein genes had a hit of at
+least 25 bits, against a best background window of 18.1 bits. In the training genomes, 12 of 12 selenocysteine predictions of
 OKI2018 and 18 of 21 of OdB3 scored at least 20 bits, but these sequences were used for training and overstate the
-performance. In the held-out *F. borealis*, only 8 of 19 Sec predictions reached 20 bits, and 3 reached 25 bits.
+performance. In the held-out *F. borealis*, only 8 of 19 selenocysteine predictions reached 20 bits, and 3 reached 25 bits.
 
-Across the three *O. dioica* assemblies, 42 of 53 curated Sec genes scored at least 25 bits. Below 25 bits were
+Across the three *O. dioica* assemblies, 42 of 53 curated selenoprotein genes scored at least 25 bits. Below 25 bits were
 SELENOT in all three assemblies, SEPHS2 in OKI2018 and OdB3, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
-24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the Sec codon lies far upstream of the stop
-codon, so that the 6,000 nucleotides scored after the Sec codon may not reach the SECIS element. Outside the Sec
+24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the selenocysteine codon lies far upstream of the stop
+codon, so that the 6,000 nucleotides scored after the selenocysteine codon may not reach the SECIS element. Outside the selenocysteine
 predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits. Seventeen of them belong to
-selenoprotein families and either do not cover the Sec position ("unaligned": GPX, DIO, SEPHS2, SELENOT and others) or
-carry another residue there (SELENOW with isoleucine, tyrosine or leucine), as expected if some are Sec genes that
+selenoprotein families and either do not cover the selenocysteine position ("unaligned": GPX, DIO, SEPHS2, SELENOT and others) or
+carry another residue there (SELENOW with isoleucine, tyrosine or leucine), as expected if some are selenoprotein genes that
 Selenoprofiles did not recognise as such, including SEPHS2 of OSKA2016 (labelled "pseudo"). Only two are cysteine
 homologs, both in *F. borealis* and at 25.5 bits, the level of its best random window; none of the cysteine homologs
 of the eight other genomes reached 25 bits.
@@ -160,12 +160,12 @@ We wrote a Nextflow [REF: Nextflow] pipeline, based on the nf-core template [REF
 steps on each genome; all tools run from container images, and stage 1 used release 0.1.2 with default parameters.
 
 *Selenoprotein genes.* Selenoprofiles 4.5.8 [@Mariotti2010; @Tico2026] searched the profiles of eukaryotic
-selenoprotein families and of the Sec machinery (profile sets `eukarya` and `machinery`), with the Selenoprofiles data
+selenoprotein families and of the selenocysteine machinery (profile sets `eukarya` and `machinery`), with the Selenoprofiles data
 set (profiles, Gene Ontology tables and UniRef50 tag database) downloaded from its server; the MD5 sums of the
-archives used are recorded. Independently, miniprot 0.11 [REF: miniprot] aligned to the genome the Sec-containing
-sequences of the same profiles. A TGA codon was called a Sec codon when miniprot aligned it to a query Sec, or
-when the query Sec was the first residue after the end of the alignment and the next genomic codon was TGA, since
-miniprot tends to stop before a C-terminal Sec. Sec codons found by both methods at the same position were merged.
+archives used are recorded. Independently, miniprot 0.11 [REF: miniprot] aligned to the genome the selenocysteine-containing
+sequences of the same profiles. A TGA codon was called a selenocysteine codon when miniprot aligned it to a query selenocysteine, or
+when the query selenocysteine was the first residue after the end of the alignment and the next genomic codon was TGA, since
+miniprot tends to stop before a C-terminal selenocysteine. selenocysteine codons found by both methods at the same position were merged.
 
 *SECIS elements.* Infernal 1.1.5 [REF: Infernal] `cmsearch` searched, with the Rfam SECIS model RF00031
 [REF: Rfam], the 6,000 nucleotides downstream of each Selenoprofiles prediction, at the Rfam gathering threshold.
@@ -175,15 +175,15 @@ A SECIS element counted as support for a prediction, not as a filter.
 threshold) searched each genome. Predictions overlapping on the same strand were merged into loci; a locus was
 considered supported when found by both tools and, where Secmarker reported it, carrying the discriminator base G73.
 
-*Annotation check.* For the genomes with an annotation, each Sec codon predicted by Selenoprofiles was classified
+*Annotation check.* For the genomes with an annotation, each selenocysteine codon predicted by Selenoprofiles was classified
 according to the annotated coding sequences overlapping it, following the classes of Ticó et al. [-@Tico2026]: well
-annotated (Sec codon inside the CDS, in frame, with or without Sec declared), stop codon (CDS ending at the Sec
+annotated (selenocysteine codon inside the CDS, in frame, with or without the selenocysteine declared), stop codon (CDS ending at the selenocysteine
 codon), skipped (CDS on both sides of the codon but not over it), upstream or downstream (CDS entirely on one side),
 out of frame, spliced (CDS boundary inside the codon) or absent. The same predictions were also assessed with
 `selenoprofiles assess`, identifying annotated transcripts by the `Parent` of their CDS features.
 
 *Transcript support.* Transcripts were aligned to their genome with minimap2 2.30 [REF: minimap2] (`-x splice
---secondary=no`). A transcript supported a Sec codon when the three nucleotides of the codon lay inside one aligned
+--secondary=no`). A transcript supported a selenocysteine codon when the three nucleotides of the codon lay inside one aligned
 exon of its primary alignment; for each codon we recorded the number of supporting transcripts and the extension of
 the longest one 3′ of the codon.
 
@@ -191,10 +191,10 @@ Results of all genomes were summarised with MultiQC [REF: MultiQC].
 
 ## Baseline curation
 
-<!-- To complete: reference proteins, Sec context, criteria; tables in curation/ of the analysis repository. -->
+<!-- To complete: reference proteins, selenocysteine context, criteria; tables in curation/ of the analysis repository. -->
 
-The baseline lists, for each of the three *O. dioica* assemblies, the Sec codons of the selenoprotein genes, placed
-by aligning curated reference proteins and checking the residues around the Sec, and supported by transcripts and
+The baseline lists, for each of the three *O. dioica* assemblies, the selenocysteine codons of the selenoprotein genes, placed
+by aligning curated reference proteins and checking the residues around the selenocysteine, and supported by transcripts and
 by comparison between assemblies. Assembly errors at a gene were recorded, not corrected.
 
 ## SECIS scores against genomic background
@@ -202,11 +202,11 @@ by comparison between assemblies. Assembly errors at a gene were recorded, not c
 For each prediction, Selenoprofiles writes the sequence downstream of the predicted coding sequence, up to 6,000
 nucleotides or the end of the contig. We scored these 3′ sequences with Infernal 1.1.5 `cmsearch` on their top
 strand, with the default filters, reporting all hits of at least 0 bits, and kept the best score of each sequence.
-Predictions were grouped into those with a Sec codon (label "selenocysteine") and the others (cysteine homologs,
-predictions not aligned at the Sec position, homologs of the Sec machinery). As background, we drew from each genome
+Predictions were grouped into those with a selenocysteine codon (label "selenocysteine") and the others (cysteine homologs,
+predictions not aligned at the selenocysteine position, homologs of the selenocysteine machinery). As background, we drew from each genome
 200 windows of 6,000 nucleotides, at positions chosen uniformly over the contigs of at least that length and on a
-random strand, and scored them the same way. For the curated *O. dioica* Sec genes, we scored the 6,000 nucleotides
-that follow each Sec codon on its strand.
+random strand, and scored them the same way. For the curated *O. dioica* selenoprotein genes, we scored the 6,000 nucleotides
+that follow each selenocysteine codon on its strand.
 
 ## Appendicularian SECIS model
 
@@ -236,7 +236,7 @@ stage 1). The analysis, from data download to figures, is at <https://github.com
 
 <!--
 Notes for the next pieces
-- References to add: review of Sec insertion; Sec biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
+- References to add: review of selenocysteine insertion; selenocysteine biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
   minimap2; Nextflow; nf-core; MultiQC; Zenodo record of the OKI2018 transcriptome.
 - SelenoDB 2.0 and the Selenoprofiles expectation table were used for the chordate comparison (Ciona gene lists;
   vertebrates); say so in the Methods.
