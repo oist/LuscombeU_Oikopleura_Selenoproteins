@@ -67,13 +67,13 @@ def curated(table, genome):
     return out
 
 
-def best_scores(cm, records, cpus):
+def best_scores(cm, records, cpus, nofilter=False):
     with tempfile.TemporaryDirectory() as d:
         fa, tbl = f"{d}/in.fa", f"{d}/out.tbl"
         with open(fa, "w") as o:
             for i, (_, s) in enumerate(records): o.write(f">r{i}\n{s}\n")
-        subprocess.run(["cmsearch", "--toponly", "-T", "0", "--cpu", str(cpus), "--tblout", tbl, cm, fa],
-                       check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(["cmsearch", "--toponly", "-T", "0", "--cpu", str(cpus)] + (["--max"] if nofilter else [])
+                       + ["--tblout", tbl, cm, fa], check=True, stdout=subprocess.DEVNULL)
         best = {}
         for l in open(tbl):
             if l.startswith("#"): continue
@@ -94,6 +94,7 @@ def main():
     ap.add_argument("--baseline", default="", help="curation table: adds the 3' sequences of the curated Sec genes")
     ap.add_argument("--seed", type=int, default=0, help="offset for the random windows")
     ap.add_argument("--replot", action="store_true", help="only redraw the figure from --table")
+    ap.add_argument("--max", action="store_true", help="cmsearch --max: no filters, so that every sequence gets its best score (slower)")
     a = ap.parse_args()
     if a.replot:
         ga = next((float(l.split()[1]) for l in open(a.cm) if l.startswith("GA ")), 0.0)
@@ -109,7 +110,7 @@ def main():
                [(h, s, "random window") for h, s in bg]
         if a.baseline:
             recs += [(h, s, "curated Sec gene") for h, s in curated(a.baseline, g)]
-        for (h, s, grp), (sc, b, e) in zip(recs, best_scores(a.cm, [(h, s) for h, s, _ in recs], a.cpus)):
+        for (h, s, grp), (sc, b, e) in zip(recs, best_scores(a.cm, [(h, s) for h, s, _ in recs], a.cpus, a.max)):
             rows.append((g, grp, h.split()[0], len(s), sc, b, e))
         print(g, len(tp), "3' sequences,", len(bg), "random windows", flush=True)
     with open(a.table, "w") as o:

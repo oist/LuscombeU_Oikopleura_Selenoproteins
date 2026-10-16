@@ -1,12 +1,12 @@
-# Reproduce the analysis: make fetch ; make stage1 ; make curation ; make stage2 ; make figures
+# Reproduce the analysis: make fetch ; (stage1/run.sh) ; make stage1 ; make curation ; make secis
 # Each target writes its outputs under work/ (large, not in git) and small tables under results/tables/ (in git).
 SHELL := /bin/bash
 GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 stage1-secis curation stage2 figures check clean
-all: stage1 curation stage2 figures
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 check clean
+all: stage1 curation secis
 
 fetch:
 	scripts/fetch.sh
@@ -21,16 +21,31 @@ stage1:
 curation:
 	python3 curation/check_baseline.py
 
-# Stage 2: parameters justified by stage 1 and the baseline
-stage2:
-	$(MAKE) -C stage2 GENOMES="$(GENOMES_BASELINE) $(GENOMES_COMPARISON)" NONTARGET="$(GENOMES_NONTARGET)"
+# SECIS (needs Infernal and matplotlib: run in the image, for example
+#   sbatch --cpus-per-task=8 scripts/run_in_container.sh make secis)
+# Stage 1: RF00031 scores of the Selenoprofiles 3' sequences against random genomic windows
+secis-stage1:
+	python3 figures/stage1_secis_scores.py --table results/tables/stage1_secis_scores.tsv --figure figures/stage1_secis_scores
 
-# RF00031 scores without threshold in the 3' regions of the stage 1 predictions (needs Infernal: run in the image)
-stage1-secis:
-	python3 stage1/rf00031_scores.py --outdir work/stage1/pipeline --out results/tables/stage1_rf00031_scores.tsv
+# Stage 2: appendicularian SECIS model, bootstrapped from the stage 1 outputs. The default run reproduces the model in
+# results/models/; to replicate with other background windows, change BACKGROUND_SEED and SECIS_OUT, for example
+#   make secis-model BACKGROUND_SEED=200 SECIS_OUT=work/stage2/secis_model_seed200
+SECIS_OUT ?= work/stage2/secis_model
+BACKGROUND_SEED ?= 100
+secis-model:
+	python3 stage2/build_secis_model.py --out $(SECIS_OUT) --background-seed $(BACKGROUND_SEED)
+	@if [ "$(SECIS_OUT)" = work/stage2/secis_model ] && [ "$(BACKGROUND_SEED)" = 100 ]; then \
+	    mkdir -p results/models && cp $(SECIS_OUT)/appendicularia_secis.cm $(SECIS_OUT)/appendicularia_secis.sto results/models/ && \
+	    cp $(SECIS_OUT)/final.seeds.fa results/models/appendicularia_secis.seeds.fa && \
+	    cp $(SECIS_OUT)/rounds.tsv results/tables/stage2_secis_model_rounds.tsv; fi
 
-figures:
-	python3 figures/stage1_rf00031_scores.py --out results/figures/stage1_rf00031_scores
+# Scores of the stage 2 model, with new random windows and the curated O. dioica Sec genes
+secis-stage2:
+	python3 figures/stage1_secis_scores.py --cm $(SECIS_OUT)/appendicularia_secis.cm --model-name 'appendicularian SECIS model' \
+	    --baseline curation/baseline_sec_genes.tsv --seed 1000 \
+	    --table results/tables/stage2_secis_scores.tsv --figure figures/stage2_secis_scores
+
+secis: secis-stage1 secis-model secis-stage2
 
 check:
 	scripts/check_sizes.sh

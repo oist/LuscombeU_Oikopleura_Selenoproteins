@@ -86,11 +86,15 @@ elements they missed defined the adaptations tested in the second stage.
 In stage 1, no SECIS element reached the Rfam gathering threshold (35 bits) downstream of any selenoprotein gene
 predicted in the nine genomes. To see whether the threshold alone was too strict, we scored with the same model,
 without threshold, the 3′ sequences of all Selenoprofiles predictions and, as background, 200 random genomic windows
-of the same length per genome (Figure SECIS-1).
+of the same length per genome (Figure SECIS-1). Predictions fall into two groups: 143 with a Sec codon, and 578
+others. The others are mostly homologs with cysteine at the Sec position (375, of which 235 in the EhSEP2 family),
+predictions whose alignment does not cover the Sec position of their profile (122, labelled "unaligned"), homologs of
+Sec machinery proteins that are not selenoproteins (40, such as eEFSec and SECIS-binding protein 2), and predictions
+with another amino acid or a stop codon at the Sec position (41).
 
 Of the 143 3′ sequences that follow predictions with a Sec codon, 96 (67%) had no hit at all, even when every hit
-of at least 0 bits was reported. This was not caused by short sequences: in OKI2018 and OSKA2016, whose 3′ sequences all have the
-full 6,000 nucleotides, 13 of 26 had no hit. The remaining 47 scored from 12 to
+of at least 0 bits was reported. This was not caused by fragmented assemblies separating coding sequences from their UTRs: in the
+chromosome-scale assembly OKI2018, 5 of 12 had no hit. The remaining 47 scored from 12 to
 31 bits; 18 reached 20 bits, and none reached the threshold. Random windows rarely had a hit (45 of 1,800), but those
 hits reached 22.6 bits. Lowering the threshold to 20 bits would therefore have recovered at most four SECIS elements
 per genome while accepting background hits, and most selenoprotein 3′ sequences would still have no hit. The Rfam
@@ -119,8 +123,12 @@ Across the three *O. dioica* assemblies, 42 of 53 curated Sec genes scored at le
 SELENOT in all three assemblies, SEPHS2 in OKI2018 and OdB3, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
 24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the Sec codon lies far upstream of the stop
 codon, so that the 6,000 nucleotides scored after the Sec codon may not reach the SECIS element. Outside the Sec
-predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits; they include predictions
-of Sec genes that Selenoprofiles did not label as such, and are examined below.
+predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits. Seventeen of them belong to
+selenoprotein families and either do not cover the Sec position ("unaligned": GPX, DIO, SEPHS2, SELENOT and others) or
+carry another residue there (SELENOW with isoleucine, tyrosine or leucine), as expected if some are Sec genes that
+Selenoprofiles did not recognise as such, including SEPHS2 of OSKA2016 (labelled "pseudo"). Only two are cysteine
+homologs, both in *F. borealis* and at 25.5 bits, the level of its best random window; none of the cysteine homologs
+of the eight other genomes reached 25 bits.
 
 <!-- Next: leave-one-genome-out models for the training genomes; genome-wide scans of non-target tunicates and
 shuffled sequences; threshold; the 19 other predictions; the curated genes below 25 bits; F. borealis. -->

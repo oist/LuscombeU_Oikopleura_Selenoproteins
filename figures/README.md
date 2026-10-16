@@ -1,8 +1,12 @@
 # Figures
 
-Figure scripts read `results/tables/` and, where noted, the pipeline outputs in `work/`.
+Figure scripts read `results/tables/` and, where noted, the pipeline outputs in `work/`. Run them with `make` (see
+the `secis-*` targets of the Makefile); they need Infernal and matplotlib, available in the image.
 
-| Script | Figure | Inputs |
+| Script | Make target | Figure |
 |---|---|---|
-| `stage1_secis_scores.py` | RF00031 scores of the Selenoprofiles 3′ sequences and of random genomic windows, per genome | `work/stage1/pipeline/selenoprofiles/*.three_prime.fa`, `data/genomes/`, `data/references/RF00031.cm`; writes `results/tables/stage1_secis_scores.tsv` |
-| `stage1_secis_scores.py --cm work/stage2/secis_model/appendicularia_secis.cm --baseline curation/baseline_sec_genes.tsv --seed 1000 --table results/tables/stage2_secis_scores.tsv --figure figures/stage2_secis_scores --model-name 'appendicularian SECIS model'` | the same scores with the stage 2 model, with the curated *O. dioica* Sec genes and new random windows | as above, plus the model built by `stage2/build_secis_model.py` |
+| `stage1_secis_scores.py` | `secis-stage1` | RF00031 scores of the Selenoprofiles 3′ sequences and of random genomic windows, per genome (`stage1_secis_scores.*`; table `results/tables/stage1_secis_scores.tsv`) |
+| `stage1_secis_scores.py` with the stage 2 model | `secis-stage2` | the same scores with the appendicularian SECIS model, with the curated *O. dioica* Sec genes and new random windows (`stage2_secis_scores.*`) |
+
+`--max` turns off the `cmsearch` filters, so that every sequence gets its best score instead of "no hit" (slower);
+`--replot` redraws a figure from its table.

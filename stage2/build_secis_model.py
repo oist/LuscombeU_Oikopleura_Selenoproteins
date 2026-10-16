@@ -66,6 +66,8 @@ def main():
     ap.add_argument("--train", nargs="+", default=["OKI", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery"])
     ap.add_argument("--seed-bits", type=float, default=15.0)
     ap.add_argument("--background", type=int, default=200, help="random windows per training genome")
+    ap.add_argument("--background-seed", type=int, default=100,
+                    help="random seed of the background windows (genome i uses seed + i); change it to replicate")
     ap.add_argument("--rounds", type=int, default=6)
     ap.add_argument("--quick-calibration", type=float, default=0.2, help="cmcalibrate -L for intermediate rounds (Mb)")
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
@@ -82,10 +84,10 @@ def main():
                 train[f"{g}|{name.split(':', 1)[1]}"] = seq
     with open(o("train.fa"), "w") as fh:
         for k, s in train.items(): fh.write(f">{k}\n{s}\n")
-    if not os.path.exists(o("background.fa")):
+    if True:  # always rewritten, so that a changed --background-seed takes effect
         with open(o("background.fa"), "w") as fh:
             for i, g in enumerate(a.train):
-                for k, s in background(f"{a.genomes}/{g}/genome.fna.gz", a.background, 6000, seed=100 + i):
+                for k, s in background(f"{a.genomes}/{g}/genome.fna.gz", a.background, 6000, seed=a.background_seed + i):
                     fh.write(f">{g}|{k}\n{s}\n")
 
     # round 0: RF00031 hits
