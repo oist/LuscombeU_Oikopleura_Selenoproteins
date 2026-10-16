@@ -1,6 +1,6 @@
 # Stage 1 — the pipeline with its default parameters
 
-Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, revision pinned in `run.sh`) on
+Stage 1 runs the selenoprotein pipeline (`oist/LuscombeU_Selenoproteins_Pipeline`, release 0.1.0, set in `run.sh`) on
 the nine appendicularian genomes, with the parameters a new user would get:
 
 - Selenoprofiles 4.5.8, profiles `eukarya,machinery`;
