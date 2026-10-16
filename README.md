@@ -74,7 +74,7 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | Other appendicularians (Naville et al. 2019) | *Oikopleura longicauda* GCA_004367895.1, *Oikopleura albicans* GCA_004367875.1, *Oikopleura vanhoeffeni* GCA_004367855.1, *Bathochordaeus stygius* GCA_004367955.1, *Mesochordaeus erythrocephalus* GCA_004367975.1, *Fritillaria borealis* GCA_004368075.1 |
 | Other tunicates (SECIS non-target controls) | *Ciona intestinalis* GCF_018327825.1, *Ciona savignyi* GCA_054131345.1, *Styela clava* GCF_964204865.1, *Thalia democratica* GCF_965202585.1 |
 | OSKA2016 transcripts (Wang et al. 2015) | GEO GSE64421 supplementary file `GSE64421_transcripts.trinity.fasta.gz` |
-| OKI2018 transcriptome (Bliznina et al. 2021) | not yet public; to be deposited on Zenodo |
+| OKI2018 transcriptome (Bliznina et al. 2021) | not yet public; to be added to Zenodo record 4604144 |
 | OdB3 cDNA (Denoeud et al. 2010) | Genoscope `cDNA.fa.bz2` (OikoBase, which also distributed them, is offline) |
 | OdB3 operon annotation (Denoeud et al. 2010) | Genoscope `operons_GGB.gff.bz2` (`config/extra_files.tsv`) |
 | Rfam RF00031, Selenoprofiles profiles v1.3.0 | `config/references.tsv` |
