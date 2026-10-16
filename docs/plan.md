@@ -35,3 +35,16 @@ Built from `results/tables/` only.
 
 - State that `OKI2018_I68` (NCBI GCF_907165135.1) is the `OKI2018_I69` assembly of Bliznina et al. 2021 (I69: the
   sequenced individual; I68 is a typo in the NCBI record), and that the NCBI name is used for consistency.
+
+## Decisions and open items (2026-10-16)
+
+- Order of the results: stage 1; Sec machinery; complete pool of Sec genes (annotated from proteins and transcripts);
+  SECIS model trained on that pool (with same-locus and 90% identity redundancy filters, family balance, and
+  leave-one-family-out evaluation).
+- tRNA-Sec: standard tools are enough (Secmarker and RF01852 find at least one supported locus in every genome); no
+  special-casing.
+- Multiple copies of a gene (tRNA-Sec loci, eEFSec, SEPHS2) in some appendicularian assemblies may come from
+  incomplete haplotype purging or from contamination. TODO: ask Charles for the reference documenting this, and cite
+  it where copy numbers are discussed.
+- Open: which genes form the machinery set (minimum: tRNA-Sec, SEPHS2, PSTK, SecS, eEFSec, SBP2; possible: SECp43,
+  SCLY).
