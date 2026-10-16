@@ -89,8 +89,8 @@ without threshold, the 3′ sequences of all Selenoprofiles predictions and, as 
 of the same length per genome (Figure SECIS-1).
 
 Of the 143 3′ sequences that follow predictions with a Sec codon, 96 (67%) had no hit at all, even when every hit
-of at least 0 bits was reported. This was not caused by short sequences: in the two chromosome-scale *O. dioica*
-assemblies, where the 3′ sequences have their full length, 13 of 26 had no hit. The remaining 47 scored from 11 to
+of at least 0 bits was reported. This was not caused by short sequences: in OKI2018 and OSKA2016, whose 3′ sequences all have the
+full 6,000 nucleotides, 13 of 26 had no hit. The remaining 47 scored from 12 to
 31 bits; 18 reached 20 bits, and none reached the threshold. Random windows rarely had a hit (45 of 1,800), but those
 hits reached 22.6 bits. Lowering the threshold to 20 bits would therefore have recovered at most four SECIS elements
 per genome while accepting background hits, and most selenoprotein 3′ sequences would still have no hit. The Rfam
@@ -116,7 +116,7 @@ OKI2018 and 18 of 21 of OdB3 scored at least 20 bits, but these sequences were u
 performance. In the held-out *F. borealis*, only 8 of 19 Sec predictions reached 20 bits, and 3 reached 25 bits.
 
 Across the three *O. dioica* assemblies, 42 of 53 curated Sec genes scored at least 25 bits. Below 25 bits were
-SEPHS2 and SELENOT in all three assemblies, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
+SELENOT in all three assemblies, SEPHS2 in OKI2018 and OdB3, SELENOO in OKI2018 and OSKA2016, SELENOK in OKI2018 and OdB3 (23.4 and
 24.9 bits), and SELENOF in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the Sec codon lies far upstream of the stop
 codon, so that the 6,000 nucleotides scored after the Sec codon may not reach the SECIS element. Outside the Sec
 predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits; they include predictions
