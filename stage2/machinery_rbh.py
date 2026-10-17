@@ -104,12 +104,14 @@ def main():
             margin = exp_bits - other
             r = reverse.get(best_p)
             back = bool(r and r[1] == chrom and r[2] <= end + 1000 and r[3] >= start - 1000)
+            reverse_run = os.path.exists(genome)
             if best_gene != EXPECTED[fam]: status = "other gene"
             elif back: status = "RBH"
-            else: status = "forward"
+            elif reverse_run: status = "forward"
+            else: status = "forward (no reverse search: genome not available)"
             if status != "other gene" and margin < a.ambiguous: status += " (ambiguous)"
             rows.append((g, pid, fam, EXPECTED[fam], best_gene, f"{best_bits:.0f}", other_gene, f"{margin:.1f}",
-                         f"{r[1]}:{r[2]}-{r[3]}" if r else "-", "yes" if back else "no", status))
+                         f"{r[1]}:{r[2]}-{r[3]}" if r else "-", ("yes" if back else "no") if reverse_run else "-", status))
         print(g, len(preds), "predictions", flush=True)
     os.makedirs(os.path.dirname(a.table) or ".", exist_ok=True)
     with open(a.table, "w") as o:

@@ -105,3 +105,17 @@ Built from `results/tables/` only.
   with the genome; current, with gene symbols and the related families such as KTI12 and SECISBP2L); the RefSeq
   proteomes of OKI2018 and of the other annotated genomes serve for the reverse searches. Optional cross-check: the
   OIST Swiss-Prot BLAST/DIAMOND databases (2020_06, BioinfoUgrp modules), which are older and site-specific.
+- Reciprocal best hits, first results (2026-10-18, human RefSeq proteome):
+  - SecS (SEPSECS), eEFSec (EEFSEC) and SECp43 in F. borealis: reciprocal best hits; extra eEFSec copies only forward.
+  - SECISBP2: in every tunicate, appendicularian or not, the single SBP2-family gene is closest to human SECISBP2L
+    (margins -2 to -38 bits; H. roretzi +1), whereas vertebrates have both paralogs, cleanly separated. The tunicate
+    gene is therefore a co-ortholog of the vertebrate SECISBP2 and SECISBP2L (duplication in vertebrates, to check
+    in the literature, for example Donovan and Copeland 2009); the manuscript must name it accordingly.
+  - SEPHS2: the selenocysteine-containing SEPHS of tunicates (and of zebrafish, weakly) are closer to human SEPHS1
+    or only marginally to SEPHS2: best hits cannot separate SPS1 and SPS2 outside mammals (Mariotti et al. 2015).
+    Use the residue at the catalytic site (selenocysteine or cysteine: SPS2 type) as the criterion.
+  - PSTK: other tunicates are reciprocal best hits (55-108 bits); the O. dioica, O. albicans and B. stygius PSTK have
+    no blastp hit in the human proteome at E <= 1e-3, O. vanhoeffeni 48 bits: too divergent for best hits against
+    human; the absence test (tunicate references, KTI12 outgroup) and a phylogeny are the evidence.
+  - Phylogenies needed: PSTK (with KTI12), SEPHS (SPS1/SPS2, with the Mariotti et al. 2015 sequences), SBP2 family
+    (placement before the vertebrate duplication).
