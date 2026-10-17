@@ -70,3 +70,14 @@ sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh m
 
 The committed test table was produced with the same profile alignments under the names `<family>_app`, before the
 profiles took the standard names; a rerun of `make machinery-test` regenerates it with the current files.
+
+### Absence tests (`machinery_absence.py`, `make machinery-absence`)
+
+For a machinery gene missing from appendicularian genomes, tests whether it is absent or only divergent: the stage 1
+predictions of the gene in other genomes are searched with tblastn in each appendicularian genome (and the
+*O. dioica* transcriptomes), and each candidate is compared by blastp with the gene's proteins and with related
+proteins of other families (outgroups). The margin (best gene hit minus best outgroup hit, in bits) classifies it as
+supported (at least 30), ambiguous (10 to 30, to be resolved by phylogeny) or a related protein. Positive controls are
+the stage 1 predictions themselves. SECp43 uses TIA1-like proteins as outgroups; PSTK uses KTI12. The scans of the
+largest genomes take longest; run them on the cluster (`sbatch --cpus-per-task=4 scripts/run_in_container.sh make
+machinery-absence`, from a writable clone).
