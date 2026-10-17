@@ -121,8 +121,16 @@ fall in a correctly annotated coding sequence in the RefSeq annotation of OKI201
 annotation and none of 21 in the OdB3 annotation; in the other cases, the annotated coding sequence ends at the codon,
 skips it, lies on one side of it or is absent.
 
-<!-- Other tunicates (Ciona intestinalis and savignyi, Halocynthia roretzi, Styela clava, Thalia democratica) and
-positive controls (human, mouse, zebrafish): stage 1 with default settings, to add after the runs on Deigo. -->
+With the same settings, the pipeline performed as expected on vertebrates, from which its tools were mostly built. It
+predicted 30 selenoprotein genes in human and in mouse and 47 in zebrafish, found the complete machinery in all
+three, and 27 of 34, 24 of 36 and 47 of 50 of the selenocysteine codons that it checked fell in correctly annotated
+coding sequences of their RefSeq annotations. In other tunicates, it predicted 16 to 25 selenoprotein genes per
+genome, including 19 in *Ciona robusta*, the number reported for this genome [@Jiang2010], and the machinery genes,
+including PSTK and SECp43. In the three *Ciona* species, SEPHS2 was predicted with a residue other than
+selenocysteine, consistent with its alternative isoform that does not carry selenocysteine [@Mariotti2015]. The Rfam
+SECIS model was strict even in vertebrates: it supported 12 of the 30 predictions in human and in mouse and 10 of 47
+in zebrafish, against 0 to 2 per genome in the other tunicates and none in appendicularians. Results on the
+appendicularians were identical between two releases of the pipeline (0.1.2 and 0.2.0).
 
 ## Appendicularian profiles recover the selenocysteine machinery
 
@@ -137,7 +145,8 @@ selenocysteine codon (Table MACHINERY). In the fragmented assemblies of *O. long
 other appendicularians more closely than its relative KTI12. In *F. borealis*, we found no convincing PSTK. SEPHS2 was
 predicted with its selenocysteine codon in seven of the nine genomes; it was not found in *B. stygius* and only
 partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), SECIS-binding protein 2 (SECISBP2) and tRNA-Sec
-were found in every genome. SECp43 (TRNAU1AP) was found only in *F. borealis*.
+were found in every genome. SECp43 (TRNAU1AP) was found only in *F. borealis*, whereas the standard profile found it in all other tunicates and
+in the vertebrates: its absence from the oikopleurid genomes is a candidate gene loss, to be confirmed.
 
 | Gene | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|
