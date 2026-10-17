@@ -20,6 +20,7 @@ NAMES = {"OKI": "*O. dioica* OKI2018", "OSKA": "*O. dioica* OSKA2016", "OdB3": "
          "Mery": "*M. erythrocephalus*", "Fbor": "*F. borealis*"}
 GENES = [("tRNA-Sec", None), ("SEPHS2", "SEPHS2"), ("PSTK", "pstk"), ("SEPSECS", "SecS"), ("EEFSEC", "eEFsec"),
          ("SECISBP2", "SBP2"), ("TRNAU1AP", "secp43")]
+ASSOCIATED = {"TRNAU1AP"}  # SECp43: associated factor, not part of the machinery (not required, not specific)
 
 
 def labels(gtf):
@@ -66,7 +67,9 @@ def main():
     with open(a.markdown, "w") as o:
         o.write("| Gene | " + " | ".join(NAMES[g] for g in GENOMES) + " |\n")
         o.write("|---|" + "---|" * len(GENOMES) + "\n")
-        for gene, _ in GENES: o.write(f"| {gene} | " + " | ".join(status[(gene, g)] for g in GENOMES) + " |\n")
+        for gene, _ in GENES:
+            label = f"{gene} (associated factor)" if gene in ASSOCIATED else gene
+            o.write(f"| {label} | " + " | ".join(status[(gene, g)] for g in GENOMES) + " |\n")
     print(open(a.markdown).read())
 
 

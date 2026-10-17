@@ -66,9 +66,11 @@ def main():
     axA.set_yticks([y[g] for g in order]); axA.set_yticklabels([NAMES[g] for g in order], fontsize=8, style="italic")
     axA.set_xlabel("selenocysteine predictions\n(red: with a SECIS at the Rfam threshold)", fontsize=8)
     axB.set_xlim(0, 1.25); axB.set_xticks([0, 0.5, 1]); axB.set_xlabel("fraction in correctly\nannotated genes", fontsize=8)
-    axC.set_xticks(range(len(MACHINERY) + 1)); axC.set_xticklabels(["tRNA-Sec\nloci"] + MACHINERY, fontsize=7, rotation=45, ha="right")
+    axC.set_xticks(range(len(MACHINERY) + 1))
+    axC.set_xticklabels(["tRNA-Sec\nloci"] + MACHINERY[:-1] + ["TRNAU1AP\n(associated)"], fontsize=7, rotation=45, ha="right")
+    axC.axvline(len(MACHINERY) - 0.5, color="#7f8c8d", lw=0.6, ls="--")
     axC.set_xlim(-0.6, len(MACHINERY) + 0.6)
-    axC.set_xlabel("machinery (red: SEPHS2 with selenocysteine;\nopen: partial prediction; ×: not found)", fontsize=8)
+    axC.set_xlabel("machinery and associated factor (red: SEPHS2 with selenocysteine;\nopen: partial prediction; ×: not found)", fontsize=8)
     for (label, gs) in GROUPS:
         axC.text(len(MACHINERY) + 0.7, (y[gs[0]] + y[gs[-1]]) / 2, label, rotation=270, va="center", fontsize=8)
     for ax in (axA, axB, axC):

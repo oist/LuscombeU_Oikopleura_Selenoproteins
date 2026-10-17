@@ -6,4 +6,4 @@
 | SEPSECS | found | found | found | found | found | found | found | found | found |
 | EEFSEC | found | found | found | found | found | found | found | found | found |
 | SECISBP2 | found | found | found | found | found | found | found | found | found |
-| TRNAU1AP | not found | not found | not found | not found | not found | not found | not found | not found | found |
+| TRNAU1AP (associated factor) | not found | not found | not found | not found | not found | not found | not found | not found | found |

@@ -94,3 +94,10 @@ Built from `results/tables/` only.
   "meta-metabolomics"; Heal et al. 2021 mSystems) and meta-omics models of plankton ecosystems (Stec et al. 2017);
   zooplankton-derived dissolved organic matter linked to zooplankton meta-transcriptomes (bioRxiv
   10.1101/2024.10.27.620474). Our genome annotations of zooplankton feed such approaches.
+- Definition (agreed 2026-10-17): "the machinery" is the six components dedicated to selenocysteine and required for
+  it: tRNA-Sec, SEPHS2, PSTK, SEPSECS (synthesis), EEFSEC, SECISBP2 (insertion). SECp43 (TRNAU1AP) is reported as an
+  associated factor: not required in mouse liver and neurons (Mahdi et al. 2015), homologs in lineages without
+  selenocysteine (yeasts, land plants in the Selenoprofiles profile), but reported by Selenoprofiles by default and
+  absent from all oikopleurids (discussion). Other borderline genes (SEPHS1, SECISBP2L, SCLY, SARS1, ALKBH8, TRIT1,
+  RPL30, nucleolin, EIF4A3) are excluded by the specificity criterion; SECISBP2 versus SECISBP2L is an orthology
+  question for the reciprocal best hits.
