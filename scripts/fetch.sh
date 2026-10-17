@@ -93,6 +93,19 @@ while IFS=$'\t' read -r id species assembly source acc annot md5 role notes; do
             mv "$out/genome.fna.gz.part" "$out/genome.fna.gz"
             rm -rf "$out/ncbi" "$out/ncbi.zip"
         fi
+        # protein sequences of RefSeq annotations (reference proteomes for the reciprocal best hits), downloaded
+        # separately so that genomes fetched earlier need not be fetched again
+        if [[ $annot == *RefSeq* && ! -s $out/protein.faa.gz ]]; then
+            rm -rf "$out/ncbi_p" "$out/ncbi_p.zip"
+            if datasets download genome accession "$acc" --include protein --filename "$out/ncbi_p.zip" \
+                   && unzip -o -q "$out/ncbi_p.zip" -d "$out/ncbi_p"; then
+                faa=$(find "$out/ncbi_p" -name 'protein.faa' | head -1)
+                if [[ -n $faa ]]; then gzip -n -c "$faa" > "$out/protein.faa.gz.part" && mv "$out/protein.faa.gz.part" "$out/protein.faa.gz"; fi
+            else
+                echo "MISSING $out/protein.faa.gz: download of the proteins of $acc failed"; fail=1
+            fi
+            rm -rf "$out/ncbi_p" "$out/ncbi_p.zip"
+        fi
     else
         fetch_url "$acc" "$out/genome.fna.gz" "$md5"
         url=${annot%% *}; if [[ -n $url ]]; then fetch_url "$url" "$out/annotation.gff3" ""; fi
@@ -146,6 +159,6 @@ if [[ ! -s $SP/uniref50_seleno_sim.fasta.psq ]]; then
         fail=1
     fi
 fi
-md5sum data/genomes/*/genome.fna.gz data/transcripts/*.fa.gz data/downloads/*/* data/downloads/*.zip 2>/dev/null > data/MD5SUMS || true
+md5sum data/genomes/*/genome.fna.gz data/genomes/*/protein.faa.gz data/transcripts/*.fa.gz data/downloads/*/* data/downloads/*.zip 2>/dev/null > data/MD5SUMS || true
 echo "Done. Checksums of downloaded files: data/MD5SUMS"
 exit $fail

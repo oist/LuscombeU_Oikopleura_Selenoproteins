@@ -101,3 +101,7 @@ Built from `results/tables/` only.
   absent from all oikopleurids (discussion). Other borderline genes (SEPHS1, SECISBP2L, SCLY, SARS1, ALKBH8, TRIT1,
   RPL30, nucleolin, EIF4A3) are excluded by the specificity criterion; SECISBP2 versus SECISBP2L is an orthology
   question for the reciprocal best hits.
+- Reciprocal best hits (decided 2026-10-17): reference proteome = human RefSeq proteins (GCF_000001405.40, fetched
+  with the genome; current, with gene symbols and the related families such as KTI12 and SECISBP2L); the RefSeq
+  proteomes of OKI2018 and of the other annotated genomes serve for the reverse searches. Optional cross-check: the
+  OIST Swiss-Prot BLAST/DIAMOND databases (2020_06, BioinfoUgrp modules), which are older and site-specific.
