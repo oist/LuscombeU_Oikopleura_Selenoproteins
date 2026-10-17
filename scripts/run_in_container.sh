@@ -7,6 +7,8 @@
 # Run a command of this repository inside the image built from environment.yml (Singularity or Apptainer).
 # usage, from the repository root:   scripts/run_in_container.sh make stage1
 #                                    sbatch [options] scripts/run_in_container.sh make curation
+# The job writes its log (%x-%j.log) in the submission directory and its results in the repository: both must be
+# writable from compute nodes (at OIST, submit from a clone on /flash, not from /bucket; see README).
 # environment: IMAGE = a local .sif file, or a docker:// or oras:// address (default below: the image built from
 # environment.yml, converted by Singularity on first use). The same image as a ready-made Singularity file:
 #   curl -L -o oikopleura-selenoproteins.sif https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/c7/c7a5982e08142390038579f334f8683c3a4cd9c922d0c4e84227b5eb2c65d421/data

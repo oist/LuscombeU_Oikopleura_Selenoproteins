@@ -72,6 +72,19 @@ NXF_WORK=<work directory> PROFILE=<profile> sbatch [options] stage1/run.sh   # N
 sbatch [options] scripts/run_in_container.sh make stage1                       # collects its outputs
 ```
 
+Batch jobs write their log in the submission directory and their results into the repository. On clusters where the
+storage that holds the repository is read-only for compute nodes (at OIST, `/bucket`), the job can write neither: its
+log is lost and nothing changes. Run such jobs from a clone on a file system that compute nodes can write (at OIST,
+`/flash`), with the large inputs linked from the main copy, then commit and push from the clone:
+
+```bash
+cd /flash/<unit>/<user> && git clone git@github.com:oist/LuscombeU_Oikopleura_Selenoproteins.git && cd LuscombeU_Oikopleura_Selenoproteins
+ln -s <main copy>/data data                                    # read-only inputs
+mkdir -p work/stage1 && ln -s <main copy>/work/stage1/pipeline work/stage1/pipeline
+sbatch [options] scripts/run_in_container.sh make stage1-figures
+git add results figures && git commit -m "..." && git push    # then git pull in the main copy
+```
+
 The Nextflow driver (`stage1/run.sh`) writes its history and log in the repository root and publishes the pipeline
 outputs under `work/`: as a batch job it needs the repository on a file system that compute nodes can write; if the
 repository is on storage that is read-only for compute nodes, run the driver on a login or interactive node.
