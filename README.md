@@ -81,6 +81,7 @@ log is lost and nothing changes. Run such jobs from a clone on a file system tha
 cd /flash/<unit>/<user> && git clone git@github.com:oist/LuscombeU_Oikopleura_Selenoproteins.git && cd LuscombeU_Oikopleura_Selenoproteins
 ln -s <main copy>/data data                                    # read-only inputs
 mkdir -p work/stage1 && ln -s <main copy>/work/stage1/pipeline work/stage1/pipeline
+ml singularity                                                 # at OIST; sbatch passes the environment to the job
 sbatch [options] scripts/run_in_container.sh make stage1-figures
 git add results figures && git commit -m "..." && git push    # then git pull in the main copy
 ```

@@ -13,11 +13,20 @@
 # environment.yml, converted by Singularity on first use). The same image as a ready-made Singularity file:
 #   curl -L -o oikopleura-selenoproteins.sif https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/c7/c7a5982e08142390038579f334f8683c3a4cd9c922d0c4e84227b5eb2c65d421/data
 #   export IMAGE=$PWD/oikopleura-selenoproteins.sif
-# Directories outside the repository that data/ links point to must be bound: export SINGULARITY_BIND=<dir>
+# Links from data/ or work/<stage>/<dir> to other directories are bound automatically; other directories outside the
+# repository must be bound with SINGULARITY_BIND=<dir>.
 set -euo pipefail
 if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname "$0")/.." && pwd); fi
 [[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
 IMAGE=${IMAGE:-docker://community.wave.seqera.io/library/oikopleura-selenoproteins:60a1e963fa7d21f6}
-RUNNER=$(command -v singularity || command -v apptainer) || { echo "singularity or apptainer not found" >&2; exit 1; }
+RUNNER=$(command -v singularity || command -v apptainer) || {
+    echo "singularity or apptainer not found: load it before running or submitting this script (at OIST: ml singularity;" >&2
+    echo "sbatch passes the loaded environment to the job)" >&2; exit 1; }
 cd "$R"
-exec "$RUNNER" exec --bind "$R" "$IMAGE" "$@"
+# bind the repository and the targets of links to inputs kept elsewhere (for example a clone on /flash whose data/
+# and work/stage1/pipeline link to the main copy)
+binds=$R
+for l in data work/*/*; do
+    if [[ -L $l ]]; then binds+=",$(readlink -f "$l")"; fi
+done
+exec "$RUNNER" exec --bind "$binds" "$IMAGE" "$@"
