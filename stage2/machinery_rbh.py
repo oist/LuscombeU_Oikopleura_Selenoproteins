@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+"""Reciprocal best hits of the machinery predictions against the human RefSeq proteome.
+
+For each Selenoprofiles prediction of a machinery gene (or of the associated factor SECp43) in each genome:
+  forward  blastp of the predicted protein against the human RefSeq proteins; the gene of each protein comes from the
+           RefSeq annotation (CDS protein_id -> gene). The best hit gives the human gene; the best hit to another gene
+           gives the margin (bits) to the closest paralog or related family.
+  reverse  tblastn of the best human protein against the genome; its best locus must overlap the prediction.
+Status:
+  RBH         the best human gene is the expected one, and the reverse search returns to the prediction
+  forward     the best human gene is the expected one, but the human protein hits another locus of the genome better
+              (a paralog or a better copy elsewhere)
+  other gene  the best human gene is not the expected one (for example SECISBP2L for SECISBP2)
+  no hit      no forward hit
+Small margins (below --ambiguous bits) are flagged for phylogeny.
+Inputs: Selenoprofiles predictions (<dir>/<genome>.selenoprofiles.faa, headers with chromosome:, strand: and
+positions:), data/genomes/Hsap/protein.faa.gz and annotation.gff3.gz, data/genomes/<genome>/genome.fna.gz.
+Output: --table (one row per prediction).
+"""
+import argparse, collections, glob, gzip, os, re, shutil, subprocess, tempfile
+
+EXPECTED = {"SEPHS2": "SEPHS2", "pstk": "PSTK", "SecS": "SEPSECS", "eEFsec": "EEFSEC", "SBP2": "SECISBP2",
+            "secp43": "TRNAU1AP"}
+
+
+def read_fasta(path):
+    name, buf = None, []
+    with (gzip.open(path, "rt") if path.endswith(".gz") else open(path)) as fh:
+        for l in fh:
+            if l.startswith(">"):
+                if name is not None: yield name, "".join(buf)
+                name, buf = l[1:].rstrip("\n"), []
+            else: buf.append(l.strip())
+    if name is not None: yield name, "".join(buf)
+
+
+def run(cmd, cwd): return subprocess.run(cmd, check=True, capture_output=True, text=True, cwd=cwd).stdout
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--predictions", nargs="+", default=sorted(glob.glob("work/stage1/pipeline/selenoprofiles/*.selenoprofiles.faa")),
+                    help="Selenoprofiles protein FASTA files, one per genome (<genome>.<anything>.faa or <genome>.faa)")
+    ap.add_argument("--human", default="data/genomes/Hsap")
+    ap.add_argument("--genomes", default="data/genomes")
+    ap.add_argument("--ambiguous", type=float, default=10.0)
+    ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
+    ap.add_argument("--table", default="results/tables/stage2_machinery_rbh.tsv")
+    a = ap.parse_args()
+    d = tempfile.mkdtemp()
+    # human proteins and their genes
+    gene_of = {}
+    with gzip.open(f"{a.human}/annotation.gff3.gz", "rt") as fh:
+        for l in fh:
+            if "\tCDS\t" not in l: continue
+            m, g = re.search(r"protein_id=([^;\n]+)", l), re.search(r"gene=([^;\n]+)", l)
+            if m and g: gene_of[m.group(1)] = g.group(1)
+    with open(f"{d}/human.faa", "w") as o:
+        for n, s in read_fasta(f"{a.human}/protein.faa.gz"): o.write(f">{n.split()[0]}\n{s}\n")
+    human = {n.split()[0]: s for n, s in read_fasta(f"{d}/human.faa")}
+    run(["formatdb", "-i", "human.faa", "-p", "T"], d)
+    rows = []
+    for faa in a.predictions:
+        g = os.path.basename(faa).split(".")[0]
+        preds = []
+        for n, s in read_fasta(faa):
+            pid = n.split()[0]; fam = pid.split(".")[0].removesuffix("_app")
+            if fam not in EXPECTED: continue
+            loc = dict(re.findall(r"(chromosome|strand|positions):(\S+)", n))
+            pos = [int(x) for x in re.findall(r"\d+", loc.get("positions", ""))]
+            preds.append((pid, fam, s.replace("*", "").replace("U", "X"), loc.get("chromosome", ""),
+                          min(pos) if pos else 0, max(pos) if pos else 0))
+        if not preds: continue
+        with open(f"{d}/q.faa", "w") as o:
+            for p in preds: o.write(f">{p[0]}\n{p[2]}\n")
+        hits = collections.defaultdict(dict)   # query -> gene -> (bits, protein)
+        for l in run(["blastall", "-p", "blastp", "-d", "human.faa", "-i", "q.faa", "-e", "1e-3", "-m", "8",
+                      "-b", "200", "-v", "200", "-a", str(a.cpus)], d).splitlines():
+            f = l.split("\t"); gene = gene_of.get(f[1], f[1]); bits = float(f[11])
+            if bits > hits[f[0]].get(gene, (0, ""))[0]: hits[f[0]][gene] = (bits, f[1])
+        # reverse: best human protein of each prediction against the genome
+        genome = f"{a.genomes}/{g}/genome.fna.gz"
+        reverse = {}
+        best_prot = {p[0]: max(hits[p[0]].values())[1] for p in preds if hits.get(p[0])}
+        if best_prot and os.path.exists(genome):
+            with gzip.open(genome, "rb") as i, open(f"{d}/g.fa", "wb") as o: shutil.copyfileobj(i, o)
+            run(["formatdb", "-i", "g.fa", "-p", "F"], d)
+            with open(f"{d}/h.faa", "w") as o:
+                for prot in sorted(set(best_prot.values())): o.write(f">{prot}\n{human[prot]}\n")
+            for l in run(["blastall", "-p", "tblastn", "-d", "g.fa", "-i", "h.faa", "-e", "1e-3", "-m", "8",
+                          "-a", str(a.cpus)], d).splitlines():
+                f = l.split("\t"); bits = float(f[11])
+                if bits > reverse.get(f[0], (0,))[0]:
+                    reverse[f[0]] = (bits, f[1], min(int(f[8]), int(f[9])), max(int(f[8]), int(f[9])))
+        for pid, fam, s, chrom, start, end in preds:
+            h = hits.get(pid, {})
+            if not h:
+                rows.append((g, pid, fam, EXPECTED[fam], "-", "-", "-", "-", "-", "-", "no hit")); continue
+            ranked = sorted(h.items(), key=lambda x: -x[1][0])
+            best_gene, (best_bits, best_p) = ranked[0]
+            exp_bits = h.get(EXPECTED[fam], (0, ""))[0]
+            other = max((v[0] for k, v in h.items() if k != EXPECTED[fam]), default=0)
+            other_gene = next((k for k, v in ranked if k != EXPECTED[fam]), "-")
+            margin = exp_bits - other
+            r = reverse.get(best_p)
+            back = bool(r and r[1] == chrom and r[2] <= end + 1000 and r[3] >= start - 1000)
+            if best_gene != EXPECTED[fam]: status = "other gene"
+            elif back: status = "RBH"
+            else: status = "forward"
+            if status != "other gene" and margin < a.ambiguous: status += " (ambiguous)"
+            rows.append((g, pid, fam, EXPECTED[fam], best_gene, f"{best_bits:.0f}", other_gene, f"{margin:.1f}",
+                         f"{r[1]}:{r[2]}-{r[3]}" if r else "-", "yes" if back else "no", status))
+        print(g, len(preds), "predictions", flush=True)
+    os.makedirs(os.path.dirname(a.table) or ".", exist_ok=True)
+    with open(a.table, "w") as o:
+        o.write("genome\tprediction\tfamily\texpected_gene\tbest_human_gene\tbest_bits\tnext_gene\tmargin\t"
+                "reverse_best_locus\treverse_returns\tstatus\n")
+        for r in rows: o.write("\t".join(map(str, r)) + "\n")
+    shutil.rmtree(d)
+
+
+if __name__ == "__main__":
+    main()

@@ -81,3 +81,11 @@ supported (at least 30), ambiguous (10 to 30, to be resolved by phylogeny) or a 
 the stage 1 predictions themselves. SECp43 uses TIA1-like proteins as outgroups; PSTK uses KTI12. The scans of the
 largest genomes take longest; run them on the cluster (`sbatch --cpus-per-task=4 scripts/run_in_container.sh make
 machinery-absence`, from a writable clone).
+
+### Reciprocal best hits (`machinery_rbh.py`, `make machinery-rbh`)
+
+Each machinery prediction (and SECp43) is searched against the human RefSeq proteome (blastp; genes from the RefSeq
+annotation), and the best human protein is searched back against the genome (tblastn). Status: RBH (expected human
+gene, and the reverse search returns to the prediction), forward (expected gene, but the human protein prefers another
+locus), other gene (for example SECISBP2L for SECISBP2) or no hit; margins below 10 bits to the next human gene are
+flagged as ambiguous, for phylogeny. Needs `data/genomes/Hsap/protein.faa.gz` (fetched with the human genome).
