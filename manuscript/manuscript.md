@@ -46,13 +46,16 @@ Robison et al. 2005]. Meta-omic studies now aim at the metabolism of whole plank
 @Heal2021], and depend on the annotated genomes of their members. The short life cycle, transparent body and
 invariant embryonic cell lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small
 and compact genome, which has lost many genes conserved in other chordates, makes it a model for evolution by gene
-loss [@Denoeud2010; @Albalat2016]. An accurate gene census is therefore important to these studies. *O. dioica*
-comprises at least three cryptic species, not yet formally described: ribosomal and mitochondrial sequences separate
-three clades, from Europe, from mainland Japan and from the Ryukyu Archipelago, which includes Okinawa; animals from
-Okinawa and from mainland Japan do not interbreed [@Masunaga2022]; and the genomes of the three are extensively
-rearranged relative to each other [@Plessy2024]. A genome assembly is public for each: OdB3 from Norway
-[@Denoeud2010], OSKA2016 from near Osaka [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. How their annotations
-represent selenoprotein genes has not been examined.
+loss [@Denoeud2010; @Albalat2016]. The losses extend to a whole organelle: its genome lacks the peroxisomal markers,
+including the peroxisomal ATPases PEX1 and PEX6 [@Zarsky2015; @Kienle2016], and with them the compartment that hosts
+part of the oxidative metabolism of lipids and of the detoxification of reactive oxygen species. An accurate gene
+census is therefore important to these studies, and in particular for the redox enzymes, many of which are
+selenoproteins. *O. dioica* comprises at least three cryptic species, not yet formally described: ribosomal and
+mitochondrial sequences separate three clades, from Europe, from mainland Japan and from the Ryukyu Archipelago,
+which includes Okinawa; animals from Okinawa and from mainland Japan do not interbreed [@Masunaga2022]; and the
+genomes of the three are extensively rearranged relative to each other [@Plessy2024]. A genome assembly is public for
+each: OdB3 from Norway [@Denoeud2010], OSKA2016 from near Osaka [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021].
+How their annotations represent selenoprotein genes has not been examined.
 
 Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
 has 19 selenoprotein genes [@Jiang2010]; a selenocysteine-containing deiodinase was characterised in *Halocynthia
