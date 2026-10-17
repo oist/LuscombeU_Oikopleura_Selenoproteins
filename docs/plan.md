@@ -86,3 +86,11 @@ Built from `results/tables/` only.
   method fails, the annotation pipeline fails, or the assembly is wrong at that locus (moved out of the introduction).
 - Introduction TODO: confirm by a full-text screen of the large surveys that SEPHS2 (Mariotti et al. 2015) is the only
   appendicularian selenoprotein gene reported.
+- Introduction, to revisit once the results are complete: the first paragraph (machinery; consider a table of the
+  machinery genes with their roles and symbols); the importance of the O. dioica selenoproteome (placeholder in the
+  text); the last paragraph (concrete contributions).
+- Gene symbols: TRU-TCA1-1 (human tRNA-Sec gene) appears once, in the Methods, for text searches.
+- Background noted: community metabolomics of marine plankton (Llewellyn et al. 2015 Prog Oceanogr, keywords
+  "meta-metabolomics"; Heal et al. 2021 mSystems) and meta-omics models of plankton ecosystems (Stec et al. 2017);
+  zooplankton-derived dissolved organic matter linked to zooplankton meta-transcriptomes (bioRxiv
+  10.1101/2024.10.27.620474). Our genome annotations of zooplankton feed such approaches.

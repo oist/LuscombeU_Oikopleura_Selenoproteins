@@ -17,21 +17,19 @@ Selenoprotein sets differ between lineages, which have lost selenoprotein genes 
 cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In eukaryotes, a stem–loop
 structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS)
 element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific elongation factor
-eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec (TRU-TCA1-1) to the UGA codon [REF: review of eukaryotic
-selenocysteine insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
-O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS,
-encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine
-biosynthesis on tRNA], and SECp43 (TRNAU1AP) binds tRNA-Sec in complexes with these enzymes [REF: SECp43]. A genome
-that encodes selenoproteins is therefore expected to also encode these machinery genes.
+eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic selenocysteine
+insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec
+kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS),
+using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine biosynthesis on tRNA], and
+SECp43 (TRNAU1AP) binds tRNA-Sec in complexes with these enzymes [REF: SECp43]. A genome that encodes selenoproteins
+is therefore expected to also encode these machinery genes.
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
-in genome annotations [@Mariotti2015]. The errors propagate to every analysis that starts from annotated proteins or
-transcripts: a selenoprotein absent from an annotation cannot be found in a proteomic search, quantified in a
-transcriptome, assigned to an orthologous group or counted among gene losses [REF: example of a selenoprotein missed
-in an omics analysis]. Because they affect one class of genes, these errors also bias comparisons between species. In
-public databases, most selenoprotein genes are misannotated unless a dedicated pipeline is used, and even then about
-one in five remains wrong [@Tico2026]. Outside vertebrates, and for genomes without such a pipeline, the situation is
-largely unmeasured.
+in genome annotations [@Mariotti2015]. A gene missing from an annotation is invisible to the analyses that start from
+annotated genes, such as proteomic searches, transcriptome quantification and orthology inference. In vertebrate
+genomes, most selenoprotein genes are misannotated in public databases unless a dedicated pipeline is used, and even
+then about one in five remains wrong [@Tico2026]. Outside vertebrates, and for genomes without such a pipeline, the
+situation is largely unmeasured.
 
 Programs dedicated to selenoproteins find their genes either by homology to known selenoprotein families, such as
 Selenoprofiles [@Mariotti2010; @Tico2026], or from SECIS elements, such as Seblastian, which predicts selenoprotein
@@ -44,15 +42,16 @@ not known in advance.
 The appendicularian *Oikopleura dioica* is a planktonic tunicate found in the oceans worldwide [@Masunaga2020].
 Appendicularians are among the most abundant zooplankton, and the filter-feeding houses that they discard contribute
 to the vertical flux of carbon in the ocean [@Masunaga2022; REF: primary sources, for example Alldredge 2005 and
-Robison et al. 2005], so that their metabolism matters beyond their own biology. The short life cycle, transparent
-body and invariant embryonic cell lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and
-its small and compact genome, which has lost many genes conserved in other chordates, makes it a model for evolution
-by gene loss [@Denoeud2010; @Albalat2016]. An accurate gene census is therefore important to these studies. *O.
-dioica* comprises at least three cryptic species: populations from Europe, the main islands of Japan and Okinawa form
-distinct clades, the last two do not interbreed [@Masunaga2022], and their genomes are extensively rearranged
-relative to each other [@Plessy2024]. A genome assembly is public for each: OdB3 from Norway [@Denoeud2010], OSKA2016
-from the main islands of Japan [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. How their annotations represent
-selenoprotein genes has not been examined.
+Robison et al. 2005]. Meta-omic studies now aim at the metabolism of whole plankton communities [@Stec2017;
+@Heal2021], and depend on the annotated genomes of their members. The short life cycle, transparent body and
+invariant embryonic cell lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small
+and compact genome, which has lost many genes conserved in other chordates, makes it a model for evolution by gene
+loss [@Denoeud2010; @Albalat2016]. An accurate gene census is therefore important to these studies. *O. dioica*
+comprises at least three cryptic species, not yet formally described: populations from Europe, the main islands of
+Japan and Okinawa form distinct clades, the last two do not interbreed [@Masunaga2022], and their genomes are
+extensively rearranged relative to each other [@Plessy2024]. A genome assembly is public for each: OdB3 from Norway
+[@Denoeud2010], OSKA2016 from the main islands of Japan [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. How
+their annotations represent selenoprotein genes has not been examined.
 
 Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
 has 19 selenoprotein genes [@Jiang2010]; a selenocysteine-containing deiodinase was characterised in *Halocynthia
@@ -65,9 +64,16 @@ dioica*, with its SECIS element [@Mariotti2015]. <!-- TODO: confirm by a full-te
 (SelenoDB 2.0, Secmarker, Baclaocos 2019, Trenz 2021, Esposito 2021). -->
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
-operons whose transcripts are resolved by trans-splicing [@Ganot2004; REF: operons in ascidians]. In addition, part
-of its introns use non-canonical GA–AG splice sites, which gene predictors model poorly [@Denoeud2010].
+operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; REF: operons in
+ascidians]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In
+addition, part of its introns use non-canonical GA–AG splice sites, which gene predictors model poorly
+[@Denoeud2010].
 
+<!-- TODO (once the results are complete): why the selenoproteome of O. dioica matters, for example whether a lineage
+that lost many genes kept the full selenocysteine system or reduced it, as insects and nematodes did; and the
+selenoproteome size of marine organisms (Lobanov et al. 2007). -->
+
+<!-- To revise once the results are complete: list the concrete contributions. -->
 Here we establish the selenoproteome of *O. dioica*, and we use the genomes of six other appendicularian species,
 together with the selenoproteomes of other tunicates, to extrapolate a baseline for appendicularians. We built a
 pipeline that combines the detection of selenoprotein genes, of their selenocysteine machinery and of SECIS elements
@@ -208,7 +214,8 @@ shuffled sequences; threshold; the 19 other predictions; the curated genes below
 
 ## Genome assemblies, annotations and transcripts
 
-Genes are named by the symbols of their human orthologs (HGNC), given at their first mention; appendicularian
+Genes are named by the symbols of their human orthologs (HGNC), given at their first mention (the human tRNA-Sec gene
+is TRU-TCA1-1); appendicularian
 orthologs take the same symbols, and selenoprotein families the root of their members' symbols (for example GPX for
 glutathione peroxidases).
 
