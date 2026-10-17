@@ -82,3 +82,7 @@ Built from `results/tables/` only.
   3. diagnostic features where they exist: selenocysteine or cysteine at the catalytic site of SEPHS2 (SPS2-type),
      the domain IV extension of eEFSec, the domain architecture (Pfam);
   synteny is of little use in O. dioica (scrambled genomes), except between its cryptic species.
+- Discussion: a selenoprotein gene can be missed for three reasons that a survey must distinguish: the prediction
+  method fails, the annotation pipeline fails, or the assembly is wrong at that locus (moved out of the introduction).
+- Introduction TODO: confirm by a full-text screen of the large surveys that SEPHS2 (Mariotti et al. 2015) is the only
+  appendicularian selenoprotein gene reported.
