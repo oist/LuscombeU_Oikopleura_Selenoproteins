@@ -150,12 +150,21 @@ the machinery set with appendicularian proteins: the predictions of the standard
 genomes, and the PSTK and SEPHS2 proteins reconstructed from *O. dioica* transcripts (Methods). The OdB3 assembly
 contributed no sequence and served as a test. With these profiles, the machinery was found in every *O. dioica*
 assembly, including PSTK, whose predicted gene models in OKI2018 and OdB3 match the curated ones, and SEPHS2 with its
-selenocysteine codon (Table MACHINERY). In the fragmented assemblies of *O. longicauda*, *B. stygius* and
-*M. erythrocephalus*, PSTK was predicted only as fragments, which Selenoprofiles discards but which match the PSTK of
-other appendicularians more closely than its relative KTI12. In *F. borealis*, we found no convincing PSTK. SEPHS2 was
-predicted with its selenocysteine codon in seven of the nine genomes; it was not found in *B. stygius* and only
-partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), SECIS-binding protein 2 (SECISBP2) and tRNA-Sec
-were found in every genome. The associated factor SECp43 (TRNAU1AP) was found only in *F. borealis*, whereas the standard profile found it in all other tunicates and in the vertebrates: its absence from the oikopleurid genomes is a candidate gene loss, to be confirmed.
+selenocysteine codon (Table MACHINERY). In the fragmented assemblies of *O. longicauda*, *B. stygius* and *M.
+erythrocephalus*, PSTK was predicted only as fragments, which Selenoprofiles discards but which match the PSTK of
+other appendicularians more closely than its relative KTI12. A search of each genome with the PSTK proteins of the
+other genomes (tblastn), followed by a comparison with KTI12, supported the loci of *O. longicauda* and *M.
+erythrocephalus* (38 and 50 bits closer to PSTK than to KTI12) and the PSTK transcripts of the three *O. dioica*
+transcriptomes (66 to 84 bits), and left that of *B. stygius* ambiguous (24 bits), like the divergent PSTK of *O.
+vanhoeffeni* (13 bits); in *F. borealis* it found no PSTK-like sequence at all, so that the gene may be missing from
+that assembly. SEPHS2 was predicted with its selenocysteine codon in seven of the nine genomes; it was not found in
+*B. stygius* and only partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), SECIS-binding protein 2
+(SECISBP2) and tRNA-Sec were found in every genome. The associated factor SECp43 (TRNAU1AP) was found only in *F.
+borealis*, whereas the standard profile found it in all other tunicates and in the vertebrates. The same search,
+applied to the eight oikopleurid genomes and the three *O. dioica* transcriptomes, found only proteins at most 6 bits
+closer to SECp43 than to TIA1-like RNA-binding proteins, whereas the SECp43 proteins of the other genomes were 65 to
+434 bits closer, and it recovered the SECp43 of *F. borealis* (Methods). SECp43 is therefore absent from the
+Oikopleuridae, and was most parsimoniously lost in their ancestor.
 
 | Gene | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|
@@ -327,6 +336,18 @@ reran Selenoprofiles with the PSTK profile, keeping the predictions that its las
 each of them (blastp [REF: BLAST]) with the PSTK proteins found in the other genomes and with KTI12, a related
 kinase. This test needs proteins of a related family to compare with, and was not applied to the other genes. A discarded prediction counted as a fragment of the gene when its best hit was a protein of
 the gene with an E-value of at most 10^-10^. tRNA-Sec loci were those of stage 1 found by both methods.
+
+## Absence tests
+
+For a machinery gene or associated factor missing from appendicularian genomes, the stage 1 predictions of the gene
+in the other genomes were searched in each appendicularian genome and in the *O. dioica* transcriptomes with tblastn
+(E-value at most 10^-3^). Hits less than 20 kb apart on the same strand formed a locus, whose translated hits
+(genomes) or whose open reading frame around the best hit (transcripts) gave a candidate protein. Each candidate was
+compared by blastp with the proteins of the gene (the profile sequences and the stage 1 predictions of the other
+genomes) and with proteins of related families: TIA1-like RNA-binding proteins from the Selenoprofiles UniRef50
+database for SECp43, KTI12 for PSTK. The margin, the score of the best hit to the gene minus that of the best hit to
+the related family, classified the candidate as supported (at least 30 bits), ambiguous (10 to 30 bits) or a related
+protein. The stage 1 predictions of the gene, scored in the same way, served as positive controls.
 
 ## SECIS scores against genomic background
 
