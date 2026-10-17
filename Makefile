@@ -16,6 +16,7 @@ fetch:
 stage1:
 	@test -d work/stage1/pipeline/compare || { echo "No pipeline output in work/stage1/pipeline: run stage1/run.sh first"; exit 1; }
 	python3 stage1/collect.py --outdir work/stage1/pipeline --out-dir results/tables
+	mkdir -p results/pipeline_info && cp data/MD5SUMS results/pipeline_info/stage1_input_MD5SUMS.txt
 
 
 # Baseline: reviewed decisions in curation/*.tsv, checked against stage 1 outputs
