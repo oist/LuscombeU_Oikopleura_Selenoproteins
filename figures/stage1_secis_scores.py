@@ -12,10 +12,14 @@ genome, with the gathering threshold. Sequences without any reported hit are dra
 import argparse, gzip, os, random, subprocess, tempfile
 from collections import defaultdict
 
-GENOMES = ["OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"]
+APPENDICULARIANS = ["OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"]
+OTHERS = ["Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Hsap", "Mmus", "Drer"]
+GENOMES = APPENDICULARIANS  # set by --all; the appendicularians come first, so that their random windows do not change
 NAMES = {"OKI": "O. dioica OKI2018", "OSKA": "O. dioica OSKA2016", "OdB3": "O. dioica OdB3", "Olon": "O. longicauda",
          "Oalb": "O. albicans", "Ovan": "O. vanhoeffeni", "Bsty": "B. stygius", "Mery": "M. erythrocephalus",
-         "Fbor": "F. borealis"}
+         "Fbor": "F. borealis", "Cint": "C. intestinalis", "Crob": "C. robusta", "Csav": "C. savignyi",
+         "Hror": "H. roretzi", "Scla": "S. clava", "Tdem": "T. democratica", "Hsap": "H. sapiens", "Mmus": "M. musculus",
+         "Drer": "D. rerio"}
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 
 
@@ -94,8 +98,11 @@ def main():
     ap.add_argument("--baseline", default="", help="curation table: adds the 3' sequences of the curated Sec genes")
     ap.add_argument("--seed", type=int, default=0, help="offset for the random windows")
     ap.add_argument("--replot", action="store_true", help="only redraw the figure from --table")
+    ap.add_argument("--all", action="store_true", help="also the other tunicates and the vertebrates")
     ap.add_argument("--max", action="store_true", help="cmsearch --max: no filters, so that every sequence gets its best score (slower)")
     a = ap.parse_args()
+    global GENOMES
+    if a.all: GENOMES = APPENDICULARIANS + OTHERS
     if a.replot:
         ga = next((float(l.split()[1]) for l in open(a.cm) if l.startswith("GA ")), 0.0)
         rows = [(r["genome"], r["group"], r["sequence"], int(r["length"]), float(r["best_bits"]) if r["best_bits"] else None,
@@ -105,14 +112,15 @@ def main():
     rows = []
     for g in GENOMES:
         tp = list(read_fasta(f"{a.pipeline}/selenoprofiles/{g}.three_prime.fa"))
-        bg = background(f"data/genomes/{g}/genome.fna.gz", a.background, 6000, seed=a.seed + GENOMES.index(g))
+        genome = f"data/genomes/{g}/genome.fna.gz"
+        bg = background(genome, a.background, 6000, seed=a.seed + GENOMES.index(g)) if os.path.exists(genome) else []
         recs = [(h, s, "selenocysteine" if label(h) == "selenocysteine" else "other prediction") for h, s in tp] + \
                [(h, s, "random window") for h, s in bg]
         if a.baseline:
             recs += [(h, s, "curated Sec gene") for h, s in curated(a.baseline, g)]
         for (h, s, grp), (sc, b, e) in zip(recs, best_scores(a.cm, [(h, s) for h, s, _ in recs], a.cpus, a.max)):
             rows.append((g, grp, h.split()[0], len(s), sc, b, e))
-        print(g, len(tp), "3' sequences,", len(bg), "random windows", flush=True)
+        print(g, len(tp), "3' sequences,", len(bg), "random windows" + ("" if bg else " (genome not available)"), flush=True)
     with open(a.table, "w") as o:
         o.write("genome\tgroup\tsequence\tlength\tbest_bits\tstart\tend\n")
         for r in rows: o.write("\t".join("" if x is None else str(x) for x in r) + "\n")
@@ -128,12 +136,15 @@ def plot(rows, ga, prefix, model_name="RF00031"):
                "random window": "#2c3e50"}
     ticks = {"curated Sec gene": "curated\nSec genes", "selenocysteine": "Sec\npredictions",
              "other prediction": "other\npredictions", "random window": "random\nwindows"}
-    fig, axes = plt.subplots(3, 3, figsize=(10, 9), sharey=True)
+    genomes = [g for g in NAMES if any(r[0] == g for r in rows)]
+    ncol = 3 if len(genomes) <= 9 else 6
+    nrow = -(-len(genomes) // ncol)
+    fig, axes = plt.subplots(nrow, ncol, figsize=(3.4 * ncol, 3 * nrow), sharey=True, squeeze=False)
     top = max(50, max((r[4] or 0) for r in rows) + 10)
     rng = random.Random(0)
     data = defaultdict(list)
     for g, grp, _, length, sc, _, _ in rows: data[(g, grp)].append(-3 + rng.uniform(-1.5, 1.5) if sc is None else sc)
-    for ax, g in zip(axes.flat, GENOMES):
+    for ax, g in zip(axes.flat, genomes):
         for k, grp in enumerate(groups):
             ys = data[(g, grp)]
             ax.scatter([k + rng.uniform(-0.25, 0.25) for _ in ys], ys, s=6, alpha=0.6, color=colours[grp], linewidths=0)
@@ -145,6 +156,7 @@ def plot(rows, ga, prefix, model_name="RF00031"):
         ax.set_title(NAMES[g], fontsize=9, style="italic"); ax.set_xticks(range(len(groups)))
         ax.set_xticklabels([ticks[x] for x in groups], fontsize=7)
         ax.set_ylim(-5, top)
+    for ax in axes.flat[len(genomes):]: ax.set_visible(False)
     for ax in axes[:, 0]: ax.set_ylabel(f"best {model_name} score (bits)", fontsize=8)
     thr = f"dashed: gathering threshold, {ga:g} bits; " if ga else ""
     fig.suptitle(f"{model_name} scores of the Selenoprofiles 3′ sequences and of random genomic windows\n"

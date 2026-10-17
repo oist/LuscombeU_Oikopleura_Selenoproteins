@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 machinery machinery-profiles machinery-test machinery-fragments machinery-census check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census check clean
 all: stage1 curation secis
 
 fetch:
@@ -51,6 +51,11 @@ secis-stage2:
 	    --table results/tables/stage2_secis_scores.tsv --figure figures/stage2_secis_scores
 
 secis: secis-stage1 secis-model secis-stage2
+
+# Stage 1 figures on all eighteen genomes (random windows only for the genomes in data/genomes)
+stage1-figures:
+	python3 figures/stage1_overview.py
+	python3 figures/stage1_secis_scores.py --all --table results/tables/stage1_secis_scores_all.tsv --figure figures/stage1_secis_scores_all
 
 # Machinery: appendicularian Selenoprofiles profiles, and their test on the genomes (Selenoprofiles in the image)
 #   sbatch --cpus-per-task=4 scripts/run_in_container.sh make machinery
