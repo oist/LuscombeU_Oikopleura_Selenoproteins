@@ -119,3 +119,18 @@ Built from `results/tables/` only.
     human; the absence test (tunicate references, KTI12 outgroup) and a phylogeny are the evidence.
   - Phylogenies needed: PSTK (with KTI12), SEPHS (SPS1/SPS2, with the Mariotti et al. 2015 sequences), SBP2 family
     (placement before the vertebrate duplication).
+- Phylogenies, provisional (2026-10-18; sandbox, one CPU, LG+G4/R4 only; to redo on Deigo with the full model
+  search and a site-heterogeneous model):
+  - PSTK (154 sequences, rooted on KTI12): appendicularian PSTK form a clade (100) inside a tunicate group (74), not
+    with KTI12; the PSTK/KTI12 split has only 54; the appendicularian clade is sister to insect-gut fungi (83), a
+    long-branch artefact.
+  - SEPHS (131, midpoint): vertebrate SEPHS1/SEPHS2 separate (100 each); tunicate selenocysteine copies (89) and
+    glycine forms (97) separate; appendicularians have a second, non-selenocysteine SEPHS (Ala/Ser; Olon, Oalb, Ovan,
+    OKI2018; 100) sister to the ascidian glycine form (95); the appendicularian SEPHS2 with selenocysteine (all nine)
+    sit on a long branch outside the animal group. To check: the non-selenocysteine copy in OSKA2016 and OdB3; the
+    Mariotti et al. 2015 SPS1/SPS2 sequence set.
+  - SECISBP2 family (118, rooted on non-animal sequences; ClipKIT gappy 0.5, 304 columns; length filter 0.2 so that
+    the domain-only tunicate predictions enter): oikopleurid proteins (99) nest inside the tunicate clade (87), sister
+    to Thalia; tunicates group with protostome and echinoderm SECIS-binding proteins (39), and the vertebrate
+    SECISBP2 and SECISBP2L clades (100 each) are not resolved against them (34-41): the tunicate gene is a single
+    SECIS-binding protein that cannot be assigned to either vertebrate paralog. F. borealis is misplaced (13).

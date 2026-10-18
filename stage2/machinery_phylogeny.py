@@ -53,6 +53,8 @@ def main():
     ap.add_argument("--human", default="data/genomes/Hsap")
     ap.add_argument("--min-fraction", type=float, default=0.5)
     ap.add_argument("--max-uniref-outgroups", type=int, default=12)
+    ap.add_argument("--clipkit-mode", default="smart-gap", help="ClipKIT trimming mode (for example gappy)")
+    ap.add_argument("--clipkit-gaps", default="", help="ClipKIT gap threshold, for the gappy modes (for example 0.5)")
     ap.add_argument("--mset", default="LG,WAG,JTT", help="substitution matrices tested by ModelFinder")
     ap.add_argument("--mrate", default="", help="rate models tested by ModelFinder (for example G4,R4,R5; default: all)")
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
@@ -123,7 +125,8 @@ def main():
           with open(f"{base}.aln", "w") as o:
             subprocess.run(["mafft", "--localpair", "--maxiterate", "1000", "--thread", str(a.cpus), "--quiet",
                             f"{base}.faa"], stdout=o, check=True)
-          subprocess.run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed"], check=True, stdout=subprocess.DEVNULL)
+          subprocess.run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed", "-m", a.clipkit_mode] +
+                         (["-g", a.clipkit_gaps] if a.clipkit_gaps else []), check=True, stdout=subprocess.DEVNULL)
         if not os.path.exists(f"{base}.iqtree"):  # resumes from the IQ-TREE checkpoint after an interruption
             subprocess.run(["iqtree2", "-s", f"{base}.trimmed", "-m", "MFP", "-mset", a.mset] +
                            (["-mrate", a.mrate] if a.mrate else []) +
