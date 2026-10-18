@@ -11,16 +11,14 @@
 # writable from compute nodes (at OIST, submit from a clone on /flash, not from /bucket; see README).
 # environment: IMAGE = a local .sif file, or a docker:// or oras:// address (default below: the image built from
 # environment.yml, converted by Singularity on first use). The same image as a ready-made Singularity file:
-#   curl -L -o oikopleura-selenoproteins.sif https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/c7/c7a5982e08142390038579f334f8683c3a4cd9c922d0c4e84227b5eb2c65d421/data
+#   curl -L -o oikopleura-selenoproteins.sif https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/01/01f97964b602eb92df40953e514e229909c392ef20b1b5ac6db653480358dbe9/data
 #   export IMAGE=$PWD/oikopleura-selenoproteins.sif
 # Links from data/ or work/<stage>/<dir> to other directories are bound automatically; other directories outside the
 # repository must be bound with SINGULARITY_BIND=<dir>.
 set -euo pipefail
 if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname "$0")/.." && pwd); fi
 [[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
-# The image 60a1e963fa7d21f6 predates IQ-TREE and ClipKIT (machinery phylogenies): rebuild it from environment.yml
-# with Wave before running make machinery-phylogeny in the container.
-IMAGE=${IMAGE:-docker://community.wave.seqera.io/library/oikopleura-selenoproteins:60a1e963fa7d21f6}
+IMAGE=${IMAGE:-docker://community.wave.seqera.io/library/oikopleura-selenoproteins:d047a0ceba5e9413}
 RUNNER=$(command -v singularity || command -v apptainer) || {
     echo "singularity or apptainer not found: load it before running or submitting this script (at OIST: ml singularity;" >&2
     echo "sbatch passes the loaded environment to the job)" >&2; exit 1; }
