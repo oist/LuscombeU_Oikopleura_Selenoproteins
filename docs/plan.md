@@ -140,10 +140,14 @@ Built from `results/tables/` only.
     with C20); their position inside PSTK is unstable, a long-branch effect (next to birds with JTT+F+R6, next to
     insect-gut fungi with C20, 81). Conclusion: PSTK, position within the family unresolved.
   - SEPHS: the non-selenocysteine appendicularian copies (Olon, Oalb, Ovan, OKI2018) group with the tunicate glycine
-    forms (94; C20 95), and with the appendicularian selenocysteine SEPHS2 (90; C20 84): both appendicularian genes
-    descend from the tunicate SEPHS lineage that also gives the ascidian glycine form, unlike the selenocysteine
-    copies of Styela, Halocynthia and Thalia (91; C20 56). F. borealis SEPHS2 is misplaced.
+    forms (94; C20 95). The appendicularian selenocysteine SEPHS2 form their own clade (100, with F. borealis) at the
+    base of the eukaryotic SEPHS (90 is the support of the whole eukaryotic group, not of a grouping with the glycine
+    forms: corrected after drawing the collapsed tree); their position is unresolved (long branch). The
+    selenocysteine copies of Styela, Halocynthia and Thalia group together (91; C20 56).
   - SECISBP2 family: the oikopleurid proteins form a clade (100, with the O. dioica profile sequence), sister to
     Nematostella (70), not with the other tunicates (90, among protostome and echinoderm proteins, 18): unlike the
     provisional tree, no support for grouping appendicularians with other tunicates. Conclusion: a member of the
     SECIS-binding protein family, orthology to the tunicate gene and to the vertebrate paralogs unresolved.
+- Display trees (figures/phylogeny_<family>_collapsed.*, figures/phylogeny_collapsed.py): nodes with ultrafast
+  bootstrap < 50 collapsed into polytomies; clades of a single taxonomic group (config/taxon_groups.tsv, assigned
+  by hand from genus names) drawn as one tip; appendicularian and other tunicate sequences always shown.

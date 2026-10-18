@@ -12,3 +12,4 @@ the `secis-*` targets of the Makefile); they need Infernal and matplotlib, avail
 `--replot` redraws a figure from its table.
 | `stage1_overview.py` | `stage1-figures` | stage 1 per genome (18 genomes): selenocysteine predictions and their RF00031 support, fraction in correctly annotated genes, tRNA-Sec loci and machinery genes (`stage1_overview.*`) |
 | `stage1_secis_scores.py --all` | `stage1-figures` | RF00031 scores of the 3′ sequences of all eighteen genomes, with random windows where the genome is available (`stage1_secis_scores_all.*`) |
+| `phylogeny_collapsed.py` | after `machinery-phylogeny` | display versions of the machinery trees: nodes with ultrafast bootstrap below 50 collapsed, clades of one taxonomic group (`config/taxon_groups.tsv`) drawn as one tip, tunicate sequences kept (`phylogeny_<family>_collapsed.*`) |
