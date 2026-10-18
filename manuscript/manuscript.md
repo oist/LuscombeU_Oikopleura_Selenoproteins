@@ -9,23 +9,20 @@ bibliography: references.bib
 
 <!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
-Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon.
-Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms
-the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox homeostasis, and
-iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [REF: review of selenoprotein functions].
-Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced their selenocysteine by
-cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In eukaryotes, a stem–loop
-structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS)
-element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific elongation factor
-eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic selenocysteine
-insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec
-kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS),
-using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine biosynthesis on tRNA]. These
-six components are dedicated to selenocysteine, and a genome that encodes selenoproteins is therefore expected to
-also encode them; we call them the machinery. An associated factor, SECp43 (TRNAU1AP), binds tRNA-Sec in complexes
-with SecS and SEPHS2 [REF: SECp43], but its role is debated: selenoprotein synthesis did not depend on it in mouse
-liver and neurons [@Mahdi2015], whereas it enhanced the translation of several selenoproteins in glioblastoma stem
-cells [@Zhang2026].
+Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenium is
+an essential trace element, with a narrow range between deficiency and toxicity [REF: selenium requirement and
+toxicity]. Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in
+which it forms the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox
+homeostasis, and iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [REF: review of
+selenoprotein functions]. Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced
+their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In
+eukaryotes, a stem–loop structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion
+sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
+elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic
+selenocysteine insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
+O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS,
+encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine
+biosynthesis on tRNA]. This machinery is expected in any genome that encodes selenoproteins.
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
 in genome annotations [@Mariotti2015]. A gene missing from an annotation is invisible to the analyses that start from
@@ -49,36 +46,31 @@ Robison et al. 2005]. Meta-omic studies now aim at the metabolism of whole plank
 @Heal2021], and depend on the annotated genomes of their members. The short life cycle, transparent body and
 invariant embryonic cell lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small
 and compact genome, which has lost many genes conserved in other chordates, makes it a model for evolution by gene
-loss [@Denoeud2010; @Albalat2016].
+loss [@Denoeud2010; @Albalat2016]. *O. dioica* has even lost its peroxisomes [@Zarsky2015; @Kienle2016;
+@Bliznina2021], which raises the question of how it detoxifies reactive oxygen species, a function in which several
+selenoproteins take part.
 
-*O. dioica* comprises at least three cryptic species, not yet formally described: ribosomal and mitochondrial
-sequences separate three clades, from Europe, from mainland Japan and from the Ryukyu Archipelago, which includes
-Okinawa; animals from Okinawa and from mainland Japan do not interbreed [@Masunaga2022]; and the genomes of the three
-are extensively rearranged relative to each other [@Plessy2024]. A genome assembly is public for each: OdB3 from
-Norway [@Denoeud2010], OSKA2016 from near Osaka [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. The gene losses
-extend to a whole organelle: the peroxisomal markers, including the peroxisomal ATPases PEX1 and PEX6, are missing
-from the OdB3 assembly [@Zarsky2015; @Kienle2016] and from the OKI2018 genome and transcriptome [@Bliznina2021],
-which represent the two most divergent cryptic species of *O. dioica* [@Masunaga2022], so that *O. dioica* lacks the
-compartment that hosts part of the oxidative metabolism of lipids and of the detoxification of reactive oxygen
-species. Telling such losses from gaps in the annotations requires an accurate gene census, in particular for the
-redox enzymes, many of which are selenoproteins. How the annotations of the three assemblies represent selenoprotein
-genes has not been examined.
+*O. dioica* comprises at least three cryptic species, not yet formally described: animals found in the main islands
+of Japan and in Okinawa do not interbreed [@Masunaga2022], and the genomes of the three species are extensively
+rearranged relative to each other [@Plessy2024]. A genome assembly is public for each: OdB3 from Norway
+[@Denoeud2010], OSKA2016 from near Osaka [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. How the annotations of
+the three assemblies represent selenoprotein genes has not been examined.
 
 Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
-has 19 selenoprotein genes [@Jiang2010]; a selenocysteine-containing deiodinase was characterised in *Halocynthia
-roretzi* [@Shepherdley2004]; and in ascidians the selenophosphate synthetase gene acquired an alternative isoform
-that does not carry selenocysteine [@Mariotti2015]. A survey of the thyroid hormone toolkit across chordates found
-that tunicate deiodinase sequences in public databases often lack parts of the protein [@Esposito2021], an example of
-how annotation errors limit comparative studies. No appendicularian selenoproteome has been described; to our
-knowledge, the only appendicularian selenoprotein gene reported is the selenophosphate synthetase SEPHS2 of *O.
-dioica*, with its SECIS element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen of the large surveys
-(SelenoDB 2.0, Secmarker, Baclaocos 2019, Trenz 2021, Esposito 2021). -->
+has 19 selenoprotein genes [@Jiang2010] and a selenocysteine-containing deiodinase was characterised in *Halocynthia
+roretzi* [@Shepherdley2004]. A survey of the thyroid hormone toolkit across chordates found that tunicate deiodinase
+sequences in public databases often lack parts of the protein [@Esposito2021], an example of how annotation errors
+limit comparative studies. No appendicularian selenoproteome has been described; to our knowledge, the only
+appendicularian selenoprotein gene reported is the selenophosphate synthetase SEPHS2 of *O. dioica*, with its SECIS
+element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen of the large surveys (SelenoDB 2.0, Secmarker,
+Baclaocos 2019, Trenz 2021, Esposito 2021). -->
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
 operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; REF: operons in
 ascidians]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In
 addition, part of its introns use non-canonical GA–AG splice sites, which gene predictors model poorly
-[@Denoeud2010].
+[@Denoeud2010]. Selenoprotein genes can also take unexpected forms: in ascidians, the selenophosphate synthetase gene
+produces an alternative isoform that does not carry selenocysteine [@Mariotti2015].
 
 <!-- TODO (once the results are complete): why the selenoproteome of O. dioica matters, for example whether a lineage
 that lost many genes kept the full selenocysteine system or reduced it, as insects and nematodes did; and the
@@ -159,12 +151,15 @@ transcriptomes (66 to 84 bits), and left that of *B. stygius* ambiguous (24 bits
 vanhoeffeni* (13 bits); in *F. borealis* it found no PSTK-like sequence at all, so that the gene may be missing from
 that assembly. SEPHS2 was predicted with its selenocysteine codon in seven of the nine genomes; it was not found in
 *B. stygius* and only partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), SECIS-binding protein 2
-(SECISBP2) and tRNA-Sec were found in every genome. The associated factor SECp43 (TRNAU1AP) was found only in *F.
-borealis*, whereas the standard profile found it in all other tunicates and in the vertebrates. The same search,
-applied to the eight oikopleurid genomes and the three *O. dioica* transcriptomes, found only proteins at most 6 bits
-closer to SECp43 than to TIA1-like RNA-binding proteins, whereas the SECp43 proteins of the other genomes were 65 to
-434 bits closer, and it recovered the SECp43 of *F. borealis* (Methods). SECp43 is therefore absent from the
-Oikopleuridae, and was most parsimoniously lost in their ancestor.
+(SECISBP2) and tRNA-Sec were found in every genome. Selenoprofiles also searches for SECp43 (TRNAU1AP), which binds
+tRNA-Sec in complexes with SecS and SEPHS2 [REF: SECp43] but is an associated factor whose role is debated:
+selenoprotein synthesis did not depend on it in mouse liver and neurons [@Mahdi2015], whereas it enhanced the
+translation of several selenoproteins in glioblastoma stem cells [@Zhang2026]. We therefore report it separately.
+SECp43 was found only in *F. borealis*, whereas the standard profile found it in all other tunicates and in the
+vertebrates. The same search, applied to the eight oikopleurid genomes and the three *O. dioica* transcriptomes,
+found only proteins at most 6 bits closer to SECp43 than to TIA1-like RNA-binding proteins, whereas the SECp43
+proteins of the other genomes were 65 to 434 bits closer, and it recovered the SECp43 of *F. borealis* (Methods).
+SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously lost in their ancestor.
 
 | Gene | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|
