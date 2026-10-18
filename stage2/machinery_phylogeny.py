@@ -155,16 +155,17 @@ def draw(treefile, groups, fam, figdir):
     reroot_keeping_supports(tree, reroot)
     tree.ladderize()
     n = len(tree.get_terminals())
-    fig, ax = plt.subplots(figsize=(9, max(6, 0.16 * n)))
-    Phylo.draw(tree, axes=ax, do_show=False,
-               label_colors=lambda name: COLOURS.get(groups.get(name, "profile"), "#2c3e50"),
+    fig, ax = plt.subplots(figsize=(10, max(6, 0.16 * n)))
+    Phylo.draw(tree, axes=ax, do_show=False, label_func=lambda c: c.name[:45] if c.is_terminal() else None,
+               label_colors=lambda lab: COLOURS.get(next((groups[k] for k in groups if k[:45] == lab), "profile"), "#2c3e50"),
                branch_labels=lambda c: f"{c.confidence:.0f}" if c.confidence is not None and c.confidence >= 70 and
                not c.is_terminal() else "")
     for t in ax.texts: t.set_fontsize(5)
+    length_column(ax, tree, sequence_lengths(treefile), fontsize=5)
     ax.set_title(f"{fam}: maximum-likelihood tree (IQ-TREE, ultrafast bootstraps >= 70 shown); red: appendicularians, "
                  f"orange: other tunicates, blue: vertebrates, purple: curated transcripts, grey: outgroup", fontsize=7)
     ax.set_ylabel(""); ax.set_yticks([])
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 0.9, 1))
     for ext in ("png", "pdf"): fig.savefig(f"{figdir}/phylogeny_{fam}.{ext}", dpi=200)
     plt.close(fig)
 
@@ -181,6 +182,34 @@ def reroot_keeping_supports(tree, reroot):
     reroot(tree)
     for c in tree.get_nonterminals():
         c.confidence = None if c is tree.root else before.get(key(c))
+
+
+def sequence_lengths(treefile):
+    """Unaligned lengths of the sequences of a tree, from <family>.faa next to the tree or in the parent directory."""
+    import os
+    base = treefile[:-len(".treefile")]
+    for faa in (f"{base}.faa", os.path.join(os.path.dirname(os.path.dirname(base)), os.path.basename(base) + ".faa")):
+        if os.path.exists(faa):
+            lengths, name = {}, None
+            for l in open(faa):
+                if l.startswith(">"): name = l[1:].strip(); lengths[name] = 0
+                else: lengths[name] += len(l.strip().replace("-", ""))
+            return lengths
+    return {}
+
+
+def length_column(ax, tree, lengths, members=None, fontsize=6):
+    """Protein length to the right of each tip; for a collapsed tip, the median and the range of its sequences."""
+    import statistics
+    from matplotlib.transforms import blended_transform_factory
+    tr = blended_transform_factory(ax.transAxes, ax.transData)
+    ax.text(1.01, 0.2, "length (aa)", transform=tr, fontsize=fontsize, fontweight="bold", va="center")
+    for i, tip in enumerate(tree.get_terminals()):
+        names = (members or {}).get(tip.name, [tip.name])
+        ls = [lengths[n] for n in names if n in lengths]
+        if not ls: continue
+        text = f"{ls[0]}" if len(ls) == 1 else f"{statistics.median(ls):.0f} ({min(ls)}-{max(ls)})"
+        ax.text(1.01, i + 1, text, transform=tr, fontsize=fontsize, va="center")
 
 
 if __name__ == "__main__":
