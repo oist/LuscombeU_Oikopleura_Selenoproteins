@@ -88,8 +88,17 @@ machinery-rbh:
 	python3 stage2/machinery_rbh.py --predictions work/stage2/machinery_test/*.faa --table results/tables/stage2_machinery_rbh.tsv
 
 # Phylogenies of PSTK (with KTI12), SEPHS (SPS1/SPS2) and the SECISBP2 family (needs IQ-TREE and ClipKIT)
+# Runs in the current shell (no job submission); on a cluster, wrap it in one job, for example
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=24:00:00 scripts/run_in_container.sh make machinery-phylogeny
+# The scripts use SLURM_CPUS_PER_TASK threads.
+# Starts afresh: the trees in results/trees (committed provisional versions) are removed first; within one run the
+# script resumes from the IQ-TREE checkpoints.
 machinery-phylogeny:
-	python3 stage2/machinery_phylogeny.py
+	rm -rf results/trees/C20 && rm -f results/trees/*.aln results/trees/*.trimmed results/trees/*.treefile results/trees/*.iqtree results/trees/*.ckp.gz results/trees/*.log
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2
+	python3 stage2/machinery_phylogeny.py --families SBP2 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5
+	mkdir -p results/trees/C20 && cp results/trees/pstk.trimmed results/trees/SEPHS2.trimmed results/trees/C20/ 2>/dev/null || true
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 
