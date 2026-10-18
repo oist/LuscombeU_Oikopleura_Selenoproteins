@@ -134,3 +134,16 @@ Built from `results/tables/` only.
     to Thalia; tunicates group with protostome and echinoderm SECIS-binding proteins (39), and the vertebrate
     SECISBP2 and SECISBP2L clades (100 each) are not resolved against them (34-41): the tunicate gene is a single
     SECIS-binding protein that cannot be assigned to either vertebrate paralog. F. borealis is misplaced (13).
+- Phylogenies, final (2026-10-19, Deigo, 8 CPUs; full ModelFinder: PSTK JTT+F+R6, SEPHS LG+R6, SECISBP2 family
+  LG+I+R5; plus LG+C20+F+G for PSTK and SEPHS in results/trees/C20):
+  - PSTK: appendicularian PSTK monophyletic (100) and inside PSTK, not KTI12 (PSTK/KTI12 split 94 with JTT+F+R6, 52
+    with C20); their position inside PSTK is unstable, a long-branch effect (next to birds with JTT+F+R6, next to
+    insect-gut fungi with C20, 81). Conclusion: PSTK, position within the family unresolved.
+  - SEPHS: the non-selenocysteine appendicularian copies (Olon, Oalb, Ovan, OKI2018) group with the tunicate glycine
+    forms (94; C20 95), and with the appendicularian selenocysteine SEPHS2 (90; C20 84): both appendicularian genes
+    descend from the tunicate SEPHS lineage that also gives the ascidian glycine form, unlike the selenocysteine
+    copies of Styela, Halocynthia and Thalia (91; C20 56). F. borealis SEPHS2 is misplaced.
+  - SECISBP2 family: the oikopleurid proteins form a clade (100, with the O. dioica profile sequence), sister to
+    Nematostella (70), not with the other tunicates (90, among protostome and echinoderm proteins, 18): unlike the
+    provisional tree, no support for grouping appendicularians with other tunicates. Conclusion: a member of the
+    SECIS-binding protein family, orthology to the tunicate gene and to the vertebrate paralogs unresolved.
