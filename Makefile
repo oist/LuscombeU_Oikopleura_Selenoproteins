@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba check clean
 all: stage1 curation secis
 
 fetch:
@@ -101,6 +101,11 @@ machinery-phylogeny:
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
 	python3 figures/phylogeny_collapsed.py
 	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2 --trees results/trees/C20 --figures results/trees/C20
+
+# Long-branch analyses of the machinery trees (after machinery-phylogeny): PMSF LG+C60, slow-fast, taxon removal,
+# AU test; several hours to days on 8 CPUs
+machinery-lba:
+	python3 stage2/machinery_lba.py
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 

@@ -139,6 +139,13 @@ Built from `results/tables/` only.
   - PSTK: appendicularian PSTK monophyletic (100) and inside PSTK, not KTI12 (PSTK/KTI12 split 94 with JTT+F+R6, 52
     with C20); their position inside PSTK is unstable, a long-branch effect (next to birds with JTT+F+R6, next to
     insect-gut fungi with C20, 81). Conclusion: PSTK, position within the family unresolved.
+    CORRECTION (2026-10-19): the PSTK/KTI12 split has 100 with both models. The values 94 and 52 above, and the
+    earlier provisional 54, came from a display error: Bio.Phylo moves supports by one branch along the rerooting
+    path. Supports are now read from the unrooted bipartitions, and the figure scripts put them back on their
+    bipartitions after rerooting (reroot_keeping_supports). Other values checked from the unrooted trees: PSTK
+    appendicularian clade 100; SEPHS appendicularian selenocysteine clade 100 (C20 60), non-selenocysteine clade 100,
+    with the tunicate glycine forms 94 (C20 95), tunicate selenocysteine copies 91 (C20 56); SECIS-binding proteins:
+    oikopleurid clade 100, with Nematostella 70, other tunicates 90.
   - SEPHS: the non-selenocysteine appendicularian copies (Olon, Oalb, Ovan, OKI2018) group with the tunicate glycine
     forms (94; C20 95). The appendicularian selenocysteine SEPHS2 form their own clade (100, with F. borealis) at the
     base of the eukaryotic SEPHS (90 is the support of the whole eukaryotic group, not of a grouping with the glycine
@@ -151,3 +158,9 @@ Built from `results/tables/` only.
 - Display trees (figures/phylogeny_<family>_collapsed.*, figures/phylogeny_collapsed.py): nodes with ultrafast
   bootstrap < 50 collapsed into polytomies; clades of a single taxonomic group (config/taxon_groups.tsv, assigned
   by hand from genus names) drawn as one tip; appendicularian and other tunicate sequences always shown.
+- Long-branch analyses (stage2/machinery_lba.py, make machinery-lba; to run on Deigo): LG+C60+F+G with PMSF,
+  slow-fast removal of the fastest sites (10 to 40 %), removal of non-target long branches (insect-gut fungi in
+  PSTK), and an AU test of the grouping of appendicularians with the other tunicates. Background: O. dioica proteins
+  evolve about twice as fast as those of Ciona, with homogeneous divergence across amino acids and a fast-evolving
+  cysteine (Berna et al. 2012, doi:10.1016/j.ympev.2011.11.013; Berna and Alvarez-Valin 2015,
+  doi:10.1016/j.margen.2015.07.007); the cysteine result also matters for the selenocysteine/cysteine homologs.

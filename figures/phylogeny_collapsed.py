@@ -68,12 +68,14 @@ def draw(fam, a, taxa):
     out = [c for c in tree.get_terminals() if grp[c.name] == "outgroup"]
     nonanimal = [c for c in tree.get_terminals() if grp[c.name] in
                  ("Green algae", "Red algae", "Stramenopiles", "Cryptophytes", "Amoebozoans", "Heteroloboseans")]
-    try:
-        if out: tree.root_with_outgroup(out if tree.is_monophyletic(out) else out[0])
-        elif fam == "SBP2" and nonanimal: tree.root_with_outgroup(nonanimal if tree.is_monophyletic(nonanimal) else nonanimal[0])
-        else: tree.root_at_midpoint()
-    except Exception:
-        tree.root_at_midpoint()
+    def reroot(t):
+        try:
+            if out: t.root_with_outgroup(out if t.is_monophyletic(out) else out[0])
+            elif fam == "SBP2" and nonanimal: t.root_with_outgroup(nonanimal if t.is_monophyletic(nonanimal) else nonanimal[0])
+            else: t.root_at_midpoint()
+        except Exception:
+            t.root_at_midpoint()
+    reroot_keeping_supports(tree, reroot)
     # 1. weak nodes become polytomies
     for c in list(tree.find_clades(order="postorder")):
         if c is tree.root or c.is_terminal(): continue
@@ -145,6 +147,20 @@ def draw(fam, a, taxa):
     for ext in ("png", "pdf"): fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)
     plt.close(fig)
     print(fam, n, "tips after collapsing")
+
+
+def reroot_keeping_supports(tree, reroot):
+    """Reroot with reroot(tree), then put each support back on its bipartition: Bio.Phylo keeps supports on node
+    objects, so that rerooting moves them by one branch along the path between the old and the new root."""
+    names = frozenset(x.name for x in tree.get_terminals())
+
+    def key(c):
+        leaves = frozenset(x.name for x in c.get_terminals())
+        return min(leaves, names - leaves, key=lambda s: (len(s), sorted(s)))
+    before = {key(c): c.confidence for c in tree.get_nonterminals() if c is not tree.root}
+    reroot(tree)
+    for c in tree.get_nonterminals():
+        c.confidence = None if c is tree.root else before.get(key(c))
 
 
 if __name__ == "__main__":

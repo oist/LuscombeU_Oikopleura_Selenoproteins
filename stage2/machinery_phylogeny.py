@@ -142,15 +142,18 @@ def draw(treefile, groups, fam, figdir):
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     tree = Phylo.read(treefile, "newick")
-    out = [c for c in tree.get_terminals() if groups.get(c.name) == "outgroup"]
-    if out:
-        try: tree.root_with_outgroup(out if len(out) > 1 and tree.is_monophyletic(out) else out[0])
-        except Exception: tree.root_at_midpoint()
-    else:
-        tree.root_at_midpoint()
-    tree.ladderize()
     for c in tree.get_nonterminals():  # IQ-TREE writes bootstraps as clade names
         if c.name and re.fullmatch(r"\d+(\.\d+)?", c.name): c.confidence, c.name = float(c.name), None
+    out = [c for c in tree.get_terminals() if groups.get(c.name) == "outgroup"]
+
+    def reroot(t):
+        try:
+            if out: t.root_with_outgroup(out if len(out) > 1 and t.is_monophyletic(out) else out[0])
+            else: t.root_at_midpoint()
+        except Exception:
+            t.root_at_midpoint()
+    reroot_keeping_supports(tree, reroot)
+    tree.ladderize()
     n = len(tree.get_terminals())
     fig, ax = plt.subplots(figsize=(9, max(6, 0.16 * n)))
     Phylo.draw(tree, axes=ax, do_show=False,
@@ -164,6 +167,20 @@ def draw(treefile, groups, fam, figdir):
     fig.tight_layout()
     for ext in ("png", "pdf"): fig.savefig(f"{figdir}/phylogeny_{fam}.{ext}", dpi=200)
     plt.close(fig)
+
+
+def reroot_keeping_supports(tree, reroot):
+    """Reroot with reroot(tree), then put each support back on its bipartition: Bio.Phylo keeps supports on node
+    objects, so that rerooting moves them by one branch along the path between the old and the new root."""
+    names = frozenset(x.name for x in tree.get_terminals())
+
+    def key(c):
+        leaves = frozenset(x.name for x in c.get_terminals())
+        return min(leaves, names - leaves, key=lambda s: (len(s), sorted(s)))
+    before = {key(c): c.confidence for c in tree.get_nonterminals() if c is not tree.root}
+    reroot(tree)
+    for c in tree.get_nonterminals():
+        c.confidence = None if c is tree.root else before.get(key(c))
 
 
 if __name__ == "__main__":
