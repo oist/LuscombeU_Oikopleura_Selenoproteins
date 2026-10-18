@@ -13,6 +13,13 @@ The trees and alignments themselves are not changed. Inputs: results/trees/<fami
 import argparse, copy, re
 
 KEEP = {"Appendicularians", "Other tunicates"}
+# Highlighted references: the related family used as outgroup, the paralogs that the appendicularian proteins could be
+# confused with, and the human gene that names each family.
+REFERENCE = {"pstk": {"outgroup": r"^KTI12_|^Human_KTI12", "named": r"^Human_PSTK_"},
+             "SEPHS2": {"paralog": r"^Human_SEPHS1_|^sps1_|threonine", "named": r"^Human_SEPHS2_"},
+             "SBP2": {"paralog": r"^Human_SECISBP2L_", "named": r"^Human_SECISBP2_"}}
+BANDS = {"outgroup": ("#d5d8dc", "related family (outgroup)"), "paralog": ("#e8daef", "paralog of the named gene"),
+         "named": ("#d4efdf", "clade of the human gene that names the family")}
 COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Mammals": "#2471a3", "Birds": "#2471a3",
            "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d"}
 
@@ -54,6 +61,8 @@ def draw(fam, a, taxa):
     for c in tree.get_nonterminals():
         if c.name and re.fullmatch(r"\d+(\.\d+)?", c.name): c.confidence, c.name = float(c.name), None
     grp = {c.name: leaf_group(c.name, groups, taxa) for c in tree.get_terminals()}
+    refs = REFERENCE.get(fam, {})
+    cat = {c.name: next((k for k, pat in refs.items() if re.search(pat, c.name)), None) for c in tree.get_terminals()}
     # rooting, as in stage2/machinery_phylogeny.py and the analyses: outgroup for PSTK, non-animal sequences for the
     # SECIS-binding proteins, midpoint for SEPHS
     out = [c for c in tree.get_terminals() if grp[c.name] == "outgroup"]
@@ -80,8 +89,13 @@ def draw(fam, a, taxa):
             if g not in KEEP and g != "unclassified":
                 n = len(clade.get_terminals())
                 depth = max(clade.distance(t) for t in clade.get_terminals())
+                cats = {cat.get(t.name) for t in clade.get_terminals()} - {None}
+                human = sorted({re.sub(r"^Human_([A-Z0-9]+)_.*", r"\1", t.name) for t in clade.get_terminals()
+                                if t.name.startswith("Human_")})
                 clade.clades = []
-                clade.name = f"{g} ({n})" if g != "outgroup" else f"KTI12, outgroup ({n})"
+                clade.name = (f"{g} ({n})" if g != "outgroup" else f"KTI12, outgroup ({n})") + \
+                             (f", with human {', '.join(human)}" if human else "")
+                cat[clade.name] = "outgroup" if "outgroup" in cats else next(iter(cats), None)
                 clade.branch_length = (clade.branch_length or 0) + depth / 2
                 grp[clade.name] = g
                 return
@@ -101,6 +115,29 @@ def draw(fam, a, taxa):
                branch_labels=lambda c: f"{c.confidence:.0f}" if (c.confidence is not None and c.confidence >= 70
                                                                  and not c.is_terminal()) else "")
     for t in ax.texts: t.set_fontsize(6)
+    # background bands: outgroup, paralogs, and the clade of the human gene that names the family; the bands of the
+    # named gene extend to the smallest clade that holds its human sequence and other reference tips
+    from matplotlib.patches import Patch
+    tips = tree.get_terminals()
+    # extend the paralog and named-gene bands to the largest clade around the human tip that holds only vertebrate
+    # tips (or unclassified accessions), so that the band covers the vertebrate clade of that gene
+    vert = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "unclassified"}
+    for tip in list(tips):
+        k = cat.get(tip.name)
+        if k not in ("paralog", "named") or not tip.name.startswith(grp.get(tip.name, "") or "?"):
+            if k not in ("paralog", "named"): continue
+        path = tree.get_path(tip); best = None
+        for anc in reversed(path[:-1]):
+            if all(grp.get(t.name) in vert and cat.get(t.name) in (None, k) for t in anc.get_terminals()): best = anc
+            else: break
+        if best is not None:
+            for t in best.get_terminals(): cat[t.name] = k
+    for i, tip in enumerate(tips):
+        k = cat.get(tip.name)
+        if k in BANDS: ax.axhspan(i + 0.5, i + 1.5, color=BANDS[k][0], zorder=0, lw=0)
+    used = [k for k in BANDS if any(cat.get(t.name) == k for t in tips)]
+    if used: ax.legend(handles=[Patch(color=BANDS[k][0], label=BANDS[k][1]) for k in used], loc="upper left",
+                       bbox_to_anchor=(0, -0.04), ncol=len(used), fontsize=6, frameon=False)
     ax.set_yticks([]); ax.set_ylabel("")
     ax.set_title(f"{fam}: groups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} collapsed; "
                  f"supports >= 70 shown", fontsize=8)
