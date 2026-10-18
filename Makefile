@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny check clean
 all: stage1 curation secis
 
 fetch:
@@ -86,6 +86,10 @@ machinery-absence:
 machinery-rbh:
 	python3 stage2/machinery_rbh.py --table results/tables/stage1_machinery_rbh.tsv
 	python3 stage2/machinery_rbh.py --predictions work/stage2/machinery_test/*.faa --table results/tables/stage2_machinery_rbh.tsv
+
+# Phylogenies of PSTK (with KTI12), SEPHS (SPS1/SPS2) and the SECISBP2 family (needs IQ-TREE and ClipKIT)
+machinery-phylogeny:
+	python3 stage2/machinery_phylogeny.py
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 

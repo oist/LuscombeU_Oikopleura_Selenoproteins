@@ -18,6 +18,8 @@
 set -euo pipefail
 if [[ -n ${SLURM_JOB_ID:-} ]]; then R=$SLURM_SUBMIT_DIR; else R=$(cd "$(dirname "$0")/.." && pwd); fi
 [[ -f $R/config/genomes.tsv ]] || { echo "Submit or run from the repository root ($R is not)" >&2; exit 1; }
+# The image 60a1e963fa7d21f6 predates IQ-TREE and ClipKIT (machinery phylogenies): rebuild it from environment.yml
+# with Wave before running make machinery-phylogeny in the container.
 IMAGE=${IMAGE:-docker://community.wave.seqera.io/library/oikopleura-selenoproteins:60a1e963fa7d21f6}
 RUNNER=$(command -v singularity || command -v apptainer) || {
     echo "singularity or apptainer not found: load it before running or submitting this script (at OIST: ml singularity;" >&2
