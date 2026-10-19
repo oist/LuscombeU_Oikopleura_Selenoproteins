@@ -13,15 +13,15 @@ proteins, to show which sequences are partial. The trees and alignments themselv
 """
 import argparse, copy, re
 
-KEEP = {"Appendicularians", "Other tunicates"}
+KEEP = {"Appendicularians", "Other tunicates", "Cephalochordates"}
 # Highlighted references: the related family used as outgroup, the paralogs that the appendicularian proteins could be
 # confused with, and the human gene that names each family.
 REFERENCE = {"pstk": {"outgroup": r"^KTI12_|^Human_KTI12", "named": r"^Human_PSTK_"},
-             "SEPHS2": {"paralog": r"^Human_SEPHS1_|^sps1_|threonine", "named": r"^Human_SEPHS2_"},
+             "SEPHS2": {"paralog": r"^Human_SEPHS1_|^sps1_|threonine|\.SPS1$", "named": r"^Human_SEPHS2_|\.SPS2$"},
              "SBP2": {"paralog": r"^Human_SECISBP2L_", "named": r"^Human_SECISBP2_"}}
 BANDS = {"outgroup": ("#d5d8dc", "related family (outgroup)"), "paralog": ("#e8daef", "paralog of the named gene"),
          "named": ("#d4efdf", "clade of the human gene that names the family")}
-COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Mammals": "#2471a3", "Birds": "#2471a3",
+COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Cephalochordates": "#117a65", "Mammals": "#2471a3", "Birds": "#2471a3",
            "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d"}
 
 
@@ -69,12 +69,14 @@ def draw(fam, a, taxa):
     # rooting, as in stage2/machinery_phylogeny.py and the analyses: outgroup for PSTK, non-animal sequences for the
     # SECIS-binding proteins, midpoint for SEPHS
     out = [c for c in tree.get_terminals() if grp[c.name] == "outgroup"]
+    prok = [c for c in tree.get_terminals() if grp[c.name] in ("Bacteria", "Archaea")]
     nonanimal = [c for c in tree.get_terminals() if grp[c.name] in
                  ("Green algae", "Red algae", "Stramenopiles", "Cryptophytes", "Amoebozoans", "Heteroloboseans")]
     def reroot(t):
         try:
             if out: t.root_with_outgroup(out if t.is_monophyletic(out) else out[0])
             elif fam == "SBP2" and nonanimal: t.root_with_outgroup(nonanimal if t.is_monophyletic(nonanimal) else nonanimal[0])
+            elif prok and t.is_monophyletic(prok): t.root_with_outgroup(prok)
             else: t.root_at_midpoint()
         except Exception:
             t.root_at_midpoint()

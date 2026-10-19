@@ -89,3 +89,12 @@ annotation), and the best human protein is searched back against the genome (tbl
 gene, and the reverse search returns to the prediction), forward (expected gene, but the human protein prefers another
 locus), other gene (for example SECISBP2L for SECISBP2) or no hit; margins below 10 bits to the next human gene are
 flagged as ambiguous, for phylogeny. Needs `data/genomes/Hsap/protein.faa.gz` (fetched with the human genome).
+
+### Phylogenies: sequences
+
+`machinery_phylogeny.py` combines the profile sequences (at most three per taxonomic group with `--max-per-group 3`),
+the SPS1/SPS2-labelled sequences of Mariotti et al. 2015 (SEPHS), the predictions of the other tunicates,
+cephalochordates and vertebrates (stage 1) and of the appendicularians (stage 2), the curated transcript proteins,
+and, for PSTK and the SECIS-binding proteins, the RefSeq proteins of the genomes that have them (KTI12 proteins join
+the outgroup). `--collect-only` writes the sequence sets without aligning. `scripts/proteins_from_gff.py` builds a
+protein file from a genome and its RefSeq GFF3 when the proteins were not downloaded.

@@ -14,3 +14,8 @@ cross-assembly comparison support them (see the stage 1 tables). Assembly errors
 
 `check_baseline.py` (run by `make curation`) reports, for each curated Sec codon, which stage 1 tools found it, the
 RF00031 score and the transcript support: `results/tables/baseline_vs_stage1.tsv` and `_summary.tsv`.
+
+`mariotti2015_sps.faa`: the selenophosphate synthetase sequences of Mariotti et al. 2015 (Genome Research,
+doi:10.1101/gr.190538.115, Supplemental Material S8: summary set, vertebrates, insects), named by species and type
+(SPS1 or SPS2) as in the paper; used as labelled references in the SEPHS tree (stage2/machinery_phylogeny.py).
+Header: `SEPHS2|<species>.<type>|<source>`.

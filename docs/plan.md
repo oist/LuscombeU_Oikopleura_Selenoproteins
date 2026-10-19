@@ -164,3 +164,12 @@ Built from `results/tables/` only.
   evolve about twice as fast as those of Ciona, with homogeneous divergence across amino acids and a fast-evolving
   cysteine (Berna et al. 2012, doi:10.1016/j.ympev.2011.11.013; Berna and Alvarez-Valin 2015,
   doi:10.1016/j.margen.2015.07.007); the cysteine result also matters for the selenocysteine/cysteine homologs.
+- Taxon sampling of the machinery trees (2026-10-19): added four tunicates (Botryllus schlosseri GCF_051294905.1,
+  Phallusia mammillata GCF_965637545.1, the salps Pegea sp. GCA_034620365.1 and Salpa thompsoni GCA_047495815.1)
+  to break the appendicularian long branch, and two cephalochordates (Branchiostoma floridae GCF_000003815.2,
+  B. lanceolatum GCF_035083965.1) as chordate anchors. No echinoderm or hemichordate: the deuterostome clade itself
+  may be an artefact of unequal branch lengths and compositional heterogeneity (Serra Silva et al. 2025, Current
+  Biology, doi:10.1016/j.cub.2025.06.045), whereas chordates are well supported. SEPHS tree: the SPS1/SPS2-labelled
+  sequences of Mariotti et al. 2015 (Supplemental Material S8; curation/mariotti2015_sps.faa). PSTK and
+  SECIS-binding proteins: RefSeq proteins replace the partial Selenoprofiles predictions where a genome has them.
+  Profile and reference sequences capped at three per taxonomic group (and SPS type).

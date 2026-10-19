@@ -95,8 +95,8 @@ machinery-rbh:
 # script resumes from the IQ-TREE checkpoints.
 machinery-phylogeny:
 	rm -rf results/trees/C20 && rm -f results/trees/*.aln results/trees/*.trimmed results/trees/*.treefile results/trees/*.iqtree results/trees/*.ckp.gz results/trees/*.log
-	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2
-	python3 stage2/machinery_phylogeny.py --families SBP2 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3
+	python3 stage2/machinery_phylogeny.py --families SBP2 --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5
 	mkdir -p results/trees/C20 && cp results/trees/pstk.trimmed results/trees/SEPHS2.trimmed results/trees/C20/ 2>/dev/null || true
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
 	python3 figures/phylogeny_collapsed.py
