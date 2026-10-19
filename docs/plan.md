@@ -203,3 +203,29 @@ Built from `results/tables/` only.
   (config/taxon_groups.tsv), the appendicularian clade is the largest appendicularian clade of the ML tree, the
   other tunicates are those of the orthologous form (SEPHS glycine forms left out), and a constrained tree that does
   not satisfy the current constraint is recomputed with its AU test. PSTK summary regenerated (trees unchanged).
+- Long-branch analyses of SEPHS and the SECIS-binding proteins (2026-10-20, Deigo, commit 72da760;
+  results/trees/lba/<family>.summary.tsv):
+  - SEPHS: the appendicularian selenocysteine SEPHS2 clade holds with PMSF LG+C60 (79) and with 30 % of fast sites
+    removed (84); with 10, 20 and 40 % removed, F. borealis leaves it (the other ten stay together, 100). Its position
+    is unstable: at the base of the animal SEPHS in the ML, C20 and PMSF trees (32-56), and outside a group that
+    includes kinetoplastid, stramenopile and amoebozoan sequences in the slow-fast trees, a position not possible
+    for an animal gene. The tunicate SEPHS clade without it is supported in every analysis (ML 78, C20 92, PMSF 97),
+    with the appendicularian non-selenocysteine copy inside the glycine forms (95-100; next to Phallusia 73-98)
+    and the ascidian and salp selenocysteine copies together with C20 (93) and 40 % removal (83). AU test: the tree
+    in which the appendicularian selenocysteine SEPHS2 groups with the ascidian and salp selenocysteine copies is
+    rejected (p-AU 0.014, delta logL 52; LG+R6); in that constrained tree the glycine forms move next to the
+    vertebrates. Reading: the tunicate duplication into selenocysteine and glycine forms precedes the divergence of
+    appendicularians (their non-selenocysteine copy is a glycine-form ortholog); the appendicularian
+    selenocysteine SEPHS2 is too divergent for its position to be inferred, and the AU rejection is made under a
+    site-homogeneous model, exposed to the same long-branch effect. Its assignment rests on the selenocysteine at
+    the catalytic site (SPS2 type; Mariotti et al. 2015) and on the presence of the separate glycine-form ortholog.
+  - SECIS-binding protein family: the Oikopleuridae clade holds in every analysis (99-100). With PMSF LG+C60 it
+    groups with the other tunicates (81), and with 40 % of fast sites removed too (71, F. borealis joining it,
+    71); in the ML tree and with 10-30 % removed it sits next to Nematostella (below 50). AU test: grouping with the
+    other tunicates not rejected (p-AU 0.503, delta logL 0.1). The vertebrate SECISBP2 and SECISBP2L form one clade
+    that excludes the tunicates in every tree (86-100). Reading: the appendicularian protein is the ortholog of the
+    single tunicate SECIS-binding protein gene, which branches before the vertebrate duplication (a pro-ortholog of
+    both SECISBP2 and SECISBP2L); support comes from the site-heterogeneous model, not from the ML tree.
+  - Summary of the three families: PSTK and SECIS-binding protein: appendicularian placement with the other
+    tunicates not rejected (p-AU 0.275 and 0.503), supported for the SECIS-binding protein by PMSF C60 (81).
+    SEPHS2: placement unresolved; the non-selenocysteine copy settles the timing of the tunicate duplication.
