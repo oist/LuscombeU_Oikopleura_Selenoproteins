@@ -104,7 +104,10 @@ machinery-phylogeny:
 
 # Long-branch analyses of the machinery trees (after machinery-phylogeny): PMSF LG+C60, slow-fast, taxon removal,
 # AU test; several hours to days on 8 CPUs
+# Starts afresh. Run it only after machinery-phylogeny has finished, for example with
+#   sbatch --dependency=afterok:<job id of machinery-phylogeny> ... make machinery-lba
 machinery-lba:
+	rm -rf results/trees/lba
 	python3 stage2/machinery_lba.py
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence

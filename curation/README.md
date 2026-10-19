@@ -17,5 +17,7 @@ RF00031 score and the transcript support: `results/tables/baseline_vs_stage1.tsv
 
 `mariotti2015_sps.faa`: the selenophosphate synthetase sequences of Mariotti et al. 2015 (Genome Research,
 doi:10.1101/gr.190538.115, Supplemental Material S8: summary set, vertebrates, insects), named by species and type
-(SPS1 or SPS2) as in the paper; used as labelled references in the SEPHS tree (stage2/machinery_phylogeny.py).
+(SPS1 or SPS2) as in the paper; used as labelled references in the SEPHS tree (stage2/machinery_phylogeny.py). The
+supplement gives codon alignments: they are translated codon by codon (gap codons skipped, stop codons, including
+the selenocysteine TGA, read as X).
 Header: `SEPHS2|<species>.<type>|<source>`.

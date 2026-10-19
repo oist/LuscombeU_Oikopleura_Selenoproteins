@@ -74,6 +74,12 @@ def main():
     for fam in a.families:
         aln, ml = f"{a.trees}/{fam}.trimmed", f"{a.trees}/{fam}.treefile"
         groups = dict(l.rstrip("\n").split("\t") for l in open(f"{a.trees}/{fam}.groups.tsv"))
+        # the inputs must come from the same run of machinery_phylogeny.py (not one being rewritten)
+        from Bio import Phylo
+        aln_names = {n for n, _ in read_fasta(aln)}
+        tree_names = {x.name for x in Phylo.read(ml, "newick").get_terminals()}
+        if aln_names != tree_names or not aln_names <= set(groups):
+            raise SystemExit(f"{fam}: alignment, tree and groups do not match (was machinery-phylogeny still running?)")
         model = best_model(f"{a.trees}/{fam}.iqtree")
         base = f"{a.out}/{fam}"
         rows = [("analysis", "model", "sites", "sequences") + tuple(supports(ml, groups).keys())]

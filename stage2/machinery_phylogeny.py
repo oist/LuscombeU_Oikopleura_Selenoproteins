@@ -92,6 +92,8 @@ def main():
         def add(name, seq, group):
             name = label(name)
             if name in seqs: return
+            if len(seq) and sum(seq.upper().count(c) for c in "ACGTN-") / len(seq) > 0.9:
+                print(f"WARNING: {name} looks like a nucleotide sequence; left out", flush=True); return
             seqs[name] = clean(seq); groups[name] = group
 
         prof = list(read_fasta(f"{a.profiles}/{fam}.fa"))
