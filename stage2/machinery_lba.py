@@ -39,7 +39,15 @@ def read_fasta(path):
 
 
 def iqtree(args, cpus):
-    subprocess.run(["iqtree2"] + args + ["-T", str(cpus), "--quiet", "--seed", "1"], check=True)
+    # called only for analyses without a final report (finished() below): -redo discards the checkpoint and partial
+    # files of an interrupted run (for example a job killed when the disk filled up)
+    subprocess.run(["iqtree2"] + args + ["-T", str(cpus), "--quiet", "--seed", "1", "-redo"], check=True)
+
+
+def finished(prefix):
+    """An IQ-TREE analysis is complete when its report (.iqtree, written last) and its tree exist; a tree file alone
+    can be an intermediate one."""
+    return os.path.exists(f"{prefix}.iqtree") and os.path.exists(f"{prefix}.treefile")
 
 
 def best_model(iqtree_report):
@@ -149,12 +157,12 @@ def main():
         seqs = list(read_fasta(aln)); nsites = len(seqs[0][1])
         rows.append(("reference", model, nsites, len(seqs)) + tuple(supports(ml, sets).values()))
         if "pmsf" in a.analyses:
-            if not os.path.exists(f"{base}.pmsf.treefile"):
+            if not finished(f"{base}.pmsf"):
                 iqtree(["-s", aln, "-m", "LG+C60+F+G", "-ft", ml, "-B", "1000", "--prefix", f"{base}.pmsf"], a.cpus)
             rows.append(("PMSF LG+C60+F+G", "LG+C60+F+G (PMSF)", nsites, len(seqs)) +
                         tuple(supports(f"{base}.pmsf.treefile", sets).values()))
         if "slowfast" in a.analyses:
-            if not os.path.exists(f"{base}.rates.rate"):
+            if not (finished(f"{base}.rates") and os.path.exists(f"{base}.rates.rate")):
                 iqtree(["-s", aln, "-te", ml, "-m", model, "-wsr", "--prefix", f"{base}.rates"], a.cpus)
             rates = [float(l.split()[1]) for l in open(f"{base}.rates.rate") if l[:1].isdigit()]
             order = sorted(range(len(rates)), key=lambda i: rates[i])   # slowest first
@@ -165,7 +173,7 @@ def main():
                 f = f"{base}.{tag}.fa"
                 with open(f, "w") as o:
                     for n, s in seqs: o.write(f">{n}\n{''.join(s[i] for i in keep)}\n")
-                if not os.path.exists(f"{base}.{tag}.treefile"):
+                if not finished(f"{base}.{tag}"):
                     iqtree(["-s", f, "-m", "MFP", "-mset", "LG,WAG,JTT", "-B", "1000", "--prefix", f"{base}.{tag}"], a.cpus)
                 rows.append((f"fastest {int(round(k * 100))} % of sites removed", best_model(f"{base}.{tag}.iqtree"),
                              len(keep), len(seqs)) + tuple(supports(f"{base}.{tag}.treefile", sets).values()))
@@ -176,7 +184,7 @@ def main():
                 f = f"{base}.taxa.fa"
                 with open(f, "w") as o:
                     for n, s in kept: o.write(f">{n}\n{s}\n")
-                if not os.path.exists(f"{base}.taxa.treefile"):
+                if not finished(f"{base}.taxa"):
                     iqtree(["-s", f, "-m", "MFP", "-mset", "LG,WAG,JTT", "-B", "1000", "--prefix", f"{base}.taxa"], a.cpus)
                 rows.append((f"without /{a.exclude}/", best_model(f"{base}.taxa.iqtree"), nsites, len(kept)) +
                             tuple(supports(f"{base}.taxa.treefile", sets).values()))
@@ -186,11 +194,11 @@ def main():
             rest = [n for n in names if n not in ingroup]
             with open(f"{base}.constraint.nwk", "w") as o: o.write(f"(({','.join(ingroup)}),{','.join(rest)});\n")
             # a constrained tree from an earlier constraint (other leaf sets) is recomputed, and the test with it
-            if os.path.exists(f"{base}.constrained.treefile") and not is_split(f"{base}.constrained.treefile", set(ingroup)):
+            if finished(f"{base}.constrained") and not is_split(f"{base}.constrained.treefile", set(ingroup)):
                 print(f"{fam}: constrained tree does not satisfy the current constraint; recomputing it and the AU test", flush=True)
                 for f in os.listdir(a.out):
                     if f.startswith((f"{fam}.constrained.", f"{fam}.au.")): os.remove(os.path.join(a.out, f))
-            if not os.path.exists(f"{base}.constrained.treefile"):
+            if not finished(f"{base}.constrained"):
                 iqtree(["-s", aln, "-m", model, "-g", f"{base}.constraint.nwk", "--prefix", f"{base}.constrained"], a.cpus)
             with open(f"{base}.candidates.treels", "w") as o:
                 o.write(open(ml).read().strip() + "\n" + open(f"{base}.constrained.treefile").read().strip() + "\n")
