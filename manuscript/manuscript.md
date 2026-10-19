@@ -254,7 +254,7 @@ appendicularians with other tunicates. As positive controls for the default sett
 their RefSeq annotations.
 
 Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
-by Bliznina et al. [-@Bliznina2021] (109,877 sequences; to be added to its Zenodo record [REF: Zenodo record 4604144]); for OSKA2016,
+by Bliznina et al. [-@Bliznina2021] (109,877 sequences; Zenodo, <https://doi.org/10.5281/zenodo.23472675>); for OSKA2016,
 the Trinity assembly of Wang et al. [-@Wang2015] (GEO GSE64421, 86,898 sequences); for OdB3, the cDNA collection of
 the genome project (Genoscope, 207,355 sequences: 7,862 clone contigs and 199,493 single reads) [@Denoeud2010],
 also distributed by the now offline OikoBase. All files were retrieved by a script that checks their MD5 sums.
@@ -371,14 +371,16 @@ proteins and profile HMMs; re-calling. -->
 
 ## Data and code availability
 
-The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.1.2 for
+The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.2.0 for
 stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>.
-[Zenodo DOIs to add.]
+The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
+[Other Zenodo DOIs to add: pipeline release, machinery profiles and SECIS models.]
 
 <!--
 Notes for the next pieces
 - References to add: review of selenocysteine insertion; selenocysteine biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
-  minimap2; Nextflow; nf-core; MultiQC; Zenodo record of the OKI2018 transcriptome.
+  minimap2; Nextflow; nf-core; MultiQC; reference-list entry for the Zenodo record of the OKI2018 transcriptome
+  (title and creators to copy from the record).
 - SelenoDB 2.0 and the Selenoprofiles expectation table were used for the chordate comparison (Ciona gene lists;
   vertebrates); say so in the Methods.
 -->
