@@ -10,19 +10,15 @@ bibliography: references.bib
 <!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
 Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenium is
-an essential trace element, with a narrow range between deficiency and toxicity [REF: selenium requirement and
-toxicity]. Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in
+an essential trace element, with a narrow range between deficiency and toxicity [@Rayman2012]. Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in
 which it forms the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox
-homeostasis, and iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [REF: review of
-selenoprotein functions]. Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced
+homeostasis, and iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [@Labunskyy2014]. Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced
 their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In
 eukaryotes, a stem–loop structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion
 sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
-elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [REF: review of eukaryotic
-selenocysteine insertion]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
+elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
 O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS,
-encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [REF: selenocysteine
-biosynthesis on tRNA]. This machinery is expected in any genome that encodes selenoproteins.
+encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. This machinery is expected in any genome that encodes selenoproteins.
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
 in genome annotations [@Mariotti2015]. A gene missing from an annotation is invisible to the analyses that start from
@@ -36,13 +32,12 @@ Selenoprofiles [@Mariotti2010; @Tico2026], or from SECIS elements, such as Sebla
 genes upstream of the SECIS elements found by SECISearch3 [@Mariotti2013]; tRNA-Sec genes have their own detectors
 [@Santesmasses2017]. These methods were built from well-studied lineages, and the SECIS models in particular from
 vertebrate and other model genomes: the seed of the Rfam SECIS family, for example, derives from a survey of metazoan
-SECIS elements and contains no tunicate sequence [@Lambert2002; REF: Rfam]. How they perform on divergent genomes is
+SECIS elements and contains no tunicate sequence [@Lambert2002; @Kalvari2020]. How they perform on divergent genomes is
 not known in advance.
 
 The appendicularian *Oikopleura dioica* is a planktonic tunicate found in the oceans worldwide [@Masunaga2020].
 Appendicularians are among the most abundant zooplankton, and the filter-feeding houses that they discard contribute
-to the vertical flux of carbon in the ocean [@Masunaga2022; REF: primary sources, for example Alldredge 2005 and
-Robison et al. 2005]. Meta-omic studies now aim at the metabolism of whole plankton communities [@Stec2017;
+to the vertical flux of carbon in the ocean [@Masunaga2022; @Robison2005]. Meta-omic studies now aim at the metabolism of whole plankton communities [@Stec2017;
 @Heal2021], and depend on the annotated genomes of their members. The short life cycle, transparent body and
 invariant embryonic cell lineages of *O. dioica* make it a model for developmental biology [@Wang2020], and its small
 and compact genome, which has lost many genes conserved in other chordates, makes it a model for evolution by gene
@@ -66,8 +61,7 @@ element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen of the large s
 Baclaocos 2019, Trenz 2021, Esposito 2021). -->
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
-operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; REF: operons in
-ascidians]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In
+operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; @Satou2006]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In
 addition, part of its introns use non-canonical GA–AG splice sites, which gene predictors model poorly
 [@Denoeud2010]. Selenoprotein genes can also take unexpected forms: in ascidians, the selenophosphate synthetase gene
 produces an alternative isoform that does not carry selenocysteine [@Mariotti2015].
@@ -152,7 +146,7 @@ vanhoeffeni* (13 bits); in *F. borealis* it found no PSTK-like sequence at all, 
 that assembly. SEPHS2 was predicted with its selenocysteine codon in seven of the nine genomes; it was not found in
 *B. stygius* and only partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), SECIS-binding protein 2
 (SECISBP2) and tRNA-Sec were found in every genome. Selenoprofiles also searches for SECp43 (TRNAU1AP), which binds
-tRNA-Sec in complexes with SecS and SEPHS2 [REF: SECp43] but is an associated factor whose role is debated:
+tRNA-Sec in complexes with SecS and SEPHS2 [@SmallHoward2006] but is an associated factor whose role is debated:
 selenoprotein synthesis did not depend on it in mouse liver and neurons [@Mahdi2015], whereas it enhanced the
 translation of several selenoproteins in glioblastoma stem cells [@Zhang2026]. We therefore report it separately.
 SECp43 was found only in *F. borealis*, whereas the standard profile found it in all other tunicates and in the
@@ -267,20 +261,20 @@ also distributed by the now offline OikoBase. All files were retrieved by a scri
 
 ## Selenoprotein gene pipeline
 
-We wrote a Nextflow [REF: Nextflow] pipeline, based on the nf-core template [REF: nf-core], that runs the following
+We wrote a Nextflow [@DiTommaso2017] pipeline, based on the nf-core template [@Ewels2020], that runs the following
 steps on each genome; all tools run from container images. Stage 1 analysed all genomes (appendicularians,
 other tunicates and vertebrate controls) in one run of release 0.2.0 with default parameters.
 
 *Selenoprotein genes.* Selenoprofiles 4.5.8 [@Mariotti2010; @Tico2026] searched the profiles of eukaryotic
 selenoprotein families and of the selenocysteine machinery (profile sets `eukarya` and `machinery`), with the Selenoprofiles data
 set (profiles, Gene Ontology tables and UniRef50 tag database) downloaded from its server; the MD5 sums of the
-archives used are recorded. Independently, miniprot 0.11 [REF: miniprot] aligned to the genome the selenocysteine-containing
+archives used are recorded. Independently, miniprot 0.11 [@Li2023] aligned to the genome the selenocysteine-containing
 sequences of the same profiles. A TGA codon was called a selenocysteine codon when miniprot aligned it to a query selenocysteine, or
 when the query selenocysteine was the first residue after the end of the alignment and the next genomic codon was TGA, since
 miniprot tends to stop before a C-terminal selenocysteine. Selenocysteine codons found by both methods at the same position were merged.
 
-*SECIS elements.* Infernal 1.1.5 [REF: Infernal] `cmsearch` searched, with the Rfam SECIS model RF00031
-[REF: Rfam], the 6,000 nucleotides downstream of each Selenoprofiles prediction, at the Rfam gathering threshold.
+*SECIS elements.* Infernal 1.1.5 [@Nawrocki2013] `cmsearch` searched, with the Rfam SECIS model RF00031
+[@Kalvari2020], the 6,000 nucleotides downstream of each Selenoprofiles prediction, at the Rfam gathering threshold.
 A SECIS element counted as support for a prediction, not as a filter.
 
 *tRNA-Sec.* Secmarker 1.0.0 [@Santesmasses2017] and `cmsearch` with the Rfam tRNA-Sec model RF01852 (gathering
@@ -294,12 +288,12 @@ codon), skipped (CDS on both sides of the codon but not over it), upstream or do
 out of frame, spliced (CDS boundary inside the codon) or absent. The same predictions were also assessed with
 `selenoprofiles assess`, identifying annotated transcripts by the `Parent` of their CDS features.
 
-*Transcript support.* Transcripts were aligned to their genome with minimap2 2.30 [REF: minimap2] (`-x splice
+*Transcript support.* Transcripts were aligned to their genome with minimap2 2.30 [@Li2018] (`-x splice
 --secondary=no`). A transcript supported a selenocysteine codon when the three nucleotides of the codon lay inside one aligned
 exon of its primary alignment; for each codon we recorded the number of supporting transcripts and the extension of
 the longest one 3′ of the codon.
 
-Results of all genomes were summarised with MultiQC [REF: MultiQC]. The pipeline's test profile runs every process
+Results of all genomes were summarised with MultiQC [@Ewels2016]. The pipeline's test profile runs every process
 on human chromosome 22 (with an annotation of SELENOO and a transcript covering its selenocysteine codon), the yeast
 genome and a fragment of the *Escherichia coli* genome, with the SECIS threshold lowered to 15 bits; modules and
 pipeline are also tested with nf-test [REF: nf-test].
@@ -319,7 +313,7 @@ extended with appendicularian proteins: the predictions of the standard profiles
 than OdB3, labelled "homologue" or "selenocysteine" and at least half as long as the median sequence of the profile,
 and the proteins reconstructed from *O. dioica* transcripts (PSTK from the OKI2018 and OSKA2016 transcriptomes, SEPHS2
 with its selenocysteine from the OSKA2016 transcriptome). The added proteins were aligned to the standard profile with
-MAFFT `--add --keeplength` [REF: MAFFT], which keeps the columns of the profile and therefore its configuration, and
+MAFFT `--add --keeplength` [@Katoh2013], which keeps the columns of the profile and therefore its configuration, and
 the extended alignments were built into profiles with `selenoprofiles build`, using all their sequences as BLAST
 queries. The profiles keep the standard names; given to the pipeline with `--selenoprofiles_overrides`, they replace
 the standard profiles of the same name.
@@ -328,7 +322,7 @@ the standard profiles of the same name.
 
 We ran Selenoprofiles with these profiles on the nine genomes. For each genome without a PSTK prediction, we
 reran Selenoprofiles with the PSTK profile, keeping the predictions that its last filter discards, and compared
-each of them (blastp [REF: BLAST]) with the PSTK proteins found in the other genomes and with KTI12, a related
+each of them (blastp [@Altschul1997]) with the PSTK proteins found in the other genomes and with KTI12, a related
 kinase. This test needs proteins of a related family to compare with, and was not applied to the other genes. A discarded prediction counted as a fragment of the gene when its best hit was a protein of
 the gene with an E-value of at most 10^-10^. tRNA-Sec loci were those of stage 1 found by both methods.
 

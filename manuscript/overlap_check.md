@@ -25,3 +25,17 @@ genes or families, to cite and to compare with:
 
 Not yet identified: Sreelatha et al. 2018 (SELENOO/SelO as an AMPylase; the title used in the query was wrong).
 Still to check: the species list of Esposito et al. 2021 (see above).
+
+## Second round (OpenAlex, 2026-10-19)
+
+735 distinct works: works citing Mariotti et al. 2015 (tunicate topics), Jiang et al. 2010, Mahdi et al. 2015,
+Donovan and Copeland 2009, Zarsky and Tachezy 2015 (tunicate topics), Berna et al. 2012 and 2015, Lobanov et al.
+2007 (marine topics) and Kocot et al. 2018, and 18 topic searches since 2015 (peroxisomes and redox in Oikopleura,
+machinery genes, selenium in plankton, misannotation, fast evolution, operons, long branches). No title or abstract
+mentions appendicularians together with selenium, selenocysteine or a machinery gene: no prior report of
+appendicularian selenoproteins, of SECp43 loss in Oikopleuridae or of the second appendicularian SEPHS. Works found
+and useful: Manta et al. 2022 (review of the selenophosphate synthetase family), Dai et al. 2022 (SECISBP2L drives
+selenoprotein synthesis in oligodendrocytes), Berna et al. 2014 (fast-evolving tunicates), Ferrandez-Roldan et al.
+2019 (O. dioica and gene loss), Delsuc et al. 2018 (tunicate phylogenomic framework), Szantho et al. 2023
+(compositionally constrained sites drive long-branch attraction). No published example of a selenoprotein missed in
+an omics analysis because of misannotation was found.
