@@ -11,6 +11,11 @@ trimmed alignment of results/trees/<family>.trimmed:
   taxa      sequences matching --exclude (non-target long branches, for example the insect-gut fungi in PSTK) removed
   au        approximately unbiased test of the maximum-likelihood tree against the best tree in which the
             appendicularian sequences group with the other tunicates
+  orthology for families with paralogous tunicate forms (SEPHS: selenocysteine and glycine forms), AU tests of two
+            positions of the appendicularian clade: inside the clade of all tunicate sequences, and next to the
+            tunicate copies of the same form with the other form (and the second appendicularian copy) as their
+            sister; under the ML model and under LG+C60+F+G with the site frequencies of the PMSF analysis
+The summaries of all families are also gathered in results/tables/stage2_machinery_lba.tsv.
 For each tree, the summary records the support of the clades that the conclusions rest on: the appendicularian clade,
 the family against the outgroup (PSTK) and the appendicularians with the other tunicates.
 Leaves are assigned to taxa by genus or genome code (config/taxon_groups.tsv), so that reference sequences of
@@ -125,13 +130,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--families", nargs="+", default=["pstk", "SEPHS2", "SBP2"])
     ap.add_argument("--trees", default="results/trees")
-    ap.add_argument("--analyses", nargs="+", default=["pmsf", "slowfast", "taxa", "au"])
+    ap.add_argument("--analyses", nargs="+", default=["pmsf", "slowfast", "taxa", "au", "orthology"])
     ap.add_argument("--step", type=float, default=0.1)
     ap.add_argument("--max-removed", type=float, default=0.4)
     ap.add_argument("--exclude", default="Smittium|Zancudomyces", help="regular expression of sequences to remove")
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--out", default="results/trees/lba")
+    ap.add_argument("--table", default="results/tables/stage2_machinery_lba.tsv")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     for fam in a.families:
@@ -212,9 +218,87 @@ def main():
             p_au = m[0].split()[-2] if m else "see report"
             rows.append(("AU test: appendicularians with the other tunicates", model, nsites, len(seqs),
                          f"p-AU of the constrained tree = {p_au}", "", ""))
+        if "orthology" in a.analyses and excl:
+            rows += orthology_tests(fam, base, aln, ml, model, seqs, sets, tax, excl, a.cpus)
         with open(f"{base}.summary.tsv", "w") as o:
             for r in rows: o.write("\t".join(map(str, r)) + "\n")
         print(open(f"{base}.summary.tsv").read(), flush=True)
+    gather(a.out, a.table)
+
+
+def p_values(au_report, n):
+    """p-AU of trees 2..n in the USER TREES table of an IQ-TREE report."""
+    table = open(au_report).read().split("USER TREES", 1)[-1]
+    out = []
+    for i in range(2, n + 1):
+        m = re.findall(rf"^\s+{i}\s+-[\d.]+\s.*$", table, re.M)
+        out.append(m[0].split()[-2] if m else "see report")
+    return out
+
+
+def orthology_tests(fam, base, aln, ml, model, seqs, sets, tax, excl, cpus):
+    names = [n for n, _ in seqs]
+    appsec = [n for n in names if n in sets["app"]]
+    tunsec = [n for n in names if n in sets["tun"]]
+    tunpar = [n for n in names if tax[n] == "Other tunicates" and re.search(excl, n)]
+    apppar = [n for n in names if tax[n] == "Appendicularians" and n not in sets["app"]]
+    alltun = appsec + tunsec + tunpar + apppar
+    rest = [n for n in names if n not in set(alltun)]
+    j = ",".join
+    # hypothesis -> (constraint, leaf sets that must be clades in the constrained tree, label)
+    hyp = {"within": (f"(({j(alltun)}),{j(rest)});", [set(alltun)],
+                      "appendicularian clade inside the clade of all tunicate sequences"),
+           "orthologous": (f"((({j(appsec + tunsec)}),({j(tunpar + apppar)})),{j(rest)});",
+                           [set(alltun), set(appsec + tunsec)],
+                           "appendicularian clade next to the tunicate copies of the same form")}
+    # site frequencies of LG+C60+F+G on the ML tree (as in the PMSF analysis), computed again if not kept
+    sitefreq = f"{base}.pmsf.sitefreq"
+    if not os.path.exists(sitefreq):
+        sitefreq = f"{base}.sitefreq.sitefreq"
+        if not os.path.exists(sitefreq):
+            iqtree(["-s", aln, "-m", "LG+C60+F+G", "-ft", ml, "-n", "0", "--prefix", f"{base}.sitefreq"], cpus)
+    models = {"ml": (["-m", model], ml, model),
+              "pmsf": (["-m", "LG+C60+F+G", "-fs", sitefreq], f"{base}.pmsf.treefile", "LG+C60+F+G (PMSF)")}
+    rows = []
+    for tag, (margs, best, label) in models.items():
+        trees = [best]
+        for h, (nwk, clades, _) in hyp.items():
+            prefix = f"{base}.{tag}.{h}"
+            with open(f"{prefix}.constraint.nwk", "w") as o: o.write(nwk + "\n")
+            if finished(prefix) and not all(is_split(f"{prefix}.treefile", c) for c in clades):
+                for f in os.listdir(os.path.dirname(base)):
+                    if f.startswith((f"{fam}.{tag}.{h}.", f"{fam}.{tag}.orthology_au.")) and not f.endswith(".constraint.nwk"):
+                        os.remove(os.path.join(os.path.dirname(base), f))
+            if not finished(prefix):
+                iqtree(["-s", aln] + margs + ["-g", f"{prefix}.constraint.nwk", "--prefix", prefix], cpus)
+            trees.append(f"{prefix}.treefile")
+        au = f"{base}.{tag}.orthology_au"
+        with open(f"{au}.treels", "w") as o:
+            for t in trees: o.write(open(t).read().strip() + "\n")
+        if not os.path.exists(f"{au}.iqtree"):
+            iqtree(["-s", aln] + margs + ["-z", f"{au}.treels", "-te", best, "-n", "0", "-zb", "10000", "-au",
+                    "--prefix", au], cpus)
+        for (h, (_, _, text)), p in zip(hyp.items(), p_values(f"{au}.iqtree", len(trees))):
+            rows.append((f"AU test: {text}", label, len(seqs[0][1]), len(seqs), f"p-AU of the constrained tree = {p}", "", ""))
+    return rows
+
+
+def gather(out, table):
+    """All family summaries in one table, with a family column and the size of the appendicularian clade."""
+    import glob
+    lines = []
+    for f in sorted(glob.glob(f"{out}/*.summary.tsv")):
+        fam = os.path.basename(f)[:-len(".summary.tsv")]
+        rows = [l.rstrip("\n").split("\t") for l in open(f) if l.strip()]
+        m = re.search(r"\((\d+)\)", rows[0][4])
+        for r in rows[1:]:
+            r += [""] * (7 - len(r))
+            lines.append([fam, m.group(1) if m else ""] + r[:7])
+    if lines and os.path.isdir(os.path.dirname(table) or "."):
+        with open(table, "w") as o:
+            o.write("\t".join(["family", "appendicularian clade size", "analysis", "model", "sites", "sequences",
+                               "appendicularian clade", "appendicularians+tunicates", "family vs outgroup"]) + "\n")
+            for l in lines: o.write("\t".join(l) + "\n")
 
 
 if __name__ == "__main__":

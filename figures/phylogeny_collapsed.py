@@ -43,7 +43,10 @@ def main():
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--min-support", type=float, default=50)
     ap.add_argument("--figures", default="figures")
-    ap.add_argument("--suffix", default="")
+    ap.add_argument("--suffix", default="", help="added to the output file names")
+    ap.add_argument("--tree-suffix", default="", help="trees read from <trees>/<family><tree-suffix>.treefile, "
+                    "for example .pmsf for the trees of stage2/machinery_lba.py in results/trees/lba")
+    ap.add_argument("--model-label", default="", help="model named in the figure title")
     a = ap.parse_args()
     taxa = {}
     for l in open(a.taxa):
@@ -58,7 +61,7 @@ def draw(fam, a, taxa):
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     groups = dict(l.rstrip("\n").split("\t") for l in open(f"{a.groups_dir}/{fam}.groups.tsv"))
-    tree = Phylo.read(f"{a.trees}/{fam}.treefile", "newick")
+    tree = Phylo.read(f"{a.trees}/{fam}{a.tree_suffix}.treefile", "newick")
     for c in tree.get_nonterminals():
         if c.name and re.fullmatch(r"\d+(\.\d+)?", c.name): c.confidence, c.name = float(c.name), None
     grp = {c.name: leaf_group(c.name, groups, taxa) for c in tree.get_terminals()}
@@ -149,8 +152,9 @@ def draw(fam, a, taxa):
     if used: ax.legend(handles=[Patch(color=BANDS[k][0], label=BANDS[k][1]) for k in used], loc="upper left",
                        bbox_to_anchor=(0, -0.04), ncol=len(used), fontsize=6, frameon=False)
     ax.set_yticks([]); ax.set_ylabel("")
-    ax.set_title(f"{fam}: groups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} collapsed; "
-                 f"supports >= 70 shown", fontsize=8)
+    model = f"{a.model_label}; " if a.model_label else ""
+    ax.set_title(f"{fam}: {model}groups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
+                 f"collapsed; supports >= 70 shown", fontsize=8)
     fig.tight_layout(rect=(0, 0, 0.88, 1))
     for ext in ("png", "pdf"): fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)
     plt.close(fig)
