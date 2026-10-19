@@ -296,7 +296,7 @@ the longest one 3′ of the codon.
 Results of all genomes were summarised with MultiQC [@Ewels2016]. The pipeline's test profile runs every process
 on human chromosome 22 (with an annotation of SELENOO and a transcript covering its selenocysteine codon), the yeast
 genome and a fragment of the *Escherichia coli* genome, with the SECIS threshold lowered to 15 bits; modules and
-pipeline are also tested with nf-test [REF: nf-test].
+pipeline are also tested with nf-test [@Forer2025].
 
 ## Baseline curation
 
