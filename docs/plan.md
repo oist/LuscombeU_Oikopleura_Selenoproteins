@@ -173,3 +173,33 @@ Built from `results/tables/` only.
   sequences of Mariotti et al. 2015 (Supplemental Material S8; curation/mariotti2015_sps.faa). PSTK and
   SECIS-binding proteins: RefSeq proteins replace the partial Selenoprofiles predictions where a genome has them.
   Profile and reference sequences capped at three per taxonomic group (and SPS type).
+- Machinery trees with the extended taxon sampling (2026-10-19, Deigo, commit 149cf6d; collapsed figures redrawn):
+  - PSTK (86 sequences, 691 sites, LG+F+R6): PSTK/KTI12 split 100. Appendicularian clade 100 (OKI2018, OSKA2016,
+    OdB3, O. albicans, O. vanhoeffeni; the O. longicauda, B. stygius and M. erythrocephalus fragments are below the
+    length filter), sister to all other PSTK (91; C20 91). Other tunicates (ascidians and salps) form a clade (99)
+    elsewhere in PSTK. Long-branch analyses: appendicularian clade 100 and PSTK/KTI12 100 in every analysis; never
+    with the other tunicates; sister to the other PSTK with PMSF LG+C60 (90), 10-30 % of fast sites removed (86-92)
+    and without the insect-gut fungi (89); with 40 % removed, next to the fungi (35). AU test: the tree with
+    appendicularians and other tunicates together is not rejected (p-AU 0.275, delta logL 5.7). Conclusion: PSTK;
+    position within the family unresolved; grouping with the other tunicates not rejected.
+  - SEPHS (129 sequences, 976 sites, LG+R6): appendicularian selenocysteine SEPHS2 clade of 11 (all nine genomes
+    except B. stygius, with F. borealis, M. erythrocephalus and the O. dioica SPS2 of Mariotti et al. 2015) 83 (C20
+    89), position unresolved (32; C20 56). Non-selenocysteine copies (OKI2018, O. longicauda x2, O. albicans,
+    O. vanhoeffeni) 100, inside the tunicate glycine forms (95; C20 100), next to Phallusia (78; C20 73). Ascidian
+    selenocysteine copies 100; with the salps and Thalia 93 with C20 only. All tunicate SEPHS except the
+    appendicularian selenocysteine clade: 78 (C20 92). Reading: the tunicate selenocysteine/glycine duplication
+    precedes the divergence of appendicularians, so the appendicularian selenocysteine SEPHS2 is expected next to the
+    ascidian and salp selenocysteine copies; it sits outside them on a long branch. Long-branch analyses pending.
+  - SECIS-binding protein family (90 sequences, 391 sites, LG+R5): Oikopleuridae clade (with B. stygius and
+    M. erythrocephalus and the O. dioica profile sequence CBY19450.1) 100, next to Nematostella (48), outside a group
+    of the other tunicates, vertebrates and other bilaterians (71); F. borealis unresolved (34). Other tunicates 100,
+    branching before the vertebrate SECISBP2/SECISBP2L duplication (vertebrate clade 86). Long-branch analyses
+    pending.
+- stage2/machinery_lba.py corrected (2026-10-19): (1) the p-AU value was read from a line of the rate table (0.1646
+  for PSTK) instead of the AU table (0.275); (2) leaves were assigned from the groups table, which left out the
+  reference and profile sequences of appendicularians and tunicates (O. dioica SPS2 and CBY19450.1, Botryllus SPS1
+  and SPS2, Ciona XP_002129526) and put both appendicularian SEPHS paralogs in one set; the AU constraint for SEPHS
+  and the SECIS-binding proteins therefore forced these sequences out of their clades. Now: leaves assigned by taxon
+  (config/taxon_groups.tsv), the appendicularian clade is the largest appendicularian clade of the ML tree, the
+  other tunicates are those of the orthologous form (SEPHS glycine forms left out), and a constrained tree that does
+  not satisfy the current constraint is recomputed with its AU test. PSTK summary regenerated (trees unchanged).

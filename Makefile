@@ -106,6 +106,8 @@ machinery-phylogeny:
 # AU test; several hours to days on 8 CPUs
 # Starts afresh. Run it only after machinery-phylogeny has finished, for example with
 #   sbatch --dependency=afterok:<job id of machinery-phylogeny> ... make machinery-lba
+# To resume, or to refresh the summaries after a change of the script, run python3 stage2/machinery_lba.py directly:
+# existing trees are kept, and a constrained tree that no longer satisfies the constraint is recomputed.
 machinery-lba:
 	rm -rf results/trees/lba
 	python3 stage2/machinery_lba.py
