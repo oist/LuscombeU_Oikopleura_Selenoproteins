@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table check clean
 all: stage1 curation secis
 
 fetch:
@@ -112,11 +112,15 @@ machinery-phylogeny:
 machinery-lba:
 	rm -rf results/trees/lba
 	python3 stage2/machinery_lba.py
-	$(MAKE) machinery-lba-figures
+	$(MAKE) machinery-lba-figures machinery-table
 
 # Collapsed display trees from the LG+C60+F+G (PMSF) trees of the long-branch analyses
 machinery-lba-figures:
 	python3 figures/phylogeny_collapsed.py --trees results/trees/lba --tree-suffix .pmsf --suffix _pmsf --model-label "LG+C60+F+G (PMSF)"
+
+# Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
+machinery-table:
+	python3 stage2/machinery_table.py
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 

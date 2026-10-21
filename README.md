@@ -52,13 +52,20 @@ Delete the work directory once the run is complete and its outputs collected.
 From the repository root (prefix each `make` with `scripts/run_in_container.sh` when using the image):
 
 ```bash
-make fetch          # needs network; some sources are still placeholders (see Data)
-NXF_WORK=<work directory> PROFILE=<profile> stage1/run.sh   # the pipeline (Nextflow)
-make stage1
-make curation
-make stage2
-make figures
+make fetch                    # needs network; some sources are still placeholders (see Data)
+NXF_WORK=<work directory> PROFILE=<profile> stage1/run.sh   # the pipeline (Nextflow), all genomes in one run
+make stage1                   # collects its outputs into results/tables and results/pipeline_info
+make stage1-figures
+make curation                 # checks the baseline (curation/) against stage 1
+make secis                    # appendicularian SECIS model and its scores
+make machinery                # appendicularian machinery profiles, their test, fragments, census, absence tests
+make machinery-rbh            # reciprocal best hits against the human proteome
+make machinery-phylogeny      # trees of PSTK, SEPHS and the SECIS-binding proteins
+make machinery-lba            # long-branch analyses, AU tests, C60 tree figures and Table MACHINERY
 ```
+
+The Makefile documents each target (inputs, outputs and the cluster submissions that worked); `stage2/README.md`
+describes the stage 2 steps.
 
 ### On a Slurm cluster
 
@@ -108,12 +115,15 @@ nextflow run oist/LuscombeU_Selenoproteins_Pipeline -r <release> -profile <profi
 | *O. dioica* OSKA2016 genome and annotation | ANISEED archives `Oidioi_genome_fasta_gff3.zip` and `Oidioi_transcripts_fasta_gff3.zip` (`config/archives.tsv`); the ANISEED download links are currently broken: place copies in `data/downloads/` (checked by md5); a Zenodo copy is planned |
 | *O. dioica* OdB3 genome and annotation | GCA_000209535.1 |
 | Other appendicularians (Naville et al. 2019) | *Oikopleura longicauda* GCA_004367895.1, *Oikopleura albicans* GCA_004367875.1, *Oikopleura vanhoeffeni* GCA_004367855.1, *Bathochordaeus stygius* GCA_004367955.1, *Mesochordaeus erythrocephalus* GCA_004367975.1, *Fritillaria borealis* GCA_004368075.1 |
-| Other tunicates (SECIS non-target controls) | *Ciona intestinalis* GCF_018327825.1, *Ciona savignyi* GCA_054131345.1, *Styela clava* GCF_964204865.1, *Thalia democratica* GCF_965202585.1 |
+| Other tunicates (stage 1 comparison, SECIS non-target controls, machinery trees) | *Ciona intestinalis* GCF_018327825.1, *Ciona robusta* (KH) GCF_000224145.3, *Ciona savignyi* GCA_054131345.1, *Halocynthia roretzi* GCA_013436055.1, *Styela clava* GCF_964204865.1, *Thalia democratica* GCF_965202585.1; for the machinery trees also *Botryllus schlosseri* GCF_051294905.1, *Phallusia mammillata* GCF_965637545.1, *Pegea* sp. GCA_034620365.1, *Salpa thompsoni* GCA_047495815.1 |
+| Cephalochordates (machinery trees) | *Branchiostoma floridae* GCF_000003815.2, *Branchiostoma lanceolatum* GCF_035083965.1 |
+| Vertebrate controls (stage 1; human proteome for the reciprocal best hits) | human GRCh38.p14 GCF_000001405.40, mouse GRCm39 GCF_000001635.27, zebrafish GRCz11 GCF_000002035.6, with their RefSeq annotations and proteins |
 | OSKA2016 transcripts (Wang et al. 2015) | GEO GSE64421 supplementary file `GSE64421_transcripts.trinity.fasta.gz` |
 | OKI2018 transcriptome (Bliznina et al. 2021) | Zenodo, <https://doi.org/10.5281/zenodo.23472675> (`config/transcripts.tsv`) |
 | OdB3 cDNA (Denoeud et al. 2010) | Genoscope `cDNA.fa.bz2` (OikoBase, which also distributed them, is offline) |
 | OdB3 operon annotation (Denoeud et al. 2010) | Genoscope `operons_GGB.gff.bz2` (`config/extra_files.tsv`) |
 | Rfam RF00031 and RF01852; Selenoprofiles data (profiles, Gene Ontology, UniRef50 tag database) from the Selenoprofiles server | `config/references.tsv` |
+| SPS1/SPS2 proteins of Mariotti et al. 2015 (SEPHS tree) | translated from their Supplemental Material S8 into `curation/mariotti2015_sps.faa` |
 
 **Assembly name.** The OKI2018 assembly is named `OKI2018_I68` at NCBI (GCF_907165135.1) because of a typo: it is
 the `OKI2018_I69` assembly of Bliznina et al. 2021, where I69 identifies the sequenced *O. dioica* individual. This
@@ -125,10 +135,14 @@ repository uses `OKI2018_I68`, the NCBI name, throughout.
 |---|---|
 | `config/` | data manifests (accessions, URLs, checksums) |
 | `scripts/` | download and repository utilities |
-| `stage1/`, `stage2/` | analysis steps, each with its own Makefile |
-| `curation/` | baseline decisions as tables, with evidence |
-| `figures/` | figure scripts |
-| `results/tables/` | small result tables used by the figures |
-| `docs/` | plan and methods notes |
+| `Makefile` | every step, from download to figures and tables |
+| `stage1/`, `stage2/` | analysis scripts (stage 1 driver and collection; stage 2 models, census, orthology) |
+| `curation/` | baseline decisions as tables, with evidence; reference proteins |
+| `figures/` | figure scripts and figures |
+| `results/tables/` | small result tables used by the figures and the manuscript |
+| `results/trees/` | machinery trees: sequence sets, removals, alignments, IQ-TREE reports; `C20/` and `lba/` for the other models and the long-branch analyses |
+| `results/models/` | appendicularian SECIS model and machinery profiles |
+| `manuscript/` | manuscript (Markdown with Pandoc citations) and bibliography |
+| `docs/` | plan and decisions |
 
 Related tool: the selenoprotein annotation pipeline (`selenoproteins`, Nextflow) — cited, not nested here.

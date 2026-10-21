@@ -98,3 +98,41 @@ cephalochordates and vertebrates (stage 1) and of the appendicularians (stage 2)
 and, for PSTK and the SECIS-binding proteins, the RefSeq proteins of the genomes that have them (KTI12 proteins join
 the outgroup). `--collect-only` writes the sequence sets without aligning. `scripts/proteins_from_gff.py` builds a
 protein file from a genome and its RefSeq GFF3 when the proteins were not downloaded.
+
+### Phylogenies: curation, alignment and trees (`make machinery-phylogeny`)
+
+Before the trees, the sequence sets are curated and every removal is recorded in `results/trees/<family>.removed.tsv`
+with its reason: the human stage 1 predictions are left out (the human RefSeq proteins represent human); identical
+sequences are kept once, under the genome or RefSeq name; after a first alignment, sequences covering less than half
+of the core columns (columns where at least half of the sequences have a residue; `--min-core`) are removed and the
+rest realigned, except appendicularian, curated and tunicate sequences, which are kept even when partial.
+Alignment: MAFFT L-INS-i. Trimming: ClipKIT gappy mode, removing the columns with at least 90 % gaps (insertions found
+in a few sequences, such as retained introns or rare isoforms); 50 % for the SECIS-binding proteins, whose tunicate
+predictions often cover only the C-terminal domain. Trees: IQ-TREE 2 with ModelFinder restricted to LG, WAG and JTT
+and 1,000 ultrafast bootstraps; PSTK and SEPHS also under LG+C20+F+G (`results/trees/C20/`, from the same trimmed
+alignments). Outputs per family in `results/trees/`: `.faa`, `.groups.tsv`, `.removed.tsv`, `.aln`, `.trimmed`,
+`.treefile`, `.iqtree`; figures `figures/phylogeny_<family>.*` (full trees) and `_collapsed.*` (display trees,
+`figures/phylogeny_collapsed.py`). About 4 hours on 8 CPUs, most of it the C20 tree of SEPHS.
+
+### Long-branch analyses (`machinery_lba.py`, `make machinery-lba`)
+
+Appendicularian proteins evolve fast, so their position is exposed to long-branch attraction. For each family:
+LG+C60+F+G with PMSF (guide: the maximum-likelihood tree); removal of the fastest 10 to 40 % of the sites (IQ-TREE site
+rates), each reduced alignment reanalysed; removal of named long branches (`--exclude`, by default the insect-gut fungi
+in PSTK); an AU test of the grouping of the appendicularian clade with the other tunicates of the same form; for SEPHS,
+two more AU tests (appendicularian selenocysteine clade inside the clade of all tunicate SEPHS, and at the position
+expected for an ortholog), under the selected model and under LG+C60+F+G with the PMSF site frequencies. Leaves are
+assigned to taxa by genus or genome code; the appendicularian clade is the largest one in the maximum-likelihood tree.
+Outputs: `results/trees/lba/` (trees, reports, site rates, `<family>.summary.tsv`), `results/tables/stage2_machinery_lba.tsv`
+(all families), and, through `machinery-lba-figures`, the display trees of the PMSF trees
+(`figures/phylogeny_<family>_collapsed_pmsf.*`). About 2 hours on 8 CPUs. `make machinery-lba` starts afresh; to
+resume after an interruption, or to refresh the summaries after a change of the script, run
+`python3 stage2/machinery_lba.py` directly: finished analyses (IQ-TREE report present) are kept, interrupted ones
+redone.
+
+### Table MACHINERY (`machinery_table.py`, `make machinery-table`)
+
+Combines the census (`stage2_machinery_census.tsv`), the reciprocal best hits (`stage2_machinery_rbh.tsv`), the
+long-branch table and the SEPHS trees into the table of the manuscript, with an orthology column and a row for the
+second, non-selenocysteine SEPHS copy (`results/tables/stage2_machinery_table.{md,tsv}`). It reads only `results/` and
+runs in seconds; `make machinery-lba` runs it at the end.
