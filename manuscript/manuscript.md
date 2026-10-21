@@ -524,6 +524,10 @@ stage 1). The analysis, from data download to figures, is at <https://github.com
 The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
 [Other Zenodo DOIs to add: pipeline release, machinery profiles and SECIS models.]
 
+# Acknowledgements
+
+We thank Léa Picard for discussion on the phylogenies.
+
 <!--
 Notes for the next pieces
 - References to add: review of selenocysteine insertion; selenocysteine biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
