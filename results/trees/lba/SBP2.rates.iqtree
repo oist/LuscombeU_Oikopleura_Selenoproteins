@@ -19,236 +19,221 @@ https://doi.org/10.1093/molbev/msaa015
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 90 sequences with 391 amino-acid sites
-Number of constant sites: 1 (= 0.255754% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 1 (= 0.255754% of all sites)
-Number of parsimony informative sites: 386
-Number of distinct site patterns: 391
+Input data: 81 sequences with 444 amino-acid sites
+Number of constant sites: 3 (= 0.675676% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 3 (= 0.675676% of all sites)
+Number of parsimony informative sites: 437
+Number of distinct site patterns: 444
 
 SUBSTITUTION PROCESS
 --------------------
 
-Model of substitution: LG+R5
+Model of substitution: LG+I+R6
 
 State frequencies: (model)
 
-Model of rate heterogeneity: FreeRate with 5 categories
-Site proportion and rates:  (0.0918,0.1391) (0.1907,0.3355) (0.3838,0.7315) (0.2881,1.6081) (0.0456,3.9307)
+Model of rate heterogeneity: Invar+FreeRate with 6 categories
+Proportion of invariable sites: 0.0053
+Site proportion and rates:  (0.0348,0.1019) (0.1244,0.2252) (0.1951,0.4397) (0.1785,0.7021) (0.3259,1.2201) (0.1359,2.6466)
 
  Category  Relative_rate  Proportion
-  1         0.1391         0.0918
-  2         0.3355         0.1907
-  3         0.7315         0.3838
-  4         1.6081         0.2881
-  5         3.9307         0.0456
+  0         0              0.0053
+  1         0.1019         0.0348
+  2         0.2252         0.1244
+  3         0.4397         0.1951
+  4         0.7021         0.1785
+  5         1.2201         0.3259
+  6         2.6466         0.1359
 
 USER TREE
 ---------
 
-Log-likelihood of the tree: -42341.9301 (s.e. 702.8078)
-Unconstrained log-likelihood (without tree): -2333.7647
-Number of free parameters (#branches + #model parameters): 185
-Akaike information criterion (AIC) score: 85053.8603
-Corrected Akaike information criterion (AICc) score: 85389.5676
-Bayesian information criterion (BIC) score: 85788.0712
+Log-likelihood of the tree: -44742.4950 (s.e. 696.4782)
+Unconstrained log-likelihood (without tree): -2706.5461
+Number of free parameters (#branches + #model parameters): 170
+Akaike information criterion (AIC) score: 89824.9901
+Corrected Akaike information criterion (AICc) score: 90037.9571
+Bayesian information criterion (BIC) score: 90521.2802
 
-Total tree length (sum of branch lengths): 83.4948
-Sum of internal branch lengths: 21.5710 (25.8352% of tree length)
+Total tree length (sum of branch lengths): 77.0034
+Sum of internal branch lengths: 22.5061 (29.2274% of tree length)
 
-WARNING: 1 near-zero internal branches (<0.0026) should be treated with caution
+WARNING: 1 near-zero internal branches (<0.0023) should be treated with caution
          Such branches are denoted by '**' in the figure below
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Volvox_carteri_f._nagariensis_EFJ47107.1' is drawn at root
 
-+----------Volvox_carteri_f._nagariensis_EFJ47107.1
++---------------Volvox_carteri_f._nagariensis_EFJ47107.1
 |
-|                                                         +--Aplysia_californica_XP_012941628.1
-|                                                      +--| (74)
-|                                                      |  +--Capitella_teleta_ELU11469.1
-|                                                   +--| (72)
-|                                                   |  |  +--Octopus_bimaculoides_KOF78133.1
-|                                                   |  +--| (35)
-|                                                   |     +---------Helobdella_robusta_ESN92194.1
-|                                                +--| (100)
-|                                                |  +--Crassostrea_gigas_EKC30124.1
-|                                             +--| (98)
-|                                             |  |  +--Acanthaster_planci_XP_022100524.1
-|                                             |  +--| (98)
-|                                             |     |     +--EEN47354.1_EEN47354.1
-|                                             |     |  +--| (100)
-|                                             |     |  |  +**Bflo_RefSeq_SECISBP2L_XP_035670302.1
-|                                             |     +--| (100)
-|                                             |        +--Blan_RefSeq_SECISBP2L_XP_066269754.1
-|                                          +--| (61)
-|                                          |  |           +--Ophiophagus_hannah_ETE66291.1
-|                                          |  |        +--| (98)
-|                                          |  |        |  +--KFP45696.1_KFP45696.1
-|                                          |  |     +--| (100)
-|                                          |  |     |  |  +--Mmus_RefSeq_SECISBP2L_NP_808276.2
-|                                          |  |     |  +--| (100)
-|                                          |  |     |     |  +**Hsap_SBP2.3.homologue
-|                                          |  |     |     +--| (100)
-|                                          |  |     |        +**Human_SECISBP2L_NP_001180418.1
-|                                          |  |  +--| (100)
-|                                          |  |  |  |  +--Tetraodon_nigroviridis_CAF99852.1
-|                                          |  |  |  +--| (99)
-|                                          |  |  |     +--Drer_RefSeq_SECISBP2L_XP_068071091.1
-|                                          |  +--| (86)
-|                                          |     |        +--KGL74119.1_KGL74119.1
-|                                          |     |     +--| (100)
-|                                          |     |     |  +--Chelonia_mydas_EMP36289.1
-|                                          |     |  +--| (100)
-|                                          |     |  |  |     +--Myotis_davidii_ELK38163.1
-|                                          |     |  |  |  +--| (94)
-|                                          |     |  |  |  |  |  +**Hsap_SBP2.1.homologue
-|                                          |     |  |  |  |  +--| (100)
-|                                          |     |  |  |  |     +**Human_SECISBP2_NP_076982.3
-|                                          |     |  |  +--| (100)
-|                                          |     |  |     +--Mmus_RefSeq_SECISBP2_NP_083555.1
-|                                          |     +--| (100)
-|                                          |        |  +--Scleropages_formosus_KPP72743.1
-|                                          |        +--| (100)
-|                                          |           +--Drer_RefSeq_SECISBP2_XP_068077667.1
-|                                       +--| (46)
-|                                       |  |     +--Bsch_RefSeq_SECISBP2L_XP_080176725.1
-|                                       |  |  +--| (100)
-|                                       |  |  |  |  +--Scla_RefSeq_SECISBP2L_XP_039256732.2
-|                                       |  |  |  +--| (27)
-|                                       |  |  |     +--Hror_SBP2.2.homologue
-|                                       |  +--| (100)
-|                                       |     |           +--Cint_RefSeq_SECISBP2L_XP_078482116.1
-|                                       |     |        +--| (100)
-|                                       |     |        |  +--Crob_RefSeq_SECISBP2L_XP_026689529.1
-|                                       |     |     +--| (100)
-|                                       |     |     |  +--Csav_SBP2.3.homologue
-|                                       |     |  +--| (100)
-|                                       |     |  |  +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
-|                                       |     +--| (99)
-|                                       |        |     +--Tdem_RefSeq_SECISBP2L_XP_082804045.1
-|                                       |        |  +--| (98)
-|                                       |        |  |  +----Pege_SBP2.1.homologue
-|                                       |        +--| (100)
-|                                       |           +--Stho_SBP2.2.homologue
-|                                    +--| (71)
-|                                    |  |                 +**Oikopleura_dioica_CBY19450.1
-|                                    |  |              +--| (100)
-|                                    |  |              |  +**OdB3_SBP2.3.homologue
-|                                    |  |           +--| (100)
-|                                    |  |           |  +--OSKA_SBP2.4.homologue
-|                                    |  |        +--| (100)
-|                                    |  |        |  +--OKI_SBP2.4.homologue
-|                                    |  |  +-----| (100)
-|                                    |  |  |     |           +--Bsty_SBP2.1.homologue
-|                                    |  |  |     |        +--| (100)
-|                                    |  |  |     |        |  +--Mery_SBP2.1.homologue
-|                                    |  |  |     |     +--| (99)
-|                                    |  |  |     |     |  +--Olon_SBP2.5.homologue
-|                                    |  |  |     |  +--| (100)
-|                                    |  |  |     |  |  +--Olon_SBP2.1.homologue
-|                                    |  |  |     +--| (98)
-|                                    |  |  |        |  +--Oalb_SBP2.3.homologue
-|                                    |  |  |        +--| (97)
-|                                    |  |  |           +--Ovan_SBP2.3.homologue
-|                                    |  +--| (48)
-|                                    |     +------Nematostella_vectensis_EDO32907.1
-|                                 +--| (34)
-|                                 |  +------------------Fbor_SBP2.2.homologue
-|                              +--| (34)
-|                              |  +---------Trichoplax_adhaerens_EDV25264.1
-|                           +--| (34)
-|                           |  |  +--------KFM61226.1_KFM61226.1
-|                           |  +--| (96)
-|                           |     +---------Ixodes_scapularis_EEC14282.1
-|                        +--| (38)
-|                        |  |                         +--KOX80201.1_KOX80201.1
-|                        |  |           +-------------| (100)
-|                        |  |           |             +--KOC62662.1_KOC62662.1
-|                        |  |        +--| (81)
-|                        |  |        |  +----------Zootermopsis_nevadensis_KDR07727.1
-|                        |  |     +--| (63)
-|                        |  |     |  |              +---Culex_quinquefasciatus_EDS27086.1
-|                        |  |     |  |   +----------| (100)
-|                        |  |     |  |   |          +--Anopheles_sinensis_KFB46832.1
-|                        |  |     |  +---| (99)
-|                        |  |     |      |           +---Drosophila_mojavensis_EDW17970.2
-|                        |  |     |      |        +--| (100)
-|                        |  |     |      |        |  +--Drosophila_busckii_ALC43769.1
-|                        |  |     |      +--------| (100)
-|                        |  |     |               +---Drosophila_willistoni_EDW72782.1
-|                        |  |  +--| (46)
-|                        |  |  |  |        +------------Trichuris_trichiura_CDW53243.1
-|                        |  |  |  |     +--| (78)
-|                        |  |  |  |     |  |                   +--Trichinella_nelsoni_KRX23146.1
-|                        |  |  |  |     |  |                +--| (76)
-|                        |  |  |  |     |  |                |  +--KRZ70544.1_KRZ70544.1
-|                        |  |  |  |     |  +----------------| (100)
-|                        |  |  |  |     |                   +--KRX91581.1_KRX91581.1
-|                        |  |  |  |  +--| (45)
-|                        |  |  |  |  |  +---------------------------------------------Sphaeroforma_arctica_JP610_KNC81545.1
-|                        |  |  |  +--| (50)
-|                        |  |  |     +----------------Pediculus_humanus_corporis_EEB17106.1
-|                        |  +--| (30)
-|                        |     +---------------Daphnia_pulex_EFX61072.1
-|                     +--| (74)
-|                     |  |             +--------Hymenolepis_microstoma_CUU98692.1
-|                     |  |  +----------| (100)
-|                     |  |  |          +---Echinococcus_multilocularis_CDS42379.1
-|                     |  +--| (56)
-|                     |     +----------------------Haemonchus_contortus_CDJ96885.1
-|                  +--| (44)
-|                  |  |     +---------------Sphaeroforma_arctica_JP610_KNC85706.1
-|                  |  |  +--| (67)
-|                  |  |  |  +------------Capsaspora_owczarzaki_ATCC_30864_KJE96997.1
-|                  |  +--| (42)
-|                  |     +----------------Salpingoeca_rosetta_EGD80782.1
-|               +--| (74)
-|               |  |         +-----------------Leptomonas_seymouri_KPI90300.1
-|               |  +---------| (96)
-|               |            +----------Bodo_saltans_CUI11282.1
-|            +--| (71)
-|            |  +------------------Galdieria_sulphuraria_EME31448.1
-|         +--| (39)
-|         |  |    +------------------EEA07153.1_EEA07153.1
-|         |  +----| (95)
-|         |       +------------------Vitrella_brassicaformis_CCMP3155_CEL93956.1
-|      +--| (50)
-|      |  |        +--------Ectocarpus_siliculosus_CBN78485.1
-|      |  |     +--| (100)
-|      |  |     |  |     +---Thalassiosira_oceanica_EJK58394.1
-|      |  |     |  +-----| (100)
-|      |  |     |        +-------Phaeodactylum_tricornutum_CCAP_1055_1_EEC51220.1
-|      |  |  +--| (91)
-|      |  |  |  +---------------Naegleria_gruberi_EFC50445.1
-|      |  +--| (61)
-|      |     |              +---Dictyostelium_discoideum_AX4_EAL67810.1
-|      |     |        +-----| (100)
-|      |     |        |     +---EGC33350.1_EGC33350.1
-|      |     +--------| (100)
-|      |              +---------Cavenderia_fasciculata_EGG21672.1
-|   +--| (69)
-|   |  |  +-----------Ostreococcus_tauri_CAL51930.1
-|   |  +**| (20)
-|   |     |     +-----------Vitrella_brassicaformis_CCMP3155_CEM02113.1
-|   |     |  +--| (79)
-|   |     |  |  +------------------Plasmodium_falciparum_HB3_KOB63698.1
-|   |     +--| (44)
-|   |        +------------Guillardia_theta_CCMP2712_EKX51709.1
-+---| (100)
-|   |  +----------------KOO29690.1_KOO29690.1
-|   +--| (70)
-|      +----------Thecamonas_trahens_ATCC_50062_KNC49160.1
+|                                                  +----Aplysia_californica_XP_012941628.1
+|                                               +--| (28)
+|                                               |  +---Capitella_teleta_ELU11469.1
+|                                            +--| (28)
+|                                            |  +---Octopus_bimaculoides_KOF78133.1
+|                                         +--| (100)
+|                                         |  +---Crassostrea_gigas_EKC30124.1
+|                                      +--| (96)
+|                                      |  +----Acanthaster_planci_XP_022100524.1
+|                                   +--| (99)
+|                                   |  |      +--EEN47354.1_EEN47354.1
+|                                   |  |   +--| (98)
+|                                   |  |   |  +**Bflo_RefSeq_SECISBP2L_XP_035670302.1
+|                                   |  +---| (100)
+|                                   |      +--Blan_RefSeq_SECISBP2L_XP_066269754.1
+|                                +--| (70)
+|                                |  |                       +**Oikopleura_dioica_CBY19450.1
+|                                |  |                    +**| (88)
+|                                |  |                    |  +**OdB3_SBP2.3.homologue
+|                                |  |                 +--| (98)
+|                                |  |                 |  +--OSKA_SBP2.4.homologue
+|                                |  |              +--| (100)
+|                                |  |              |  +--OKI_SBP2.4.homologue
+|                                |  |     +--------| (100)
+|                                |  |     |        |         +--Bsty_SBP2.1.homologue
+|                                |  |     |        |     +---| (100)
+|                                |  |     |        |     |   +--Mery_SBP2.1.homologue
+|                                |  |     |        |  +--| (100)
+|                                |  |     |        |  |  |  +--Olon_SBP2.1.homologue
+|                                |  |     |        |  |  +--| (100)
+|                                |  |     |        |  |     +--Olon_SBP2.5.homologue
+|                                |  |     |        +--| (98)
+|                                |  |     |           |  +--Oalb_SBP2.3.homologue
+|                                |  |     |           +--| (98)
+|                                |  |     |              +--Ovan_SBP2.3.homologue
+|                                |  |  +--| (67)
+|                                |  |  |  +---------------------Fbor_SBP2.2.homologue
+|                                |  +--| (70)
+|                                |     |        +--Bsch_RefSeq_SECISBP2L_XP_080176725.1
+|                                |     |     +--| (94)
+|                                |     |     |  +--Scla_RefSeq_SECISBP2L_XP_039256732.2
+|                                |     |  +--| (100)
+|                                |     |  |  +---Hror_SBP2.2.homologue
+|                                |     +--| (100)
+|                                |        |           +--Cint_RefSeq_SECISBP2L_XP_078482116.1
+|                                |        |        +--| (100)
+|                                |        |        |  +--Crob_RefSeq_SECISBP2L_XP_026689529.1
+|                                |        |     +--| (100)
+|                                |        |     |  +--Csav_SBP2.3.homologue
+|                                |        |  +--| (100)
+|                                |        |  |  +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
+|                                |        +--| (80)
+|                                |           |     +----Tdem_RefSeq_SECISBP2L_XP_082804045.1
+|                                |           |  +--| (99)
+|                                |           |  |  +----Pege_SBP2.1.homologue
+|                                |           +--| (100)
+|                                |              +-----Stho_SBP2.2.homologue
+|                            +---| (94)
+|                            |   |            +--Ophiophagus_hannah_ETE66291.1
+|                            |   |         +--| (98)
+|                            |   |         |  +--KFP45696.1_KFP45696.1
+|                            |   |      +--| (100)
+|                            |   |      |  |  +--Mmus_RefSeq_SECISBP2L_NP_808276.2
+|                            |   |      |  +--| (100)
+|                            |   |      |     +--Human_SECISBP2L_NP_001180418.1
+|                            |   |  +---| (100)
+|                            |   |  |   |  +--Tetraodon_nigroviridis_CAF99852.1
+|                            |   |  |   +--| (98)
+|                            |   |  |      +--Drer_RefSeq_SECISBP2L_XP_068071091.1
+|                            |   +--| (79)
+|                            |      |         +--KGL74119.1_KGL74119.1
+|                            |      |      +--| (99)
+|                            |      |      |  +--Chelonia_mydas_EMP36289.1
+|                            |      |   +--| (100)
+|                            |      |   |  |  +--Myotis_davidii_ELK38163.1
+|                            |      |   |  +--| (100)
+|                            |      |   |     |  +--Mmus_RefSeq_SECISBP2_NP_083555.1
+|                            |      |   |     +--| (90)
+|                            |      |   |        +--Human_SECISBP2_NP_076982.3
+|                            |      +---| (100)
+|                            |          |  +---Scleropages_formosus_KPP72743.1
+|                            |          +--| (100)
+|                            |             +--Drer_RefSeq_SECISBP2_XP_068077667.1
+|                         +--| (56)
+|                         |  |     +----------KFM61226.1_KFM61226.1
+|                         |  |  +--| (96)
+|                         |  |  |  +--------------Ixodes_scapularis_EEC14282.1
+|                         |  +--| (52)
+|                         |     |                            +--KOX80201.1_KOX80201.1
+|                         |     |        +-------------------| (100)
+|                         |     |        |                   +--KOC62662.1_KOC62662.1
+|                         |     |     +--| (64)
+|                         |     |     |  |  +----------------Zootermopsis_nevadensis_KDR07727.1
+|                         |     |     |  +--| (77)
+|                         |     |     |     |                +----Culex_quinquefasciatus_EDS27086.1
+|                         |     |     |     |   +------------| (100)
+|                         |     |     |     |   |            +--Anopheles_sinensis_KFB46832.1
+|                         |     |     |     +---| (100)
+|                         |     |     |         |              +----Drosophila_mojavensis_EDW17970.2
+|                         |     |     |         |           +--| (100)
+|                         |     |     |         |           |  +---Drosophila_busckii_ALC43769.1
+|                         |     |     |         +-----------| (100)
+|                         |     |     |                     +-----Drosophila_willistoni_EDW72782.1
+|                         |     |  +--| (42)
+|                         |     |  |  |           +--------------Trichuris_trichiura_CDW53243.1
+|                         |     |  |  |  +--------| (100)
+|                         |     |  |  |  |        |                       +---Trichinella_nelsoni_KRX23146.1
+|                         |     |  |  |  |        |                    +--| (99)
+|                         |     |  |  |  |        |                    |  +--KRZ70544.1_KRZ70544.1
+|                         |     |  |  |  |        +--------------------| (100)
+|                         |     |  |  |  |                             +--KRX91581.1_KRX91581.1
+|                         |     |  |  +--| (61)
+|                         |     |  |     +-------------------Pediculus_humanus_corporis_EEB17106.1
+|                         |     +--| (49)
+|                         |        |                   +-------------Hymenolepis_microstoma_CUU98692.1
+|                         |        |   +---------------| (100)
+|                         |        |   |               +------Echinococcus_multilocularis_CDS42379.1
+|                         |        +---| (40)
+|                         |            +-----------------------------------Haemonchus_contortus_CDJ96885.1
+|                      +--| (39)
+|                      |  |   +-------------------Sphaeroforma_arctica_JP610_KNC85706.1
+|                      |  +---| (98)
+|                      |      +---------------Capsaspora_owczarzaki_ATCC_30864_KJE96997.1
+|                   +--| (50)
+|                   |  |   +---------------------Salpingoeca_rosetta_EGD80782.1
+|                   |  +---| (53)
+|                   |      +--------------------------------------Leptomonas_seymouri_KPI90300.1
+|                +--| (31)
+|                |  |    +--------------------------------EEA07153.1_EEA07153.1
+|                |  +----| (62)
+|                |       +--------------------------Vitrella_brassicaformis_CCMP3155_CEL93956.1
+|             +--| (46)
+|             |  +--------------------------Galdieria_sulphuraria_EME31448.1
+|          +--| (48)
+|          |  |         +--------------Ectocarpus_siliculosus_CBN78485.1
+|          |  |     +---| (99)
+|          |  |     |   |        +-----Thalassiosira_oceanica_EJK58394.1
+|          |  |     |   +--------| (100)
+|          |  |     |            +-----------Phaeodactylum_tricornutum_CCAP_1055_1_EEC51220.1
+|          |  |  +--| (79)
+|          |  |  |  +-----------------------Naegleria_gruberi_EFC50445.1
+|          |  +--| (55)
+|          |     |                    +----Dictyostelium_discoideum_AX4_EAL67810.1
+|          |     |           +--------| (100)
+|          |     |           |        +-----EGC33350.1_EGC33350.1
+|          |     +-----------| (100)
+|          |                 +------------Cavenderia_fasciculata_EGG21672.1
+|       +--| (60)
+|       |  |         +-----------------Vitrella_brassicaformis_CCMP3155_CEM02113.1
+|       |  |     +---| (65)
+|       |  |     |   +------------------------Plasmodium_falciparum_HB3_KOB63698.1
+|       |  |  +--| (62)
+|       |  |  |  +---------------Guillardia_theta_CCMP2712_EKX51709.1
+|       |  +--| (49)
+|       |     +-------------------Thecamonas_trahens_ATCC_50062_KNC49160.1
++-------| (100)
+|       +--------------Ostreococcus_tauri_CAL51930.1
 |
 +------------Coccomyxa_subellipsoidea_C-169_EIE24823.1
 
 Tree in newick format:
 
-(Volvox_carteri_f._nagariensis_EFJ47107.1:1.2164124230,(((((((((((((((((((Aplysia_californica_XP_012941628.1:0.3476759721,Capitella_teleta_ELU11469.1:0.2772197774)74:0.0613443434,(Octopus_bimaculoides_KOF78133.1:0.2067400395,Helobdella_robusta_ESN92194.1:1.0346382515)35:0.0301052918)72:0.0347403195,Crassostrea_gigas_EKC30124.1:0.3093144799)100:0.2143722659,(Acanthaster_planci_XP_022100524.1:0.3665556344,((EEN47354.1_EEN47354.1:0.0175144162,Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0000009794)100:0.0123679045,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0142369429)100:0.2949408070)98:0.0882296770)98:0.1295549461,((((Ophiophagus_hannah_ETE66291.1:0.1156541049,KFP45696.1_KFP45696.1:0.0107203682)98:0.0319763101,(Mmus_RefSeq_SECISBP2L_NP_808276.2:0.0414213645,(Hsap_SBP2.3.homologue:0.0000009794,Human_SECISBP2L_NP_001180418.1:0.0000009794)100:0.0235628919)100:0.0767019719)100:0.0847021916,(Tetraodon_nigroviridis_CAF99852.1:0.0852138368,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.2911231924)99:0.0427978771)100:0.3211950944,(((KGL74119.1_KGL74119.1:0.2116185731,Chelonia_mydas_EMP36289.1:0.1140869718)100:0.1477253983,((Myotis_davidii_ELK38163.1:0.1360384146,(Hsap_SBP2.1.homologue:0.0000009794,Human_SECISBP2_NP_076982.3:0.0000009794)100:0.0960358418)94:0.0618869295,Mmus_RefSeq_SECISBP2_NP_083555.1:0.0770296558)100:0.2640135841)100:0.1380402832,(Scleropages_formosus_KPP72743.1:0.2513050247,Drer_RefSeq_SECISBP2_XP_068077667.1:0.2578128898)100:0.2210295802)100:0.2675959748)86:0.0936153916)61:0.1271300836,((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.3186129044,(Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2105662163,Hror_SBP2.2.homologue:0.2396100850)27:0.0481749480)100:0.1520521367,((((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0047765108,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0150711256)100:0.2540129680,Csav_SBP2.3.homologue:0.2187102017)100:0.1307662558,Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.1965719299)100:0.1077500824,((Tdem_RefSeq_SECISBP2L_XP_082804045.1:0.4018059408,Pege_SBP2.1.homologue:0.5939054267)98:0.0548735333,Stho_SBP2.2.homologue:0.3783170458)100:0.1547589287)99:0.0882471200)100:0.2058372665)46:0.0771246588,(((((Oikopleura_dioica_CBY19450.1:0.0000009794,OdB3_SBP2.3.homologue:0.0000009794)100:0.0099464281,OSKA_SBP2.4.homologue:0.0046603588)100:0.0426064599,OKI_SBP2.4.homologue:0.0187637096)100:0.2790865593,((((Bsty_SBP2.1.homologue:0.1198946748,Mery_SBP2.1.homologue:0.2241592386)100:0.2750694269,Olon_SBP2.5.homologue:0.0364337098)99:0.0321642056,Olon_SBP2.1.homologue:0.0944776234)100:0.2743470206,(Oalb_SBP2.3.homologue:0.1170541911,Ovan_SBP2.3.homologue:0.2029199224)97:0.1189404695)98:0.0697519826)100:0.6379660251,Nematostella_vectensis_EDO32907.1:0.7319735630)48:0.1147208948)71:0.0303053206,Fbor_SBP2.2.homologue:1.9592706631)34:0.1262758558,Trichoplax_adhaerens_EDV25264.1:1.0441509519)34:0.1189629742,(KFM61226.1_KFM61226.1:0.9655070836,Ixodes_scapularis_EEC14282.1:1.0591108926)96:0.1962523897)34:0.2351201901,(((((KOX80201.1_KOX80201.1:0.1423522167,KOC62662.1_KOC62662.1:0.2361361353)100:1.5117518848,Zootermopsis_nevadensis_KDR07727.1:1.1773505388)81:0.1958492962,((Culex_quinquefasciatus_EDS27086.1:0.4371028155,Anopheles_sinensis_KFB46832.1:0.2322744033)100:1.1625632225,((Drosophila_mojavensis_EDW17970.2:0.4424930892,Drosophila_busckii_ALC43769.1:0.3400335734)100:0.1751247426,Drosophila_willistoni_EDW72782.1:0.4439046701)100:0.9707564959)99:0.4233642895)63:0.0721618148,(((Trichuris_trichiura_CDW53243.1:1.4215397316,((Trichinella_nelsoni_KRX23146.1:0.3082688466,KRZ70544.1_KRZ70544.1:0.0364578492)76:0.0235090396,KRX91581.1_KRX91581.1:0.0388865913)100:1.8332438776)78:0.4109354904,Sphaeroforma_arctica_JP610_KNC81545.1:4.7518014110)45:0.0671699892,Pediculus_humanus_corporis_EEB17106.1:1.7603332835)50:0.0871394520)46:0.0633983626,Daphnia_pulex_EFX61072.1:1.6455814418)30:0.1048660931)38:0.0640443815,((Hymenolepis_microstoma_CUU98692.1:0.9829182606,Echinococcus_multilocularis_CDS42379.1:0.4436126759)100:1.1698850067,Haemonchus_contortus_CDJ96885.1:2.4428355483)56:0.3051295245)74:0.1028960802,((Sphaeroforma_arctica_JP610_KNC85706.1:1.6444506032,Capsaspora_owczarzaki_ATCC_30864_KJE96997.1:1.3400301074)67:0.1158326915,Salpingoeca_rosetta_EGD80782.1:1.7563877797)42:0.1319754371)44:0.0526746116,(Leptomonas_seymouri_KPI90300.1:1.8894901934,Bodo_saltans_CUI11282.1:1.1848150691)96:1.0368503853)74:0.0261800565,Galdieria_sulphuraria_EME31448.1:2.0295394003)71:0.0709131517,(EEA07153.1_EEA07153.1:2.0039996536,Vitrella_brassicaformis_CCMP3155_CEL93956.1:1.9648278564)95:0.5332562207)39:0.0718815577,(((Ectocarpus_siliculosus_CBN78485.1:0.9590811027,(Thalassiosira_oceanica_EJK58394.1:0.4252887929,Phaeodactylum_tricornutum_CCAP_1055_1_EEC51220.1:0.8633213048)100:0.7184528434)100:0.3536608751,Naegleria_gruberi_EFC50445.1:1.7193033971)91:0.1650409251,((Dictyostelium_discoideum_AX4_EAL67810.1:0.4130108693,EGC33350.1_EGC33350.1:0.4366659084)100:0.6440818029,Cavenderia_fasciculata_EGG21672.1:1.0493952150)100:0.9530831979)61:0.1091036290)50:0.0731229934,(Ostreococcus_tauri_CAL51930.1:1.2937292968,((Vitrella_brassicaformis_CCMP3155_CEM02113.1:1.3039535644,Plasmodium_falciparum_HB3_KOB63698.1:1.9596299961)79:0.2752849780,Guillardia_theta_CCMP2712_EKX51709.1:1.4274537416)44:0.1965141645)20:0.0000027969)69:0.1724350551,(KOO29690.1_KOO29690.1:1.7504969984,Thecamonas_trahens_ATCC_50062_KNC49160.1:1.1406347676)70:0.1016268969)100:0.4560271491,Coccomyxa_subellipsoidea_C-169_EIE24823.1:1.4161711205);
+(Volvox_carteri_f._nagariensis_EFJ47107.1:1.2991216872,(((((((((((((((Aplysia_californica_XP_012941628.1:0.4598908076,Capitella_teleta_ELU11469.1:0.3808835357)28:0.0357061183,Octopus_bimaculoides_KOF78133.1:0.3189304645)28:0.0447409704,Crassostrea_gigas_EKC30124.1:0.3387736107)100:0.2687885240,Acanthaster_planci_XP_022100524.1:0.4038975944)96:0.1041847124,((EEN47354.1_EEN47354.1:0.0323305546,Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0000036855)98:0.0147664904,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0131193430)100:0.3722872420)99:0.1072295578,((((((Oikopleura_dioica_CBY19450.1:0.0000014377,OdB3_SBP2.3.homologue:0.0000014377)88:0.0000036183,OSKA_SBP2.4.homologue:0.0152044908)98:0.0337587279,OKI_SBP2.4.homologue:0.0345896989)100:0.3030704503,(((Bsty_SBP2.1.homologue:0.1166118330,Mery_SBP2.1.homologue:0.0787290921)100:0.3501122228,(Olon_SBP2.1.homologue:0.1155363979,Olon_SBP2.5.homologue:0.0569751263)100:0.0726423436)100:0.1964836676,(Oalb_SBP2.3.homologue:0.1296659579,Ovan_SBP2.3.homologue:0.2208568972)98:0.1214085171)98:0.0750143979)100:0.7688688192,Fbor_SBP2.2.homologue:1.7992218136)67:0.1710296506,(((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.2974388010,Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2049696264)94:0.0741574765,Hror_SBP2.2.homologue:0.3362976471)100:0.1642167725,((((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0049776127,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0134578116)100:0.2853717448,Csav_SBP2.3.homologue:0.2111794874)100:0.1447998951,Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.2188966939)100:0.1247235504,((Tdem_RefSeq_SECISBP2L_XP_082804045.1:0.4158543103,Pege_SBP2.1.homologue:0.4328434161)99:0.0757720060,Stho_SBP2.2.homologue:0.4964793169)100:0.1544709239)80:0.0428400055)100:0.1924924266)70:0.1323980818)70:0.0672079461,((((Ophiophagus_hannah_ETE66291.1:0.1222292153,KFP45696.1_KFP45696.1:0.0217572259)98:0.0319581640,(Mmus_RefSeq_SECISBP2L_NP_808276.2:0.0436598887,Human_SECISBP2L_NP_001180418.1:0.0217376215)100:0.0670426311)100:0.0833557222,(Tetraodon_nigroviridis_CAF99852.1:0.0935575905,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.2362183184)98:0.0561165065)100:0.3712072026,(((KGL74119.1_KGL74119.1:0.2655844450,Chelonia_mydas_EMP36289.1:0.1407865016)99:0.1309605066,(Myotis_davidii_ELK38163.1:0.1278617553,(Mmus_RefSeq_SECISBP2_NP_083555.1:0.1226390380,Human_SECISBP2_NP_076982.3:0.0842237562)90:0.0443689478)100:0.2489260341)100:0.2268167801,(Scleropages_formosus_KPP72743.1:0.3190174289,Drer_RefSeq_SECISBP2_XP_068077667.1:0.3059963696)100:0.2743452909)100:0.3916180782)79:0.0715129543)94:0.3596174547,((KFM61226.1_KFM61226.1:0.9511085386,Ixodes_scapularis_EEC14282.1:1.2313021637)96:0.2552506559,((((KOX80201.1_KOX80201.1:0.2396577282,KOC62662.1_KOC62662.1:0.2393784220)100:1.6621649290,(Zootermopsis_nevadensis_KDR07727.1:1.3533212676,((Culex_quinquefasciatus_EDS27086.1:0.4319037289,Anopheles_sinensis_KFB46832.1:0.2827067211)100:1.0724490525,((Drosophila_mojavensis_EDW17970.2:0.4625483743,Drosophila_busckii_ALC43769.1:0.3578343351)100:0.1825714941,Drosophila_willistoni_EDW72782.1:0.5023976475)100:0.9679346927)100:0.3533468755)77:0.0816478146)64:0.0556376684,((Trichuris_trichiura_CDW53243.1:1.2174430091,((Trichinella_nelsoni_KRX23146.1:0.3327696783,KRZ70544.1_KRZ70544.1:0.0389283571)99:0.0270498219,KRX91581.1_KRX91581.1:0.0431185182)100:1.6883307702)100:0.7586512035,Pediculus_humanus_corporis_EEB17106.1:1.6483984219)61:0.2028337017)42:0.0966302502,((Hymenolepis_microstoma_CUU98692.1:1.1700909455,Echinococcus_multilocularis_CDS42379.1:0.6108258556)100:1.3411144632,Haemonchus_contortus_CDJ96885.1:2.8657318336)40:0.3477120184)49:0.1028629025)52:0.1482961721)56:0.2169636981,(Sphaeroforma_arctica_JP610_KNC85706.1:1.6239626177,Capsaspora_owczarzaki_ATCC_30864_KJE96997.1:1.2710967180)98:0.3826223403)39:0.0925808254,(Salpingoeca_rosetta_EGD80782.1:1.7508694307,Leptomonas_seymouri_KPI90300.1:3.1666208943)53:0.3767392912)50:0.0454642832,(EEA07153.1_EEA07153.1:2.6437545202,Vitrella_brassicaformis_CCMP3155_CEL93956.1:2.1661346731)62:0.4127197998)31:0.0372984818,Galdieria_sulphuraria_EME31448.1:2.2009242157)46:0.0947306052,(((Ectocarpus_siliculosus_CBN78485.1:1.2043988536,(Thalassiosira_oceanica_EJK58394.1:0.5176989506,Phaeodactylum_tricornutum_CCAP_1055_1_EEC51220.1:0.9771903190)100:0.7674404640)99:0.3687535335,Naegleria_gruberi_EFC50445.1:1.9201030665)79:0.0673144679,((Dictyostelium_discoideum_AX4_EAL67810.1:0.4229017409,EGC33350.1_EGC33350.1:0.5026520714)100:0.7247397857,Cavenderia_fasciculata_EGG21672.1:1.0797401536)100:1.0194883276)55:0.1811844903)48:0.0864216807,(((Vitrella_brassicaformis_CCMP3155_CEM02113.1:1.4826679202,Plasmodium_falciparum_HB3_KOB63698.1:1.9972278128)65:0.3491769204,Guillardia_theta_CCMP2712_EKX51709.1:1.2745085329)62:0.3011666075,Thecamonas_trahens_ATCC_50062_KNC49160.1:1.6002065247)49:0.0542015988)60:0.0671398959,Ostreococcus_tauri_CAL51930.1:1.2682432263)100:0.6590467249,Coccomyxa_subellipsoidea_C-169_EIE24823.1:1.0949038357);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/lba/SBP2.rates.treefile -m "LG+R5{0.0918439,0.139146,0.190666,0.335531,0.383836,0.731472,0.28805,1.60813,0.0456038,3.93074}" --length 391
+--alisim simulated_MSA -t results/trees/lba/SBP2.rates.treefile -m "LG+I{0.00532407}+R6{0.0348382,0.101895,0.124359,0.225213,0.19513,0.439726,0.178542,0.702105,0.325919,1.22007,0.135887,2.64661}" --length 444
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -263,7 +248,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Mon Oct 19 22:45:10 2026
-Total CPU time used: 29.1192 seconds (0h:0m:29s)
-Total wall-clock time used: 3.68675 seconds (0h:0m:3s)
+Date and time: Wed Oct 21 23:43:57 2026
+Total CPU time used: 160.415 seconds (0h:2m:40s)
+Total wall-clock time used: 20.3504 seconds (0h:0m:20s)
 
