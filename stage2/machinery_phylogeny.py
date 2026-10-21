@@ -129,6 +129,7 @@ def main():
                     if per_type.get(key, 0) >= a.max_per_group: continue
                     per_type[key] = per_type.get(key, 0) + 1
                 add(f[1], s, "reference")
+        skipped = []
         kind = lambda g: "tunicate" if g in TUNICATES else "cephalochordate" if g in CEPHALOCHORDATES else "vertebrate"
         replaced = set()
         if fam in REFSEQ_FAMILIES:
@@ -141,11 +142,12 @@ def main():
         for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in TUNICATES | VERTEBRATES | CEPHALOCHORDATES or g in replaced: continue
-            if g == "Hsap" and HUMAN_GENES.get(fam):
-                continue   # human is represented by its RefSeq proteins of the family (below)
             for n, s in read_fasta(faa):
                 pid = n.split()[0]
                 if pid.split(".")[0] == fam and len(clean(s)) >= a.min_fraction * med:
+                    if g == "Hsap" and HUMAN_GENES.get(fam):   # human: its RefSeq proteins of the family (below)
+                        skipped.append((label(f"{g}|{pid}"), kind(g), "human stage 1 prediction (human RefSeq proteins used)"))
+                        continue
                     add(f"{g}|{pid}", s, kind(g))
         for faa in sorted(glob.glob(f"{a.stage2}/*.faa")):
             g = os.path.basename(faa).split(".")[0]
@@ -174,7 +176,7 @@ def main():
                     sp = re.search(r"Tax=([^=]+?) TaxID", n)
                     add(f"KTI12|{(sp.group(1) if sp else '')}|{n.split()[0]}", s, "outgroup"); k += 1
         base = f"{a.out}/{fam}"
-        removed = deduplicate(seqs, groups)
+        removed = skipped + deduplicate(seqs, groups)
         write_set(base, seqs, groups, removed)
         print(fam, len(seqs), "sequences", flush=True)
         if a.collect_only: continue

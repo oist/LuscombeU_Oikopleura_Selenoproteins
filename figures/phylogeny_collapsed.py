@@ -149,13 +149,15 @@ def draw(fam, a, taxa):
         k = cat.get(tip.name)
         if k in BANDS: ax.axhspan(i + 0.5, i + 1.5, color=BANDS[k][0], zorder=0, lw=0)
     used = [k for k in BANDS if any(cat.get(t.name) == k for t in tips)]
-    if used: ax.legend(handles=[Patch(color=BANDS[k][0], label=BANDS[k][1]) for k in used], loc="upper left",
-                       bbox_to_anchor=(0, -0.04), ncol=len(used), fontsize=6, frameon=False)
+    # legend in its own strip below the axis label (about 0.35 inch, whatever the height of the figure)
+    bottom = 0.35 / fig.get_size_inches()[1]
+    if used: fig.legend(handles=[Patch(color=BANDS[k][0], label=BANDS[k][1]) for k in used], loc="lower left",
+                        bbox_to_anchor=(0.01, 0.0), ncol=len(used), fontsize=6, frameon=False)
     ax.set_yticks([]); ax.set_ylabel("")
-    model = f"{a.model_label}; " if a.model_label else ""
-    ax.set_title(f"{fam}: {model}groups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
+    model = f", {a.model_label}" if a.model_label else ""
+    ax.set_title(f"{fam}{model}\ngroups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
                  f"collapsed; supports >= 70 shown", fontsize=8)
-    fig.tight_layout(rect=(0, 0, 0.88, 1))
+    fig.tight_layout(rect=(0, bottom, 0.88, 1))
     for ext in ("png", "pdf"): fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)
     plt.close(fig)
     print(fam, n, "tips after collapsing")

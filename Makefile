@@ -98,7 +98,7 @@ machinery-phylogeny:
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3
 	python3 stage2/machinery_phylogeny.py --families SBP2 --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5
 	mkdir -p results/trees/C20 && cp results/trees/pstk.trimmed results/trees/SEPHS2.trimmed results/trees/C20/ 2>/dev/null || true
-	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
 	python3 figures/phylogeny_collapsed.py
 	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2 --trees results/trees/C20 --figures results/trees/C20
 

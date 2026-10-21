@@ -255,3 +255,24 @@ Built from `results/tables/` only.
   SEPHS 117, 448 (6 human predictions, 6 duplicates); SECIS-binding proteins 82, 427 (2 human predictions; fragments
   of Nematostella (78 residues, the ML sister of the oikopleurid clade), Helobdella, Trichoplax, Daphnia, Bodo and
   Sphaeroforma). Trees, long-branch analyses, figures, tables and manuscript numbers to recompute.
+- Machinery trees after curation (2026-10-22, Deigo, commit 806e317; alignments PSTK 83 x 419, LG+F+I+R5; SEPHS
+  117 x 454, LG+R6; SECIS-binding proteins 81 x 444, LG+I+R6). Removed: duplicate human KTI12 and the B. floridae
+  PSTK fragment; 6 SEPHS duplicates; 7 partial SECIS-binding proteins (KOO29690.1, Daphnia, Bodo, Sphaeroforma,
+  Trichoplax, Helobdella, Nematostella); human predictions (not listed in this run's removed.tsv; recorded from now on).
+  - PSTK: PSTK/KTI12 100 and appendicularian clade 100 everywhere; other tunicates 97-100; the appendicularian clade
+    now groups with the PSTK of the insect-gut fungi (56 ML, 74 C20, 84 PMSF, 60-77 site removal), and without the
+    fungi it is sister to all other PSTK (94): long-branch attraction between two long branches. AU p 0.268.
+  - SEPHS: oikopleurid selenocysteine SEPHS2 (10 sequences, 7 genomes) 100 everywhere; F. borealis joins under C20
+    and PMSF only (83, 76). Placement: base of animal SEPHS under C20 and PMSF (39, 56), outside a group with
+    kinetoplastid, stramenopile and amoebozoan proteins in ML and every site-removal tree. Tunicate SEPHS without it
+    82-95; glycine forms with the second appendicularian copy 75-99; Phallusia sister 79 (ML), 95 (PMSF). AU: all
+    rejected, more strongly than before (inside tunicate SEPHS 0.011 ML, 0.0045 PMSF; orthologous position 0.0047,
+    0.0009; generic 0.0057). No SEPHS fails the composition test; paths from the tunicate-vertebrate common node:
+    appendicularian selenocysteine copy 1.3, second copy 2.5 substitutions per site.
+  - SECIS-binding proteins: Oikopleuridae clade 99-100; F. borealis joins it in all but the 40 % site-removal tree
+    (47-77). Appendicularians with the other tunicates: 70 ML, 93 PMSF, 53-68 site removal (oikopleurids with
+    tunicates 76 at 40 %); AU p 0.586. Vertebrate SECISBP2+SECISBP2L clade excluding tunicates and amphioxus 79-98.
+    The earlier ML placement next to Nematostella was due to a 78-residue fragment.
+  - Provisional Results, Table MACHINERY and Methods updated with these numbers; collapsed figures redrawn (title on
+    two lines, legend below the axis label). The C20 run now uses --max-per-group 3 for its sequence collection too
+    (its trees always used the copied trimmed alignments; only its unused faa and groups files had all sequences).
