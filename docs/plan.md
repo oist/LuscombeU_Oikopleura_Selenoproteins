@@ -229,3 +229,16 @@ Built from `results/tables/` only.
   - Summary of the three families: PSTK and SECIS-binding protein: appendicularian placement with the other
     tunicates not rejected (p-AU 0.275 and 0.503), supported for the SECIS-binding protein by PMSF C60 (81).
     SEPHS2: placement unresolved; the non-selenocysteine copy settles the timing of the tunicate duplication.
+- SEPHS orthology AU tests (2026-10-20, Deigo, commit 559d9c2; results/trees/lba/SEPHS2.{ml,pmsf}.*): both positions
+  of the appendicularian selenocysteine SEPHS2 clade are rejected under both models. Inside the clade of all tunicate
+  SEPHS: p-AU 0.0067 (LG+R6, delta logL 43) and 0.019 (LG+C60+F+G PMSF, delta logL 34); next to the ascidian and salp
+  selenocysteine copies, with the glycine forms and the second appendicularian copy as their sister: p-AU 0.012
+  (delta logL 51) and 0.0082 (delta logL 39). Checks: no appendicularian selenocysteine SEPHS2 fails the IQ-TREE
+  composition test (median p 74 %); its path from the common node of the tunicate and vertebrate SEPHS (2.2
+  substitutions per site) is shorter than that of the second, non-selenocysteine appendicularian copy (3.0), which is
+  placed inside the tunicate glycine forms in every analysis. Reading: under both models the data reject the
+  appendicularian selenocysteine SEPHS2 as a member of the tunicate SEPHS clade, and neither composition nor the
+  longest branch explains it. Two readings remain: a divergent ortholog of the tunicate selenocysteine copy whose
+  signal these models do not recover, or a separate SEPHS2 lineage (with the ortholog of the tunicate selenocysteine
+  copy lost in appendicularians). The manuscript states the rejection and leaves the origin open; the protein is a
+  selenocysteine SEPHS2 by its catalytic residue in any case.
