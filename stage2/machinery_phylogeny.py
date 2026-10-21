@@ -14,8 +14,15 @@ predictions of the other tunicates, cephalochordates and vertebrates, the stage 
 selenocysteine, the RefSeq proteins of a genome (best human hit PSTK or KTI12, SECISBP2 or SECISBP2L; longest
 isoform per gene) replace its predictions, which cover only the region of the profile. Predictions
 shorter than --min-fraction of the median profile length are left out (fragments make trees unstable).
-Steps: MAFFT (L-INS-i), ClipKIT (smart-gap trimming), IQ-TREE 2 (ModelFinder restricted to --mset and --mrate, 1000
-ultrafast bootstraps). Outputs: <out>/<family>.{faa,aln,trimmed,treefile,iqtree} and <figures>/phylogeny_<family>.*
+Curation, recorded in <out>/<family>.removed.tsv: the stage 1 predictions of the human genome are replaced by the
+human RefSeq proteins of the family; identical sequences are kept once (genome-derived names preferred); after a first
+alignment, sequences covering less than --min-core of the core columns (columns where at least half of the sequences
+have a residue) are removed and the rest realigned, except appendicularian, curated and tunicate sequences, which are
+the subject of the trees and are kept even when partial.
+Steps: MAFFT (L-INS-i), ClipKIT (by default gappy mode, removing the columns with at least 90 % gaps, among which
+insertions found in a few sequences only, such as retained introns or rare isoforms), IQ-TREE 2 (ModelFinder
+restricted to --mset and --mrate, 1000 ultrafast bootstraps).
+Outputs: <out>/<family>.{faa,groups.tsv,removed.tsv,aln,trimmed,treefile,iqtree} and <figures>/phylogeny_<family>.*
 """
 import argparse, glob, gzip, os, re, statistics, subprocess
 
@@ -25,6 +32,8 @@ VERTEBRATES = {"Hsap", "Mmus", "Drer"}
 CEPHALOCHORDATES = {"Bflo", "Blan"}
 # families without selenocysteine: their RefSeq proteins, when a genome has them, replace the Selenoprofiles
 # predictions, which cover only the region of the profile (for example the C-terminal domain of SECIS-binding proteins)
+# groups kept by the core-coverage filter even when partial (the subject of the trees)
+KEEP_PARTIAL = {"appendicularian", "curated", "tunicate"}
 REFSEQ_FAMILIES = {"pstk": ["PSTK", "KTI12"], "SBP2": ["SECISBP2", "SECISBP2L"]}
 HUMAN_GENES = {"pstk": ["PSTK", "KTI12"], "SEPHS2": ["SEPHS1", "SEPHS2"], "SBP2": ["SECISBP2", "SECISBP2L"]}
 OUTGROUP_PATTERN = {"pstk": r"KTI12|[Kk]iller toxin.insensitive"}
@@ -69,8 +78,10 @@ def main():
     ap.add_argument("--human", default="data/genomes/Hsap")
     ap.add_argument("--min-fraction", type=float, default=0.5)
     ap.add_argument("--max-uniref-outgroups", type=int, default=12)
-    ap.add_argument("--clipkit-mode", default="smart-gap", help="ClipKIT trimming mode (for example gappy)")
-    ap.add_argument("--clipkit-gaps", default="", help="ClipKIT gap threshold, for the gappy modes (for example 0.5)")
+    ap.add_argument("--min-core", type=float, default=0.5,
+                    help="minimum fraction of the core alignment columns covered by a sequence (see above)")
+    ap.add_argument("--clipkit-mode", default="gappy", help="ClipKIT trimming mode (for example smart-gap)")
+    ap.add_argument("--clipkit-gaps", default="0.9", help="ClipKIT gap threshold, for the gappy modes (empty: ClipKIT default)")
     ap.add_argument("--model", default="", help="fixed model instead of ModelFinder (for example LG+C20+F+G)")
     ap.add_argument("--mset", default="LG,WAG,JTT", help="substitution matrices tested by ModelFinder")
     ap.add_argument("--mrate", default="", help="rate models tested by ModelFinder (for example G4,R4,R5; default: all)")
@@ -130,6 +141,8 @@ def main():
         for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in TUNICATES | VERTEBRATES | CEPHALOCHORDATES or g in replaced: continue
+            if g == "Hsap" and HUMAN_GENES.get(fam):
+                continue   # human is represented by its RefSeq proteins of the family (below)
             for n, s in read_fasta(faa):
                 pid = n.split()[0]
                 if pid.split(".")[0] == fam and len(clean(s)) >= a.min_fraction * med:
@@ -161,18 +174,21 @@ def main():
                     sp = re.search(r"Tax=([^=]+?) TaxID", n)
                     add(f"KTI12|{(sp.group(1) if sp else '')}|{n.split()[0]}", s, "outgroup"); k += 1
         base = f"{a.out}/{fam}"
-        with open(f"{base}.faa", "w") as o:
-            for n, s in seqs.items(): o.write(f">{n}\n{s}\n")
-        with open(f"{base}.groups.tsv", "w") as o:
-            for n, g in groups.items(): o.write(f"{n}\t{g}\n")
+        removed = deduplicate(seqs, groups)
+        write_set(base, seqs, groups, removed)
         print(fam, len(seqs), "sequences", flush=True)
         if a.collect_only: continue
         if not os.path.exists(f"{base}.trimmed"):
-          with open(f"{base}.aln", "w") as o:
-            subprocess.run(["mafft", "--localpair", "--maxiterate", "1000", "--thread", str(a.cpus), "--quiet",
-                            f"{base}.faa"], stdout=o, check=True)
-          subprocess.run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed", "-m", a.clipkit_mode] +
-                         (["-g", a.clipkit_gaps] if a.clipkit_gaps else []), check=True, stdout=subprocess.DEVNULL)
+            align(base, a.cpus)
+            partial = core_filter(f"{base}.aln", groups, a.min_core)
+            if partial:
+                for n, cov in partial.items():
+                    removed.append((n, groups[n], f"covers {cov:.0%} of the core columns")); seqs.pop(n); groups.pop(n)
+                print(fam, "partial sequences removed:", " ".join(partial), flush=True)
+                write_set(base, seqs, groups, removed)
+                align(base, a.cpus)
+            subprocess.run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed", "-m", a.clipkit_mode] +
+                           (["-g", a.clipkit_gaps] if a.clipkit_gaps else []), check=True, stdout=subprocess.DEVNULL)
         if not os.path.exists(f"{base}.iqtree"):  # resumes from the IQ-TREE checkpoint after an interruption
             models = ["-m", a.model] if a.model else ["-m", "MFP", "-mset", a.mset] + (["-mrate", a.mrate] if a.mrate else [])
             subprocess.run(["iqtree2", "-s", f"{base}.trimmed"] + models +
@@ -217,6 +233,51 @@ def draw(treefile, groups, fam, figdir):
     fig.tight_layout(rect=(0, 0, 0.9, 1))
     for ext in ("png", "pdf"): fig.savefig(f"{figdir}/phylogeny_{fam}.{ext}", dpi=200)
     plt.close(fig)
+
+
+def deduplicate(seqs, groups):
+    """Keep identical sequences once, preferring names from genomes and RefSeq over profile and database entries.
+    Returns the removed (name, group, reason) and edits seqs and groups in place."""
+    def rank(n):
+        return (0 if groups[n] in ("curated", "appendicularian") else
+                1 if re.match(r"(Human_|[A-Z][a-z]{2,3}[_|])", n) and groups[n] != "profile" else 2)
+    by_seq, removed = {}, []
+    for n in sorted(seqs, key=rank):
+        s = seqs[n]
+        if s in by_seq:
+            removed.append((n, groups[n], f"identical to {by_seq[s]}")); seqs.pop(n); groups.pop(n)
+        else:
+            by_seq[s] = n
+    return removed
+
+
+def write_set(base, seqs, groups, removed):
+    with open(f"{base}.faa", "w") as o:
+        for n, s in seqs.items(): o.write(f">{n}\n{s}\n")
+    with open(f"{base}.groups.tsv", "w") as o:
+        for n, g in groups.items(): o.write(f"{n}\t{g}\n")
+    with open(f"{base}.removed.tsv", "w") as o:
+        o.write("sequence\tgroup\treason\n")
+        for r in removed: o.write("\t".join(r) + "\n")
+
+
+def align(base, cpus):
+    with open(f"{base}.aln", "w") as o:
+        subprocess.run(["mafft", "--localpair", "--maxiterate", "1000", "--thread", str(cpus), "--quiet",
+                        f"{base}.faa"], stdout=o, check=True)
+
+
+def core_filter(aln, groups, min_core):
+    """Sequences outside KEEP_PARTIAL that cover less than min_core of the core columns (columns where at least half
+    of the sequences have a residue): name -> coverage."""
+    al = dict(read_fasta(aln))
+    names = list(al); ncol = len(al[names[0]])
+    core = [i for i in range(ncol) if sum(al[x][i] != "-" for x in names) >= len(names) / 2]
+    out = {}
+    for x in names:
+        cov = sum(al[x][i] != "-" for i in core) / len(core)
+        if cov < min_core and groups.get(x) not in KEEP_PARTIAL: out[x] = cov
+    return out
 
 
 def load_taxa(path):

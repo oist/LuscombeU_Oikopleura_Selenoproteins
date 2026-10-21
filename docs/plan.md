@@ -242,3 +242,16 @@ Built from `results/tables/` only.
   signal these models do not recover, or a separate SEPHS2 lineage (with the ortholog of the tunicate selenocysteine
   copy lost in appendicularians). The manuscript states the rejection and leaves the origin open; the protein is a
   selenocysteine SEPHS2 by its catalytic residue in any case.
+- Curation of the machinery tree sets (2026-10-21, after review of the PSTK alignment by eye: a truncated lancelet
+  PSTK, rare insertions in mammals): stage2/machinery_phylogeny.py now (1) leaves out the human stage 1 predictions
+  (the human RefSeq proteins represent human; the PSTK prediction carried an N-terminal extension and the SEPHS
+  predictions included pseudogenes); (2) keeps identical sequences once (genome or RefSeq names preferred); (3) after a
+  first alignment, removes sequences covering less than half of the core columns, except appendicularian, curated and
+  tunicate sequences, then realigns; (4) trims with ClipKIT gappy 0.9 instead of smart-gap (smart-gap had kept 224 of
+  691 PSTK columns and 426 of 976 SEPHS columns occupied by at most 6 sequences, for example the 75-residue insertion
+  of mammalian KTI12, which is in the canonical human and mouse proteins). Removals are listed in
+  results/trees/<family>.removed.tsv. Preview on the previous sets (local MAFFT 7.505): PSTK 83 sequences, 413
+  columns (removed: human prediction, duplicate human KTI12, Branchiostoma floridae PSTK fragment of 106 residues);
+  SEPHS 117, 448 (6 human predictions, 6 duplicates); SECIS-binding proteins 82, 427 (2 human predictions; fragments
+  of Nematostella (78 residues, the ML sister of the oikopleurid clade), Helobdella, Trichoplax, Daphnia, Bodo and
+  Sphaeroforma). Trees, long-branch analyses, figures, tables and manuscript numbers to recompute.

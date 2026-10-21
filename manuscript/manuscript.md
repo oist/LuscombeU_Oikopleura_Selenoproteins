@@ -427,7 +427,9 @@ protein. The stage 1 predictions of the gene, scored in the same way, served as 
 
 > **Provisional section (2026-10-21).** Draft of the methods of the reciprocal best hits, trees and long-branch
 > analyses (`stage2/machinery_rbh.py`, `stage2/machinery_phylogeny.py`, `stage2/machinery_lba.py`,
-> `figures/phylogeny_collapsed.py`); to be checked before submission.
+> `figures/phylogeny_collapsed.py`); to be checked before submission. The curation of the sequence sets and the
+> trimming described here were introduced on 2026-10-21; the alignment sizes, models and all numbers in the Results
+> still come from the previous run and are to be updated after the trees are recomputed.
 
 *Reciprocal best hits.* Each machinery protein predicted with the appendicularian profiles was compared by blastp
 (legacy BLAST 2.2.26, E-value at most 10^-3^) [@Altschul1997] with the human RefSeq proteins of the GRCh38.p14
@@ -456,8 +458,16 @@ prokaryotic selenophosphate synthetases. The tree of the SECIS-binding proteins 
 and was rooted on the non-animal sequences of the profile. Taxonomic groups were assigned from genus names or genome
 codes (`config/taxon_groups.tsv`).
 
+The sequence sets were then curated, and each removal recorded with its reason. The stage 1 predictions in the human
+genome were left out, human being represented by its RefSeq proteins of the family; identical sequences were kept
+once, under the name of the genome or RefSeq record; and, after a first alignment, sequences covering less than half
+of the core columns (columns where at least half of the sequences have a residue) were removed and the others
+realigned. Appendicularian, curated and other tunicate sequences, the subject of the trees, were kept even when
+partial.
+
 Sequences were aligned with MAFFT 7.520 L-INS-i (`--localpair --maxiterate 1000`) [@Katoh2013] and trimmed with
-ClipKIT 2.14.0 in smart-gap mode [@Steenwyk2020] (gappy mode with a threshold of 0.5 for the SECIS-binding
+ClipKIT 2.14.0 in gappy mode [@Steenwyk2020], which removed the columns with at least 90% gaps, among them insertions
+found in a few sequences only, such as retained introns or rare isoforms (at least 50% gaps for the SECIS-binding
 proteins). Trees were inferred with IQ-TREE 2.3.6 [@Minh2020], with ModelFinder [@Kalyaanamoorthy2017] restricted to
 the LG, WAG and JTT matrices and 1,000 ultrafast bootstrap replicates [@Hoang2017]. The alignments had 86 sequences
 and 691 sites for PSTK (selected model LG+F+R6), 129 and 976 for SEPHS (LG+R6) and 90 and 391 for the SECIS-binding
