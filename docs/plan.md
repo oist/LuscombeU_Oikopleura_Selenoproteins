@@ -312,3 +312,5 @@ Built from `results/tables/` only.
   editable SVG; draft legend in figures/README.md. Biochemistry checked against the abstracts of Xu2006 and
   SmallHoward2006. Note: SmallHoward2006 reports SECp43 complexes with SLA/LP (SEPSECS) and SPS1, not SPS2; the
   manuscript sentence "in complexes with SecS and SEPHS2" needs checking.
+- Schematic placed in the introduction as Figure SCHEME (image from figures/machinery_scheme.svg, legend after it);
+  SBGN reference added (LeNovere2009); the SVG now names sans-serif as fallback font.

@@ -20,11 +20,4 @@ instead of "no hit" (slower), and `--replot` redraws a figure from its table. In
 outgroup family, the paralogs of the gene that names the family and the vertebrate clade of that gene; a column gives
 the protein lengths (median and range for collapsed tips).
 
-Draft legend of the schematic (`machinery_scheme.*`): Selenocysteine machinery. Top: synthesis of selenocysteine on
-its tRNA. Seryl-tRNA synthetase (SerRS) charges tRNA-Sec with serine; PSTK phosphorylates the seryl group; SEPSECS
-converts O-phosphoseryl-tRNA-Sec (Sep-tRNA-Sec) into selenocysteinyl-tRNA-Sec (Sec-tRNA-Sec) with selenophosphate,
-made from selenide and ATP by SEPHS2 [@Xu2006]. Bottom: decoding of UGA. EEFSEC carries Sec-tRNA-Sec to the ribosome
-at the UGA codon; SECISBP2/SECISBP2L, bound to the SECIS element of the 3′ UTR, binds EEFSEC and the ribosome
-[@Copeland2003; @Labunskyy2014]. TRNAU1AP (SECp43), an associated factor, binds Sec-tRNA-Sec and is found in
-complexes with SEPSECS [@SmallHoward2006]. Shapes follow the Systems Biology Graphical Notation; proteins listed in
-Table MACHINERY in blue.
+The schematic (`machinery_scheme.*`) is Figure SCHEME of the manuscript, in the introduction, with its legend.

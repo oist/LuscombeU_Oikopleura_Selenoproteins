@@ -18,7 +18,22 @@ eukaryotes, a stem–loop structure in the 3′ untranslated region of selenopro
 sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
 elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
 O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS,
-encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. This machinery is expected in any genome that encodes selenoproteins.
+encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. This machinery
+(Figure SCHEME) is expected in any genome that encodes selenoproteins.
+
+![Schematic of the selenocysteine machinery](../figures/machinery_scheme.svg)
+
+<!-- Figure drawn by figures/machinery_scheme.py (make machinery-scheme); figures/machinery_scheme.pdf for print,
+figures/machinery_scheme.svg for editing. -->
+
+Figure SCHEME. The selenocysteine machinery of eukaryotes. Top, synthesis of selenocysteine on its tRNA: seryl-tRNA
+synthetase (SerRS) charges tRNA-Sec with serine, PSTK phosphorylates the seryl group, and SEPSECS converts
+O-phosphoseryl-tRNA-Sec (Sep-tRNA-Sec) into selenocysteinyl-tRNA-Sec (Sec-tRNA-Sec) with selenophosphate, which
+SEPHS2 makes from selenide and ATP [@Xu2006]. Bottom, decoding of UGA: EEFSEC carries Sec-tRNA-Sec to the ribosome at
+the UGA codon, and the SECIS-binding protein (SECISBP2 or SECISBP2L), bound to the SECIS element in the 3′
+untranslated region, binds EEFSEC and the ribosome [@Copeland2003; @Labunskyy2014]. TRNAU1AP (SECp43), an associated
+factor, binds Sec-tRNA-Sec and is found in complexes with SEPSECS [@SmallHoward2006]. Gene names as in Table
+MACHINERY, whose proteins are drawn in blue; shapes follow the Systems Biology Graphical Notation [@LeNovere2009].
 
 Because gene prediction programs read UGA as a stop codon, selenoprotein genes are often truncated, split or missing
 in genome annotations [@Mariotti2015]. A gene missing from an annotation is invisible to the analyses that start from

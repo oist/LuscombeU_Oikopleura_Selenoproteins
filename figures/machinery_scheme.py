@@ -119,7 +119,8 @@ def main():
     ap.add_argument("--out", default="figures/machinery_scheme")
     ap.add_argument("--png", action="store_true", help="also write a PNG (for checking; not committed)")
     a = ap.parse_args()
-    plt.rcParams.update({"svg.fonttype": "none", "pdf.fonttype": 42, "font.family": "DejaVu Sans"})
+    plt.rcParams.update({"svg.fonttype": "none", "pdf.fonttype": 42,   # text kept as text in the SVG
+                         "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"]})
 
     X0, X1, Y0, Y1 = 0, 100, -17, 74
     fig = plt.figure(figsize=(7.2, 7.2 * (Y1 - Y0) / (X1 - X0)))
