@@ -13,8 +13,18 @@ Figure scripts read `results/tables/`, `results/trees/` and, where noted, the pi
 | `stage2/machinery_phylogeny.py` | `machinery-phylogeny` | full maximum-likelihood trees of PSTK, SEPHS and the SECIS-binding proteins, with protein lengths (`phylogeny_<family>.*`); the C20 versions in `results/trees/C20/` |
 | `phylogeny_collapsed.py --trees results/trees/lba --tree-suffix .pmsf` | `machinery-lba-figures` | display versions of the LG+C60+F+G (PMSF) trees (`phylogeny_<family>_collapsed_pmsf.*`), proposed as the main tree figures |
 | `phylogeny_collapsed.py --trees results/trees/domains --formats pdf` | `machinery-domain-figures` | display versions of the trees of each domain (`phylogeny_<family>_collapsed_domain_<domain>.pdf`; PDF only, to keep the repository small) |
+| `machinery_scheme.py` | `machinery-scheme` | schematic of the selenocysteine machinery, drawn from scratch with SBGN-style glyphs; gene names as in Table MACHINERY (`machinery_scheme.pdf`, and `machinery_scheme.svg` for editing, for example with Inkscape) |
 
 For `stage1_secis_scores.py`, `--max` turns off the `cmsearch` filters, so that every sequence gets its best score
 instead of "no hit" (slower), and `--replot` redraws a figure from its table. In the tree figures, bands mark the
 outgroup family, the paralogs of the gene that names the family and the vertebrate clade of that gene; a column gives
 the protein lengths (median and range for collapsed tips).
+
+Draft legend of the schematic (`machinery_scheme.*`): Selenocysteine machinery. Top: synthesis of selenocysteine on
+its tRNA. Seryl-tRNA synthetase (SerRS) charges tRNA-Sec with serine; PSTK phosphorylates the seryl group; SEPSECS
+converts O-phosphoseryl-tRNA-Sec (Sep-tRNA-Sec) into selenocysteinyl-tRNA-Sec (Sec-tRNA-Sec) with selenophosphate,
+made from selenide and ATP by SEPHS2 [@Xu2006]. Bottom: decoding of UGA. EEFSEC carries Sec-tRNA-Sec to the ribosome
+at the UGA codon; SECISBP2/SECISBP2L, bound to the SECIS element of the 3′ UTR, binds EEFSEC and the ribosome
+[@Copeland2003; @Labunskyy2014]. TRNAU1AP (SECp43), an associated factor, binds Sec-tRNA-Sec and is found in
+complexes with SEPSECS [@SmallHoward2006]. Shapes follow the Systems Biology Graphical Notation; proteins listed in
+Table MACHINERY in blue.

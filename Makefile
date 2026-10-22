@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-domains machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme machinery-domains machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -135,6 +135,10 @@ machinery-domain-figures:
 	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d \
 	    --suffix _domain_$$d --model-label "$$l domain, $$m" --formats pdf || exit 1; \
 	done
+
+# Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)
+machinery-scheme:
+	python3 figures/machinery_scheme.py
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:

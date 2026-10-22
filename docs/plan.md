@@ -307,3 +307,8 @@ Built from `results/tables/` only.
     half.
   - Provisional Results and Methods updated; display trees figures/phylogeny_<family>_collapsed_domain_<domain>.pdf;
     figures/phylogeny_collapsed.py got --formats.
+- Schematic of the selenocysteine machinery (2026-10-22): figures/machinery_scheme.py (make machinery-scheme), drawn
+  from scratch with SBGN-style glyphs (metabolite, RNA, protein, complex; conversion, catalysis, binding); PDF and
+  editable SVG; draft legend in figures/README.md. Biochemistry checked against the abstracts of Xu2006 and
+  SmallHoward2006. Note: SmallHoward2006 reports SECp43 complexes with SLA/LP (SEPSECS) and SPS1, not SPS2; the
+  manuscript sentence "in complexes with SecS and SEPHS2" needs checking.
