@@ -175,7 +175,8 @@ SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously l
 
 > **Provisional section (2026-10-22).** Draft written from the results at commit 806e317, after curation of the
 > sequence sets (`results/tables/stage2_machinery_rbh.tsv`, `results/trees/`, `results/tables/stage2_machinery_lba.tsv`);
-> domain analysis from `results/tables/stage2_machinery_domains.tsv` and `stage2_machinery_domain_conflicts.tsv`.
+> domain analysis from `results/tables/stage2_machinery_domains.tsv` and `stage2_machinery_domain_conflicts.tsv`
+> (and their `_pmsf` versions, 2026-10-23); other tunicates from `results/tables/stage1_machinery_rbh.tsv`.
 > Numbers, figure and table numbers, and wording are to be checked before submission.
 
 Selenoprofiles predicts homologs of its profile families, not necessarily orthologs of the named human genes. We
@@ -185,8 +186,10 @@ SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes, an
 seven; in the fragmented assemblies of *B. stygius* and *M. erythrocephalus*, the human protein matched another locus
 better. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. Best hits did not assign the three other
 genes. The PSTK proteins of *O. dioica* and *O. albicans* had no hit in the human proteome, and that of
-*O. vanhoeffeni* scored 48 bits. The SECIS-binding proteins of all nine genomes were closer to human SECISBP2L than to
-SECISBP2, by 2 to 38 bits. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2
+*O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in each of the ten other
+tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The SECIS-binding proteins of all nine genomes
+were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits, as were those of nine of the ten other tunicates and
+of the two amphioxus species; the *Halocynthia roretzi* protein was closer to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2
 within 9 bits of each other; best hits do not separate these paralogs outside mammals [@Mariotti2015].
 
 For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from:
@@ -247,22 +250,32 @@ other, except for arrangements within appendicularians, other tunicates, amniote
 among the prokaryotic and alveolate SEPHS near the root (Table DOMAINS). For PSTK, the appendicularian clade was recovered from the
 kinase domain (100%) and from the C-terminal region (97%), without the insect-gut fungi, and its position remained
 unresolved: sister to all other PSTK in the kinase tree (57%), next to dipteran PSTK in the C-terminal tree (54%).
-Neither part rejected a grouping with the other tunicates (p = 0.44 and 0.32). For the SECIS-binding proteins, the
+Neither part rejected a grouping with the other tunicates (p = 0.44 and 0.32). Under PMSF, the clade fell next to
+the insect-gut fungi in the kinase tree (42%) and next to fly, *Trichinella* and *Aphanomyces* proteins in the
+C-terminal tree (70%), and the grouping with the other tunicates was still not rejected (p = 0.64 and
+0.30). For the SECIS-binding proteins, the
 L7Ae domain reproduced the full-length result: oikopleurid proteins with those of the other tunicates (81%), and
 vertebrate SECISBP2 and SECISBP2L in one clade that excluded them (95%). The region upstream of the L7Ae domain
 placed the oikopleurid proteins next to vertebrate SECISBP2, in a group with the other tunicate proteins (67% and
 67%). Neither part rejected the grouping of appendicularians with the other tunicates (p = 0.38 and 0.49); the short
-*F. borealis* protein (315 residues) fell elsewhere in both trees. For SEPHS, the N-terminal half rejected none of
+*F. borealis* protein (315 residues) fell elsewhere in both trees. Under PMSF, the L7Ae domain grouped the
+oikopleurid proteins with those of the other tunicates more strongly (91%; vertebrate clade 96%), and neither part
+rejected the grouping (p = 0.38 and 0.51). For SEPHS, under the selected model, the N-terminal half rejected none of
 the tested positions of the appendicularian selenocysteine clade (with the tunicate selenocysteine copies, p = 0.45;
 inside the clade of all tunicate SEPHS, p = 0.33; at the position of an ortholog, p = 0.19), whereas the C-terminal
 half rejected the position of an ortholog (p = 0.0034; p = 0.08 for the other two). The N-terminal tree, however,
 grouped both appendicularian copies with the SPS2 of dipterans and of the louse *Pediculus humanus* (84%; the second
 copy with these insect proteins, 94%), whereas in the C-terminal tree the second copy fell inside the tunicate
 glycine forms (77 and 83%) and the insect proteins grouped with *Rhodnius prolixus* SPS2 (100%). This was the only
-conflict supported by 90% or more that involved the position of an appendicularian protein. The rejection of
-orthology for the selenocysteine SEPHS2 thus rests on the C-terminal half, and the N-terminal half, which does not
-reject it, places the appendicularian proteins in a way that contradicts the position of the second copy in the
-full-length and C-terminal trees.
+conflict supported by 90% or more that involved the position of an appendicularian protein under that model. Under
+PMSF, this grouping disappeared: the second copy fell next to the tunicate glycine forms in both halves (39 to 65%),
+and both halves rejected the position of an ortholog for the selenocysteine clade (p = 0.016 and 0.011), but not its
+placement inside the clade of all tunicate SEPHS (p = 0.22 and 0.071). The only strongly supported conflict between
+the PMSF trees concerned the other tunicates: the C-terminal half grouped all tunicate SEPHS, with the second
+appendicularian copy, with the vertebrate proteins (95%), whereas the N-terminal half grouped the vertebrate
+proteins with those of amphioxus and protostomes (95%). The non-rejection of orthology by the N-terminal half under
+the selected model thus came with a grouping that the site-heterogeneous model does not support, and under that
+model both halves reject the position of an ortholog, as the full-length alignment does.
 
 | Gene | Orthology | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -295,10 +308,13 @@ an assembly may reflect duplicated haplotypes or contamination [@Pichon2019].
   results/tables/stage2_machinery_domains.tsv and stage2_machinery_domain_conflicts.tsv; supplementary figures
   figures/phylogeny_<family>_collapsed_domain_<domain>.pdf (make machinery-domain-figures). Supports quoted in the
   text that are not in the tables (57, 54, 67, 81, 84, 94, 77, 83%) were read from the domain trees in
-  results/trees/domains/.
-- Reciprocal best hits of the other tunicates (plan, 2026-10-18: SECIS-binding protein closest to SECISBP2L in every
-  tunicate, H. roretzi +1 bit; PSTK reciprocal best hits, 55 to 108 bits): results/tables/stage1_machinery_rbh.tsv is
-  not in the repository; regenerate it with make machinery-rbh before citing these numbers.
+  results/trees/domains/. PMSF versions (2026-10-23, Deigo, make machinery-domains-pmsf):
+  results/tables/stage2_machinery_domains_pmsf.tsv, stage2_machinery_domain_conflicts_pmsf.tsv and
+  figures/phylogeny_<family>_collapsed_domain_<domain>_pmsf.pdf; supports quoted (42, 70, 91, 96, 39 to 65%) read
+  from results/trees/domains/*.pmsf.treefile.
+- Reciprocal best hits of the other tunicates: results/tables/stage1_machinery_rbh.tsv (regenerated 2026-10-23,
+  make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
+  for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
 - The second SEPHS copy was not found in OSKA2016 and OdB3: to check (assembly or prediction).
 -->
 
@@ -553,7 +569,8 @@ proteins 76, 253 and 191). For each part, a tree was inferred as above, constrai
 long-branch analyses, and AU tests compared, on the data of that part, the trees of both parts, the full-length tree
 pruned to the same sequences and the constrained trees. Clades with ultrafast bootstrap support of at least 95%, and
 of at least 90%, in the tree of one part were tested for compatibility with the clades so supported in the tree of
-the other part.
+the other part. The analysis was repeated under LG+C60+F+G with PMSF, the site frequencies of each part being
+estimated on its maximum-likelihood tree; the full-length PMSF tree, pruned, was added to the tested trees.
 
 ## SECIS scores against genomic background
 

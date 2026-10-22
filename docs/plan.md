@@ -314,3 +314,18 @@ Built from `results/tables/` only.
   manuscript sentence "in complexes with SecS and SEPHS2" needs checking.
 - Schematic placed in the introduction as Figure SCHEME (image from figures/machinery_scheme.svg, legend after it);
   SBGN reference added (LeNovere2009); the SVG now names sans-serif as fallback font.
+- Deigo runs of 2026-10-23 (commit 872680d): make machinery-rbh and make machinery-domains-pmsf.
+  - results/tables/stage1_machinery_rbh.tsv now in the repository: PSTK of the ten other tunicates reciprocal best
+    hits of human PSTK (55-108 bits); SECIS-binding proteins closer to SECISBP2L in nine of ten tunicates and both
+    amphioxus (H. roretzi SECISBP2 +1 bit); tunicate SEPHS mostly SEPHS1, Sec copies of B. schlosseri and S. clava
+    SEPHS2 within 5 bits. Cited in the provisional Results. stage2_machinery_rbh.tsv: same values, prediction names
+    without the _app suffix; Table MACHINERY unchanged.
+  - Domains under LG+C60+F+G (PMSF): PSTK as under ML (with tunicates not rejected, 0.64 and 0.30; appendicularians
+    next to the fungi 42 or to flies, Trichinella and Aphanomyces 70). SECIS-binding protein: L7Ae oikopleurids with
+    tunicates 91, vertebrate SECISBP2+SECISBP2L 96; with tunicates not rejected (0.38, 0.51). SEPHS: the ML N-terminal
+    grouping of the appendicularian copies with insect SPS2 disappears (second copy next to the tunicate glycine
+    forms in both halves, 39-65); both halves reject the ortholog position (0.016, 0.011), neither rejects the
+    position inside all tunicate SEPHS (0.22, 0.071). One strong conflict (95 vs 95): tunicate SEPHS with vertebrates
+    (C-terminal) against vertebrates with amphioxus and protostomes (N-terminal).
+  - Makefile fix: the PMSF domain figures were written as phylogeny_<family>_collapsed_domain_.pdf ($$d_pmsf read as
+    one shell variable); now ${d}; misnamed files removed, figures redrawn.

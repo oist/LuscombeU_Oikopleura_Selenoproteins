@@ -143,7 +143,7 @@ machinery-domain-figures:
 	  else m=$$(sed -n 's/^Best-fit model according to BIC: //p' results/trees/domains/$$f.$$d.iqtree); fi; \
 	  l=$$(echo $$d | tr _ ' ' | sed 's/^\([CN]\) /\1-/'); \
 	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d$(DOMAIN_SUFFIX) \
-	    --suffix _domain_$$d$(subst .,_,$(DOMAIN_SUFFIX)) --model-label "$$l domain, $$m" --formats pdf || exit 1; \
+	    --suffix _domain_$${d}$(subst .,_,$(DOMAIN_SUFFIX)) --model-label "$$l domain, $$m" --formats pdf || exit 1; \
 	done
 
 # Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)
