@@ -595,7 +595,9 @@ The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.
 
 # Acknowledgements
 
-We thank Léa Picard for discussion on the phylogenies.
+We thank Léa Picard for discussion on the phylogenies, and Amir Ghaffarian and Nicholas M. Luscombe for the AI
+infrastructure in the research unit. We are grateful for the help and support provided by the Scientific Computing
+and Data Analysis section of Core Facilities at OIST.
 
 <!--
 Notes for the next pieces
