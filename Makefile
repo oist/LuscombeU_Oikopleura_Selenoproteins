@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-domains machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -117,6 +117,24 @@ machinery-lba:
 # Collapsed display trees from the LG+C60+F+G (PMSF) trees of the long-branch analyses
 machinery-lba-figures:
 	python3 figures/phylogeny_collapsed.py --trees results/trees/lba --tree-suffix .pmsf --suffix _pmsf --model-label "LG+C60+F+G (PMSF)"
+
+# Domain analysis of the machinery trees (after machinery-phylogeny): one tree per domain (domains defined on human
+# proteins, curation/machinery_domains.tsv), supports and AU tests of each domain's tree against the other domain's data
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=1-00:00:00 scripts/run_in_container.sh make machinery-domains
+machinery-domains:
+	rm -rf results/trees/domains
+	python3 stage2/machinery_domains.py
+	$(MAKE) machinery-domain-figures
+
+# Collapsed display trees of the domains (PDF only; seconds)
+DOMAIN_TREES = pstk:kinase pstk:C_terminal SEPHS2:N_terminal SEPHS2:C_terminal SBP2:upstream_of_L7Ae SBP2:L7Ae
+machinery-domain-figures:
+	for x in $(DOMAIN_TREES); do f=$${x%%:*}; d=$${x#*:}; \
+	  m=$$(sed -n 's/^Best-fit model according to BIC: //p' results/trees/domains/$$f.$$d.iqtree); \
+	  l=$$(echo $$d | tr _ ' ' | sed 's/^\([CN]\) /\1-/'); \
+	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d \
+	    --suffix _domain_$$d --model-label "$$l domain, $$m" --formats pdf || exit 1; \
+	done
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:

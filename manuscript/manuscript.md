@@ -159,7 +159,8 @@ SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously l
 ## Orthology of the machinery genes
 
 > **Provisional section (2026-10-22).** Draft written from the results at commit 806e317, after curation of the
-> sequence sets (`results/tables/stage2_machinery_rbh.tsv`, `results/trees/`, `results/tables/stage2_machinery_lba.tsv`).
+> sequence sets (`results/tables/stage2_machinery_rbh.tsv`, `results/trees/`, `results/tables/stage2_machinery_lba.tsv`);
+> domain analysis from `results/tables/stage2_machinery_domains.tsv` and `stage2_machinery_domain_conflicts.tsv`.
 > Numbers, figure and table numbers, and wording are to be checked before submission.
 
 Selenoprofiles predicts homologs of its profile families, not necessarily orthologs of the named human genes. We
@@ -223,6 +224,31 @@ vertebrate SEPHS). The appendicularian selenocysteine SEPHS2 is thus either a di
 selenocysteine copy whose signal these models do not recover, or a separate SEPHS2 lineage. In both cases it is a
 selenocysteine SEPHS2, by the residue at its catalytic site [@Mariotti2015].
 
+To test whether these positions are supported along the whole protein, we split each alignment in two at a domain
+boundary of the human protein and analysed each part on the same sequences (Methods; Table DOMAINS). In each family,
+the data of each part rejected the tree of the other part (AU test, p ≤ 0.0023), but the differences lay in weakly
+supported nodes: no clade with 95% support or more in one tree was incompatible with a clade so supported in the
+other, except for arrangements within appendicularians, other tunicates, amniotes, cephalochordates or nematodes, and
+among the prokaryotic and alveolate SEPHS near the root (Table DOMAINS). For PSTK, the appendicularian clade was recovered from the
+kinase domain (100%) and from the C-terminal region (97%), without the insect-gut fungi, and its position remained
+unresolved: sister to all other PSTK in the kinase tree (57%), next to dipteran PSTK in the C-terminal tree (54%).
+Neither part rejected a grouping with the other tunicates (p = 0.44 and 0.32). For the SECIS-binding proteins, the
+L7Ae domain reproduced the full-length result: oikopleurid proteins with those of the other tunicates (81%), and
+vertebrate SECISBP2 and SECISBP2L in one clade that excluded them (95%). The region upstream of the L7Ae domain
+placed the oikopleurid proteins next to vertebrate SECISBP2, in a group with the other tunicate proteins (67% and
+67%). Neither part rejected the grouping of appendicularians with the other tunicates (p = 0.38 and 0.49); the short
+*F. borealis* protein (315 residues) fell elsewhere in both trees. For SEPHS, the N-terminal half rejected none of
+the tested positions of the appendicularian selenocysteine clade (with the tunicate selenocysteine copies, p = 0.45;
+inside the clade of all tunicate SEPHS, p = 0.33; at the position of an ortholog, p = 0.19), whereas the C-terminal
+half rejected the position of an ortholog (p = 0.0034; p = 0.08 for the other two). The N-terminal tree, however,
+grouped both appendicularian copies with the SPS2 of dipterans and of the louse *Pediculus humanus* (84%; the second
+copy with these insect proteins, 94%), whereas in the C-terminal tree the second copy fell inside the tunicate
+glycine forms (77 and 83%) and the insect proteins grouped with *Rhodnius prolixus* SPS2 (100%). This was the only
+conflict supported by 90% or more that involved the position of an appendicularian protein. The rejection of
+orthology for the selenocysteine SEPHS2 thus rests on the C-terminal half, and the N-terminal half, which does not
+reject it, places the appendicularian proteins in a way that contradicts the position of the second copy in the
+full-length and C-terminal trees.
+
 | Gene | Orthology | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|---|
 | tRNA-Sec | not tested (RNA gene) | found | found | found | found (4 loci) | found (2 loci) | found (2 loci) | found | found (2 loci) | found |
@@ -250,6 +276,11 @@ an assembly may reflect duplicated haplotypes or contamination [@Pichon2019].
 - Figure TREES: figures/phylogeny_<family>_collapsed_pmsf.{png,pdf} (make machinery-lba-figures); supplementary
   figures: the maximum-likelihood trees, collapsed (figures/phylogeny_<family>_collapsed.*) and full
   (figures/phylogeny_<family>.*). Table LBA: results/tables/stage2_machinery_lba.tsv.
+- Domain analysis (2026-10-22, local run, make machinery-domains): Table DOMAINS from
+  results/tables/stage2_machinery_domains.tsv and stage2_machinery_domain_conflicts.tsv; supplementary figures
+  figures/phylogeny_<family>_collapsed_domain_<domain>.pdf (make machinery-domain-figures). Supports quoted in the
+  text that are not in the tables (57, 54, 67, 81, 84, 94, 77, 83%) were read from the domain trees in
+  results/trees/domains/.
 - Reciprocal best hits of the other tunicates (plan, 2026-10-18: SECIS-binding protein closest to SECISBP2L in every
   tunicate, H. roretzi +1 bit; PSTK reciprocal best hits, 55 to 108 bits): results/tables/stage1_machinery_rbh.tsv is
   not in the repository; regenerate it with make machinery-rbh before citing these numbers.
@@ -423,9 +454,10 @@ protein. The stage 1 predictions of the gene, scored in the same way, served as 
 
 ## Orthology of the machinery genes
 
-> **Provisional section (2026-10-21).** Draft of the methods of the reciprocal best hits, trees and long-branch
-> analyses (`stage2/machinery_rbh.py`, `stage2/machinery_phylogeny.py`, `stage2/machinery_lba.py`,
-> `figures/phylogeny_collapsed.py`); to be checked before submission.
+> **Provisional section (2026-10-22).** Draft of the methods of the reciprocal best hits, trees, long-branch
+> analyses and domain analysis (`stage2/machinery_rbh.py`, `stage2/machinery_phylogeny.py`,
+> `stage2/machinery_lba.py`, `stage2/machinery_domains.py`, `figures/phylogeny_collapsed.py`); to be checked before
+> submission.
 
 *Reciprocal best hits.* Each machinery protein predicted with the appendicularian profiles was compared by blastp
 (legacy BLAST 2.2.26, E-value at most 10^-3^) [@Altschul1997] with the human RefSeq proteins of the GRCh38.p14
@@ -491,6 +523,22 @@ sister group. These two were tested under the selected model and under LG+C60+F+
 PMSF analysis. The composition of each sequence was compared with that of the alignment by the chi-square test of
 IQ-TREE, and path lengths were measured in the maximum-likelihood trees from the most recent common ancestor of the
 tunicate and vertebrate SEPHS.
+
+*Domain analysis* (`stage2/machinery_domains.py`). Each trimmed alignment was split in two at a domain boundary of
+the human protein, taken from the InterPro entries of the CATH-Gene3D, SUPERFAMILY and Pfam databases for the UniProt
+sequences: PSTK (Q8IV42), kinase domain (residues 1-263, P-loop NTPase domains at 20-88 and 140-263) and C-terminal
+region (264-348); SEPHS2 (Q99611), N-terminal half (1-238, with the AIR synthase-related N-terminal domain, PF00586)
+and C-terminal half (239-448, with the C-terminal domain, PF02769); SECISBP2 (Q96T21), region upstream of the L7Ae
+domain (1-631) and L7Ae domain (632-854, PF01248). The UniProt coordinates were carried to the human sequence of the
+alignment by a global pairwise alignment (Biopython, BLOSUM62), and each column was assigned to the domain of the
+human residue it holds, or of the last human residue before it. Sequences with residues in less than 30% of the
+columns of either part were left out (one PSTK, one SEPHS and five SECIS-binding proteins), so that both parts were
+analysed on the same sequences (PSTK 82 sequences, 294 and 125 columns; SEPHS 116, 234 and 220; SECIS-binding
+proteins 76, 253 and 191). For each part, a tree was inferred as above, constrained trees were searched as in the
+long-branch analyses, and AU tests compared, on the data of that part, the trees of both parts, the full-length tree
+pruned to the same sequences and the constrained trees. Clades with ultrafast bootstrap support of at least 95%, and
+of at least 90%, in the tree of one part were tested for compatibility with the clades so supported in the tree of
+the other part.
 
 ## SECIS scores against genomic background
 

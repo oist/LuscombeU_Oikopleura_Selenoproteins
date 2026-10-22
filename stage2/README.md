@@ -130,6 +130,23 @@ resume after an interruption, or to refresh the summaries after a change of the 
 `python3 stage2/machinery_lba.py` directly: finished analyses (IQ-TREE report present) are kept, interrupted ones
 redone.
 
+### Domain analysis (`machinery_domains.py`, `make machinery-domains`)
+
+Tests whether the two domains of each protein support the same tree. Each trimmed alignment is split at a domain
+boundary of the human protein (`curation/machinery_domains.tsv`: UniProt coordinates from InterPro entries of
+CATH-Gene3D, SUPERFAMILY and Pfam; UniProt sequences in `curation/machinery_domain_references.faa`, carried to the
+human RefSeq sequence of the alignment by a global pairwise alignment): PSTK kinase domain / C-terminal region, SEPHS
+N-terminal / C-terminal halves, SECIS-binding protein region upstream of the L7Ae domain / L7Ae domain. Sequences
+covering less than 30 % of the columns of either part are left out. For each part: a tree (IQ-TREE, as for the
+full-length trees), the supports of the appendicularian clade and of its grouping with the other tunicates, the
+constrained trees of `machinery_lba.py`, and AU tests of both domain trees, of the full-length tree (pruned) and of
+the constrained trees against the data of that part. Outputs: `results/trees/domains/` (alignments, trees, reports,
+constraints), `results/tables/stage2_machinery_domains.tsv` (one row per family, part and tested tree),
+`results/tables/stage2_machinery_domain_conflicts.tsv` (clades supported by at least 95 or 90 % in one domain tree that
+are incompatible with a clade so supported in the other) and, through `machinery-domain-figures`, display trees
+(`figures/phylogeny_<family>_collapsed_domain_<domain>.pdf`). About 2.5 hours on 2 CPUs. As for `machinery_lba.py`,
+running the script directly keeps the finished IQ-TREE analyses and only rewrites the tables.
+
 ### Table MACHINERY (`machinery_table.py`, `make machinery-table`)
 
 Combines the census (`stage2_machinery_census.tsv`), the reciprocal best hits (`stage2_machinery_rbh.tsv`), the

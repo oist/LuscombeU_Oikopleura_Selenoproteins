@@ -47,6 +47,7 @@ def main():
     ap.add_argument("--tree-suffix", default="", help="trees read from <trees>/<family><tree-suffix>.treefile, "
                     "for example .pmsf for the trees of stage2/machinery_lba.py in results/trees/lba")
     ap.add_argument("--model-label", default="", help="model named in the figure title")
+    ap.add_argument("--formats", nargs="+", default=["png", "pdf"], help="file formats written")
     a = ap.parse_args()
     taxa = {}
     for l in open(a.taxa):
@@ -158,7 +159,7 @@ def draw(fam, a, taxa):
     ax.set_title(f"{fam}{model}\ngroups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
                  f"collapsed; supports >= 70 shown", fontsize=8)
     fig.tight_layout(rect=(0, bottom, 0.88, 1))
-    for ext in ("png", "pdf"): fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)
+    for ext in a.formats: fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)
     plt.close(fig)
     print(fam, n, "tips after collapsing")
 

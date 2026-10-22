@@ -15,4 +15,5 @@ in `work/`.
 | `stage2_absence_{pstk,secp43}.*.tsv` | `make machinery-absence` | absence tests: candidates, controls, summary |
 | `stage2_machinery_rbh.tsv` (`stage1_machinery_rbh.tsv` when regenerated) | `make machinery-rbh` | reciprocal best hits against the human proteome |
 | `stage2_machinery_lba.tsv` | `make machinery-lba` | supports and AU tests of the machinery trees, all families |
+| `stage2_machinery_domains.tsv`, `stage2_machinery_domain_conflicts.tsv` | `make machinery-domains` | domain analysis of the machinery trees: supports and AU tests per domain; strongly supported conflicts between the two domain trees |
 | `stage2_machinery_table.{md,tsv}` | `make machinery-table` | Table MACHINERY of the manuscript: census with orthology evidence |

@@ -285,3 +285,25 @@ Built from `results/tables/` only.
   references) and layout; stage2/README.md (curation, trees, long-branch analyses, table, run times); figures and
   results/tables indexes. Still open: results/tables/stage1_machinery_rbh.tsv (make machinery-rbh on Deigo); the
   second SEPHS copy in OSKA2016 and OdB3.
+- Domain analysis of the machinery trees (2026-10-22, local run, 2 CPUs; stage2/machinery_domains.py, make
+  machinery-domains): each trimmed alignment split at a domain boundary of the human protein (InterPro entries of
+  Q8IV42, Q99611, Q96T21; curation/machinery_domains.tsv), the parts analysed on the same sequences. PSTK kinase
+  1-263 (294 columns) / C-terminal (125), 82 sequences; SEPHS N-terminal 1-238 (234) / C-terminal (220), 116; SECIS-
+  binding protein upstream of L7Ae 1-631 (253) / L7Ae 632-854 (191), 76.
+  - In every family, each part rejects the tree of the other (AU p <= 0.0023), but no clade with >= 95 % support in
+    one domain tree is incompatible with one so supported in the other, except arrangements within taxonomic groups
+    and among prokaryotic and alveolate SEPHS.
+  - PSTK: appendicularian clade 100 (kinase) and 97 (C-terminal), without the fungi; sister to all other PSTK (57) or
+    next to dipteran PSTK (54); appendicularians with tunicates not rejected (0.44, 0.32). C-terminal data reject the
+    full-length tree (0.0001), kinase data do not (0.19).
+  - SECIS-binding protein: L7Ae tree as the full-length tree (oikopleurids with tunicates 81; vertebrate SECISBP2 +
+    SECISBP2L 95); upstream region: oikopleurids next to vertebrate SECISBP2, with tunicates (67, 67). With tunicates
+    not rejected (0.38, 0.49). F. borealis (315 aa) elsewhere in both.
+  - SEPHS: N-terminal data reject no tested position (with tunicate Sec copies 0.45, inside all tunicate SEPHS 0.33,
+    orthologous position 0.19); C-terminal data reject the orthologous position (0.0034; others 0.08). The N-terminal
+    tree groups both appendicularian copies with dipteran and louse SPS2 (84; second copy with them 94), against the
+    C-terminal tree (second copy in tunicate glycine forms 77-83; insect SPS2 with Rhodnius SPS2 100): the only
+    conflict >= 90 % involving an appendicularian protein. The rejection of SEPHS2 orthology rests on the C-terminal
+    half.
+  - Provisional Results and Methods updated; display trees figures/phylogeny_<family>_collapsed_domain_<domain>.pdf;
+    figures/phylogeny_collapsed.py got --formats.

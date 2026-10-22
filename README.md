@@ -62,6 +62,7 @@ make machinery                # appendicularian machinery profiles, their test, 
 make machinery-rbh            # reciprocal best hits against the human proteome
 make machinery-phylogeny      # trees of PSTK, SEPHS and the SECIS-binding proteins
 make machinery-lba            # long-branch analyses, AU tests, C60 tree figures and Table MACHINERY
+make machinery-domains        # trees and AU tests of each domain of PSTK, SEPHS and the SECIS-binding proteins
 ```
 
 The Makefile documents each target (inputs, outputs and the cluster submissions that worked); `stage2/README.md`
@@ -140,7 +141,7 @@ repository uses `OKI2018_I68`, the NCBI name, throughout.
 | `curation/` | baseline decisions as tables, with evidence; reference proteins |
 | `figures/` | figure scripts and figures |
 | `results/tables/` | small result tables used by the figures and the manuscript |
-| `results/trees/` | machinery trees: sequence sets, removals, alignments, IQ-TREE reports; `C20/` and `lba/` for the other models and the long-branch analyses |
+| `results/trees/` | machinery trees: sequence sets, removals, alignments, IQ-TREE reports; `C20/`, `lba/` and `domains/` for the other models, the long-branch analyses and the domain analysis |
 | `results/models/` | appendicularian SECIS model and machinery profiles |
 | `manuscript/` | manuscript (Markdown with Pandoc citations) and bibliography |
 | `docs/` | plan and decisions |
