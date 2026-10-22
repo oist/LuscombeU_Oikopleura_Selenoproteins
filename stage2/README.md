@@ -160,3 +160,34 @@ Combines the census (`stage2_machinery_census.tsv`), the reciprocal best hits (`
 long-branch table and the SEPHS trees into the table of the manuscript, with an orthology column and a row for the
 second, non-selenocysteine SEPHS copy (`results/tables/stage2_machinery_table.{md,tsv}`). It reads only `results/` and
 runs in seconds; `make machinery-lba` runs it at the end.
+
+## Orthology of the selenoproteins
+
+The approach of the machinery applied to the selenoprotein families that have appendicularian sequences
+(`SELENO_TREES` in the Makefile: DIO, GPX, MsrA, SELENOF, SELENOK, SELENOL, SELENOO, SELENOS, SELENOT, SELENOU,
+SELENOW, TXNRD), to give a first global view before family-by-family analyses.
+
+1. `make selenoprotein-rbh`: `machinery_rbh.py --families selenoproteins` on the stage 1 predictions of all genomes.
+   Each family has its human genes (`SELENOPROTEIN_GENES`: for example GPX1 to GPX8, DIO1 to DIO3, SELENOW and
+   SELENOV), possibly none (SELENOL, SELENOU: status "best hit only"); the margin is the score of the best expected
+   gene minus that of the best other gene, so that a small margin flags paralogs that best hits do not separate.
+   Output `results/tables/stage2_selenoprotein_rbh.tsv`.
+2. `make selenoprotein-phylogeny`: `machinery_phylogeny.py` with the same settings as the machinery trees
+   (profile sequences, at most three per taxonomic group; stage 1 predictions of the other tunicates,
+   cephalochordates and vertebrates; human RefSeq proteins of the family, and of a related family as outgroup for
+   TXNRD (GSR) and SELENOF (SELENOM); curation, MAFFT, ClipKIT, IQ-TREE), with the stage 1 predictions of the
+   appendicularians and `--min-fraction 0.3`, since the profiles of some families mix short and long proteins.
+   Families without appendicularian sequence are collected but not aligned. Outputs `results/trees/selenoproteins/`
+   and `figures/selenoproteins/phylogeny_<family>.pdf`, `phylogeny_<family>_collapsed.pdf`.
+3. `make selenoprotein-pmsf`: `machinery_lba.py --analyses pmsf` on these trees (LG+C60+F+G with PMSF, guide: the
+   maximum-likelihood tree). Outputs `results/trees/selenoproteins/lba/`, `results/tables/stage2_selenoprotein_lba.tsv`
+   (the supports of the largest appendicularian clade only) and `figures/selenoproteins/phylogeny_<family>_collapsed_pmsf.pdf`.
+4. `make selenoprotein-orthology`: `selenoprotein_orthology.py` splits the appendicularian sequences of each tree
+   into appendicularian clades and reads, for each, its support, its sister group, the human genes of the nearest
+   side that contains vertebrate sequences (human RefSeq proteins and vertebrate predictions with their best human
+   hit), and the best human hits of its members. Outputs `results/tables/stage2_selenoprotein_orthology.{tsv,md}`.
+   This is a summary for review, not an assignment: the families that it leaves open are then analysed as the
+   machinery was (AU tests, site removal, domains).
+
+Known gap: SELENOK was not predicted by the stage 1 settings in any appendicularian genome, so that its tree, if
+any, lacks the *O. dioica* protein until the stage 2 re-calling or a curated protein from transcripts.

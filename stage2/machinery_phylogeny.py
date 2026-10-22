@@ -8,6 +8,11 @@ Families and outgroups:
           and human SEPHS1 and SEPHS2; rooted on the prokaryotic SelD when they form a clade, else at the midpoint
   SBP2    SECIS-binding proteins: the profile contains SECISBP2, SECISBP2-like and non-animal sequences; human
           SECISBP2 and SECISBP2L are added; midpoint rooting
+Selenoprotein families (make selenoprotein-phylogeny; families of stage2/machinery_rbh.py SELENOPROTEIN_GENES): the
+human RefSeq proteins of the family are added (for example GPX1 to GPX8), and those of a related family as outgroup
+where one is set in OUTGROUP_GENES (GSR for TXNRD, SELENOM for SELENOF); other families are rooted at the midpoint
+for display. The appendicularian sequences are then the stage 1 predictions (--stage2 pointing to the stage 1
+directory); a family without appendicularian sequence is collected but not aligned.
 Sequences: the profile sequences (optionally at most --max-per-group per taxonomic group, the longest kept), the stage 1
 predictions of the other tunicates, cephalochordates and vertebrates, the stage 2 predictions of the appendicularians
 (appendicularian profiles), and the curated transcript proteins. For PSTK and the SECIS-binding proteins, which have no
@@ -24,7 +29,10 @@ insertions found in a few sequences only, such as retained introns or rare isofo
 restricted to --mset and --mrate, 1000 ultrafast bootstraps).
 Outputs: <out>/<family>.{faa,groups.tsv,removed.tsv,aln,trimmed,treefile,iqtree} and <figures>/phylogeny_<family>.*
 """
-import argparse, glob, gzip, os, re, statistics, subprocess
+import argparse, glob, gzip, os, re, statistics, subprocess, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from machinery_rbh import SELENOPROTEIN_GENES   # human genes of each selenoprotein family
 
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
 TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho"}
@@ -35,7 +43,10 @@ CEPHALOCHORDATES = {"Bflo", "Blan"}
 # groups kept by the core-coverage filter even when partial (the subject of the trees)
 KEEP_PARTIAL = {"appendicularian", "curated", "tunicate"}
 REFSEQ_FAMILIES = {"pstk": ["PSTK", "KTI12"], "SBP2": ["SECISBP2", "SECISBP2L"]}
-HUMAN_GENES = {"pstk": ["PSTK", "KTI12"], "SEPHS2": ["SEPHS1", "SEPHS2"], "SBP2": ["SECISBP2", "SECISBP2L"]}
+# human genes of a related family, added as outgroup
+OUTGROUP_GENES = {"pstk": ["KTI12"], "TXNRD": ["GSR"], "SELENOF": ["SELENOM"]}
+HUMAN_GENES = {"pstk": ["PSTK", "KTI12"], "SEPHS2": ["SEPHS1", "SEPHS2"], "SBP2": ["SECISBP2", "SECISBP2L"],
+               **{f: g + OUTGROUP_GENES.get(f, []) for f, g in SELENOPROTEIN_GENES.items() if f != "SEPHS2"}}
 OUTGROUP_PATTERN = {"pstk": r"KTI12|[Kk]iller toxin.insensitive"}
 COLOURS = {"appendicularian": "#c0392b", "tunicate": "#e67e22", "vertebrate": "#2471a3", "outgroup": "#7f8c8d",
            "cephalochordate": "#117a65", "reference": "#2c3e50",
@@ -88,7 +99,9 @@ def main():
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--out", default="results/trees")
     ap.add_argument("--figures", default="figures")
+    ap.add_argument("--formats", nargs="+", default=["png", "pdf"], help="file formats of the tree figures")
     a = ap.parse_args()
+    os.makedirs(a.figures, exist_ok=True)
     os.makedirs(a.out, exist_ok=True)
     gene_of = {}
     with gzip.open(f"{a.human}/annotation.gff3.gz", "rt") as fh:
@@ -107,6 +120,8 @@ def main():
                 print(f"WARNING: {name} looks like a nucleotide sequence; left out", flush=True); return
             seqs[name] = clean(seq); groups[name] = group
 
+        if not os.path.exists(f"{a.profiles}/{fam}.fa"):
+            print(f"WARNING: {fam}: no profile {a.profiles}/{fam}.fa; skipped", flush=True); continue
         prof = list(read_fasta(f"{a.profiles}/{fam}.fa"))
         med = statistics.median(len(clean(s.replace("-", ""))) for _, s in prof)
         taxa = load_taxa(a.taxa)
@@ -136,7 +151,7 @@ def main():
             for g in sorted((TUNICATES | VERTEBRATES | CEPHALOCHORDATES) - {"Hsap"}):
                 prots = refseq_family_proteins(f"{a.genomes}/{g}", REFSEQ_FAMILIES[fam], gene_of, human, a.cpus)
                 for pid, (gene, seq) in prots.items():
-                    add(f"{g}|RefSeq_{gene}_{pid}", seq, "outgroup" if gene == "KTI12" else kind(g))
+                    add(f"{g}|RefSeq_{gene}_{pid}", seq, "outgroup" if gene in OUTGROUP_GENES.get(fam, []) else kind(g))
                 if prots: replaced.add(g)
             if replaced: print(fam, "RefSeq proteins instead of predictions for", " ".join(sorted(replaced)), flush=True)
         for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
@@ -151,6 +166,7 @@ def main():
                     add(f"{g}|{pid}", s, kind(g))
         for faa in sorted(glob.glob(f"{a.stage2}/*.faa")):
             g = os.path.basename(faa).split(".")[0]
+            if g not in APPENDICULARIANS: continue
             for n, s in read_fasta(faa):
                 pid = n.split()[0]
                 if pid.split(".")[0].removesuffix("_app") == fam and len(clean(s)) >= a.min_fraction * med:
@@ -163,7 +179,9 @@ def main():
             prots = [p for p, gg in gene_of.items() if gg == gene and p in human]
             if prots:
                 p = max(prots, key=lambda x: (x.startswith("NP_"), len(human[x])))
-                add(f"Human_{gene}|{p}", human[p], "outgroup" if gene == "KTI12" else "vertebrate")
+                add(f"Human_{gene}|{p}", human[p], "outgroup" if gene in OUTGROUP_GENES.get(fam, []) else "vertebrate")
+            else:
+                print(f"WARNING: {fam}: no human RefSeq protein for {gene}", flush=True)
         if fam in OUTGROUP_PATTERN:
             if os.path.exists(a.outgroups):
                 for n, s in read_fasta(a.outgroups):
@@ -180,6 +198,8 @@ def main():
         write_set(base, seqs, groups, removed)
         print(fam, len(seqs), "sequences", flush=True)
         if a.collect_only: continue
+        if not any(v in ("appendicularian", "curated") for v in groups.values()):
+            print(fam, "no appendicularian sequence: not aligned", flush=True); continue
         if not os.path.exists(f"{base}.trimmed"):
             align(base, a.cpus)
             partial = core_filter(f"{base}.aln", groups, a.min_core)
@@ -195,12 +215,12 @@ def main():
             models = ["-m", a.model] if a.model else ["-m", "MFP", "-mset", a.mset] + (["-mrate", a.mrate] if a.mrate else [])
             subprocess.run(["iqtree2", "-s", f"{base}.trimmed"] + models +
                            ["-B", "1000", "-T", str(a.cpus), "--prefix", base, "--quiet", "--seed", "1"], check=True)
-        draw(f"{base}.treefile", groups, fam, a.figures)
+        draw(f"{base}.treefile", groups, fam, a.figures, a.formats)
         for ext in ("bionj", "ckp.gz", "mldist", "model.gz", "splits.nex", "uniqueseq.phy", "contree"):
             if os.path.exists(f"{base}.{ext}"): os.remove(f"{base}.{ext}")
 
 
-def draw(treefile, groups, fam, figdir):
+def draw(treefile, groups, fam, figdir, formats=("png", "pdf")):
     from Bio import Phylo
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -233,7 +253,7 @@ def draw(treefile, groups, fam, figdir):
                  f"orange: other tunicates, blue: vertebrates, purple: curated transcripts, grey: outgroup", fontsize=7)
     ax.set_ylabel(""); ax.set_yticks([])
     fig.tight_layout(rect=(0, 0, 0.9, 1))
-    for ext in ("png", "pdf"): fig.savefig(f"{figdir}/phylogeny_{fam}.{ext}", dpi=200)
+    for ext in formats: fig.savefig(f"{figdir}/phylogeny_{fam}.{ext}", dpi=200)
     plt.close(fig)
 
 

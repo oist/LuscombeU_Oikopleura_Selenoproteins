@@ -53,7 +53,10 @@ def main():
     for l in open(a.taxa):
         if l.startswith("#") or l.startswith("genus\t"): continue
         g, grp = l.rstrip("\n").split("\t"); taxa[g] = grp
+    import os
     for fam in a.families:
+        if not os.path.exists(f"{a.trees}/{fam}{a.tree_suffix}.treefile"):
+            print(fam, "no tree; skipped"); continue
         draw(fam, a, taxa)
 
 
@@ -105,7 +108,8 @@ def draw(fam, a, taxa):
                 human = sorted({re.sub(r"^Human_([A-Z0-9]+)_.*", r"\1", t.name) for t in clade.get_terminals()
                                 if t.name.startswith("Human_")})
                 clade.clades = []
-                clade.name = (f"{g} ({n})" if g != "outgroup" else f"KTI12, outgroup ({n})") + \
+                clade.name = (f"{g} ({n})" if g != "outgroup" else
+                              f"KTI12, outgroup ({n})" if fam == "pstk" else f"outgroup ({n})") + \
                              (f", with human {', '.join(human)}" if human else "")
                 cat[clade.name] = "outgroup" if "outgroup" in cats else next(iter(cats), None)
                 members[clade.name] = member_names

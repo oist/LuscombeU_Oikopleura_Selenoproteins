@@ -13,6 +13,7 @@ Figure scripts read `results/tables/`, `results/trees/` and, where noted, the pi
 | `stage2/machinery_phylogeny.py` | `machinery-phylogeny` | full maximum-likelihood trees of PSTK, SEPHS and the SECIS-binding proteins, with protein lengths (`phylogeny_<family>.*`); the C20 versions in `results/trees/C20/` |
 | `phylogeny_collapsed.py --trees results/trees/lba --tree-suffix .pmsf` | `machinery-lba-figures` | display versions of the LG+C60+F+G (PMSF) trees (`phylogeny_<family>_collapsed_pmsf.*`), proposed as the main tree figures |
 | `phylogeny_collapsed.py --trees results/trees/domains --formats pdf` | `machinery-domain-figures` | display versions of the trees of each domain (`phylogeny_<family>_collapsed_domain_<domain>.pdf`; PDF only, to keep the repository small); with `DOMAIN_SUFFIX=.pmsf` (run by `machinery-domains-pmsf`), the PMSF trees (`..._pmsf.pdf`) |
+| `stage2/machinery_phylogeny.py`, `phylogeny_collapsed.py` (selenoprotein families) | `selenoprotein-phylogeny`, `selenoprotein-pmsf` | trees of the selenoprotein families in `figures/selenoproteins/`: full (`phylogeny_<family>.pdf`), collapsed (`_collapsed.pdf`) and collapsed PMSF (`_collapsed_pmsf.pdf`); PDF only |
 | `machinery_scheme.py` | `machinery-scheme` | schematic of the selenocysteine machinery, drawn from scratch with SBGN-style glyphs; gene names as in Table MACHINERY (`machinery_scheme.pdf`, and `machinery_scheme.svg` for editing, for example with Inkscape) |
 
 For `stage1_secis_scores.py`, `--max` turns off the `cmsearch` filters, so that every sequence gets its best score

@@ -18,3 +18,6 @@ in `work/`.
 | `stage2_machinery_domains.tsv`, `stage2_machinery_domain_conflicts.tsv` | `make machinery-domains` | domain analysis of the machinery trees: supports and AU tests per domain; strongly supported conflicts between the two domain trees |
 | `stage2_machinery_domains_pmsf.tsv`, `stage2_machinery_domain_conflicts_pmsf.tsv` | `make machinery-domains-pmsf` | the same under LG+C60+F+G (PMSF) |
 | `stage2_machinery_table.{md,tsv}` | `make machinery-table` | Table MACHINERY of the manuscript: census with orthology evidence |
+| `stage2_selenoprotein_rbh.tsv` | `make selenoprotein-rbh` | reciprocal best hits of the stage 1 selenoprotein predictions against the human proteome |
+| `stage2_selenoprotein_lba.tsv` | `make selenoprotein-pmsf` | supports of the largest appendicularian clade in the selenoprotein trees, maximum likelihood and PMSF |
+| `stage2_selenoprotein_orthology.{tsv,md}` | `make selenoprotein-orthology` | first-pass orthology of each appendicularian selenoprotein clade |

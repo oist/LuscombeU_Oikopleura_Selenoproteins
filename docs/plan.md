@@ -329,3 +329,14 @@ Built from `results/tables/` only.
     (C-terminal) against vertebrates with amphioxus and protostomes (N-terminal).
   - Makefile fix: the PMSF domain figures were written as phylogeny_<family>_collapsed_domain_.pdf ($$d_pmsf read as
     one shell variable); now ${d}; misnamed files removed, figures redrawn.
+- Orthology of the selenoproteins (2026-10-23, agreed: "apply it to the other proteins, then revisit"): the machinery
+  approach generalised. machinery_rbh.py takes --families (sets machinery, selenoproteins; several human genes per
+  family, margin to the best other gene); machinery_phylogeny.py adds the human RefSeq proteins of each selenoprotein
+  family (outgroups GSR for TXNRD, SELENOM for SELENOF), takes the appendicularian predictions only from appendicularian
+  genomes, skips families without appendicularian sequence or profile, and writes PDF only with --formats;
+  machinery_lba.py skips families without tree; new stage2/selenoprotein_orthology.py (appendicularian clades, sister
+  group, nearest vertebrate genes, best hits). Families: DIO, GPX, MsrA, SELENOF, SELENOK, SELENOL, SELENOO, SELENOS,
+  SELENOT, SELENOU, SELENOW, TXNRD (those with a selenocysteine prediction in an appendicularian genome, or in the
+  baseline). Tested on synthetic data (human sequences from the InterPro API, mutated copies as predictions). To run
+  on Deigo: make selenoprotein-rbh, selenoprotein-phylogeny, then selenoprotein-pmsf; selenoprotein-orthology after.
+  Known gap: no appendicularian SELENOK in stage 1.

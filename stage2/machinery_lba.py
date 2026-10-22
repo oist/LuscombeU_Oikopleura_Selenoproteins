@@ -142,6 +142,8 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     for fam in a.families:
         aln, ml = f"{a.trees}/{fam}.trimmed", f"{a.trees}/{fam}.treefile"
+        if not os.path.exists(ml):
+            print(f"{fam}: no tree in {a.trees}; skipped", flush=True); continue
         groups = dict(l.rstrip("\n").split("\t") for l in open(f"{a.trees}/{fam}.groups.tsv"))
         # the inputs must come from the same run of machinery_phylogeny.py (not one being rewritten)
         from Bio import Phylo
