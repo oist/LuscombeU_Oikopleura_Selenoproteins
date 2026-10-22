@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme machinery-domains machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -126,14 +126,24 @@ machinery-domains:
 	python3 stage2/machinery_domains.py
 	$(MAKE) machinery-domain-figures
 
-# Collapsed display trees of the domains (PDF only; seconds)
+# The same under LG+C60+F+G with PMSF (after machinery-domains, whose maximum-likelihood trees are the guide trees;
+# keeps finished analyses, so it can be resubmitted after an interruption)
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2-00:00:00 scripts/run_in_container.sh make machinery-domains-pmsf
+machinery-domains-pmsf:
+	python3 stage2/machinery_domains.py --pmsf --table results/tables/stage2_machinery_domains_pmsf.tsv \
+	  --conflicts results/tables/stage2_machinery_domain_conflicts_pmsf.tsv
+	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
+
+# Collapsed display trees of the domains (PDF only; seconds); DOMAIN_SUFFIX=.pmsf for the PMSF trees
 DOMAIN_TREES = pstk:kinase pstk:C_terminal SEPHS2:N_terminal SEPHS2:C_terminal SBP2:upstream_of_L7Ae SBP2:L7Ae
+DOMAIN_SUFFIX =
 machinery-domain-figures:
 	for x in $(DOMAIN_TREES); do f=$${x%%:*}; d=$${x#*:}; \
-	  m=$$(sed -n 's/^Best-fit model according to BIC: //p' results/trees/domains/$$f.$$d.iqtree); \
+	  if [ -n "$(DOMAIN_SUFFIX)" ]; then m="LG+C60+F+G (PMSF)"; \
+	  else m=$$(sed -n 's/^Best-fit model according to BIC: //p' results/trees/domains/$$f.$$d.iqtree); fi; \
 	  l=$$(echo $$d | tr _ ' ' | sed 's/^\([CN]\) /\1-/'); \
-	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d \
-	    --suffix _domain_$$d --model-label "$$l domain, $$m" --formats pdf || exit 1; \
+	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d$(DOMAIN_SUFFIX) \
+	    --suffix _domain_$$d$(subst .,_,$(DOMAIN_SUFFIX)) --model-label "$$l domain, $$m" --formats pdf || exit 1; \
 	done
 
 # Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)

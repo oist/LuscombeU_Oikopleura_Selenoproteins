@@ -23,6 +23,13 @@ trees; --conflicts therefore lists, for each threshold of --strong, the clades s
 bootstrap in one domain tree that are incompatible with a clade so supported in the other (each clade described by
 the taxonomic groups of its smaller side, with its support).
 Display trees of the domains: make machinery-domain-figures (figures/phylogeny_<family>_collapsed_domain_<domain>.pdf).
+
+With --pmsf, the same analysis under LG+C60+F+G with posterior mean site frequencies (PMSF), as in
+stage2/machinery_lba.py: for each part, the site frequencies are estimated on its maximum-likelihood tree (which is
+computed first if absent), then the tree (1,000 ultrafast bootstraps), the constrained trees and the AU tests use
+these frequencies. The candidate trees are the PMSF trees of both parts, the full-length PMSF and maximum-likelihood
+trees (pruned), and the constrained trees. Files <out>/<family>.<domain>.pmsf.*; use --table and --conflicts to write
+separate tables (make machinery-domains-pmsf).
 Outputs: <out>/<family>.<domain>.*, --table (one row per family, domain and tested tree) and --conflicts.
 """
 import argparse, os, re, subprocess, sys
@@ -110,6 +117,9 @@ def main():
     ap.add_argument("--out", default="results/trees/domains")
     ap.add_argument("--table", default="results/tables/stage2_machinery_domains.tsv")
     ap.add_argument("--conflicts", default="results/tables/stage2_machinery_domain_conflicts.tsv")
+    ap.add_argument("--pmsf", action="store_true", help="LG+C60+F+G with PMSF instead of the selected model")
+    ap.add_argument("--full-pmsf", default="results/trees/lba",
+                    help="directory of the full-length PMSF trees (<family>.pmsf.treefile), with --pmsf")
     ap.add_argument("--strong", type=float, nargs="+", default=[95, 90],
                     help="ultrafast bootstrap of a strongly supported clade (one conflict row per threshold)")
     a = ap.parse_args()
@@ -172,27 +182,40 @@ def main():
             write_fasta(f"{p}.fa", seqs, cols[d])
             if not (os.path.exists(f"{p}.iqtree") and os.path.exists(f"{p}.treefile")):
                 iqtree(["-s", f"{p}.fa", "-m", "MFP", "-mset", "LG,WAG,JTT", "-B", "1000", "--prefix", p], a.cpus)
-        models = {d: lba.best_model(f"{base}.{re.sub(r'[^A-Za-z0-9]+', '_', d)}.iqtree") for d in names}
+            if a.pmsf and not (os.path.exists(f"{p}.pmsf.iqtree") and os.path.exists(f"{p}.pmsf.treefile")):
+                iqtree(["-s", f"{p}.fa", "-m", "LG+C60+F+G", "-ft", f"{p}.treefile", "-B", "1000",
+                        "--prefix", f"{p}.pmsf"], a.cpus)
+        slug = {d: f"{base}.{re.sub(r'[^A-Za-z0-9]+', '_', d)}" for d in names}   # alignment and ML prefix
+        S = ".pmsf" if a.pmsf else ""
+        if a.pmsf:
+            margs = {d: ["-m", "LG+C60+F+G", "-fs", f"{slug[d]}.pmsf.sitefreq"] for d in names}
+            models = {d: "LG+C60+F+G (PMSF)" for d in names}
+            prune(f"{a.full_pmsf}/{fam}.pmsf.treefile", set(keep), f"{base}.full.pmsf.pruned.treefile")
+            full = [("full-length tree (PMSF)", f"{base}.full.pmsf.pruned.treefile"),
+                    ("full-length tree", f"{base}.full.pruned.treefile")]
+        else:
+            models = {d: lba.best_model(f"{slug[d]}.iqtree") for d in names}
+            margs = {d: ["-m", models[d]] for d in names}
+            full = [("full-length tree", f"{base}.full.pruned.treefile")]
         for d in names:
-            p = f"{base}.{re.sub(r'[^A-Za-z0-9]+', '_', d)}"
-            candidates = [(f"tree of the {e} domain", f"{base}.{re.sub(r'[^A-Za-z0-9]+', '_', e)}.treefile") for e in names]
-            candidates.append(("full-length tree", f"{base}.full.pruned.treefile"))
+            p = slug[d] + S
+            candidates = [(f"tree of the {e} domain", f"{slug[e]}{S}.treefile") for e in names] + full
             for k, (label, nwk) in enumerate(cons.items()):
                 cp = f"{p}.constraint{k}"
                 with open(f"{cp}.nwk", "w") as o: o.write(nwk + "\n")
                 if not (os.path.exists(f"{cp}.iqtree") and os.path.exists(f"{cp}.treefile")):
-                    iqtree(["-s", f"{p}.fa", "-m", models[d], "-g", f"{cp}.nwk", "--prefix", cp], a.cpus)
+                    iqtree(["-s", f"{slug[d]}.fa"] + margs[d] + ["-g", f"{cp}.nwk", "--prefix", cp], a.cpus)
                 candidates.append((label, f"{cp}.treefile"))
             with open(f"{p}.candidates.treels", "w") as o:
                 for _, f in candidates: o.write(open(f).read().strip() + "\n")
             if not os.path.exists(f"{p}.au.iqtree"):
-                iqtree(["-s", f"{p}.fa", "-m", models[d], "-z", f"{p}.candidates.treels", "-te", f"{p}.treefile",
+                iqtree(["-s", f"{slug[d]}.fa"] + margs[d] + ["-z", f"{p}.candidates.treels", "-te", f"{p}.treefile",
                         "-n", "0", "-zb", "10000", "-au", "--prefix", f"{p}.au"], a.cpus)
             sup = lba.supports(f"{p}.treefile", sets)
             pv = p_values(f"{p}.au.iqtree", len(candidates))
             for (label, _), pval in zip(candidates, pv):
                 table.append((fam, d, len(cols[d]), len(keep), models[d]) + tuple(sup.values()) + (label, pval))
-        f1, f2 = (f"{base}.{re.sub(r'[^A-Za-z0-9]+', '_', d)}.treefile" for d in names)
+        f1, f2 = (f"{slug[d]}{S}.treefile" for d in names)
         for threshold in a.strong:
             s1, s2 = strong_splits(f1, threshold), strong_splits(f2, threshold)
             bad = [(x, sx, y, sy) for x, sx in s1 for y, sy in s2 if not compatible(x, y, set(keep))]
@@ -225,7 +248,7 @@ def compatible(a, b, names):
 def describe(side, groups, taxa):
     import collections
     c = collections.Counter(lba.taxon(n, groups, taxa) for n in side)
-    return "[" + ", ".join(f"{k} {v}" for k, v in c.most_common()) + "]"
+    return "[" + ", ".join(f"{k} {v}" for k, v in sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))) + "]"   # stable order
 
 
 if __name__ == "__main__":

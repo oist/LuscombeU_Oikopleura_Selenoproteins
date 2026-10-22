@@ -147,6 +147,13 @@ are incompatible with a clade so supported in the other) and, through `machinery
 (`figures/phylogeny_<family>_collapsed_domain_<domain>.pdf`). About 2.5 hours on 2 CPUs. As for `machinery_lba.py`,
 running the script directly keeps the finished IQ-TREE analyses and only rewrites the tables.
 
+`make machinery-domains-pmsf` repeats the analysis under LG+C60+F+G with PMSF (`--pmsf`): site frequencies estimated
+on the maximum-likelihood tree of each part, then the tree, the constrained trees and the AU tests with these
+frequencies; the full-length PMSF tree of `results/trees/lba/` is added to the candidate trees. Outputs
+`results/trees/domains/<family>.<domain>.pmsf.*`, `results/tables/stage2_machinery_domains_pmsf.tsv`,
+`results/tables/stage2_machinery_domain_conflicts_pmsf.tsv` and `figures/phylogeny_<family>_collapsed_domain_<domain>_pmsf.pdf`.
+It keeps finished analyses, so it can be resubmitted after an interruption.
+
 ### Table MACHINERY (`machinery_table.py`, `make machinery-table`)
 
 Combines the census (`stage2_machinery_census.tsv`), the reciprocal best hits (`stage2_machinery_rbh.tsv`), the
