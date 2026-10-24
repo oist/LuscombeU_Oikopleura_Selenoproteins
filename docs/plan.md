@@ -494,7 +494,22 @@ no earlier step waits for them.
   transcript-based models marked with the GFF3 attribute exception; annotation_fix column; transl_except comma
   percent-encoded; the FASTA outputs committed. Tested on the ENA sequence with simulated transcripts (a 13-nt
   insertion in transcripts, a 13-nt deletion in an assembly copy, a 1-nt insertion, 5'-truncated ESTs) and
-  RefSeq-style annotations of each status. No GA-AG introns are reported for O. dioica in PubMed (two hits, both on
-  F. borealis: Henriet et al. 2019, doi:10.1016/j.cub.2019.07.092; Soo et al. 2026, doi:10.1093/nar/gkag659), so no
-  preference is given to GA-AG among equivalent non-canonical placements; all are listed. To rerun on Deigo (the
+  RefSeq-style annotations of each status. A PubMed search found no report of GA-AG introns in O. dioica (two hits, both on
+  F. borealis: Henriet et al. 2019, doi:10.1016/j.cub.2019.07.092; Soo et al. 2026, doi:10.1093/nar/gkag659); this
+  was wrong, see the next entry. To rerun on Deigo (the
   alignments are cached in work/stage2/gold_standard/).
+- Intron classes of O. dioica (2026-10-24, references provided by C. Plessy): Denoeud et al. 2010, supplementary
+  section 10.1 (doi:10.1126/science.1194167): in the reference annotation (73,254 introns, 72.6% validated by
+  cDNAs), GT-AG 87.6%, GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%; no AT-AC or U12 intron and no minor spliceosome; GA-AG
+  introns mostly 55-100 nt (GT-AG 35-55 nt), with a C...AAAG acceptor consensus; 24.2% of UTR introns and 11.2% of
+  CDS introns are not GT-AG; the annotation allowed all G*-AG donors. Frey and Pucker 2020 (Cells 9:458,
+  doi:10.3390/cells9020458): GA-AG more frequent than GC-AG in O. dioica and the copepod Eurytemora affinis. The
+  PubMed record of Frey and Pucker 2020 lost the italic species names of its abstract ("observed inand"), which
+  explains why the search missed it. curation/gold_standard.py now uses these classes: splice-site cost
+  log10(f(GT-AG) / f(site)) / 2 (GA-AG 0.49, GC-AG 0.76, GG-AG 1.05, other sites 1.47, in mismatches; AT-AC no
+  longer preferred), equivalent placements moved to the most frequent class, and the table reports atypical
+  introns (GA-AG, GC-AG, GG-AG) apart from other splice sites, which point to an alignment, assembly or transcript
+  problem. On the test set (ENA sequence, chains of the first run): the SELENOT intron placed as GA-AG in OKI2018
+  and OdB3 (as in the pilot), and the DIO_PAR intron too; other splice sites remain in OKI GPX_chr1a (1),
+  SELENOO (4) and SEPHS2 (1), to review on the rerun. Relevant to step 7 (stage 2 with non-canonical introns):
+  G*-AG donors for O. dioica.

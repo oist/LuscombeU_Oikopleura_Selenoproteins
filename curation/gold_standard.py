@@ -6,10 +6,14 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   1. Transcripts. The transcripts of the assembly (stage1/samplesheet.csv: the OKI2018 Trinity transcriptome, the
      OSKA2016 transcript assembly, the OdB3 cDNA collection) are aligned to it with minimap2 (-x splice:hq -un, one
      primary alignment each; cached in --work). -un turns off the GT-AG preference of minimap2, which otherwise
-     creates artificial indels next to non-canonical introns; junctions are then placed by the script: each intron
-     is moved within +/- --window nt to the placement with the fewest mismatches between transcript and genome in
-     the window, a non-canonical site counting as 1.5 mismatches and GC-AG and AT-AC as 0.1 and 0.2 (so that a
-     GT-AG, GC-AG or AT-AC site is preferred when it costs at most one mismatch), then the smallest move. A
+     creates artificial indels next to the atypical introns of O. dioica (GA-AG 9%, GC-AG 2.7% and GG-AG 0.7% of the
+     introns, against 87.6% GT-AG, and no AT-AC or U12 intron: Denoeud et al. 2010, supplementary section 10.1;
+     GA-AG also in Frey and Pucker 2020); junctions are then placed by the script: each intron is moved within
+     +/- --window nt to the placement of lowest cost, the number of mismatches between transcript and genome in the
+     window plus the cost of the splice site, log10(f(GT-AG) / f(site)) / 2 with the frequencies above (other sites
+     taken as 0.1%), 2 being the log10 cost of a mismatch at about 1% divergence (GA-AG 0.49, GC-AG 0.76, GG-AG
+     1.05, other sites 1.47), then the smallest move. Every exon chain is also moved, among the placements that
+     give the same spliced sequence, to the most frequent class. A
      transcript supports the gene when an aligned exon holds the three bases of the codon and they read TGA on the
      gene strand.
   2. Candidate models. Each candidate is an exon chain on the genome: the chain of each supporting transcript, of
@@ -38,8 +42,9 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      candidate on the assembly gives a frame. Then the assembly does not encode the protein: the model is the exon
      chain of the transcript with the genome positions of its coding sequence, marked in the GFF3 with the
      attribute exception (as RefSeq models annotated from transcripts), and protein_source is "transcript".
-Reported per gene: the protein context check; introns and splice sites (non-canonical ones listed with all their
-equivalent placements, the one used first, as "GA-AG/AG-AA/GG-AA"); insertions, deletions and mismatches between
+Reported per gene: the protein context check; introns, the atypical ones (GA-AG, GC-AG, GG-AG) and the other splice
+sites (listed with all their equivalent placements, the one used first, as "CA-TT/AG-TC/GG-CA"; such sites point to
+an alignment, assembly or transcript problem); insertions, deletions and mismatches between
 the assembly and the compatible transcript that covers most of the coding sequence; the 3' UTR of the model and the
 longest 3' UTR of the supporting transcripts that end at the same stop codon; how the public annotation treats the
 gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, coding
@@ -49,15 +54,20 @@ Outputs in --out: <genome>.gff3 (gene, mRNA, exon and CDS features; transl_excep
 <genome>.proteins.faa (U for selenocysteine), <genome>.utr3.fa (3' UTR of the model), <genome>.after_stop.fa
 (--after-stop nucleotides of genome after the stop codon, on the gene strand), and --table.
 """
-import argparse, collections, csv, gzip, os, re, subprocess
+import argparse, collections, csv, gzip, math, os, re, subprocess
 
 STOPS = {"TAA", "TAG", "TGA"}
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 BASES = "TCAG"
 AA = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
 CODE = {a + b + c: AA[16 * i + 4 * j + k] for i, a in enumerate(BASES) for j, b in enumerate(BASES) for k, c in enumerate(BASES)}
-CANONICAL = {"GT-AG": 0.0, "GC-AG": 0.1, "AT-AC": 0.2}
-NONCANONICAL = 1.5
+# Intron classes of the O. dioica reference annotation (Denoeud et al. 2010, supplementary section 10.1): GT-AG 87.6%,
+# GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%; no AT-AC or U12 intron (no minor spliceosome). Other sites: at most 0.1%.
+INTRON_CLASSES = {"GT-AG": 87.6, "GA-AG": 9.0, "GC-AG": 2.7, "GG-AG": 0.7}
+OTHER_SITES = 0.1
+MISMATCH_LOG10 = 2.0   # log10 cost of a mismatch at about 1% divergence between transcript and assembly
+SITE_COST = {k: math.log10(INTRON_CLASSES["GT-AG"] / f) / MISMATCH_LOG10 for k, f in INTRON_CLASSES.items()}
+OTHER_COST = math.log10(INTRON_CLASSES["GT-AG"] / OTHER_SITES) / MISMATCH_LOG10
 END_TOLERANCE = 10
 
 
@@ -116,12 +126,9 @@ def equivalent_sites(genome, a, b, strand, limit=50):
     return out
 
 
-RANK = {"GT-AG": 0, "GC-AG": 1, "AT-AC": 2}
-
-
 def normalise_blocks(blocks, genome, strand):
-    """Exon chain with each intron moved, among the placements that give the same spliced sequence, to a GT-AG,
-    GC-AG or AT-AC site when there is one (in this order), then to the smallest move."""
+    """Exon chain with each intron moved, among the placements that give the same spliced sequence, to the most
+    frequent intron class of O. dioica (GT-AG, GA-AG, GC-AG, GG-AG), then to the smallest move."""
     b = [list(x) for x in sorted(blocks)]
     for i in range(len(b) - 1):
         a, e = b[i][1], b[i + 1][0]
@@ -130,7 +137,7 @@ def normalise_blocks(blocks, genome, strand):
         while left < b[i][1] - b[i][0] - 1 and genome[a - 1 - left] == genome[e - 1 - left]: left += 1
         right = 0
         while right < b[i + 1][1] - b[i + 1][0] - 1 and genome[a + right] == genome[e + right]: right += 1
-        k = min((RANK.get(site(genome, a + k, e + k, strand), 9), abs(k), k) for k in range(-left, right + 1))[2]
+        k = min((SITE_COST.get(site(genome, a + k, e + k, strand), OTHER_COST), abs(k), k) for k in range(-left, right + 1))[2]
         b[i][1] += k; b[i + 1][0] += k
     return [tuple(x) for x in b]
 
@@ -145,9 +152,9 @@ def parse_cigar(cg):
 
 
 def refine_junctions(aln, fwd, genome, strand, window):
-    """CIGAR with each intron moved within +/- window nt to the placement with the fewest mismatches between the
-    transcript (fwd: in the orientation of the genome forward strand) and the genome, a non-canonical site counting
-    as NONCANONICAL mismatches (CANONICAL for the canonical ones), then the smallest move; and the number of moves."""
+    """CIGAR with each intron moved within +/- window nt to the placement of lowest cost: mismatches between the
+    transcript (fwd: in the orientation of the genome forward strand) and the genome in the window, plus the cost of
+    its splice site (SITE_COST, OTHER_COST), then the smallest move; and the number of moves."""
     ops = parse_cigar(aln["cigar"])
     q = aln["qs"] if aln["strand"] == "+" else aln["qlen"] - aln["qe"]
     t = aln["ts"]
@@ -161,7 +168,7 @@ def refine_junctions(aln, fwd, genome, strand, window):
                 for k in range(-w, w + 1):
                     mm = sum(fwd[x].upper() != genome[(t + x - q) if x < q + k else (t + n + x - q)].upper()
                              for x in range(q - w, q + w))
-                    key = (mm + CANONICAL.get(site(genome, t + k, t + k + n, strand), NONCANONICAL), abs(k), k)
+                    key = (mm + SITE_COST.get(site(genome, t + k, t + k + n, strand), OTHER_COST), abs(k), k)
                     if best is None or key < best: best = key
                 k = best[2]
                 if k:
@@ -647,7 +654,8 @@ def main():
         if best["open3"]: notes.append("3' end open (no stop codon in the chain)")
         if not best["support"]: notes.append("no supporting transcript compatible with the exon chain")
         if not best["ctx"]: notes.append("curated context not found in the protein")
-        noncanon = ["/".join(x) for x in best["sites"] if x[0] not in CANONICAL]
+        atypical = collections.Counter(x[0] for x in best["sites"] if x[0] in INTRON_CLASSES and x[0] != "GT-AG")
+        other_sites = ["/".join(x) for x in best["sites"] if x[0] not in INTRON_CLASSES]
         same_stop = [tm for tm in tms if best["stop_genome"] is not None and tm["stop_genome"] == best["stop_genome"]]
         lo_cds, hi_cds = min(best["cds_genome"]), max(best["cds_genome"])
         status, ids, over = annotation_status(annotations[g], contig, strand, codon0, lo_cds, hi_cds)
@@ -661,7 +669,8 @@ def main():
                     "cds_start": (lo_cds + 1) if strand == "+" else (hi_cds + 1),
                     "cds_end": (hi_cds + 1) if strand == "+" else (lo_cds + 1),
                     "exons": len(best["blocks"]), "introns": len(best["introns"]),
-                    "non_canonical_introns": ",".join(noncanon) or "-",
+                    "atypical_introns": ",".join(f"{k} x{v}" if v > 1 else k for k, v in sorted(atypical.items())) or "-",
+                    "other_splice_sites": ",".join(other_sites) or "-",
                     "junctions_moved": best.get("moved", "-"),
                     "utr5_length": best["utr5_len"] if not best["cds_only"] else "",
                     "utr3_length": len(best["utr3"]) if not best["cds_only"] else "",
@@ -692,7 +701,8 @@ def main():
     cols = ["genome", "gene", "family", "contig", "sec_codon", "strand", "baseline_status", "evidence",
             "transcripts_with_codon", "candidates", "supporting_transcripts", "protein_length", "protein_source",
             "identity_assembly_protein", "identity_transcript_protein",
-            "complete", "cds_start", "cds_end", "exons", "introns", "non_canonical_introns", "junctions_moved",
+            "complete", "cds_start", "cds_end", "exons", "introns", "atypical_introns", "other_splice_sites",
+            "junctions_moved",
             "utr5_length", "utr3_length", "utr3_max_length", "polyA_signal", "difference_transcript",
             "cds_bases_covered", "cds_mismatches", "cds_insertions", "cds_deletions", "context_match",
             "annotation_status", "annotated_proteins", "annotation_fix", "notes"]

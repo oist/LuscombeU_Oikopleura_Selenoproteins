@@ -24,7 +24,8 @@ Header: `SEPHS2|<species>.<type>|<source>`.
 
 `gold_standard.py` (run by `make gold-standard`; step 2 of the plan of 2026-10-24) builds gene models of the curated
 selenoprotein genes of OKI2018, OSKA2016 and OdB3. The transcripts of each assembly are aligned with minimap2
-(`-x splice:hq -un`) and their junctions placed by the script (fewest mismatches, then canonical sites). Candidate
+(`-x splice:hq -un`) and their junctions placed by the script (fewest mismatches, plus a splice-site cost from the
+intron classes of *O. dioica*: GT-AG 87.6%, GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%; Denoeud et al. 2010). Candidate
 models are exon chains from the supporting transcripts, the annotated mRNAs and the stage 1 prediction; each is read
 on the genome sequence (frame through the curated TGA read as selenocysteine), so that GFF3 and protein agree with
 the assembly. The model is chosen by the curated context, length, completeness and transcript support. When a
