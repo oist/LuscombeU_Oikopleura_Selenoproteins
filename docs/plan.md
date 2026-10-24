@@ -822,3 +822,24 @@ no earlier step waits for them.
   (SELENOW_pair2: 3' UTR 197 nt, 2 exons; SELENOW_pair1: 5' UTR 197 nt, 2 exons; notes added). Table: 168 introns,
   27 atypical (16%); 3' UTRs median 303 nt, range 4-695. Manuscript numbers updated; figure inputs of the two genes
   regenerated (only the splice-site rows change); pages redrawn.
+- Step 4 started (2026-10-25): stage2/uga_secis_screen.py, make secis-scan (heavy) and make uga-screen (light).
+  Design sent to Charles before implementation. Genome-wide scans with the Oikopleura model of the six Oikopleura
+  assemblies and Cint, Csav, Scla, Tdem, each with a copy shuffled in 1 kb windows (dinucleotides preserved); the
+  genome-scan threshold is the lowest integer score with at most one expected shuffled hit in the largest
+  Oikopleura assembly (pooled rate). Transcript screen: frames through a TGA (ATG, or 5' open, to a stop codon that
+  ends before a SECIS hit of 20 bits or more), at least 40 codons, internal (>= 10 codons after the TGA) or
+  C-terminal; frames that overlap a longer frame, or a longer ordinary ORF, in another reading frame are left out.
+  Positive controls: the gold standard in each O. dioica assembly; human and C. intestinalis RefSeq mRNAs (Oikopleura
+  model and RF00031; known = transl_except selenocysteines). Genome-based screen: the first version (a TGA in an open
+  stretch of the 5 kb before a SECIS hit, longest stretch kept) picked random open stretches rather than the
+  selenocysteine exon in the local test (SELENOW_chr1a, SELENOF, GPX_chr1b missed), so it was replaced by a
+  comparative screen (as SGP2, Castellano et al. 2004): tblastx between species of the 5 kb upstream of each
+  genome-scan hit; a TGA aligned to a TGA (E <= 1e-5, >= 10 aligned residues on one side, no stronger alignment of the
+  same regions in another frame, open stretch >= 20 codons). Candidates annotated by blastp against the human RefSeq
+  proteome (residue aligned to U) and the gold-standard proteins; O. dioica candidates grouped across assemblies.
+  Local test (reduced OKI2018 regions with 7 gold-standard genes, RefSeq-like annotation and Trinity-like
+  transcripts from the gold standard; OdB3 contigs with 5 genes standing in for another species): transcript
+  screen 7/7 in both sets (rank 1 each; 3 other frames from the 3' extension of SELENOW_pair2 into SELENOW_pair1);
+  comparative screen 5/5 in each genome, with 9 other candidates each, expected from identical sequences of the same
+  species (intergenic TGAs align); the step-3 locus NC_137291.1:11878408 scores 28.1 bits in the genome scan.
+  Next: run make secis-scan, then make uga-screen, on Deigo.

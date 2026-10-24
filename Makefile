@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -162,6 +162,19 @@ secis-hits:
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=8:00:00 scripts/run_in_container.sh make secis-v2
 secis-v2:
 	python3 stage2/secis_model_training.py --jobs 4
+
+# Step 4 of the plan of 2026-10-24: UGA/SECIS screens. secis-scan: genome-wide SECIS scans (Oikopleura model) of the
+# six Oikopleura assemblies and four non-target tunicates and of window-shuffled copies, and SECIS searches of the
+# transcript sets (O. dioica annotations and transcript assemblies; human and C. intestinalis RefSeq transcripts as
+# controls, also with RF00031); one to a few hours, for example
+#   sbatch -p compute --cpus-per-task=16 --mem=32G --time=12:00:00 scripts/run_in_container.sh make secis-scan
+# uga-screen: genome-scan threshold, transcript and comparative screens, blastp, tables (minutes; after secis-scan)
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=4:00:00 scripts/run_in_container.sh make uga-screen
+secis-scan:
+	python3 stage2/uga_secis_screen.py scan --jobs 4
+
+uga-screen:
+	python3 stage2/uga_secis_screen.py screen
 
 # Orthology of the appendicularian selenoproteins, with the approach used for the machinery: reciprocal best hits,
 # trees, LG+C60+F+G (PMSF) trees, then a first-pass summary per appendicularian clade (stage2/README.md)
