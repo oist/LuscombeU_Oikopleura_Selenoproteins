@@ -753,3 +753,25 @@ no earlier step waits for them.
   rewritten Results section are those of this table. Page 2 committed.
 - Page layout (comments of Charles): the paragraph moved below the proteins, so that gene models and proteins form a
   grid; thin grey rulers between rows of genes, above the key and between columns.
+- Step 3, first run of make secis-v2 (2026-10-24, commit 3dbd9f3, gold standard of that day): 111 positive windows
+  (O. dioica 53 from the gold standard; O. longicauda 22, O. albicans 20, O. vanhoeffeni 16 from the stage 1
+  predictions). 19 windows of the three other species have no hit with any model (10 of them shorter than 2 kb:
+  contig ends); all O. dioica windows have hits. Pooled, species folds (each species held out from training):
+  new model 85/111 above the training threshold, 0.43 evaluation negatives above it per Mb; merged 67, 0.43/Mb;
+  current 82, 0.75/Mb (optimistic: trained on most of these sequences); RF00031 27, 0.11/Mb. Family folds: new 82
+  (0.95/Mb), current 82 (0.75), merged 64 (0.50), RF00031 26 (0.02). In the species folds, the new model misses 2
+  windows that the current one detects (OSKA2016 GPX_PAR, O. vanhoeffeni GPX.9) and detects 5 that it misses
+  (OKI2018 SEPHS2, OSKA2016 and OdB3 SELENOT, OdB3 SELENOF and SEPHS2). Final model: 75 seeds (OKI2018 18, OSKA2016
+  12, OdB3 8, O. longicauda 20, O. albicans 9, O. vanhoeffeni 8), 67 consensus positions. Problem: the best
+  evaluation negative scores 44-48 bits with the new and current models in every family fold and in the O. dioica
+  fold, more than most positives: an O. dioica random window that holds a SECIS element. The random windows were
+  not kept away from the positive windows (a 2 kb window on the gene strand overlapping one of the 18 positive
+  windows of an assembly is expected about 0.4 times per evaluation set of this size; the training windows, which
+  set the thresholds, have the same problem). Changes: random windows that overlap a positive window are drawn
+  again; new table stage2_secis_v2_negatives.tsv with the evaluation negatives above the training threshold and
+  their coordinates (high-scoring ones that remain are candidate SECIS elements of selenoproteins not yet known).
+  The rerun also takes the positive windows from the current gold standard (OdB3 GPX_chr1a: window after the stop
+  codon of the joined model, 119 nt further; OSKA2016 SELENOW_pair2). Tested locally on the reduced genomes (no
+  random window overlaps a positive window; negatives table written). Provisional conclusion: the new model is the
+  candidate to replace the current one (more sensitive than the merged model at the same false-positive rate in
+  the species folds, much more sensitive than RF00031); to confirm with the rerun, then choose its threshold.

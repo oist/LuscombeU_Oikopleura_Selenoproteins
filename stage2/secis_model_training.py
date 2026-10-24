@@ -12,8 +12,9 @@ does not give one SECIS element twice), and left out when shorter than --min-win
     the next stop codon (at most --max-extension nucleotides; otherwise the window starts at the end of the
     prediction, flagged).
 Negative windows: random genomic windows (--random per genome, uniform over the contigs at least --window long, on a
-random strand) of the six assemblies and of the non-target tunicates (--nontarget), drawn with one random seed for
-training and another for evaluation; each positive window shuffled with its dinucleotide composition preserved
+random strand; a window that overlaps a positive window is drawn again, so that the SECIS elements of known
+selenoproteins do not count as false positives) of the six assemblies and of the non-target tunicates (--nontarget),
+drawn with one random seed for training and another for evaluation; each positive window shuffled with its dinucleotide composition preserved
 (Altschul and Erickson 1985); and the windows after the stop codons of the stage 1 cysteine homologs kept by the
 first round, except those overlapping a positive window.
 
@@ -40,7 +41,9 @@ evaluation negatives above the training threshold are counted per megabase.
 
 Outputs: in --out, the windows (windows.fa, windows.tsv), one directory per fold (rounds, seeds, models, scores) and
 final/; in results/tables, stage2_secis_v2_windows.tsv, stage2_secis_v2_rounds.tsv, stage2_secis_v2_summary.tsv
-(fold, model and pooled rows) and stage2_secis_v2_heldout.tsv (one row per positive window: its held-out scores);
+(fold, model and pooled rows), stage2_secis_v2_heldout.tsv (one row per positive window: its held-out scores) and
+stage2_secis_v2_negatives.tsv (the evaluation negatives above the training threshold, per fold and model, with their
+coordinates: candidate SECIS elements of selenoproteins not yet known);
 the final model is copied to results/models/oikopleura_secis.{cm,sto} with its seeds.
 """
 import argparse, collections, concurrent.futures, csv, gzip, os, random, shutil, subprocess
@@ -151,19 +154,25 @@ def extend_to_stop(seq, strand, cds, max_extension, need_tga):
     return (edge + 1 if strand == "+" else edge), False
 
 
-def random_windows(contigs, n, length, seed):
+def random_windows(contigs, n, length, seed, exclude=None):
+    """n random windows (uniform over the contigs at least length long, random strand); windows that overlap a span
+    of exclude (contig -> [(start, end)], the positive windows) are drawn again."""
     rng = random.Random(seed)
     usable = [(name, s) for name, s in contigs.items() if len(s) >= length]
     total = sum(len(s) for _, s in usable)
-    for i in range(n if total else 0):
+    i = tries = 0
+    while total and i < n and tries < 100 * n:
+        tries += 1
         x = rng.randrange(total)
         for name, s in usable:
             if x < len(s): break
             x -= len(s)
         a = min(x, len(s) - length)
         strand = "-" if rng.random() < 0.5 else "+"
+        if exclude and any(p < a + length and a < q for p, q in exclude.get(name, [])): continue
         w = s[a:a + length].upper()
         yield i, name, strand, a, a + length, (rc(w) if strand == "-" else w)
+        i += 1
 
 
 def dinucleotide_shuffle(seq, rng):
@@ -210,6 +219,7 @@ def build_windows(a):
     for i, g in enumerate(genomes + a.nontarget):
         contigs = {k: v for k, v in read_fasta(sheet[g]["fasta"])}
         print(g, len(contigs), "contigs", flush=True)
+        pos_spans = collections.defaultdict(list)
         if g in genomes:
             # selenoprotein genes: (name, family, contig, strand, stop_end, all CDS rows, note)
             genes = []
@@ -238,7 +248,6 @@ def build_windows(a):
                     return min(nxt) if nxt else None
                 nxt = [y for _, y in spans if y <= stop_end]
                 return max(nxt) if nxt else None
-            pos_spans = collections.defaultdict(list)
             for name, family, c, st, stop_end, rows, note in genes:
                 s, e, w = window(contigs[c], c, st, stop_end, a.window, limit(c, st, stop_end, rows))
                 if len(w) < a.min_window:
@@ -258,7 +267,7 @@ def build_windows(a):
                              "note": note})
         for kind, seed in (("random_train", a.train_seed + i), ("random_eval", a.eval_seed + i)):
             if kind == "random_train" and g not in genomes: continue
-            for k, c, st, s, e, w in random_windows(contigs, a.random, a.window, seed):
+            for k, c, st, s, e, w in random_windows(contigs, a.random, a.window, seed, pos_spans if g in genomes else None):
                 wins.append({"id": f"{g}|{kind}|{k}", "genome": g, "set": kind, "family": "-",
                              "species": species(g) if g in genomes else "non-target", "contig": c, "strand": st, "start": s, "end": e,
                              "seq": w, "note": ""})
@@ -484,6 +493,7 @@ def main():
                 "per Mb", "negative windows", "negative Mb")]
     pooled = collections.defaultdict(lambda: [0, 0, 0, 0, 0, 0.0])
     heldout = collections.defaultdict(dict)
+    negrows = [("fold", "model", "window", "set", "genome", "contig", "strand", "start", "end", "bits", "training threshold (bits)")]
     for (fname, tr, train_genomes, held, eval_genomes), job in zip(folds, jobs):
         key = job[0]
         if key not in results: continue
@@ -497,6 +507,11 @@ def main():
             det = sum(sc.get(k, 0.0) > thr for k in held)
             det_strict = sum(sc.get(k, 0.0) > negmax for k in held)
             fp = sum(sc.get(k, 0.0) > thr for k in neg)
+            for k in neg:
+                if sc.get(k, 0.0) > thr:
+                    w = wins[k]
+                    negrows.append((fname, m, k, w["set"], w["genome"], w["contig"], w["strand"], w["start"] + 1, w["end"],
+                                    f"{sc[k]:.1f}", f"{thr:.1f}"))
             mb = sum(len(wins[k]["seq"]) for k in neg) / 1e6
             summary.append((fname, m, len(held), f"{thr:.1f}", det, f"{negmax:.1f}", det_strict, fp,
                             f"{fp / mb:.2f}" if mb else "", len(neg), f"{mb:.2f}"))
@@ -508,6 +523,8 @@ def main():
                         p[4], f"{p[5]:.2f}"))
     with open(f"{a.tables}/stage2_secis_v2_summary.tsv", "w") as fh:
         for r in summary: fh.write("\t".join(map(str, r)) + "\n")
+    with open(f"{a.tables}/stage2_secis_v2_negatives.tsv", "w") as fh:
+        for r in negrows: fh.write("\t".join(map(str, r)) + "\n")
     hcols = sorted({c for v in heldout.values() for c in v})
     with open(f"{a.tables}/stage2_secis_v2_heldout.tsv", "w") as fh:
         fh.write("\t".join(["window", "genome", "family"] + hcols) + "\n")
