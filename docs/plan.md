@@ -599,3 +599,18 @@ no earlier step waits for them.
   models. Provisional Results and Methods sections added to the manuscript; Biopython cited (Cock2009). Next: step
   3, SECIS model from the gold-standard sequences after the stop codons (curation/gold_standard/*.after_stop.fa) and
   the stage 1 predictions of O. longicauda, O. albicans and O. vanhoeffeni.
+
+- Step 3 started (2026-10-24): stage2/secis_model_training.py (make secis-v2). Windows of 2,000 nt after the stop
+  codons (gold standard for the three O. dioica assemblies; stage 1 predictions kept by step 1, extended to the stop
+  codon, for O. longicauda, O. albicans and O. vanhoeffeni), shortened at the next selenoprotein coding sequence
+  (OKI2018 SELENOW_pair2: 197 nt before SELENOW_pair1; minimum window 100 nt); negatives: random windows of the six
+  assemblies and of Cint, Csav, Scla, Tdem (training and evaluation seeds apart), dinucleotide-shuffled positives,
+  windows after cysteine homologs. Bootstrap from RF00031, one SECIS per locus, 90% identity filter (Biopython global
+  alignment with free end gaps; no vsearch or CD-HIT in the image); merged model per fold from the RF00031 seed
+  sequences and the fold's seeds aligned together to RF00031 (no --mapali: it requires the Rfam alignment to give
+  the consensus columns of the Rfam model exactly). Folds per family and per species; RF00031 and the current model
+  scored on the same windows and thresholds (current model optimistic: trained on most held-out sets). Whole-genome
+  scans are left to step 4 (genome-based UGA/SECIS screen). Tested locally (Infernal 1.1.5 from Debian) on the ENA
+  sequence of OKI2018 and OdB3, a pseudo-genome with stage 1-style predictions (four of six truncated predictions
+  extended to the gold-standard stop; the two others are OdB3 genes whose assembly has an extra base) and a synthetic
+  non-target genome, with a stand-in for RF00031 (rfam.org is not reachable here).

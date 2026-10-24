@@ -171,6 +171,21 @@ new search: the RF00031 and current-model scores of `results/tables/stage1_secis
 `stage2_secis_scores.tsv`, with the random windows of each genome and the cysteine homologs as controls, and the
 length of each 3' sequence (shorter than 6,000 nt at contig ends). Outputs `results/tables/stage2_secis_hits*.tsv`.
 
+## SECIS model trained on the six *Oikopleura* assemblies (`secis_model_training.py`, `make secis-v2`)
+
+Step 3 of the plan of 2026-10-24. Positive windows: the 2,000 nucleotides after the stop codon of each selenoprotein
+gene, shortened at the next selenoprotein coding sequence on the same strand; stop codons from the gold-standard
+models of step 2 (OKI2018, OSKA2016, OdB3) and from the stage 1 predictions kept by step 1, extended to the next stop
+codon (*O. longicauda*, *O. albicans*, *O. vanhoeffeni*). Negative windows: random genomic windows of the six
+assemblies and of four non-target tunicates (separate random seeds for training and evaluation), dinucleotide-shuffled
+positive windows, and windows after the stage 1 cysteine homologs. Training bootstraps from RF00031 with one SECIS
+element per locus and a 90% identity filter on the seeds; a merged model (RF00031 seed sequences with the same
+appendicularian seeds) is built in each fold. Folds: one per family and one per species (the three *O. dioica*
+assemblies together); each is scored with its new and merged models, RF00031 and the current model. Outputs:
+`work/stage2/secis_v2/` (windows, one directory per fold, final model), `results/tables/stage2_secis_v2_*.tsv` and
+`results/models/oikopleura_secis.{cm,sto,seeds.fa}`. Needs Infernal and Biopython (container image); about 16 jobs
+of training, four at a time (`--jobs`).
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences
