@@ -1,0 +1,200 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOS.trimmed
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 21 sequences with 206 amino-acid sites
+Number of constant sites: 3 (= 1.45631% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 3 (= 1.45631% of all sites)
+Number of parsimony informative sites: 180
+Number of distinct site patterns: 203
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+SSF+F+G4
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 1.3106
+
+ Category  Relative_rate  Proportion
+  1         0.1945         0.2500
+  2         0.5537         0.2500
+  3         1.0371         0.2500
+  4         2.2148         0.2500
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -5221.5489 (s.e. 146.4395)
+Unconstrained log-likelihood (without tree): -1092.8604
+Number of free parameters (#branches + #model parameters): 59
+Akaike information criterion (AIC) score: 10561.0979
+Corrected Akaike information criterion (AICc) score: 10609.5910
+Bayesian information criterion (BIC) score: 10757.4426
+
+Total tree length (sum of branch lengths): 20.3214
+Sum of internal branch lengths: 10.2907 (50.6400% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Equus_caballus_gi_149691084_ref_XP_001490943.1' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++--Equus_caballus_gi_149691084_ref_XP_001490943.1
+|
+|           +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
+|        +--| (97)
+|        |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
+|        |  |     +--| (92)
+|        |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
+|        |  |  +--| (67)
+|        |  |  |  +----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
+|        |  +--| (51)
+|        |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
+|        |     |  +--| (86)
+|        |     |  |  +--Drer_SELENOS.4.selenocysteine
+|        |     +--| (48)
+|        |        |     +------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
+|        |        |  +--| (68)
+|        |        |  |  +--------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
+|        |        +--| (50)
+|        |           |                                             +-------Se_user_SelS_Ostreococcus_lucimarinus
+|        |           |             +-------------------------------| (100)
+|        |           |             |                               +**Se_user_SelS_Ostreococcus_tauri
+|        |           |     +-------| (85)
+|        |           |     |       +-------OSKA_SELENOS.1.selenocysteine
+|        |           |  +--| (45)
+|        |           |  |  |           +--Cint_SELENOS.1.selenocysteine
+|        |           |  |  |        +--| (99)
+|        |           |  |  |        |  +--Crob_SELENOS.1.selenocysteine
+|        |           |  |  |     +--| (99)
+|        |           |  |  |     |  +--Csav_SELENOS.4.selenocysteine
+|        |           |  |  +-----| (98)
+|        |           |  |        +---Pmam_SELENOS.2.selenocysteine
+|        |           +--| (30)
+|        |              +-------Blan_SELENOS.1.unaligned
+|     +--| (67)
+|     |  +--Mmus_SELENOS.2.selenocysteine
+|  +--| (83)
+|  |  +--SelS.Sus_scrofa_SelS.Sus_scrofa
++--| (92)
+|  +**Human_SELENOS_NP_060915.2
+|
++**SelS.Homo_sapiens_SelS.Homo_sapiens
+
+Tree in newick format:
+
+(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2473514756,((((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3553647314,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.0801031510,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2144199874)92:0.0913686142,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8040155211)67:0.1036685673,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.2982599076,Drer_SELENOS.4.selenocysteine:0.2344243436)86:0.2519460663,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.1955478147,Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:1.4158650210)68:0.4965138498,((((Se_user_SelS_Ostreococcus_lucimarinus:1.2883650732,Se_user_SelS_Ostreococcus_tauri:0.0000029901)100:4.9343265990,OSKA_SELENOS.1.selenocysteine:1.2590116765)85:1.3612420070,(((Cint_SELENOS.1.selenocysteine:0.0214702894,Crob_SELENOS.1.selenocysteine:0.0215599882)99:0.1120174821,Csav_SELENOS.4.selenocysteine:0.3698108418)99:0.4007476966,Pmam_SELENOS.2.selenocysteine:0.6932987911)98:0.9814515700)45:0.5288513923,Blan_SELENOS.1.unaligned:1.3223824496)30:0.1410502671)50:0.2034027467)48:0.2336940186)51:0.0819488050)97:0.2664442407,Mmus_SELENOS.2.selenocysteine:0.1219239490)67:0.0371878182,SelS.Sus_scrofa_SelS.Sus_scrofa:0.0874642630)83:0.0399619300,Human_SELENOS_NP_060915.2:0.0000022554)92:0.0249243785,SelS.Homo_sapiens_SelS.Homo_sapiens:0.0000020404);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -5221.549091
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--Equus_caballus_gi_149691084_ref_XP_001490943.1
+|
+|           +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
+|        +--| (97)
+|        |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
+|        |  |     +--| (92)
+|        |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
+|        |  |  +--| (67)
+|        |  |  |  +----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
+|        |  +--| (51)
+|        |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
+|        |     |  +--| (86)
+|        |     |  |  +--Drer_SELENOS.4.selenocysteine
+|        |     +--| (48)
+|        |        |     +------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
+|        |        |  +--| (68)
+|        |        |  |  +--------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
+|        |        +--| (50)
+|        |           |                                             +-------Se_user_SelS_Ostreococcus_lucimarinus
+|        |           |             +-------------------------------| (100)
+|        |           |             |                               +--Se_user_SelS_Ostreococcus_tauri
+|        |           |     +-------| (85)
+|        |           |     |       +-------OSKA_SELENOS.1.selenocysteine
+|        |           |  +--| (45)
+|        |           |  |  |           +--Cint_SELENOS.1.selenocysteine
+|        |           |  |  |        +--| (99)
+|        |           |  |  |        |  +--Crob_SELENOS.1.selenocysteine
+|        |           |  |  |     +--| (99)
+|        |           |  |  |     |  +--Csav_SELENOS.4.selenocysteine
+|        |           |  |  +-----| (98)
+|        |           |  |        +---Pmam_SELENOS.2.selenocysteine
+|        |           +--| (30)
+|        |              +-------Blan_SELENOS.1.unaligned
+|     +--| (67)
+|     |  +--Mmus_SELENOS.2.selenocysteine
+|  +--| (83)
+|  |  +--SelS.Sus_scrofa_SelS.Sus_scrofa
++--| (92)
+|  +--Human_SELENOS_NP_060915.2
+|
++--SelS.Homo_sapiens_SelS.Homo_sapiens
+
+
+Consensus tree in newick format: 
+
+(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2472690206,((((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3552393110,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.0801018630,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2143267304)92:0.0913253036,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8036569271)67:0.1036763391,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.2981727903,Drer_SELENOS.4.selenocysteine:0.2343064247)86:0.2519353800,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.1950280530,Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:1.4151040363)68:0.4960778883,((((Se_user_SelS_Ostreococcus_lucimarinus:1.2876872153,Se_user_SelS_Ostreococcus_tauri:0.0000020967)100:4.9300423482,OSKA_SELENOS.1.selenocysteine:1.2625932772)85:1.3533987028,(((Cint_SELENOS.1.selenocysteine:0.0214754651,Crob_SELENOS.1.selenocysteine:0.0215385334)99:0.1120956184,Csav_SELENOS.4.selenocysteine:0.3694989756)99:0.4009205957,Pmam_SELENOS.2.selenocysteine:0.6926187070)98:0.9802415398)45:0.5291503390,Blan_SELENOS.1.unaligned:1.3219031736)30:0.1409595889)50:0.2032441298)48:0.2335174014)51:0.0819352929)97:0.2663452669,Mmus_SELENOS.2.selenocysteine:0.1218980691)67:0.0371757002,SelS.Sus_scrofa_SelS.Sus_scrofa:0.0874469605)83:0.0399478364,Human_SELENOS_NP_060915.2:0.0000020714)92:0.0249296919,SelS.Homo_sapiens_SelS.Homo_sapiens:0.0000025162);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOS.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0850838,0.0933262,0.0316405,0.0353629,0.00850838,0.0630152,0.0896038,0.0973145,0.00983781,0.0255251,0.0829567,0.0765754,0.0249934,0.0236639,0.051582,0.0792342,0.0335017,0.0151555,0.0287158,0.0444031}+G4{1.31062}" --length 206
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOS.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOS.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 23 23:45:42 2026
+Total CPU time used: 2504.718007 seconds (0h:41m:44s)
+Total wall-clock time used: 495.6313809 seconds (0h:8m:15s)
+

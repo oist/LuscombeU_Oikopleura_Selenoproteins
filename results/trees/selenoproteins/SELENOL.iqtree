@@ -1,0 +1,258 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOL.trimmed
+Type of analysis: ModelFinder + tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+To cite ModelFinder please use: 
+
+Subha Kalyaanamoorthy, Bui Quang Minh, Thomas KF Wong, Arndt von Haeseler,
+and Lars S Jermiin (2017) ModelFinder: Fast model selection for
+accurate phylogenetic estimates. Nature Methods, 14:587–589.
+https://doi.org/10.1038/nmeth.4285
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 26 sequences with 319 amino-acid sites
+Number of constant sites: 7 (= 2.19436% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 7 (= 2.19436% of all sites)
+Number of parsimony informative sites: 275
+Number of distinct site patterns: 319
+
+ModelFinder
+-----------
+
+Best-fit model according to BIC: LG+I+G4
+
+List of models sorted by BIC scores: 
+
+Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
+LG+I+G4           -9914.973   19931.946 - 1.83e-08   19951.811 - 0.000449   20123.971 +    0.985
+LG+G4             -9922.111   19944.222 - 3.95e-11   19963.251 - 1.47e-06   20132.481 -    0.014
+LG+I+R3           -9913.601   19935.202 - 3.59e-09   19957.702 - 2.36e-05   20138.522 - 0.000682
+LG+R3             -9919.875   19945.750 - 1.84e-11   19967.350 -  1.9e-07   20145.305 -  2.3e-05
+LG+I+R4           -9913.524   19939.047 - 5.26e-10   19963.414 - 1.36e-06   20149.898 - 2.31e-06
+WAG+I+G4          -9929.367   19960.734 - 1.03e-14   19980.599 - 2.52e-10   20152.758 - 5.53e-07
+LG+I+R2           -9927.091   19958.183 - 3.68e-14   19978.905 - 5.87e-10   20153.973 - 3.01e-07
+LG+R4             -9919.202   19948.404 - 4.89e-12   19971.826 - 2.02e-08   20155.489 - 1.41e-07
+LG+F+I+G4         -9878.158   19896.316 +    0.999   19936.396 +    0.998   20159.879 - 1.57e-08
+WAG+G4            -9937.900   19975.799 - 5.49e-18   19994.829 - 2.04e-13   20164.059 - 1.94e-09
+LG+R2             -9937.900   19977.800 - 2.02e-18   19997.665 - 4.95e-14   20169.825 - 1.09e-10
+LG+F+G4           -9886.265   19910.531 - 0.000818   19949.326 -  0.00155   20170.329 - 8.45e-11
+WAG+F+I+G4        -9888.146   19916.291 - 4.59e-05   19956.372 - 4.59e-05   20179.855 - 7.22e-13
+WAG+F+G4          -9897.939   19933.878 - 6.97e-09   19972.673 - 1.32e-08   20193.676 -  7.2e-16
+JTT+I+G4          -9972.629   20047.258 - 1.67e-33   20067.123 - 4.09e-29   20239.283 - 8.99e-26
+JTT+G4            -9978.943   20057.886 - 8.22e-36   20076.916 - 3.06e-31   20246.145 - 2.91e-27
+JTT+F+I+G4        -9926.715   19993.429 - 8.16e-22   20033.510 - 8.15e-22   20256.993 - 1.28e-29
+JTT+F+G4          -9933.903   20005.806 - 1.68e-24   20044.601 - 3.18e-24   20265.604 - 1.73e-31
+LG+I             -10056.420   20212.840 - 1.85e-69   20231.870 - 6.88e-65   20401.100 - 6.54e-61
+LG               -10094.991   20287.983 - 8.92e-86   20306.199 - 4.98e-81   20472.477 - 2.07e-76
+
+AIC, w-AIC   : Akaike information criterion scores and weights.
+AICc, w-AICc : Corrected AIC scores and weights.
+BIC, w-BIC   : Bayesian information criterion scores and weights.
+
+Plus signs denote the 95% confidence sets.
+Minus signs denote significant exclusion.
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+I+G4
+
+State frequencies: (model)
+
+Model of rate heterogeneity: Invar+Gamma with 4 categories
+Proportion of invariable sites: 0.0165
+Gamma shape alpha: 2.0246
+
+ Category  Relative_rate  Proportion
+  0         0              0.0165
+  1         0.3012         0.2459
+  2         0.6686         0.2459
+  3         1.0885         0.2459
+  4         2.0087         0.2459
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -9911.8280 (s.e. 233.6000)
+Unconstrained log-likelihood (without tree): -1839.0960
+Number of free parameters (#branches + #model parameters): 51
+Akaike information criterion (AIC) score: 19925.6561
+Corrected Akaike information criterion (AICc) score: 19945.5212
+Bayesian information criterion (BIC) score: 20117.6808
+
+Total tree length (sum of branch lengths): 23.1493
+Sum of internal branch lengths: 7.0347 (30.3886% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'SelL_Gasterosteus_aculeatus_SelL_Gasterosteus_aculeatus' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++--SelL_Gasterosteus_aculeatus_SelL_Gasterosteus_aculeatus
+|
+|        +--SelL_salmo_salar_SelL_salmo_salar
+|     +--| (100)
+|     |  +--SelL_Oncorhynchus_mykiss_SelL_Oncorhynchus_mykiss
+|  +--| (48)
+|  |  |      +--SelL_danio_rerio_SelL_danio_rerio
+|  |  +------| (100)
+|  |         +**Drer_SELENOL.5.selenocysteine
++--| (96)
+|  |                             +**SelL_ciona_intestinalis_SelL_ciona_intestinalis
+|  |                          +--| (99)
+|  |                          |  +--Crob_SELENOL.3.selenocysteine
+|  |                       +--| (37)
+|  |                       |  |  +**Cint_SELENOL.3.selenocysteine
+|  |                       |  +--| (31)
+|  |                       |     +-------------------------------Fbor_SELENOL.7.threonine
+|  |                    +--| (43)
+|  |                    |  +---Csav_SELENOL.3.selenocysteine
+|  |                 +--| (38)
+|  |                 |  +-------Pmam_SELENOL.1.selenocysteine
+|  |              +--| (64)
+|  |              |  |   +-----------------Pege_SELENOL.1.valine
+|  |              |  +---| (66)
+|  |              |      |  +--------Stho_SELENOL.3.selenocysteine
+|  |              |      +--| (88)
+|  |              |         |     +--Stho_SELENOL.4.selenocysteine
+|  |              |         +-----| (90)
+|  |              |               +---------Tdem_SELENOL.1.selenocysteine
+|  |           +--| (62)
+|  |           |  |  +-------SelL_Molgula_tectiformis_SelL_Molgula_tectiformis
+|  |           |  +--| (90)
+|  |           |     |  +-----------Bsch_SELENOL.1.selenocysteine
+|  |           |     +--| (92)
+|  |           |        |  +-------Hror_SELENOL.4.selenocysteine
+|  |           |        +--| (95)
+|  |           |           +----Scla_SELENOL.1.selenocysteine
+|  |        +--| (60)
+|  |        |  |       +-------------------Fbor_SELENOL.1.selenocysteine
+|  |        |  +-------| (86)
+|  |        |          +--------------------Fbor_SELENOL.4.selenocysteine
+|  |     +--| (68)
+|  |     |  |     +--Bflo_SELENOL.3.selenocysteine
+|  |     |  +-----| (100)
+|  |     |        +--Blan_SELENOL.2.selenocysteine
+|  +-----| (99)
+|        +-----SelL_Squalus_acanthias_SelL_Squalus_acanthias
+|
+|  +--SelL_fugu_SelL_fugu
++--| (99)
+   +--SelL_Tetraodon_nigroviridis_SelL_Tetraodon_nigroviridis
+
+Tree in newick format:
+
+(SelL_Gasterosteus_aculeatus_SelL_Gasterosteus_aculeatus:0.1766896601,(((SelL_salmo_salar_SelL_salmo_salar:0.0130600949,SelL_Oncorhynchus_mykiss_SelL_Oncorhynchus_mykiss:0.0077380864)100:0.3122179670,(SelL_danio_rerio_SelL_danio_rerio:0.0058542414,Drer_SELENOL.5.selenocysteine:0.0008102196)100:0.6669283184)48:0.0852236949,(((((((((SelL_ciona_intestinalis_SelL_ciona_intestinalis:0.0000010000,Crob_SELENOL.3.selenocysteine:0.0098755678)99:0.0559289158,(Cint_SELENOL.3.selenocysteine:0.0000021371,Fbor_SELENOL.7.threonine:2.9841325147)31:0.0201751442)37:0.3241991656,Csav_SELENOL.3.selenocysteine:0.3777501540)43:0.2614396202,Pmam_SELENOL.1.selenocysteine:0.7417762160)38:0.2233950918,(Pege_SELENOL.1.valine:1.7042223723,(Stho_SELENOL.3.selenocysteine:0.8978015781,(Stho_SELENOL.4.selenocysteine:0.1848899130,Tdem_SELENOL.1.selenocysteine:0.9166124848)90:0.5548256515)88:0.3362078247)66:0.4526588263)64:0.2389676313,(SelL_Molgula_tectiformis_SelL_Molgula_tectiformis:0.7892218746,(Bsch_SELENOL.1.selenocysteine:1.1188804488,(Hror_SELENOL.4.selenocysteine:0.7516663641,Scla_SELENOL.1.selenocysteine:0.4731999216)95:0.1113166452)92:0.2174974698)90:0.2100322072)62:0.2476392849,(Fbor_SELENOL.1.selenocysteine:1.9144377049,Fbor_SELENOL.4.selenocysteine:2.0114985041)86:0.7322707750)60:0.2310224502,(Bflo_SELENOL.3.selenocysteine:0.0930137848,Blan_SELENOL.2.selenocysteine:0.0367868079)100:0.6224481499)68:0.1607923106,SelL_Squalus_acanthias_SelL_Squalus_acanthias:0.6238343821)99:0.5723129618)96:0.2224125342,(SelL_fugu_SelL_fugu:0.1604298453,SelL_Tetraodon_nigroviridis_SelL_Tetraodon_nigroviridis:0.1203532891)99:0.1748144318);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -9912.188394
+Robinson-Foulds distance between ML tree and consensus tree: 4
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--SelL_Gasterosteus_aculeatus_SelL_Gasterosteus_aculeatus
+|
+|        +--SelL_salmo_salar_SelL_salmo_salar
+|     +--| (100)
+|     |  +--SelL_Oncorhynchus_mykiss_SelL_Oncorhynchus_mykiss
+|  +--| (48)
+|  |  |      +--SelL_danio_rerio_SelL_danio_rerio
+|  |  +------| (100)
+|  |         +--Drer_SELENOL.5.selenocysteine
++--| (96)
+|  |                                +--SelL_ciona_intestinalis_SelL_ciona_intestinalis
+|  |                             +--| (99)
+|  |                             |  +--Crob_SELENOL.3.selenocysteine
+|  |                          +--| (68)
+|  |                          |  +--Cint_SELENOL.3.selenocysteine
+|  |                       +--| (56)
+|  |                       |  +---Csav_SELENOL.3.selenocysteine
+|  |                    +--| (43)
+|  |                    |  +---------------------------------Fbor_SELENOL.7.threonine
+|  |                 +--| (38)
+|  |                 |  +-------Pmam_SELENOL.1.selenocysteine
+|  |              +--| (64)
+|  |              |  |    +-------------------Pege_SELENOL.1.valine
+|  |              |  +----| (66)
+|  |              |       |  +---------Stho_SELENOL.3.selenocysteine
+|  |              |       +--| (88)
+|  |              |          |     +--Stho_SELENOL.4.selenocysteine
+|  |              |          +-----| (90)
+|  |              |                +---------Tdem_SELENOL.1.selenocysteine
+|  |           +--| (62)
+|  |           |  |  +--------SelL_Molgula_tectiformis_SelL_Molgula_tectiformis
+|  |           |  +--| (90)
+|  |           |     |  +------------Bsch_SELENOL.1.selenocysteine
+|  |           |     +--| (92)
+|  |           |        |  +-------Hror_SELENOL.4.selenocysteine
+|  |           |        +--| (95)
+|  |           |           +----Scla_SELENOL.1.selenocysteine
+|  |        +--| (60)
+|  |        |  |       +---------------------Fbor_SELENOL.1.selenocysteine
+|  |        |  +-------| (86)
+|  |        |          +----------------------Fbor_SELENOL.4.selenocysteine
+|  |     +--| (68)
+|  |     |  |      +--Bflo_SELENOL.3.selenocysteine
+|  |     |  +------| (100)
+|  |     |         +--Blan_SELENOL.2.selenocysteine
+|  +-----| (99)
+|        +------SelL_Squalus_acanthias_SelL_Squalus_acanthias
+|
+|  +--SelL_fugu_SelL_fugu
++--| (99)
+   +--SelL_Tetraodon_nigroviridis_SelL_Tetraodon_nigroviridis
+
+
+Consensus tree in newick format: 
+
+(SelL_Gasterosteus_aculeatus_SelL_Gasterosteus_aculeatus:0.1767519638,(((SelL_salmo_salar_SelL_salmo_salar:0.0130858518,SelL_Oncorhynchus_mykiss_SelL_Oncorhynchus_mykiss:0.0077248299)100:0.3120389653,(SelL_danio_rerio_SelL_danio_rerio:0.0058574719,Drer_SELENOL.5.selenocysteine:0.0008116647)100:0.6676136459)48:0.0868646216,((((((((((SelL_ciona_intestinalis_SelL_ciona_intestinalis:0.0000025340,Crob_SELENOL.3.selenocysteine:0.0098777936)99:0.0560822101,Cint_SELENOL.3.selenocysteine:0.0200402225)68:0.3133566234,Csav_SELENOL.3.selenocysteine:0.3865198485)56:0.0000021944,Fbor_SELENOL.7.threonine:2.9267047340)43:0.2611066948,Pmam_SELENOL.1.selenocysteine:0.7504797262)38:0.2191420309,(Pege_SELENOL.1.valine:1.7037225418,(Stho_SELENOL.3.selenocysteine:0.8994931986,(Stho_SELENOL.4.selenocysteine:0.1889191800,Tdem_SELENOL.1.selenocysteine:0.9130745929)90:0.5535963356)88:0.3315831500)66:0.4541652786)64:0.2385969900,(SelL_Molgula_tectiformis_SelL_Molgula_tectiformis:0.7908945812,(Bsch_SELENOL.1.selenocysteine:1.1194207414,(Hror_SELENOL.4.selenocysteine:0.7508476821,Scla_SELENOL.1.selenocysteine:0.4736557640)95:0.1111803523)92:0.2171964277)90:0.2124426222)62:0.2436221320,(Fbor_SELENOL.1.selenocysteine:1.9156531215,Fbor_SELENOL.4.selenocysteine:2.0126416223)86:0.7266354386)60:0.2339429780,(Bflo_SELENOL.3.selenocysteine:0.0928588211,Blan_SELENOL.2.selenocysteine:0.0369959919)100:0.6222871118)68:0.1619678773,SelL_Squalus_acanthias_SelL_Squalus_acanthias:0.6237520711)99:0.5725571690)96:0.2213171147,(SelL_fugu_SelL_fugu:0.1605068682,SelL_Tetraodon_nigroviridis_SelL_Tetraodon_nigroviridis:0.1203873697)99:0.1748691796);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/SELENOL.treefile -m "LG+I{0.0164598}+G4{2.02461}" --length 319
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOL.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOL.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 23 10:35:15 2026
+Total CPU time used: 701.071121 seconds (0h:11m:41s)
+Total wall-clock time used: 99.24837196 seconds (0h:1m:39s)
+

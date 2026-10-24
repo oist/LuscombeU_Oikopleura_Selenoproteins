@@ -1,0 +1,865 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/DIO.trimmed
+Type of analysis: ModelFinder + tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+To cite ModelFinder please use: 
+
+Subha Kalyaanamoorthy, Bui Quang Minh, Thomas KF Wong, Arndt von Haeseler,
+and Lars S Jermiin (2017) ModelFinder: Fast model selection for
+accurate phylogenetic estimates. Nature Methods, 14:587–589.
+https://doi.org/10.1038/nmeth.4285
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 170 sequences with 288 amino-acid sites
+Number of constant sites: 0 (= 0% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 0 (= 0% of all sites)
+Number of parsimony informative sites: 285
+Number of distinct site patterns: 288
+
+ModelFinder
+-----------
+
+Best-fit model according to BIC: LG+R6
+
+List of models sorted by BIC scores: 
+
+Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
+LG+R6            -39045.761   78785.522 +    0.833  320297.522 -        0   80056.569 +    0.784
+LG+R5            -39052.731   78795.462 -  0.00578  317535.462 -        0   80059.183 +    0.212
+LG+R7            -39045.402   78788.803 +    0.161  323088.803 -        0   80067.177 -   0.0039
+LG+R4            -39070.822   78827.644 - 5.94e-10  314811.644 -        0   80084.039 -  8.5e-07
+LG+G4            -39094.072   78864.144 - 7.05e-18  308028.144 +        1   80102.224 - 9.56e-11
+LG+F+R5          -39048.445   78824.890 - 2.35e-09  344544.890 -        0   80158.208 - 6.66e-23
+LG+F+R6          -39043.548   78819.095 - 4.27e-08  347463.095 -        0   80159.739 -  3.1e-23
+LG+R3            -39117.806   78917.612 - 1.73e-29  312161.612 -        0   80166.682 - 9.63e-25
+WAG+F+R6         -39052.424   78836.848 - 5.96e-12  347480.848 -        0   80177.491 - 4.33e-27
+WAG+F+R5         -39058.751   78845.503 - 7.87e-14  344565.503 -        0   80178.820 - 2.23e-27
+WAG+R6           -39107.609   78909.217 - 1.15e-27  320421.217 -        0   80180.265 - 1.08e-27
+WAG+R5           -39114.724   78919.448 -  6.9e-30  317659.448 -        0   80183.169 - 2.53e-28
+JTT+R6           -39199.616   79093.233 - 1.26e-67  320605.233 -        0   80364.280 - 1.19e-67
+JTT+F+R6         -39147.430   79026.859 - 3.27e-53  347670.859 -        0   80367.503 - 2.38e-68
+JTT+R5           -39208.362   79106.723 - 1.49e-70  317846.723 -        0   80370.444 - 5.46e-69
+JTT+F+R5         -39154.879   79037.758 - 1.41e-55  344757.758 -        0   80371.075 - 3.98e-69
+LG+R2            -39251.499   79180.999 - 1.11e-86  309700.999 -        0   80422.743 -  2.4e-80
+LG               -40035.463   80744.925 -        0  308556.925 - 1.5e-115   81979.343 -        0
+
+AIC, w-AIC   : Akaike information criterion scores and weights.
+AICc, w-AICc : Corrected AIC scores and weights.
+BIC, w-BIC   : Bayesian information criterion scores and weights.
+
+Plus signs denote the 95% confidence sets.
+Minus signs denote significant exclusion.
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+R6
+
+State frequencies: (model)
+
+Model of rate heterogeneity: FreeRate with 6 categories
+Site proportion and rates:  (0.0450,0.1155) (0.1326,0.2943) (0.1286,0.5307) (0.2591,0.8485) (0.3009,1.2509) (0.1338,2.1766)
+
+ Category  Relative_rate  Proportion
+  1         0.1155         0.0450
+  2         0.2943         0.1326
+  3         0.5307         0.1286
+  4         0.8485         0.2591
+  5         1.2509         0.3009
+  6         2.1766         0.1338
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -38902.3143 (s.e. 1080.1605)
+Unconstrained log-likelihood (without tree): -1630.9326
+Number of free parameters (#branches + #model parameters): 347
+Akaike information criterion (AIC) score: 78498.6285
+Corrected Akaike information criterion (AICc) score: 320010.6285
+Bayesian information criterion (BIC) score: 79769.6758
+
+**************************** WARNING ****************************
+Number of parameters (K, model parameters and branch lengths): 347
+Sample size (n, alignment length): 288
+
+Given that K>=n, the parameter estimates might be inaccurate.
+Thus, phylogenetic estimates should be interpreted with caution.
+
+Ideally, it is desirable that n >> K. When selecting optimal models,
+1. use AIC or BIC if n > 40K;
+2. use AICc or BIC if 40K >= n > K;
+3. be extremely cautious if n <= K
+
+To improve the situation (3), consider the following options:
+  1. Increase the sample size (n)
+  2. Decrease the number of parameters (K) to be estimated. If
+     possible:
+     a. Remove the least important sequences from the alignment
+     b. Specify some of the parameter values for the substitution
+        model (e.g., the nucleotide or amino acid frequencies)
+     c. Specify some of the parameter values for the rates-across-
+        sites model (e.g., the shape parameter for the discrete
+        Gamma distribution, the proportion of invariable sites, or
+        the rates of change for different rate categories under
+        the FreeRate model)
+
+Reference:
+Burnham KR, Anderson DR (2002). Model Selection and Multimodel
+Inference: A Practical Information-Theoretic Approach. Springer,
+New York.
+************************ END OF WARNING ***********************
+
+Total tree length (sum of branch lengths): 117.5385
+Sum of internal branch lengths: 47.3234 (40.2621% of tree length)
+
+WARNING: 2 near-zero internal branches (<0.0035) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Macropus_eugenii_gi_197107958_gb_ACH42531.1' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++--Macropus_eugenii_gi_197107958_gb_ACH42531.1
+|
+|     +--Ornithorhynchus_anatinus_gi_197107956_gb_ACH42530.1
+|  +--| (71)
+|  |  |  +--DIO3.Sus_scrofa_DIO3.Sus_scrofa
+|  |  +--| (100)
+|  |     |  +--Mmus_DIO.1.selenocysteine
+|  |     +--| (93)
+|  |        +**Human_DIO3_NP_001353.4
++--| (84)
+|  |                              +--Oryzias_latipes_gi_211904101_ref_NP_001129993.1
+|  |                           +--| (98)
+|  |                           |  |  +--DIO2b.Salmo_salar_DIO2b.Salmo_salar
+|  |                           |  +--| (92)
+|  |                           |     |  +**DIO2.Salmo_salar_DIO2.Salmo_salar
+|  |                           |     +--| (100)
+|  |                           |        +--Oncorhynchus_mykiss_gi_16550970_gb_AAL25653.1
+|  |                        +--| (97)
+|  |                        |  +--Drer_DIO.3.selenocysteine
+|  |                     +--| (100)
+|  |                     |  +--Anguilla_japonica_gi_83758434_dbj_BAE54452.1
+|  |                  +--| (94)
+|  |                  |  +--gi_182702126_sp_Q8UVX8.3_IOD2_NEOFS_gi_182702126_sp_Q8UVX8.3
+|  |               +--| (94)
+|  |               |  |           +**DIO2.Homo_sapiens_DIO2.Homo_sapiens
+|  |               |  |        +--| (100)
+|  |               |  |        |  +**Human_DIO2_NP_054644.1
+|  |               |  |     +--| (100)
+|  |               |  |     |  +--DIO2.Sus_scrofa_DIO2.Sus_scrofa
+|  |               |  |  +--| (100)
+|  |               |  |  |  +--Mmus_DIO.3.selenocysteine
+|  |               |  +--| (100)
+|  |               |     +--Gallus_gallus_gi_156547239_ref_NP_989445.2
+|  |        +------| (100)
+|  |        |      +--Xenopus_laevis_gi_13811437_gb_AAK40121.1
+|  |     +--| (100)
+|  |     |  |                          +**DIO1.Mus_musculus_DIO1.Mus_musculus
+|  |     |  |                       +--| (100)
+|  |     |  |                       |  +**Mmus_DIO.5.selenocysteine
+|  |     |  |                    +--| (96)
+|  |     |  |                    |  |     +--DIO1.Sus_scrofa_DIO1.Sus_scrofa
+|  |     |  |                    |  |  +--| (77)
+|  |     |  |                    |  |  |  |  +--DIO1.Homo_sapiens_DIO1.Homo_sapiens
+|  |     |  |                    |  |  |  +--| (100)
+|  |     |  |                    |  |  |     +**Human_DIO1_NP_000783.2
+|  |     |  |                    |  +--| (77)
+|  |     |  |                    |     +--Canis_lupus_familiaris_gi_55742738_ref_NP_001007127.1
+|  |     |  |                 +--| (100)
+|  |     |  |                 |  +--gi_182702122_sp_Q95N00.2_IOD1_SUNMU_gi_182702122_sp_Q95N00.2
+|  |     |  |              +--| (100)
+|  |     |  |              |  |  +**DIO1.Gallus_gallus_DIO1.Gallus_gallus
+|  |     |  |              |  +--| (100)
+|  |     |  |              |     +--Gallus_gallus_gi_148277086_ref_NP_001091083.1
+|  |     |  |           +--| (98)
+|  |     |  |           |  +---Xenopus_laevis_gi_147905927_ref_NP_001089136.1
+|  |     |  |        +--| (100)
+|  |     |  |        |  |     +--DIO1.Salmo_salar_DIO1.Salmo_salar
+|  |     |  |        |  |  +--| (99)
+|  |     |  |        |  |  |  |        +--Paralichthys_olivaceus_gi_171451963_dbj_BAG15906.1
+|  |     |  |        |  |  |  |     +--| (97)
+|  |     |  |        |  |  |  |     |  +--Sparus_aurata_gi_47846193_emb_CAF02303.1
+|  |     |  |        |  |  |  |  +--| (97)
+|  |     |  |        |  |  |  |  |  +--gi_172046120_sp_Q804E1.2_IOD1_FUNHE_gi_172046120_sp_Q804E1.2
+|  |     |  |        |  |  |  +--| (100)
+|  |     |  |        |  |  |     +--Oreochromis_niloticus_gi_2440145_emb_CAA71995.1
+|  |     |  |        |  +--| (99)
+|  |     |  |        |     +--Drer_DIO.5.selenocysteine
+|  |     |  |     +--| (88)
+|  |     |  |     |  |                    +--Bflo_DIO.3.selenocysteine
+|  |     |  |     |  |                 +--| (98)
+|  |     |  |     |  |                 |  +--Blan_DIO.3.selenocysteine
+|  |     |  |     |  |              +--| (99)
+|  |     |  |     |  |              |  +--Bflo_DIO.4.selenocysteine
+|  |     |  |     |  |           +--| (99)
+|  |     |  |     |  |           |  |     +--Bflo_DIO.10.selenocysteine
+|  |     |  |     |  |           |  |  +--| (99)
+|  |     |  |     |  |           |  |  |  +--Blan_DIO.18.selenocysteine
+|  |     |  |     |  |           |  +--| (66)
+|  |     |  |     |  |           |     |     +--Blan_DIO.4.selenocysteine
+|  |     |  |     |  |           |     |  +--| (100)
+|  |     |  |     |  |           |     |  |  +--Blan_DIO.5.selenocysteine
+|  |     |  |     |  |           |     +--| (100)
+|  |     |  |     |  |           |        +--Blan_DIO.8.selenocysteine
+|  |     |  |     |  |        +--| (99)
+|  |     |  |     |  |        |  |     +--Bflo_DIO.7.selenocysteine
+|  |     |  |     |  |        |  |  +--| (97)
+|  |     |  |     |  |        |  |  |  +--Bflo_DIO.8.selenocysteine
+|  |     |  |     |  |        |  +--| (98)
+|  |     |  |     |  |        |     |        +--Blan_DIO.9.selenocysteine
+|  |     |  |     |  |        |     |     +--| (99)
+|  |     |  |     |  |        |     |     |  +--Blan_DIO.11.selenocysteine
+|  |     |  |     |  |        |     |  +--| (70)
+|  |     |  |     |  |        |     |  |  +--Blan_DIO.10.selenocysteine
+|  |     |  |     |  |        |     +--| (95)
+|  |     |  |     |  |        |        +--Blan_DIO.12.selenocysteine
+|  |     |  |     |  |     +--| (83)
+|  |     |  |     |  |     |  +--------------------Blan_DIO.6.unaligned
+|  |     |  |     |  |  +--| (62)
+|  |     |  |     |  |  |  |    +--Bflo_DIO.12.selenocysteine
+|  |     |  |     |  |  |  +----| (100)
+|  |     |  |     |  |  |       +--Blan_DIO.20.selenocysteine
+|  |     |  |     |  +--| (39)
+|  |     |  |     |     |          +--Bflo_DIO.13.selenocysteine
+|  |     |  |     |     |       +--| (66)
+|  |     |  |     |     |       |  +--Bflo_DIO.14.selenocysteine
+|  |     |  |     |     |    +--| (67)
+|  |     |  |     |     |    |  +--Bflo_DIO.15.selenocysteine
+|  |     |  |     |     +----| (100)
+|  |     |  |     |          +--Blan_DIO.22.selenocysteine
+|  |     |  |  +--| (57)
+|  |     |  |  |  |                          +-----------Dictyostelium_discoideum_AX4_gi_166240590_ref_XP_643546.2
+|  |     |  |  |  |                       +--| (96)
+|  |     |  |  |  |                       |  |              +--Se_user_Deiodinase-like_1_Paramecium_tetraurelia
+|  |     |  |  |  |                       |  +--------------| (100)
+|  |     |  |  |  |                       |                 +--Se_user_Deiodinase-like_2_Paramecium
+|  |     |  |  |  |                    +--| (63)
+|  |     |  |  |  |                    |  |         +--Ovan_DIO.1.selenocysteine
+|  |     |  |  |  |                    |  |      +--| (53)
+|  |     |  |  |  |                    |  |      |  +---Ovan_DIO.6.unaligned
+|  |     |  |  |  |                    |  +------| (100)
+|  |     |  |  |  |                    |         |   +--Ovan_DIO.3.unaligned
+|  |     |  |  |  |                    |         +---| (100)
+|  |     |  |  |  |                    |             +--Ovan_DIO.12.selenocysteine
+|  |     |  |  |  |                 +--| (59)
+|  |     |  |  |  |                 |  |       +--OKI_DIO.1.selenocysteine
+|  |     |  |  |  |                 |  +-------| (100)
+|  |     |  |  |  |                 |          |  +--OSKA_DIO.1.selenocysteine
+|  |     |  |  |  |                 |          +--| (96)
+|  |     |  |  |  |                 |             |  +**OdB3_DIO.8.selenocysteine
+|  |     |  |  |  |                 |             +--| (99)
+|  |     |  |  |  |                 |                +--OdB3_DIO.10.selenocysteine
+|  |     |  |  |  |              +--| (66)
+|  |     |  |  |  |              |  |         +--Oalb_DIO.2.selenocysteine
+|  |     |  |  |  |              |  |      +--| (100)
+|  |     |  |  |  |              |  |      |  |  +--Oalb_DIO.4.selenocysteine
+|  |     |  |  |  |              |  |      |  +--| (83)
+|  |     |  |  |  |              |  |      |     +--Oalb_DIO.6.selenocysteine
+|  |     |  |  |  |              |  |  +---| (100)
+|  |     |  |  |  |              |  |  |   +-----Oalb_DIO.8.selenocysteine
+|  |     |  |  |  |              |  +--| (93)
+|  |     |  |  |  |              |     |  +--Olon_DIO.1.selenocysteine
+|  |     |  |  |  |              |     +--| (97)
+|  |     |  |  |  |              |        |  +---Olon_DIO.3.selenocysteine
+|  |     |  |  |  |              |        +--| (95)
+|  |     |  |  |  |              |           |      +**Olon_DIO.5.selenocysteine
+|  |     |  |  |  |              |           +------| (100)
+|  |     |  |  |  |              |                  |  +**Olon_DIO.6.selenocysteine
+|  |     |  |  |  |              |                  +--| (100)
+|  |     |  |  |  |              |                     +**Olon_DIO.10.selenocysteine
+|  |     |  |  |  |           +--| (64)
+|  |     |  |  |  |           |  |            +--OSKA_DIO.4.selenocysteine
+|  |     |  |  |  |           |  |         +--| (82)
+|  |     |  |  |  |           |  |         |  +--OdB3_DIO.7.selenocysteine
+|  |     |  |  |  |           |  +---------| (100)
+|  |     |  |  |  |           |            |        +--OdB3_DIO.1.selenocysteine
+|  |     |  |  |  |           |            |     +**| (71)
+|  |     |  |  |  |           |            |     |  +**OdB3_DIO.2.selenocysteine
+|  |     |  |  |  |           |            |  +--| (97)
+|  |     |  |  |  |           |            |  |  +--OdB3_DIO.3.selenocysteine
+|  |     |  |  |  |           |            +--| (97)
+|  |     |  |  |  |           |               +--OdB3_DIO.4.selenocysteine
+|  |     |  |  |  |        +--| (74)
+|  |     |  |  |  |        |  +------------------Fbor_DIO.1.serine
+|  |     |  |  |  |     +--| (63)
+|  |     |  |  |  |     |  |                +--Bsch_DIO.2.selenocysteine
+|  |     |  |  |  |     |  |             +--| (100)
+|  |     |  |  |  |     |  |             |  +--Bsch_DIO.3.selenocysteine
+|  |     |  |  |  |     |  |        +----| (100)
+|  |     |  |  |  |     |  |        |    +--Bsch_DIO.6.selenocysteine
+|  |     |  |  |  |     |  |     +--| (98)
+|  |     |  |  |  |     |  |     |  |      +--Scla_DIO.1.selenocysteine
+|  |     |  |  |  |     |  |     |  |   +--| (100)
+|  |     |  |  |  |     |  |     |  |   |  +--Scla_DIO.2.selenocysteine
+|  |     |  |  |  |     |  |     |  +---| (100)
+|  |     |  |  |  |     |  |     |      +--Scla_DIO.3.selenocysteine
+|  |     |  |  |  |     |  |  +--| (98)
+|  |     |  |  |  |     |  |  |  +-------Scla_DIO.5.selenocysteine
+|  |     |  |  |  |     |  +--| (100)
+|  |     |  |  |  |     |     +------Hror_DIO.1.selenocysteine
+|  |     |  |  |  |  +--| (73)
+|  |     |  |  |  |  |  |           +**Cint_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |        +--| (100)
+|  |     |  |  |  |  |  |        |  +--Crob_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |     +--| (100)
+|  |     |  |  |  |  |  |     |  +--Csav_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |  +--| (87)
+|  |     |  |  |  |  |  |  |  +----Pmam_DIO.11.selenocysteine
+|  |     |  |  |  |  |  +--| (85)
+|  |     |  |  |  |  |     |     +--Hror_DIO.3.selenocysteine
+|  |     |  |  |  |  |     |  +--| (100)
+|  |     |  |  |  |  |     |  |  +---Hror_DIO.8.selenocysteine
+|  |     |  |  |  |  |     +--| (97)
+|  |     |  |  |  |  |        +----Scla_DIO.10.selenocysteine
+|  |     |  |  |  +--| (76)
+|  |     |  |  |     |         +--Cint_DIO.2.selenocysteine
+|  |     |  |  |     |      +--| (100)
+|  |     |  |  |     |      |  +--Crob_DIO.2.selenocysteine
+|  |     |  |  |     |  +---| (100)
+|  |     |  |  |     |  |   +--Csav_DIO.2.selenocysteine
+|  |     |  |  |     +--| (76)
+|  |     |  |  |        |        +---Pmam_DIO.3.selenocysteine
+|  |     |  |  |        |     +--| (95)
+|  |     |  |  |        |     |  +------Pmam_DIO.7.selenocysteine
+|  |     |  |  |        |  +--| (98)
+|  |     |  |  |        |  |  +--Pmam_DIO.6.selenocysteine
+|  |     |  |  |        +--| (92)
+|  |     |  |  |           +------Pmam_DIO.10.selenocysteine
+|  |     |  +--| (90)
+|  |     |     |     +----------------------Hoeflea_phototrophica_DFL-43_gi_163757341_ref_ZP_02164430.1
+|  |     |     |  +**| (21)
+|  |     |     |  |  |                          +-------Croceibacter_atlanticus_HTCC2559_gi_83855608_ref_ZP_00949137
+|  |     |     |  |  |                       +--| (96)
+|  |     |     |  |  |                       |  +---Flavobacteriales_bacterium_HTCC2170_gi_88713732_ref_ZP_01107
+|  |     |     |  |  |                    +--| (94)
+|  |     |     |  |  |                    |  |       +--------Fbor_DIO.7.histidine
+|  |     |     |  |  |                    |  +-------| (95)
+|  |     |     |  |  |                    |          +**Fbor_DIO.23.unaligned
+|  |     |     |  |  |                 +--| (84)
+|  |     |     |  |  |                 |  +-----------------Fbor_DIO.17.tryptophan
+|  |     |     |  |  |              +--| (91)
+|  |     |     |  |  |              |  +---------------Fbor_DIO.3.cysteine
+|  |     |     |  |  |           +--| (89)
+|  |     |     |  |  |           |  |                      +--Bsty_DIO.2.cysteine
+|  |     |     |  |  |           |  |           +----------| (100)
+|  |     |     |  |  |           |  |           |          +--Mery_DIO.3.cysteine
+|  |     |     |  |  |           |  |        +--| (99)
+|  |     |     |  |  |           |  |        |  |    +--Fbor_DIO.2.cysteine
+|  |     |     |  |  |           |  |        |  +----| (100)
+|  |     |     |  |  |           |  |        |       +--Fbor_DIO.5.cysteine
+|  |     |     |  |  |           |  |     +--| (54)
+|  |     |     |  |  |           |  |     |  |                  +**Bsty_DIO.3.cysteine
+|  |     |     |  |  |           |  |     |  |               +--| (100)
+|  |     |     |  |  |           |  |     |  |               |  |  +--Bsty_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |  |               |  +--| (100)
+|  |     |     |  |  |           |  |     |  |               |     +--Mery_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |  |        +------| (100)
+|  |     |     |  |  |           |  |     |  |        |      +---Fbor_DIO.16.cysteine
+|  |     |     |  |  |           |  |     |  |     +--| (90)
+|  |     |     |  |  |           |  |     |  |     |  |                  +**Fbor_DIO.36.cysteine
+|  |     |     |  |  |           |  |     |  |     |  |   +--------------| (100)
+|  |     |     |  |  |           |  |     |  |     |  |   |              +--Fbor_DIO.40.cysteine
+|  |     |     |  |  |           |  |     |  |     |  +---| (96)
+|  |     |     |  |  |           |  |     |  |     |      |  +---------Fbor_DIO.44.cysteine
+|  |     |     |  |  |           |  |     |  |     |      +--| (96)
+|  |     |     |  |  |           |  |     |  |     |         +-------------------Fbor_DIO.54.cysteine
+|  |     |     |  |  |           |  |     |  |  +--| (61)
+|  |     |     |  |  |           |  |     |  |  |  |                   +--Fbor_DIO.13.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |                +--| (100)
+|  |     |     |  |  |           |  |     |  |  |  |                |  |  +--Fbor_DIO.15.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |                |  +--| (100)
+|  |     |     |  |  |           |  |     |  |  |  |                |     +--Fbor_DIO.24.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |           +----| (100)
+|  |     |     |  |  |           |  |     |  |  |  |           |    +--Fbor_DIO.20.cysteine
+|  |     |     |  |  |           |  |     |  |  |  +-----------| (100)
+|  |     |     |  |  |           |  |     |  |  |              |  +--Fbor_DIO.46.cysteine
+|  |     |     |  |  |           |  |     |  |  |              +--| (85)
+|  |     |     |  |  |           |  |     |  |  |                 |     +--Fbor_DIO.47.cysteine
+|  |     |     |  |  |           |  |     |  |  |                 +-----| (100)
+|  |     |     |  |  |           |  |     |  |  |                       +--Fbor_DIO.48.cysteine
+|  |     |     |  |  |           |  |     |  +--| (51)
+|  |     |     |  |  |           |  |     |     |             +-------Fbor_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |     |        +----| (92)
+|  |     |     |  |  |           |  |     |     |        |    +----------Fbor_DIO.18.cysteine
+|  |     |     |  |  |           |  |     |     |  +-----| (90)
+|  |     |     |  |  |           |  |     |     |  |     |             +--Fbor_DIO.33.cysteine
+|  |     |     |  |  |           |  |     |     |  |     +-------------| (100)
+|  |     |     |  |  |           |  |     |     |  |                   +**Fbor_DIO.39.cysteine
+|  |     |     |  |  |           |  |     |     +--| (31)
+|  |     |     |  |  |           |  |     |        |                 +--Fbor_DIO.8.cysteine
+|  |     |     |  |  |           |  |     |        |           +-----| (100)
+|  |     |     |  |  |           |  |     |        |           |     +--Fbor_DIO.9.cysteine
+|  |     |     |  |  |           |  |     |        |     +-----| (100)
+|  |     |     |  |  |           |  |     |        |     |     +------Fbor_DIO.12.cysteine
+|  |     |     |  |  |           |  |     |        |  +--| (55)
+|  |     |     |  |  |           |  |     |        |  |  |      +--------Fbor_DIO.10.cysteine
+|  |     |     |  |  |           |  |     |        |  |  +------| (99)
+|  |     |     |  |  |           |  |     |        |  |         +---Fbor_DIO.22.cysteine
+|  |     |     |  |  |           |  |     |        +--| (34)
+|  |     |     |  |  |           |  |     |           +------------Fbor_DIO.19.cysteine
+|  |     |     |  |  |           |  |  +--| (88)
+|  |     |     |  |  |           |  |  |  +-----------------Fbor_DIO.14.selenocysteine
+|  |     |     |  |  |           |  +--| (88)
+|  |     |     |  |  |           |     +------------------Fbor_DIO.31.threonine
+|  |     |     |  |  |      +----| (94)
+|  |     |     |  |  |      |    |                      +------Pege_DIO.3.cysteine
+|  |     |     |  |  |      |    |                   +--| (75)
+|  |     |     |  |  |      |    |                   |  +----------Stho_DIO.1.cysteine
+|  |     |     |  |  |      |    |                +--| (73)
+|  |     |     |  |  |      |    |                |  +----Scla_DIO.11.cysteine
+|  |     |     |  |  |      |    |             +--| (80)
+|  |     |     |  |  |      |    |             |  |  +---------Tdem_DIO.1.cysteine
+|  |     |     |  |  |      |    |             |  +--| (54)
+|  |     |     |  |  |      |    |             |     |  +----Olon_DIO.11.cysteine
+|  |     |     |  |  |      |    |             |     +--| (100)
+|  |     |     |  |  |      |    |             |        +-------Olon_DIO.13.cysteine
+|  |     |     |  |  |      |    |          +--| (38)
+|  |     |     |  |  |      |    |          |  +--------Fbor_DIO.29.cysteine
+|  |     |     |  |  |      |    |       +--| (90)
+|  |     |     |  |  |      |    |       |  +-----------OdB3_DIO.14.cysteine
+|  |     |     |  |  |      |    |    +--| (65)
+|  |     |     |  |  |      |    |    |  +-------------------Olon_DIO.14.cysteine
+|  |     |     |  |  |      |    +----| (99)
+|  |     |     |  |  |      |         +--------Fbor_DIO.34.cysteine
+|  |     |     |  |  +------| (95)
+|  |     |     |  |         +--------------------------------------Bsty_DIO.10.unaligned
+|  |     |     +--| (43)
+|  |     |        |      +---------------Strongylocentrotus_purpuratus_gi_115925484_ref_XP_001190882.
+|  |     |        |   +--| (72)
+|  |     |        |   |  |  +--Bflo_DIO.2.selenocysteine
+|  |     |        |   |  +--| (100)
+|  |     |        |   |     +--Blan_DIO.2.selenocysteine
+|  |     |        +---| (95)
+|  |     |            |   +--Bflo_DIO.1.cysteine
+|  |     |            +---| (100)
+|  |     |                +--Blan_DIO.1.cysteine
+|  |  +--| (97)
+|  |  |  |              +--Carassius_auratus_gi_145336998_gb_ABP64747.1
+|  |  |  |           +--| (100)
+|  |  |  |           |  +--Drer_DIO.1.selenocysteine
+|  |  |  |        +--| (100)
+|  |  |  |        |  |  +--Solea_senegalensis_gi_193247580_emb_CAP16956.1
+|  |  |  |        |  +--| (100)
+|  |  |  |        |     +--DIO3.Salmo_salar_DIO3.Salmo_salar
+|  |  |  |     +--| (87)
+|  |  |  |     |  |  +--Takifugu_rubripes_gi_209954618_ref_NP_001129619.1
+|  |  |  |     |  +--| (92)
+|  |  |  |     |     +--Drer_DIO.2.selenocysteine
+|  |  |  |  +--| (75)
+|  |  |  |  |  +--Chiloscyllium_punctatum_gi_161328016_gb_ABX60542.1
+|  |  |  +--| (80)
+|  |  |     +--Neoceratodus_forsteri_gi_37912833_gb_AAR05175.1
+|  +--| (99)
+|     |  +--gi_182702118_sp_P49898.2_IOD3_RANCA_gi_182702118_sp_P49898.2
+|     +--| (100)
+|        +--Xenopus_laevis_gi_76779544_gb_AAI06401.1
+|
+|  +**DIO3.Gallus_gallus_DIO3.Gallus_gallus
++--| (100)
+   +--Gallus_gallus_gi_2440063_emb_CAA72136.1
+
+Tree in newick format:
+
+(Macropus_eugenii_gi_197107958_gb_ACH42531.1:0.1829049151,((Ornithorhynchus_anatinus_gi_197107956_gb_ACH42530.1:0.1662742492,(DIO3.Sus_scrofa_DIO3.Sus_scrofa:0.0157660235,(Mmus_DIO.1.selenocysteine:0.0472259758,Human_DIO3_NP_001353.4:0.0000010384)93:0.0366181944)100:0.4418682023)71:0.0498488846,(((((((((Oryzias_latipes_gi_211904101_ref_NP_001129993.1:0.1501689086,(DIO2b.Salmo_salar_DIO2b.Salmo_salar:0.0366007789,(DIO2.Salmo_salar_DIO2.Salmo_salar:0.0000029683,Oncorhynchus_mykiss_gi_16550970_gb_AAL25653.1:0.0044516602)100:0.0404356561)92:0.0189428260)98:0.0428748286,Drer_DIO.3.selenocysteine:0.1477216426)97:0.0430105571,Anguilla_japonica_gi_83758434_dbj_BAE54452.1:0.1233252530)100:0.1101973423,gi_182702126_sp_Q8UVX8.3_IOD2_NEOFS_gi_182702126_sp_Q8UVX8.3:0.0564238598)94:0.0536660697,((((DIO2.Homo_sapiens_DIO2.Homo_sapiens:0.0000010384,Human_DIO2_NP_054644.1:0.0000010384)100:0.0310231585,DIO2.Sus_scrofa_DIO2.Sus_scrofa:0.0315699365)100:0.0214780774,Mmus_DIO.3.selenocysteine:0.0248291140)100:0.0533767938,Gallus_gallus_gi_156547239_ref_NP_989445.2:0.0678705462)100:0.0548299935)94:0.0859663660,Xenopus_laevis_gi_13811437_gb_AAK40121.1:0.0552872589)100:0.8059136645,(((((((((DIO1.Mus_musculus_DIO1.Mus_musculus:0.0000010384,Mmus_DIO.5.selenocysteine:0.0000024287)100:0.1781545864,((DIO1.Sus_scrofa_DIO1.Sus_scrofa:0.0861240803,(DIO1.Homo_sapiens_DIO1.Homo_sapiens:0.0063672243,Human_DIO1_NP_000783.2:0.0000025419)100:0.0995661703)77:0.0274509282,Canis_lupus_familiaris_gi_55742738_ref_NP_001007127.1:0.1389832138)77:0.0351361967)96:0.0598662995,gi_182702122_sp_Q95N00.2_IOD1_SUNMU_gi_182702122_sp_Q95N00.2:0.2095652473)100:0.3106199083,(DIO1.Gallus_gallus_DIO1.Gallus_gallus:0.0000029344,Gallus_gallus_gi_148277086_ref_NP_001091083.1:0.0087359878)100:0.2697226299)100:0.1728828805,Xenopus_laevis_gi_147905927_ref_NP_001089136.1:0.4927191790)98:0.1793955084,((DIO1.Salmo_salar_DIO1.Salmo_salar:0.2389834244,(((Paralichthys_olivaceus_gi_171451963_dbj_BAG15906.1:0.1306260189,Sparus_aurata_gi_47846193_emb_CAF02303.1:0.2581980218)97:0.0363698641,gi_172046120_sp_Q804E1.2_IOD1_FUNHE_gi_172046120_sp_Q804E1.2:0.2118540307)97:0.0329659004,Oreochromis_niloticus_gi_2440145_emb_CAA71995.1:0.1399154035)100:0.1327841005)99:0.0710286480,Drer_DIO.5.selenocysteine:0.3303737201)99:0.2762756271)100:0.4225765069,(((((((Bflo_DIO.3.selenocysteine:0.0688219069,Blan_DIO.3.selenocysteine:0.0964307389)98:0.0596975698,Bflo_DIO.4.selenocysteine:0.1389663485)99:0.0417841229,((Bflo_DIO.10.selenocysteine:0.1284079324,Blan_DIO.18.selenocysteine:0.1724735093)99:0.0623815266,((Blan_DIO.4.selenocysteine:0.0858508954,Blan_DIO.5.selenocysteine:0.0274736478)100:0.0797543558,Blan_DIO.8.selenocysteine:0.1562713953)100:0.0671336188)66:0.0303867749)99:0.0592265010,((Bflo_DIO.7.selenocysteine:0.0573898231,Bflo_DIO.8.selenocysteine:0.0597330121)97:0.0412698019,(((Blan_DIO.9.selenocysteine:0.0385557934,Blan_DIO.11.selenocysteine:0.0497466174)99:0.0494964717,Blan_DIO.10.selenocysteine:0.1196551266)70:0.0179846103,Blan_DIO.12.selenocysteine:0.1275622753)95:0.0549469260)98:0.0491151440)99:0.3845530764,Blan_DIO.6.unaligned:2.4930621488)83:0.1176276595,(Bflo_DIO.12.selenocysteine:0.1124256888,Blan_DIO.20.selenocysteine:0.1322694485)100:0.5775989068)62:0.1469906655,(((Bflo_DIO.13.selenocysteine:0.2083981360,Bflo_DIO.14.selenocysteine:0.0296627086)66:0.0923878186,Bflo_DIO.15.selenocysteine:0.0264006270)67:0.0157941747,Blan_DIO.22.selenocysteine:0.1350442143)100:0.6428032972)39:0.2002171887)88:0.2298676497,(((((((((Dictyostelium_discoideum_AX4_gi_166240590_ref_XP_643546.2:1.4587430322,(Se_user_Deiodinase-like_1_Paramecium_tetraurelia:0.2993117591,Se_user_Deiodinase-like_2_Paramecium:0.4452713613)100:1.8212258550)96:0.3755208771,((Ovan_DIO.1.selenocysteine:0.2072064476,Ovan_DIO.6.unaligned:0.5035589145)53:0.1907747408,(Ovan_DIO.3.unaligned:0.0133114205,Ovan_DIO.12.selenocysteine:0.0100092902)100:0.5492668333)100:0.8449492643)63:0.1475296407,(OKI_DIO.1.selenocysteine:0.1555127907,(OSKA_DIO.1.selenocysteine:0.0231460979,(OdB3_DIO.8.selenocysteine:0.0000010384,OdB3_DIO.10.selenocysteine:0.0092433288)99:0.0663835304)96:0.0886798041)100:0.9932138545)59:0.1002322935,(((Oalb_DIO.2.selenocysteine:0.0095485604,(Oalb_DIO.4.selenocysteine:0.0378963874,Oalb_DIO.6.selenocysteine:0.0994820284)83:0.0854627730)100:0.4319019732,Oalb_DIO.8.selenocysteine:0.6881535255)100:0.4950938058,(Olon_DIO.1.selenocysteine:0.4499958707,(Olon_DIO.3.selenocysteine:0.5146814900,(Olon_DIO.5.selenocysteine:0.0000022038,(Olon_DIO.6.selenocysteine:0.0000020895,Olon_DIO.10.selenocysteine:0.0000021391)100:0.0487643851)100:0.8250210598)95:0.1473344934)97:0.0916323519)93:0.1831400390)66:0.3284716030,((OSKA_DIO.4.selenocysteine:0.1578356980,OdB3_DIO.7.selenocysteine:0.0392837301)82:0.0341082785,(((OdB3_DIO.1.selenocysteine:0.0049528126,OdB3_DIO.2.selenocysteine:0.0000010384)71:0.0000010383,OdB3_DIO.3.selenocysteine:0.0160137106)97:0.0054520191,OdB3_DIO.4.selenocysteine:0.0144086029)97:0.0271774048)100:1.1873536420)64:0.0997891514,Fbor_DIO.1.serine:2.1989010006)74:0.1387096882,(((((Bsch_DIO.2.selenocysteine:0.1482643327,Bsch_DIO.3.selenocysteine:0.0887898801)100:0.4295052437,Bsch_DIO.6.selenocysteine:0.4405151232)100:0.6780389289,((Scla_DIO.1.selenocysteine:0.0954045434,Scla_DIO.2.selenocysteine:0.0967714729)100:0.1086287987,Scla_DIO.3.selenocysteine:0.1057388385)100:0.4899493540)98:0.1479471260,Scla_DIO.5.selenocysteine:0.9287682456)98:0.1446091861,Hror_DIO.1.selenocysteine:0.8662011783)100:0.3295160103)63:0.0567351620,((((Cint_DIO.3.selenocysteine:0.0000025516,Crob_DIO.3.selenocysteine:0.0661290701)100:0.3349577533,Csav_DIO.3.selenocysteine:0.2676105174)100:0.3901623598,Pmam_DIO.11.selenocysteine:0.6523430500)87:0.2009777993,((Hror_DIO.3.selenocysteine:0.4378545990,Hror_DIO.8.selenocysteine:0.5253346157)100:0.2245283821,Scla_DIO.10.selenocysteine:0.6671017364)97:0.1723764294)85:0.1778377956)73:0.1197125366,(((Cint_DIO.2.selenocysteine:0.0649111863,Crob_DIO.2.selenocysteine:0.0371683438)100:0.2514435083,Csav_DIO.2.selenocysteine:0.3964859597)100:0.4766660726,(((Pmam_DIO.3.selenocysteine:0.5306788258,Pmam_DIO.7.selenocysteine:0.8990174033)95:0.0696811621,Pmam_DIO.6.selenocysteine:0.3734871567)98:0.1626050785,Pmam_DIO.10.selenocysteine:0.8991370816)92:0.1412905512)76:0.1321125996)76:0.4047810431)57:0.2513424065,((Hoeflea_phototrophica_DFL-43_gi_163757341_ref_ZP_02164430.1:2.7392698325,(((((((Croceibacter_atlanticus_HTCC2559_gi_83855608_ref_ZP_00949137:0.9632261223,Flavobacteriales_bacterium_HTCC2170_gi_88713732_ref_ZP_01107:0.5376480549)96:0.2606220592,(Fbor_DIO.7.histidine:1.1123698002,Fbor_DIO.23.unaligned:0.0000025105)95:0.9409681849)94:0.2068723757,Fbor_DIO.17.tryptophan:2.1018379333)84:0.1566169516,Fbor_DIO.3.cysteine:1.8420100323)91:0.1831152480,(((((Bsty_DIO.2.cysteine:0.0464228174,Mery_DIO.3.cysteine:0.0771094511)100:1.3379926720,(Fbor_DIO.2.cysteine:0.2185566979,Fbor_DIO.5.cysteine:0.4532216444)100:0.6127709746)99:0.4277244203,(((((Bsty_DIO.3.cysteine:0.0000023028,(Bsty_DIO.4.cysteine:0.0360654495,Mery_DIO.4.cysteine:0.0070339913)100:0.1875375711)100:0.2192230005,Fbor_DIO.16.cysteine:0.4906567070)100:0.8817416657,((Fbor_DIO.36.cysteine:0.0000028478,Fbor_DIO.40.cysteine:0.3988946989)100:1.7526978570,(Fbor_DIO.44.cysteine:1.2540905038,Fbor_DIO.54.cysteine:2.2838387930)96:0.2205800793)96:0.4995572910)90:0.3436030051,(((Fbor_DIO.13.cysteine:0.0539795569,(Fbor_DIO.15.cysteine:0.0309160305,Fbor_DIO.24.cysteine:0.0185624881)100:0.0496946560)100:0.0697389006,Fbor_DIO.20.cysteine:0.0637331552)100:0.5982280998,(Fbor_DIO.46.cysteine:0.2935577869,(Fbor_DIO.47.cysteine:0.0231484286,Fbor_DIO.48.cysteine:0.0228114572)100:0.7010702660)85:0.1487781597)100:1.3727427800)61:0.1045085880,(((Fbor_DIO.4.cysteine:0.9918928319,Fbor_DIO.18.cysteine:1.3184297199)92:0.6394789707,(Fbor_DIO.33.cysteine:0.0190507757,Fbor_DIO.39.cysteine:0.0000020514)100:1.6602670320)90:0.7940377511,((((Fbor_DIO.8.cysteine:0.2963109418,Fbor_DIO.9.cysteine:0.1172910241)100:0.7667966626,Fbor_DIO.12.cysteine:0.8972537907)100:0.7721761260,(Fbor_DIO.10.cysteine:1.0512751264,Fbor_DIO.22.cysteine:0.5444749902)99:0.9125401998)55:0.0588529928,Fbor_DIO.19.cysteine:1.5739189688)34:0.1768242755)31:0.0836337802)51:0.1533480503)54:0.1065706785,Fbor_DIO.14.selenocysteine:2.0676081961)88:0.0553059908,Fbor_DIO.31.threonine:2.2022945346)88:0.1726726903)89:0.4172468906,(((((((Pege_DIO.3.cysteine:0.8275514500,Stho_DIO.1.cysteine:1.2829515475)75:0.3621187698,Scla_DIO.11.cysteine:0.6132372926)73:0.1169419578,(Tdem_DIO.1.cysteine:1.2293295326,(Olon_DIO.11.cysteine:0.5895910660,Olon_DIO.13.cysteine:0.9520711446)100:0.1904367938)54:0.1581929881)80:0.1583698159,Fbor_DIO.29.cysteine:1.1160704638)38:0.2249527532,OdB3_DIO.14.cysteine:1.3701165155)90:0.1436256267,Olon_DIO.14.cysteine:2.3747169578)65:0.2893771462,Fbor_DIO.34.cysteine:1.1105704002)99:0.6606526646)94:0.5926249991,Bsty_DIO.10.unaligned:4.4912255459)95:0.8757754086)21:0.0000026457,((Strongylocentrotus_purpuratus_gi_115925484_ref_XP_001190882.:1.8312139255,(Bflo_DIO.2.selenocysteine:0.0881293938,Blan_DIO.2.selenocysteine:0.1086911607)100:0.4412341885)72:0.1829644424,(Bflo_DIO.1.cysteine:0.1076880720,Blan_DIO.1.cysteine:0.0306923447)100:0.4966246742)95:0.5240896955)43:0.1922008282)90:0.1476264065)100:0.4384714887,(((((Carassius_auratus_gi_145336998_gb_ABP64747.1:0.0737486690,Drer_DIO.1.selenocysteine:0.1340435779)100:0.1025280319,(Solea_senegalensis_gi_193247580_emb_CAP16956.1:0.1452479030,DIO3.Salmo_salar_DIO3.Salmo_salar:0.0859272064)100:0.0685274591)100:0.0891305189,(Takifugu_rubripes_gi_209954618_ref_NP_001129619.1:0.2315444530,Drer_DIO.2.selenocysteine:0.4253256856)92:0.0889942662)87:0.0606391912,Chiloscyllium_punctatum_gi_161328016_gb_ABX60542.1:0.2504131278)75:0.0226104962,Neoceratodus_forsteri_gi_37912833_gb_AAR05175.1:0.2366045928)80:0.0470178538)97:0.0708459504,(gi_182702118_sp_P49898.2_IOD3_RANCA_gi_182702118_sp_P49898.2:0.1572833490,Xenopus_laevis_gi_76779544_gb_AAI06401.1:0.1637726946)100:0.1062120004)99:0.1214205256)84:0.0526927721,(DIO3.Gallus_gallus_DIO3.Gallus_gallus:0.0000022335,Gallus_gallus_gi_2440063_emb_CAA72136.1:0.0089339735)100:0.0898684281);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -38902.525882
+Robinson-Foulds distance between ML tree and consensus tree: 4
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--Macropus_eugenii_gi_197107958_gb_ACH42531.1
+|
+|     +--Ornithorhynchus_anatinus_gi_197107956_gb_ACH42530.1
+|  +--| (71)
+|  |  |  +--DIO3.Sus_scrofa_DIO3.Sus_scrofa
+|  |  +--| (100)
+|  |     |  +--Mmus_DIO.1.selenocysteine
+|  |     +--| (93)
+|  |        +--Human_DIO3_NP_001353.4
++--| (84)
+|  |                              +--Oryzias_latipes_gi_211904101_ref_NP_001129993.1
+|  |                           +--| (98)
+|  |                           |  |  +--DIO2b.Salmo_salar_DIO2b.Salmo_salar
+|  |                           |  +--| (92)
+|  |                           |     |  +--DIO2.Salmo_salar_DIO2.Salmo_salar
+|  |                           |     +--| (100)
+|  |                           |        +--Oncorhynchus_mykiss_gi_16550970_gb_AAL25653.1
+|  |                        +--| (97)
+|  |                        |  +--Drer_DIO.3.selenocysteine
+|  |                     +--| (100)
+|  |                     |  +--Anguilla_japonica_gi_83758434_dbj_BAE54452.1
+|  |                  +--| (94)
+|  |                  |  +--gi_182702126_sp_Q8UVX8.3_IOD2_NEOFS_gi_182702126_sp_Q8UVX8.3
+|  |               +--| (94)
+|  |               |  |           +--DIO2.Homo_sapiens_DIO2.Homo_sapiens
+|  |               |  |        +--| (100)
+|  |               |  |        |  +--Human_DIO2_NP_054644.1
+|  |               |  |     +--| (100)
+|  |               |  |     |  +--DIO2.Sus_scrofa_DIO2.Sus_scrofa
+|  |               |  |  +--| (100)
+|  |               |  |  |  +--Mmus_DIO.3.selenocysteine
+|  |               |  +--| (100)
+|  |               |     +--Gallus_gallus_gi_156547239_ref_NP_989445.2
+|  |        +------| (100)
+|  |        |      +--Xenopus_laevis_gi_13811437_gb_AAK40121.1
+|  |     +--| (100)
+|  |     |  |                              +--DIO1.Mus_musculus_DIO1.Mus_musculus
+|  |     |  |                           +--| (100)
+|  |     |  |                           |  +--Mmus_DIO.5.selenocysteine
+|  |     |  |                        +--| (96)
+|  |     |  |                        |  |     +--DIO1.Sus_scrofa_DIO1.Sus_scrofa
+|  |     |  |                        |  |  +--| (77)
+|  |     |  |                        |  |  |  |  +--DIO1.Homo_sapiens_DIO1.Homo_sapiens
+|  |     |  |                        |  |  |  +--| (100)
+|  |     |  |                        |  |  |     +--Human_DIO1_NP_000783.2
+|  |     |  |                        |  +--| (77)
+|  |     |  |                        |     +--Canis_lupus_familiaris_gi_55742738_ref_NP_001007127.1
+|  |     |  |                     +--| (100)
+|  |     |  |                     |  +--gi_182702122_sp_Q95N00.2_IOD1_SUNMU_gi_182702122_sp_Q95N00.2
+|  |     |  |                  +--| (100)
+|  |     |  |                  |  |  +--DIO1.Gallus_gallus_DIO1.Gallus_gallus
+|  |     |  |                  |  +--| (100)
+|  |     |  |                  |     +--Gallus_gallus_gi_148277086_ref_NP_001091083.1
+|  |     |  |               +--| (98)
+|  |     |  |               |  +---Xenopus_laevis_gi_147905927_ref_NP_001089136.1
+|  |     |  |           +---| (100)
+|  |     |  |           |   |     +--DIO1.Salmo_salar_DIO1.Salmo_salar
+|  |     |  |           |   |  +--| (99)
+|  |     |  |           |   |  |  |        +--Paralichthys_olivaceus_gi_171451963_dbj_BAG15906.1
+|  |     |  |           |   |  |  |     +--| (97)
+|  |     |  |           |   |  |  |     |  +--Sparus_aurata_gi_47846193_emb_CAF02303.1
+|  |     |  |           |   |  |  |  +--| (97)
+|  |     |  |           |   |  |  |  |  +--gi_172046120_sp_Q804E1.2_IOD1_FUNHE_gi_172046120_sp_Q804E1.2
+|  |     |  |           |   |  |  +--| (100)
+|  |     |  |           |   |  |     +--Oreochromis_niloticus_gi_2440145_emb_CAA71995.1
+|  |     |  |           |   +--| (99)
+|  |     |  |           |      +--Drer_DIO.5.selenocysteine
+|  |     |  |        +--| (52)
+|  |     |  |        |  |                 +--Bflo_DIO.3.selenocysteine
+|  |     |  |        |  |              +--| (98)
+|  |     |  |        |  |              |  +--Blan_DIO.3.selenocysteine
+|  |     |  |        |  |           +--| (99)
+|  |     |  |        |  |           |  +--Bflo_DIO.4.selenocysteine
+|  |     |  |        |  |        +--| (99)
+|  |     |  |        |  |        |  |     +--Bflo_DIO.10.selenocysteine
+|  |     |  |        |  |        |  |  +--| (99)
+|  |     |  |        |  |        |  |  |  +--Blan_DIO.18.selenocysteine
+|  |     |  |        |  |        |  +--| (66)
+|  |     |  |        |  |        |     |     +--Blan_DIO.4.selenocysteine
+|  |     |  |        |  |        |     |  +--| (100)
+|  |     |  |        |  |        |     |  |  +--Blan_DIO.5.selenocysteine
+|  |     |  |        |  |        |     +--| (100)
+|  |     |  |        |  |        |        +--Blan_DIO.8.selenocysteine
+|  |     |  |        |  |     +--| (99)
+|  |     |  |        |  |     |  |     +--Bflo_DIO.7.selenocysteine
+|  |     |  |        |  |     |  |  +--| (97)
+|  |     |  |        |  |     |  |  |  +--Bflo_DIO.8.selenocysteine
+|  |     |  |        |  |     |  +--| (98)
+|  |     |  |        |  |     |     |        +--Blan_DIO.9.selenocysteine
+|  |     |  |        |  |     |     |     +--| (99)
+|  |     |  |        |  |     |     |     |  +--Blan_DIO.11.selenocysteine
+|  |     |  |        |  |     |     |  +--| (70)
+|  |     |  |        |  |     |     |  |  +--Blan_DIO.10.selenocysteine
+|  |     |  |        |  |     |     +--| (95)
+|  |     |  |        |  |     |        +--Blan_DIO.12.selenocysteine
+|  |     |  |        |  |  +--| (83)
+|  |     |  |        |  |  |  +--------------------Blan_DIO.6.unaligned
+|  |     |  |        |  +--| (62)
+|  |     |  |        |     |   +--Bflo_DIO.12.selenocysteine
+|  |     |  |        |     +---| (100)
+|  |     |  |        |         +--Blan_DIO.20.selenocysteine
+|  |     |  |     +--| (88)
+|  |     |  |     |  |          +--Bflo_DIO.13.selenocysteine
+|  |     |  |     |  |       +--| (66)
+|  |     |  |     |  |       |  +--Bflo_DIO.14.selenocysteine
+|  |     |  |     |  |    +--| (67)
+|  |     |  |     |  |    |  +--Bflo_DIO.15.selenocysteine
+|  |     |  |     |  +----| (100)
+|  |     |  |     |       +--Blan_DIO.22.selenocysteine
+|  |     |  |  +--| (57)
+|  |     |  |  |  |                          +-----------Dictyostelium_discoideum_AX4_gi_166240590_ref_XP_643546.2
+|  |     |  |  |  |                       +--| (96)
+|  |     |  |  |  |                       |  |              +--Se_user_Deiodinase-like_1_Paramecium_tetraurelia
+|  |     |  |  |  |                       |  +--------------| (100)
+|  |     |  |  |  |                       |                 +--Se_user_Deiodinase-like_2_Paramecium
+|  |     |  |  |  |                    +--| (63)
+|  |     |  |  |  |                    |  |         +--Ovan_DIO.1.selenocysteine
+|  |     |  |  |  |                    |  |      +--| (53)
+|  |     |  |  |  |                    |  |      |  +---Ovan_DIO.6.unaligned
+|  |     |  |  |  |                    |  +------| (100)
+|  |     |  |  |  |                    |         |   +--Ovan_DIO.3.unaligned
+|  |     |  |  |  |                    |         +---| (100)
+|  |     |  |  |  |                    |             +--Ovan_DIO.12.selenocysteine
+|  |     |  |  |  |                 +--| (59)
+|  |     |  |  |  |                 |  |       +--OKI_DIO.1.selenocysteine
+|  |     |  |  |  |                 |  +-------| (100)
+|  |     |  |  |  |                 |          |  +--OSKA_DIO.1.selenocysteine
+|  |     |  |  |  |                 |          +--| (96)
+|  |     |  |  |  |                 |             |  +--OdB3_DIO.8.selenocysteine
+|  |     |  |  |  |                 |             +--| (99)
+|  |     |  |  |  |                 |                +--OdB3_DIO.10.selenocysteine
+|  |     |  |  |  |              +--| (66)
+|  |     |  |  |  |              |  |         +--Oalb_DIO.2.selenocysteine
+|  |     |  |  |  |              |  |      +--| (100)
+|  |     |  |  |  |              |  |      |  |  +--Oalb_DIO.4.selenocysteine
+|  |     |  |  |  |              |  |      |  +--| (83)
+|  |     |  |  |  |              |  |      |     +--Oalb_DIO.6.selenocysteine
+|  |     |  |  |  |              |  |  +---| (100)
+|  |     |  |  |  |              |  |  |   +-----Oalb_DIO.8.selenocysteine
+|  |     |  |  |  |              |  +--| (93)
+|  |     |  |  |  |              |     |  +--Olon_DIO.1.selenocysteine
+|  |     |  |  |  |              |     +--| (97)
+|  |     |  |  |  |              |        |  +---Olon_DIO.3.selenocysteine
+|  |     |  |  |  |              |        +--| (95)
+|  |     |  |  |  |              |           |      +--Olon_DIO.5.selenocysteine
+|  |     |  |  |  |              |           +------| (100)
+|  |     |  |  |  |              |                  |  +--Olon_DIO.6.selenocysteine
+|  |     |  |  |  |              |                  +--| (100)
+|  |     |  |  |  |              |                     +--Olon_DIO.10.selenocysteine
+|  |     |  |  |  |           +--| (64)
+|  |     |  |  |  |           |  |            +--OSKA_DIO.4.selenocysteine
+|  |     |  |  |  |           |  |         +--| (82)
+|  |     |  |  |  |           |  |         |  +--OdB3_DIO.7.selenocysteine
+|  |     |  |  |  |           |  +---------| (100)
+|  |     |  |  |  |           |            |        +--OdB3_DIO.1.selenocysteine
+|  |     |  |  |  |           |            |     +--| (71)
+|  |     |  |  |  |           |            |     |  +--OdB3_DIO.2.selenocysteine
+|  |     |  |  |  |           |            |  +--| (97)
+|  |     |  |  |  |           |            |  |  +--OdB3_DIO.3.selenocysteine
+|  |     |  |  |  |           |            +--| (97)
+|  |     |  |  |  |           |               +--OdB3_DIO.4.selenocysteine
+|  |     |  |  |  |        +--| (74)
+|  |     |  |  |  |        |  +------------------Fbor_DIO.1.serine
+|  |     |  |  |  |     +--| (63)
+|  |     |  |  |  |     |  |                +--Bsch_DIO.2.selenocysteine
+|  |     |  |  |  |     |  |             +--| (100)
+|  |     |  |  |  |     |  |             |  +--Bsch_DIO.3.selenocysteine
+|  |     |  |  |  |     |  |        +----| (100)
+|  |     |  |  |  |     |  |        |    +--Bsch_DIO.6.selenocysteine
+|  |     |  |  |  |     |  |     +--| (98)
+|  |     |  |  |  |     |  |     |  |      +--Scla_DIO.1.selenocysteine
+|  |     |  |  |  |     |  |     |  |   +--| (100)
+|  |     |  |  |  |     |  |     |  |   |  +--Scla_DIO.2.selenocysteine
+|  |     |  |  |  |     |  |     |  +---| (100)
+|  |     |  |  |  |     |  |     |      +--Scla_DIO.3.selenocysteine
+|  |     |  |  |  |     |  |  +--| (98)
+|  |     |  |  |  |     |  |  |  +-------Scla_DIO.5.selenocysteine
+|  |     |  |  |  |     |  +--| (100)
+|  |     |  |  |  |     |     +------Hror_DIO.1.selenocysteine
+|  |     |  |  |  |  +--| (73)
+|  |     |  |  |  |  |  |           +--Cint_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |        +--| (100)
+|  |     |  |  |  |  |  |        |  +--Crob_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |     +--| (100)
+|  |     |  |  |  |  |  |     |  +--Csav_DIO.3.selenocysteine
+|  |     |  |  |  |  |  |  +--| (87)
+|  |     |  |  |  |  |  |  |  +----Pmam_DIO.11.selenocysteine
+|  |     |  |  |  |  |  +--| (85)
+|  |     |  |  |  |  |     |     +--Hror_DIO.3.selenocysteine
+|  |     |  |  |  |  |     |  +--| (100)
+|  |     |  |  |  |  |     |  |  +---Hror_DIO.8.selenocysteine
+|  |     |  |  |  |  |     +--| (97)
+|  |     |  |  |  |  |        +-----Scla_DIO.10.selenocysteine
+|  |     |  |  |  +--| (76)
+|  |     |  |  |     |         +--Cint_DIO.2.selenocysteine
+|  |     |  |  |     |      +--| (100)
+|  |     |  |  |     |      |  +--Crob_DIO.2.selenocysteine
+|  |     |  |  |     |  +---| (100)
+|  |     |  |  |     |  |   +--Csav_DIO.2.selenocysteine
+|  |     |  |  |     +--| (76)
+|  |     |  |  |        |        +---Pmam_DIO.3.selenocysteine
+|  |     |  |  |        |     +--| (95)
+|  |     |  |  |        |     |  +------Pmam_DIO.7.selenocysteine
+|  |     |  |  |        |  +--| (98)
+|  |     |  |  |        |  |  +--Pmam_DIO.6.selenocysteine
+|  |     |  |  |        +--| (92)
+|  |     |  |  |           +-------Pmam_DIO.10.selenocysteine
+|  |     |  +--| (90)
+|  |     |     |     +----------------------Hoeflea_phototrophica_DFL-43_gi_163757341_ref_ZP_02164430.1
+|  |     |     |  +--| (21)
+|  |     |     |  |  |                          +-------Croceibacter_atlanticus_HTCC2559_gi_83855608_ref_ZP_00949137
+|  |     |     |  |  |                       +--| (96)
+|  |     |     |  |  |                       |  +---Flavobacteriales_bacterium_HTCC2170_gi_88713732_ref_ZP_01107
+|  |     |     |  |  |                    +--| (94)
+|  |     |     |  |  |                    |  |       +--------Fbor_DIO.7.histidine
+|  |     |     |  |  |                    |  +-------| (95)
+|  |     |     |  |  |                    |          +--Fbor_DIO.23.unaligned
+|  |     |     |  |  |                 +--| (84)
+|  |     |     |  |  |                 |  +-----------------Fbor_DIO.17.tryptophan
+|  |     |     |  |  |              +--| (91)
+|  |     |     |  |  |              |  +---------------Fbor_DIO.3.cysteine
+|  |     |     |  |  |           +--| (89)
+|  |     |     |  |  |           |  |                      +--Bsty_DIO.2.cysteine
+|  |     |     |  |  |           |  |           +----------| (100)
+|  |     |     |  |  |           |  |           |          +--Mery_DIO.3.cysteine
+|  |     |     |  |  |           |  |        +--| (99)
+|  |     |     |  |  |           |  |        |  |    +--Fbor_DIO.2.cysteine
+|  |     |     |  |  |           |  |        |  +----| (100)
+|  |     |     |  |  |           |  |        |       +--Fbor_DIO.5.cysteine
+|  |     |     |  |  |           |  |     +--| (54)
+|  |     |     |  |  |           |  |     |  |                  +--Bsty_DIO.3.cysteine
+|  |     |     |  |  |           |  |     |  |               +--| (100)
+|  |     |     |  |  |           |  |     |  |               |  |  +--Bsty_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |  |               |  +--| (100)
+|  |     |     |  |  |           |  |     |  |               |     +--Mery_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |  |        +------| (100)
+|  |     |     |  |  |           |  |     |  |        |      +---Fbor_DIO.16.cysteine
+|  |     |     |  |  |           |  |     |  |     +--| (90)
+|  |     |     |  |  |           |  |     |  |     |  |                  +--Fbor_DIO.36.cysteine
+|  |     |     |  |  |           |  |     |  |     |  |   +--------------| (100)
+|  |     |     |  |  |           |  |     |  |     |  |   |              +--Fbor_DIO.40.cysteine
+|  |     |     |  |  |           |  |     |  |     |  +---| (96)
+|  |     |     |  |  |           |  |     |  |     |      |  +---------Fbor_DIO.44.cysteine
+|  |     |     |  |  |           |  |     |  |     |      +--| (96)
+|  |     |     |  |  |           |  |     |  |     |         +-------------------Fbor_DIO.54.cysteine
+|  |     |     |  |  |           |  |     |  |  +--| (61)
+|  |     |     |  |  |           |  |     |  |  |  |                   +--Fbor_DIO.13.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |                +--| (100)
+|  |     |     |  |  |           |  |     |  |  |  |                |  |  +--Fbor_DIO.15.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |                |  +--| (100)
+|  |     |     |  |  |           |  |     |  |  |  |                |     +--Fbor_DIO.24.cysteine
+|  |     |     |  |  |           |  |     |  |  |  |           +----| (100)
+|  |     |     |  |  |           |  |     |  |  |  |           |    +--Fbor_DIO.20.cysteine
+|  |     |     |  |  |           |  |     |  |  |  +-----------| (100)
+|  |     |     |  |  |           |  |     |  |  |              |  +--Fbor_DIO.46.cysteine
+|  |     |     |  |  |           |  |     |  |  |              +--| (85)
+|  |     |     |  |  |           |  |     |  |  |                 |     +--Fbor_DIO.47.cysteine
+|  |     |     |  |  |           |  |     |  |  |                 +-----| (100)
+|  |     |     |  |  |           |  |     |  |  |                       +--Fbor_DIO.48.cysteine
+|  |     |     |  |  |           |  |     |  +--| (51)
+|  |     |     |  |  |           |  |     |     |             +-------Fbor_DIO.4.cysteine
+|  |     |     |  |  |           |  |     |     |        +----| (92)
+|  |     |     |  |  |           |  |     |     |        |    +----------Fbor_DIO.18.cysteine
+|  |     |     |  |  |           |  |     |     |  +-----| (90)
+|  |     |     |  |  |           |  |     |     |  |     |             +--Fbor_DIO.33.cysteine
+|  |     |     |  |  |           |  |     |     |  |     +-------------| (100)
+|  |     |     |  |  |           |  |     |     |  |                   +--Fbor_DIO.39.cysteine
+|  |     |     |  |  |           |  |     |     +--| (31)
+|  |     |     |  |  |           |  |     |        |                 +--Fbor_DIO.8.cysteine
+|  |     |     |  |  |           |  |     |        |           +-----| (100)
+|  |     |     |  |  |           |  |     |        |           |     +--Fbor_DIO.9.cysteine
+|  |     |     |  |  |           |  |     |        |     +-----| (100)
+|  |     |     |  |  |           |  |     |        |     |     +------Fbor_DIO.12.cysteine
+|  |     |     |  |  |           |  |     |        |  +--| (55)
+|  |     |     |  |  |           |  |     |        |  |  |       +--------Fbor_DIO.10.cysteine
+|  |     |     |  |  |           |  |     |        |  |  +-------| (99)
+|  |     |     |  |  |           |  |     |        |  |          +---Fbor_DIO.22.cysteine
+|  |     |     |  |  |           |  |     |        +--| (34)
+|  |     |     |  |  |           |  |     |           +------------Fbor_DIO.19.cysteine
+|  |     |     |  |  |           |  |  +--| (88)
+|  |     |     |  |  |           |  |  |  +-----------------Fbor_DIO.14.selenocysteine
+|  |     |     |  |  |           |  +--| (88)
+|  |     |     |  |  |           |     +------------------Fbor_DIO.31.threonine
+|  |     |     |  |  |      +----| (94)
+|  |     |     |  |  |      |    |                   +------Pege_DIO.3.cysteine
+|  |     |     |  |  |      |    |                +--| (75)
+|  |     |     |  |  |      |    |                |  +----------Stho_DIO.1.cysteine
+|  |     |     |  |  |      |    |             +--| (73)
+|  |     |     |  |  |      |    |             |  +----Scla_DIO.11.cysteine
+|  |     |     |  |  |      |    |          +--| (80)
+|  |     |     |  |  |      |    |          |  |  +---------Tdem_DIO.1.cysteine
+|  |     |     |  |  |      |    |          |  +--| (54)
+|  |     |     |  |  |      |    |          |     |  +----Olon_DIO.11.cysteine
+|  |     |     |  |  |      |    |          |     +--| (100)
+|  |     |     |  |  |      |    |          |        +-------Olon_DIO.13.cysteine
+|  |     |     |  |  |      |    |       +--| (90)
+|  |     |     |  |  |      |    |       |  |  +-------Fbor_DIO.29.cysteine
+|  |     |     |  |  |      |    |       |  +--| (48)
+|  |     |     |  |  |      |    |       |     +----------OdB3_DIO.14.cysteine
+|  |     |     |  |  |      |    |    +--| (65)
+|  |     |     |  |  |      |    |    |  +-------------------Olon_DIO.14.cysteine
+|  |     |     |  |  |      |    +----| (99)
+|  |     |     |  |  |      |         +---------Fbor_DIO.34.cysteine
+|  |     |     |  |  +------| (95)
+|  |     |     |  |         +--------------------------------------Bsty_DIO.10.unaligned
+|  |     |     +--| (43)
+|  |     |        |      +--------------Strongylocentrotus_purpuratus_gi_115925484_ref_XP_001190882.
+|  |     |        |   +--| (72)
+|  |     |        |   |  |  +--Bflo_DIO.2.selenocysteine
+|  |     |        |   |  +--| (100)
+|  |     |        |   |     +--Blan_DIO.2.selenocysteine
+|  |     |        +---| (95)
+|  |     |            |   +--Bflo_DIO.1.cysteine
+|  |     |            +---| (100)
+|  |     |                +--Blan_DIO.1.cysteine
+|  |  +--| (97)
+|  |  |  |              +--Carassius_auratus_gi_145336998_gb_ABP64747.1
+|  |  |  |           +--| (100)
+|  |  |  |           |  +--Drer_DIO.1.selenocysteine
+|  |  |  |        +--| (100)
+|  |  |  |        |  |  +--Solea_senegalensis_gi_193247580_emb_CAP16956.1
+|  |  |  |        |  +--| (100)
+|  |  |  |        |     +--DIO3.Salmo_salar_DIO3.Salmo_salar
+|  |  |  |     +--| (87)
+|  |  |  |     |  |  +--Takifugu_rubripes_gi_209954618_ref_NP_001129619.1
+|  |  |  |     |  +--| (92)
+|  |  |  |     |     +--Drer_DIO.2.selenocysteine
+|  |  |  |  +--| (75)
+|  |  |  |  |  +--Chiloscyllium_punctatum_gi_161328016_gb_ABX60542.1
+|  |  |  +--| (80)
+|  |  |     +--Neoceratodus_forsteri_gi_37912833_gb_AAR05175.1
+|  +--| (99)
+|     |  +--gi_182702118_sp_P49898.2_IOD3_RANCA_gi_182702118_sp_P49898.2
+|     +--| (100)
+|        +--Xenopus_laevis_gi_76779544_gb_AAI06401.1
+|
+|  +--DIO3.Gallus_gallus_DIO3.Gallus_gallus
++--| (100)
+   +--Gallus_gallus_gi_2440063_emb_CAA72136.1
+
+
+Consensus tree in newick format: 
+
+(Macropus_eugenii_gi_197107958_gb_ACH42531.1:0.1818859746,((Ornithorhynchus_anatinus_gi_197107956_gb_ACH42530.1:0.1653759520,(DIO3.Sus_scrofa_DIO3.Sus_scrofa:0.0156943808,(Mmus_DIO.1.selenocysteine:0.0469887942,Human_DIO3_NP_001353.4:0.0000020795)93:0.0364130780)100:0.4395296302)71:0.0498881547,(((((((((Oryzias_latipes_gi_211904101_ref_NP_001129993.1:0.1492916385,(DIO2b.Salmo_salar_DIO2b.Salmo_salar:0.0364034573,(DIO2.Salmo_salar_DIO2.Salmo_salar:0.0000027012,Oncorhynchus_mykiss_gi_16550970_gb_AAL25653.1:0.0044264949)100:0.0401854122)92:0.0188103148)98:0.0425971011,Drer_DIO.3.selenocysteine:0.1468877481)97:0.0427871583,Anguilla_japonica_gi_83758434_dbj_BAE54452.1:0.1225695055)100:0.1095543904,gi_182702126_sp_Q8UVX8.3_IOD2_NEOFS_gi_182702126_sp_Q8UVX8.3:0.0561392327)94:0.0535064212,((((DIO2.Homo_sapiens_DIO2.Homo_sapiens:0.0000027012,Human_DIO2_NP_054644.1:0.0000027012)100:0.0308436485,DIO2.Sus_scrofa_DIO2.Sus_scrofa:0.0314114680)100:0.0213714743,Mmus_DIO.3.selenocysteine:0.0246997522)100:0.0531172395,Gallus_gallus_gi_156547239_ref_NP_989445.2:0.0674885242)100:0.0544063002)94:0.0854398645,Xenopus_laevis_gi_13811437_gb_AAK40121.1:0.0549244763)100:0.7978780018,((((((((((DIO1.Mus_musculus_DIO1.Mus_musculus:0.0000027012,Mmus_DIO.5.selenocysteine:0.0000027012)100:0.1770902754,((DIO1.Sus_scrofa_DIO1.Sus_scrofa:0.0855229709,(DIO1.Homo_sapiens_DIO1.Homo_sapiens:0.0063315181,Human_DIO1_NP_000783.2:0.0000023003)100:0.0991037563)77:0.0273398974,Canis_lupus_familiaris_gi_55742738_ref_NP_001007127.1:0.1381096951)77:0.0348238006)96:0.0594534389,gi_182702122_sp_Q95N00.2_IOD1_SUNMU_gi_182702122_sp_Q95N00.2:0.2082961128)100:0.3070907908,(DIO1.Gallus_gallus_DIO1.Gallus_gallus:0.0000027012,Gallus_gallus_gi_148277086_ref_NP_001091083.1:0.0086872668)100:0.2705953949)100:0.1798341183,Xenopus_laevis_gi_147905927_ref_NP_001089136.1:0.4778024194)98:0.2068024299,((DIO1.Salmo_salar_DIO1.Salmo_salar:0.2387070795,(((Paralichthys_olivaceus_gi_171451963_dbj_BAG15906.1:0.1294792788,Sparus_aurata_gi_47846193_emb_CAF02303.1:0.2569142292)97:0.0364067720,gi_172046120_sp_Q804E1.2_IOD1_FUNHE_gi_172046120_sp_Q804E1.2:0.2103503557)97:0.0330740701,Oreochromis_niloticus_gi_2440145_emb_CAA71995.1:0.1390840262)100:0.1297473043)99:0.0716363909,Drer_DIO.5.selenocysteine:0.3292839866)99:0.2358511071)100:0.4670694147,((((((Bflo_DIO.3.selenocysteine:0.0690510890,Blan_DIO.3.selenocysteine:0.0952995414)98:0.0594667624,Bflo_DIO.4.selenocysteine:0.1380132138)99:0.0414078796,((Bflo_DIO.10.selenocysteine:0.1274392691,Blan_DIO.18.selenocysteine:0.1715987573)99:0.0625980402,((Blan_DIO.4.selenocysteine:0.0856434061,Blan_DIO.5.selenocysteine:0.0271350021)100:0.0792505819,Blan_DIO.8.selenocysteine:0.1555575433)100:0.0666265625)66:0.0301982948)99:0.0605123643,((Bflo_DIO.7.selenocysteine:0.0569700924,Bflo_DIO.8.selenocysteine:0.0594910959)97:0.0409732277,(((Blan_DIO.9.selenocysteine:0.0385019778,Blan_DIO.11.selenocysteine:0.0493199838)99:0.0492141908,Blan_DIO.10.selenocysteine:0.1189172283)70:0.0179042193,Blan_DIO.12.selenocysteine:0.1266152119)95:0.0545562870)98:0.0478511634)99:0.4192625761,Blan_DIO.6.unaligned:2.4588437641)83:0.1284668340,(Bflo_DIO.12.selenocysteine:0.1099061688,Blan_DIO.20.selenocysteine:0.1328886220)100:0.5617887265)62:0.1251197579)52:0.1749474343,(((Bflo_DIO.13.selenocysteine:0.2282945968,Bflo_DIO.14.selenocysteine:0.0291097231)66:0.0715900861,Bflo_DIO.15.selenocysteine:0.0274081176)67:0.0471497943,Blan_DIO.22.selenocysteine:0.1042675703)100:0.6088120340)88:0.2046275383,(((((((((Dictyostelium_discoideum_AX4_gi_166240590_ref_XP_643546.2:1.4415143335,(Se_user_Deiodinase-like_1_Paramecium_tetraurelia:0.2971446362,Se_user_Deiodinase-like_2_Paramecium:0.4427179174)100:1.8119232730)96:0.3714237589,((Ovan_DIO.1.selenocysteine:0.2065416189,Ovan_DIO.6.unaligned:0.4997279702)53:0.1913678345,(Ovan_DIO.3.unaligned:0.0131681504,Ovan_DIO.12.selenocysteine:0.0099900328)100:0.5421604964)100:0.8384482953)63:0.1426192271,(OKI_DIO.1.selenocysteine:0.1545332580,(OSKA_DIO.1.selenocysteine:0.0229956264,(OdB3_DIO.8.selenocysteine:0.0000027012,OdB3_DIO.10.selenocysteine:0.0091836292)99:0.0659311136)96:0.0880599306)100:0.9891663415)59:0.0985175373,(((Oalb_DIO.2.selenocysteine:0.0096989405,(Oalb_DIO.4.selenocysteine:0.0376558547,Oalb_DIO.6.selenocysteine:0.0988746864)83:0.0848030507)100:0.4299202996,Oalb_DIO.8.selenocysteine:0.6827265005)100:0.4989885599,(Olon_DIO.1.selenocysteine:0.4480854417,(Olon_DIO.3.selenocysteine:0.5091295160,(Olon_DIO.5.selenocysteine:0.0000027012,(Olon_DIO.6.selenocysteine:0.0000026334,Olon_DIO.10.selenocysteine:0.0000022064)100:0.0484464824)100:0.8198387754)95:0.1438405136)97:0.0889478893)93:0.1845998279)66:0.2993299028,((OSKA_DIO.4.selenocysteine:0.1564149131,OdB3_DIO.7.selenocysteine:0.0393442970)82:0.0338663428,(((OdB3_DIO.1.selenocysteine:0.0049261981,OdB3_DIO.2.selenocysteine:0.0000027012)71:0.0000027012,OdB3_DIO.3.selenocysteine:0.0159121124)97:0.0054116672,OdB3_DIO.4.selenocysteine:0.0143418676)97:0.0270140128)100:1.2023486676)64:0.1292029243,Fbor_DIO.1.serine:2.1712150145)74:0.1134142211,(((((Bsch_DIO.2.selenocysteine:0.1509817067,Bsch_DIO.3.selenocysteine:0.0848395839)100:0.4272290323,Bsch_DIO.6.selenocysteine:0.4377655001)100:0.6733201115,((Scla_DIO.1.selenocysteine:0.0947739437,Scla_DIO.2.selenocysteine:0.0969213954)100:0.1090461440,Scla_DIO.3.selenocysteine:0.1047540818)100:0.4925457338)98:0.1439969595,Scla_DIO.5.selenocysteine:0.9266315949)98:0.1492971058,Hror_DIO.1.selenocysteine:0.8645481025)100:0.3282453233)63:0.0621165069,((((Cint_DIO.3.selenocysteine:0.0000025365,Crob_DIO.3.selenocysteine:0.0657225974)100:0.3443080919,Csav_DIO.3.selenocysteine:0.2512300297)100:0.3855058883,Pmam_DIO.11.selenocysteine:0.6509736535)87:0.1879381027,((Hror_DIO.3.selenocysteine:0.4300563850,Hror_DIO.8.selenocysteine:0.5301237820)100:0.2135684535,Scla_DIO.10.selenocysteine:0.6843208096)97:0.1784834904)85:0.1829839690)73:0.1136552411,(((Cint_DIO.2.selenocysteine:0.0637925380,Crob_DIO.2.selenocysteine:0.0376689539)100:0.2560637531,Csav_DIO.2.selenocysteine:0.3859428271)100:0.5019348124,(((Pmam_DIO.3.selenocysteine:0.5253249876,Pmam_DIO.7.selenocysteine:0.8923740557)95:0.0647928899,Pmam_DIO.6.selenocysteine:0.3806059331)98:0.1532708164,Pmam_DIO.10.selenocysteine:0.9103841503)92:0.1092548484)76:0.1381453189)76:0.3747345981)57:0.2820667749,((Hoeflea_phototrophica_DFL-43_gi_163757341_ref_ZP_02164430.1:2.6962415522,(((((((Croceibacter_atlanticus_HTCC2559_gi_83855608_ref_ZP_00949137:0.9546134549,Flavobacteriales_bacterium_HTCC2170_gi_88713732_ref_ZP_01107:0.5365522411)96:0.2590660596,(Fbor_DIO.7.histidine:1.1129674734,Fbor_DIO.23.unaligned:0.0000020648)95:0.9336540160)94:0.2039406682,Fbor_DIO.17.tryptophan:2.0942424528)84:0.1631052511,Fbor_DIO.3.cysteine:1.8145332887)91:0.1765742429,(((((Bsty_DIO.2.cysteine:0.0470056841,Mery_DIO.3.cysteine:0.0758588682)100:1.3319624124,(Fbor_DIO.2.cysteine:0.2194948580,Fbor_DIO.5.cysteine:0.4485727943)100:0.6055203763)99:0.4280212308,(((((Bsty_DIO.3.cysteine:0.0000026944,(Bsty_DIO.4.cysteine:0.0358760514,Mery_DIO.4.cysteine:0.0069967664)100:0.1864883363)100:0.2185795422,Fbor_DIO.16.cysteine:0.4869666011)100:0.8799028769,((Fbor_DIO.36.cysteine:0.0000022532,Fbor_DIO.40.cysteine:0.3964221984)100:1.7409238914,(Fbor_DIO.44.cysteine:1.2458048383,Fbor_DIO.54.cysteine:2.2704189047)96:0.2179763799)96:0.4904440313)90:0.3423003334,(((Fbor_DIO.13.cysteine:0.0537213154,(Fbor_DIO.15.cysteine:0.0307864444,Fbor_DIO.24.cysteine:0.0183950974)100:0.0493862703)100:0.0699330695,Fbor_DIO.20.cysteine:0.0628365538)100:0.5951185062,(Fbor_DIO.46.cysteine:0.2927027199,(Fbor_DIO.47.cysteine:0.0232447768,Fbor_DIO.48.cysteine:0.0224800308)100:0.6951832688)85:0.1488354207)100:1.3622069667)61:0.1042187214,(((Fbor_DIO.4.cysteine:0.9896888446,Fbor_DIO.18.cysteine:1.3029239287)92:0.6372444874,(Fbor_DIO.33.cysteine:0.0189606323,Fbor_DIO.39.cysteine:0.0000027078)100:1.6396381081)90:0.7801900826,((((Fbor_DIO.8.cysteine:0.2949730647,Fbor_DIO.9.cysteine:0.1158309921)100:0.7581973861,Fbor_DIO.12.cysteine:0.8935402461)100:0.7653781387,(Fbor_DIO.10.cysteine:1.0389701282,Fbor_DIO.22.cysteine:0.5417716918)99:0.9067822067)55:0.0657095027,Fbor_DIO.19.cysteine:1.5582649864)34:0.1691850510)31:0.0845814703)51:0.1542125079)54:0.1069160202,Fbor_DIO.14.selenocysteine:2.0543025786)88:0.0558035557,Fbor_DIO.31.threonine:2.1731552845)88:0.1734967327)89:0.3954097095,((((((Pege_DIO.3.cysteine:0.8202887169,Stho_DIO.1.cysteine:1.2688437773)75:0.3517421080,Scla_DIO.11.cysteine:0.6120112115)73:0.1197241181,(Tdem_DIO.1.cysteine:1.2266106957,(Olon_DIO.11.cysteine:0.5830186025,Olon_DIO.13.cysteine:0.9470754952)100:0.1848196998)54:0.1512895999)80:0.1962753285,(Fbor_DIO.29.cysteine:0.9791996371,OdB3_DIO.14.cysteine:1.3564151985)48:0.1538159803)90:0.3425592559,Olon_DIO.14.cysteine:2.3275244769)65:0.2630647505,Fbor_DIO.34.cysteine:1.1558181159)99:0.6275402390)94:0.6075037576,Bsty_DIO.10.unaligned:4.4578298826)95:0.8798640705)21:0.0000021515,((Strongylocentrotus_purpuratus_gi_115925484_ref_XP_001190882.:1.8088991682,(Bflo_DIO.2.selenocysteine:0.0851941144,Blan_DIO.2.selenocysteine:0.1105961942)100:0.4432818396)72:0.1748260725,(Bflo_DIO.1.cysteine:0.1064543918,Blan_DIO.1.cysteine:0.0311317394)100:0.4988862592)95:0.5248050096)43:0.1384177265)90:0.1853639998)100:0.4359784705,(((((Carassius_auratus_gi_145336998_gb_ABP64747.1:0.0735027343,Drer_DIO.1.selenocysteine:0.1333427346)100:0.1020232659,(Solea_senegalensis_gi_193247580_emb_CAP16956.1:0.1446207141,DIO3.Salmo_salar_DIO3.Salmo_salar:0.0854480758)100:0.0680668158)100:0.0881461998,(Takifugu_rubripes_gi_209954618_ref_NP_001129619.1:0.2302280047,Drer_DIO.2.selenocysteine:0.4226506780)92:0.0894114857)87:0.0600232592,Chiloscyllium_punctatum_gi_161328016_gb_ABX60542.1:0.2495808739)75:0.0225634854,Neoceratodus_forsteri_gi_37912833_gb_AAR05175.1:0.2351148202)80:0.0497377013)97:0.0680815374,(gi_182702118_sp_P49898.2_IOD3_RANCA_gi_182702118_sp_P49898.2:0.1563562437,Xenopus_laevis_gi_76779544_gb_AAI06401.1:0.1626668782)100:0.1057575809)99:0.1209124063)84:0.0522955414,(DIO3.Gallus_gallus_DIO3.Gallus_gallus:0.0000020776,Gallus_gallus_gi_2440063_emb_CAA72136.1:0.0088872143)100:0.0895797615);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/DIO.treefile -m "LG+R6{0.0449846,0.115492,0.132563,0.294264,0.128611,0.530651,0.259087,0.848456,0.300913,1.25088,0.133841,2.17659}" --length 288
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/DIO.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/DIO.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 23 09:21:00 2026
+Total CPU time used: 7965.06234 seconds (2h:12m:45s)
+Total wall-clock time used: 1058.995911 seconds (0h:17m:38s)
+
