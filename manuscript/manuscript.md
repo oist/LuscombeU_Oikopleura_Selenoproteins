@@ -529,7 +529,10 @@ TGA was extended upstream to the first ATG after the previous stop codon (or the
 chain has no stop upstream), and downstream to the next stop codon. Candidates were ranked by the presence of the
 curated protein context of the selenocysteine, the absence of unsupported splice sites outside the four intron
 classes, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length and, last, an
-annotated exon chain. When the transcripts differed from the assembly by indels in the coding sequence, the
+annotated exon chain. Among the candidates equal to the first one on every criterion before length, the one whose
+protein aligned best to the same gene in the other assemblies (mean global alignment score) replaced it when its
+score was higher by 20 (about 10 bits), so that exons beyond the transcripts, taken from the annotation or from a
+prediction, were chosen by similarity rather than by length. When the transcripts differed from the assembly by indels in the coding sequence, the
 transcript protein replaced the assembly protein when its identity to the same gene in the other assemblies,
 counted on the part of each reference protein that both proteins cover (global alignments with BLOSUM62 and free
 end gaps, Biopython [@Cock2009]), was higher by more than 0.02, or when it was complete and more than 10% longer

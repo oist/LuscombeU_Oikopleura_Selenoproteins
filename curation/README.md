@@ -28,11 +28,13 @@ selenoprotein genes of OKI2018, OSKA2016 and OdB3. The transcripts of each assem
 intron classes of *O. dioica*: GT-AG 87.6%, GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%; Denoeud et al. 2010). Candidate
 models are exon chains from the supporting transcripts, the annotated mRNAs and the stage 1 prediction; each is read
 on the genome sequence (frame through the curated TGA read as selenocysteine), so that GFF3 and protein agree with
-the assembly. The model is chosen by the curated context, length, completeness and transcript support. When a
+the assembly. The model is chosen by the curated context, length, completeness and transcript support; among
+candidates equal on these criteria except length, by similarity to the same gene in the other assemblies. When a
 transcript differs from the assembly by indels, its protein is used only if it is more similar to the same gene in
 the other assemblies; the model is then mapped from the transcript and marked with the GFF3 attribute `exception`.
 The table reports splice sites (non-canonical ones with all equivalent placements), differences between transcripts
 and assembly, UTRs, the treatment of the gene by the public annotation and the change it needs. Outputs:
 `curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine), `<genome>.candidate_models.tsv`
-(all candidate models and transcript frames, for review), `<genome>.proteins.faa`,
+(all candidate models and transcript frames, and the annotated models near the codon, with splice sites and annotated
+CDS rows, for review), `<genome>.proteins.faa`,
 `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.

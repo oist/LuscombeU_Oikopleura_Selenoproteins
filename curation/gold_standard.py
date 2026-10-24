@@ -42,7 +42,11 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      at least one supporting transcript compatible with the chain (same introns where they overlap, allowing
      equivalent placements, and no transcript end inside an intron of the chain or the reverse, beyond 10 nt); a
      chain with UTRs (transcript or annotated mRNA) rather than CDS rows only; protein length; an annotated chain
-     (so that the public annotation is changed as little as possible); 3' UTR length. An in-frame stop codon
+     (so that the public annotation is changed as little as possible); 3' UTR length. Among the candidates equal to
+     the first one on every criterion before protein length, the one whose protein aligns best to the proteins of
+     the same gene in the other assemblies (mean global alignment score, BLOSUM62, free end gaps) replaces it when
+     its score is higher by 20 or more (about 10 bits): exons beyond the transcripts, taken from the annotation or
+     from the prediction, are so chosen by similarity rather than by length. An in-frame stop codon
      upstream of the start is not required: many O. dioica mRNAs are trans-spliced and have short 5' UTRs; it is
      reported (upstream_stop). A chosen model of CDS rows is given the UTR exons of the compatible transcripts that
      reach furthest 5' and 3', its coding sequence unchanged.
@@ -68,11 +72,13 @@ sites (listed with all their equivalent placements, the one used first, as "CA-T
 an alignment, assembly or transcript problem); insertions, deletions and mismatches between
 the assembly and the compatible transcript that covers most of the coding sequence; the 3' UTR of the model and the
 longest 3' UTR of the supporting transcripts that end at the same stop codon; how the public annotation treats the
-gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, codon in an
-intron of the coding sequence, coding sequence ending before the codon or starting after it, no model); and the change that the annotation needs
+gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, coding
+sequence ending at the codon (the TGA read as stop codon), codon in an intron of the coding sequence, coding sequence
+ending before the codon or starting after it, no model); and the change that the annotation needs
 (annotation_fix).
-Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain and the ranking criteria, every
-supporting transcript with its own frame, and the annotated transcripts near the codon that are not candidates, for
+Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain, splice sites and the ranking
+criteria, every supporting transcript with its own frame, and the annotated transcripts near the codon that are not
+candidates, with the splice sites of their chain as annotated; the CDS rows of annotated models in annotated_cds; for
 review), <genome>.gff3 (gene, mRNA, exon and CDS features; transl_except=(pos:..%2Caa:Sec) on the CDS rows),
 <genome>.proteins.faa (U for selenocysteine), <genome>.utr3.fa (3' UTR of the model), <genome>.after_stop.fa
 (--after-stop nucleotides of genome after the stop codon, on the gene strand), and --table.
@@ -92,6 +98,7 @@ MISMATCH_LOG10 = 2.0   # log10 cost of a mismatch at about 1% divergence between
 SITE_COST = {k: math.log10(INTRON_CLASSES["GT-AG"] / f) / MISMATCH_LOG10 for k, f in INTRON_CLASSES.items()}
 OTHER_COST = math.log10(INTRON_CLASSES["GT-AG"] / OTHER_SITES) / MISMATCH_LOG10
 END_TOLERANCE = 10
+TIE_SCORE_MARGIN = 20   # BLOSUM62 score units (half bits): about 10 bits
 
 
 def rc(s): return s.translate(COMP)[::-1]
@@ -510,12 +517,14 @@ def annotation_status(ann, contig, strand, codon0, lo, hi):
     statuses = []
     for _, r, a, b in over:
         inside = any(x <= codon0 and codon0 + 2 <= y for x, y in r["cds"])
-        if inside: statuses.append("selenocysteine declared" if r["sec"] else "codon inside the coding sequence, not declared")
+        last = (b == codon0 + 2) if strand == "+" else (a == codon0)   # the TGA is the annotated stop codon
+        if inside and last and not r["sec"]: statuses.append("coding sequence ends at the codon (TGA read as stop)")
+        elif inside: statuses.append("selenocysteine declared" if r["sec"] else "codon inside the coding sequence, not declared")
         elif a <= codon0 and codon0 + 2 <= b: statuses.append("codon in an intron of the coding sequence (skipped)")
         elif (strand == "+" and b < codon0) or (strand == "-" and a > codon0 + 2): statuses.append("coding sequence ends before the codon")
         else: statuses.append("coding sequence starts after the codon")
     order = ["selenocysteine declared", "codon inside the coding sequence, not declared",
-             "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
+             "coding sequence ends at the codon (TGA read as stop)", "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
              "coding sequence starts after the codon"]
     return next(s for s in order if s in statuses), ids, over
 
@@ -616,9 +625,10 @@ def graft_utrs(m, genome, strand):
     return g
 
 
-def candidate_rows(g, gene, models, tms, chosen, others):
+def candidate_rows(g, gene, models, tms, chosen, others, genome, strand):
     """Rows of the candidates table: every candidate model, every supporting transcript (its own frame) and the
-    annotated transcripts near the codon that are not candidates."""
+    annotated transcripts near the codon that are not candidates (with the splice sites of their exon chain as
+    annotated); annotated_cds: the coding sequence of the annotated models (CDS rows)."""
     fmt = lambda blocks: ";".join(f"{a + 1}-{b}" for a, b in sorted(blocks))
     rows = []
     for m in models:
@@ -628,25 +638,27 @@ def candidate_rows(g, gene, models, tms, chosen, others):
                      "stop": "no" if m["open3"] else "yes", "upstream_stop": "no" if m["open5"] else "yes",
                      "context": "yes" if m.get("ctx") else "no", "compatible_transcripts": len(m.get("support", [])),
                      "indels": "", "exons": fmt(m["blocks"]),
-                     "splice_sites": ";".join(x[0] for x in m.get("sites", []))})
+                     "splice_sites": ";".join(x[0] for x in m.get("sites", [])),
+                     "annotated_cds": fmt([(x, y + 1) for x, y in m["annotated_cds"]]) if m.get("annotated_cds") else ""})
     for tm in tms:
         rows.append({"genome": g, "gene": gene, "item": "transcript frame", "kind": "transcript", "source": tm["tx"],
                      "chosen": "", "protein_length": len(tm["protein"]),
                      "starts_with_M": "yes" if tm["protein"].startswith("M") else "no",
                      "stop": "no" if tm["open3"] else "yes", "upstream_stop": "no" if tm["open5"] else "yes",
                      "context": "", "compatible_transcripts": "", "indels": tm.get("cds_indels", ""),
-                     "exons": fmt(tm["blocks"]), "splice_sites": ""})
+                     "exons": fmt(tm["blocks"]), "splice_sites": "", "annotated_cds": ""})
     for mid, ar in others:
+        blocks = ar["exons"] or [(x, y + 1) for x, y in ar["cds"]]
         rows.append({"genome": g, "gene": gene, "item": "annotated, not a candidate", "kind": "annotation",
                      "source": ar["protein"], "chosen": "", "protein_length": "", "starts_with_M": "", "stop": "",
                      "upstream_stop": "", "context": "", "compatible_transcripts": "", "indels": "",
-                     "exons": fmt(ar["exons"] or [(x, y + 1) for x, y in ar["cds"]]),
-                     "splice_sites": "CDS " + fmt([(x, y + 1) for x, y in ar["cds"]]) if ar["cds"] else "no CDS"})
+                     "exons": fmt(blocks), "splice_sites": ";".join(site(genome, a, b, strand) for a, b in chain_introns(blocks)),
+                     "annotated_cds": fmt([(x, y + 1) for x, y in ar["cds"]]) if ar["cds"] else "no CDS"})
     return rows
 
 
 CANDIDATE_COLUMNS = ["genome", "gene", "item", "kind", "source", "chosen", "protein_length", "starts_with_M", "stop",
-                     "upstream_stop", "context", "compatible_transcripts", "indels", "exons", "splice_sites"]
+                     "upstream_stop", "context", "compatible_transcripts", "indels", "exons", "splice_sites", "annotated_cds"]
 
 
 def main():
@@ -710,7 +722,7 @@ def main():
                 blocks = ar["exons"] or [(x, y + 1) for x, y in ar["cds"]]
                 if not (min(x for x, _ in blocks) <= codon0 and codon0 + 3 <= max(y for _, y in blocks)): continue
                 m = model_from_chain(blocks, gs, codon0, strand, ar["protein"], "annotation", cds_only=not ar["exons"])
-                if m: cands.append(m)
+                if m: m["annotated_cds"] = ar["cds"]; cands.append(m)
             for pid, cds in gtf.get(contig, {}).items():
                 if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
                 m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "prediction", cds_only=True)
@@ -749,6 +761,7 @@ def main():
                                   m["protein"].startswith("M"), bool(m["support"]), not m["cds_only"],
                                   effective_length(m), m["kind"] == "annotation", len(m["utr3"]))
                 best = max(usable, key=rank)
+                for m in usable: m["rank"] = rank(m)
             tx_ok = [tm for tm in tms if tm["protein"]]
             reliable = [t for t in tx_ok if t["cds_indels"] <= MAX_TRANSCRIPT_INDELS] or tx_ok
             top = max((effective_length(t) for t in reliable), default=0)
@@ -784,9 +797,22 @@ def main():
                "candidates": rec["candidates"]}
         if best is None and tbest is None:
             row.update({"evidence": "none", "notes": "no transcript, annotated mRNA or prediction holds the codon in a frame"})
-            cand_rows.extend(candidate_rows(g, gene, [], tms, None, rec["near"]))
+            cand_rows.extend(candidate_rows(g, gene, [], tms, None, rec["near"], gs, strand))
             report.append(row); continue
         source, notes, id_g, id_t = "genome", [], "", ""
+        others = [p for og, p in proteins[gene] if og != g]
+        if best is not None and others:
+            # candidates equal to the chosen one on every criterion before protein length (for example two
+            # extensions of a partial transcript, from the annotation and from the prediction): the protein that
+            # aligns best to the other assemblies is used when its mean score is higher by TIE_SCORE_MARGIN or more
+            score = lambda m: sum(aligner.score(m["protein"].replace("U", "C"), p.replace("U", "C")) for p in others) / len(others)
+            ties = [m for m in rec["usable"] if m is not best and m["rank"][:7] == best["rank"][:7] and m["protein"] != best["protein"]]
+            alt = max(ties, key=score) if ties else None
+            if alt and score(alt) >= score(best) + TIE_SCORE_MARGIN:
+                notes.append(f"{alt['source']} chosen over {best['source']} (equal on the criteria before protein length): "
+                             f"its protein aligns better to the other assemblies (mean score {score(alt):.0f} against "
+                             f"{score(best):.0f})")
+                best = alt
         if best is not None and best.get("base_tx") is not None:
             ext = nterm_extension(best, gs, strand)
             if ext:
@@ -833,7 +859,7 @@ def main():
                              f"model mapped from the transcript, protein from the transcript")
         chosen = best
         if source == "genome": best = graft_utrs(best, gs, strand)
-        cand_rows.extend(candidate_rows(g, gene, rec["usable"], tms, chosen if source == "genome" else None, rec["near"]))
+        cand_rows.extend(candidate_rows(g, gene, rec["usable"], tms, chosen if source == "genome" else None, rec["near"], gs, strand))
         if best.get("grafted"): notes.append(best["grafted"])
         protein = best["protein"]
         lo_cds, hi_cds = min(best["cds_genome"]), max(best["cds_genome"])

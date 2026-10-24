@@ -623,3 +623,28 @@ no earlier step waits for them.
   coding sequence as "coding sequence starts after the codon" (OSKA2016 DIO_PAR and SEPHS2); it now reports
   "codon in an intron of the coding sequence (skipped)", class of Tico et al. 2026; the table changes at the next run
   of make gold-standard.
+- Reannotation figures, layout (2026-10-24, comments of Charles): panel A aligned on the selenocysteine TGA in every
+  assembly (one TGA line); splice sites marked by the colour of the intron chevron (GA-AG, GC-AG, GG-AG; other
+  sites black), so that drawn lengths stay unchanged; the sites of public and gold-standard introns are read on the
+  genome by figures/reannotation_inputs.py, or taken from the candidate table; public models must overlap the
+  coding sequence of the gold-standard model (not only its UTR); Pfam short names. SEPHS2 and DIO_PAR to be redrawn.
+- Third example, TXNRD (2026-10-24): RefSeq XP_081643508.1 (OKI2018) has other 5' exons, without the glutaredoxin
+  domain (its first 49 residues do not align to the gold-standard protein, identical from residue 104 on), and its
+  coding sequence ends at the TGA; the ANISEED model (OSKA2016) has an extra exon inside the GA-AG intron and ends in
+  an intron before the TGA, and is joined to 6 or more exons upstream; GenBank CBY19735.1 (OdB3) has the GA-AG
+  intron but one intron away from the ESTs, and ends at the TGA. Gold-standard defect found: the OdB3 model took its
+  5' part (beyond the ESTs, which cover the 3' part) from the Selenoprofiles prediction rather than from GenBank
+  (609 against 600 aa, ranked by length): an N-terminal extension of 12 aa not found in OKI2018 or OSKA2016 and a
+  GT-AG intron in place of the GA-AG intron of GenBank and of the OSKA2016 transcript (VNAKATE, residues 105-111
+  of the OSKA2016 protein, becomes GLIQ). The N-terminal test did not apply because the EST's own model is a fragment. New rule in
+  curation/gold_standard.py: among the candidates equal to the chosen one on every criterion before protein length,
+  the one whose protein aligns best to the same gene in the other assemblies (mean global alignment score) replaces
+  it when its score is higher by 20 (about 10 bits). From the candidate tables (OKI2018 and OdB3, local genomes),
+  the rule changes only OdB3 TXNRD (mean score 3031 against 2986; OKI2018 TXNRD: 2945 against 2940, unchanged).
+  Also: annotation_status now separates "coding sequence ends at the codon (TGA read as stop)" from "codon inside
+  the coding sequence, not declared" (a CDS that ends with the TGA as stop codon was counted as inside: GenBank
+  CBY19735.1, RefSeq XP_081643508.1); the candidate table gives the splice sites of the annotated models that are
+  not candidates and the annotated CDS rows (new column annotated_cds). Tested on a reconstruction of the OdB3 and
+  OKI2018 TXNRD loci (transcripts spliced from the genome, annotation and prediction chains of the tables). The
+  results paragraph on the public annotations needs its counts again after the rerun. The TXNRD figure will be
+  drawn from the rerun (a preview was made with the expected OdB3 model).
