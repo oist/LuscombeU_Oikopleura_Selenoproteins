@@ -102,7 +102,8 @@ run --gene SELENOF --embl FN653029.1 --reference "human=O60613" \
 run --gene SELENOO --embl FN653064.1 --reference "human=Q9BVL4" \
     --reference-fasta "C. intestinalis=$T/SELENOO.faa:Cint_SELENOO.1.selenocysteine:Cint_SELENOO.1" \
     --note "OKI:XP_081634508.1=TGA read as stop; GT-AG or GA-AG introns where the gold standard, mapped from the transcript, has other sites" \
-           "OSKA:Oidioi.CG.OSKA2016.S11.g10193.01.t=TGA read as stop; skips one exon" \
+           "OSKA:Oidioi.CG.OSKA2016.S11.g10191.01.t=N-terminal part" "OSKA:Oidioi.CG.OSKA2016.S11.g10192.01.t=central part" \
+           "OSKA:Oidioi.CG.OSKA2016.S11.g10193.01.t=C-terminal part, TGA read as stop, skips one exon" \
     --gold-note "OKI=mapped from the transcript (the assembly lacks 5 bases of the coding sequence)" \
                 "OdB3=the exon of the TGA is not in the assembly"
 

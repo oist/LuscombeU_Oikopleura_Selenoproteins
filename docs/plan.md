@@ -731,3 +731,20 @@ no earlier step waits for them.
   rule by a unit test (no OSKA2016 genome here). Page 2 was previewed with the expected models; OKI2018 SELENOO is
   mapped from the transcript onto an assembly that lacks 5 bases: its introns with other sites are where RefSeq has
   GT-AG or GA-AG introns (alignment placement around the missing bases).
+- Gold-standard rerun (2026-10-24, commit 54fa4b4): OdB3 GPX_chr1a (183 aa, the two GenBank models joined), OdB3
+  SELENOW_chr1a (spliced ESTs, 86 aa, GC-AG intron) and OSKA2016 SELENOW_chr2 (3' UTR cut at the next gene) as
+  expected; OdB3 DIO_chr1 now from the two GenBank models joined (same protein; UTRs change); OSKA2016 SELENOO now
+  lists the three ANISEED models that split the gene. Regression: OKI2018 SELENOO became the 70-aa C-terminal frame
+  of the assembly. The RefSeq chain (587 aa), chosen before, is contradicted by all four transcripts, so the
+  transcript chain read on the assembly was chosen; its frame is broken by the 5 missing bases and starts at an
+  internal ATG, so it counted as complete and the transcript protein (600 aa, identity 0.79 against 0.80 on the
+  shared 70 residues) was not used. New rule: at a similar identity, the complete transcript protein is also used
+  when the assembly protein is less than half as long. From the tables, only OKI2018 SELENOO is in this situation.
+  Also: annotation_status separates "codon inside the coding sequence, in another frame" (OdB3 GPX_PAR and SEPHS2)
+  from codons in frame without declaration (OKI2018 GPX_chr1a and GPX_chr2, translated as X by RefSeq). Rerun needed;
+  page 2 is committed after it (preview made with the expected OKI2018 SELENOO, the model of commit ce64671).
+- Results section on the gold standard rewritten with the counts of the rerun (and the two expected changes above):
+  53 models, all complete; 170 introns, 27 atypical (16%); GA-AG in all three assemblies for DIO_PAR, SELENOT,
+  SELENOW_chr2 and TXNRD; public treatment of the codon per model: 3 declared, 2 in frame as X, 12 read as stop, 12
+  skipped in an intron, 2 in another frame, 9 starting after, 3 ending before, 10 without coding sequence; genes split
+  or joined by the annotations. Figure legend REANNOTATION added. There is no third page: the 18 genes fill two.

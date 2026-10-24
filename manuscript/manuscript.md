@@ -363,37 +363,60 @@ SELENOT (1) and MsrA (1) predictions.
 
 To train SECIS models and appendicularian profiles on reliable sequences, we built a gene model for each curated
 selenocysteine codon of the three *O. dioica* assemblies, from their transcripts, their public annotations and the
-stage 1 predictions (Methods). Of the 54 codons (18 genes in each assembly), 53 received a model; the exception is
-OdB3 SELENOO, whose codon no transcript, annotated mRNA or prediction holds in a frame. Fifty-two models are
-complete, from an ATG to a stop codon, through the selenocysteine; the OdB3 GPX_chr1a model, without transcript, lacks
-its 5′ end. Fifty models have a 3′ UTR from transcripts (median 300 nucleotides, from 4 to 1,585).
+stage 1 predictions (Methods; Figure REANNOTATION). Of the 54 codons (18 genes in each assembly), 53 received a model;
+the exception is OdB3 SELENOO, whose exon with the selenocysteine codon is not in the assembly. All 53 models are
+complete, from an ATG to a stop codon, through the selenocysteine. All but one are supported by transcripts; OdB3
+GPX_chr1a, without transcript, joins the two GenBank models that split the gene at the selenocysteine codon, and its
+protein then aligns to the other assemblies along its whole length. Fifty-one models have a 3′ UTR from transcripts
+(median 310 nucleotides, from 4 to 892).
 
 In six genes the assembly does not encode the protein of the transcripts, because it lacks or adds bases in the
 coding sequence: SELENOS (13 nucleotides absent from the assembly), SELENOO (5 nucleotides) and DIO_chr1 (a
 frameshift in its 3′ part) in OKI2018, SELENOW_PAR (2 nucleotides) in OSKA2016, and DIO_PAR and GPX_PAR (1
-nucleotide added in the assembly) in OdB3. In each case the transcript protein is more
-similar to the same gene in the other assemblies than the protein encoded by the assembly; in OKI2018 DIO_chr1, for
-example, the assembly frame ends in a C-terminus unrelated to the other assemblies, whereas the transcript protein
-ends, as they do, in the sequence VEYVGGPGPFGYDL. For these genes, the gold standard gives the transcript protein and a
-model mapped from the transcript.
+nucleotide added in the assembly) in OdB3. In each case the transcript protein is more similar to the same gene in
+the other assemblies than the protein encoded by the assembly, or much longer (OKI2018 SELENOO, whose assembly frame
+gives only the last 70 residues); in OKI2018 DIO_chr1, for example, the assembly frame ends in a C-terminus
+unrelated to the other assemblies, whereas the transcript protein ends, as they do, in the sequence VEYVGGPGPFGYDL.
+For these genes, the gold standard gives the transcript protein and a model mapped from the transcript.
 
-The 195 introns of the models include 19 GA-AG, 6 GC-AG and 1 GG-AG introns (13%), close to the proportion of
-non-GT-AG introns in the *O. dioica* reference annotation (12.4%) [@Denoeud2010; @Frey2020]. SELENOT, SELENOW_chr2
-and DIO_PAR have a GA-AG intron in each of the three assemblies. The ten splice sites of other types lie in six
-models: OKI2018 DIO_chr1 and SELENOO (5 sites), mapped from transcripts onto an assembly that lacks bases, OSKA2016
-SELENOO (2 sites), and OKI2018 GPX_chr1a, OSKA2016 GPX_chr1b and SELENOW_pair2 (1 site each).
+The 170 introns of the models include 19 GA-AG, 7 GC-AG and 1 GG-AG introns (16%), against 12.4% of non-GT-AG
+introns in the *O. dioica* reference annotation [@Denoeud2010; @Frey2020]. DIO_PAR, SELENOT, SELENOW_chr2 and TXNRD
+have a GA-AG intron in each of the three assemblies. The nine splice sites of other types lie in five models: OKI2018
+SELENOO (4 sites) and DIO_chr1 (1 site), mapped from transcripts onto an assembly that lacks bases, where they mark
+the alignment around the missing bases (RefSeq places GT-AG or GA-AG introns a few nucleotides away in SELENOO),
+OSKA2016 SELENOO (2 sites), and OKI2018 GPX_chr1a and OSKA2016 GPX_chr1b (1 site each).
 
-The public annotations rarely give the selenoproteins. In OKI2018, RefSeq declares the selenocysteine in three
-genes (DIO_PAR, GPX_PAR and SELENOF), but places one intron of DIO_PAR 11 nucleotides away from the GA-AG intron
-supported by the transcripts; GPX_chr1a needs only the declaration; in five genes the exon chain is right and only
-the coding sequence changes (GPX_chr1b, GPX_chr2, SELENOT, SELENOW_chr2 and SEPHS2; in four of them it starts after
-the selenocysteine codon); and five genes have no annotated coding sequence (SELENOK, SELENOW_PAR, SELENOW_chr1a and the two SELENOW genes of the chr1 pair). Three of
-these lie in the 3′ part of RefSeq mRNAs of other genes (SELENOW_PAR, SELENOW_pair1 and SELENOW_pair2), as does
-SELENOW_PAR of OdB3, that is, on transcripts that hold another coding sequence upstream. The OSKA2016 annotation
-declares no selenocysteine; for 15 genes its models follow other exon chains than the transcripts, most of them
-starting after the selenocysteine codon, for one the coding sequence can be extended on a compatible chain, and two
-genes have no model. The OdB3 annotation splits at least three genes at the selenocysteine codon into separate models
-(DIO_PAR, DIO_chr1 and GPX_chr1b).
+The public annotations rarely give the selenoproteins (Figure REANNOTATION). Of the 53 models, three have the
+selenocysteine declared by the public annotation, all in RefSeq (OKI2018 DIO_PAR, GPX_PAR and SELENOF), and in DIO_PAR one intron lies 11
+nucleotides away from the GA-AG intron supported by the transcripts. In two more RefSeq models (GPX_chr1a and
+GPX_chr2) the codon is in the frame of the coding sequence but translated as X. Elsewhere the codon is read as a stop
+codon that ends the coding sequence (12 models: 2 in OKI2018, 3 in OSKA2016, 7 in OdB3), skipped in an intron of
+the coding sequence (12 models, 10 of them in OSKA2016), read in another frame (OdB3 GPX_PAR and SEPHS2, where the
+coding sequence starts near the codon in another frame), or the coding sequence starts after it (9 models; 5 in
+OKI2018, where it starts at an internal ATG of the right exon chain in GPX_chr1b, SELENOT, SELENOW_chr2 and SEPHS2)
+or ends before it (3 models, among them OKI2018 SELENOS, whose frame is lost where the assembly lacks 13 bases).
+Ten have no annotated coding sequence at all (SELENOK, SELENOW_PAR, SELENOW_chr1a and the two SELENOW genes of the
+chr1 pair in OKI2018; SELENOK and SELENOW_PAR in OSKA2016; SELENOW_PAR, SELENOW_chr1a and SELENOW_pair2 in OdB3).
+SELENOW_PAR in OKI2018 and OdB3, and the SELENOW pair in OKI2018, lie in the 3′ UTR of the annotated mRNA of
+another protein, as expected from genes of an operon whose mRNAs are separated by trans-splicing; OSKA2016
+SELENOW_chr2 is also known from a transcript that reads through into the next gene. The annotations also join or
+split genes at the selenocysteine codon: the OdB3 annotation splits five genes there into two or three models
+(DIO_PAR, DIO_chr1, GPX_chr1a, GPX_chr1b and SELENOS), and the OSKA2016 annotation joins SEPHS2 to the upstream gene
+and the two genes of the SELENOW pair into one model, and splits SELENOO into three models.
+
+Figure REANNOTATION (two pages, `figures/reannotation_page.pdf` and `figures/reannotation_page2.pdf`). Reannotation of
+the 18 selenoprotein genes in three *O. dioica* assemblies. For each gene, top: in each assembly, the public models
+(grey; RefSeq for OKI2018, ANISEED for OSKA2016, GenBank for OdB3) above the gold-standard model (blue), in gene
+orientation, positioned by their distance in nucleotides to the selenocysteine TGA (dashed red line); thick boxes,
+coding exons; thin boxes, untranslated exons; coloured introns, splice sites other than GT-AG (drawn length
+unchanged); hatched boxes, coding sequences in another frame than the gold standard; green boxes, SECIS elements
+found by the appendicularian covariance model in the 2,000 nucleotides after the stop codon, with their bit
+scores; stretches of more than 1,500 nucleotides without exon are shortened (break marks). Middle: the public models
+of each assembly and what distinguishes them from the gold standard, notes on the gold-standard models, and the
+accessions of the reference proteins. Bottom: the human protein (UniProt), the *Ciona intestinalis* protein (stage 1
+prediction on its genome) and the three gold-standard proteins, placed on the coordinates of the human protein by
+local alignment (those of OSKA2016 and OdB3 through the OKI2018 protein), with the Pfam domains of the human protein
+and the residues aligned to its selenocysteine; lines, residues outside the aligned part.
 
 ## An appendicularian SECIS model built from the stage 1 predictions
 
@@ -538,8 +561,9 @@ score was higher by 20 (about 10 bits), so that exons beyond the transcripts, ta
 prediction, were chosen by similarity rather than by length. When the transcripts differed from the assembly by indels in the coding sequence, the
 transcript protein replaced the assembly protein when its identity to the same gene in the other assemblies,
 counted on the part of each reference protein that both proteins cover (global alignments with BLOSUM62 and free
-end gaps, Biopython [@Cock2009]), was higher by more than 0.02, or when it was complete and more than 10% longer
-while the assembly protein was not; the model was then the transcript chain mapped onto the assembly. The models are
+end gaps, Biopython [@Cock2009]), was higher by more than 0.02, or, at a similar identity, when it was complete and
+either more than 10% longer while the assembly protein was not complete, or more than twice as long (a frame broken by
+the assembly); the model was then the transcript chain mapped onto the assembly. The models are
 given in GFF3 with the selenocysteine declared (`transl_except`), with their proteins, 3′ UTRs, the 2,000
 nucleotides of genome that follow each stop codon, and a table of all candidates.
 

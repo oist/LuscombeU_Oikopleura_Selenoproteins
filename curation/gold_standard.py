@@ -69,10 +69,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      identical residues are counted over the part of each reference protein to which both align (so that a
      fragment and a longer protein are compared on the same residues); the transcript protein is used only when
      its identity there exceeds that of the assembly protein by more than 0.02, or is not lower by more than 0.02
-     while it is complete (ATG and stop), the assembly protein is not, and it is more than 10% longer (without
-     another assembly: when it
-     is more than 10% longer, holds the curated context when the assembly protein does not, or has a stop codon
-     when the assembly protein has none). The transcript protein is also used when no
+     while it is complete (ATG and stop) and either the assembly protein is not complete and it is more than 10%
+     longer, or the assembly protein is less than half as long, a frame broken by the assembly and read from an
+     internal ATG (without another assembly: when it is more than 10% longer, holds the curated context when the
+     assembly protein does not, or has a stop codon when the assembly protein has none). The transcript protein is also used when no
      candidate on the assembly gives a frame. Then the assembly does not encode the protein: the model is the exon
      chain of the transcript with the genome positions of its coding sequence, marked in the GFF3 with the
      attribute exception (as RefSeq models annotated from transcripts), and protein_source is "transcript".
@@ -81,9 +81,10 @@ sites (listed with all their equivalent placements, the one used first, as "CA-T
 an alignment, assembly or transcript problem); insertions, deletions and mismatches between
 the assembly and the compatible transcript that covers most of the coding sequence; the 3' UTR of the model and the
 longest 3' UTR of the supporting transcripts that end at the same stop codon; how the public annotation treats the
-gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, coding
-sequence ending at the codon (the TGA read as stop codon), codon in an intron of the coding sequence, coding sequence
-ending before the codon or starting after it, no model); and the change that the annotation needs
+gene (annotation_status: selenocysteine declared, codon inside the coding sequence and in its frame without
+declaration, coding sequence ending at the codon (the TGA read as stop codon), codon inside the coding sequence in
+another frame (counted from the first base of the coding sequence), codon in an intron of the coding sequence, coding
+sequence ending before the codon or starting after it, no model); and the change that the annotation needs
 (annotation_fix).
 Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain, splice sites and the ranking
 criteria, every supporting transcript with its own frame, and the annotated transcripts near the codon that are not
@@ -529,12 +530,22 @@ def annotation_status(ann, contig, strand, codon0, lo, hi):
         inside = any(x <= codon0 and codon0 + 2 <= y for x, y in r["cds"])
         last = (b == codon0 + 2) if strand == "+" else (a == codon0)   # the TGA is the annotated stop codon
         if inside and last and not r["sec"]: statuses.append("coding sequence ends at the codon (TGA read as stop)")
-        elif inside: statuses.append("selenocysteine declared" if r["sec"] else "codon inside the coding sequence, not declared")
+        elif inside and r["sec"]: statuses.append("selenocysteine declared")
+        elif inside:   # frame of the codon in the annotated coding sequence, counted from its first base
+            rows = sorted(r["cds"]) if strand == "+" else sorted(r["cds"])[::-1]
+            first = codon0 if strand == "+" else codon0 + 2
+            off = 0
+            for x, y in rows:
+                if x <= first <= y: off += (first - x) if strand == "+" else (y - first); break
+                off += y - x + 1
+            statuses.append("codon inside the coding sequence, not declared" if off % 3 == 0 else
+                            "codon inside the coding sequence, in another frame")
         elif a <= codon0 and codon0 + 2 <= b: statuses.append("codon in an intron of the coding sequence (skipped)")
         elif (strand == "+" and b < codon0) or (strand == "-" and a > codon0 + 2): statuses.append("coding sequence ends before the codon")
         else: statuses.append("coding sequence starts after the codon")
     order = ["selenocysteine declared", "codon inside the coding sequence, not declared",
-             "coding sequence ends at the codon (TGA read as stop)", "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
+             "coding sequence ends at the codon (TGA read as stop)", "codon inside the coding sequence, in another frame",
+             "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
              "coding sequence starts after the codon"]
     return next(s for s in order if s in statuses), ids, over
 
@@ -902,8 +913,12 @@ def main():
                 if span:
                     id_g, id_t = sum(c[0] for c in counts) / span, sum(c[1] for c in counts) / span
                     complete = lambda m: m["protein"].startswith("M") and not m["open3"]
-                    use_tx = id_t > id_g + 0.02 or (id_t >= id_g - 0.02 and complete(tbest) and not complete(best) and
-                                                    effective_length(tbest) > 1.1 * effective_length(best))
+                    # the transcript protein is also used, at a similar identity, when it is complete and the assembly
+                    # protein is not, or when the assembly protein is less than half as long (a frame broken by the
+                    # assembly, read from an internal ATG)
+                    use_tx = id_t > id_g + 0.02 or (id_t >= id_g - 0.02 and complete(tbest) and
+                                                    ((not complete(best) and effective_length(tbest) > 1.1 * effective_length(best)) or
+                                                     effective_length(tbest) > 2 * effective_length(best)))
                     if not use_tx:
                         notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
                                      f"is less similar to the other assemblies ({id_t:.2f} against {id_g:.2f}): protein "
