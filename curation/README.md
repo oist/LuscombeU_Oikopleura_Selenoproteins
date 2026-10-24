@@ -33,5 +33,6 @@ transcript differs from the assembly by indels, its protein is used only if it i
 the other assemblies; the model is then mapped from the transcript and marked with the GFF3 attribute `exception`.
 The table reports splice sites (non-canonical ones with all equivalent placements), differences between transcripts
 and assembly, UTRs, the treatment of the gene by the public annotation and the change it needs. Outputs:
-`curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine), `<genome>.proteins.faa`,
+`curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine), `<genome>.candidates.tsv`
+(all candidate models and transcript frames, for review), `<genome>.proteins.faa`,
 `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.

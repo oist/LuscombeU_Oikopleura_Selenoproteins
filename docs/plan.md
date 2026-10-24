@@ -524,3 +524,26 @@ no earlier step waits for them.
   and record that lowering the minimum intron length of exonerate did not recover the missed Sec exons. For step 7:
   check the minimum intron lengths of exonerate and GeneWise as called by Selenoprofiles 4.5.8 (source not
   reachable here).
+- Step 2, second Deigo run reviewed (2026-10-24, commit 150b560): 53 of 54 genes modelled (OdB3 SELENOO: no
+  transcript, annotation or prediction holds the codon, as in the pilot). All 32 assembly-based models of OKI2018
+  and OdB3 translate to their protein on the ENA sequence. Agreements with the pilot: OKI2018 SELENOS, the assembly
+  lacks 13 nt (transcript protein, 196 aa); SELENOT and SEPHS2 need only a new CDS start and the Sec declaration on
+  the RefSeq exon chains; DIO_PAR, GPX_PAR and SELENOF are the RefSeq models with Sec declared and need no change;
+  the SELENOT intron is GA-AG in OKI2018, OSKA2016 and OdB3. Transcript proteins chosen where the assembly lacks or
+  adds bases: OSKA2016 SELENOW_PAR (2 nt; identity 0.91 against 0.72) and OdB3 GPX_PAR (1 nt; 0.99 against 0.91).
+  OKI2018 SELENOW_PAR and SELENOW_pair1/pair2 lie in the 3' part of the RefSeq mRNAs of other genes
+  (XP_081636423.1; XP_081628722.1, 5' UTRs of 1,976, 2,818 and 2,336 nt), as does OdB3 SELENOW_PAR in CBY23864.1:
+  transcripts that hold another coding sequence upstream (step 10, operons). Faults: (1) many O. dioica mRNAs have
+  short 5' UTRs without an in-frame stop (trans-splicing), so ranking on a complete frame tied transcript models
+  with 3'-truncated annotated ones and the annotation preference then chose the truncated model (OdB3 SELENOF,
+  141 aa without stop instead of 144 aa); (2) the annotation preference came before length (OKI2018 TXNRD: RefSeq
+  545 aa chosen over the 600-aa transcript model); (3) identity as a fraction favoured a partial prediction with a
+  GT-CG junction over the EST protein (OdB3 DIO_PAR); (4) chosen predictions had no UTRs (OKI2018 SELENOW_chr1a);
+  (5) the OdB3 annotation splits exons at the TGA. Revision: ranking by context, 90% length band, stop codon, ATG
+  start, transcript support, chain with UTRs, length, then annotation (upstream stop reported, not ranked); identity
+  counted over the part of each reference protein that both proteins cover; UTR exons grafted from compatible
+  transcripts onto chosen CDS-only models; touching blocks merged; candidates table per assembly
+  (curation/gold_standard/<genome>.candidates.tsv) for review. To review after the rerun: OKI2018 DIO_chr1 (model
+  from a transcript with 56 mismatches and a TT-AA junction; RefSeq starts after the Sec), OKI2018 SELENOO (RefSeq
+  587 aa; transcripts incompatible), and the OSKA2016 genes, all reported as new exon chains against the OSKA2016
+  annotation.
