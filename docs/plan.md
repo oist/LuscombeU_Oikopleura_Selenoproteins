@@ -656,3 +656,28 @@ no earlier step waits for them.
   the page. One x scale per gene. A test with the three genes repeated shows that three rows (nine genes) fit on the
   page. Previewed with SEPHS2, DIO_PAR and TXNRD (inputs regenerated with the new inputs script; expected OdB3
   TXNRD model).
+- Second row of the page (2026-10-24): SELENOT (RefSeq and GenBank: same exon chain, coding sequence from an
+  internal ATG 62 codons after the TGA; ANISEED: TGA in an intron of the coding sequence, extra 5' exon, ends in the
+  GA-AG intron), DIO_chr1 (RefSeq "low quality protein", corrected model starting 4 codons after the TGA; ANISEED:
+  TGA exon skipped, joined to 5 exons upstream; GenBank: two models split at the TGA, CBY06720.1 ending with the TGA
+  as stop and CBY06719.1 starting 4 codons after it; OKI2018 gold model mapped from the transcript), SELENOW_PAR (no
+  annotated coding sequence: in the 3' UTR of the RefSeq and GenBank mRNAs of another protein, 592 and 589 aa; no
+  OSKA2016 model; OSKA2016 gold model mapped from the transcript). References: human SELENOT, DIO3, SELENOW
+  (UniProt); Halocynthia Q6U6H1; Ciona SELENOT and SELENOW from the stage 1 predictions on the Ciona intestinalis
+  genome (results/trees/selenoproteins; UniProt has only fragments or cysteine homologs). Commands with the
+  curator's notes: figures/reannotation_inputs.sh.
+- Gold-standard defect found with SELENOW_PAR (2026-10-24): in OKI2018 and OdB3 the model was the annotated mRNA of
+  the upstream protein (XP_081636423.1, CBY23864.1), which holds SELENOW_PAR in its 3' part, because annotated chains
+  were preferred among candidates with the same protein; the transcripts start 11 nt before the start codon. Same
+  for SELENOW_pair1 and pair2 (OKI2018, mRNA of XP_081628722.1) and SELENOW_pair2 (OdB3, CBY21828.1). New rule:
+  an annotated mRNA whose coding sequence does not overlap the candidate's is ranked after the other candidates of
+  the same length and is not preferred as annotated chain; the notes report that it holds the gene. Tested on a
+  reconstruction of the OKI2018 locus (transcript chosen, note written). The operon question (step 10) is unchanged:
+  the transcripts of the pair genes still hold both open reading frames.
+- Page, other changes: public exons cut at the window instead of dropped (the RefSeq and GenBank mRNAs of
+  SELENOW_PAR were not drawn); stretches longer than 1,500 nt without any drawn exon drawn 200 nt long with break
+  marks (the 5.2 kb intron of OKI2018 DIO_chr1, 176 nt in OSKA2016); proteins placed by local alignment, the
+  OSKA2016 and OdB3 gold-standard proteins through the OKI2018 one, unaligned residues drawn as a line (global
+  alignments with free end gaps placed the weakly conserved N-termini of the three DIO_chr1 proteins differently);
+  "other frame" only for public coding sequences that overlap the gold-standard one; RefSeq proteins corrected for
+  the assembly located by their first and last 15 residues.
