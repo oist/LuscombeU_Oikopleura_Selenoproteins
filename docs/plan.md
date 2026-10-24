@@ -547,3 +547,23 @@ no earlier step waits for them.
   from a transcript with 56 mismatches and a TT-AA junction; RefSeq starts after the Sec), OKI2018 SELENOO (RefSeq
   587 aa; transcripts incompatible), and the OSKA2016 genes, all reported as new exon chains against the OSKA2016
   annotation.
+- Step 2, third Deigo run reviewed (2026-10-24, commit 330d19f), with the candidate tables and the ENA sequence:
+  31 assembly-based models of OKI2018 and OdB3 translate to their protein. Checked against the orthologues of the
+  other assemblies: OKI2018 has assembly errors in three genes, where the transcript protein is used: SELENOS
+  (13 nt), DIO_chr1 (frameshift in the 3' part: the assembly frame ends ...WCENWRKF, the transcript protein
+  ...VEYVGGPGPFGYDLDEMVRKLEEILKDN as in OSKA2016 and OdB3; RefSeq bridges it with a 2-nt gap and gives another
+  C-terminus; the 7-nt terminal exon of the transcript alignment is an artefact of the broken region) and SELENOO
+  (5 nt; the transcript protein has 536 residues identical to OSKA2016 against 519 for the RefSeq chain, which
+  lacks a 15-aa segment, DTTVIRDKFYDGNAK, present in OSKA2016). OKI2018 TXNRD: transcript model of 600 aa chosen
+  (RefSeq 545 aa). OKI2018 DIO_PAR: RefSeq places an intron 11 nt from the transcript-supported GA-AG intron
+  (DPYAAKKPIR against DPYGQTKPIR; orthologues D[ST]DAQLKPIR, not decisive), and the transcripts lack the RefSeq
+  first exon. OSKA2016: the annotation has CDS rows only and its models splice around the TGA (for example GPX_PAR,
+  542884 joined to 543323), so new exon chains are needed for all genes. OdB3: DIO_PAR, eight ESTs give the same
+  complete 243-aa protein and differ from the assembly by one base, whose frame breaks (only a 5' fragment
+  prediction with a GT-CG junction was a candidate); DIO_chr1, the EST lacks the first 12 nt and the prediction
+  reads through a 37-nt intron; SEPHS2, ESTs end with frame errors and the assembly protein is kept. Changes:
+  transcript chains extended with annotated or predicted exons beyond their ends (tested on the ENA sequence: OKI
+  DIO_PAR 243 aa with the GA-AG intron; OdB3 DIO_chr1 220 aa, MWAQIF...SPIQCY as in OSKA2016); transcript protein
+  for comparison = the one shared by the most transcripts; a complete transcript protein replaces a fragmentary
+  assembly protein more than 10% shorter unless its identity over the shared part is lower by more than 0.02;
+  annotation_fix reports intron moves.

@@ -21,7 +21,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      gene strand.
   2. Candidate models. Each candidate is an exon chain on the genome: the chain of each supporting transcript, of
      each annotated mRNA that holds the codon in an exon (exon rows, or CDS rows when the annotation has no exons),
-     and of the stage 1 Selenoprofiles prediction that holds the codon (<stage1>/<genome>.selenoprofiles.gtf). The
+     and of the stage 1 Selenoprofiles prediction that holds the codon (<stage1>/<genome>.selenoprofiles.gtf), and
+     each transcript chain extended with the exons of an annotated or predicted candidate beyond its ends, at each
+     end that lies inside an exon of that candidate (a 5'-truncated transcript completed by the annotation; inside
+     its own span the transcript decides, for example on the placement of an atypical intron). The
      genome sequence is spliced along the chain, so that the coding sequence, the protein and the GFF3 rows of a
      model always agree with the assembly. In this sequence the frame of the TGA is extended upstream to the
      previous stop codon (TAA, TAG or TGA) and the coding sequence starts at the first ATG after it; downstream it
@@ -41,10 +44,14 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   4. Assembly or transcript. The frame of the TGA is also read in the sequence of each supporting transcript, and
      the best transcript protein is chosen by the same criteria. When its transcript differs from the assembly by
      indels in the coding sequence and the two proteins differ, both are aligned (global, BLOSUM62, free end gaps)
-     to the proteins of the same gene in the other assemblies (assembly and transcript proteins), and their
+     to the proteins of the same gene in the other assemblies (assembly and transcript proteins; the transcript
+     protein is the one shared by the most transcripts, then the longest, then the one with the fewest indels:
+     single-pass ESTs carry frame errors), and their
      identical residues are counted over the part of each reference protein to which both align (so that a
      fragment and a longer protein are compared on the same residues); the transcript protein is used only when
-     its identity there exceeds that of the assembly protein by more than 0.02 (without another assembly: when it
+     its identity there exceeds that of the assembly protein by more than 0.02, or is not lower by more than 0.02
+     while it is complete (ATG and stop), the assembly protein is not, and it is more than 10% longer (without
+     another assembly: when it
      is more than 10% longer, holds the curated context when the assembly protein does not, or has a stop codon
      when the assembly protein has none). The transcript protein is also used when no
      candidate on the assembly gives a frame. Then the assembly does not encode the protein: the model is the exon
@@ -369,6 +376,20 @@ def short_intron_candidates(tms, genome, strand, lo, hi):
     return out
 
 
+def extend_chain(t_blocks, o_blocks):
+    """Exon chain of a transcript extended with the blocks of another chain (annotated mRNA, prediction) beyond its
+    ends, at each end that lies inside an exon of the other chain; None when nothing is added. Inside its own span
+    the transcript decides."""
+    t, o = sorted(t_blocks), sorted(o_blocks)
+    t0, t1 = t[0][0], t[-1][1]
+    new, added = list(t), False
+    if any(a <= t0 < b for a, b in o) and any(a < t0 for a, _ in o):
+        new += [(a, min(b, t0)) for a, b in o if a < t0]; added = True
+    if any(a < t1 <= b for a, b in o) and any(b > t1 for _, b in o):
+        new += [(max(a, t1), b) for a, b in o if b > t1]; added = True
+    return new if added else None
+
+
 def same_intron(i1, i2, genome):
     """Same intron, allowing placements that give the same spliced sequence."""
     (a1, b1), (a2, b2) = sorted([i1, i2])
@@ -486,6 +507,12 @@ def annotation_fix(model, over, genome):
     for _, r, _, _ in over:
         if compatible(r["exons"] or [(x, y + 1) for x, y in r["cds"]], model["blocks"], genome):
             return f"change the coding sequence of {r['protein']} (compatible exon chain, to be extended)"
+    for _, r, _, _ in over:   # same number of introns, some placed differently
+        ai, mi = chain_introns(r["exons"] or [(x, y + 1) for x, y in r["cds"]]), model["introns"]
+        if r["exons"] and len(ai) == len(mi):
+            moved = sum(not same_intron(x, y, genome) for x, y in zip(ai, mi))
+            if moved and moved <= len(ai) // 2 + 1:
+                return f"move {moved} intron(s) of {r['protein']} and change its coding sequence"
     return "new exon chain (overlapping " + ",".join(sorted({r["protein"] for _, r, _, _ in over})) + ")"
 
 
@@ -654,6 +681,16 @@ def main():
                 if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
                 m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "prediction", cds_only=True)
                 if m: cands.append(m)
+            # transcript chains extended with annotated or predicted exons beyond their ends
+            others = [m for m in cands if m["kind"] in ("annotation", "prediction")]
+            seen = {tuple(m["blocks"]) for m in cands}
+            for tm in tms:
+                for o in others:
+                    blocks = extend_chain(tm["blocks"], o["blocks"])
+                    if not blocks: continue
+                    m = model_from_chain(blocks, gs, codon0, strand, f"{tm['tx']}+{o['source']}", f"transcript+{o['kind']}")
+                    if m and tuple(m["blocks"]) not in seen:
+                        seen.add(tuple(m["blocks"])); m["moved"] = tm["moved"]; cands.append(m)
             usable = [m for m in cands if m["cds"]]
             for m in usable:
                 m["ctx"] = has_ctx(m["protein"])
@@ -667,8 +704,9 @@ def main():
                                   effective_length(m), m["kind"] == "annotation", len(m["utr3"]))
                 best = max(usable, key=rank)
             tx_ok = [tm for tm in tms if tm["protein"]]
+            shared = collections.Counter(t["protein"] for t in tx_ok)
             tbest = max(tx_ok, key=lambda t: (has_ctx(t["protein"]), not t["open3"], t["protein"].startswith("M"),
-                                              effective_length(t))) if tx_ok else None
+                                              shared[t["protein"]], effective_length(t), -t["cds_indels"])) if tx_ok else None
             near = [(mid, ar) for mid, ar in ann.items() if ar["contig"] == contig and ar["strand"] == strand and
                     not any(m["kind"] == "annotation" and m["source"] == ar["protein"] for m in usable) and
                     min(x for x, _ in (ar["exons"] or [(x, y + 1) for x, y in ar["cds"]])) < codon0 + 5000 and
@@ -710,7 +748,9 @@ def main():
                 span = sum(c[2] for c in counts)
                 if span:
                     id_g, id_t = sum(c[0] for c in counts) / span, sum(c[1] for c in counts) / span
-                    use_tx = id_t > id_g + 0.02
+                    complete = lambda m: m["protein"].startswith("M") and not m["open3"]
+                    use_tx = id_t > id_g + 0.02 or (id_t >= id_g - 0.02 and complete(tbest) and not complete(best) and
+                                                    effective_length(tbest) > 1.1 * effective_length(best))
                     if not use_tx:
                         notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
                                      f"is less similar to the other assemblies ({id_t:.2f} against {id_g:.2f}): protein "
