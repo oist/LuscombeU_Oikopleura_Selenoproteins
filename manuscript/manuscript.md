@@ -368,7 +368,7 @@ the exception is OdB3 SELENOO, whose exon with the selenocysteine codon is not i
 complete, from an ATG to a stop codon, through the selenocysteine. All but one are supported by transcripts; OdB3
 GPX_chr1a, without transcript, joins the two GenBank models that split the gene at the selenocysteine codon, and its
 protein then aligns to the other assemblies along its whole length. Fifty-one models have a 3′ UTR from transcripts
-(median 310 nucleotides, from 4 to 892).
+(median 303 nucleotides, from 4 to 695).
 
 In six genes the assembly does not encode the protein of the transcripts, because it lacks or adds bases in the
 coding sequence: SELENOS (13 nucleotides absent from the assembly), SELENOO (5 nucleotides) and DIO_chr1 (a
@@ -379,7 +379,7 @@ gives only the last 70 residues); in OKI2018 DIO_chr1, for example, the assembly
 unrelated to the other assemblies, whereas the transcript protein ends, as they do, in the sequence VEYVGGPGPFGYDL.
 For these genes, the gold standard gives the transcript protein and a model mapped from the transcript.
 
-The 170 introns of the models include 19 GA-AG, 7 GC-AG and 1 GG-AG introns (16%), against 12.4% of non-GT-AG
+The 168 introns of the models include 19 GA-AG, 7 GC-AG and 1 GG-AG introns (16%), against 12.4% of non-GT-AG
 introns in the *O. dioica* reference annotation [@Denoeud2010; @Frey2020]. DIO_PAR, SELENOT, SELENOW_chr2 and TXNRD
 have a GA-AG intron in each of the three assemblies. The nine splice sites of other types lie in five models: OKI2018
 SELENOO (4 sites) and DIO_chr1 (1 site), mapped from transcripts onto an assembly that lacks bases, where they mark
@@ -398,7 +398,8 @@ or ends before it (3 models, among them OKI2018 SELENOS, whose frame is lost whe
 Ten have no annotated coding sequence at all (SELENOK, SELENOW_PAR, SELENOW_chr1a and the two SELENOW genes of the
 chr1 pair in OKI2018; SELENOK and SELENOW_PAR in OSKA2016; SELENOW_PAR, SELENOW_chr1a and SELENOW_pair2 in OdB3).
 SELENOW_PAR in OKI2018 and OdB3, and the SELENOW pair in OKI2018, lie in the 3′ UTR of the annotated mRNA of
-another protein, as expected from genes of an operon whose mRNAs are separated by trans-splicing; OSKA2016
+another protein, as expected from genes of an operon whose mRNAs are separated by trans-splicing (in OKI2018,
+one transcript also holds both genes of the pair; Methods); OSKA2016
 SELENOW_chr2 is also known from a transcript that reads through into the next gene. The annotations also join or
 split genes at the selenocysteine codon: the OdB3 annotation splits five genes there into two or three models
 (DIO_PAR, DIO_chr1, GPX_chr1a, GPX_chr1b and SELENOS), and the OSKA2016 annotation joins SEPHS2 to the upstream gene

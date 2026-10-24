@@ -818,3 +818,7 @@ no earlier step waits for them.
   assembly, and OKI2018 is the outgroup of the three, so similarity to OKI2018 would miss the shortest distance.
   Values: human 44-70%, C. intestinalis 44-74%, OKI2018 88-99%, OSKA2016 94-100% (SELENOK: OKI2018 97%, OSKA2016
   94%). No value for SELENOO (no OdB3 model).
+- make gold-standard rerun (2026-10-25, commit 7cd13a4): only the OKI2018 SELENOW pair changed, as in the local test
+  (SELENOW_pair2: 3' UTR 197 nt, 2 exons; SELENOW_pair1: 5' UTR 197 nt, 2 exons; notes added). Table: 168 introns,
+  27 atypical (16%); 3' UTRs median 303 nt, range 4-695. Manuscript numbers updated; figure inputs of the two genes
+  regenerated (only the splice-site rows change); pages redrawn.
