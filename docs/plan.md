@@ -748,3 +748,8 @@ no earlier step waits for them.
   SELENOW_chr2 and TXNRD; public treatment of the codon per model: 3 declared, 2 in frame as X, 12 read as stop, 12
   skipped in an intron, 2 in another frame, 9 starting after, 3 ending before, 10 without coding sequence; genes split
   or joined by the annotations. Figure legend REANNOTATION added. There is no third page: the 18 genes fill two.
+- Gold-standard rerun (2026-10-24, commit 0f885f8): OKI2018 SELENOO again mapped from the transcript (600 aa); OdB3
+  GPX_PAR and SEPHS2 now "codon inside the coding sequence, in another frame"; no other change. The counts of the
+  rewritten Results section are those of this table. Page 2 committed.
+- Page layout (comments of Charles): the paragraph moved below the proteins, so that gene models and proteins form a
+  grid; thin grey rulers between rows of genes, above the key and between columns.

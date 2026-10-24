@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """A4 portrait page of reannotated selenoprotein genes: three genes per row, as many rows as needed.
 
-Each gene has two parts, drawn as in figures/reannotation_figure.py:
+Each gene has three parts (thin rulers separate rows and columns of genes):
 - gene models (top): in each O. dioica assembly, the public models (OKI2018 RefSeq, OSKA2016 ANISEED, OdB3 GenBank,
   grey) above the gold-standard model of step 2 (blue), in gene orientation and aligned on the selenocysteine TGA
   (x: nucleotides from the TGA, one scale per gene; stretches of more than 1,500 nt without any drawn exon, such as
@@ -9,8 +9,8 @@ Each gene has two parts, drawn as in figures/reannotation_figure.py:
   length; SECIS elements: best hit of the current appendicularian model (cmsearch) after the stop codon, drawn as a
   green box with its bit score; letters when several public models share a row; public exons are cut at the margin
   beyond the gold-standard transcript, and those entirely beyond it are counted.
-- paragraph (middle): the public models of each assembly with the curator's notes, the notes on the gold-standard
-  models, and the accessions of the reference proteins.
+- paragraph (below the proteins): the public models of each assembly with the curator's notes, the notes on the
+  gold-standard models, and the accessions of the reference proteins.
 - proteins (bottom): reference proteins and the gold-standard proteins of the three assemblies on the coordinates
   of the first reference (local alignments, BLOSUM62; the gold-standard proteins of OSKA2016 and OdB3 through a
   global alignment to the first gold-standard protein; residues outside the aligned part drawn as a line as long as
@@ -455,7 +455,7 @@ def main():
     fx = lambda mm: mm / PAGE_W
     fy = lambda mm: mm / PAGE_H                    # from the bottom of the page
     top = PAGE_H - TOP
-    used = set()
+    used, rulers = set(), []
     for d in genes:
         for g in GENOMES:
             used |= set(d["gold_sites"].get(g, "").split(";"))
@@ -466,8 +466,9 @@ def main():
         paras, indent, hN = layout_notes(row, col_w)
         refs_y, gold_y, hB = layout_proteins(row)
         axA_bottom = top - 3.5 - hA
-        axN_bottom = axA_bottom - 6.0 - hN
-        axB_bottom = axN_bottom - 0.5 - hB
+        axB_bottom = axA_bottom - 6.0 - hB
+        axN_bottom = axB_bottom - 7.0 - hN          # paragraph below the proteins (axis and its label above it)
+        row_top, row_bottom = top + 1.5, axN_bottom - 1.0
         for k, d in enumerate(row):
             left = LEFT + k * (col_w + COL_GAP)
             fig.text(fx(left), fy(top), d["gene"], fontsize=8, fontweight="bold", va="top")
@@ -496,13 +497,25 @@ def main():
                     axB.text(fx(LEFT - 1.5), yy, NAMES[g], transform=labB, fontsize=5.5, ha="right", va="center", color=GOLD)
                 axB.text(fx(4), (gold_y[0] + gold_y[-1]) / 2, "gold standard", transform=labB, fontsize=5.5, rotation=90,
                          ha="center", va="center", color=GOLD)
-        top = axB_bottom - 8
+        rulers.append((row_top, row_bottom))
+        top = axN_bottom - 6
     key_h = key(fig, used)
+    # thin rulers: between rows of genes and above the key, and between the columns of each row
+    from matplotlib.lines import Line2D
+    rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)
+    W = PAGE_W - LEFT - RIGHT
+    for k, (rt, rb) in enumerate(rulers):
+        y = (rb + (rulers[k + 1][0] if k + 1 < len(rulers) else BOTTOM + key_h)) / 2
+        fig.add_artist(Line2D([fx(2), fx(PAGE_W - RIGHT)], [fy(y), fy(y)], **rule))
+        top_ = (rt + (rulers[k - 1][1] if k else PAGE_H)) / 2 if k else rt
+        for c in (1, 2):
+            x = LEFT + c * col_w + (c - 0.5) * COL_GAP
+            fig.add_artist(Line2D([fx(x), fx(x)], [fy(rt), fy(rb)], **rule))
     os.makedirs(a.out, exist_ok=True)
     out = os.path.join(a.out, a.name)
     for ext in ("pdf", "svg", "png"):
         fig.savefig(f"{out}.{ext}", dpi=200 if ext == "png" else None)
-    print("written", out, f"(lowest protein axis {top + 8:.0f} mm from the bottom of the page; key {BOTTOM + key_h:.0f} mm)")
+    print("written", out, f"(lowest paragraph ends {top + 6:.0f} mm from the bottom of the page; key {BOTTOM + key_h:.0f} mm)")
 
 
 if __name__ == "__main__":

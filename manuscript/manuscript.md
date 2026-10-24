@@ -411,12 +411,12 @@ orientation, positioned by their distance in nucleotides to the selenocysteine T
 coding exons; thin boxes, untranslated exons; coloured introns, splice sites other than GT-AG (drawn length
 unchanged); hatched boxes, coding sequences in another frame than the gold standard; green boxes, SECIS elements
 found by the appendicularian covariance model in the 2,000 nucleotides after the stop codon, with their bit
-scores; stretches of more than 1,500 nucleotides without exon are shortened (break marks). Middle: the public models
-of each assembly and what distinguishes them from the gold standard, notes on the gold-standard models, and the
-accessions of the reference proteins. Bottom: the human protein (UniProt), the *Ciona intestinalis* protein (stage 1
-prediction on its genome) and the three gold-standard proteins, placed on the coordinates of the human protein by
-local alignment (those of OSKA2016 and OdB3 through the OKI2018 protein), with the Pfam domains of the human protein
-and the residues aligned to its selenocysteine; lines, residues outside the aligned part.
+scores; stretches of more than 1,500 nucleotides without exon are shortened (break marks). Middle: the human
+protein (UniProt), the *Ciona intestinalis* protein (stage 1 prediction on its genome) and the three gold-standard
+proteins, placed on the coordinates of the human protein by local alignment (those of OSKA2016 and OdB3 through the
+OKI2018 protein), with the Pfam domains of the human protein and the residues aligned to its selenocysteine; lines,
+residues outside the aligned part. Bottom: the public models of each assembly and what distinguishes them from the
+gold standard, notes on the gold-standard models, and the accessions of the reference proteins.
 
 ## An appendicularian SECIS model built from the stage 1 predictions
 
