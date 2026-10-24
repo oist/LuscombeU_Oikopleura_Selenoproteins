@@ -21,3 +21,4 @@ in `work/`.
 | `stage2_selenoprotein_rbh.tsv` | `make selenoprotein-rbh` | reciprocal best hits of the stage 1 selenoprotein predictions against the human proteome |
 | `stage2_selenoprotein_lba.tsv` | `make selenoprotein-pmsf` | supports of the largest appendicularian clade in the selenoprotein trees, maximum likelihood and PMSF |
 | `stage2_selenoprotein_orthology.{tsv,md}` | `make selenoprotein-orthology` | first-pass orthology of each appendicularian selenoprotein clade |
+| `stage2_secis_hits.tsv`, `stage2_secis_hits_summary.tsv`, `stage2_secis_hits_families.tsv` | `make secis-hits` | step 1: validated selenocysteine hits with their RF00031 and current-model SECIS scores; per genome and per family |

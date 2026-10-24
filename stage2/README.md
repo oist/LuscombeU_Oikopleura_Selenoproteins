@@ -161,6 +161,16 @@ long-branch table and the SEPHS trees into the table of the manuscript, with an 
 second, non-selenocysteine SEPHS copy (`results/tables/stage2_machinery_table.{md,tsv}`). It reads only `results/` and
 runs in seconds; `make machinery-lba` runs it at the end.
 
+## SECIS search in the validated hits (`secis_validated_hits.py`, `make secis-hits`)
+
+Step 1 of the plan of 2026-10-24. The stage 1 predictions with a selenocysteine codon in the six *Oikopleura*
+assemblies, left out only on evidence against them from hit validation round 1 (best human hit in an unrelated
+family, counting MIEN1 for SELENOW and SEPHS1 for SEPHS2 as related; non-animal nearest relatives in the family tree);
+the curated *O. dioica* genes always kept; *B. stygius*, *M. erythrocephalus* and *F. borealis* reported apart. No
+new search: the RF00031 and current-model scores of `results/tables/stage1_secis_scores.tsv` and
+`stage2_secis_scores.tsv`, with the random windows of each genome and the cysteine homologs as controls, and the
+length of each 3' sequence (shorter than 6,000 nt at contig ends). Outputs `results/tables/stage2_secis_hits*.tsv`.
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences

@@ -341,6 +341,21 @@ hits reached 22.6 bits. Lowering the threshold to 20 bits would therefore have r
 per genome while accepting background hits, and most selenoprotein 3′ sequences would still have no hit. The Rfam
 model does not recognise most appendicularian SECIS elements, rather than recognising them below its threshold.
 
+> **Provisional paragraph (2026-10-24, step 1 of the plan in docs/plan.md; `results/tables/stage2_secis_hits*.tsv`,
+> `make secis-hits`).** Restricted to the validated hits of the six *Oikopleura* assemblies; it is to replace the two
+> paragraphs above, which count all predictions of the nine genomes (decision of 2026-10-24 on the genome sets).
+
+Restricted to the hits that the orthology analysis supports, the result is the same. In the six *Oikopleura*
+assemblies, the first round of hit validation gave no evidence against any of the 111 predictions with a
+selenocysteine codon: each has its best human hit in its family or in a related gene (MIEN1 for the chr2-type
+SELENOW, SEPHS1 for SEPHS2), or no hit, and none has bacterial or fungal nearest relatives in the tree of its family
+(Methods). Fourteen of them lie less than 500 nucleotides from the end of their contig (11 in *O. longicauda*),
+which leaves no room for a SECIS element. With RF00031, 41 of the 111 3′ sequences had a hit, 15 reached 20 bits and
+4 reached 25 bits, whereas the best random window of each genome scored 13.2 to 22.6 bits and no cysteine homolog of
+these genomes reached 20 bits. Hits of 20 bits or more followed SELENOW (5 of 30 predictions), GPX (4 of 39), DIO
+(2 of 22), SEPHS2 (2 of 3), SELENOF (1 of 7) and TXNRD (1 of 5) predictions, and none of the SELENOO (2), SELENOS (1),
+SELENOT (1) and MsrA (1) predictions.
+
 ## An appendicularian SECIS model built from the stage 1 predictions
 
 We built a new covariance model from the stage 1 outputs alone, by iterative bootstrap (Methods). Training used the
@@ -586,6 +601,12 @@ predictions not aligned at the selenocysteine position, homologs of the selenocy
 200 windows of 6,000 nucleotides, at positions chosen uniformly over the contigs of at least that length and on a
 random strand, and scored them the same way. For the curated *O. dioica* selenoprotein genes, we scored the 6,000 nucleotides
 that follow each selenocysteine codon on its strand.
+
+*Validated hits* (provisional, 2026-10-24). For the SECIS analyses, a selenocysteine prediction was left out only on
+evidence against it from the first round of hit validation: a best human hit (reciprocal best-hit analysis) in an
+unrelated family, MIEN1 counting as related to SELENOW and SEPHS1 to SEPHS2, or nearest relatives in the tree of its
+family (the smallest side of a bipartition holding it and non-appendicularian sequences) that are all bacterial,
+archaeal, fungal or of other non-animal groups. The curated *O. dioica* genes were always kept.
 
 ## Appendicularian SECIS model
 

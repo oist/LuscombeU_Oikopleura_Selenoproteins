@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme secis-hits selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -145,6 +145,10 @@ machinery-domain-figures:
 	  python3 figures/phylogeny_collapsed.py --families $$f --trees results/trees/domains --tree-suffix .$$d$(DOMAIN_SUFFIX) \
 	    --suffix _domain_$${d}$(subst .,_,$(DOMAIN_SUFFIX)) --model-label "$$l domain, $$m" --formats pdf || exit 1; \
 	done
+
+# Step 1 of the plan of 2026-10-24: SECIS scores of the validated selenocysteine hits (seconds; reads results/ only)
+secis-hits:
+	python3 stage2/secis_validated_hits.py
 
 # Orthology of the appendicularian selenoproteins, with the approach used for the machinery: reciprocal best hits,
 # trees, LG+C60+F+G (PMSF) trees, then a first-pass summary per appendicularian clade (stage2/README.md)

@@ -459,3 +459,10 @@ no earlier step waits for them.
     config/taxon_groups.tsv before final trees.
   Next (to agree): AU tests for SELENOW_PAR (SELENOW vs SELENOV), SELENOF, SELENOO, SELENOT; MIEN1 added to the SELENOW
   references; a curated SELENOK; contamination filter.
+- Step 1 done (2026-10-24, local; stage2/secis_validated_hits.py, make secis-hits; results/tables/stage2_secis_hits*.tsv):
+  111 selenocysteine predictions in the six Oikopleura assemblies (OKI 12, OSKA 14, OdB3 21, Olon 28, Oalb 20,
+  Ovan 16), none left out by the rule; 14 within 500 nt of a contig end (11 in O. longicauda). RF00031: 41 with a
+  hit, 15 at 20 bits or more, 4 at 25; best random window per genome 13.2-22.6; no cysteine homolog at 20 bits.
+  Current model: OSKA2016 (held out) 12 of 14 at 25 bits, best random window 18.1, no cysteine homolog at 20.
+  Families with the least SECIS evidence: SELENOO, SELENOS, SELENOT (none at 20 bits with RF00031), SELENOF (1 of 7).
+  Provisional paragraph and Methods added to the manuscript.
