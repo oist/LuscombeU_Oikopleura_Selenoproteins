@@ -169,8 +169,10 @@ secis-v2:
 # transcript sets (O. dioica annotations and transcript assemblies; human and C. intestinalis RefSeq transcripts as
 # controls, also with RF00031); one to a few hours, for example
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=12:00:00 scripts/run_in_container.sh make secis-scan
-# uga-screen: genome-scan threshold, transcript and comparative screens, blastp, tables (minutes; after secis-scan)
-#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=4:00:00 scripts/run_in_container.sh make uga-screen
+# uga-screen: genome-scan threshold, transcript and comparative screens, blastp, tables (minutes); it stops when an
+# output of secis-scan is missing. Both at once, the second waiting for the first:
+#   jid=$(sbatch --parsable -p compute --cpus-per-task=16 --mem=32G --time=12:00:00 scripts/run_in_container.sh make secis-scan)
+#   sbatch --dependency=afterok:$jid -p compute --cpus-per-task=8 --mem=16G --time=4:00:00 scripts/run_in_container.sh make uga-screen
 secis-scan:
 	python3 stage2/uga_secis_screen.py scan --jobs 4
 

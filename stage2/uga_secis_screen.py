@@ -48,7 +48,7 @@ stage2_secis_scan_hits.tsv (genome-scan hits at or above the threshold, with the
 stage2_uga_screen.tsv (one row per candidate) and stage2_uga_screen_summary.tsv (per genome and source: sequences,
 SECIS hits, candidates, known genes recovered).
 """
-import argparse, collections, concurrent.futures, csv, gzip, os, random, re, subprocess, zlib
+import argparse, collections, concurrent.futures, csv, gzip, os, random, re, subprocess, sys, zlib
 
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 STOPS = {"TAA", "TAG", "TGA"}
@@ -658,8 +658,26 @@ def genome_threshold(summary, a):
     return None
 
 
+def expected_scan_outputs(a, sheet):
+    """Files that the scan step writes for the genomes and transcript sets of the arguments."""
+    out = [f"{a.work}/scan/{g}.{kind}.{ext}" for g in a.scan for kind in ("genome", "shuffled") for ext in ("tbl", "size")]
+    for g in a.transcripts:
+        ann, asm = SOURCE[g]
+        row = sheet.get(g, {})
+        if ann and row.get("annotation") and os.path.exists(row["annotation"]):
+            out += [f"{a.work}/tx/{g}.{ann}.{x}" for x in ("fa", "tsv", "oikopleura.tbl")]
+            if g in CONTROLS: out.append(f"{a.work}/tx/{g}.{ann}.RF00031.tbl")
+        if asm and row.get("transcripts") and os.path.exists(row["transcripts"]):
+            out += [f"{a.work}/tx/{g}.{asm}.{x}" for x in ("fa", "oikopleura.tbl")]
+    return out
+
+
 def screen(a):
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
+    missing = [f for f in expected_scan_outputs(a, sheet) if not os.path.exists(f)]
+    if missing and not a.allow_missing:
+        sys.exit(f"{len(missing)} outputs of the scan step are missing (run make secis-scan first, and wait for it to "
+                 f"finish), for example:\n  " + "\n  ".join(missing[:10]))
     os.makedirs(a.tables, exist_ok=True)
     # genome scans
     summary = []
@@ -842,6 +860,7 @@ def main():
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
     ap.add_argument("--hits", default="results/tables/stage2_secis_hits.tsv")
     ap.add_argument("--species-map", nargs="*", default=[], help="genome=species pairs that replace the species of a genome (tests)")
+    ap.add_argument("--allow-missing", action="store_true", help="screen even when some scan outputs are missing")
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--work", default="work/stage2/uga_screen")
