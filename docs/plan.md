@@ -648,3 +648,11 @@ no earlier step waits for them.
   OKI2018 TXNRD loci (transcripts spliced from the genome, annotation and prediction chains of the tables). The
   results paragraph on the public annotations needs its counts again after the rerun. The TXNRD figure will be
   drawn from the rerun (a preview was made with the expected OdB3 model).
+- Multi-gene page (2026-10-24, request of Charles): figures/reannotation_page.py draws an A4 portrait page, three
+  genes per row (columns), each with its gene models and proteins; assembly names and gold-standard protein labels
+  once per row on the left; gene structures half as thick (CDS 1.4 mm, UTR 0.55 mm); public models named, with the
+  curator's note, in a caption wrapped above them (letters a, b, c when several share a row); reference proteins
+  labelled with their accession on the same line above their bar; less space between proteins; key at the bottom of
+  the page. One x scale per gene. A test with the three genes repeated shows that three rows (nine genes) fit on the
+  page. Previewed with SEPHS2, DIO_PAR and TXNRD (inputs regenerated with the new inputs script; expected OdB3
+  TXNRD model).
