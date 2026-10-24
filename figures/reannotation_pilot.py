@@ -11,7 +11,7 @@ A. Gene models in gene orientation, aligned on the 5' end of the gold-standard t
 B. Proteins drawn on the coordinates of human SEPHS2 (UniProt Q99611) through global alignments (BLOSUM62, free end
    gaps): AIR synthase related protein domains (Pfam PF00586 and PF02769, InterPro coordinates on Q99611) and the
    residue at the selenocysteine position of human SEPHS2 (U60).
-External inputs (public, with sources): figures/data/reannotation_pilot_sephs2.tsv and .fa. The Ciona protein comes
+External inputs (public, with sources): figures/inputs/reannotation_pilot_sephs2.tsv and .fa. The Ciona protein comes
 from the SEPHS2 profile of results/models/machinery_profiles/.
 Outputs: figures/reannotation_pilot_SEPHS2.{pdf,svg,png}.
 """
@@ -121,7 +121,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--gene", default="SEPHS2")
     ap.add_argument("--gold", default="curation/gold_standard")
-    ap.add_argument("--data", default="figures/data/reannotation_pilot_sephs2")
+    ap.add_argument("--data", default="figures/inputs/reannotation_pilot_sephs2")
     ap.add_argument("--profile", default="results/models/machinery_profiles/SEPHS2.fa")
     ap.add_argument("--cm", default="results/models/appendicularia_secis.cm")
     ap.add_argument("--out", default="figures/reannotation_pilot_SEPHS2")
