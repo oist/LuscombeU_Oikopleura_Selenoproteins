@@ -13,7 +13,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      window plus the cost of the splice site, log10(f(GT-AG) / f(site)) / 2 with the frequencies above (other sites
      taken as 0.1%), 2 being the log10 cost of a mismatch at about 1% divergence (GA-AG 0.49, GC-AG 0.76, GG-AG
      1.05, other sites 1.47), then the smallest move. Every exon chain is also moved, among the placements that
-     give the same spliced sequence, to the most frequent class. A
+     give the same spliced sequence, to the most frequent class. O. dioica introns are short (peak at 40-44 nt, some
+     below 35 nt; Denoeud et al. 2010, figure S22); minimap2 -x splice:hq aligns introns of 20 nt or more as
+     introns and shorter ones as deletions (tested with minimap2 2.26), so deletions of 10 nt or more that have an
+     equivalent placement on one of these sites are reported as possible introns. A
      transcript supports the gene when an aligned exon holds the three bases of the codon and they read TGA on the
      gene strand.
   2. Candidate models. Each candidate is an exon chain on the genome: the chain of each supporting transcript, of
@@ -202,7 +205,7 @@ def walk(aln):
     (with the genome position they precede) and deleted target positions."""
     q = aln["qs"] if aln["strand"] == "+" else aln["qlen"] - aln["qe"]
     t = aln["ts"]
-    g2q, q2g, ins, dels, introns, blocks = {}, {}, [], [], [], []
+    g2q, q2g, ins, dels, introns, blocks, del_spans = {}, {}, [], [], [], [], []
     bstart = t
     for n, op in parse_cigar(aln["cigar"]):
         if op == "M":
@@ -211,11 +214,11 @@ def walk(aln):
         elif op == "I":
             ins += [(q + i, t) for i in range(n)]; q += n
         elif op == "D":
-            dels += [t + i for i in range(n)]; t += n
+            dels += [t + i for i in range(n)]; del_spans.append((t, t + n)); t += n
         elif op == "N":
             blocks.append((bstart, t)); introns.append((t, t + n)); t += n; bstart = t
     blocks.append((bstart, t))
-    return {"g2q": g2q, "q2g": q2g, "ins": ins, "dels": dels, "introns": introns, "blocks": blocks}
+    return {"g2q": g2q, "q2g": q2g, "ins": ins, "dels": dels, "introns": introns, "blocks": blocks, "del_spans": del_spans}
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -336,6 +339,23 @@ def mapped_transcript_model(tm, genome, strand):
             "protein": tm["protein"], "cds": "", "utr3": tm["utr3"], "utr5_len": tm["utr5_len"],
             "cds_genome": tm["cds_genome"], "stop_genome": tm["stop_genome"], "moved": tm["moved"],
             "sites": [equivalent_sites(genome, a, b, strand) for a, b in chain_introns(tm["blocks"])], "exception": exc}
+
+
+SHORT_INTRON_CHECK = 10
+
+
+def short_intron_candidates(tms, genome, strand, lo, hi):
+    """Deletions of at least SHORT_INTRON_CHECK nt of transcripts against the assembly, between lo and hi, with an
+    equivalent placement on a site of the O. dioica intron classes: possible short introns, which minimap2
+    (-x splice:hq) aligns as deletions below about 20 nt (O. dioica introns peak at 40-44 nt, some below 35 nt:
+    Denoeud et al. 2010, figure S22). Returns {(start, end): (site, [transcripts])}."""
+    out = {}
+    for tm in tms:
+        for a, b in tm["walk"]["del_spans"]:
+            if b - a < SHORT_INTRON_CHECK or b <= lo or a > hi: continue
+            sites = [x for x in equivalent_sites(genome, a, b, strand) if x in INTRON_CLASSES]
+            if sites: out.setdefault((a, b), (sites[0], []))[1].append(tm["tx"])
+    return out
 
 
 def same_intron(i1, i2, genome):
@@ -637,6 +657,7 @@ def main():
                 notes.append(f"the assembly does not encode the protein of {tbest['tx']} ({best['exception']}{why}): "
                              f"model mapped from the transcript, protein from the transcript")
         protein = best["protein"]
+        lo_cds, hi_cds = min(best["cds_genome"]), max(best["cds_genome"])
         if source == "genome":   # internal check: the GFF3 coding sequence, read on the genome, gives the protein
             cds_seq = "".join(gs[x:y + 1] for x, y in cds_segments(best))
             cds_seq = cds_seq if strand == "+" else rc(cds_seq)
@@ -650,6 +671,9 @@ def main():
         if indel_tx and source == "genome":
             notes.append(f"{len(indel_tx)} supporting transcript(s) differ from the assembly by indels in the coding "
                          f"sequence ({','.join(indel_tx[:3])}{'...' if len(indel_tx) > 3 else ''})")
+        for (x, y), (site_, txs) in sorted(short_intron_candidates(tms, gs, strand, lo_cds, hi_cds).items()):
+            notes.append(f"possible intron of {y - x} nt ({site_}) aligned as a deletion at {x + 1}-{y} "
+                         f"({','.join(sorted(set(txs))[:3])})")
         if best["open5"]: notes.append("5' end open (start may lie upstream)")
         if best["open3"]: notes.append("3' end open (no stop codon in the chain)")
         if not best["support"]: notes.append("no supporting transcript compatible with the exon chain")
@@ -657,7 +681,6 @@ def main():
         atypical = collections.Counter(x[0] for x in best["sites"] if x[0] in INTRON_CLASSES and x[0] != "GT-AG")
         other_sites = ["/".join(x) for x in best["sites"] if x[0] not in INTRON_CLASSES]
         same_stop = [tm for tm in tms if best["stop_genome"] is not None and tm["stop_genome"] == best["stop_genome"]]
-        lo_cds, hi_cds = min(best["cds_genome"]), max(best["cds_genome"])
         status, ids, over = annotation_status(annotations[g], contig, strand, codon0, lo_cds, hi_cds)
         fix = annotation_fix(best, over, gs)
         if source != "genome": fix += "; the assembly does not encode the protein of the transcripts"

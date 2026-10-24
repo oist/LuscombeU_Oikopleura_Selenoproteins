@@ -513,3 +513,14 @@ no earlier step waits for them.
   and OdB3 (as in the pilot), and the DIO_PAR intron too; other splice sites remain in OKI GPX_chr1a (1),
   SELENOO (4) and SEPHS2 (1), to review on the rerun. Relevant to step 7 (stage 2 with non-canonical introns):
   G*-AG donors for O. dioica.
+- Short introns (2026-10-24, noted by C. Plessy): O. dioica introns peak at 40-44 nt, with a few percent below 35 nt
+  (Denoeud et al. 2010, figure S22; the cDNA mapping used exonerate --minintron 25, so shorter introns were not
+  measurable). minimap2 2.26 -x splice:hq -un aligns introns of 20 nt or more as introns and those of 16 and 18 nt as
+  deletions (synthetic test, GT-AG and GA-AG alike); the container has minimap2 2.30 (to check on Deigo; a release
+  binary could not be run here). curation/gold_standard.py now reports deletions of 10 nt or more with an equivalent
+  placement on a GT-AG, GA-AG, GC-AG or GG-AG site as possible introns (notes column); the junction window (+/- 8 nt)
+  and the end tolerance (10 nt) stay below the shortest intron sizes. The pipeline notes of the pilot
+  (docs/oikopleura_sec_annotation_agent.md in the pipeline repository) already ask to allow GA-AG and short introns
+  and record that lowering the minimum intron length of exonerate did not recover the missed Sec exons. For step 7:
+  check the minimum intron lengths of exonerate and GeneWise as called by Selenoprofiles 4.5.8 (source not
+  reachable here).
