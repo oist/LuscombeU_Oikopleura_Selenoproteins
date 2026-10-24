@@ -8,8 +8,8 @@ A. Gene models in gene orientation, aligned on the 5' end of the gold-standard t
    The selenocysteine TGA is drawn across each assembly; SECIS elements are the best hits of the current
    appendicularian model (results/models/appendicularia_secis.cm, Infernal cmsearch) in the 2,000 nt after the stop
    codon (<genome>.after_stop.fa), drawn when cmsearch is available.
-B. Proteins drawn on the coordinates of human SEPHS2 (UniProt Q99611) through global alignments (BLOSUM62, free end
-   gaps): AIR synthase related protein domains (Pfam PF00586 and PF02769, InterPro coordinates on Q99611) and the
+B. Gold-standard proteins, with human SEPHS2 and a Ciona SEPHS, drawn on the coordinates of human SEPHS2 (UniProt
+   Q99611) through global alignments (BLOSUM62, free end gaps): AIR synthase related protein domains (Pfam PF00586 and PF02769, InterPro coordinates on Q99611) and the
    residue at the selenocysteine position of human SEPHS2 (U60).
 External inputs (public, with sources): figures/inputs/reannotation_pilot_sephs2.tsv and .fa. The Ciona protein comes
 from the SEPHS2 profile of results/models/machinery_profiles/.
@@ -92,23 +92,28 @@ def secis_hits(cm, fasta, genomes, gene):
     return best
 
 
-def draw_model(ax, y, exons, cds, x, color, hatch=False, h_cds=0.5, h_utr=0.2):
+H_CDS, H_UTR, CHEVRON = 0.2, 0.08, 0.07   # heights of coding and UTR exons, and of the intron chevrons
+ROW, GAP = 0.5, 0.95                       # public model to gold standard; gold standard to the next assembly
+
+
+def draw_model(ax, y, exons, cds, x, color, hatch=False, h_cds=H_CDS, h_utr=H_UTR):
     xs = sorted((min(x(a), x(b)), max(x(a), x(b)) + 1) for a, b in exons)
     for (a0, a1), (b0, b1) in zip(xs, xs[1:]):
         mid = (a1 + b0) / 2
-        ax.plot([a1, mid, b0], [y, y + 0.12, y], color=color, lw=0.6, solid_joinstyle="miter")
+        ax.plot([a1, mid, b0], [y, y + CHEVRON, y], color=color, lw=0.5, solid_joinstyle="miter")
     for a0, a1 in xs:
         ax.add_patch(Rectangle((a0, y - h_utr / 2), a1 - a0, h_utr, facecolor=color, edgecolor="none"))
     for a, b in cds:
         a0, a1 = min(x(a), x(b)), max(x(a), x(b)) + 1
         ax.add_patch(Rectangle((a0, y - h_cds / 2), a1 - a0, h_cds, facecolor="white" if hatch else color,
-                               edgecolor=color, lw=0.6, hatch="//////" if hatch else None))
+                               edgecolor=color, lw=0.5, hatch="////" if hatch else None))
 
 
 def stem_loop(ax, x0, y, color):
-    ax.plot([x0, x0], [y + 0.3, y + 0.6], color=color, lw=0.9)
-    ax.plot([x0 + 25, x0 + 25], [y + 0.3, y + 0.6], color=color, lw=0.9)
-    ax.add_patch(matplotlib.patches.Ellipse((x0 + 12.5, y + 0.68), 40, 0.22, facecolor="none", edgecolor=color, lw=0.9))
+    """SECIS glyph standing on a model drawn at y."""
+    ax.plot([x0, x0], [y + 0.04, y + 0.18], color=color, lw=0.8)
+    ax.plot([x0 + 22, x0 + 22], [y + 0.04, y + 0.18], color=color, lw=0.8)
+    ax.add_patch(matplotlib.patches.Ellipse((x0 + 11, y + 0.23), 36, 0.1, facecolor="none", edgecolor=color, lw=0.8))
 
 
 def protein_map(q, ref, aligner):
@@ -160,8 +165,8 @@ def main():
 
     # ---- figure
     from matplotlib.transforms import blended_transform_factory
-    fig = plt.figure(figsize=(7.2, 7.0))
-    axA = fig.add_axes([0.25, 0.43, 0.73, 0.52]); axB = fig.add_axes([0.25, 0.05, 0.73, 0.27])
+    fig = plt.figure(figsize=(7.2, 5.0))
+    axA = fig.add_axes([0.25, 0.40, 0.73, 0.57]); axB = fig.add_axes([0.25, 0.07, 0.73, 0.22])
     labA = blended_transform_factory(axA.transAxes, axA.transData)
     labB = blended_transform_factory(axB.transAxes, axB.transData)
     gprot = {}
@@ -180,7 +185,7 @@ def main():
         x = (lambda p, t0=t0: p - t0) if st == "+" else (lambda p, t1=t1: t1 - p)
         xs = x(sec[0]) if st == "+" else x(sec[1])
         top = y
-        axA.text(-0.33, y - 0.5, NAMES[g], transform=labA, fontsize=8, fontweight="bold", va="center", ha="left")
+        axA.text(-0.33, y - ROW / 2, NAMES[g], transform=labA, fontsize=7.5, fontweight="bold", va="center", ha="left")
         # public models (one row; OdB3 has two models side by side)
         names = []
         for lbl, e, c, hatch in public[g]:
@@ -189,21 +194,21 @@ def main():
             if g == "OdB3":
                 xm = min(min(x(p_), x(q_)) for p_, q_ in e); xM = max(max(x(p_), x(q_)) for p_, q_ in e)
                 txt = f"{lbl.split()[1]}: other frame" if hatch else f"{lbl.split()[1]}: starts at an internal ATG"
-                axA.text((xm + xM) / 2 if not hatch else xs - 20, y + 0.36, txt, fontsize=5.5,
+                axA.text((xm + xM) / 2 if not hatch else xs - 20, y + 0.15, txt, fontsize=5.5,
                          color=OTHER if hatch else PUBLIC, ha="center" if not hatch else "right", va="bottom")
             elif g == "OSKA" and "upstream" in lbl:
                 xm = min(min(x(p_), x(q_)) for p_, q_ in e)
                 n = re.search(r"and (\d+) exons", lbl).group(1)
-                axA.annotate("", xy=(xm - 90, y), xytext=(xm - 10, y),
-                             arrowprops=dict(arrowstyle="-|>", color=PUBLIC, lw=0.6, mutation_scale=6))
-                axA.text(xm, y + 0.36, f"◀ {n} more exons", fontsize=5.5, color=PUBLIC, ha="left", va="bottom")
+                axA.annotate("", xy=(xm - 80, y), xytext=(xm - 10, y),
+                             arrowprops=dict(arrowstyle="-|>", color=PUBLIC, lw=0.5, mutation_scale=5))
+                axA.text(xm, y + 0.15, f"◀ {n} more exons", fontsize=5.5, color=PUBLIC, ha="left", va="bottom")
         src = {"OKI": "RefSeq", "OSKA": "ANISEED", "OdB3": "GenBank"}[g]
-        axA.text(-0.02, y + 0.12, src, transform=labA, fontsize=6, ha="right", va="center")
-        axA.text(-0.02, y - 0.16, ", ".join(n_.replace("Oidioi.CG.OSKA2016.", "") for n_ in names), transform=labA,
+        axA.text(-0.02, y + 0.07, src, transform=labA, fontsize=6, ha="right", va="center")
+        axA.text(-0.02, y - 0.11, ", ".join(n_.replace("Oidioi.CG.OSKA2016.", "") for n_ in names), transform=labA,
                  fontsize=5, color="0.35", ha="right", va="center")
         if g in notes:
-            axA.text(xs + 60, y + 0.38, notes[g], fontsize=5.5, color=PUBLIC, va="bottom")
-        y -= 1.0
+            axA.text(xs + 60, y + 0.15, notes[g], fontsize=5.5, color=PUBLIC, va="bottom")
+        y -= ROW
         # gold standard
         draw_model(axA, y, ex, cds, x, GOLD)
         axA.text(-0.02, y, "gold standard", transform=labA, fontsize=6, color=GOLD, ha="right", va="center")
@@ -212,29 +217,29 @@ def main():
             exs = blocks(chosen["exons"])
             for (a1, b1), (a2, b2), site in zip(exs, exs[1:], chosen["splice_sites"].split(";")):
                 if site != "GT-AG":
-                    axA.text((x(b1) + x(a2)) / 2, y + 0.24, site, ha="center", fontsize=5.5, color=GOLD)
+                    axA.text((x(b1) + x(a2)) / 2, y + 0.09, site, ha="center", fontsize=5, color=GOLD, va="bottom")
         if g in secis:
             f0, f1, bits = secis[g]
             stop = max(b for _, b in cds) if st == "+" else min(a_ for a_, _ in cds)
             xs_ = x(stop) + f0
-            stem_loop(axA, xs_, y - 0.2, SECIS)
-            axA.text(xs_ + 45, y + 0.42, f"SECIS {bits:.0f} bits", fontsize=5.5, color=SECIS, va="center")
-        axA.plot([xs + 1.5, xs + 1.5], [y - 0.4, top + 0.72], color=SEC, lw=0.8, ls=(0, (2, 1.5)))
-        axA.text(xs + 1.5, top + 0.76, "TGA", color=SEC, ha="center", fontsize=6, fontweight="bold", va="bottom")
-        y -= 1.5
+            stem_loop(axA, xs_, y, SECIS)
+            axA.text(xs_ + 40, y + 0.2, f"SECIS {bits:.0f} bits", fontsize=5.5, color=SECIS, va="center")
+        axA.plot([xs + 1.5, xs + 1.5], [y - 0.15, top + 0.33], color=SEC, lw=0.7, ls=(0, (2, 1.5)))
+        axA.text(xs + 1.5, top + 0.35, "TGA", color=SEC, ha="center", fontsize=5.5, fontweight="bold", va="bottom")
+        y -= GAP
     # key
-    ky = y + 0.6
+    ky = y + GAP - 0.35
     draw_model(axA, ky, [(1, 120)], [(41, 120)], lambda p: p - 1 - 650, "0.4")
     axA.text(-510, ky, "exons: coding (thick), UTR (thin)", fontsize=5.5, va="center")
     draw_model(axA, ky, [(1, 80)], [(1, 80)], lambda p: p - 1 + 450, OTHER, hatch=True)
     axA.text(550, ky, "coding sequence in another frame", fontsize=5.5, va="center")
-    stem_loop(axA, 1500, ky - 0.45, SECIS)
+    stem_loop(axA, 1500, ky - 0.12, SECIS)
     axA.text(1545, ky, "SECIS element (current model)", fontsize=5.5, va="center")
-    axA.set_xlim(-700, 2400); axA.set_ylim(ky - 0.4, 1.1)
+    axA.set_xlim(-700, 2400); axA.set_ylim(ky - 0.2, 0.55)
     axA.set_yticks([]); [axA.spines[s_].set_visible(False) for s_ in ("left", "right", "top")]
     axA.set_xticks(range(0, 2001, 500))
     axA.set_xlabel("nucleotides from the 5′ end of the gold-standard transcript (gene orientation)", fontsize=6)
-    axA.text(-0.33, 0.85, "A", transform=labA, fontsize=10, fontweight="bold")
+    axA.text(-0.33, 0.42, "A", transform=labA, fontsize=10, fontweight="bold")
 
     # ---- proteins on human coordinates
     from Bio import Align
@@ -254,26 +259,24 @@ def main():
     prots = [("human SEPHS2", "UniProt Q99611", human, "black"),
              ("Ciona intestinalis SEPHS", "XP_002129526.1", ciona, "black"),
              ("OKI2018 gold standard", "", gp["OKI"], GOLD),
-             ("OKI2018 RefSeq", "XP_081635792.1", seqs["OKI_XP_081635792.1"], PUBLIC),
              ("OSKA2016 gold standard", "", gp["OSKA"], GOLD),
-             ("OdB3 gold standard", "", gp["OdB3"], GOLD),
-             ("OdB3 GenBank", "CBY08598.1", seqs["OdB3_CBY08598.1"], PUBLIC)]
+             ("OdB3 gold standard", "", gp["OdB3"], GOLD)]
     doms = [tuple(map(int, f["value"].split("-"))) + (f["feature"].split()[1],) for f in facts if f["feature"].startswith("domain")]
     for i, (lbl, acc, p, col) in enumerate(prots):
         yy = -i
         m = protein_map(p, human, al)
         h0, h1 = min(m.values()), max(m.values())
-        axB.add_patch(Rectangle((h0, yy - 0.18), h1 - h0, 0.36, facecolor="white", edgecolor=col, lw=0.7))
+        axB.add_patch(Rectangle((h0, yy - 0.15), h1 - h0, 0.3, facecolor="white", edgecolor=col, lw=0.7))
         for d0, d1, dn in doms:
             a0, a1 = max(d0, h0), min(d1, h1)
-            if a1 > a0: axB.add_patch(Rectangle((a0, yy - 0.18), a1 - a0, 0.36, facecolor=DOM, edgecolor=col, lw=0.7))
+            if a1 > a0: axB.add_patch(Rectangle((a0, yy - 0.15), a1 - a0, 0.3, facecolor=DOM, edgecolor=col, lw=0.7))
         site = next((p[i_] for i_, j in m.items() if j == 60), None)
         if site:
-            axB.plot([60], [yy], "o", ms=6.5, color=SEC if site == "U" else "white", mec=SEC if site == "U" else "black", mew=0.7)
+            axB.plot([60], [yy], "o", ms=6, color=SEC if site == "U" else "white", mec=SEC if site == "U" else "black", mew=0.7)
             axB.text(60, yy - 0.01, site, ha="center", va="center", fontsize=5.5, color="white" if site == "U" else "black",
                      fontweight="bold")
-        axB.text(-0.02, yy + (0.12 if acc else 0), lbl, transform=labB, ha="right", va="center", fontsize=6, color=col)
-        if acc: axB.text(-0.02, yy - 0.18, acc, transform=labB, ha="right", va="center", fontsize=5, color="0.35")
+        axB.text(-0.02, yy + (0.13 if acc else 0), lbl, transform=labB, ha="right", va="center", fontsize=6, color=col)
+        if acc: axB.text(-0.02, yy - 0.2, acc, transform=labB, ha="right", va="center", fontsize=5, color="0.35")
         axB.text(h1 + 6, yy, f"{len(p)} aa", va="center", fontsize=5.5, color="0.3")
     for d0, d1, dn in doms:
         axB.text((d0 + d1) / 2, 0.42, {"PF00586": "AIRS", "PF02769": "AIRS_C"}.get(dn, dn) + f" ({dn})", ha="center",
