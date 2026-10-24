@@ -63,6 +63,39 @@ Built from `results/tables/` only.
   plus appendicularian proteins (stage 1 predictions, curated transcripts), OdB3 held out; tested by Selenoprofiles
   on the nine genomes against stage 1; then deposited (Zenodo) and passed to the pipeline as extra profiles.
 
+## Decisions (2026-10-24)
+
+- **Genome sets.** Stage 2 is developed and trained on the six *Oikopleura* assemblies only: OKI2018, OSKA2016 and
+  OdB3 (*O. dioica*), *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. *B. stygius*, *M. erythrocephalus* and
+  *F. borealis* are held out and used at the end of the manuscript, after stage 2, for the census over as many
+  appendicularians as possible (and as tests of how far the stage 2 tools generalise beyond *Oikopleura*).
+  Reasons: their contribution to stage 2 is small (SECIS model: 1 of 73 seeds, from *B. stygius*; machinery profiles:
+  8 sequences, 5 from *F. borealis*); their assemblies are fragmented (*B. stygius*, *M. erythrocephalus*: short N50,
+  fragment predictions) or noisy (*F. borealis*: 188 selenoprotein predictions, 31 % without a human hit, many
+  cysteine homologues grouping with bacteria or fungi); holding out *F. borealis* removes the circularity of the
+  SECp43 profile, which contains the *F. borealis* protein it then recovers; and most splice junctions of
+  *F. borealis* are non-canonical (Charles Plessy), which the gene prediction tools handle poorly.
+  *F. borealis* stays essential for its phylogenetic position (only non-oikopleurid appendicularian): the SECp43
+  loss in the oikopleurid ancestor, SELENOL and selenocysteine SELENOU, PSTK absent or missed, and the timing of the
+  GPX and SELENOW expansions belong to the final census discussion.
+- **No recomputation now.** Existing results stay as they are. The change is applied the next time each step is
+  rerun for another reason: SECIS model retrained without *B. stygius* and *M. erythrocephalus*; machinery profiles
+  rebuilt and retested without the three genomes; selenoprotein profiles built without them from the start; the
+  manuscript statements that rely on them (SECp43 loss, PSTK fragments, their columns in Table MACHINERY, the
+  *F. borealis* SECIS evaluation) moved to the census section. Trees: decide at the next rerun whether the three
+  genomes stay as descriptive taxon sampling (they are not used to train any tool) or are removed.
+- **Bacterial-like sequences: possible horizontal gene transfer, strict standard.** Similarity to bacterial sequences
+  is "interesting if true": tunicates acquired cellulose synthase by a lateral gene transfer from a prokaryote at the
+  base of the lineage (Sagane et al. 2010, Development, doi:10.1242/dev.044503, PMID 20335363; two CesA genes in
+  *O. dioica*), so other transfers cannot be excluded. But no false positive is allowed: a candidate is worth
+  reporting only after every attempt to disprove it has failed. Contamination is the default explanation. Checks
+  to pass, at least: the gene lies on a contig with animal genes and appendicularian composition (GC, coverage,
+  codon usage), not on a short or bacterial-like contig; it has introns, or spliced transcripts from the species;
+  it is found in independent assemblies or individuals (for *O. dioica*: OKI2018, OSKA2016, OdB3 and the
+  transcriptomes); a foreign-contamination screen of the assembly (for example NCBI FCS-GX, or Tiara) does not flag
+  the contig; and its placement among bacteria holds under site-heterogeneous models, with vertical descent rejected
+  by AU tests. One HGT screen, at the end of the manuscript, for all genomes used in the census.
+
 ## Manuscript style
 
 - Write "selenocysteine" when the amino acid is meant alone; keep "Sec" only inside names (tRNA-Sec, eEFSec, SecS)

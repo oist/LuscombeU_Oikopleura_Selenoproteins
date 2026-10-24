@@ -316,6 +316,10 @@ an assembly may reflect duplicated haplotypes or contamination [@Pichon2019].
   make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
   for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
 - The second SEPHS copy was not found in OSKA2016 and OdB3: to check (assembly or prediction).
+- Decision of 2026-10-24 (docs/plan.md): B. stygius, M. erythrocephalus and F. borealis are held out of stage 2 and
+  used at the end for the census; at the next rerun, the statements of this section that rely on them (SECp43 loss,
+  PSTK fragments, their columns in Table MACHINERY) move to the census section. Bacterial-like sequences: one strict
+  HGT screen at the end (no false positive; contamination is the default explanation).
 -->
 
 ## The Rfam SECIS model does not separate appendicularian SECIS elements from genomic background
