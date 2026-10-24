@@ -22,8 +22,9 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   2. Candidate models. Each candidate is an exon chain on the genome: the chain of each supporting transcript, of
      each annotated mRNA that holds the codon in an exon (exon rows, or CDS rows when the annotation has no exons),
      and of the stage 1 Selenoprofiles prediction that holds the codon (<stage1>/<genome>.selenoprofiles.gtf), and
-     each transcript chain extended with the exons of an annotated or predicted candidate beyond its ends, at each
-     end that lies inside an exon of that candidate (a 5'-truncated transcript completed by the annotation; inside
+     each transcript chain extended with the exons of an overlapping annotated mRNA or prediction beyond its ends,
+     at each end that lies inside an exon of that model, when this changes the coding sequence (a truncated
+     transcript completed by the annotation, including annotated models that stop or start at the TGA; inside
      its own span the transcript decides, for example on the placement of an atypical intron). When such an
      extension places the start codon beyond the transcript while the transcript's own model is complete, the
      added N-terminal residues must align to the same gene in another assembly (at least half of them, 40%
@@ -532,9 +533,12 @@ def annotation_fix(model, over, genome):
             return "none (selenocysteine declared)" if r["sec"] else "declare the selenocysteine (transl_except)"
     if model["kind"] == "annotation":
         return f"change the coding sequence on the annotated exon chain of {model['source']}"
-    for _, r, _, _ in over:
-        if compatible(r["exons"] or [(x, y + 1) for x, y in r["cds"]], model["blocks"], genome):
-            return f"change the coding sequence of {r['protein']} (compatible exon chain, to be extended)"
+    compat = sorted({r["protein"] for _, r, _, _ in over
+                     if compatible(r["exons"] or [(x, y + 1) for x, y in r["cds"]], model["blocks"], genome)})
+    if len(compat) > 1:
+        return f"merge {' and '.join(compat)} into one coding sequence through the selenocysteine"
+    if compat:
+        return f"change the coding sequence of {compat[0]} (compatible exon chain, to be extended)"
     for _, r, _, _ in over:   # same number of introns, some placed differently
         ai, mi = chain_introns(r["exons"] or [(x, y + 1) for x, y in r["cds"]]), model["introns"]
         if r["exons"] and len(ai) == len(mi):
@@ -709,18 +713,26 @@ def main():
                 if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
                 m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "prediction", cds_only=True)
                 if m: cands.append(m)
-            # transcript chains extended with annotated or predicted exons beyond their ends
-            others = [m for m in cands if m["kind"] in ("annotation", "prediction")]
+            # transcript chains extended with the exons of overlapping annotated mRNAs or predictions beyond their
+            # ends (also models that do not hold the codon: the OdB3 annotation splits genes at the TGA); an
+            # extension must change the coding sequence of the transcript's own model
+            extenders = [("annotation", ar["protein"], ar["exons"] or [(x, y + 1) for x, y in ar["cds"]])
+                         for ar in ann.values() if ar["contig"] == contig and ar["strand"] == strand]
+            extenders += [("prediction", pid, [(x, y + 1) for x, y, _ in cds]) for pid, cds in gtf.get(contig, {}).items()
+                          if cds[0][2] == strand]
             seen = {tuple(m["blocks"]) for m in cands}
             for tm in tms:
-                for o in others:
-                    blocks = extend_chain(tm["blocks"], o["blocks"])
+                t0, t1 = min(a for a, _ in tm["blocks"]), max(b for _, b in tm["blocks"])
+                own = next((c for c in cands if c["kind"] == "transcript" and c["source"] == tm["tx"]), None)
+                for kind, src, oblocks in extenders:
+                    if max(b for _, b in oblocks) <= t0 or min(a for a, _ in oblocks) >= t1: continue
+                    blocks = extend_chain(tm["blocks"], oblocks)
                     if not blocks: continue
-                    m = model_from_chain(blocks, gs, codon0, strand, f"{tm['tx']}+{o['source']}", f"transcript+{o['kind']}")
-                    if m and tuple(m["blocks"]) not in seen:
-                        seen.add(tuple(m["blocks"])); m["moved"] = tm["moved"]; m["base_tx"] = tm
-                        m["base"] = next((c for c in cands if c["kind"] == "transcript" and c["source"] == tm["tx"]), None)
-                        cands.append(m)
+                    m = model_from_chain(blocks, gs, codon0, strand, f"{tm['tx']}+{src}", f"transcript+{kind}")
+                    if not m or tuple(m["blocks"]) in seen: continue
+                    if own and own["cds"] and m.get("cds_genome") == own.get("cds_genome"): continue
+                    seen.add(tuple(m["blocks"])); m["moved"] = tm["moved"]; m["base_tx"] = tm; m["base"] = own
+                    cands.append(m)
             usable = [m for m in cands if m["cds"]]
             for m in usable:
                 m["ctx"] = has_ctx(m["protein"])

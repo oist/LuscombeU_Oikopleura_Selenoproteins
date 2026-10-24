@@ -582,3 +582,12 @@ no earlier step waits for them.
   site outside the intron classes that no compatible transcript shares rank below the others; the reference
   transcript protein excludes transcripts with more than 20 indels and prefers, within 95% of the longest, the one
   that contains the most other transcript proteins.
+- Step 2, fifth Deigo run reviewed (2026-10-24, commit 16a1fcd): as expected for OdB3 GPX_PAR (183 aa), OSKA2016
+  SELENOW_pair1 (93 aa), OKI2018 TXNRD (600 aa), OSKA2016 SELENOS (9-aa extension rejected) and OdB3 TXNRD (no
+  unsupported junction; EST completed by the prediction, 609 aa); 30 assembly-based models translate on the ENA
+  sequence. Remaining fault: OdB3 SEPHS2 had no stop codon (323 aa; OKI2018 393, OSKA2016 391): the OdB3
+  annotation splits the gene at the TGA (CBY08599.1, N-terminal part spliced around the TGA by a 46-nt intron;
+  CBY08598.1, C-terminal part with the stop codon), and extensions used only models holding the codon. Change:
+  transcript chains are extended with any overlapping annotated mRNA or prediction, when the extension changes the
+  coding sequence (tested on the ENA sequence: OdB3 SEPHS2 392 aa, C-terminus as in OSKA2016); annotation_fix
+  reports merges of compatible split models.
