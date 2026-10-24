@@ -21,3 +21,10 @@ doi:10.1101/gr.190538.115, Supplemental Material S8: summary set, vertebrates, i
 supplement gives codon alignments: they are translated codon by codon (gap codons skipped, stop codons, including
 the selenocysteine TGA, read as X).
 Header: `SEPHS2|<species>.<type>|<source>`.
+
+`gold_standard.py` (run by `make gold-standard`; step 2 of the plan of 2026-10-24) builds gene models of the curated
+selenoprotein genes from the transcripts of each assembly: spliced alignment (minimap2 `-x splice:hq -un`), the open
+reading frame through the curated TGA read as selenocysteine, UTR ends, splice sites, indels against the assembly,
+and the treatment of each gene by the public annotation; the Selenoprofiles prediction when no transcript supports
+the codon. Outputs: `curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine),
+`<genome>.proteins.faa`, `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.

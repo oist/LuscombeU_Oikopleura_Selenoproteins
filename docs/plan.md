@@ -466,3 +466,9 @@ no earlier step waits for them.
   Current model: OSKA2016 (held out) 12 of 14 at 25 bits, best random window 18.1, no cysteine homolog at 20.
   Families with the least SECIS evidence: SELENOO, SELENOS, SELENOT (none at 20 bits with RF00031), SELENOF (1 of 7).
   Provisional paragraph and Methods added to the manuscript.
+- Step 2 started (2026-10-24): curation/gold_standard.py (make gold-standard), tested on synthetic data (two
+  strands, a GA-AG intron, an unstranded transcript, a transcript with an insertion, a prediction-only gene, an
+  annotation starting after the selenocysteine codon). minimap2 -x splice moved a GA-AG junction by two bases and
+  created a false insertion; -un (no GT-AG preference) aligns it exactly, so the script uses -x splice:hq -un. To run
+  on Deigo; then review each gene against the pilot (SELENOT GA-AG intron and selenocysteine exon, SEPHS2 first exon,
+  OKI2018 SELENOS allele, OdB3 SELENOO C-terminus, SELENOK, the SELENOW genes without RefSeq model).
