@@ -58,7 +58,7 @@ longest 3' UTR of the supporting transcripts that end at the same stop codon; ho
 gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, coding
 sequence ending before the codon or starting after it, no model); and the change that the annotation needs
 (annotation_fix).
-Outputs in --out: <genome>.candidates.tsv (every candidate model with its exon chain and the ranking criteria, every
+Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain and the ranking criteria, every
 supporting transcript with its own frame, and the annotated transcripts near the codon that are not candidates, for
 review), <genome>.gff3 (gene, mRNA, exon and CDS features; transl_except=(pos:..%2Caa:Sec) on the CDS rows),
 <genome>.proteins.faa (U for selenocysteine), <genome>.utr3.fa (3' UTR of the model), <genome>.after_stop.fa
@@ -797,7 +797,7 @@ def main():
         o["after"].append(f">{gene}|{g}|after_{'stop' if not best['open3'] else 'open_frame'}|{len(seq)} nt\n{seq}\n")
     for g, o in out.items():
         with open(f"{a.out}/{g}.gff3", "w") as fh: fh.write("\n".join(o["gff"]) + "\n")
-        with open(f"{a.out}/{g}.candidates.tsv", "w") as fh:
+        with open(f"{a.out}/{g}.candidate_models.tsv", "w") as fh:
             fh.write("\t".join(CANDIDATE_COLUMNS) + "\n")
             for r in cand_rows:
                 if r["genome"] == g: fh.write("\t".join(str(r[c]) for c in CANDIDATE_COLUMNS) + "\n")

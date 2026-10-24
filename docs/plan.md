@@ -543,7 +543,7 @@ no earlier step waits for them.
   start, transcript support, chain with UTRs, length, then annotation (upstream stop reported, not ranked); identity
   counted over the part of each reference protein that both proteins cover; UTR exons grafted from compatible
   transcripts onto chosen CDS-only models; touching blocks merged; candidates table per assembly
-  (curation/gold_standard/<genome>.candidates.tsv) for review. To review after the rerun: OKI2018 DIO_chr1 (model
+  (curation/gold_standard/<genome>.candidate_models.tsv) for review. To review after the rerun: OKI2018 DIO_chr1 (model
   from a transcript with 56 mismatches and a TT-AA junction; RefSeq starts after the Sec), OKI2018 SELENOO (RefSeq
   587 aa; transcripts incompatible), and the OSKA2016 genes, all reported as new exon chains against the OSKA2016
   annotation.
