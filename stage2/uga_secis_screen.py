@@ -3,8 +3,9 @@
 
 scan (heavy; Infernal cmsearch):
   - genome-wide SECIS scans with the Oikopleura SECIS model of step 3 (results/models/oikopleura_secis.cm), both
-    strands, hits of at least --report-bits, of the --scan genomes (six Oikopleura assemblies and four non-target
-    tunicates) and of a shuffled copy of each, as background: every contig cut in windows of --shuffle-window nt,
+    strands, hits of at least --report-bits, of the --scan genomes (six Oikopleura assemblies, the three
+    appendicularian genomes held out of stage 2, B. stygius, M. erythrocephalus and F. borealis, computed for the final
+    census, and four non-target tunicates) and of a shuffled copy of each, as background: every contig cut in windows of --shuffle-window nt,
     each shuffled with its dinucleotide counts preserved (Altschul and Erickson 1985), so that local composition
     stays as in the genome;
   - transcript sets: the annotated transcripts of the genomes that have an annotation (exon chain, or CDS rows when
@@ -29,7 +30,9 @@ screen (light; reads the outputs of scan):
     alignment of E <= --cmp-evalue on the forward frames of both regions, with at least --cmp-flank aligned residues
     on one side of it, unless a stronger alignment of the same two regions overlaps it in another frame; its open
     stretch (codons to the previous and next stop codons) must hold at least --cmp-min-codons codons; "internal" or
-    "C-terminal" as above; one candidate per TGA, from the nearest SECIS hit downstream;
+    "C-terminal" as above; one candidate per TGA, from the nearest SECIS hit downstream; the held-out genomes
+    (--heldout) are screened too, against all species, but are not partners of the Oikopleura assemblies, whose
+    candidates therefore do not depend on them;
   - each candidate protein (translated with U, from the frame of the transcript screen or the open stretch of the
     comparative screen) is compared by blastp (legacy BLAST) with the human RefSeq proteome (best hit, E <= --evalue, and
     the residue aligned to the U in a local alignment with the hit, BLOSUM62) and with the gold-standard proteins of
@@ -56,6 +59,7 @@ CODE = {a + b + c: AA[16 * i + 4 * j + k] for i, a in enumerate(BASES) for j, b 
 OIKOPLEURA = ["OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan"]
 DIOICA = ["OKI", "OSKA", "OdB3"]
 NONTARGET = ["Cint", "Csav", "Scla", "Tdem"]
+HELDOUT = ["Bsty", "Mery", "Fbor"]   # held out of stage 2 (decision of 2026-10-24); computed for the final census
 CONTROLS = ["Hsap", "Cint"]
 SPECIES = {"OKI": "O. dioica", "OSKA": "O. dioica", "OdB3": "O. dioica"}
 species = lambda g: SPECIES.get(g, g)
@@ -414,7 +418,7 @@ def comparative_screen(a, summary, T, sheet):
     d = f"{a.work}/comparative"
     os.makedirs(d, exist_ok=True)
     regions, stats = {}, collections.Counter()
-    for g in a.genome_screen:
+    for g in a.genome_screen + a.heldout:
         rec = next((x for x in summary if x["genome"] == g and x["set"] == "genome"), None)
         if rec is None or T is None: continue
         by_contig = collections.defaultdict(list)
@@ -444,6 +448,9 @@ def comparative_screen(a, summary, T, sheet):
         for hit in it.iter("Hit"):
             t = hit.findtext("Hit_def").split()[0]
             if species(regions[t]["genome"]) == species(regions[q]["genome"]): continue
+            # the candidates of the Oikopleura assemblies rest on Oikopleura partners only, so that they do not
+            # depend on the held-out genomes; those of the held-out genomes may rest on any other species
+            if regions[q]["genome"] not in a.heldout and regions[t]["genome"] in a.heldout: continue
             hsps = [h for h in hit.iter("Hsp") if int(h.findtext("Hsp_query-frame")) > 0 and int(h.findtext("Hsp_hit-frame")) > 0]
             spans = [(int(h.findtext("Hsp_query-frame")), int(h.findtext("Hsp_query-from")), int(h.findtext("Hsp_query-to")),
                       float(h.findtext("Hsp_bit-score"))) for h in hsps]
@@ -676,7 +683,7 @@ def screen(a):
                 f"shuffled Oikopleura assemblies in the largest one)\n")
     print(f"genome threshold: {T} bits", flush=True)
     gold, gold_prot = read_gold(a)
-    stage1 = read_stage1(a, list(dict.fromkeys(a.scan + a.transcripts + a.genome_screen)))
+    stage1 = read_stage1(a, list(dict.fromkeys(a.scan + a.transcripts + a.genome_screen + a.heldout)))
     cands, refgenes = [], {}
     stats = collections.defaultdict(lambda: collections.Counter())
     # transcript screen
@@ -706,12 +713,14 @@ def screen(a):
     # comparative screen of the genome-scan hits
     cmp_cands, cmp_stats = comparative_screen(a, summary, T, sheet)
     cands += cmp_cands
-    for g in a.genome_screen:
+    for g in a.genome_screen + a.heldout:
         stats[(g, "comparative", "oikopleura")]["SECIS hits"] = cmp_stats[(g, "hits")]
         stats[(g, "comparative", "oikopleura")]["with a frame"] = cmp_stats[(g, "partnered")]
         if g not in DIOICA:   # reference genes: the selenocysteine predictions of stage 1 kept by the hit validation
-            refgenes[(g, "comparative", "oikopleura")] = sum(1 for v in stage1.get(g, {}).values() for x in v
-                                                             if x[4] == "selenocysteine")
+            # (in the held-out genomes, all were left out as held out)
+            refgenes[(g, "comparative", "oikopleura")] = sum(
+                1 for v in stage1.get(g, {}).values() for x in v
+                if x[4] == "selenocysteine" or (g in a.heldout and x[4].startswith("selenocysteine")))
     # known genes, blastp
     for i, c in enumerate(cands): c["id"] = f"cand{i + 1}"
     human = {k: v for k, v in read_fasta(a.human)} if os.path.exists(a.human) else {}
@@ -774,7 +783,7 @@ def screen(a):
         o.write("genome\tcontig\tstrand\tfrom\tto\tbits\tevalue\tknown gene upstream (distance from its stop codon)\t"
                 "candidates of the comparative screen\n")
         for r in summary:
-            if r["set"] != "genome" or T is None or r["genome"] not in a.genome_screen + NONTARGET: continue
+            if r["set"] != "genome" or T is None or r["genome"] not in a.genome_screen + a.heldout + NONTARGET: continue
             for contig, strand, x, y, bits, ev in sorted(r["hits"], key=lambda h: -h[4]):
                 if bits < T: continue
                 nk = near_known(contig, strand, min(x, y) - 1, max(x, y), gold.get(r["genome"], []), stage1.get(r["genome"], {}))
@@ -805,9 +814,12 @@ def main():
     ap.add_argument("--samplesheet", default="stage1/samplesheet.csv")
     ap.add_argument("--model", default="results/models/oikopleura_secis.cm")
     ap.add_argument("--rfam", default="data/references/RF00031.cm")
-    ap.add_argument("--scan", nargs="*", default=OIKOPLEURA + NONTARGET, help="genomes scanned whole (and shuffled)")
+    ap.add_argument("--scan", nargs="*", default=OIKOPLEURA + HELDOUT + NONTARGET, help="genomes scanned whole (and shuffled)")
     ap.add_argument("--transcripts", nargs="*", default=DIOICA + CONTROLS, help="genomes with transcript sets")
     ap.add_argument("--genome-screen", nargs="*", default=OIKOPLEURA, help="genomes of the comparative screen")
+    ap.add_argument("--heldout", nargs="*", default=HELDOUT,
+                    help="genomes of the comparative screen held out of stage 2: their regions are compared with all "
+                         "species, but are not partners of the other genomes")
     ap.add_argument("--report-bits", type=float, default=15.0)
     ap.add_argument("--shuffle-window", type=int, default=1000)
     ap.add_argument("--shuffle-seed", type=int, default=600)

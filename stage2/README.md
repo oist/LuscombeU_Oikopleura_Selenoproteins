@@ -193,15 +193,18 @@ SECIS of genes, with a threshold of 20 bits in the 3′ windows (`docs/plan.md`)
 ## UGA/SECIS screens (`uga_secis_screen.py`, `make secis-scan`, `make uga-screen`)
 
 Step 4 of the plan of 2026-10-24, independent of protein families. `scan`: genome-wide SECIS scans with
-`results/models/oikopleura_secis.cm` (both strands, hits of 15 bits or more) of the six *Oikopleura* assemblies and
-four non-target tunicates, and of copies shuffled in windows of 1 kb (dinucleotides preserved) as background;
+`results/models/oikopleura_secis.cm` (both strands, hits of 15 bits or more) of the six *Oikopleura* assemblies, the
+three appendicularian genomes held out of stage 2 (*B. stygius*, *M. erythrocephalus*, *F. borealis*; computed for
+the final census) and four non-target tunicates, and of copies shuffled in windows of 1 kb (dinucleotides
+preserved) as background;
 SECIS searches of the transcript sets: annotated transcripts (extended by 1 kb of genome after their 3′ end, and
 300 nt before CDS-only models), sense strand; transcript assemblies (OKI2018 Trinity, OSKA2016 transcripts, OdB3
 ESTs), both strands; human and *C. intestinalis* RefSeq mRNAs as controls, also with RF00031. `screen`: the
 genome-scan threshold from the shuffled copies (at most one expected false hit in the largest *Oikopleura*
 assembly); transcript screen (a frame through a TGA, from an ATG to a stop codon before a SECIS hit of 20 bits or
 more; frames overlapping a longer frame in another reading frame left out); comparative screen (TGA/TGA pairs in
-tblastx alignments between species of the regions upstream of genome-scan hits, as SGP2); blastp of the candidates
+tblastx alignments between species of the regions upstream of genome-scan hits, as SGP2; the held-out genomes are
+compared with all species but are not partners of the *Oikopleura* assemblies); blastp of the candidates
 against the human RefSeq proteome and the gold-standard proteins; known genes from the gold standard, the stage 1
 predictions and the annotated selenocysteines of the controls. Tested on a reduced OKI2018 and OdB3 set (seven
 gold-standard genes: all found by the transcript screen; the comparative test, OdB3 standing in for another

@@ -843,3 +843,9 @@ no earlier step waits for them.
   comparative screen 5/5 in each genome, with 9 other candidates each, expected from identical sequences of the same
   species (intergenic TGAs align); the step-3 locus NC_137291.1:11878408 scores 28.1 bits in the genome scan.
   Next: run make secis-scan, then make uga-screen, on Deigo.
+- Step 4, held-out genomes (2026-10-25, request of Charles): B. stygius, M. erythrocephalus and F. borealis are
+  scanned too (and their shuffled copies; the genome-scan threshold still comes from the Oikopleura copies only) and
+  screened by the comparative screen against all species; they are not partners of the Oikopleura assemblies, so the
+  Oikopleura candidates do not depend on them (decision of 2026-10-24). Reference genes of a held-out genome: its
+  stage 1 selenocysteine predictions (all left out as held out). Tested with the OdB3 test contigs as a held-out
+  stand-in: OKI2018 no comparative candidate (its only partner was held out), the stand-in 14 with the 5 genes.

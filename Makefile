@@ -164,7 +164,8 @@ secis-v2:
 	python3 stage2/secis_model_training.py --jobs 4
 
 # Step 4 of the plan of 2026-10-24: UGA/SECIS screens. secis-scan: genome-wide SECIS scans (Oikopleura model) of the
-# six Oikopleura assemblies and four non-target tunicates and of window-shuffled copies, and SECIS searches of the
+# six Oikopleura assemblies, the three held-out appendicularians (B. stygius, M. erythrocephalus, F. borealis; for the
+# final census) and four non-target tunicates, and of window-shuffled copies, and SECIS searches of the
 # transcript sets (O. dioica annotations and transcript assemblies; human and C. intestinalis RefSeq transcripts as
 # controls, also with RF00031); one to a few hours, for example
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=12:00:00 scripts/run_in_container.sh make secis-scan
