@@ -405,7 +405,9 @@ split genes at the selenocysteine codon: the OdB3 annotation splits five genes t
 and the two genes of the SELENOW pair into one model, and splits SELENOO into three models.
 
 Figure REANNOTATION (two pages, `figures/reannotation_page.pdf` and `figures/reannotation_page2.pdf`). Reannotation of
-the 18 selenoprotein genes in three *O. dioica* assemblies. For each gene, top: in each assembly, the public models
+the 18 selenoprotein genes in three *O. dioica* assemblies, grouped by family (page 1: glutathione peroxidases,
+deiodinases, thioredoxin reductase, SELENOO and SEPHS2; page 2: the Rdx family, SELENOW paralogs and SELENOT, then
+SELENOF, SELENOK and SELENOS). For each gene, top: in each assembly, the public models
 (grey; RefSeq for OKI2018, ANISEED for OSKA2016, GenBank for OdB3) above the gold-standard model (blue), in gene
 orientation, positioned by their distance in nucleotides to the selenocysteine TGA (dashed red line); thick boxes,
 coding exons; thin boxes, untranslated exons; coloured introns, splice sites other than GT-AG (drawn length
