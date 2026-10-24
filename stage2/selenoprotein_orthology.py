@@ -13,7 +13,10 @@ a clade of one. For each clade, read on the unrooted tree:
     sequences with a known human gene (human RefSeq proteins of the family, named Human_<gene>, and vertebrate
     predictions with their best human hit), with the support of that side and its numbers of other tunicate and
     vertebrate sequences;
-  - the best human hits of its members (results/tables/stage2_selenoprotein_rbh.tsv), as gene and status.
+  - the best human hits of its members (results/tables/stage2_selenoprotein_rbh.tsv), as gene and status;
+  - the Selenoprofiles labels of its members (selenocysteine, cysteine, homologue...), and the curated O. dioica
+    genes among them (curation/baseline_sec_genes.tsv, matched to the stage 1 predictions by their selenocysteine
+    codon in results/tables/stage1_annotation.tsv, so that only predictions with a selenocysteine are named).
 This is a summary for review: the reading is root-free but depends on the tree, and a side that holds most of the
 tree, or genes of several paralogs, does not assign the clade to one gene.
 Outputs: --table (one row per family, tree and appendicularian clade) and --markdown (the same, readable).
@@ -66,7 +69,22 @@ def describe(leaves, tax):
 def fmt(x): return "NA" if x is None else f"{x:.0f}"
 
 
-def analyse(fam, label, treefile, groups, tax, rbh):
+def baseline_names(baseline, annotation):
+    """(genome, prediction) -> curated gene, for stage 1 predictions whose selenocysteine codon is a curated one."""
+    cur = {}
+    for r in csv.DictReader(open(baseline), delimiter="\t"):
+        cur[(r["genome"], r["contig"], int(r["sec_codon"]))] = r["gene"]
+    out = {}
+    for r in csv.DictReader(open(annotation), delimiter="\t"):
+        if r["sec_start"] in (".", ""): continue
+        for d in (0, -2, 2):
+            k = (r["genome"], r["contig"], int(r["sec_start"]) + d)
+            if k in cur: out[(r["genome"], r["prediction"])] = cur[k]; break
+    return out
+
+
+def analyse(fam, label, treefile, groups, tax, rbh, curated=None):
+    curated = curated or {}
     tree = lba.read_tree(treefile)
     names, sd = sides(tree)
     app = {n for n in names if tax[n] == "Appendicularians"}
@@ -83,8 +101,12 @@ def analyse(fam, label, treefile, groups, tax, rbh):
         for n in members:
             r = rbh.get(split_name(n))
             hits[f"{r['best_human_gene']} ({r['status']})" if r else "not in the best-hit table"] += 1
+        labels = collections.Counter(n.rsplit(".", 1)[-1] for n in members)
+        named = sorted(f"{split_name(n)[0]}:{curated[split_name(n)]}" for n in members if split_name(n) in curated)
         rows.append({
             "family": fam, "tree": label, "clade": k, "sequences": len(T),
+            "labels": ", ".join(f"{l} {v}" for l, v in sorted(labels.items(), key=lambda kv: (-kv[1], kv[0]))),
+            "curated O. dioica genes": " ".join(named) or "-",
             "genomes": ",".join(sorted({split_name(n)[0] for n in T}, key=lambda g: sorted(APPENDICULARIANS).index(g)
                                        if g in APPENDICULARIANS else 99)),
             "members": " ".join(members), "clade support": fmt(sd.get(T)) if len(T) > 1 else "-",
@@ -107,6 +129,8 @@ def main():
     ap.add_argument("--pmsf", default="results/trees/selenoproteins/lba")
     ap.add_argument("--rbh", default="results/tables/stage2_selenoprotein_rbh.tsv")
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
+    ap.add_argument("--baseline", default="curation/baseline_sec_genes.tsv")
+    ap.add_argument("--annotation", default="results/tables/stage1_annotation.tsv")
     ap.add_argument("--table", default="results/tables/stage2_selenoprotein_orthology.tsv")
     ap.add_argument("--markdown", default="results/tables/stage2_selenoprotein_orthology.md")
     a = ap.parse_args()
@@ -116,6 +140,7 @@ def main():
     else:
         print(f"WARNING: {a.rbh} not found; best human hits left empty", flush=True)
     taxa = lba.load_taxa(a.taxa)
+    curated = baseline_names(a.baseline, a.annotation) if os.path.exists(a.baseline) and os.path.exists(a.annotation) else {}
     rows = []
     for fam in a.families:
         gfile = f"{a.trees}/{fam}.groups.tsv"
@@ -126,7 +151,7 @@ def main():
             if not os.path.exists(tf): continue
             leaves = {x.name for x in lba.read_tree(tf).get_terminals()}
             tax = {n: lba.taxon(n, groups, taxa) for n in leaves}
-            rows += analyse(fam, label, tf, groups, tax, rbh)
+            rows += analyse(fam, label, tf, groups, tax, rbh, curated)
     if not rows: raise SystemExit("no tree found")
     cols = list(rows[0])
     with open(a.table, "w") as o:
@@ -139,8 +164,8 @@ def main():
         for r in rows:
             if r["family"] != fam:
                 fam = r["family"]; o.write(f"\n## {fam}\n\n")
-            o.write(f"- {r['tree']} clade {r['clade']} ({r['sequences']} sequences; {r['genomes']}; support "
-                    f"{r['clade support']}): sister group {r['sister group']} ({r['sister support']}); nearest "
+            o.write(f"- {r['tree']} clade {r['clade']} ({r['sequences']} sequences: {r['labels']}; {r['genomes']}; "
+                    f"curated: {r['curated O. dioica genes']}; support {r['clade support']}): sister group {r['sister group']} ({r['sister support']}); nearest "
                     f"vertebrate genes {r['nearest vertebrate genes']} (side of {r['their side']}, support "
                     f"{r['side support']}, {r['other tunicates in side']} other tunicate sequences); best human hits: "
                     f"{r['best human hits']}\n")

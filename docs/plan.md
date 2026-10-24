@@ -340,3 +340,32 @@ Built from `results/tables/` only.
   baseline). Tested on synthetic data (human sequences from the InterPro API, mutated copies as predictions). To run
   on Deigo: make selenoprotein-rbh, selenoprotein-phylogeny, then selenoprotein-pmsf; selenoprotein-orthology after.
   Known gap: no appendicularian SELENOK in stage 1.
+- Selenoprotein orthology, first pass (2026-10-24; Deigo commit 07488b7; summary by make selenoprotein-orthology,
+  results/tables/stage2_selenoprotein_orthology.{tsv,md}, now with labels and curated O. dioica gene names; trees read
+  in figures/selenoproteins/*_collapsed_pmsf.pdf):
+  - TXNRD: appendicularian clade (9 genomes, 100) with the tunicate TXNRD1/3-type proteins (89-92), co-ortholog of
+    TXNRD1 and TXNRD3 (90-95); no appendicularian protein in the TXNRD2 clade, where ascidians and salps have one.
+  - GPX: the four O. dioica Sec GPX in two appendicularian clades (chr1a+chr1b; PAR+chr2), both in the group of
+    vertebrate GPX4 and tunicate GPX4-like proteins (70-75 PMSF); best hits GPX4 for most Sec predictions. No
+    appendicularian protein in the GPX1/2 or GPX3/5/6 groups (tunicates have GPX3-like). Cys GPX7/8-like proteins in
+    O. longicauda and O. vanhoeffeni (97). F. borealis Sec GPX clade outside the GPX4 group.
+  - SELENOW: three lineages. chr1a, pair1 and pair2 with Halocynthia SELENOW in the SELENOW clade (expanded, tandem
+    pair). chr2 (all nine genomes, 95-99) with tunicate, amphioxus, insect and fish SelW-like proteins whose best human
+    hit is MIEN1. PAR (OKI, OdB3, Olon, Mery; 97-100) sister to mammalian SELENOV (79-82), best hit SELENOV (ambiguous);
+    SELENOV arose in placental mammals (Mariotti et al. 2012), so the grouping is suspect: to test.
+  - DIO: DIO_PAR and DIO_chr1 among the tunicate DIOs (with protist deiodinase-like and sea urchin sequences nested,
+    weak supports); invertebrate chordate DIOs nearer DIO1 than DIO2/DIO3; best hits mixed DIO1/2/3. Unresolved.
+  - SELENOF, SELENOO, SELENOT: reciprocal best hits of the human gene; trees place the appendicularian clade outside
+    the animal or tunicate clade (SELENOF between plants and animals; SELENOO next to Phytophthora SelO; SELENOT next
+    to nematodes), the pattern of long branches: to test (AU) before calling them orthologs.
+  - SELENOK: the curated O. dioica SELENOK is not in stage 1; the appendicularian predictions in the tree are
+    glycine/tyrosine/proline homologues, not it. SELENOS: only the OSKA2016 protein, no human hit.
+  - Families absent from the Oikopleuridae but in other tunicates: SELENOH, SELENON, MSRB, FrnE (stage 1); SELENOL and a
+    Sec SELENOU only in F. borealis; appendicularian MsrA and SELENOU (PRXL2-like) are cysteine forms.
+  - F. borealis, and to a lesser extent B. stygius and M. erythrocephalus, carry many cysteine homologues that group
+    with bacteria or fungi (GPX, DIO-like thioredoxins, SelO, SelW-like, GSR-like): likely contaminants; exclude from
+    the census or flag.
+  - Profile sequences named by Ensembl identifiers are unclassified and kept in full (SELENOO): add these codes to
+    config/taxon_groups.tsv before final trees.
+  Next (to agree): AU tests for SELENOW_PAR (SELENOW vs SELENOV), SELENOF, SELENOO, SELENOT; MIEN1 added to the SELENOW
+  references; a curated SELENOK; contamination filter.
