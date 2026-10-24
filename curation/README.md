@@ -23,8 +23,14 @@ the selenocysteine TGA, read as X).
 Header: `SEPHS2|<species>.<type>|<source>`.
 
 `gold_standard.py` (run by `make gold-standard`; step 2 of the plan of 2026-10-24) builds gene models of the curated
-selenoprotein genes from the transcripts of each assembly: spliced alignment (minimap2 `-x splice:hq -un`), the open
-reading frame through the curated TGA read as selenocysteine, UTR ends, splice sites, indels against the assembly,
-and the treatment of each gene by the public annotation; the Selenoprofiles prediction when no transcript supports
-the codon. Outputs: `curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine),
-`<genome>.proteins.faa`, `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.
+selenoprotein genes of OKI2018, OSKA2016 and OdB3. The transcripts of each assembly are aligned with minimap2
+(`-x splice:hq -un`) and their junctions placed by the script (fewest mismatches, then canonical sites). Candidate
+models are exon chains from the supporting transcripts, the annotated mRNAs and the stage 1 prediction; each is read
+on the genome sequence (frame through the curated TGA read as selenocysteine), so that GFF3 and protein agree with
+the assembly. The model is chosen by the curated context, length, completeness and transcript support. When a
+transcript differs from the assembly by indels, its protein is used only if it is more similar to the same gene in
+the other assemblies; the model is then mapped from the transcript and marked with the GFF3 attribute `exception`.
+The table reports splice sites (non-canonical ones with all equivalent placements), differences between transcripts
+and assembly, UTRs, the treatment of the gene by the public annotation and the change it needs. Outputs:
+`curation/gold_standard/<genome>.gff3` (with `transl_except` for the selenocysteine), `<genome>.proteins.faa`,
+`<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.

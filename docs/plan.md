@@ -472,3 +472,29 @@ no earlier step waits for them.
   created a false insertion; -un (no GT-AG preference) aligns it exactly, so the script uses -x splice:hq -un. To run
   on Deigo; then review each gene against the pilot (SELENOT GA-AG intron and selenocysteine exon, SEPHS2 first exon,
   OKI2018 SELENOS allele, OdB3 SELENOO C-terminus, SELENOK, the SELENOW genes without RefSeq model).
+- Step 2, first Deigo run reviewed (2026-10-24, commit 98a5e95; 54 curated genes, 52 models). Four faults, checked on
+  the ENA sequence of OKI2018 (OU015566-OU015570, = RefSeq NC_137291-NC_137295) and of the OdB3 scaffolds:
+  (1) with -un, minimap2 places a junction anywhere among the placements that give the same spliced sequence: 53 of
+  the 110 introns of the OKI2018 and OdB3 models become GT-AG, GC-AG or AT-AC by such a shift (mRNA unchanged); of
+  the 18 others, GA-AG is one of the equivalent placements of 12; (2) the protein was read in the transcript and the
+  GFF3 coding sequence on the genome, which disagree when they differ by indels (OKI DIO_chr1: 13-nt insertion in
+  the transcript, 110 aa; OKI SELENOO: 1 nt, 27 aa); (3) a complete frame ranked before a longer one; (4) the 3' UTR
+  and after-stop FASTA files were excluded by the *.fa rule of .gitignore. Other observations: TXNRD is 600 aa in
+  OKI2018 and OSKA2016, with an N-terminal segment carrying a glutaredoxin-like CPFC motif (domain to be verified);
+  OKI SELENOW_pair1 and SELENOW_pair2 were both modelled from one transcript (TRINITY_DN2389_c0_g1_i2), which holds
+  the two frames (relevant to step 10); OSKA2016 SEPHS2 and OdB3 SELENOO had neither transcript nor prediction.
+  Revision of curation/gold_standard.py: junction placement by the script (fewest mismatches in +/- 8 nt, then
+  canonical sites), normalisation of every exon chain to canonical sites among equivalent placements; candidates
+  from transcripts, annotated mRNAs and the stage 1 prediction, all read on the genome sequence (internal check that
+  the GFF3 coding sequence gives the protein); ranking by curated context (either side of the U, since the curated
+  context was read on contiguous genome and runs into introns for GPX_chr1a, SEPHS2 and SELENOT), length within 90%
+  of the longest (from the first methionine when the 5' end is open), completeness, transcript support, annotated
+  chain; an open 5' end starts at the first ATG, or at the first codon for a fragment without ATG (3' ESTs);
+  assembly or transcript protein decided by identity to the same gene in the other assemblies (margin 0.02),
+  transcript-based models marked with the GFF3 attribute exception; annotation_fix column; transl_except comma
+  percent-encoded; the FASTA outputs committed. Tested on the ENA sequence with simulated transcripts (a 13-nt
+  insertion in transcripts, a 13-nt deletion in an assembly copy, a 1-nt insertion, 5'-truncated ESTs) and
+  RefSeq-style annotations of each status. No GA-AG introns are reported for O. dioica in PubMed (two hits, both on
+  F. borealis: Henriet et al. 2019, doi:10.1016/j.cub.2019.07.092; Soo et al. 2026, doi:10.1093/nar/gkag659), so no
+  preference is given to GA-AG among equivalent non-canonical placements; all are listed. To rerun on Deigo (the
+  alignments are cached in work/stage2/gold_standard/).
