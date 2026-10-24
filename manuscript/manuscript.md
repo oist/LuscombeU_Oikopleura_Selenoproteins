@@ -528,8 +528,9 @@ gene in another assembly. Each candidate was read on the genome sequence spliced
 TGA was extended upstream to the first ATG after the previous stop codon (or the first ATG of the frame when the
 chain has no stop upstream), and downstream to the next stop codon. Candidates were ranked by the presence of the
 curated protein context of the selenocysteine, the absence of unsupported splice sites outside the four intron
-classes, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length and, last, an
-annotated exon chain. Among the candidates equal to the first one on every criterion before length, the one whose
+classes, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length, not the
+annotated mRNA of another protein (an annotated mRNA whose coding sequence lies elsewhere, such as the upstream gene of
+an operon) and, last, an annotated exon chain. Among the candidates equal to the first one on every criterion before length, the one whose
 protein aligned best to the same gene in the other assemblies (mean global alignment score) replaced it when its
 score was higher by 20 (about 10 bits), so that exons beyond the transcripts, taken from the annotation or from a
 prediction, were chosen by similarity rather than by length. When the transcripts differed from the assembly by indels in the coding sequence, the

@@ -41,8 +41,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      least 90% as long as the longest candidate (lengths from the first methionine); a stop codon; an ATG start;
      at least one supporting transcript compatible with the chain (same introns where they overlap, allowing
      equivalent placements, and no transcript end inside an intron of the chain or the reverse, beyond 10 nt); a
-     chain with UTRs (transcript or annotated mRNA) rather than CDS rows only; protein length; an annotated chain
-     (so that the public annotation is changed as little as possible); 3' UTR length. Among the candidates equal to
+     chain with UTRs (transcript or annotated mRNA) rather than CDS rows only; protein length; not the annotated
+     mRNA of another protein (an annotated mRNA whose coding sequence does not overlap the candidate's, as the
+     upstream gene of an operon; reported in the notes); an annotated chain (so that the public annotation is
+     changed as little as possible); 3' UTR length. Among the candidates equal to
      the first one on every criterion before protein length, the one whose protein aligns best to the proteins of
      the same gene in the other assemblies (mean global alignment score, BLOSUM62, free end gaps) replaces it when
      its score is higher by 20 or more (about 10 bits): exons beyond the transcripts, taken from the annotation or
@@ -750,6 +752,11 @@ def main():
             usable = [m for m in cands if m["cds"]]
             for m in usable:
                 m["ctx"] = has_ctx(m["protein"])
+                # an annotated mRNA whose own coding sequence does not overlap the candidate's is the mRNA of another
+                # protein (for example an upstream gene of an operon): not preferred as "annotated chain"
+                lo_c, hi_c = min(m["cds_genome"]), max(m["cds_genome"])
+                m["other_gene_mrna"] = bool(m["kind"] == "annotation" and m.get("annotated_cds") and
+                                            not any(a <= hi_c and b >= lo_c for a, b in m["annotated_cds"]))
                 m["support"] = [tm for tm in tms if compatible(tm["blocks"], m["blocks"], gs)]
                 m["unsupported_sites"] = sum(1 for x, i in zip(m["sites"], m["introns"]) if x[0] not in INTRON_CLASSES and
                                              not any(same_intron(i, j, gs) for tm in m["support"] for j in tm["walk"]["introns"]))
@@ -759,7 +766,7 @@ def main():
                 longest = max(effective_length(m) for m in pool)
                 rank = lambda m: (m["ctx"], m["unsupported_sites"] == 0, effective_length(m) >= 0.9 * longest, not m["open3"],
                                   m["protein"].startswith("M"), bool(m["support"]), not m["cds_only"],
-                                  effective_length(m), m["kind"] == "annotation", len(m["utr3"]))
+                                  effective_length(m), not m["other_gene_mrna"], m["kind"] == "annotation", len(m["utr3"]))
                 best = max(usable, key=rank)
                 for m in usable: m["rank"] = rank(m)
             tx_ok = [tm for tm in tms if tm["protein"]]
@@ -800,6 +807,12 @@ def main():
             cand_rows.extend(candidate_rows(g, gene, [], tms, None, rec["near"], gs, strand))
             report.append(row); continue
         source, notes, id_g, id_t = "genome", [], "", ""
+        for m in rec["usable"]:
+            if m.get("other_gene_mrna"):
+                c = m["annotated_cds"]
+                up = (max(b for _, b in c) < min(m["cds_genome"])) == (strand == "+")
+                notes.append(f"the annotated mRNA of {m['source']} (another coding sequence) holds the gene in its "
+                             f"{'3' if up else '5'}' part")
         others = [p for og, p in proteins[gene] if og != g]
         if best is not None and others:
             # candidates equal to the chosen one on every criterion before protein length (for example two

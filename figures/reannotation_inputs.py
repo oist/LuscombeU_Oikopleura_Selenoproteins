@@ -7,8 +7,8 @@ Public models: the annotated transcripts of the candidate table of step 2 (curat
 order, from the candidate table (annotated CDS rows), from the EMBL record of the
 contig when given (--embl, GenBank models of OdB3: CDS and mRNA locations, translation), or by finding the public
 protein (EBI dbfetch, RefSeq proteins) in the translation of the exon chain read on the genome (--genome; TGA read
-as U). A public protein with less than 30% identity to the gold-standard protein is marked as read in another
-frame. Models of CDS rows only (OSKA2016) use their exons as coding sequence.
+as U). A public protein whose coding sequence overlaps the gold-standard one, with less than 30% identity to the
+gold-standard protein, is marked as read in another frame. Models of CDS rows only (OSKA2016) use their exons as coding sequence.
 Splice sites of the drawn introns of the public and gold-standard models: read on the genome when it is given,
 otherwise taken from the rows of the candidate table that have the same intron ("?" when none has it).
 Reference proteins (--reference label=UniProt accession, the first one giving the coordinates of panel B): sequence,
@@ -71,17 +71,24 @@ def location(s):
 
 
 def locate_protein(protein, exons, genome, strand):
-    """CDS (1-based segments) of a protein found in the translation of an exon chain, TGA read as U; None if absent."""
+    """CDS (1-based segments) of a protein found in the translation of an exon chain, TGA read as U and X in the
+    protein matching any residue, or, for a protein corrected for the assembly, from the positions of its first and
+    last 15 residues; None if absent."""
     pos = [p for a, b in sorted(exons) for p in range(a, b + 1)]
     if strand == "-": pos = pos[::-1]
     nt = "".join(genome[p - 1] for p in pos).upper()
     if strand == "-": nt = nt.translate(str.maketrans("ACGT", "TGCA"))
+    regex = lambda p: re.compile("".join("." if c == "X" else re.escape("*" if c == "U" else c) for c in p))
     for f in (0, 1, 2):
         aa = "".join("U" if nt[i:i + 3] == "TGA" else translate(nt[i:i + 3]) for i in range(f, len(nt) - 2, 3))
-        k = aa.replace("U", "*").find(protein.replace("U", "*"))
-        if k < 0: continue
+        hit = regex(protein).search(aa.replace("U", "*"))
+        if hit: k, k_end = hit.start(), hit.end()
+        else:   # a corrected model (RefSeq "low quality protein"): from its first to its last 15 residues
+            h1, h2 = regex(protein[:15]).search(aa.replace("U", "*")), regex(protein[-15:]).search(aa.replace("U", "*"))
+            if not h1 or not h2 or h2.end() <= h1.start(): continue
+            k, k_end = h1.start(), h2.end()
         start = f + 3 * k
-        end = start + 3 * len(protein) + (3 if aa[k + len(protein):k + len(protein) + 1] == "*" else 0)
+        end = f + 3 * k_end + (3 if aa[k_end:k_end + 1] == "*" else 0)
         keep = sorted(pos[start:end])
         segs, s0 = [], keep[0]
         for x, y in zip(keep, keep[1:] + [None]):
@@ -128,7 +135,8 @@ def main():
     ap.add_argument("--embl", nargs="*", default=[], help="EMBL accessions of OdB3 contigs (GenBank models)")
     ap.add_argument("--reference", nargs="+", required=True, help="label=UniProt accession; the first gives the axis")
     ap.add_argument("--reference-fasta", nargs="*", default=[],
-                    help="label=FASTA:sequence name:accession, for a reference protein without UniProt entry (gaps removed)")
+                    help="label=FASTA:sequence name:accession, for a reference protein without UniProt entry (gaps removed; "
+                         "X read as selenocysteine, as in the Selenoprofiles outputs)")
     ap.add_argument("--note", nargs="*", default=[], help="genome:model=text shown next to a public model")
     ap.add_argument("--reference-note", nargs="*", default=[], help="label=text shown under a reference protein")
     ap.add_argument("--gold-note", nargs="*", default=[], help="genome=text shown next to a gold-standard model")
@@ -184,7 +192,9 @@ def main():
             if len(ex) > 1: rows.append(("public", g, pid, "sites", *intron_sites(ex, cseq, strand, tsites)))
             if prot:
                 fasta.append(f">{g}_{pid}\n{prot}\n")
-                if identity(prot, gprot[g]) < 0.3: rows.append(("public", g, pid, "frame", "other", "identity to the gold-standard protein below 30%"))
+                over = cds and any(a_ <= y and b_ >= x for a_, b_ in cds for x, y in gcds)
+                if over and identity(prot, gprot[g]) < 0.3:
+                    rows.append(("public", g, pid, "frame", "other", "coding sequence overlapping the gold-standard one; identity to the gold-standard protein below 30%"))
         for n in a.note:
             k, _, text = n.partition("=")
             ng, _, nm = k.partition(":")
@@ -212,7 +222,7 @@ def main():
     for ref in a.reference_fasta:
         label, spec = ref.split("=", 1)
         path, name, acc = spec.split(":", 2)
-        seq = next(v for k, v in read_fasta(path) if name in k).replace("-", "").replace(".", "").upper()
+        seq = next(v for k, v in read_fasta(path) if name in k).replace("-", "").replace(".", "").upper().replace("X", "U")
         fasta.append(f">{label}\n{seq}\n")
         rows.append(("reference", "-", label, "accession", acc, path))
     for n in a.reference_note:

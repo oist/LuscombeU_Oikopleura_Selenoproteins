@@ -4,13 +4,15 @@
 Each gene has two parts, drawn as in figures/reannotation_figure.py:
 - gene models (top): in each O. dioica assembly, the public models (OKI2018 RefSeq, OSKA2016 ANISEED, OdB3 GenBank,
   grey) above the gold-standard model of step 2 (blue), in gene orientation and aligned on the selenocysteine TGA
-  (x: nucleotides from the TGA, one scale per gene); introns coloured by splice site without changing their drawn
+  (x: nucleotides from the TGA, one scale per gene; stretches of more than 1,500 nt without any drawn exon, such as
+  long introns, are drawn 200 nt long and marked by a break); introns coloured by splice site without changing their drawn
   length; SECIS elements: best hit of the current appendicularian model (cmsearch) after the stop codon. Public
   models are named, with the curator's note, in a caption above them (letters when several share a row);
-  exons more than the margin outside the gold-standard transcript are counted, not drawn.
+  public exons are cut at the margin beyond the gold-standard transcript, and those entirely beyond it are counted.
 - proteins (bottom): reference proteins and the gold-standard proteins of the three assemblies on the coordinates
-  of the first reference (global alignments, BLOSUM62, free end gaps), with its Pfam domains and the residues
-  aligned to its selenocysteines.
+  of the first reference (local alignments, BLOSUM62; the gold-standard proteins of OSKA2016 and OdB3 through a
+  global alignment to the first gold-standard protein; residues outside the aligned part drawn as a line as long as
+  they are), with its Pfam domains and the residues aligned to its selenocysteines.
 The assembly names and the labels of the gold-standard proteins are written once per row of genes, on the left;
 the key is at the bottom of the page. Sizes are physical (mm), so that rows of genes keep the same density.
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
@@ -39,6 +41,7 @@ LEFT, RIGHT, COL_GAP, TOP, BOTTOM = 24, 5, 7, 8, 6
 CDS_H, UTR_H, CHEV = 1.4, 0.55, 0.8        # gene models: coding and UTR exons, intron chevrons (half of the one-gene figure)
 BAR_H = 1.4                                # proteins
 CAPTION = 5                                # pt
+PAD = 120                                  # nt kept on each side of a shortened stretch
 LH = 2.1                                   # mm per caption line
 _t2p = TextToPath()
 BOX = dict(facecolor="white", edgecolor="none", pad=0.3)
@@ -81,14 +84,41 @@ def load(gene, a):
             if l.startswith(">"): name = l[1:].split("|")[0]
             elif name == gene: d["gprot"][g] = l.strip()
     d["secis"] = rf.secis_hits(a.cm, a.gold, gene)
-    d["x"] = {g: ((lambda p, s0=sec[0]: p - s0) if st == "+" else (lambda p, s1=sec[1]: s1 - p))
-              for g, (st, ex, cds, sec) in d["gold"].items() if ex}
-    d["span"] = {g: (min(min(d["x"][g](p), d["x"][g](q)) for p, q in d["gold"][g][1]),
-                     max(max(d["x"][g](p), d["x"][g](q)) + 1 for p, q in d["gold"][g][1])) for g in d["x"]}
-    longest = max(b - a_ for a_, b in d["span"].values())
+    xr = {g: ((lambda p, s0=sec[0]: p - s0) if st == "+" else (lambda p, s1=sec[1]: s1 - p))
+          for g, (st, ex, cds, sec) in d["gold"].items() if ex}       # nucleotides from the TGA
+    span = {g: (min(min(xr[g](p), xr[g](q)) for p, q in d["gold"][g][1]),
+                max(max(xr[g](p), xr[g](q)) + 1 for p, q in d["gold"][g][1])) for g in xr}
+    longest = max(b - a_ for a_, b in span.values())
     d["margin"] = a.margin or int(min(400, max(150, 0.15 * longest)))
-    d["X0"] = min(v[0] for v in d["span"].values()) - d["margin"]
-    d["X1"] = max(v[1] for v in d["span"].values()) + d["margin"]
+    win = {g: (v[0] - d["margin"], v[1] + d["margin"]) for g, v in span.items()}
+    X0, X1 = min(v[0] for v in win.values()), max(v[1] for v in win.values())
+    # stretches longer than --long nt without any drawn exon (a long intron) are drawn --short nt long, with a break
+    feats = []
+    for g in xr:
+        feats += [(min(xr[g](p), xr[g](q)), max(xr[g](p), xr[g](q)) + 1) for p, q in d["gold"][g][1]]
+        for m in d["public"][g].values():
+            for p, q in rf.blocks(m["exons"]):
+                a0, a1 = max(min(xr[g](p), xr[g](q)), win[g][0]), min(max(xr[g](p), xr[g](q)) + 1, win[g][1])
+                if a1 > a0: feats.append((a0, a1))
+    feats.sort()
+    breaks, end = [], feats[0][1]
+    for a0, a1 in feats[1:]:
+        if a0 - end > a.long: breaks.append((end + PAD, a0 - PAD))
+        end = max(end, a1)
+
+    def fwd(v):
+        out = v
+        for b0, b1 in breaks:
+            if v >= b1: out -= b1 - b0 - a.short
+            elif v > b0: out -= (v - b0) * (1 - a.short / (b1 - b0))
+        return out
+    d["fwd"], d["raw_breaks"] = fwd, breaks
+    d["breaks"] = [(fwd(b0), fwd(b1)) for b0, b1 in breaks]
+    d["x"] = {g: (lambda p, f=xr[g]: fwd(f(p))) for g in xr}
+    d["xr"] = xr
+    d["span"] = {g: (fwd(v[0]), fwd(v[1])) for g, v in span.items()}
+    d["win"] = {g: (fwd(v[0]), fwd(v[1])) for g, v in win.items()}
+    d["X0"], d["X1"], d["X0raw"], d["X1raw"] = fwd(X0), fwd(X1), X0, X1
     for g in GENOMES:   # public models, 5' to 3', with the letters used when several share the row
         if g not in d["x"]: continue
         x = d["x"][g]
@@ -108,21 +138,43 @@ def caption(d, g, col_w):
     return wrap("; ".join(parts), col_w, CAPTION), len(ms) > 1
 
 
-def draw_model(ax, y, exons, cds, x, color, hatch=False, sites=None):
-    """As reannotation_figure.draw_model, with the heights of this page (mm)."""
-    ex = sorted(exons)
+def draw_model(ax, y, exons, cds, x, color, hatch=False, sites=None, clip=(-1e12, 1e12)):
+    """As reannotation_figure.draw_model, with the heights of this page (mm); exons and coding sequences are cut at
+    the window clip (plot coordinates), and introns drawn between the exons that are drawn."""
+    span = lambda a, b: (max(min(x(a), x(b)), clip[0]), min(max(x(a), x(b)) + 1, clip[1]))
+    ex = [e for e in sorted(exons) if span(*e)[1] > span(*e)[0]]
+    drawn = []
     for e1, e2 in [(e1, e2) for e1, e2 in zip(ex, ex[1:]) if e2[0] > e1[1] + 1]:
-        r1, r2 = sorted([(min(x(e1[0]), x(e1[1])), max(x(e1[0]), x(e1[1])) + 1), (min(x(e2[0]), x(e2[1])), max(x(e2[0]), x(e2[1])) + 1)])
+        r1, r2 = sorted([span(*e1), span(*e2)])
         c = rf.site_colour((sites or {}).get((e1[1], e2[0]), ""), color)
         ax.plot([r1[1], (r1[1] + r2[0]) / 2, r2[0]], [y, y + CHEV, y], color=c, lw=0.4 if c == color else 0.9,
                 solid_joinstyle="miter", zorder=3 if c != color else 2)
+        drawn.append((r1[1], r2[0]))
     for a, b in ex:
-        a0, a1 = min(x(a), x(b)), max(x(a), x(b)) + 1
+        a0, a1 = span(a, b)
         ax.add_patch(Rectangle((a0, y - UTR_H / 2), a1 - a0, UTR_H, facecolor=color, edgecolor="none"))
     for a, b in cds:
-        a0, a1 = min(x(a), x(b)), max(x(a), x(b)) + 1
+        a0, a1 = span(a, b)
+        if a1 <= a0: continue
         ax.add_patch(Rectangle((a0, y - CDS_H / 2), a1 - a0, CDS_H, facecolor="white" if hatch else color,
                                edgecolor=color, lw=0.4, hatch="//////" if hatch else None))
+    return drawn
+
+
+def break_mark(ax, xc, y, ntmm, color="0.3"):
+    """Two slanted strokes on a white gap at (xc, y): a stretch drawn shorter than it is."""
+    ax.add_patch(Rectangle((xc - 0.45 * ntmm, y - 0.9), 0.9 * ntmm, 1.8, facecolor="white", edgecolor="none", zorder=6, clip_on=False))
+    for dx in (-0.3, 0.3):
+        ax.plot([xc + (dx - 0.25) * ntmm, xc + (dx + 0.25) * ntmm], [y - 0.8, y + 0.8], color=color, lw=0.5, zorder=7, clip_on=False)
+
+
+def mark_breaks(ax, d, y, introns, ntmm):
+    """Break marks on the drawn introns (a, b: plot coordinates) that span a shortened stretch."""
+    for b0, b1 in d["breaks"]:
+        for a_, b_ in introns:
+            if a_ <= b0 and b_ >= b1:
+                xc, mid = (b0 + b1) / 2, (a_ + b_) / 2
+                break_mark(ax, xc, y + CHEV * (1 - abs(xc - mid) / ((b_ - a_) / 2)), ntmm)
 
 
 def stem_loop(ax, x0, y, w, color):
@@ -162,30 +214,33 @@ def draw_models(ax, d, tracks, col_w):
         if g not in d["x"]: continue
         st, ex, cds, sec = d["gold"][g]
         x = d["x"][g]
-        lo, hi = d["span"][g][0] - d["margin"], d["span"][g][1] + d["margin"]
+        lo, hi = d["win"][g]
         ms = d["public"][g]
         for k, (name, m) in enumerate(ms.items()):
             e, c = rf.blocks(m["exons"]), rf.blocks(m.get("cds", ""))
-            inside = lambda b: lo <= min(x(b[0]), x(b[1])) and max(x(b[0]), x(b[1])) <= hi
-            e_in, c_in = [b for b in e if inside(b)], [b for b in c if inside(b)]
+            touches = lambda b: max(x(b[0]), x(b[1])) + 1 > lo and min(x(b[0]), x(b[1])) < hi   # exons cut at the window
+            e_in, c_in = [b for b in e if touches(b)], [b for b in c if touches(b)]
             hatch = m.get("frame") == "other"
             col = OTHER if hatch else PUBLIC
-            draw_model(ax, t["pub"], e_in, c_in, x, col, hatch=hatch, sites=rf.site_map(e, m.get("sites", "")))
+            drawn = draw_model(ax, t["pub"], e_in, c_in, x, col, hatch=hatch, sites=rf.site_map(e, m.get("sites", "")), clip=(lo, hi))
+            mark_breaks(ax, d, t["pub"], drawn, ntmm)
             if not e_in: continue
-            xm = min(min(x(p), x(q)) for p, q in e_in); xM = max(max(x(p), x(q)) + 1 for p, q in e_in)
+            xm = max(lo, min(min(x(p), x(q)) for p, q in e_in)); xM = min(hi, max(max(x(p), x(q)) + 1 for p, q in e_in))
             n_left = sum(max(x(p), x(q)) < lo for p, q in e); n_right = sum(min(x(p), x(q)) > hi for p, q in e)
-            if n_left: ax.text(xm, t["pub"] - 1.3, f"◀ {n_left} more exons", fontsize=4.5, color=PUBLIC, va="top")
-            if n_right: ax.text(xM, t["pub"] - 1.3, f"{n_right} more exons ▶", fontsize=4.5, color=PUBLIC, va="top", ha="right")
+            more = lambda n: f"{n} more exon{'s' if n > 1 else ''}"
+            if n_left: ax.text(xm, t["pub"] - 1.3, f"◀ {more(n_left)}", fontsize=4.5, color=PUBLIC, va="top")
+            if n_right: ax.text(xM, t["pub"] - 1.3, f"{more(n_right)} ▶", fontsize=4.5, color=PUBLIC, va="top", ha="right")
             if len(ms) > 1:
                 ax.text((xm + xM) / 2, t["pub"] + 1.2, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
-        draw_model(ax, t["gold"], ex, cds, x, GOLD, sites=rf.site_map(ex, d["gold_sites"].get(g, "")))
+        drawn = draw_model(ax, t["gold"], ex, cds, x, GOLD, sites=rf.site_map(ex, d["gold_sites"].get(g, "")))
+        mark_breaks(ax, d, t["gold"], drawn, ntmm)
         for k, line in enumerate(t["gnotes"][d["gene"]]):
             ax.text(X0, t["gold_note_top"] - k * LH, line, fontsize=CAPTION, color=GOLD, va="top", ha="left", bbox=BOX, zorder=5)
         if g in d["secis"]:
             f0, f1, bits = d["secis"][g]
             stop = max(q for _, q in cds) if st == "+" else min(p for p, _ in cds)
             w = 1.1 * ntmm
-            x0 = x(stop) + f0
+            x0 = d["fwd"](d["xr"][g](stop) + f0)
             stem_loop(ax, x0, t["gold"], w, SECIS)
             label = f"{bits:.0f} bits"
             if x0 + w + 1.2 * ntmm + width_mm(label, 4.5) * ntmm < X1:
@@ -197,7 +252,11 @@ def draw_models(ax, d, tracks, col_w):
     ax.text(1.5, -2.4, "TGA", color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
     ax.set_xlim(X0, X1)
     step = next(s for s in (250, 500, 1000, 2000) if (X1 - X0) / s <= 6)
-    ax.set_xticks(range(math.ceil(X0 / step) * step, int(X1) + 1, step))
+    ticks = [v for v in range(math.ceil(d["X0raw"] / step) * step, int(d["X1raw"]) + 1, step)
+             if not any(b0 - 0.6 * step < v < b1 + 0.6 * step for b0, b1 in d["raw_breaks"])]
+    ax.set_xticks([d["fwd"](v) for v in ticks], [f"{v:g}".replace("-", "−") for v in ticks])
+    bottom = ax.get_ylim()[0]
+    for b0, b1 in d["breaks"]: break_mark(ax, (b0 + b1) / 2, bottom, ntmm, color="black")
     ax.set_yticks([]); [ax.spines[s].set_visible(False) for s in ("left", "right", "top")]
     ax.tick_params(axis="x", pad=1)
 
@@ -219,13 +278,13 @@ def layout_proteins(genes):
 def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     from Bio import Align
     from Bio.Align import substitution_matrices
-    al = Align.PairwiseAligner(mode="global", substitution_matrix=substitution_matrices.load("BLOSUM62"),
+    al = Align.PairwiseAligner(mode="local", substitution_matrix=substitution_matrices.load("BLOSUM62"),
                                open_gap_score=-10, extend_gap_score=-0.5)
-    al.end_insertion_score = al.end_deletion_score = 0
+    glob = Align.PairwiseAligner(mode="global", substitution_matrix=substitution_matrices.load("BLOSUM62"),
+                                 open_gap_score=-10, extend_gap_score=-0.5)
+    glob.end_insertion_score = glob.end_deletion_score = 0
     axis_label = next(k for k, v in d["refs"].items() if v.get("axis") == "yes")
     axis = d["seqs"][axis_label]
-    L = len(axis) * 1.13
-    ammm = L / col_w
     secpos = [int(p) for p in d["refs"][axis_label].get("selenocysteine", "").split(",") if p]
     doms = []
     for s in d["refs"][axis_label]["domains"]:
@@ -236,11 +295,27 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     for k, (lbl, v) in enumerate(d["refs"].items()):
         acc = v.get("accession", "").replace("UniProt ", "")
         text = f"{lbl} {acc}" + (f"; {v['note']}" if v.get("note") else "")
-        rows.append((refs_y[k][1], d["seqs"][lbl], "black", (refs_y[k][0], text)))
-    rows += [(gold_y[k], d["gprot"][g], GOLD, None) for k, g in enumerate(GENOMES) if g in d["gprot"]]
-    for yy, p, col, label in rows:
-        m = rf.protein_map(p, axis, al)
+        rows.append((refs_y[k][1], d["seqs"][lbl], "black", (refs_y[k][0], text), rf.protein_map(d["seqs"][lbl], axis, al)))
+    # the gold-standard proteins of the other assemblies go through the first one (global alignment), so that the
+    # three, nearly identical, are drawn alike where their similarity to the reference is low
+    first = next(g for g in GENOMES if g in d["gprot"])
+    m_first = rf.protein_map(d["gprot"][first], axis, al)
+    for k, g in enumerate(GENOMES):
+        if g not in d["gprot"]: continue
+        m = m_first if g == first else {i: m_first[j - 1] for i, j in rf.protein_map(d["gprot"][g], d["gprot"][first], glob).items()
+                                        if j - 1 in m_first}
+        rows.append((gold_y[k], d["gprot"][g], GOLD, None, m))
+    ends = [(m[min(m)] - min(m), m[max(m)] + len(p) - 1 - max(m)) for _, p, _, _, m in rows]   # with unaligned residues
+    lo = min(0, min(e[0] for e in ends))
+    hi = max(len(axis), max(e[1] for e in ends))
+    L0, L1 = lo, hi + 0.13 * (hi - lo)
+    ammm = (L1 - L0) / col_w
+    for yy, p, col, label, m in rows:
         h0, h1 = min(m.values()), max(m.values())
+        # residues outside the aligned part (free end gaps): a line as long as they are, at the scale of the axis
+        t0, t1 = h0 - min(m), h1 + len(p) - 1 - max(m)
+        ax.plot([t0, h0], [yy, yy], color=col, lw=0.6, solid_capstyle="butt")
+        ax.plot([h1, t1], [yy, yy], color=col, lw=0.6, solid_capstyle="butt")
         ax.add_patch(Rectangle((h0, yy - BAR_H / 2), h1 - h0, BAR_H, facecolor="white", edgecolor=col, lw=0.5))
         for d0, d1, _ in doms:
             a0, a1 = max(d0, h0), min(d1, h1)
@@ -250,8 +325,8 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
             if site:
                 ax.plot([sp], [yy], "o", ms=4.2, color=SEC if site == "U" else "white", mec=SEC if site == "U" else "black", mew=0.5)
                 ax.text(sp, yy - 0.05, site, ha="center", va="center", fontsize=4, color="white" if site == "U" else "black", fontweight="bold")
-        ax.text(h1 + 1.0 * ammm, yy, f"{len(p)} aa", va="center", fontsize=4.5, color="0.3")
-        if label: ax.text(0, label[0], label[1], fontsize=CAPTION, va="top", ha="left", color="0.15")
+        ax.text(t1 + 1.0 * ammm, yy, f"{len(p)} aa", va="center", fontsize=4.5, color="0.3")
+        if label: ax.text(L0, label[0], label[1], fontsize=CAPTION, va="top", ha="left", color="0.15")
     # domain and selenocysteine labels; a label that would overlap the previous one goes one line up
     items = sorted([((d0 + d1) / 2, name, "0.25", "normal") for d0, d1, name in doms] +
                    [(sp, f"U{sp}", SEC, "bold") for sp in secpos])
@@ -262,12 +337,12 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         while any(l_ == line and not (xc + half < a_ or xc - half > b_) for a_, b_, l_ in placed): line += 1
         placed.append((xc - half - 0.8 * ammm, xc + half + 0.8 * ammm, line))
         ax.text(xc, -0.4 - (1 - min(line, 1)) * LH, text, ha="center", va="top", fontsize=CAPTION, color=col, fontweight=wt)
-    ax.set_xlim(0, L)
-    step = next(s for s in (50, 100, 200) if L / s <= 7)
+    ax.set_xlim(L0, L1)
+    step = next(s for s in (50, 100, 200) if (L1 - L0) / s <= 7)
     ax.set_xticks(range(0, len(axis) + 1, step))
     ax.set_yticks([]); [ax.spines[s].set_visible(False) for s in ("left", "right", "top")]
     ax.tick_params(axis="x", pad=1)
-    ax.set_xlabel(f"residue of {axis_label} (global alignments)", fontsize=5, labelpad=1)
+    ax.set_xlabel(f"residue of {axis_label} (local alignments)", fontsize=5, labelpad=1)
 
 
 def key(fig, used_sites):
@@ -307,7 +382,8 @@ def key(fig, used_sites):
     proteins = [(lambda ax, cx, y: ax.add_patch(Rectangle((cx + 1, y - BAR_H / 2), 6, BAR_H, facecolor=DOM, edgecolor="black", lw=0.5)),
                  "Pfam domain of the first reference", "black"),
                 (circle("U", SEC, SEC, "white"), "selenocysteine aligned to one of the first reference", "black"),
-                (circle("C", "white", "black", "black"), "other residue aligned to it", "black")]
+                (circle("C", "white", "black", "black"), "other residue aligned to it", "black"),
+                (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black")]
     lines, line, cx = [], [], 0
     for group in (models[:4], models[4:], introns, proteins):
         for f, text, col in group:
@@ -333,6 +409,8 @@ def main():
     ap.add_argument("--inputs", default="figures/inputs")
     ap.add_argument("--cm", default="results/models/appendicularia_secis.cm")
     ap.add_argument("--margin", type=int, default=0, help="nt drawn beyond the gold-standard transcripts (0: 15%% of the longest, 150 to 400)")
+    ap.add_argument("--long", type=int, default=1500, help="stretches without exon longer than this (nt) are shortened")
+    ap.add_argument("--short", type=int, default=200, help="drawn length (nt) of a shortened stretch")
     ap.add_argument("--name", default="reannotation_page")
     ap.add_argument("--out", default="figures")
     a = ap.parse_args()
