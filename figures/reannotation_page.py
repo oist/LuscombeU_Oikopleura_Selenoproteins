@@ -45,6 +45,7 @@ BAR_H = 1.4                                # proteins
 CAPTION = 5                                # pt
 NOTE, NOTE_LH = 5, 2.0                     # paragraph between gene models and proteins: font size (pt), line height (mm)
 SECIS_H = 1.0                              # height of the SECIS box (mm)
+PAIR = 2.4                                 # distance between the public and the gold-standard track of an assembly (mm)
 PAD = 120                                  # nt kept on each side of a shortened stretch
 LH = 2.1                                   # mm per caption line
 _t2p = TextToPath()
@@ -147,10 +148,12 @@ def notes(d):
         else:
             text = f"{DB[g]} " + "; ".join(f"{'abcdefgh'[k]} {short(n)}" + (f": {m['note']}" if m.get("note") else "")
                                            for k, (n, m) in enumerate(ms.items())) + "."
-        if d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
-        if g not in d["x"]: text += " No gold-standard model."
+        if g not in d["x"]:
+            text = "no gold-standard model" + (f": {d['gold_notes'][g]}." if d["gold_notes"].get(g) else ".")
+        elif d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
         out.append((NAMES[g], text))
-    out.append(("proteins", "; ".join(f"{lbl} {v.get('accession', '').replace('UniProt ', '')}" for lbl, v in d["refs"].items()) + "."))
+    out.append(("proteins", "; ".join(f"{lbl} {v.get('accession', '').replace('UniProt ', '')}" + (f" ({v['note']})" if v.get("note") else "")
+                                      for lbl, v in d["refs"].items()) + "."))
     return out
 
 
@@ -205,9 +208,9 @@ def layout_models(genes):
     for g in GENOMES:
         y -= 2.2                       # letters of the models and counts of exons beyond the window
         pub = y
-        y -= 3.4
+        y -= PAIR                      # public and gold-standard models of one assembly: closer than two assemblies
         tracks[g] = {"pub": pub, "gold": y}
-        y -= 1.6
+        y -= 2.0
     return tracks, -y + 0.4
 
 
@@ -217,7 +220,9 @@ def draw_models(ax, d, tracks, col_w):
     last_gold = None
     for g in GENOMES:
         t = tracks[g]
-        if g not in d["x"]: continue
+        if g not in d["x"]:
+            ax.text(d["X0"], t["gold"], "no gold-standard model", fontsize=4.5, color=GOLD, va="center")
+            continue
         st, ex, cds, sec = d["gold"][g]
         x = d["x"][g]
         lo, hi = d["win"][g]
@@ -235,8 +240,11 @@ def draw_models(ax, d, tracks, col_w):
             n_left = sum(max(x(p), x(q)) < lo for p, q in e); n_right = sum(min(x(p), x(q)) > hi for p, q in e)
             if n_left: ax.text(xm, t["pub"] + 1.0, f"◀ {n_left}", fontsize=4.5, color=PUBLIC, va="bottom")
             if n_right: ax.text(xM, t["pub"] + 1.0, f"{n_right} ▶", fontsize=4.5, color=PUBLIC, va="bottom", ha="right")
-            if len(ms) > 1:
-                ax.text((xm + xM) / 2, t["pub"] + 1.0, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
+            if len(ms) > 1:   # letter over the model, after the count of exons beyond the window when there is one
+                xl = (xm + xM) / 2
+                if n_left: xl = max(xl, xm + (width_mm(f"◀ {n_left}", 4.5) + 1.2) * ntmm)
+                if n_right: xl = min(xl, xM - (width_mm(f"{n_right} ▶", 4.5) + 1.2) * ntmm)
+                ax.text(xl, t["pub"] + 1.0, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
         drawn = draw_model(ax, t["gold"], ex, cds, x, GOLD, sites=rf.site_map(ex, d["gold_sites"].get(g, "")))
         mark_breaks(ax, d, t["gold"], drawn, ntmm)
         end = d["span"][g][1]
@@ -253,7 +261,8 @@ def draw_models(ax, d, tracks, col_w):
     ax.set_xlim(X0, X1)
     step = next(s for s in (250, 500, 1000, 2000) if (X1 - X0) / s <= 6)
     ticks = [v for v in range(math.ceil(d["X0raw"] / step) * step, int(d["X1raw"]) + 1, step)
-             if not any(b0 - 0.6 * step < v < b1 + 0.6 * step for b0, b1 in d["raw_breaks"])]
+             if not any(b0 - 0.6 * step < v < b1 + 0.6 * step for b0, b1 in d["raw_breaks"])
+             and X0 + 0.04 * (X1 - X0) < d["fwd"](v) < X1 - 0.02 * (X1 - X0)]       # not at the very edges
     ax.set_xticks([d["fwd"](v) for v in ticks], [f"{v:g}".replace("-", "−") for v in ticks])
     bottom = ax.get_ylim()[0]
     for b0, b1 in d["breaks"]: break_mark(ax, (b0 + b1) / 2, bottom, ntmm, color="black")
@@ -321,6 +330,8 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     # three, nearly identical, are drawn alike where their similarity to the reference is low
     first = next(g for g in GENOMES if g in d["gprot"])
     m_first = rf.protein_map(d["gprot"][first], axis, al)
+    if not secpos:   # first reference without selenocysteine (a cysteine homolog): the residue aligned to the gold U
+        secpos = [m_first[i] for i, c in enumerate(d["gprot"][first]) if c == "U" and i in m_first]
     for k, g in enumerate(GENOMES):
         if g not in d["gprot"]: continue
         m = m_first if g == first else {i: m_first[j - 1] for i, j in rf.protein_map(d["gprot"][g], d["gprot"][first], glob).items()
@@ -349,7 +360,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         ax.text(t1 + 1.0 * ammm, yy, f"{len(p)} aa", va="center", fontsize=4.5, color="0.3")
     # domain and selenocysteine labels; a label that would overlap the previous one goes one line up
     items = sorted([((d0 + d1) / 2, name, "0.25", "normal") for d0, d1, name in doms] +
-                   [(sp, f"U{sp}", SEC, "bold") for sp in secpos])
+                   [(sp, f"{axis[sp - 1]}{sp}", SEC, "bold") for sp in secpos])
     placed = []
     for xc, text, col, wt in items:
         half = width_mm(text, CAPTION, wt) / 2 * ammm

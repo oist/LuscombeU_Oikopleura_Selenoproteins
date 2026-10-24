@@ -522,15 +522,17 @@ between transcript and genome plus a splice-site cost of log10(f(GT-AG)/f(site))
 [@Denoeud2010], the factor 2 being the log10 cost of a mismatch at 1% divergence. A transcript supported the gene when
 an aligned exon held the codon as TGA. Candidate models were the exon chains of the supporting transcripts, of the
 annotated mRNAs and of the stage 1 Selenoprofiles predictions holding the codon, and the transcript chains extended
-with the exons of overlapping annotated or predicted models beyond their ends; an extension that placed the start
-codon beyond a transcript whose own model was complete was kept only when the added residues aligned to the same
-gene in another assembly. Each candidate was read on the genome sequence spliced along its chain: the frame of the
+with the exons of overlapping annotated or predicted models beyond their ends, and, where the annotation split a
+gene at the TGA, the annotated model ending at the codon joined to the next model downstream; an extension that
+placed the start codon beyond a transcript whose own model was complete was kept only when the added residues
+aligned to the same gene in another assembly. Each candidate was read on the genome sequence spliced along its chain: the frame of the
 TGA was extended upstream to the first ATG after the previous stop codon (or the first ATG of the frame when the
 chain has no stop upstream), and downstream to the next stop codon. Candidates were ranked by the presence of the
 curated protein context of the selenocysteine, the absence of unsupported splice sites outside the four intron
-classes, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length, not the
+classes, not being contradicted by most of the supporting transcripts, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length, not the
 annotated mRNA of another protein (an annotated mRNA whose coding sequence lies elsewhere, such as the upstream gene of
-an operon) and, last, an annotated exon chain. Among the candidates equal to the first one on every criterion before length, the one whose
+an operon) and, last, an annotated exon chain; 3′ UTR exons that overlapped the coding sequence of a downstream
+annotated gene (read-through transcripts) were left out. Among the candidates equal to the first one on every criterion before length, the one whose
 protein aligned best to the same gene in the other assemblies (mean global alignment score) replaced it when its
 score was higher by 20 (about 10 bits), so that exons beyond the transcripts, taken from the annotation or from a
 prediction, were chosen by similarity rather than by length. When the transcripts differed from the assembly by indels in the coding sequence, the

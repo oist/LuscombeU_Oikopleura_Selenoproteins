@@ -156,6 +156,11 @@ def main():
             elif name == gene: gprot[g] = l.strip()
     for g in ("OKI", "OSKA", "OdB3"):
         strand, gex, gcds = gold(f"{a.gold}/{g}.gff3", gene)
+        if not gcds:   # no gold-standard model in this assembly: only the curator's note
+            for n_ in a.gold_note:
+                ng, _, text = n_.partition("=")
+                if ng == g: rows.append(("gold", g, gene, "note", text, "curator"))
+            continue
         lo, hi = min(x for x, _ in gcds), max(y for _, y in gcds)   # public models must overlap the coding sequence
         allrows = [r for r in csv.DictReader(open(f"{a.gold}/{g}.candidate_models.tsv"), delimiter="\t") if r["gene"] == gene]
         cand = [r for r in allrows if r["kind"] == "annotation" and r["item"] != "transcript frame"]

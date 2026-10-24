@@ -71,3 +71,60 @@ run --gene SELENOS --embl FN653033.1 --reference "human=Q9BQE4" \
            "OSKA:Oidioi.CG.OSKA2016.S13.g10968.01.t=starts 9 codons upstream; TGA read as stop" \
            "OdB3:CBY08859.1=N-terminal part; ends in an intron" "OdB3:CBY08858.1=other first exon; TGA read as stop" \
     --gold-note "OKI=mapped from the transcript (the assembly lacks 13 bases of the coding sequence)"
+
+# page 2
+run --gene GPX_chr1a --embl FN653021.1 --reference "human=P36969" \
+    --reference-fasta "C. intestinalis=$T/GPX.faa:Cint_GPX.5.selenocysteine:Cint_GPX.5" \
+    --note "OKI:XP_081637767.1=same model; TGA translated as X (selenocysteine not declared)" \
+           "OSKA:Oidioi.CG.OSKA2016.S6.g07306.01.t=other 5′ exons; TGA read as stop" \
+           "OSKA:Oidioi.CG.OSKA2016.S6.g07307.01.t=starts 13 codons after the TGA" \
+           "OdB3:CBY23346.1=TGA read as stop" "OdB3:CBY23347.1=starts 13 codons after the TGA" \
+    --gold-note "OdB3=the two GenBank models joined through the TGA (no transcript)"
+
+run --gene GPX_chr1b --embl FN653042.1 --reference "human=P36969" \
+    --reference-fasta "C. intestinalis=$T/GPX.faa:Cint_GPX.5.selenocysteine:Cint_GPX.5" \
+    --note "OKI:XP_081636615.1=same exon chain; coding sequence starts at an internal ATG, 17 codons after the TGA" \
+           "OSKA:Oidioi.CG.OSKA2016.S3.g04759.01.t=starts 17 codons after the TGA; reads through one intron, places another differently" \
+           "OdB3:CBY19528.1=TGA read as stop" "OdB3:CBY19527.1=starts 17 codons after the TGA"
+
+run --gene GPX_chr2 --embl FN653019.1 --reference "human=P36969" \
+    --reference-fasta "C. intestinalis=$T/GPX.faa:Cint_GPX.1.selenocysteine:Cint_GPX.1" \
+    --note "OKI:XP_081630045.1=same exon chain; TGA translated as X (selenocysteine not declared)" \
+           "OSKA:Oidioi.CG.OSKA2016.S27.g15046.01.t=starts in the second exon; TGA in an intron of the coding sequence" \
+           "OdB3:CBY22474.1=TGA in an extra intron of the coding sequence"
+
+run --gene SELENOF --embl FN653029.1 --reference "human=O60613" \
+    --reference-fasta "C. intestinalis=$T/SELENOF.faa:Cint_SELENOF.1.selenocysteine:Cint_SELENOF.1" \
+    --note "OKI:XP_081628534.1=selenocysteine declared; same model as the gold standard" \
+           "OSKA:Oidioi.CG.OSKA2016.S16.g12238.01.t=TGA in an intron of the coding sequence" \
+           "OdB3:CBY08124.1=same exon chain; TGA read as stop"
+
+run --gene SELENOO --embl FN653064.1 --reference "human=Q9BVL4" \
+    --reference-fasta "C. intestinalis=$T/SELENOO.faa:Cint_SELENOO.1.selenocysteine:Cint_SELENOO.1" \
+    --note "OKI:XP_081634508.1=TGA read as stop; GT-AG or GA-AG introns where the gold standard, mapped from the transcript, has other sites" \
+           "OSKA:Oidioi.CG.OSKA2016.S11.g10193.01.t=TGA read as stop; skips one exon" \
+    --gold-note "OKI=mapped from the transcript (the assembly lacks 5 bases of the coding sequence)" \
+                "OdB3=the exon of the TGA is not in the assembly"
+
+run --gene SELENOW_chr1a --embl FN653018.1 --reference "human=P63302" \
+    --reference-fasta "C. intestinalis=$T/SELENOW.faa:Cint_SELENOW.1.selenocysteine:Cint_SELENOW.1" \
+    --note "OSKA:Oidioi.CG.OSKA2016.S7.g08360.01.t=TGA in an intron of the coding sequence"
+
+run --gene SELENOW_chr2 --embl FN653019.1 --reference "human=Q9BRT3" --reference-note "human=MIEN1, best human hit, a cysteine homolog" \
+    --reference-fasta "C. intestinalis=$T/SELENOW.faa:Cint_SELENOW.3.selenocysteine:Cint_SELENOW.3" \
+    --note "OKI:XP_081633592.1=same exon chain; coding sequence starts at an internal ATG, 24 codons after the TGA" \
+           "OSKA:Oidioi.CG.OSKA2016.S40.g16478.01.t=starts 24 codons after the TGA; one intron placed differently" \
+           "OdB3:CBY22624.1=same exon chain; coding sequence starts at an internal ATG, 24 codons after the TGA" \
+    --gold-note "OSKA=3′ UTR exons of a read-through transcript into the next gene left out"
+
+run --gene SELENOW_pair1 --embl FN653018.1 --reference "human=P63302" \
+    --reference-fasta "C. intestinalis=$T/SELENOW.faa:Cint_SELENOW.1.selenocysteine:Cint_SELENOW.1" \
+    --note "OKI:XP_081628722.1=mRNA of another protein (674 aa), with SELENOW_pair2 and this gene in its 3′ UTR" \
+           "OSKA:Oidioi.CG.OSKA2016.S5.g07175.01.t=one model across SELENOW_pair2 and this gene; both TGAs in introns" \
+           "OdB3:CBY21827.1=TGA in an intron of the coding sequence"
+
+run --gene SELENOW_pair2 --embl FN653018.1 --reference "human=P63302" \
+    --reference-fasta "C. intestinalis=$T/SELENOW.faa:Cint_SELENOW.1.selenocysteine:Cint_SELENOW.1" \
+    --note "OKI:XP_081628722.1=mRNA of another protein (674 aa), with this gene and SELENOW_pair1 in its 3′ UTR" \
+           "OSKA:Oidioi.CG.OSKA2016.S5.g07175.01.t=one model across this gene and SELENOW_pair1; both TGAs in introns" \
+           "OdB3:CBY21828.1=mRNA of another protein (94 aa) further downstream, with this gene in its 5′ UTR"

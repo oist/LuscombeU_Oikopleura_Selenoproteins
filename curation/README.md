@@ -30,7 +30,9 @@ models are exon chains from the supporting transcripts, the annotated mRNAs and 
 on the genome sequence (frame through the curated TGA read as selenocysteine), so that GFF3 and protein agree with
 the assembly. The model is chosen by the curated context, length, completeness and transcript support; among
 candidates equal on these criteria except length, by similarity to the same gene in the other assemblies; an
-annotated mRNA whose coding sequence is another protein's (operons) is not preferred as annotated chain. When a
+annotated mRNA whose coding sequence is another protein's (operons) is not preferred as annotated chain; models
+split at the TGA by the annotation are also joined into one candidate; a chain contradicted by most supporting
+transcripts is ranked last; 3' UTR exons of read-through transcripts into a downstream gene are left out. When a
 transcript differs from the assembly by indels, its protein is used only if it is more similar to the same gene in
 the other assemblies; the model is then mapped from the transcript and marked with the GFF3 attribute `exception`.
 The table reports splice sites (non-canonical ones with all equivalent placements), differences between transcripts

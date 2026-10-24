@@ -703,3 +703,31 @@ no earlier step waits for them.
   SELENOK (no RefSeq or ANISEED model; GenBank reads the TGA as stop), SELENOS (RefSeq loses the frame where the
   OKI2018 assembly lacks 13 bases; ANISEED reads the TGA as stop; GenBank splits the gene in two). Nine genes fill
   the page; figures/reannotation_page.{pdf,svg,png} committed (PNG at 200 dpi, under 1 MB).
+- Page 2 of the reannotation figure (2026-10-24): GPX_chr1a, GPX_chr1b, GPX_chr2, SELENOF, SELENOO, SELENOW_chr1a,
+  SELENOW_chr2, SELENOW_pair1, SELENOW_pair2; public and gold-standard tracks of an assembly closer (2.4 mm against
+  4.2 mm between assemblies). Human references: GPX4 for the three GPX genes, SELENOF, SELENOO, SELENOW; for
+  SELENOW_chr2 the best human hit is MIEN1 (Q9BRT3), a cysteine homolog: the page marks the residue of the first
+  reference aligned to the gold-standard U when the reference has no selenocysteine. Gene with no gold-standard model
+  in one assembly (SELENOO, OdB3: exon of the TGA not assembled) drawn with a note.
+- Gold-standard defects found while preparing page 2, and rules added to curation/gold_standard.py (rerun needed):
+  1. OdB3 GPX_chr1a was the Selenoprofiles prediction (146 aa, 5' fragment without ATG, reading 22 nt into an
+     intron), while GenBank splits the gene at the TGA into CBY23346.1 (ending with the TGA as stop) and CBY23347.1
+     (starting 13 codons after it), with no EST to join them. New candidates: an annotated model holding the codon
+     and ending at most 30 nt after it, joined to the next annotated model downstream (at most 300 nt further), the
+     stretch between them read as exon. For GPX_chr1a: 183 aa, ATG, stop, GT-AG introns, mean alignment score to
+     OKI2018 and OSKA2016 913 and 976 against 683 and 741 for the prediction.
+  2. OdB3 SELENOW_chr1a was the prediction (100 aa, reading through an intron) instead of the 15 spliced ESTs (86 aa,
+     GC-AG intron, like OKI2018 and OSKA2016): the prediction was longest and the ESTs fell under 90% of its length.
+     New criterion, before the length criterion: not contradicted by the transcripts (more supporting transcripts
+     incompatible with the chain than compatible with it); contradicted chains are also left out of the longest
+     length. From the candidate tables, only OdB3 SELENOW_chr1a changes.
+  3. OSKA2016 SELENOW_chr2: the only transcript reads through into the next ANISEED gene (S40.g16479), its 3' UTR
+     holding five introns and that gene's exons. New rule: 3' UTR exons after the exon of the stop codon are left out
+     from the first one that overlaps the coding sequence of another annotated model. Only this model has such
+     exons.
+  4. The annotated models listed near a gene were those within 5 kb of the codon; now also those overlapping any
+     candidate (OSKA2016 SELENOO, 8.3 kb, has two more ANISEED models, S11.g10191 and g10192, not yet in the table).
+  Tested on reconstructions of the OdB3 loci (GPX_chr1a, SELENOW_chr1a) and on the other local tests; the read-through
+  rule by a unit test (no OSKA2016 genome here). Page 2 was previewed with the expected models; OKI2018 SELENOO is
+  mapped from the transcript onto an assembly that lacks 5 bases: its introns with other sites are where RefSeq has
+  GT-AG or GA-AG introns (alignment placement around the missing bases).
