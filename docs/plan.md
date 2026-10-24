@@ -96,6 +96,63 @@ Built from `results/tables/` only.
   the contig; and its placement among bacteria holds under site-heterogeneous models, with vertical descent rejected
   by AU tests. One HGT screen, at the end of the manuscript, for all genomes used in the census.
 
+## Plan of the next steps (agreed 2026-10-24)
+
+Done: stage 1; machinery census (with one selenoprotein, SEPHS2); hit validation, round 1 (reciprocal best hits and
+trees of the selenoprotein families). Analysis order below; the manuscript may present the steps in another order.
+Proteomic data that may become available later serve only for the final validation, at the end of the manuscript;
+no earlier step waits for them.
+
+1. **SECIS search in the validated hits**, with the existing models only (Rfam RF00031 and the current model);
+   descriptive, trains nothing. A hit is left out only on evidence against it: best human hit in an unrelated
+   family, placement among bacteria or fungi, or a held-out genome (*B. stygius*, *M. erythrocephalus*,
+   *F. borealis*). Lack of evidence is not a reason: family-level validation counts the related human genes (MIEN1
+   for SELENOW, SEPHS1 for SEPHS2) and the tree placement in the family, and the curated *O. dioica* genes are always
+   kept (SELENOS has no human hit). Checked on the 73 seeds of the current model: the first wording (best hit
+   outside the expected genes, or no hit) would have removed 14, of which 13 trusted selenoproteins (8 chr2-type
+   SELENOW with best hit MIEN1, including SELENOW_chr2 of OKI2018 and OdB3; 2 *O. vanhoeffeni* SELENOW of the same
+   clade with no hit; 3 selenocysteine SEPHS2 with best hit SEPHS1) and 1 *B. stygius* GPX; the rule above removes
+   only the latter.
+2. **Annotation fix** of OKI2018, OSKA2016 and OdB3 (gold standard): selenocysteine codons, stop codons and 3' UTR
+   ends from transcripts; GFF3 with the selenocysteine codons marked and protein sets; later the RefSeq/GenBank
+   corrections. OKI2018 SELENOS is annotated as a disrupted allele (the OKI2018 transcriptome carries both alleles,
+   so the 13-nt deletion is real; whether this individual carries both is unknown); OdB3 lacks the SELENOO
+   C-terminus; OSKA2016 is the only assembly with all 18 genes intact and is the reference for SELENOS. Done before
+   step 3 because SECIS windows anchored on the selenocysteine codon may miss the SECIS of SEPHS2 and SELENOT.
+3. **New SECIS model** from the six *Oikopleura* assemblies (*O. longicauda* included): 3' regions from the stop
+   codons of step 2; one SECIS per locus; 90 % identity filter on the SECIS hits (vsearch or CD-HIT). On the 73
+   current seeds, 90 % merges 73 into 61 (OdB3 haplotype copies, the GPX_chr1b SECIS of OKI2018 and OdB3, copies
+   within *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, and the OKI2018 SELENOW pair, whose overlapping
+   windows may hold one SECIS twice). Evaluation leave-one-family-out and leave-one-species-out (the three
+   *O. dioica* assemblies held out together: they share near-identical SECIS). Final comparison, on the same held-out
+   sets and backgrounds (random windows, shuffled sequences, whole-genome scans, non-target tunicates), with Rfam
+   RF00031, Rfam merged with appendicularian sequences, and the current model, to check that updating an existing
+   model is not the better solution.
+4. **UGA/SECIS screens** in every genome where possible: transcript-based (OKI2018 RefSeq and Trinity
+   transcriptome, OSKA2016 annotation and transcripts, OdB3 annotation and ESTs); genome-based (SECIS hit, then an
+   open frame through a TGA upstream) for *O. longicauda*, *O. albicans* and *O. vanhoeffeni*; human and a few
+   tunicates with known selenoproteomes as positive controls of the screen.
+5. **TXNL1** (thioredoxin-like protein 1, candidate; curation/candidates.tsv), with a rule fixed in advance: counted
+   only if the new model scores its SECIS above background in the three *O. dioica* assemblies and the TGA is
+   conserved; otherwise reported as a candidate. Also check the TGA position in the other tunicates. Public
+   proteomics: none found for appendicularians (PRIDE API, 2026-10-24: no project for Oikopleura, larvacean or
+   appendicularian, against 9 for Ciona and 1 for Botryllus; published mass spectrometry on *O. dioica* covers house
+   proteins, histone modifications and metallothioneins, with no deposited data found). Proteomic data that may
+   become accessible later: final validation only.
+6. **Appendicularian selenoprotein profiles** from the gold standard, each tested with an assembly held out; the
+   machinery profiles rebuilt without *F. borealis* (decision of 2026-10-24).
+7. **Stage 2**, with handling of non-canonical introns (the SELENOT selenocysteine exon is lost at a GA-AG intron):
+   the six *Oikopleura* assemblies, then the three held-out genomes. Stage 1 and stage 2 measured against the gold
+   standard on held-out assemblies only (the gold standard feeds the stage 2 profiles).
+8. **Hit validation, round 2**: AU tests for SELENOW_PAR (SELENOW against SELENOV), SELENOF, SELENOO, SELENOT; human
+   MIEN1 in the SELENOW references; Ensembl identifiers assigned to taxonomic groups; held-out genomes in the trees
+   or not.
+9. **Census of all appendicularians** and comparison with the other tunicates, after a contamination screen
+   (FCS-GX or Tiara) and the single strict HGT screen.
+10. **SECIS and operons.**
+11. **Discussion**; Zenodo deposits (models, profiles, gold-standard annotations); pipeline release with the stage 2
+    models; methods written as each step finishes.
+
 ## Manuscript style
 
 - Write "selenocysteine" when the amino acid is meant alone; keep "Sec" only inside names (tRNA-Sec, eEFSec, SecS)
