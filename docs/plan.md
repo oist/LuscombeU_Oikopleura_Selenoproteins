@@ -613,3 +613,13 @@ no earlier step waits for them.
   sequence of OKI2018 and OdB3, a pseudo-genome with stage 1-style predictions (four of six truncated predictions
   extended to the gold-standard stop; the two others are OdB3 genes whose assembly has an extra base) and a synthetic
   non-target genome, with a stand-in for RF00031 (rfam.org is not reachable here).
+- Reannotation figures (2026-10-24): figures/reannotation_inputs.py gathers, for one gene, the public models that
+  overlap the gold-standard models (candidate tables of step 2; RefSeq CDS located by finding the RefSeq protein in
+  the translated exon chain; GenBank models from the ENA EMBL records), reference proteins and their Pfam domains
+  (InterPro API), with the source of each value; figures/reannotation_figure.py draws them (SEPHS2, DIO_PAR; human
+  DIO2 and Halocynthia roretzi Q6U6H1, a complete tunicate deiodinase with U133, as references for DIO_PAR; most
+  tunicate deiodinases in UniProt are fragments of 80-130 aa that stop at the TGA). While drawing DIO_PAR, the
+  annotation status of curation/gold_standard.py was found to report a codon inside an intron of the annotated
+  coding sequence as "coding sequence starts after the codon" (OSKA2016 DIO_PAR and SEPHS2); it now reports
+  "codon in an intron of the coding sequence (skipped)", class of Tico et al. 2026; the table changes at the next run
+  of make gold-standard.

@@ -68,8 +68,8 @@ sites (listed with all their equivalent placements, the one used first, as "CA-T
 an alignment, assembly or transcript problem); insertions, deletions and mismatches between
 the assembly and the compatible transcript that covers most of the coding sequence; the 3' UTR of the model and the
 longest 3' UTR of the supporting transcripts that end at the same stop codon; how the public annotation treats the
-gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, coding
-sequence ending before the codon or starting after it, no model); and the change that the annotation needs
+gene (annotation_status: selenocysteine declared, codon inside the coding sequence without declaration, codon in an
+intron of the coding sequence, coding sequence ending before the codon or starting after it, no model); and the change that the annotation needs
 (annotation_fix).
 Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain and the ranking criteria, every
 supporting transcript with its own frame, and the annotated transcripts near the codon that are not candidates, for
@@ -511,10 +511,12 @@ def annotation_status(ann, contig, strand, codon0, lo, hi):
     for _, r, a, b in over:
         inside = any(x <= codon0 and codon0 + 2 <= y for x, y in r["cds"])
         if inside: statuses.append("selenocysteine declared" if r["sec"] else "codon inside the coding sequence, not declared")
+        elif a <= codon0 and codon0 + 2 <= b: statuses.append("codon in an intron of the coding sequence (skipped)")
         elif (strand == "+" and b < codon0) or (strand == "-" and a > codon0 + 2): statuses.append("coding sequence ends before the codon")
         else: statuses.append("coding sequence starts after the codon")
     order = ["selenocysteine declared", "codon inside the coding sequence, not declared",
-             "coding sequence ends before the codon", "coding sequence starts after the codon"]
+             "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
+             "coding sequence starts after the codon"]
     return next(s for s in order if s in statuses), ids, over
 
 
