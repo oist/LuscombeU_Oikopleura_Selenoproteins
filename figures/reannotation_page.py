@@ -16,7 +16,9 @@ Each gene has three parts (thin rulers separate rows and columns of genes):
 - proteins (bottom): reference proteins and the gold-standard proteins of the three assemblies on the coordinates
   of the first reference (local alignments, BLOSUM62; the gold-standard proteins of OSKA2016 and OdB3 through a
   global alignment to the first gold-standard protein; residues outside the aligned part drawn as a line as long as
-  they are), with its Pfam domains and the residues aligned to its selenocysteines.
+  they are), with its Pfam domains and the residues aligned to its selenocysteines; right column: percentage of
+  similar residues to the OdB3 protein (BLOSUM62 > 0, selenocysteine read as cysteine, over the aligned part of a
+  global alignment with free end gaps, internal gaps counted as differences; none when OdB3 has no model).
 The assembly names and the labels of the protein rows (one row per reference species, then the gold-standard
 proteins) are written once per row of genes, on the left; the key is at the bottom of the page. Sizes are physical (mm), so that rows of genes keep the same density.
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
@@ -311,6 +313,22 @@ def layout_proteins(genes):
     return refs, gold, -(y + 2.3) + 1.6
 
 
+SIM_TO = "OdB3"   # gold-standard protein to which the similarity of the other proteins is given
+
+
+def similarity(q, ref, aligner):
+    """Percentage of similar residues of q to ref: residue pairs with a positive BLOSUM62 score (selenocysteine read
+    as cysteine) over the aligned part of a global alignment with free end gaps (from the first to the last aligned
+    pair; internal gaps count as differences)."""
+    aln = aligner.align(q.replace("U", "C"), ref.replace("U", "C"))[0]
+    bq, br = aln.aligned
+    pairs = [(q[i], ref[j]) for (q0, q1), (r0, r1) in zip(bq, br) for i, j in zip(range(q0, q1), range(r0, r1))]
+    columns = (bq[-1][1] - bq[0][0]) + (br[-1][1] - br[0][0]) - len(pairs)
+    blosum = aligner.substitution_matrix
+    similar = sum(a == b or blosum[a.replace("U", "C"), b.replace("U", "C")] > 0 for a, b in pairs)
+    return 100 * similar / columns
+
+
 def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     from Bio import Align
     from Bio.Align import substitution_matrices
@@ -329,7 +347,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         doms.append((d0, d1, name))
     rows = []
     for lbl in d["refs"]:
-        rows.append((refs_y[lbl], d["seqs"][lbl], "black", None, rf.protein_map(d["seqs"][lbl], axis, al)))
+        rows.append((refs_y[lbl], d["seqs"][lbl], "black", lbl, rf.protein_map(d["seqs"][lbl], axis, al)))
     # the gold-standard proteins of the other assemblies go through the first one (global alignment), so that the
     # three, nearly identical, are drawn alike where their similarity to the reference is low
     first = next(g for g in GENOMES if g in d["gprot"])
@@ -340,11 +358,15 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         if g not in d["gprot"]: continue
         m = m_first if g == first else {i: m_first[j - 1] for i, j in rf.protein_map(d["gprot"][g], d["gprot"][first], glob).items()
                                         if j - 1 in m_first}
-        rows.append((gold_y[k], d["gprot"][g], GOLD, None, m))
+        rows.append((gold_y[k], d["gprot"][g], GOLD, g, m))
+    ref = d["gprot"].get(SIM_TO)
+    sim = {lbl: similarity(p, ref, glob) for _, p, _, lbl, _ in rows if ref and lbl != SIM_TO}
     ends = [(m[min(m)] - min(m), m[max(m)] + len(p) - 1 - max(m)) for _, p, _, _, m in rows]   # with unaligned residues
     lo = min(0, min(e[0] for e in ends))
     hi = max(len(axis), max(e[1] for e in ends))
-    L0, L1 = lo, hi + 0.13 * (hi - lo)
+    # right of the proteins: the length (after the end of each protein) and a column of similarities (mm)
+    right = 1.0 + width_mm("0000 aa", 4.5) + 1.2 + width_mm("100", 4.5)
+    L0, L1 = lo, hi + right * (hi - lo) / (col_w - right)
     ammm = (L1 - L0) / col_w
     for yy, p, col, label, m in rows:
         h0, h1 = min(m.values()), max(m.values())
@@ -362,10 +384,16 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
                 ax.plot([sp], [yy], "o", ms=4.2, color=SEC if site == "U" else "white", mec=SEC if site == "U" else "black", mew=0.5)
                 ax.text(sp, yy - 0.05, site, ha="center", va="center", fontsize=4, color="white" if site == "U" else "black", fontweight="bold")
         ax.text(t1 + 1.0 * ammm, yy, f"{len(p)} aa", va="center", fontsize=4.5, color="0.3")
-    # domain and selenocysteine labels; a label that would overlap the previous one goes one line up
+        if label in sim: ax.text(L1, yy, f"{sim[label]:.0f}", va="center", ha="right", fontsize=4.5, color="black")
+    # domain and selenocysteine labels; a label that would overlap the previous one goes one line up; the header of
+    # the similarity column first, on the lower line
     items = sorted([((d0 + d1) / 2, name, "0.25", "normal") for d0, d1, name in doms] +
                    [(sp, f"{axis[sp - 1]}{sp}", SEC, "bold") for sp in secpos])
     placed = []
+    if sim:   # header on two lines, so that it stays narrow
+        for line, head in ((1, "% sim."), (0, f"to {rf.NAMES[SIM_TO]}")):
+            ax.text(L1, -0.4 - (1 - line) * LH, head, ha="right", va="top", fontsize=4.5, color="black")
+            placed.append((L1 - (width_mm(head, 4.5) + 0.8) * ammm, L1, line))
     for xc, text, col, wt in items:
         half = width_mm(text, CAPTION, wt) / 2 * ammm
         line = 0
@@ -423,6 +451,8 @@ def key(fig, used_sites):
                 (circle("U", SEC, SEC, "white"), "selenocysteine aligned to one of the first reference", "black"),
                 (circle("C", "white", "black", "black"), "other residue aligned to it", "black"),
                 (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black"),
+                (lambda ax, cx, y: ax.text(cx + 7, y, "92", fontsize=4.5, color="black", va="center", ha="right"),
+                 f"% similar residues to the {rf.NAMES[SIM_TO]} protein (BLOSUM62 > 0; global alignment, aligned part)", "black"),
                 (None, "human: UniProt; C. intestinalis: stage 1 predictions on its genome (accessions in the paragraphs)", "black")]
     lines, line, cx = [], [], 0
     for group in (models[:4], models[4:], introns, proteins):

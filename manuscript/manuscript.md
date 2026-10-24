@@ -417,7 +417,11 @@ sequence, with its bit score (open boxes would mark hits below 20 bits; there ar
 protein (UniProt), the *Ciona intestinalis* protein (stage 1 prediction on its genome) and the three gold-standard
 proteins, placed on the coordinates of the human protein by local alignment (those of OSKA2016 and OdB3 through the
 OKI2018 protein), with the Pfam domains of the human protein and the residues aligned to its selenocysteine; lines,
-residues outside the aligned part. Bottom: the public models of each assembly and what distinguishes them from the
+residues outside the aligned part; right column, percentage of residues similar to the OdB3 protein (BLOSUM62 score
+above 0, selenocysteine read as cysteine), over the aligned part of a global alignment with free end gaps, internal
+gaps counted as differences (OdB3, the first published assembly, is the reference because OKI2018 is the outgroup of
+the three: similarity to OKI2018 would not show the shortest distances; no value for SELENOO, which has no OdB3
+model). Bottom: the public models of each assembly and what distinguishes them from the
 gold standard, notes on the gold-standard models, and the accessions of the reference proteins.
 
 ## An *Oikopleura* SECIS model trained on the gold-standard genes

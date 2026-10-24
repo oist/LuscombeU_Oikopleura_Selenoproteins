@@ -811,3 +811,10 @@ no earlier step waits for them.
   two models change (OKI2018 SELENOW_pair2 3' UTR 197 nt, SELENOW_pair1 5' UTR 197 nt, one exon less each); no other
   gold-standard model reaches another gene's coding sequence. Expected after make gold-standard: 168 introns (the
   two dropped introns were counted twice), 3' UTR median 303 nt, range 4-695; the Results numbers are to update then.
+- Reannotation pages, similarity to OdB3 (2026-10-25, request of Charles): right of each protein panel, a column with
+  the percentage of residues similar to the OdB3 gold-standard protein (BLOSUM62 > 0, selenocysteine read as
+  cysteine; global alignment with free end gaps, BLOSUM62, gap open 10, extension 0.5; denominator: the columns from
+  the first to the last aligned pair, internal gaps counted as differences). OdB3 as reference: first published
+  assembly, and OKI2018 is the outgroup of the three, so similarity to OKI2018 would miss the shortest distance.
+  Values: human 44-70%, C. intestinalis 44-74%, OKI2018 88-99%, OSKA2016 94-100% (SELENOK: OKI2018 97%, OSKA2016
+  94%). No value for SELENOO (no OdB3 model).
