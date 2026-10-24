@@ -81,7 +81,7 @@ NC_137294.1	gold_standard	CDS	7274479	7274578	.	+	0	ID=cds-OKI_SELENOK;Parent=rn
 NC_137294.1	gold_standard	CDS	7274620	7274752	.	+	2	ID=cds-OKI_SELENOK;Parent=rna-OKI_SELENOK;transl_except=(pos:7274834..7274836%2Caa:Sec)
 NC_137294.1	gold_standard	CDS	7274794	7274845	.	+	1	ID=cds-OKI_SELENOK;Parent=rna-OKI_SELENOK;transl_except=(pos:7274834..7274836%2Caa:Sec)
 NC_137293.1	gold_standard	gene	2223488	2229745	.	-	.	ID=gene-OKI_SELENOO;Name=SELENOO
-NC_137293.1	gold_standard	mRNA	2223488	2229745	.	-	.	ID=rna-OKI_SELENOO;Parent=gene-OKI_SELENOO;Name=SELENOO;evidence=transcript:TRINITY_DN1620_c0_g1_i4
+NC_137293.1	gold_standard	mRNA	2223488	2229745	.	-	.	ID=rna-OKI_SELENOO;Parent=gene-OKI_SELENOO;Name=SELENOO;evidence=transcript:TRINITY_DN1620_c0_g1_i4;exception=annotated by transcript or proteomic data;Note=5 bases of the transcript coding sequence absent from the assembly%2C 0 bases of the assembly absent from it
 NC_137293.1	gold_standard	exon	2223488	2223982	.	-	.	ID=exon-OKI_SELENOO-1;Parent=rna-OKI_SELENOO
 NC_137293.1	gold_standard	exon	2224266	2224391	.	-	.	ID=exon-OKI_SELENOO-2;Parent=rna-OKI_SELENOO
 NC_137293.1	gold_standard	exon	2224594	2224676	.	-	.	ID=exon-OKI_SELENOO-3;Parent=rna-OKI_SELENOO
@@ -96,7 +96,20 @@ NC_137293.1	gold_standard	exon	2228027	2228098	.	-	.	ID=exon-OKI_SELENOO-11;Pare
 NC_137293.1	gold_standard	exon	2229020	2229138	.	-	.	ID=exon-OKI_SELENOO-12;Parent=rna-OKI_SELENOO
 NC_137293.1	gold_standard	exon	2229200	2229336	.	-	.	ID=exon-OKI_SELENOO-13;Parent=rna-OKI_SELENOO
 NC_137293.1	gold_standard	exon	2229470	2229745	.	-	.	ID=exon-OKI_SELENOO-14;Parent=rna-OKI_SELENOO
-NC_137293.1	gold_standard	CDS	2223735	2223947	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2223735	2223982	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2224266	2224391	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2224594	2224676	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2224952	2225089	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2225325	2225571	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2226301	2226518	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2227351	2227441	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2227506	2227549	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2227614	2227657	.	-	2	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2227739	2227899	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2228027	2228098	.	-	1	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2229020	2229138	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2229200	2229336	.	-	2	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
+NC_137293.1	gold_standard	CDS	2229470	2229539	.	-	0	ID=cds-OKI_SELENOO;Parent=rna-OKI_SELENOO;transl_except=(pos:complement(2223744..2223746)%2Caa:Sec)
 NC_137293.1	gold_standard	gene	14528587	14529589	.	-	.	ID=gene-OKI_SELENOS;Name=SELENOS
 NC_137293.1	gold_standard	mRNA	14528587	14529589	.	-	.	ID=rna-OKI_SELENOS;Parent=gene-OKI_SELENOS;Name=SELENOS;evidence=transcript:TRINITY_DN2699_c0_g1_i1;exception=annotated by transcript or proteomic data;Note=13 bases of the transcript coding sequence absent from the assembly%2C 0 bases of the assembly absent from it
 NC_137293.1	gold_standard	exon	14528587	14528906	.	-	.	ID=exon-OKI_SELENOS-1;Parent=rna-OKI_SELENOS
