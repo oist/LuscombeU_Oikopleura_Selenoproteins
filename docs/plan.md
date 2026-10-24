@@ -599,7 +599,6 @@ no earlier step waits for them.
   models. Provisional Results and Methods sections added to the manuscript; Biopython cited (Cock2009). Next: step
   3, SECIS model from the gold-standard sequences after the stop codons (curation/gold_standard/*.after_stop.fa) and
   the stage 1 predictions of O. longicauda, O. albicans and O. vanhoeffeni.
-
 - Step 3 started (2026-10-24): stage2/secis_model_training.py (make secis-v2). Windows of 2,000 nt after the stop
   codons (gold standard for the three O. dioica assemblies; stage 1 predictions kept by step 1, extended to the stop
   codon, for O. longicauda, O. albicans and O. vanhoeffeni), shortened at the next selenoprotein coding sequence
