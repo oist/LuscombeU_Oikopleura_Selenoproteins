@@ -591,3 +591,11 @@ no earlier step waits for them.
   transcript chains are extended with any overlapping annotated mRNA or prediction, when the extension changes the
   coding sequence (tested on the ENA sequence: OdB3 SEPHS2 392 aa, C-terminus as in OSKA2016); annotation_fix
   reports merges of compatible split models.
+- Step 2 done (2026-10-24, sixth Deigo run, commit 151eea3): OdB3 SEPHS2 complete (392 aa), merges of split OdB3
+  models reported; other proteins unchanged; 30 assembly-based models translate on the ENA sequence. Summary: 53
+  models for 54 curated codons (OdB3 SELENOO: none), 52 complete (OdB3 GPX_chr1a: 5' fragment), 50 with a 3' UTR
+  (median 300 nt); transcript proteins where the assembly lacks or adds bases: OKI2018 SELENOS, SELENOO, DIO_chr1;
+  OSKA2016 SELENOW_PAR; OdB3 DIO_PAR, GPX_PAR; 195 introns, 19 GA-AG, 6 GC-AG, 1 GG-AG (13%), 10 other sites in 6
+  models. Provisional Results and Methods sections added to the manuscript; Biopython cited (Cock2009). Next: step
+  3, SECIS model from the gold-standard sequences after the stop codons (curation/gold_standard/*.after_stop.fa) and
+  the stage 1 predictions of O. longicauda, O. albicans and O. vanhoeffeni.
