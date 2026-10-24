@@ -1,25 +1,32 @@
 kind	assembly	name	field	value	source
 public	OKI	XP_081635792.1	database	RefSeq	
 public	OKI	XP_081635792.1	exons	5006722-5007265;5007307-5007471;5007510-5007751;5007961-5008137;5008183-5008479;5008526-5008640	candidate table of step 2 (OKI.candidate_models.tsv)
-public	OKI	XP_081635792.1	cds	5007056-5007265;5007307-5007471;5007510-5007751;5007961-5008137;5008183-5008246	RefSeq protein (EBI dbfetch) located in the translation of the RefSeq exon chain
-public	OKI	XP_081635792.1	note	coding sequence starts at codon 109, 79 codons after the TGA (codon 30)	curator
+public	OKI	XP_081635792.1	cds	5007056-5007265;5007307-5007471;5007510-5007751;5007961-5008137;5008183-5008246	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081635792.1	sites	GT-AG;GT-AG;GC-AG;GT-AG;GT-AG	genome sequence
+public	OKI	XP_081635792.1	note	coding sequence starts 79 codons after the TGA	curator
+gold	OKI	SEPHS2	sites	GT-AG;GT-AG;GC-AG;GT-AG;GT-AG	genome sequence
 public	OSKA	Oidioi.CG.OSKA2016.S25.g14713.01.t	database	ANISEED	
 public	OSKA	Oidioi.CG.OSKA2016.S25.g14713.01.t	exons	269020-269034;269148-269169;269358-269427;269557-269796;269875-270047;270206-270294;270532-270652;270871-271091;271135-271248;271290-271384;271429-271625;271674-271914;271962-272004;272423-272705;272749-272925;272963-273204;273248-273412;273457-273666	candidate table of step 2 (OSKA.candidate_models.tsv)
 public	OSKA	Oidioi.CG.OSKA2016.S25.g14713.01.t	cds	269020-269034;269148-269169;269358-269427;269557-269796;269875-270047;270206-270294;270532-270652;270871-271091;271135-271248;271290-271384;271429-271625;271674-271914;271962-272004;272423-272705;272749-272925;272963-273204;273248-273412;273457-273666	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14713.01.t	sites	GA-AG;GC-TG;GT-AG;GT-AG;GC-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	candidate table of step 2 (same intron)
 public	OSKA	Oidioi.CG.OSKA2016.S25.g14713.01.t	note	TGA exon skipped; fused with the upstream gene	curator
+gold	OSKA	SEPHS2	sites	GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	candidate table of step 2 (same intron)
 public	OdB3	CBY08599.1	database	GenBank	
 public	OdB3	CBY08599.1	exons	231088-231345;231392-231397;231443-231466;231467-231483	ENA EMBL record (mRNA location)
 public	OdB3	CBY08599.1	cds	231088-231345;231392-231397;231443-231466	ENA EMBL record (CDS location)
-public	OdB3	CBY08599.1	frame	other	identity to the gold-standard protein below 30%
+public	OdB3	CBY08599.1	sites	GT-AG;GT-AG	genome sequence
+public	OdB3	CBY08599.1	frame	other	coding sequence overlapping the gold-standard one; identity to the gold-standard protein below 30%
 public	OdB3	CBY08598.1	database	GenBank	
 public	OdB3	CBY08598.1	exons	229785-230087;230088-230297;230347-230511;230551-230792;230835-231011;231052-231070	ENA EMBL record (mRNA location)
 public	OdB3	CBY08598.1	cds	230088-230297;230347-230511;230551-230792;230835-231011;231052-231070	ENA EMBL record (CDS location)
+public	OdB3	CBY08598.1	sites	GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
 public	OdB3	CBY08599.1	note	other frame	curator
 public	OdB3	CBY08598.1	note	starts at an internal ATG	curator
-reference	-	human SEPHS2	accession	UniProt Q99611	UniProt Q99611 (InterPro API)
-reference	-	human SEPHS2	organism	Homo sapiens	UniProt Q99611 (InterPro API)
-reference	-	human SEPHS2	axis	yes	
-reference	-	human SEPHS2	selenocysteine	60	UniProt Q99611 (InterPro API)
-reference	-	human SEPHS2	domain	PF00586:120-225:AIR synthase related protein, N-terminal domain	UniProt Q99611 (InterPro API)
-reference	-	human SEPHS2	domain	PF02769:244-416:AIR synthase related protein, C-terminal domain	UniProt Q99611 (InterPro API)
-reference	-	Ciona intestinalis SEPHS	accession	XP_002129526.1	results/models/machinery_profiles/SEPHS2.fa
+gold	OdB3	SEPHS2	sites	GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+reference	-	human	accession	UniProt Q99611	UniProt Q99611 (InterPro API)
+reference	-	human	organism	Homo sapiens	UniProt Q99611 (InterPro API)
+reference	-	human	axis	yes	
+reference	-	human	selenocysteine	60	UniProt Q99611 (InterPro API)
+reference	-	human	domain	PF00586:120-225:AIRS	UniProt Q99611 (InterPro API), Pfam short name
+reference	-	human	domain	PF02769:244-416:AIRS_C	UniProt Q99611 (InterPro API), Pfam short name
+reference	-	C. intestinalis	accession	Cint_SEPHS2.5	results/trees/SEPHS2.faa

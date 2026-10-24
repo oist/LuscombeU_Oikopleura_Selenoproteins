@@ -681,3 +681,25 @@ no earlier step waits for them.
   alignments with free end gaps placed the weakly conserved N-termini of the three DIO_chr1 proteins differently);
   "other frame" only for public coding sequences that overlap the gold-standard one; RefSeq proteins corrected for
   the assembly located by their first and last 15 residues.
+- Gold-standard rerun (2026-10-24, pushed by Charles, commit f9ae243) with the three new rules: OdB3 TXNRD from
+  the ESTs and the GenBank model (600 aa, GA-AG intron), OKI2018 and OdB3 SELENOW_PAR, OKI2018 SELENOW_pair1 and
+  pair2 and OdB3 SELENOW_pair2 from the transcripts (notes: the annotated mRNA of another protein holds the gene),
+  as expected. One more change from the similarity rule: OSKA2016 SELENOW_pair2 is now comp18928_c0_seq3 (94 aa, one
+  exon) instead of comp18928_c0_seq2 (101 aa, an intron with a GC-CG site; mean score 468 against 332). Annotation
+  status: 12 coding sequences end at the TGA read as stop (see results/tables/gold_standard.tsv),
+  12 skip the TGA in an intron, 9 start after it, 4 hold it without declaration, 3 declare it, 3 end before it, 10
+  genes have no annotated coding sequence. The results paragraph on the public annotations must be rewritten with
+  these counts.
+- Page layout, second version (2026-10-24, comments of Charles): the notes moved from captions above the models to
+  one paragraph per gene between the gene models and the proteins (public models of each assembly with letters as
+  on the models, notes on the gold-standard models, accessions of the reference proteins); SECIS drawn as a flat
+  green box on the model line at its position, bit score after the end of the model; public and gold-standard tracks
+  closer (3.4 mm); one protein row per species, labelled on the left (human; C. intestinalis), the reference
+  accessions in the paragraphs; all tunicate references are now the C. intestinalis stage 1 predictions
+  (results/trees/), so that every row of genes has the same species rows (Halocynthia Q6U6H1 and UniProt H2Y2A4
+  no longer used); assembly names horizontal on the left. Third row: GPX_PAR (RefSeq declares the selenocysteine,
+  same model as the gold standard; a RefSeq non-coding RNA ends in the TGA exon; ANISEED skips the TGA exon;
+  GenBank starts 14 nt before the TGA in another frame for 41 codons, the OdB3 assembly having one extra base),
+  SELENOK (no RefSeq or ANISEED model; GenBank reads the TGA as stop), SELENOS (RefSeq loses the frame where the
+  OKI2018 assembly lacks 13 bases; ANISEED reads the TGA as stop; GenBank splits the gene in two). Nine genes fill
+  the page; figures/reannotation_page.{pdf,svg,png} committed (PNG at 200 dpi, under 1 MB).

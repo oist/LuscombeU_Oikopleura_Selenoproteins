@@ -1,0 +1,31 @@
+kind	assembly	name	field	value	source
+public	OKI	XP_081632420.1	database	RefSeq	
+public	OKI	XP_081632420.1	exons	3436209-3436482;3436485-3436703;3441909-3442144;3442185-3442314	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081632420.1	cds	3436385-3436482;3436485-3436703;3441909-3441957	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081632420.1	sites	TA-TA;GT-AG;GT-AG	genome sequence
+public	OKI	XP_081632420.1	note	coding sequence starts 4 codons after the TGA; model corrected for the assembly (low-quality protein)	curator
+gold	OKI	DIO_chr1	sites	TT-AA;GT-AG;GT-AG	genome sequence
+gold	OKI	DIO_chr1	note	mapped from the transcript (the assembly lacks 7 bases of the coding sequence and has 6 others)	curator
+public	OSKA	Oidioi.CG.OSKA2016.S37.g16254.01.t	database	ANISEED	
+public	OSKA	Oidioi.CG.OSKA2016.S37.g16254.01.t	exons	83026-83232;83272-83388;83717-84072;84677-84995;85035-85266;86124-86446	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S37.g16254.01.t	cds	83026-83232;83272-83388;83717-84072;84677-84995;85035-85266;86124-86446	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S37.g16254.01.t	sites	GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	candidate table of step 2 (same intron)
+public	OSKA	Oidioi.CG.OSKA2016.S37.g16254.01.t	note	TGA exon skipped; joined to 5 exons upstream of the gene	curator
+gold	OSKA	DIO_chr1	sites	GT-AG;GT-AG	candidate table of step 2 (same intron)
+public	OdB3	CBY06720.1	database	GenBank	
+public	OdB3	CBY06720.1	exons	147462-147642;147679-147782	ENA EMBL record (mRNA location)
+public	OdB3	CBY06720.1	cds	147462-147642;147679-147782	ENA EMBL record (CDS location)
+public	OdB3	CBY06720.1	sites	GT-AG	genome sequence
+public	OdB3	CBY06719.1	database	GenBank	
+public	OdB3	CBY06719.1	exons	146631-147046;147047-147366;147404-147452	ENA EMBL record (mRNA location)
+public	OdB3	CBY06719.1	cds	147047-147366;147404-147452	ENA EMBL record (CDS location)
+public	OdB3	CBY06719.1	sites	GT-AG	genome sequence
+public	OdB3	CBY06720.1	note	ends at the TGA (read as stop)	curator
+public	OdB3	CBY06719.1	note	starts 4 codons after the TGA	curator
+gold	OdB3	DIO_chr1	sites	GT-AG;GT-AG	genome sequence
+reference	-	human	accession	UniProt P55073	UniProt P55073 (InterPro API)
+reference	-	human	organism	Homo sapiens	UniProt P55073 (InterPro API)
+reference	-	human	axis	yes	
+reference	-	human	selenocysteine	170	UniProt P55073 (InterPro API)
+reference	-	human	domain	PF00837:38-293:T4_deiodinase	UniProt P55073 (InterPro API), Pfam short name
+reference	-	C. intestinalis	accession	Cint_DIO.2	results/trees/selenoproteins/DIO.faa

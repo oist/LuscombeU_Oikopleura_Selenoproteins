@@ -1,0 +1,30 @@
+kind	assembly	name	field	value	source
+public	OKI	rna-XR_014134294.1	database	RefSeq	
+public	OKI	rna-XR_014134294.1	exons	3899036-3899205;3899253-3899558;3899600-3899743;3899786-3900393;3900444-3900497;3900539-3900623	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	rna-XR_014134294.1	sites	GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+public	OKI	XP_081635498.1	database	RefSeq	
+public	OKI	XP_081635498.1	exons	3900264-3900393;3900444-3900497;3900539-3900641;3900688-3900879;3900931-3901474	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081635498.1	cds	3900329-3900393;3900444-3900497;3900539-3900641;3900688-3900879;3900931-3901086	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081635498.1	sites	GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+public	OKI	rna-XR_014134294.1	note	non-coding RNA that starts upstream and ends in the TGA exon	curator
+public	OKI	XP_081635498.1	note	selenocysteine declared; same model as the gold standard	curator
+gold	OKI	GPX_PAR	sites	GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14813.01.t	database	ANISEED	
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14813.01.t	exons	542832-542884;543323-543527;543569-543724	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14813.01.t	cds	542832-542884;543323-543527;543569-543724	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14813.01.t	sites	GT-AG;GT-AG	candidate table of step 2 (same intron)
+public	OSKA	Oidioi.CG.OSKA2016.S25.g14813.01.t	note	TGA exon skipped; starts in the second exon	curator
+gold	OSKA	GPX_PAR	sites	GT-AG;GT-AG;GT-AG;GT-AG	candidate table of step 2 (same intron)
+public	OdB3	CBY25160.1	database	GenBank	
+public	OdB3	CBY25160.1	exons	14480-14529;14576-14629;14708-14745;14746-14810;14859-15051;15094-15249;15250-15581	ENA EMBL record (mRNA location)
+public	OdB3	CBY25160.1	cds	14746-14810;14859-15051;15094-15249	ENA EMBL record (CDS location)
+public	OdB3	CBY25160.1	sites	GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+public	OdB3	CBY25160.1	note	starts 14 nt before the TGA, in another frame for 41 codons	curator
+gold	OdB3	GPX_PAR	sites	GT-AG;GT-AG;GT-AG;GT-AG	genome sequence
+gold	OdB3	GPX_PAR	note	mapped from the transcript (one extra base in the assembly)	curator
+reference	-	human	accession	UniProt P36969	UniProt P36969 (InterPro API)
+reference	-	human	organism	Homo sapiens	UniProt P36969 (InterPro API)
+reference	-	human	axis	yes	
+reference	-	human	selenocysteine	73	UniProt P36969 (InterPro API)
+reference	-	human	domain	PF00255:41-148:GSHPx	UniProt P36969 (InterPro API), Pfam short name
+reference	-	C. intestinalis	accession	Cint_GPX.5	results/trees/selenoproteins/GPX.faa

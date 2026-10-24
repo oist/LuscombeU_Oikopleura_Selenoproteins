@@ -6,15 +6,17 @@ Each gene has two parts, drawn as in figures/reannotation_figure.py:
   grey) above the gold-standard model of step 2 (blue), in gene orientation and aligned on the selenocysteine TGA
   (x: nucleotides from the TGA, one scale per gene; stretches of more than 1,500 nt without any drawn exon, such as
   long introns, are drawn 200 nt long and marked by a break); introns coloured by splice site without changing their drawn
-  length; SECIS elements: best hit of the current appendicularian model (cmsearch) after the stop codon. Public
-  models are named, with the curator's note, in a caption above them (letters when several share a row);
-  public exons are cut at the margin beyond the gold-standard transcript, and those entirely beyond it are counted.
+  length; SECIS elements: best hit of the current appendicularian model (cmsearch) after the stop codon, drawn as a
+  green box with its bit score; letters when several public models share a row; public exons are cut at the margin
+  beyond the gold-standard transcript, and those entirely beyond it are counted.
+- paragraph (middle): the public models of each assembly with the curator's notes, the notes on the gold-standard
+  models, and the accessions of the reference proteins.
 - proteins (bottom): reference proteins and the gold-standard proteins of the three assemblies on the coordinates
   of the first reference (local alignments, BLOSUM62; the gold-standard proteins of OSKA2016 and OdB3 through a
   global alignment to the first gold-standard protein; residues outside the aligned part drawn as a line as long as
   they are), with its Pfam domains and the residues aligned to its selenocysteines.
-The assembly names and the labels of the gold-standard proteins are written once per row of genes, on the left;
-the key is at the bottom of the page. Sizes are physical (mm), so that rows of genes keep the same density.
+The assembly names and the labels of the protein rows (one row per reference species, then the gold-standard
+proteins) are written once per row of genes, on the left; the key is at the bottom of the page. Sizes are physical (mm), so that rows of genes keep the same density.
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
 of step 2. Output: <out>/<name>.{pdf,svg,png}.
 """
@@ -37,10 +39,12 @@ GOLD, PUBLIC, OTHER, SEC, SECIS, DOM = rf.GOLD, rf.PUBLIC, rf.OTHER, rf.SEC, rf.
 GENOMES, NAMES, SITE_COLOURS = rf.GENOMES, rf.NAMES, rf.SITE_COLOURS
 MM = 1 / 25.4
 PAGE_W, PAGE_H = 210, 297                  # mm
-LEFT, RIGHT, COL_GAP, TOP, BOTTOM = 24, 5, 7, 8, 6
+LEFT, RIGHT, COL_GAP, TOP, BOTTOM = 25.5, 5, 7, 8, 6
 CDS_H, UTR_H, CHEV = 1.4, 0.55, 0.8        # gene models: coding and UTR exons, intron chevrons (half of the one-gene figure)
 BAR_H = 1.4                                # proteins
 CAPTION = 5                                # pt
+NOTE, NOTE_LH = 5, 2.0                     # paragraph between gene models and proteins: font size (pt), line height (mm)
+SECIS_H = 1.0                              # height of the SECIS box (mm)
 PAD = 120                                  # nt kept on each side of a shortened stretch
 LH = 2.1                                   # mm per caption line
 _t2p = TextToPath()
@@ -62,7 +66,7 @@ def wrap(text, width, size):
     return lines + ([cur] if cur else [])
 
 
-def short(name): return name.replace("Oidioi.CG.OSKA2016.", "")
+def short(name): return name.replace("Oidioi.CG.OSKA2016.", "").replace("rna-", "")
 
 
 def load(gene, a):
@@ -127,15 +131,27 @@ def load(gene, a):
     return d
 
 
-def caption(d, g, col_w):
-    """Caption lines of the public models of an assembly, and whether letters are drawn on the models."""
-    ms = d["public"].get(g, {})
-    if not ms: return wrap("no annotated model", col_w, CAPTION), False
-    parts = []
-    for k, (name, m) in enumerate(ms.items()):
-        lead = f"{'abcdefgh'[k]} " if len(ms) > 1 else ""
-        parts.append(f"{lead}{short(name)}" + (f": {m['note']}" if m.get("note") else ""))
-    return wrap("; ".join(parts), col_w, CAPTION), len(ms) > 1
+DB = {"OKI": "RefSeq", "OSKA": "ANISEED", "OdB3": "GenBank"}
+
+
+def notes(d):
+    """Entries (label, text) of the paragraph of a gene: the public models of each assembly with the curator's notes
+    (letters as on the models when several share a row), the gold-standard notes, and the reference proteins."""
+    out = []
+    for g in GENOMES:
+        ms = d["public"].get(g, {})
+        if not ms: text = f"no {DB[g]} model."
+        elif len(ms) == 1:
+            name, m = next(iter(ms.items()))
+            text = f"{DB[g]} {short(name)}" + (f": {m['note']}." if m.get("note") else ".")
+        else:
+            text = f"{DB[g]} " + "; ".join(f"{'abcdefgh'[k]} {short(n)}" + (f": {m['note']}" if m.get("note") else "")
+                                           for k, (n, m) in enumerate(ms.items())) + "."
+        if d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
+        if g not in d["x"]: text += " No gold-standard model."
+        out.append((NAMES[g], text))
+    out.append(("proteins", "; ".join(f"{lbl} {v.get('accession', '').replace('UniProt ', '')}" for lbl, v in d["refs"].items()) + "."))
+    return out
 
 
 def draw_model(ax, y, exons, cds, x, color, hatch=False, sites=None, clip=(-1e12, 1e12)):
@@ -177,30 +193,22 @@ def mark_breaks(ax, d, y, introns, ntmm):
                 break_mark(ax, xc, y + CHEV * (1 - abs(xc - mid) / ((b_ - a_) / 2)), ntmm)
 
 
-def stem_loop(ax, x0, y, w, color):
-    """SECIS glyph (w: width in data units) standing on a model drawn at y."""
-    for xx in (x0, x0 + w): ax.plot([xx, xx], [y + 0.5, y + 1.9], color=color, lw=0.6)
-    ax.add_patch(Ellipse((x0 + w / 2, y + 2.35), w * 1.7, 0.9, facecolor="none", edgecolor=color, lw=0.6))
+def secis_box(ax, x0, x1, y):
+    """SECIS element: a flat box on the model line."""
+    ax.add_patch(Rectangle((x0, y - SECIS_H / 2), x1 - x0, SECIS_H, facecolor=SECIS, edgecolor="none", zorder=4))
 
 
-def layout_models(genes, col_w):
-    """y (mm, 0 at the top, downwards) of the public and gold-standard tracks of each assembly for one row of genes,
-    with the caption lines of each gene, and the height of the part."""
-    y, tracks = -3.6, {}
+def layout_models(genes):
+    """y (mm, 0 at the top, downwards) of the public and gold-standard tracks of each assembly, the same for the
+    genes of a row, and the height of the part."""
+    y, tracks = -3.4, {}
     for g in GENOMES:
-        caps = {d["gene"]: caption(d, g, col_w) for d in genes}
-        gnotes = {d["gene"]: wrap(d["gold_notes"].get(g, ""), col_w, CAPTION) for d in genes}
-        n_cap = max(len(c[0]) for c in caps.values())
-        letters = any(c[1] for c in caps.values())
-        top = y
-        y -= n_cap * LH + 1.6 + (1.9 if letters else 0)
+        y -= 2.2                       # letters of the models and counts of exons beyond the window
         pub = y
-        y -= 5.2
-        gold = y
-        y -= 1.4
-        tracks[g] = {"caption_top": top, "pub": pub, "gold": gold, "gold_note_top": y, "caps": caps, "gnotes": gnotes}
-        y -= max(len(v) for v in gnotes.values()) * LH + 2.0
-    return tracks, -y
+        y -= 3.4
+        tracks[g] = {"pub": pub, "gold": y}
+        y -= 1.6
+    return tracks, -y + 0.4
 
 
 def draw_models(ax, d, tracks, col_w):
@@ -209,8 +217,6 @@ def draw_models(ax, d, tracks, col_w):
     last_gold = None
     for g in GENOMES:
         t = tracks[g]
-        for k, line in enumerate(t["caps"][d["gene"]][0]):
-            ax.text(X0, t["caption_top"] - k * LH, line, fontsize=CAPTION, color="0.35", va="top", ha="left", bbox=BOX, zorder=5)
         if g not in d["x"]: continue
         st, ex, cds, sec = d["gold"][g]
         x = d["x"][g]
@@ -227,29 +233,23 @@ def draw_models(ax, d, tracks, col_w):
             if not e_in: continue
             xm = max(lo, min(min(x(p), x(q)) for p, q in e_in)); xM = min(hi, max(max(x(p), x(q)) + 1 for p, q in e_in))
             n_left = sum(max(x(p), x(q)) < lo for p, q in e); n_right = sum(min(x(p), x(q)) > hi for p, q in e)
-            more = lambda n: f"{n} more exon{'s' if n > 1 else ''}"
-            if n_left: ax.text(xm, t["pub"] - 1.3, f"◀ {more(n_left)}", fontsize=4.5, color=PUBLIC, va="top")
-            if n_right: ax.text(xM, t["pub"] - 1.3, f"{more(n_right)} ▶", fontsize=4.5, color=PUBLIC, va="top", ha="right")
+            if n_left: ax.text(xm, t["pub"] + 1.0, f"◀ {n_left}", fontsize=4.5, color=PUBLIC, va="bottom")
+            if n_right: ax.text(xM, t["pub"] + 1.0, f"{n_right} ▶", fontsize=4.5, color=PUBLIC, va="bottom", ha="right")
             if len(ms) > 1:
-                ax.text((xm + xM) / 2, t["pub"] + 1.2, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
+                ax.text((xm + xM) / 2, t["pub"] + 1.0, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
         drawn = draw_model(ax, t["gold"], ex, cds, x, GOLD, sites=rf.site_map(ex, d["gold_sites"].get(g, "")))
         mark_breaks(ax, d, t["gold"], drawn, ntmm)
-        for k, line in enumerate(t["gnotes"][d["gene"]]):
-            ax.text(X0, t["gold_note_top"] - k * LH, line, fontsize=CAPTION, color=GOLD, va="top", ha="left", bbox=BOX, zorder=5)
+        end = d["span"][g][1]
         if g in d["secis"]:
             f0, f1, bits = d["secis"][g]
             stop = max(q for _, q in cds) if st == "+" else min(p for p, _ in cds)
-            w = 1.1 * ntmm
-            x0 = d["fwd"](d["xr"][g](stop) + f0)
-            stem_loop(ax, x0, t["gold"], w, SECIS)
-            label = f"{bits:.0f} bits"
-            if x0 + w + 1.2 * ntmm + width_mm(label, 4.5) * ntmm < X1:
-                ax.text(x0 + w + 1.2 * ntmm, t["gold"] + 2.2, label, fontsize=4.5, color=SECIS, va="center")
-            else:
-                ax.text(x0 - 1.2 * ntmm, t["gold"] + 2.2, label, fontsize=4.5, color=SECIS, va="center", ha="right")
+            x0, x1 = d["fwd"](d["xr"][g](stop) + f0), d["fwd"](d["xr"][g](stop) + f1 + 1)
+            secis_box(ax, x0, x1, t["gold"])
+            end = max(end, x1)
+            ax.text(end + 0.8 * ntmm, t["gold"], f"{bits:.0f}", fontsize=4.5, color=SECIS, va="center")
         last_gold = t["gold"]
-    ax.plot([1.5, 1.5], [last_gold - 1.5, -2.6], color=SEC, lw=0.5, ls=(0, (2, 1.5)), zorder=1)
-    ax.text(1.5, -2.4, "TGA", color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
+    ax.plot([1.5, 1.5], [last_gold - 1.2, -2.4], color=SEC, lw=0.5, ls=(0, (2, 1.5)), zorder=1)
+    ax.text(1.5, -2.3, "TGA", color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
     ax.set_xlim(X0, X1)
     step = next(s for s in (250, 500, 1000, 2000) if (X1 - X0) / s <= 6)
     ticks = [v for v in range(math.ceil(d["X0raw"] / step) * step, int(d["X1raw"]) + 1, step)
@@ -261,14 +261,37 @@ def draw_models(ax, d, tracks, col_w):
     ax.tick_params(axis="x", pad=1)
 
 
+def layout_notes(genes, col_w):
+    """Lines of the paragraph of each gene, with a hanging indent after the bold labels, and the height of the part."""
+    indent = max(width_mm(lbl, NOTE, "bold") for lbl in list(NAMES.values()) + ["proteins"]) + 1.2
+    out = {}
+    for d in genes:
+        out[d["gene"]] = [(lbl, wrap(text, col_w - indent, NOTE)) for lbl, text in notes(d)]
+    n = max(sum(len(l) for _, l in v) for v in out.values())
+    return out, indent, n * NOTE_LH + 0.6
+
+
+def draw_notes(ax, entries, indent):
+    y = -0.3
+    for lbl, lines in entries:
+        ax.text(0, y, lbl, fontsize=NOTE, fontweight="bold", va="top", color="0.15")
+        for line in lines:
+            ax.text(indent, y, line, fontsize=NOTE, va="top", color="0.15")
+            y -= NOTE_LH
+    ax.axis("off")
+
+
 def layout_proteins(genes):
-    """y (mm, downwards) of the label lines and bars of the references (as many rows as the gene with most) and of
-    the gold-standard proteins, and the height of the part."""
-    nref = max(len(d["refs"]) for d in genes)
-    y = -2 * LH - 0.6                 # domain and selenocysteine labels (two lines when they overlap)
-    refs = []
-    for _ in range(nref):
-        refs.append((y, y - LH - 0.9)); y -= LH + 0.9 + 2.6
+    """y (mm, downwards) of one row per reference species (the species of the genes of the row, in order) and of the
+    gold-standard proteins, and the height of the part."""
+    species = []
+    for d in genes:
+        species += [k for k in d["refs"] if k not in species]
+    y = -2 * LH - 1.4                 # domain and selenocysteine labels (two lines when they overlap)
+    refs = {}
+    for sp in species:
+        refs[sp] = y; y -= 2.3
+    y -= 0.5
     gold = []
     for _ in GENOMES:
         gold.append(y); y -= 2.3
@@ -292,10 +315,8 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         d0, d1 = map(int, span.split("-"))
         doms.append((d0, d1, name))
     rows = []
-    for k, (lbl, v) in enumerate(d["refs"].items()):
-        acc = v.get("accession", "").replace("UniProt ", "")
-        text = f"{lbl} {acc}" + (f"; {v['note']}" if v.get("note") else "")
-        rows.append((refs_y[k][1], d["seqs"][lbl], "black", (refs_y[k][0], text), rf.protein_map(d["seqs"][lbl], axis, al)))
+    for lbl in d["refs"]:
+        rows.append((refs_y[lbl], d["seqs"][lbl], "black", None, rf.protein_map(d["seqs"][lbl], axis, al)))
     # the gold-standard proteins of the other assemblies go through the first one (global alignment), so that the
     # three, nearly identical, are drawn alike where their similarity to the reference is low
     first = next(g for g in GENOMES if g in d["gprot"])
@@ -326,7 +347,6 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
                 ax.plot([sp], [yy], "o", ms=4.2, color=SEC if site == "U" else "white", mec=SEC if site == "U" else "black", mew=0.5)
                 ax.text(sp, yy - 0.05, site, ha="center", va="center", fontsize=4, color="white" if site == "U" else "black", fontweight="bold")
         ax.text(t1 + 1.0 * ammm, yy, f"{len(p)} aa", va="center", fontsize=4.5, color="0.3")
-        if label: ax.text(L0, label[0], label[1], fontsize=CAPTION, va="top", ha="left", color="0.15")
     # domain and selenocysteine labels; a label that would overlap the previous one goes one line up
     items = sorted([((d0 + d1) / 2, name, "0.25", "normal") for d0, d1, name in doms] +
                    [(sp, f"U{sp}", SEC, "bold") for sp in secpos])
@@ -342,7 +362,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     ax.set_xticks(range(0, len(axis) + 1, step))
     ax.set_yticks([]); [ax.spines[s].set_visible(False) for s in ("left", "right", "top")]
     ax.tick_params(axis="x", pad=1)
-    ax.set_xlabel(f"residue of {axis_label} (local alignments)", fontsize=5, labelpad=1)
+    ax.set_xlabel(f"residue of the {axis_label} protein", fontsize=5, labelpad=1)
 
 
 def key(fig, used_sites):
@@ -370,9 +390,12 @@ def key(fig, used_sites):
                                                         lw=0.4, hatch="//////")), "coding sequence in another frame", "black"),
               (lambda ax, cx, y: ax.plot([cx + 4, cx + 4], [y - 1.5, y + 1.5], color=SEC, lw=0.5, ls=(0, (2, 1.5))),
                "selenocysteine TGA (x axis: nucleotides from it, gene orientation)", "black"),
-              (lambda ax, cx, y: stem_loop(ax, cx + 3.4, y - 1.4, 1.1, SECIS), "SECIS element, bit score (current model)", "black"),
+              (lambda ax, cx, y: (secis_box(ax, cx + 2, cx + 4, y), ax.text(cx + 4.8, y, "37", fontsize=4.5, color=SECIS, va="center")),
+               "SECIS element and bit score (current model)", "black"),
               (lambda ax, cx, y: ax.text(cx + 7, y, "◀ n", fontsize=4.5, color=PUBLIC, va="center", ha="right"),
-               "exons beyond the drawn region", "black")]
+               "number of exons beyond the drawn region", "black"),
+              (lambda ax, cx, y: ax.text(cx + 6, y, "a b", fontsize=5, fontweight="bold", color=PUBLIC, va="center", ha="right"),
+               "public models of the same row, as named in the paragraph", "black")]
     sites = ["GT-AG"] + [k for k in SITE_COLOURS if k in used_sites] + \
             (["other"] if any(v not in SITE_COLOURS and v not in ("GT-AG", "?", "") for v in used_sites) else [])
     introns = [(None, "intron splice sites (drawn length unchanged):", "black")]
@@ -383,7 +406,8 @@ def key(fig, used_sites):
                  "Pfam domain of the first reference", "black"),
                 (circle("U", SEC, SEC, "white"), "selenocysteine aligned to one of the first reference", "black"),
                 (circle("C", "white", "black", "black"), "other residue aligned to it", "black"),
-                (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black")]
+                (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black"),
+                (None, "human: UniProt; C. intestinalis: stage 1 predictions on its genome (accessions in the paragraphs)", "black")]
     lines, line, cx = [], [], 0
     for group in (models[:4], models[4:], introns, proteins):
         for f, text, col in group:
@@ -427,17 +451,21 @@ def main():
             for m in d["public"].get(g, {}).values(): used |= set(m.get("sites", "").split(";"))
     for r in range(0, len(genes), 3):
         row = genes[r:r + 3]
-        tracks, hA = layout_models(row, col_w)
+        tracks, hA = layout_models(row)
+        paras, indent, hN = layout_notes(row, col_w)
         refs_y, gold_y, hB = layout_proteins(row)
-        title_y = top
         axA_bottom = top - 3.5 - hA
-        axB_bottom = axA_bottom - 7 - hB
+        axN_bottom = axA_bottom - 6.0 - hN
+        axB_bottom = axN_bottom - 0.5 - hB
         for k, d in enumerate(row):
             left = LEFT + k * (col_w + COL_GAP)
-            fig.text(fx(left), fy(title_y), d["gene"], fontsize=8, fontweight="bold", va="top")
+            fig.text(fx(left), fy(top), d["gene"], fontsize=8, fontweight="bold", va="top")
             axA = fig.add_axes([fx(left), fy(axA_bottom), fx(col_w), fy(hA)])
             axA.set_ylim(-hA, 0)
             draw_models(axA, d, tracks, col_w)
+            axN = fig.add_axes([fx(left), fy(axN_bottom), fx(col_w), fy(hN)])
+            axN.set_xlim(0, col_w); axN.set_ylim(-hN, 0)
+            draw_notes(axN, paras[d["gene"]], indent)
             axB = fig.add_axes([fx(left), fy(axB_bottom), fx(col_w), fy(hB)])
             axB.set_ylim(-hB, 0)
             draw_proteins(axB, d, refs_y, gold_y, col_w, fig)
@@ -445,25 +473,25 @@ def main():
                 lab = blended_transform_factory(fig.transFigure, axA.transData)
                 for g in GENOMES:
                     t = tracks[g]
-                    db = rf.DB if hasattr(rf, "DB") else {"OKI": "RefSeq", "OSKA": "ANISEED", "OdB3": "GenBank"}
-                    fig_x = fx(LEFT - 1.5)
-                    axA.text(fig_x, t["pub"], db[g], transform=lab, fontsize=5.5, ha="right", va="center", color="0.25")
-                    axA.text(fig_x, t["gold"], "gold standard", transform=lab, fontsize=5.5, ha="right", va="center", color=GOLD)
-                    axA.text(fx(4), (t["pub"] + t["gold"]) / 2, NAMES[g], transform=lab, fontsize=7, fontweight="bold",
-                             rotation=90, ha="center", va="center")
+                    axA.text(fx(LEFT - 1.5), t["pub"], DB[g], transform=lab, fontsize=5, ha="right", va="center", color="0.25")
+                    axA.text(fx(LEFT - 1.5), t["gold"], "gold standard", transform=lab, fontsize=5.5, ha="right", va="center", color=GOLD)
+                    axA.text(fx(2), t["pub"], NAMES[g], transform=lab, fontsize=5.5, fontweight="bold", ha="left", va="center")
                 axA.text(fx(LEFT - 1.5), -hA - 0.5, "nt from TGA", transform=lab, fontsize=5, ha="right", va="top", color="0.25")
                 labB = blended_transform_factory(fig.transFigure, axB.transData)
+                for sp, yy in refs_y.items():
+                    axB.text(fx(LEFT - 1.5), yy, sp, transform=labB, fontsize=5.5, ha="right", va="center",
+                             style="normal" if sp == "human" else "italic")
                 for g, yy in zip(GENOMES, gold_y):
                     axB.text(fx(LEFT - 1.5), yy, NAMES[g], transform=labB, fontsize=5.5, ha="right", va="center", color=GOLD)
-                axB.text(fx(4), (gold_y[0] + gold_y[-1]) / 2, "gold standard", transform=labB, fontsize=6, rotation=90,
+                axB.text(fx(4), (gold_y[0] + gold_y[-1]) / 2, "gold standard", transform=labB, fontsize=5.5, rotation=90,
                          ha="center", va="center", color=GOLD)
-        top = axB_bottom - 5.5
+        top = axB_bottom - 8
     key_h = key(fig, used)
     os.makedirs(a.out, exist_ok=True)
     out = os.path.join(a.out, a.name)
     for ext in ("pdf", "svg", "png"):
-        fig.savefig(f"{out}.{ext}", dpi=300 if ext == "png" else None)
-    print("written", out, f"(lowest protein axis {top + 5.5:.0f} mm from the bottom of the page; key {BOTTOM + key_h:.0f} mm)")
+        fig.savefig(f"{out}.{ext}", dpi=200 if ext == "png" else None)
+    print("written", out, f"(lowest protein axis {top + 8:.0f} mm from the bottom of the page; key {BOTTOM + key_h:.0f} mm)")
 
 
 if __name__ == "__main__":
