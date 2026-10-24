@@ -58,7 +58,9 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      reported (upstream_stop). A chosen model of CDS rows is given the UTR exons of the compatible transcripts that
      reach furthest 5' and 3', its coding sequence unchanged. 3' UTR exons after the exon of the stop codon are left
      out from the first one that overlaps the coding sequence of another annotated model (read-through into a
-     downstream gene).
+     downstream gene), and the UTRs are cut at the coding sequence of another gene of the baseline table (its model of
+     the first pass, or its codon) when the exon chain reaches it: the 3' UTR ends before the next coding sequence
+     downstream and the 5' UTR starts after the previous one (one transcript holding two genes, as in operons).
   4. Assembly or transcript. The frame of the TGA is also read in the sequence of each supporting transcript, and
      the best transcript protein is chosen by the same criteria. When its transcript differs from the assembly by
      indels in the coding sequence and the two proteins differ, both are aligned (global, BLOSUM62, free end gaps)
@@ -666,6 +668,40 @@ def trim_readthrough(m, ann, contig, strand, genome, codon0):
     return m, []
 
 
+class Neighbours(list):
+    """[(gene, first, last)] coding spans of the genes of one contig and strand."""
+    def get_others(self, gene): return [t for t in self if t[0] != gene]
+
+
+def trim_at_genes(m, neighbours, genome, strand):
+    """Model whose UTRs stop at the coding sequences of the other selenoprotein genes of the table (neighbours:
+    [(gene, first, last)] genomic 0-based CDS spans on the same contig and strand): the 3' UTR ends before the next
+    coding sequence downstream and the 5' UTR starts after the previous one upstream, when the exon chain reaches
+    them (one transcript holding two genes, as in operons); the coding sequence is unchanged. Returns the model and
+    the notes."""
+    if m.get("stop_genome") is None or not m.get("cds_genome"): return m, []
+    lo_c, hi_c = min(m["cds_genome"]), max(m["cds_genome"])
+    b0, b1 = min(a for a, _ in m["blocks"]), max(b for _, b in m["blocks"]) - 1
+    inside = [(n, x, y) for n, x, y in neighbours if x <= b1 and y >= b0 and (y < lo_c or x > hi_c)]
+    left = max((t for t in inside if t[2] < lo_c), key=lambda t: t[2], default=None)    # genome order
+    right = min((t for t in inside if t[1] > hi_c), key=lambda t: t[1], default=None)
+    if not left and not right: return m, []
+    lo = left[2] + 1 if left else b0
+    hi = right[1] - 1 if right else b1
+    blocks = [(max(a, lo), min(b, hi + 1)) for a, b in m["blocks"] if b > lo and a <= hi]
+    seq, pos = spliced(genome, blocks, strand)
+    idx = {p: i for i, p in enumerate(pos)}
+    first, last = idx.get(m["cds_genome"][0]), idx.get(m["cds_genome"][-1])
+    if first is None or last is None or last - first + 1 != len(m["cds_genome"]): return m, []
+    open5 = not any(seq[i:i + 3] in STOPS for i in range(first - 3, -1, -3))
+    t = dict(m, blocks=sorted(blocks), introns=chain_introns(blocks), utr5_len=first, utr3=seq[last + 1:], open5=open5)
+    t["sites"] = [equivalent_sites(genome, a, b, strand) for a, b in t["introns"]]
+    down, up = (right, left) if strand == "+" else (left, right)
+    notes = [f"{end} UTR cut at the coding sequence of {n[0]} (one exon chain holds both genes)"
+             for end, n in (("3'", down), ("5'", up)) if n]
+    return t, notes
+
+
 def candidate_rows(g, gene, models, tms, chosen, others, genome, strand):
     """Rows of the candidates table: every candidate model, every supporting transcript (its own frame) and the
     annotated transcripts near the codon that are not candidates (with the splice sites of their exon chain as
@@ -855,6 +891,13 @@ def main():
     for rec in records:
         for m in (rec["best"], rec["tbest"]):
             if m and m["protein"]: proteins[rec["r"]["gene"]].append((rec["g"], m["protein"]))
+    # coding sequences of the selenoprotein genes (pass 1 models; the codon when there is none), to stop UTRs there
+    neighbours = collections.defaultdict(Neighbours)
+    for rec in records:
+        r, m = rec["r"], rec["best"]
+        c0 = int(r["sec_codon"]) - 1
+        span = (min(m["cds_genome"]), max(m["cds_genome"])) if m and m.get("cds_genome") else (c0, c0 + 2)
+        neighbours[(rec["g"], r["contig"], r["strand"])].append((r["gene"], *span))
     out = {g: {"gff": ["##gff-version 3"], "prot": [], "utr": [], "after": []} for g in genomes}
     report, cand_rows = [], []
     for rec in records:
@@ -943,6 +986,8 @@ def main():
             best, cut = trim_readthrough(best, annotations[g], contig, strand, gs, codon0)
             if cut: notes.append(f"3' UTR exons overlapping the coding sequence of {','.join(cut)} left out (read-through "
                                  f"into a downstream gene)")
+            best, cut = trim_at_genes(best, neighbours[(g, contig, strand)].get_others(gene), gs, strand)
+            notes += cut
         cand_rows.extend(candidate_rows(g, gene, rec["usable"], tms, chosen if source == "genome" else None, rec["near"], gs, strand))
         if best.get("grafted"): notes.append(best["grafted"])
         protein = best["protein"]

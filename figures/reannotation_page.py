@@ -6,8 +6,10 @@ Each gene has three parts (thin rulers separate rows and columns of genes):
   grey) above the gold-standard model of step 2 (blue), in gene orientation and aligned on the selenocysteine TGA
   (x: nucleotides from the TGA, one scale per gene; stretches of more than 1,500 nt without any drawn exon, such as
   long introns, are drawn 200 nt long and marked by a break); introns coloured by splice site without changing their drawn
-  length; SECIS elements: best hit of the current appendicularian model (cmsearch) after the stop codon, drawn as a
-  green box with its bit score; letters when several public models share a row; public exons are cut at the margin
+  length; SECIS elements: best hit of the Oikopleura SECIS model of step 3 (results/models/oikopleura_secis.cm,
+  cmsearch) in the 2,000 nt after the stop codon, shortened at the next gold-standard coding sequence downstream,
+  drawn as a green box with its bit score (open box below
+  --secis-bits, 20 by default); letters when several public models share a row; public exons are cut at the margin
   beyond the gold-standard transcript, and those entirely beyond it are counted.
 - paragraph (below the proteins): the public models of each assembly with the curator's notes, the notes on the
   gold-standard models, and the accessions of the reference proteins.
@@ -45,6 +47,7 @@ BAR_H = 1.4                                # proteins
 CAPTION = 5                                # pt
 NOTE, NOTE_LH = 5, 2.0                     # paragraph between gene models and proteins: font size (pt), line height (mm)
 SECIS_H = 1.0                              # height of the SECIS box (mm)
+SECIS_BITS = 20.0                          # SECIS hits below this score: open boxes (set by --secis-bits)
 PAIR = 2.4                                 # distance between the public and the gold-standard track of an assembly (mm)
 PAD = 120                                  # nt kept on each side of a shortened stretch
 LH = 2.1                                   # mm per caption line
@@ -196,9 +199,10 @@ def mark_breaks(ax, d, y, introns, ntmm):
                 break_mark(ax, xc, y + CHEV * (1 - abs(xc - mid) / ((b_ - a_) / 2)), ntmm)
 
 
-def secis_box(ax, x0, x1, y):
-    """SECIS element: a flat box on the model line."""
-    ax.add_patch(Rectangle((x0, y - SECIS_H / 2), x1 - x0, SECIS_H, facecolor=SECIS, edgecolor="none", zorder=4))
+def secis_box(ax, x0, x1, y, strong=True):
+    """SECIS element: a flat box on the model line, open when its score is below the threshold."""
+    ax.add_patch(Rectangle((x0, y - SECIS_H / 2), x1 - x0, SECIS_H, facecolor=SECIS if strong else "white",
+                           edgecolor=SECIS, lw=0 if strong else 0.5, zorder=4))
 
 
 def layout_models(genes):
@@ -252,7 +256,7 @@ def draw_models(ax, d, tracks, col_w):
             f0, f1, bits = d["secis"][g]
             stop = max(q for _, q in cds) if st == "+" else min(p for p, _ in cds)
             x0, x1 = d["fwd"](d["xr"][g](stop) + f0), d["fwd"](d["xr"][g](stop) + f1 + 1)
-            secis_box(ax, x0, x1, t["gold"])
+            secis_box(ax, x0, x1, t["gold"], bits >= SECIS_BITS)
             end = max(end, x1)
             ax.text(end + 0.8 * ntmm, t["gold"], f"{bits:.0f}", fontsize=4.5, color=SECIS, va="center")
         last_gold = t["gold"]
@@ -401,8 +405,9 @@ def key(fig, used_sites):
                                                         lw=0.4, hatch="//////")), "coding sequence in another frame", "black"),
               (lambda ax, cx, y: ax.plot([cx + 4, cx + 4], [y - 1.5, y + 1.5], color=SEC, lw=0.5, ls=(0, (2, 1.5))),
                "selenocysteine TGA (x axis: nucleotides from it, gene orientation)", "black"),
-              (lambda ax, cx, y: (secis_box(ax, cx + 2, cx + 4, y), ax.text(cx + 4.8, y, "37", fontsize=4.5, color=SECIS, va="center")),
-               "SECIS element and bit score (current model)", "black"),
+              (lambda ax, cx, y: (secis_box(ax, cx + 0.3, cx + 2.1, y), secis_box(ax, cx + 2.8, cx + 4.6, y, False),
+                                  ax.text(cx + 5.1, y, "37", fontsize=4.5, color=SECIS, va="center")),
+               "best SECIS hit and bit score (Oikopleura model; open box: below 20 bits)", "black"),
               (lambda ax, cx, y: ax.text(cx + 7, y, "◀ n", fontsize=4.5, color=PUBLIC, va="center", ha="right"),
                "number of exons beyond the drawn region", "black"),
               (lambda ax, cx, y: ax.text(cx + 6, y, "a b", fontsize=5, fontweight="bold", color=PUBLIC, va="center", ha="right"),
@@ -442,13 +447,16 @@ def main():
     ap.add_argument("--genes", nargs="+", required=True, help="genes in reading order, three per row")
     ap.add_argument("--gold", default="curation/gold_standard")
     ap.add_argument("--inputs", default="figures/inputs")
-    ap.add_argument("--cm", default="results/models/appendicularia_secis.cm")
+    ap.add_argument("--cm", default="results/models/oikopleura_secis.cm")
+    ap.add_argument("--secis-bits", type=float, default=20.0, help="SECIS hits below this score are drawn as open boxes")
     ap.add_argument("--margin", type=int, default=0, help="nt drawn beyond the gold-standard transcripts (0: 15%% of the longest, 150 to 400)")
     ap.add_argument("--long", type=int, default=1500, help="stretches without exon longer than this (nt) are shortened")
     ap.add_argument("--short", type=int, default=200, help="drawn length (nt) of a shortened stretch")
     ap.add_argument("--name", default="reannotation_page")
     ap.add_argument("--out", default="figures")
     a = ap.parse_args()
+    global SECIS_BITS
+    SECIS_BITS = a.secis_bits
     genes = [load(g, a) for g in a.genes]
     col_w = (PAGE_W - LEFT - RIGHT - 2 * COL_GAP) / 3
     fig = plt.figure(figsize=(PAGE_W * MM, PAGE_H * MM))

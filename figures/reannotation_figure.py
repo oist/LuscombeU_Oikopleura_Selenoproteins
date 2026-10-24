@@ -4,9 +4,10 @@
 A. Gene models in gene orientation, aligned on the selenocysteine TGA in every assembly: the public models (OKI2018
    RefSeq, OSKA2016 ANISEED gene models, OdB3 GenBank) above the gold-standard model of step 2
    (curation/gold_standard/<genome>.gff3). Introns are coloured by splice site (GT-AG in the colour of the model),
-   without changing their drawn length; the sites are those of the inputs table. SECIS elements are the best hits of the current appendicularian model
-   (results/models/appendicularia_secis.cm, Infernal cmsearch) in the 2,000 nt after the stop codon
-   (<genome>.after_stop.fa), drawn when cmsearch is available. Exons more than --margin nt outside the
+   without changing their drawn length; the sites are those of the inputs table. SECIS elements are the best hits of the Oikopleura SECIS model of step 3
+   (results/models/oikopleura_secis.cm, Infernal cmsearch) in the 2,000 nt after the stop codon
+   (<genome>.after_stop.fa), shortened at the next gold-standard coding sequence downstream on the same strand, drawn
+   when cmsearch is available. Exons more than --margin nt outside the
    gold-standard transcript of their assembly are counted, not drawn.
 B. Gold-standard proteins and reference proteins drawn on the coordinates of the first reference protein through
    global alignments (BLOSUM62, free end gaps), with its Pfam domains (InterPro, short names) and the residues
@@ -66,9 +67,32 @@ def gold_model(path, gene):
     return strand, sorted(exons), sorted(cds), sec
 
 
+def next_cds(path, gene):
+    """Distance from the end of the stop codon of a gold-standard model to the first coding base of the next
+    gold-standard model downstream on the same contig and strand (None when there is none)."""
+    rows = collections.defaultdict(list)
+    for l in open(path):
+        f = l.rstrip("\n").split("\t")
+        if len(f) < 9 or f[2] != "CDS": continue
+        rows[re.search(r"Parent=rna-([^;]+)", f[8]).group(1).split("_", 1)[1]].append((f[0], f[6], int(f[3]), int(f[4])))
+    if gene not in rows: return None
+    contig, strand = rows[gene][0][:2]
+    if strand == "+":
+        end = max(r[3] for r in rows[gene])
+        d = [min(r[2] for r in v) - end - 1 for k, v in rows.items() if k != gene and v[0][:2] == (contig, strand)]
+    else:
+        end = min(r[2] for r in rows[gene])
+        d = [end - max(r[3] for r in v) - 1 for k, v in rows.items() if k != gene and v[0][:2] == (contig, strand)]
+    d = [x for x in d if x >= 0]
+    return min(d) if d else None
+
+
 def secis_hits(cm, gold, gene):
-    """Best SECIS hit of the current model after the stop codon of each genome: genome -> (from, to, bits)."""
+    """Best SECIS hit of a covariance model after the stop codon of each genome: genome -> (from, to, bits). The
+    window (<genome>.after_stop.fa, 2,000 nt) is shortened at the next gold-standard coding sequence downstream on the
+    same strand, as for the training windows of step 3, so that a gene is not given the SECIS of the next one."""
     if not shutil.which("cmsearch") or not os.path.exists(cm): return {}
+    limit = {g: next_cds(f"{gold}/{g}.gff3", gene) for g in GENOMES if os.path.exists(f"{gold}/{g}.gff3")}
     with tempfile.TemporaryDirectory() as d:
         q = os.path.join(d, "q.fa")
         with open(q, "w") as o:
@@ -81,6 +105,7 @@ def secis_hits(cm, gold, gene):
         for l in open(tbl):
             if l.startswith("#"): continue
             f = l.split()
+            if limit.get(f[0]) is not None and int(f[8]) > limit[f[0]]: continue
             if float(f[14]) > best.get(f[0], (0, 0, -1))[2]: best[f[0]] = (int(f[7]), int(f[8]), float(f[14]))
     return best
 
@@ -132,7 +157,7 @@ def main():
     ap.add_argument("--gene", required=True)
     ap.add_argument("--gold", default="curation/gold_standard")
     ap.add_argument("--inputs", default="figures/inputs")
-    ap.add_argument("--cm", default="results/models/appendicularia_secis.cm")
+    ap.add_argument("--cm", default="results/models/oikopleura_secis.cm")
     ap.add_argument("--margin", type=int, default=0, help="nt drawn beyond the gold-standard transcripts (0: 30%% of the longest, 250 to 600)")
     ap.add_argument("--out", default="figures")
     a = ap.parse_args()
@@ -231,7 +256,7 @@ def main():
     draw_model(axA, ky, [(1, int(80 * unit))], [(1, int(80 * unit))], lambda p: p - 1 + at(0.36), OTHER, hatch=True)
     axA.text(at(0.36) + 100 * unit, ky, "coding sequence in another frame", fontsize=5.5, va="center")
     stem_loop(axA, at(0.68), ky - 0.12, SECIS)
-    axA.text(at(0.68) + 45 * unit, ky, "SECIS element (current model)", fontsize=5.5, va="center")
+    axA.text(at(0.68) + 45 * unit, ky, "SECIS element (Oikopleura model)", fontsize=5.5, va="center")
     shown = [k for k in SITE_COLOURS if k in used_sites] + \
             (["other"] if any(v not in SITE_COLOURS and v not in ("GT-AG", "?", "") for v in used_sites) else [])
     bottom = ky

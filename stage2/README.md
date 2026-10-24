@@ -186,7 +186,9 @@ assemblies together); each is scored with its new and merged models, RF00031 and
 negatives above the training threshold are listed with their coordinates (candidate SECIS elements). Outputs:
 `work/stage2/secis_v2/` (windows, one directory per fold, final model), `results/tables/stage2_secis_v2_*.tsv` and
 `results/models/oikopleura_secis.{cm,sto,seeds.fa}`. Needs Infernal and Biopython (container image); about 16 jobs
-of training, four at a time (`--jobs`).
+of training, four at a time (`--jobs`). Run of 2026-10-25: 84 of 111 held-out windows detected in the species folds
+at 0.32 evaluation negatives per Mb (RF00031: 27); the final model replaces the first appendicularian model for the
+SECIS of genes, with a threshold of 20 bits in the 3′ windows (`docs/plan.md`).
 
 ## Orthology of the selenoproteins
 

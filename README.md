@@ -146,7 +146,7 @@ repository uses `OKI2018_I68`, the NCBI name, throughout.
 | `figures/` | figure scripts and figures |
 | `results/tables/` | small result tables used by the figures and the manuscript |
 | `results/trees/` | machinery trees: sequence sets, removals, alignments, IQ-TREE reports; `C20/`, `lba/` and `domains/` for the other models, the long-branch analyses and the domain analysis; `selenoproteins/` for the selenoprotein families |
-| `results/models/` | appendicularian SECIS model and machinery profiles |
+| `results/models/` | SECIS models (`oikopleura_secis.cm` in use) and machinery profiles |
 | `manuscript/` | manuscript (Markdown with Pandoc citations) and bibliography |
 | `docs/` | plan and decisions |
 

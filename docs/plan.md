@@ -779,3 +779,35 @@ no earlier step waits for them.
   page 1 GPX_PAR, GPX_chr1a, GPX_chr1b, GPX_chr2, DIO_PAR, DIO_chr1, TXNRD, SELENOO, SEPHS2; page 2 SELENOW_PAR,
   SELENOW_chr1a, SELENOW_chr2, SELENOW_pair1, SELENOW_pair2, SELENOT (Rdx family), SELENOF, SELENOK, SELENOS (ER
   membrane or lumen). New target make reannotation-pages with this order.
+- Step 3, rerun of make secis-v2 (2026-10-25, commit cbc204c; random windows kept away from the positive windows):
+  the 44-48 bit negatives are gone; the best evaluation negatives are now 19.7-24.3 bits (24.1 bits with the new
+  model, a S. clava random window). Pooled, species folds: new 84/111 above the training threshold, all above the
+  best evaluation negative of their fold, 3 negatives above the threshold (0.32/Mb; random windows of S. clava and
+  C. savignyi, 21.6-23.1 bits); current 82 (0.64/Mb; optimistic); merged 66 (0.32/Mb); RF00031 27 (0.11/Mb).
+  Family folds: new 81 (0.72/Mb), current 82 (0.50), merged 65 (0.25), RF00031 26 (0.02). O. dioica fold: new 49/53,
+  no negative above 19.7 bits (current 45/53, 1 negative); misses OKI2018 and OSKA2016 SELENOO, OSKA2016 GPX_PAR and
+  SELENOF. Held-out scores of the new model, species folds: >= 20 bits 84, >= 25 bits 64, >= 30 bits 43. Of the 27
+  windows not detected, 19 have no hit with any model (9 of them shortened by a contig end). Final model: 76 seeds
+  (OKI2018 18, OSKA2016 12, OdB3 9, O. longicauda 20, O. albicans 9, O. vanhoeffeni 8), CLEN 66, 7 rounds, best
+  training background 17.8 bits in the last round; seeds start a median of 127 nt after the stop codon (quartiles
+  67 and 238); the 53 O. dioica windows score 25.6-59.1 bits with it (training data).
+  Decision: the new model (results/models/oikopleura_secis.cm) replaces appendicularia_secis.cm for the SECIS of
+  genes; threshold 20 bits in the 3' windows of genes (3 of 4,691 evaluation negative windows of 2 kb passed it in
+  the species folds). The threshold of genome-wide scans is left to step 4. Local check, not in the pipeline (6 Mb
+  of OKI2018 random windows away from the positive windows, Infernal 1.1.5): 3 hits >= 20 bits (0.5/Mb); the best,
+  28.1 bits at NC_137291.1:11878408 (-) and 27.5 bits at NC_137294.1:5395714 (-) (29.9 bits with the first model),
+  have no stage 1 prediction within 20 kb: candidates for step 4. Downstream analyses that still use the first
+  model (stage 1 SECIS figures, make secis-hits) to revisit in step 4.
+  Figures and manuscript switched: reannotation pages and single-gene figures use the new model (open box below 20
+  bits; none in the 53 models); new Results and Methods sections; the first-model section condensed to one
+  paragraph (Figure SECIS-2 to redraw). While switching, the SELENOW pair showed two defects: (1) the SECIS of
+  SELENOW_pair2 was that of SELENOW_pair1 (best hit of the 2 kb window, which reaches the next gene; own SECIS 23-92
+  nt after the stop codon, 35.8-42.7 bits): the figure scripts now shorten the window at the next gold-standard
+  coding sequence, as the training did; (2) in OKI2018 both models come from one transcript (TRINITY_DN2389) that
+  holds the two genes, so that the 3' UTR of SELENOW_pair2 (892 nt, the maximum of the table) holds the coding
+  sequence of SELENOW_pair1, and the 5' UTR of SELENOW_pair1 (492 nt) that of SELENOW_pair2. New rule in
+  curation/gold_standard.py: UTRs are cut at the coding sequence of another gene of the table (3' UTR before the
+  next one, 5' UTR after the previous one), with a note. Local test (reconstructed OKI2018 and OdB3 loci): only these
+  two models change (OKI2018 SELENOW_pair2 3' UTR 197 nt, SELENOW_pair1 5' UTR 197 nt, one exon less each); no other
+  gold-standard model reaches another gene's coding sequence. Expected after make gold-standard: 168 introns (the
+  two dropped introns were counted twice), 3' UTR median 303 nt, range 4-695; the Results numbers are to update then.

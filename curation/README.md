@@ -32,7 +32,8 @@ the assembly. The model is chosen by the curated context, length, completeness a
 candidates equal on these criteria except length, by similarity to the same gene in the other assemblies; an
 annotated mRNA whose coding sequence is another protein's (operons) is not preferred as annotated chain; models
 split at the TGA by the annotation are also joined into one candidate; a chain contradicted by most supporting
-transcripts is ranked last; 3' UTR exons of read-through transcripts into a downstream gene are left out. When a
+transcripts is ranked last; 3' UTR exons of read-through transcripts into a downstream gene are left out, and UTRs stop at the coding
+sequence of another selenoprotein gene of the table (one transcript holding two genes). When a
 transcript differs from the assembly by indels, its protein is used only if it is more similar to the same gene in
 the other assemblies; the model is then mapped from the transcript and marked with the GFF3 attribute `exception`.
 The table reports splice sites (non-canonical ones with all equivalent placements), differences between transcripts

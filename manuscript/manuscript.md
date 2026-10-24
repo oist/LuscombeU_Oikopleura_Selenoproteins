@@ -411,47 +411,58 @@ SELENOF, SELENOK and SELENOS). For each gene, top: in each assembly, the public 
 (grey; RefSeq for OKI2018, ANISEED for OSKA2016, GenBank for OdB3) above the gold-standard model (blue), in gene
 orientation, positioned by their distance in nucleotides to the selenocysteine TGA (dashed red line); thick boxes,
 coding exons; thin boxes, untranslated exons; coloured introns, splice sites other than GT-AG (drawn length
-unchanged); hatched boxes, coding sequences in another frame than the gold standard; green boxes, SECIS elements
-found by the appendicularian covariance model in the 2,000 nucleotides after the stop codon, with their bit
-scores; stretches of more than 1,500 nucleotides without exon are shortened (break marks). Middle: the human
+unchanged); hatched boxes, coding sequences in another frame than the gold standard; green boxes, best hit of the
+*Oikopleura* SECIS model in the 2,000 nucleotides after the stop codon, shortened at the next selenoprotein coding
+sequence, with its bit score (open boxes would mark hits below 20 bits; there are none); stretches of more than 1,500 nucleotides without exon are shortened (break marks). Middle: the human
 protein (UniProt), the *Ciona intestinalis* protein (stage 1 prediction on its genome) and the three gold-standard
 proteins, placed on the coordinates of the human protein by local alignment (those of OSKA2016 and OdB3 through the
 OKI2018 protein), with the Pfam domains of the human protein and the residues aligned to its selenocysteine; lines,
 residues outside the aligned part. Bottom: the public models of each assembly and what distinguishes them from the
 gold standard, notes on the gold-standard models, and the accessions of the reference proteins.
 
-## An appendicularian SECIS model built from the stage 1 predictions
+## An *Oikopleura* SECIS model trained on the gold-standard genes
 
-We built a new covariance model from the stage 1 outputs alone, by iterative bootstrap (Methods). Training used the
-110 3′ sequences that follow predictions with a selenocysteine codon in seven oikopleurid genomes: OKI2018 and OdB3 for
-*O. dioica*, *O. longicauda*, *O. albicans*, *O. vanhoeffeni*, *B. stygius* and *M. erythrocephalus*. The OSKA2016
-assembly of *O. dioica* and the genome of *F. borealis*, a fritillariid, were kept out of training as controls. The
-initial seeds were the 26 training sequences whose best Rfam hit reached 15 bits. After five rounds, in which each
-new model was used to collect the training hits that score above every background window, the set of seeds no
-longer changed: 73 hits, in 73 of the 110 training sequences. The seeds lie close to the predicted stop codons (median
-152 nucleotides downstream; quartiles 74 and 388) and are 60 to 75 nucleotides long.
+A first appendicularian model, built by bootstrap from RF00031 on the 3′ sequences of stage 1 predictions in seven
+oikopleurid genomes (Methods), gave at least 25 bits to 42 of the 53 gold-standard *O. dioica* genes. Its
+evaluation was not independent: its training sequences included those of OKI2018 and OdB3, whose SECIS elements are
+near-identical to those of OSKA2016, and it scored the 6,000 nucleotides after the selenocysteine codon rather than
+the 3′ region of each gene. We therefore trained a second model in the same way on the gene models of the previous
+section and evaluated it on families and species left out of training (Methods).
 
-We evaluated the final model on new random windows and on the curated *O. dioica* selenoprotein genes (Figure SECIS-2). Of
-1,800 random windows, 8 had a hit of at least 20 bits and 1 of at least 25 bits (27.3 bits, in *F. borealis*); in
-the three *O. dioica* assemblies, no random window exceeded 20.8 bits. Hits downstream of selenoprotein genes reached 62 bits.
-In the held-out OSKA2016 assembly, 12 of the 14 selenocysteine predictions and 15 of the 18 curated selenoprotein genes had a hit of at
-least 25 bits, against a best background window of 18.1 bits. In the training genomes, 12 of 12 selenocysteine predictions of
-OKI2018 and 18 of 21 of OdB3 scored at least 20 bits, but these sequences were used for training and overstate the
-performance. In the held-out *F. borealis*, only 8 of 19 selenocysteine predictions reached 20 bits, and 3 reached 25 bits.
+The positive windows were the 2,000 nucleotides after the stop codon of the 53 gold-standard models and of 58
+selenocysteine predictions of *O. longicauda* (22), *O. albicans* (20) and *O. vanhoeffeni* (16), shortened at the
+next selenoprotein coding sequence on the same strand (SELENOW_pair2, before SELENOW_pair1, in the three *O. dioica*
+assemblies) or at a contig end (20 windows of the three other species). The negative windows were random windows of
+the six assemblies and of four non-target tunicates (*Ciona intestinalis*, *Ciona savignyi*, *Styela clava* and
+*Thalia democratica*), drawn away from the positive windows; the positive windows shuffled with their dinucleotide
+composition preserved; and the windows after the stop codons of 180 cysteine homologs.
 
-Across the three *O. dioica* assemblies, 42 of 53 curated selenoprotein genes scored at least 25 bits. Below 25 bits were
-selenoprotein T (SELENOT) in all three assemblies, SEPHS2 in OKI2018 and OdB3, selenoprotein O (SELENOO) in OKI2018 and OSKA2016, selenoprotein K (SELENOK) in OKI2018 and OdB3 (23.4 and
-24.9 bits), and selenoprotein F (SELENOF) in OSKA2016 and OdB3. For SEPHS2 and SELENOT, the selenocysteine codon lies far upstream of the stop
-codon, so that the 6,000 nucleotides scored after the selenocysteine codon may not reach the SECIS element. Outside the selenocysteine
-predictions, 19 of the 578 other Selenoprofiles predictions had a hit of at least 25 bits. Seventeen of them belong to
-selenoprotein families and either do not cover the selenocysteine position ("unaligned": GPX, DIO, SEPHS2, SELENOT and others) or
-carry another residue there (selenoprotein W (SELENOW) with isoleucine, tyrosine or leucine), as expected if some are selenoprotein genes that
-Selenoprofiles did not recognise as such, including SEPHS2 of OSKA2016 (labelled "pseudo"). Only two are cysteine
-homologs, both in *F. borealis* and at 25.5 bits, the level of its best random window; none of the cysteine homologs
-of the eight other genomes reached 25 bits.
+In the four species folds, where the windows of one species were left out of training (the three *O. dioica*
+assemblies together), the model detected 84 of the 111 left-out windows above its training threshold (the best score
+of the training random windows, 19.6 to 21.6 bits), all of them also above the best evaluation negative of their
+fold. Three evaluation negatives passed the training threshold (0.32 per Mb), all random windows of non-target
+tunicates (21.6 to 23.1 bits). Of the 53 *O. dioica* windows, 49 were detected, and no negative passed the
+threshold (19.7 bits); the four below it are SELENOO in OKI2018 and OSKA2016, and GPX_PAR and SELENOF in OSKA2016.
+Sixty-four left-out windows scored at least 25 bits and 43 at least 30 bits. Of the 27 windows not detected, 19 had
+no hit with any of the four models compared below, and 9 of these 19 are shortened by a contig end. In the twelve
+family folds, the model detected 81 of the 111 windows, with 0.72 negatives per Mb above the training thresholds.
+On the same windows and thresholds, RF00031 detected 27 windows in the species folds and 26 in the family folds, and
+a model built from the RF00031 seed sequences and the appendicularian seeds of each fold detected 66 and 65 (0.32
+and 0.25 negatives per Mb). The first appendicularian model detected 82 in both (0.64 and 0.50 negatives per Mb),
+but it had been trained on most of the left-out windows.
 
-<!-- Next: leave-one-genome-out models for the training genomes; genome-wide scans of non-target tunicates and
-shuffled sequences; threshold; the 19 other predictions; the curated genes below 25 bits; F. borealis. -->
+The final model, trained on the 111 windows, converged in seven rounds on 76 seeds (18 in OKI2018, 12 in OSKA2016, 9
+in OdB3, 20 in *O. longicauda*, 9 in *O. albicans* and 8 in *O. vanhoeffeni*); the best score of the training random
+windows was 17.8 bits in the last round, and the consensus is 66 nucleotides long. The seeds start a median of 127
+nucleotides after the stop codon (quartiles 67 and 238). The 53 *O. dioica* windows, which are training data for this
+model, score 25.6 to 59.1 bits (median 40.4; Figure REANNOTATION). We use this model with a threshold of 20 bits for
+SECIS elements in the 3′ windows of genes: at that score, about one evaluation negative window of 2,000 nucleotides
+in 1,500 passed in the species folds (3 of 4,691). Scans of whole genomes call for a threshold set on genome-wide background
+(Stage 2).
+
+<!-- Figure SECIS-2 shows the first model; to redraw with the new model (held-out scores of
+results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives). Next (step 4): genome-wide scans and
+their threshold; SECIS elements without a known selenoprotein gene. -->
 
 # Methods
 
@@ -557,7 +568,9 @@ curated protein context of the selenocysteine, the absence of unsupported splice
 classes, not being contradicted by most of the supporting transcripts, a length within 90% of the longest, a stop codon, an ATG start, transcript support, length, not the
 annotated mRNA of another protein (an annotated mRNA whose coding sequence lies elsewhere, such as the upstream gene of
 an operon) and, last, an annotated exon chain; 3′ UTR exons that overlapped the coding sequence of a downstream
-annotated gene (read-through transcripts) were left out. Among the candidates equal to the first one on every criterion before length, the one whose
+annotated gene (read-through transcripts) were left out, and the UTRs were cut at the coding sequence of another
+selenoprotein gene of the table when the exon chain reached it (one transcript holding both genes of the SELENOW
+pair in OKI2018). Among the candidates equal to the first one on every criterion before length, the one whose
 protein aligned best to the same gene in the other assemblies (mean global alignment score) replaced it when its
 score was higher by 20 (about 10 bits), so that exons beyond the transcripts, taken from the annotation or from a
 prediction, were chosen by similarity rather than by length. When the transcripts differed from the assembly by indels in the coding sequence, the
@@ -707,7 +720,7 @@ unrelated family, MIEN1 counting as related to SELENOW and SEPHS1 to SEPHS2, or 
 family (the smallest side of a bipartition holding it and non-appendicularian sequences) that are all bacterial,
 archaeal, fungal or of other non-animal groups. The curated *O. dioica* genes were always kept.
 
-## Appendicularian SECIS model
+## First appendicularian SECIS model
 
 Training sequences were the 3′ sequences that follow Selenoprofiles predictions labelled "selenocysteine" in seven
 oikopleurid genomes (OKI2018, OdB3, *O. longicauda*, *O. albicans*, *O. vanhoeffeni*, *B. stygius* and
@@ -721,6 +734,42 @@ the training sequences scoring above the best background hit of that round. Roun
 sequences did not change, which happened at round 5; the best background hit was 29.3, 23.7, 21.6, 21.0 and 24.8 bits
 in rounds 1 to 5. The final model was built from the last seeds and calibrated with default `cmcalibrate` settings.
 The procedure is implemented in `stage2/build_secis_model.py` of the analysis repository.
+
+## *Oikopleura* SECIS model
+
+Positive windows were the 2,000 nucleotides that follow the stop codon of each selenoprotein gene on its strand: the
+gold-standard models of OKI2018, OSKA2016 and OdB3, and, in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, the
+selenocysteine predictions kept by the first round of hit validation, whose frame was extended on the genome to the
+next stop codon (at most 600 nucleotides). Windows were shortened at the next selenoprotein coding sequence
+downstream on the same strand and at contig ends, and left out when shorter than 100 nucleotides. Negative windows
+were 200 random windows of 2,000 nucleotides per genome, in the six assemblies and in four non-target tunicates
+(*C. intestinalis*, *C. savignyi*, *S. clava* and *T. democratica*), drawn uniformly over the contigs at least that
+long, on a random strand, and drawn again when they overlapped a positive window; one random seed gave the windows
+used for training and another those used for evaluation. Further negatives were the positive windows shuffled with
+their dinucleotide composition preserved [@Altschul1985] and the windows after the stop codons of the cysteine
+homologs kept by the first round of hit validation, except those overlapping a positive window. All windows were
+scored with `cmsearch` on their top strand, reporting hits of at least 0 bits.
+
+Training started from RF00031. Round 0 seeds were the best RF00031 hit of each training window scoring at least 15
+bits. Each round aligned the seeds to the current model (`cmalign`), built a model (`cmbuild`), calibrated it
+(`cmcalibrate -L 0.2`) and searched the training windows and the training random windows of the training genomes;
+the next seeds were the best hit of each training window scoring above the best random-window hit. In decreasing
+order of score, a seed was then dropped when it overlapped an earlier seed in the genome or was at least 90%
+identical to one (identical bases over the length of the shorter sequence, in a global alignment with free end gaps;
+Biopython [@Cock2009]). Rounds stopped when the seed set no longer changed, or after eight rounds.
+
+Evaluation used one fold per family, whose positive windows in the six assemblies were left out, and one per
+species, the three *O. dioica* assemblies being left out together because their SECIS elements are near-identical.
+In each fold, all windows were scored with the model of the fold, with RF00031, with a model built from the RF00031
+seed sequences and the final seeds of the fold aligned together to RF00031, and with the first appendicularian model.
+For each model, the training threshold was the best score of the training random windows of the training genomes.
+Left-out positive windows were counted above this threshold and above the best score of the evaluation negatives of
+the fold: the evaluation random windows of the left-out genomes (of the six assemblies, for a family fold) and of
+the non-target tunicates, the shuffled left-out windows and the left-out cysteine windows. Evaluation negatives
+above the training threshold were counted per megabase. The final model was trained in the same way on all positive
+windows and calibrated with the default `cmcalibrate` settings. The procedure is implemented in
+`stage2/secis_model_training.py` of the analysis repository (`make secis-v2`); the model is
+`results/models/oikopleura_secis.cm`.
 
 ## Stage 2
 
