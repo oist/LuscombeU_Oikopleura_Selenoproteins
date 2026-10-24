@@ -775,3 +775,7 @@ no earlier step waits for them.
   random window overlaps a positive window; negatives table written). Provisional conclusion: the new model is the
   candidate to replace the current one (more sensitive than the merged model at the same false-positive rate in
   the species folds, much more sensitive than RF00031); to confirm with the rerun, then choose its threshold.
+- Reannotation pages reordered by family (2026-10-25, request of Charles), families kept together in reading order:
+  page 1 GPX_PAR, GPX_chr1a, GPX_chr1b, GPX_chr2, DIO_PAR, DIO_chr1, TXNRD, SELENOO, SEPHS2; page 2 SELENOW_PAR,
+  SELENOW_chr1a, SELENOW_chr2, SELENOW_pair1, SELENOW_pair2, SELENOT (Rdx family), SELENOF, SELENOK, SELENOS (ER
+  membrane or lumen). New target make reannotation-pages with this order.

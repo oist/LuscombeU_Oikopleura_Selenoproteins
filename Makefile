@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme gold-standard secis-hits secis-v2 selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -199,6 +199,16 @@ selenoprotein-orthology:
 # Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)
 machinery-scheme:
 	python3 figures/machinery_scheme.py
+
+# Figure REANNOTATION (two A4 pages), from the gold standard and figures/inputs (written by
+# figures/reannotation_inputs.sh, which needs www.ebi.ac.uk and the genomes). Genes grouped by family, families kept
+# together in reading order: page 1, glutathione peroxidases, deiodinases, then thioredoxin reductase, SELENOO and
+# SEPHS2; page 2, the Rdx family (SELENOW paralogs and SELENOT), then SELENOF, SELENOK and SELENOS.
+REANNOTATION_PAGE1 = GPX_PAR GPX_chr1a GPX_chr1b GPX_chr2 DIO_PAR DIO_chr1 TXNRD SELENOO SEPHS2
+REANNOTATION_PAGE2 = SELENOW_PAR SELENOW_chr1a SELENOW_chr2 SELENOW_pair1 SELENOW_pair2 SELENOT SELENOF SELENOK SELENOS
+reannotation-pages:
+	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE1) --name reannotation_page
+	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE2) --name reannotation_page2
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:
