@@ -764,7 +764,7 @@ no earlier step waits for them.
   (OKI2018 SEPHS2, OSKA2016 and OdB3 SELENOT, OdB3 SELENOF and SEPHS2). Final model: 75 seeds (OKI2018 18, OSKA2016
   12, OdB3 8, O. longicauda 20, O. albicans 9, O. vanhoeffeni 8), 67 consensus positions. Problem: the best
   evaluation negative scores 44-48 bits with the new and current models in every family fold and in the O. dioica
-  fold, more than most positives: an O. dioica random window that holds a SECIS element. The random windows were
+  fold, more than most positives: probably an O. dioica random window that holds a SECIS element. The random windows were
   not kept away from the positive windows (a 2 kb window on the gene strand overlapping one of the 18 positive
   windows of an assembly is expected about 0.4 times per evaluation set of this size; the training windows, which
   set the thresholds, have the same problem). Changes: random windows that overlap a positive window are drawn
