@@ -567,3 +567,18 @@ no earlier step waits for them.
   for comparison = the one shared by the most transcripts; a complete transcript protein replaces a fragmentary
   assembly protein more than 10% shorter unless its identity over the shared part is lower by more than 0.02;
   annotation_fix reports intron moves.
+- Step 2, fourth Deigo run reviewed (2026-10-24, commit 0450c82): OKI2018 DIO_PAR now has the transcript-supported
+  GA-AG intron and the RefSeq first exon (243 aa; annotation_fix: move 1 intron of XP_081636384.1); OdB3 DIO_chr1
+  220 aa; OdB3 DIO_PAR uses the complete EST protein (244 aa); 30 assembly-based models translate on the ENA
+  sequence. New faults: (1) the transcript protein "shared by the most transcripts" was a truncated one for OdB3
+  GPX_PAR (167 aa instead of 183: several ESTs start at the same internal ATG); (2) extensions beyond the 5' end of
+  a complete transcript model added N-terminal residues without support (OSKA2016 SELENOW_pair1 103 aa against 93
+  in OKI2018 and OdB3; OKI2018 TXNRD 611 against 600), which matters for trans-spliced mRNAs whose 5' end is the
+  true end; (3) a predicted exon brought a TC-AT junction without transcript support (OdB3 TXNRD). Changes: such an
+  N-terminal extension is kept only when its residues align to the same gene in another assembly (half of them at
+  40% identity; tested on the proteins of the fourth run: kept for OdB3 DIO_chr1, OKI2018 and OSKA2016 DIO_PAR,
+  rejected for OSKA2016 SELENOW_pair1 and the TXNRD extensions, whose residues differ between assemblies), and kept
+  but marked as not tested when no other assembly has the gene; a column start_in_transcripts; models with a splice
+  site outside the intron classes that no compatible transcript shares rank below the others; the reference
+  transcript protein excludes transcripts with more than 20 indels and prefers, within 95% of the longest, the one
+  that contains the most other transcript proteins.
