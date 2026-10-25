@@ -849,3 +849,12 @@ no earlier step waits for them.
   Oikopleura candidates do not depend on them (decision of 2026-10-24). Reference genes of a held-out genome: its
   stage 1 selenocysteine predictions (all left out as held out). Tested with the OdB3 test contigs as a held-out
   stand-in: OKI2018 no comparative candidate (its only partner was held out), the stand-in 14 with the 5 genes.
+- Step 4, first make uga-screen on Deigo (2026-10-25): formatdb failed on the regions of the comparative screen
+  (probably empty regions: SECIS hits at contig starts in fragmented assemblies), and the single genome threshold
+  came out at 33 bits, because it was set for the largest assembly (one expected false hit in it). Changes: regions
+  with fewer than 60 bases (A, C, G, T) left out; failed commands now print their error output (and formatdb.log);
+  thresholds per genome from the pooled shuffled rate: genome threshold (at most one expected false hit in that
+  genome; genome-wide SECIS predictions) and comparative threshold (at most 100 expected false hits, not below
+  15 bits: the regions of the comparative screen, where the second species gives the specificity); the summary
+  table gives both, with the hits and the expected false hits at each; the hits table lists the hits at the
+  comparative threshold, flagged when at the genome threshold.

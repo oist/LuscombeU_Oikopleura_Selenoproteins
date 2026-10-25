@@ -15,8 +15,11 @@ scan (heavy; Infernal cmsearch):
     (Trinity, transcripts, ESTs), searched on both strands. O. dioica sets with the Oikopleura model; the controls
     (human and C. intestinalis RefSeq transcripts) with the Oikopleura model and with Rfam RF00031.
 screen (light; reads the outputs of scan):
-  - threshold of genome scans: the lowest integer score at which the hits of the shuffled copies of the six
-    Oikopleura assemblies, pooled, give at most --genome-fp expected false hits in the largest of them (both strands);
+  - thresholds of the genome scans, per genome, from the hits of the shuffled copies of the six Oikopleura
+    assemblies (pooled rate per Mb, both strands): the genome threshold, the lowest integer score with at most
+    --genome-fp expected false hits in the genome (genome-wide SECIS predictions), and the comparative threshold, the
+    lowest with at most --cmp-fp expected false hits (the SECIS hits whose upstream regions enter the comparative
+    screen, where a second species gives the specificity);
   - transcript screen: on each transcript strand with a SECIS hit of at least --tx-bits (20 bits, step 3), every TGA
     upstream of the SECIS is read as selenocysteine in a frame that starts at the first ATG after the previous stop
     codon of the frame (TAA, TAG or TGA; or at the first ATG of the frame when there is none: "5' open"; or at the
@@ -25,7 +28,8 @@ screen (light; reads the outputs of scan):
     follow the TGA, "C-terminal" otherwise (as SELENOK, SELENOS and TXNRD); every TGA gives at most one frame, ranked
     by length for each SECIS hit;
   - comparative screen (selenocysteine/selenocysteine pairs between species, as SGP2, Castellano et al. 2004): the
-    --upstream nt before each genome-scan hit at or above the threshold, on its strand, compared by tblastx with
+    --upstream nt before each genome-scan hit at or above the comparative threshold, on its strand (regions with
+    fewer than 3 x --cmp-min-codons bases, at contig starts or in gaps, left out), compared by tblastx with
     those of the other species (the three O. dioica assemblies count as one species); a TGA aligned to a TGA in an
     alignment of E <= --cmp-evalue on the forward frames of both regions, with at least --cmp-flank aligned residues
     on one side of it, unless a stronger alignment of the same two regions overlaps it in another frame; its open
@@ -44,11 +48,12 @@ screen (light; reads the outputs of scan):
     (transl_except). O. dioica candidates are grouped across assemblies by blastp (identity >= --group-identity,
     E <= 1e-10).
 Outputs: work in --work; tables stage2_secis_scan_summary.tsv (hits per genome, real and shuffled, by score),
-stage2_secis_scan_hits.tsv (genome-scan hits at or above the threshold, with the nearest known gene),
+stage2_secis_scan_hits.tsv (genome-scan hits at or above the comparative threshold, flagged when also at the genome
+threshold, with the nearest known gene and the candidates of the comparative screen),
 stage2_uga_screen.tsv (one row per candidate) and stage2_uga_screen_summary.tsv (per genome and source: sequences,
 SECIS hits, candidates, known genes recovered).
 """
-import argparse, collections, concurrent.futures, csv, gzip, os, random, re, subprocess, sys, zlib
+import argparse, collections, concurrent.futures, csv, gzip, math, os, random, re, subprocess, sys, zlib
 
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 STOPS = {"TAA", "TAG", "TGA"}
@@ -102,7 +107,12 @@ def translate(s):
 
 
 def run(cmd, cwd=None):
-    return subprocess.run(cmd, check=True, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
+    p = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if p.returncode:
+        log = os.path.join(cwd or ".", "formatdb.log")
+        tail = open(log).read()[-2000:] if cmd[0] == "formatdb" and os.path.exists(log) else ""
+        sys.exit(f"command failed ({p.returncode}) in {cwd or '.'}: {' '.join(cmd)}\n{p.stderr[-2000:]}{tail}")
+    return p.stdout
 
 
 def dinucleotide_shuffle(seq, rng):
@@ -408,7 +418,8 @@ def open_stretch(s, u):
 
 def comparative_screen(a, summary, T, sheet):
     """Selenocysteine/selenocysteine pairs between species: the --upstream nt before each genome-scan hit at or above
-    T (on the strand of the hit) are compared by tblastx (legacy BLAST, no filter) with those of the other species;
+    the comparative threshold of its genome (T: genome -> (genome, comparative threshold)), on the strand of the hit,
+    are compared by tblastx (legacy BLAST, no filter) with those of the other species;
     a TGA aligned to a TGA (stop/stop column) in an alignment of E <= --cmp-evalue on the forward frames of both
     regions, with at least --cmp-flank aligned residues on one side, is a candidate, unless a stronger alignment
     between the same regions overlaps it in another frame (the other frames of a conserved coding sequence). Returns
@@ -420,10 +431,11 @@ def comparative_screen(a, summary, T, sheet):
     regions, stats = {}, collections.Counter()
     for g in a.genome_screen + a.heldout:
         rec = next((x for x in summary if x["genome"] == g and x["set"] == "genome"), None)
-        if rec is None or T is None: continue
+        tc = T.get(g, (None, None))[1]
+        if rec is None or tc is None: continue
         by_contig = collections.defaultdict(list)
         for h in rec["hits"]:
-            if h[4] >= T: by_contig[h[0]].append(h)
+            if h[4] >= tc: by_contig[h[0]].append(h)
         stats[(g, "hits")] = sum(len(v) for v in by_contig.values())
         for contig, seq in read_fasta(sheet[g]["fasta"]):
             if contig not in by_contig: continue
@@ -432,10 +444,14 @@ def comparative_screen(a, summary, T, sheet):
                 ss = seq if strand == "+" else rc(seq)
                 h0, h1 = strand_coords(len(seq), strand, x, y)
                 lo = max(0, h0 - a.upstream)
+                if sum(ss[lo:h0].count(b) for b in "ACGT") < 3 * a.cmp_min_codons: continue   # contig start, gaps
                 regions[f"r{len(regions) + 1}"] = {"genome": g, "contig": contig, "strand": strand, "x": x, "y": y,
                                                    "bits": bits, "evalue": ev, "lo": lo, "h0": h0, "seq": ss[lo:h0],
                                                    "length": len(seq)}
     if not regions: return [], stats
+    per = collections.Counter(r["genome"] for r in regions.values())
+    print("comparative screen, regions: " + ", ".join(f"{g} {n}" for g, n in per.items()) +
+          f" ({sum(len(r['seq']) for r in regions.values()) / 1e6:.1f} Mb); tblastx", flush=True)
     with open(f"{d}/regions.fa", "w") as o:
         for k, r in regions.items(): o.write(f">{k}\n{r['seq']}\n")
     run(["formatdb", "-i", "regions.fa", "-p", "F"], d)
@@ -644,18 +660,24 @@ def near_known(contig, strand, h_lo, h_hi, gold_g, stage1_g, window=3000):
     return f"{best[0]} ({best[1]} nt)" if best else ""
 
 
-def genome_threshold(summary, a):
-    """Lowest integer score at which the pooled shuffled hits of the Oikopleura assemblies give at most a.genome_fp
-    expected hits in the largest assembly (both strands)."""
+def thresholds(summary, a):
+    """Per genome, from the hits of the shuffled copies of the Oikopleura assemblies (pooled rate per Mb, both
+    strands): the genome threshold, the lowest integer score with at most --genome-fp expected false hits in that
+    genome, and the comparative threshold, the lowest with at most --cmp-fp expected false regions (not below
+    --report-bits). Returns {genome: (genome threshold, comparative threshold)} and the pooled rates."""
     shuffled = [r for r in summary if r["set"] == "shuffled" and r["genome"] in OIKOPLEURA]
-    if not shuffled: return None
+    if not shuffled: return {}, {}
     mb = sum(r["Mb"] for r in shuffled)
-    largest = max(r["Mb"] for r in shuffled)
-    scores = sorted(s for r in shuffled for s in r["scores"])
-    for t in range(int(a.report_bits), 200):
-        n = sum(1 for s in scores if s >= t)
-        if n / mb * largest <= a.genome_fp: return t
-    return None
+    scores = [x for r in shuffled for x in r["scores"]]
+    rate = {t: sum(1 for x in scores if x >= t) / mb for t in range(int(math.ceil(a.report_bits)), 201)}
+    first = lambda size, fp: next((t for t, v in sorted(rate.items()) if v * size <= fp), None)
+    out = {}
+    for r in summary:
+        if r["set"] != "genome": continue
+        tg = a.genome_bits if a.genome_bits is not None else first(r["Mb"], a.genome_fp)
+        tc = a.cmp_bits if a.cmp_bits is not None else first(r["Mb"], a.cmp_fp)
+        out[r["genome"]] = (tg, tc)
+    return out, rate
 
 
 def expected_scan_outputs(a, sheet):
@@ -689,17 +711,22 @@ def screen(a):
             hits = read_tbl(tbl, a.report_bits)
             mb = 2 * int(open(size).read()) / 1e6
             summary.append({"genome": g, "set": kind, "Mb": mb, "scores": [h[4] for h in hits], "hits": hits})
-    T = genome_threshold(summary, a) if a.genome_bits is None else a.genome_bits
+    T, rate = thresholds(summary, a)
     with open(f"{a.tables}/stage2_secis_scan_summary.tsv", "w") as o:
         o.write("genome\tset\tMb (both strands)\t" + "\t".join(f">= {c} bits" for c in cuts) +
-                "\thits per Mb at the genome threshold\n")
+                "\tgenome threshold (bits)\thits at the genome threshold\texpected false hits at it\t"
+                "comparative threshold (bits)\thits at the comparative threshold\texpected false hits at it\n")
         for r in summary:
-            n = sum(1 for s in r["scores"] if T is not None and s >= T)
-            o.write(f"{r['genome']}\t{r['set']}\t{r['Mb']:.1f}\t" + "\t".join(str(sum(1 for s in r['scores'] if s >= c)) for c in cuts) +
-                    (f"\t{n / r['Mb']:.3f}\n" if T is not None else "\t-\n"))
-        o.write(f"# genome threshold: {T} bits (lowest integer score with at most {a.genome_fp} expected hit(s) of the pooled "
-                f"shuffled Oikopleura assemblies in the largest one)\n")
-    print(f"genome threshold: {T} bits", flush=True)
+            tg, tc = T.get(r["genome"], (None, None))
+            cols = []
+            for t in (tg, tc):
+                if t is None: cols += ["-", "-", "-"]
+                else: cols += [str(t), str(sum(1 for x in r["scores"] if x >= t)), f"{rate.get(int(t), 0) * r['Mb']:.1f}"]
+            o.write(f"{r['genome']}\t{r['set']}\t{r['Mb']:.1f}\t" + "\t".join(str(sum(1 for x in r['scores'] if x >= c)) for c in cuts) +
+                    "\t" + "\t".join(cols if r["set"] == "genome" else ["-"] * 6) + "\n")
+        o.write(f"# thresholds from the pooled hits of the shuffled Oikopleura assemblies: genome threshold, at most "
+                f"{a.genome_fp} expected false hit(s) in the genome; comparative threshold, at most {a.cmp_fp}\n")
+    for g, (tg, tc) in T.items(): print(f"{g}: genome threshold {tg} bits, comparative threshold {tc} bits", flush=True)
     gold, gold_prot = read_gold(a)
     stage1 = read_stage1(a, list(dict.fromkeys(a.scan + a.transcripts + a.genome_screen + a.heldout)))
     cands, refgenes = [], {}
@@ -798,14 +825,17 @@ def screen(a):
         if c["screen"] == "comparative":
             idx[(c["genome"], c["contig"], c["strand"], c["secis_from"], c["secis_to"])].append(f"{c['id']} ({c['class']})")
     with open(f"{a.tables}/stage2_secis_scan_hits.tsv", "w") as o:
-        o.write("genome\tcontig\tstrand\tfrom\tto\tbits\tevalue\tknown gene upstream (distance from its stop codon)\t"
-                "candidates of the comparative screen\n")
+        o.write("genome\tcontig\tstrand\tfrom\tto\tbits\tevalue\tat the genome threshold\t"
+                "known gene upstream (distance from its stop codon)\tcandidates of the comparative screen\n")
         for r in summary:
-            if r["set"] != "genome" or T is None or r["genome"] not in a.genome_screen + a.heldout + NONTARGET: continue
+            if r["set"] != "genome" or r["genome"] not in a.genome_screen + a.heldout + NONTARGET: continue
+            tg, tc = T.get(r["genome"], (None, None))
+            if tc is None: continue
             for contig, strand, x, y, bits, ev in sorted(r["hits"], key=lambda h: -h[4]):
-                if bits < T: continue
+                if bits < min(tc, tg if tg is not None else tc): continue
                 nk = near_known(contig, strand, min(x, y) - 1, max(x, y), gold.get(r["genome"], []), stage1.get(r["genome"], {}))
-                o.write(f"{r['genome']}\t{contig}\t{strand}\t{x}\t{y}\t{bits}\t{ev:.2g}\t{nk}\t"
+                o.write(f"{r['genome']}\t{contig}\t{strand}\t{x}\t{y}\t{bits}\t{ev:.2g}\t"
+                        f"{'yes' if tg is not None and bits >= tg else 'no'}\t{nk}\t"
                         f"{', '.join(idx.get((r['genome'], contig, strand, x, y), []))}\n")
 
 
@@ -844,8 +874,10 @@ def main():
     ap.add_argument("--extend3", type=int, default=1000)
     ap.add_argument("--extend5", type=int, default=300)
     ap.add_argument("--tx-bits", type=float, default=20.0)
-    ap.add_argument("--genome-bits", type=float, default=None, help="threshold of genome scans (default: from the shuffled copies)")
-    ap.add_argument("--genome-fp", type=float, default=1.0)
+    ap.add_argument("--genome-bits", type=float, default=None, help="genome threshold for all genomes (default: per genome, from the shuffled copies)")
+    ap.add_argument("--genome-fp", type=float, default=1.0, help="expected false hits per genome at the genome threshold")
+    ap.add_argument("--cmp-bits", type=float, default=None, help="comparative threshold for all genomes (default: per genome)")
+    ap.add_argument("--cmp-fp", type=float, default=100.0, help="expected false regions per genome at the comparative threshold")
     ap.add_argument("--min-codons", type=int, default=40)
     ap.add_argument("--internal", type=int, default=10)
     ap.add_argument("--upstream", type=int, default=5000)
