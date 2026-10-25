@@ -888,3 +888,14 @@ no earlier step waits for them.
     copies and stage 1 names as recovered genes (now gold-standard genes, stage 1 selenocysteine predictions or
     annotated selenocysteines, as fits the genome); human hits now carry their RefSeq description; new column
     other_species (candidates of other species whose U aligns to the U). To rerun: make uga-screen (minutes).
+- Step 4, second make uga-screen (2026-10-25, commit 0b4b4ef). Gold-standard genes found by the transcript screen:
+  OKI2018 Trinity 18/18, RefSeq 15/18 (no RefSeq model for SELENOK and SELENOW_chr1a; the RefSeq SELENOS frame is
+  lost where the assembly lacks 13 bases), OSKA2016 transcripts 15 (no DIO_PAR, DIO_chr1, GPX_chr1a), ANISEED 9, OdB3
+  ESTs 15 (no GPX_chr1b, SELENOW_pair2, SEPHS2), GenBank 12; comparative screen 14-15 per assembly (SELENOO, SELENOS,
+  SELENOT, DIO_chr1 lack a partner in another species at the comparative threshold). The first summary's 18/18 for
+  RefSeq counted stage 1 names. The cross-species column missed the KKSU family: the U is its last residue and was
+  read as X, so local alignments stopped before it; U is now read as C in these comparisons (checked on the table:
+  the O. dioica KKSU candidates and the O. albicans one now link). New status "homolog of a known selenoprotein"
+  (partner at a known selenocysteine codon, or U aligned to the U of a gold-standard or human selenoprotein), so
+  that "candidate" holds only proteins of no known selenoprotein family; --known-identity lowered to 80 % (an OSKA2016
+  SELENOW_pair1 transcript at 89 % was a candidate).

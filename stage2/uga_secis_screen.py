@@ -49,9 +49,11 @@ screen (light; reads the outputs of scan):
     (transl_except); for O. dioica transcripts without genome positions, protein identity >= --known-identity with a
     gold-standard protein of any of the three assemblies. Status of each frame: "known" (the selenocysteine codon of a
     known gene), "known gene, other TGA" (another TGA of a gold-standard gene), "stage 1 prediction without
-    selenocysteine" (cysteine homologues and others), "other frame of a known transcript", or "candidate".
+    selenocysteine" (cysteine homologues and others), "other frame of a known transcript", "homolog of a known
+    selenoprotein" (partner of the comparative screen at a known selenocysteine codon, or U aligned to the U of a
+    gold-standard or human selenoprotein), or "candidate".
     Candidates of the same gene are listed across the O. dioica assemblies (blastp identity >= --group-identity,
-    E <= 1e-10) and in the other species (blastp E <= --cmp-evalue with the U of both aligned).
+    E <= --cmp-evalue) and in the other species (blastp E <= --cmp-evalue with the U of both aligned; U read as C).
 Outputs: work in --work; tables stage2_secis_scan_summary.tsv (hits per genome, real and shuffled, by score),
 stage2_secis_scan_hits.tsv (genome-scan hits at or above the comparative threshold, flagged when also at the genome
 threshold, with the nearest known gene and the candidates of the comparative screen),
@@ -820,6 +822,13 @@ def screen(a):
     for c in cands:
         if c["status"] == "candidate" and c["screen"] == "transcript" and (c["genome"], c["source"], c["model"], c["sequence"]) in with_known:
             c["status"] = "other frame of a known transcript"
+    # copies of known selenoproteins not known at that locus: the partner of the comparative screen is a known
+    # selenocysteine codon, or the U aligns to the U of a gold-standard or human selenoprotein
+    for c in cands:
+        if c["status"] != "candidate": continue
+        h, hh = gb.get(c["id"]), hb.get(c["id"])
+        if status_of(c.get("partner_known", "")) == "known" or (h and h[4] == "U") or (hh and hh[4] == "U"):
+            c["status"] = "homolog of a known selenoprotein"
     # candidates of the same gene in other O. dioica assemblies and in other species
     groups, other_species = group_candidates([c for c in cands if c["genome"] not in CONTROLS], a)
     for c in cands:
@@ -845,7 +854,8 @@ def screen(a):
         o.write("genome\tsource\tmodel\tsequences\tsequences with a SECIS hit (comparative: hits at the threshold)\t"
                 "sequences with a frame (comparative: regions with an alignment to another species)\tframes\tknown\t"
                 "known genes recovered\treference genes\tknown gene, other TGA\tother frame of a known transcript\t"
-                "stage 1 prediction without selenocysteine\tcandidates\tcandidates in another species\n")
+                "stage 1 prediction without selenocysteine\thomolog of a known selenoprotein\tcandidates\t"
+                "candidates in another species\n")
         keys = list(stats) + [k for k in dict.fromkeys((c["genome"], c["source"], c["model"]) for c in cands) if k not in stats]
         for k in keys:
             cs = [c for c in cands if (c["genome"], c["source"], c["model"]) == k]
@@ -857,7 +867,7 @@ def screen(a):
             o.write(f"{k[0]}\t{k[1]}\t{k[2]}\t{stats[k].get('sequences', '')}\t"
                     f"{stats[k].get('with SECIS', stats[k].get('SECIS hits', ''))}\t{stats[k].get('with a frame', '')}\t{len(cs)}\t"
                     f"{n['known']}\t{len(rec)}\t{ref}\t{n['known gene, other TGA']}\t{n['other frame of a known transcript']}\t"
-                    f"{n['stage 1 prediction without selenocysteine']}\t{n['candidate']}\t"
+                    f"{n['stage 1 prediction without selenocysteine']}\t{n['homolog of a known selenoprotein']}\t{n['candidate']}\t"
                     f"{sum(1 for c in cs if c['status'] == 'candidate' and c['other_species'])}\n")
     print(f"{len(cands)} candidates", flush=True)
     # genome-scan hits at or above the threshold, with the nearest known gene upstream and their candidates
@@ -881,9 +891,10 @@ def screen(a):
 
 
 def group_candidates(cands, a):
-    """For each candidate: the O. dioica assemblies holding a matching candidate (blastp identity >= --group-identity,
-    E <= 1e-10), and the other species holding a candidate whose U aligns to its U (blastp E <= --cmp-evalue, local
-    alignment BLOSUM62). Returns two dicts id -> "genome,genome"."""
+    """For each candidate: the O. dioica assemblies holding a matching candidate (blastp E <= --cmp-evalue, identity
+    >= --group-identity), and the other species holding a candidate whose U aligns to its U (blastp E <= --cmp-evalue,
+    then a local alignment, BLOSUM62); U is read as C in both, so that alignments run through it. Returns two dicts
+    id -> "genome,genome"."""
     if not cands: return {}, {}
     from Bio import Align
     from Bio.Align import substitution_matrices
@@ -892,8 +903,11 @@ def group_candidates(cands, a):
     seqs = {c["id"]: c["protein"].rstrip("*") for c in cands}
     genome = {c["id"]: c["genome"] for c in cands}
     b = Blast(seqs, a.work, "candidates")
+    with open(f"{b.dir}/db.faa", "w") as o:   # U read as C, so that alignments run through the U (often C-terminal)
+        for k, v in seqs.items(): o.write(f">{k}\n{v.replace('U', 'C')}\n")
+    run(["formatdb", "-i", "db.faa", "-p", "T"], b.dir)
     with open(f"{b.dir}/q.faa", "w") as o:
-        for k, v in seqs.items(): o.write(f">{k}\n{v.replace('U', 'X')}\n")
+        for k, v in seqs.items(): o.write(f">{k}\n{v.replace('U', 'C')}\n")
     same, other = collections.defaultdict(set), collections.defaultdict(set)
     checked = {}
     for l in run(["blastall", "-p", "blastp", "-d", "db.faa", "-i", "q.faa", "-e", str(a.cmp_evalue), "-m", "8", "-a",
@@ -902,12 +916,12 @@ def group_candidates(cands, a):
         q, t, ident, ev = f[0], f[1], float(f[2]), float(f[10])
         if q == t: continue
         if species(genome[q]) == species(genome[t]):
-            if genome[q] in DIOICA and genome[t] in DIOICA and ident >= a.group_identity and ev <= 1e-10: same[q].add(genome[t])
+            if genome[q] in DIOICA and genome[t] in DIOICA and ident >= a.group_identity: same[q].add(genome[t])
         elif (q, t) not in checked:
             x, y = seqs[q], seqs[t]
             ok = False
             if "U" in x and "U" in y:
-                aln = al.align(x.replace("U", "X"), y.replace("U", "X"))[0]
+                aln = al.align(x.replace("U", "C"), y.replace("U", "C"))[0]
                 ux, uy = x.index("U"), y.index("U")
                 ok = any(q0 <= ux < q1 and t0 + ux - q0 == uy for (q0, q1), (t0, t1) in zip(*aln.aligned))
             checked[(q, t)] = ok
@@ -948,7 +962,7 @@ def main():
     ap.add_argument("--cmp-flank", type=int, default=10)
     ap.add_argument("--cmp-min-codons", type=int, default=20)
     ap.add_argument("--evalue", type=float, default=1e-3)
-    ap.add_argument("--known-identity", type=float, default=90.0)
+    ap.add_argument("--known-identity", type=float, default=80.0)
     ap.add_argument("--group-identity", type=float, default=80.0)
     ap.add_argument("--human", default="data/genomes/Hsap/protein.faa.gz")
     ap.add_argument("--gold", default="curation/gold_standard")
