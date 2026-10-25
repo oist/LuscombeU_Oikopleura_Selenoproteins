@@ -466,8 +466,62 @@ in 1,500 passed in the species folds (3 of 4,691). Scans of whole genomes call f
 (Stage 2).
 
 <!-- Figure SECIS-2 shows the first model; to redraw with the new model (held-out scores of
-results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives). Next (step 4): genome-wide scans and
-their threshold; SECIS elements without a known selenoprotein gene. -->
+results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives). -->
+
+## UGA/SECIS screens outside the known families
+
+> **Provisional section (2026-10-26, step 4 of the plan; `stage2/uga_secis_screen.py`, `make secis-scan` and
+> `make uga-screen`; `results/tables/stage2_secis_scan_*.tsv` and `stage2_uga_screen*.tsv`).**
+
+To look for selenoproteins outside the families known from other organisms, we searched genomes and transcripts for
+SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them (Methods).
+
+Thresholds for whole genomes were set from shuffled copies of the six *Oikopleura* assemblies, at one expected false
+hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
+*Oikopleura* species (618 to 1,287 Mb). At these thresholds, the scans found 23, 22 and 29 hits in OKI2018, OSKA2016
+and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of a
+gold-standard gene. In the four non-target tunicates, hits were as frequent as in their shuffled copies at every
+score (in *C. intestinalis*, 267 against 344 at 15 bits): genome-wide, the model does not recognise the SECIS
+elements of ascidians and salps.
+
+The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
+all 18 gold-standard genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in
+the OdB3 ESTs. With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no
+model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. In the positive controls, it found
+16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3 with the *Oikopleura* model; in
+*C. intestinalis* RefSeq mRNAs, 11 and 6 of 17.
+
+The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both,
+found 14 to 15 gold-standard genes in each *O. dioica* assembly, and 20 of 28, 11 of 20 and 9 of 16 stage 1
+selenocysteine predictions in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. Ten more alignments were copies of
+known selenoproteins absent from stage 1: SELENOK in *O. albicans* and *O. vanhoeffeni*, whose C-terminus
+...GGUGR aligns with that of *O. dioica* SELENOK (stage 1 found SELENOK in no appendicularian), and copies of TXNRD,
+GPX, DIO and SELENOW. In the held-out genomes, six short TGA-containing stretches (five *M. erythrocephalus* contigs
+and one *B. stygius* contig) aligned with one another: a repeated element, not a gene.
+
+One family of no known selenoprotein family was found by both screens in the three *O. dioica* assemblies and by the
+comparative screen in *O. albicans*. In *O. dioica* its frame encodes 68 to 70 residues: an N-terminal part rich in
+lysine and glycine, a hydrophobic segment (NLDVLMSALMLVLVFYIF(L/V), Kyte–Doolittle mean 2.2) and the
+C-terminus RRKF(T/S)NWKPGKKSU, where the TGA is followed directly by a stop codon. The gene is annotated in RefSeq
+(XM_081776455.1, OKI2018 chromosome 2), ANISEED (Oidioi.CG.OSKA2016.S22.g13919) and GenBank (GSOID_T00008777001), and
+supported by the OKI2018 and OSKA2016 transcripts and seven OdB3 ESTs; its SECIS scores 30.8 to 36.6 bits, 222 to
+262 nucleotides after the stop codon. The *O. albicans* copy (contig SCLG01000111.1, no transcript data) ends in
+RRRFCNWTPGKKSU, with a SECIS of 31.9 bits 395 nucleotides after the stop codon. The family has no blastp hit in the
+human RefSeq proteome. A TGA followed by a stop codon may simply end a protein; read as selenocysteine, it would make
+this the last residue, as in other C-terminal selenoproteins whose selenocysteine lies among the last residues
+(SELENOK, SELENOS).
+
+The transcript screen also found, in the three assemblies, a frame of 168 codons whose best human hit is
+thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to
+31.8 bits in the annotated transcripts and ESTs (23.6 in the OSKA2016 transcript assembly), 67 to 95 nucleotides after
+the stop codon: the TXNL1 candidate noted earlier, examined below. In OKI2018,
+four genome-scan hits at the genome threshold follow no known gene: the SECIS of the new family, one 1.4 kb upstream
+of the TXNL1 codon (similar hits lie upstream of it in OSKA2016 and OdB3), one on NC_137295.1 (30.1 bits) and one on
+NC_137291.1 (28.1 bits).
+
+<!-- Next (step 5): TXNL1 by the rule fixed in advance (SECIS above background in the three assemblies, TGA
+conserved; the other tunicates); the new family in the other species (tblastn) and in other databases; Table and
+figure for the screens. -->
 
 # Methods
 
@@ -775,6 +829,45 @@ above the training threshold were counted per megabase. The final model was trai
 windows and calibrated with the default `cmcalibrate` settings. The procedure is implemented in
 `stage2/secis_model_training.py` of the analysis repository (`make secis-v2`); the model is
 `results/models/oikopleura_secis.cm`.
+
+## UGA/SECIS screens
+
+Genomes were scanned with `cmsearch` (both strands, default filters, hits of 15 bits or more) and the *Oikopleura*
+model: the six *Oikopleura* assemblies, the held-out *B. stygius*, *M. erythrocephalus* and *F. borealis*, and four
+non-target tunicates, each with a copy in which every window of 1,000 nucleotides was shuffled with its dinucleotide
+counts preserved [@Altschul1985]. From the hits of the shuffled *Oikopleura* copies, pooled per megabase (both
+strands), two thresholds were set for each genome: the genome threshold, the lowest integer score with at most one
+expected false hit in that genome, and the comparative threshold, with at most 100 (not below 15 bits).
+
+Transcript sets were the annotated transcripts (RefSeq for OKI2018, ANISEED for OSKA2016, GenBank for OdB3; CDS rows
+for models without exons), extended by 1,000 nucleotides of genome after their 3′ end (and 300 before the 5′ end of
+CDS-only models) and searched on their sense strand, and the transcript assemblies (OKI2018 Trinity, OSKA2016
+transcripts, OdB3 ESTs), searched on both strands. Controls were the RefSeq mRNAs of human and *C. intestinalis*,
+searched with the *Oikopleura* model and with RF00031. On each transcript strand with a SECIS hit of at least 20
+bits, every TGA upstream of the hit was read as selenocysteine in a frame from the first ATG after the previous stop
+codon of the frame (TAA, TAG or TGA), or from the first ATG or codon of the transcript when there was none, to the next
+stop codon, which had to end before the SECIS. Frames of at least 40 codons with at least 10 codons before the TGA
+were kept (the spliced leader of *O. dioica* mRNAs [@Ganot2004] holds a TGA in one frame); a frame was left out when
+it overlapped, in another reading frame, a longer such frame or a longer ordinary open reading frame. Frames with at
+least 10 codons after the TGA were called internal, the others C-terminal.
+
+For the comparative screen, the 5,000 nucleotides before each genome-scan hit at the comparative threshold, on its
+strand, were compared by tblastx (legacy BLAST 2.2.26, no filter) with those of the other species, the three
+*O. dioica* assemblies counting as one. A TGA aligned to a TGA on the forward frames of both regions, in an alignment
+with E ≤ 10^-5^ and at least 10 aligned residues on one side of it, was kept unless a stronger alignment of the same
+regions overlapped it in another frame, and when the open stretch around it held at least 20 codons; each TGA was
+assigned to the nearest SECIS hit downstream. The held-out genomes were compared with all species but did not serve
+as partners of the *Oikopleura* assemblies. Candidate proteins were compared by blastp (E ≤ 10^-3^) with the human
+RefSeq proteome and the gold-standard proteins, and the residue aligned to the selenocysteine was read in a local
+alignment (BLOSUM62). A frame was known when its TGA was the selenocysteine codon of a gold-standard gene, lay in the
+coding sequence of a stage 1 selenocysteine prediction, or was an annotated selenocysteine of a control; for
+*O. dioica* transcripts without genome position, when its protein was at least 80 % identical to a gold-standard
+protein with the selenocysteines aligned. Other frames were classed as another TGA of a known gene, another frame of
+a transcript with a known frame, a copy of a known selenoprotein (partner at a known codon, or selenocysteine aligned
+to that of a gold-standard or human selenoprotein), a TGA upstream of the SECIS of a known gene (comparative screen,
+known gene ending at most 3 kb before the hit), or a candidate. Candidates of the same gene were linked between
+species when their selenocysteines aligned (blastp E ≤ 10^-5^, selenocysteine read as cysteine). The procedure is
+`stage2/uga_secis_screen.py` of the analysis repository (`make secis-scan`, `make uga-screen`).
 
 ## Stage 2
 

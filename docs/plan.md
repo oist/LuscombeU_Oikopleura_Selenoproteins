@@ -912,3 +912,12 @@ no earlier step waits for them.
   O. vanhoeffeni through that of O. albicans); comparative candidates upstream of the SECIS of a known selenoprotein
   gene (its coding sequence ends at most 3 kb before the hit; for example a TGA of the gene upstream of OSKA2016
   GPX_chr1a, whose SECIS scores 59.1 bits) get the status "upstream of the SECIS of a known gene".
+- Step 4 done (2026-10-26, fourth make uga-screen, commit 6243f71): classification as intended (comparative screen:
+  candidates are the KKSU family in OKI2018, OSKA2016, OdB3 and O. albicans, and the M. erythrocephalus/B. stygius
+  repeat; ten copies of known selenoproteins absent from stage 1; four TGAs upstream of the SECIS of known genes).
+  Genome-scan hits at the genome threshold after no known gene in OKI2018: the KKSU SECIS (NC_137292.1:12253777,
+  36.6 bits), NC_137292.1:13040099 (31.6 bits, 1.4 kb upstream of the TXNL1 codon; similar hits upstream of TXNL1 in
+  OSKA2016 and OdB3; the TXNL1 SECIS itself, 70 nt after its stop codon, lies after a stage 1 Ostsp2 prediction
+  labelled unaligned), NC_137295.1:2369276 (30.1 bits) and the step-3 locus NC_137291.1:11878408 (28.1 bits).
+  Provisional Results and Methods written (section "UGA/SECIS screens outside the known families"). Next: step 5
+  (TXNL1; the KKSU family in the other species and other databases).
