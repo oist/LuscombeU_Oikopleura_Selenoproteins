@@ -858,3 +858,33 @@ no earlier step waits for them.
   15 bits: the regions of the comparative screen, where the second species gives the specificity); the summary
   table gives both, with the hits and the expected false hits at each; the hits table lists the hits at the
   comparative threshold, flagged when at the genome threshold.
+- Step 4, first complete make uga-screen (2026-10-25, commit 50c6990). Thresholds per genome (pooled shuffled rate):
+  genome threshold 28-29 bits in the O. dioica assemblies, 31-34 bits elsewhere; comparative threshold 18-25 bits.
+  Assembly sizes (both strands): O. dioica 113-141 Mb; O. longicauda 618, O. albicans 732, O. vanhoeffeni 1,287,
+  B. stygius 793, M. erythrocephalus 1,748, F. borealis 286, Cint 281, Csav 401, Scla 754, Tdem 1,604. Genome hits at
+  the genome threshold: OKI 23, OSKA 22, OdB3 29, Olon 30, Oalb 15, Ovan 19 (expected false hits 0.4-0.9); the
+  non-target tunicates are at the level of their shuffled copies (Cint 267 hits at 15 bits against 344 shuffled):
+  the Oikopleura model does not see ascidian SECIS elements genome-wide.
+  - Transcript screen: all 18 gold-standard genes found in the OKI2018 RefSeq and Trinity sets, 15 in the OSKA2016
+    transcripts, 7 in the ANISEED models (models missing or broken), OdB3 GenBank and ESTs most of them. Controls:
+    human RefSeq 18 of 25 selenoprotein genes with RF00031, 3 with the Oikopleura model; C. intestinalis 15 of 17 with
+    RF00031, 9 with the Oikopleura model.
+  - Comparative screen: 14-22 known genes per O. dioica assembly, 20 of 28 O. longicauda, 12 of 20 O. albicans, 9 of 16
+    O. vanhoeffeni stage 1 selenocysteine predictions; few other candidates (OKI 2, OSKA 3, OdB3 1, Olon 1, Oalb 5,
+    Ovan 6). Among them SELENOK of O. albicans, O. vanhoeffeni and M. erythrocephalus (C-terminal ...GGUGR, partners
+    the O. dioica SELENOK and each other), the gene that stage 1 missed in every appendicularian; TXNRD of
+    M. erythrocephalus; SELENOW_PAR, SELENOW_chr1a and GPX of O. albicans or O. vanhoeffeni not in stage 1.
+  - New candidate family: a 68-70 aa protein with a hydrophobic segment and the C-terminus ...RRKF(T/S)NWKPGKKSU,
+    TGA followed by a stop codon, in all three O. dioica assemblies (RefSeq XM_081776455.1 on NC_137292.1 at
+    12254043, ANISEED S22.g13919, GenBank GSOID_T00008777001, Trinity, OSKA2016 transcripts, 7 ESTs; SECIS 28-37 bits)
+    and in O. albicans (genome, SCLG01000111.1, ...RRRFCNWTPGKKSU, SECIS 31.9 bits); no human hit.
+  - Held-out genomes: a family of short open stretches (...UIA(N/D/S)HT(K)LL(P/S)ETTSSGKLSLKN...) on five
+    M. erythrocephalus contigs, partnered with a B. stygius contig start: a repeated element, not a gene.
+  - Defects found and fixed in stage2/uga_secis_screen.py: the spliced leader of O. dioica mRNAs holds a TGA in one
+    frame (...HF-U-VRFRLSN), which gave 5' fragment frames with the U at codons 2-6 (now at least --min-before 10
+    codons before the TGA; the earliest known selenocysteine is codon 13); other frames of a transcript that holds a
+    known gene, and other TGAs of gold-standard genes (genome overlap, or protein identity >= 90 % to a gold protein of
+    any O. dioica assembly), are no longer counted as candidates (column status); the summary counted haplotype
+    copies and stage 1 names as recovered genes (now gold-standard genes, stage 1 selenocysteine predictions or
+    annotated selenocysteines, as fits the genome); human hits now carry their RefSeq description; new column
+    other_species (candidates of other species whose U aligns to the U). To rerun: make uga-screen (minutes).

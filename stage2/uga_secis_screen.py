@@ -24,7 +24,8 @@ screen (light; reads the outputs of scan):
     upstream of the SECIS is read as selenocysteine in a frame that starts at the first ATG after the previous stop
     codon of the frame (TAA, TAG or TGA; or at the first ATG of the frame when there is none: "5' open"; or at the
     first codon when there is no ATG either: "5' fragment") and ends at the next stop codon after the TGA, which must
-    end before the SECIS; frames shorter than --min-codons are left out; "internal" when at least --internal codons
+    end before the SECIS; frames shorter than --min-codons, or with fewer than --min-before codons before the TGA
+    (the spliced leader of O. dioica mRNAs holds a TGA in one frame), are left out; "internal" when at least --internal codons
     follow the TGA, "C-terminal" otherwise (as SELENOK, SELENOS and TXNRD); every TGA gives at most one frame, ranked
     by length for each SECIS hit;
   - comparative screen (selenocysteine/selenocysteine pairs between species, as SGP2, Castellano et al. 2004): the
@@ -45,8 +46,12 @@ screen (light; reads the outputs of scan):
     the stage 1 predictions (overlap of the TGA with their coding sequence: selenocysteine or cysteine homologs, as
     labelled by the first round of hit validation; for the comparative screen also at the partner TGA) and, for the
     controls, the selenocysteines of the annotation
-    (transl_except). O. dioica candidates are grouped across assemblies by blastp (identity >= --group-identity,
-    E <= 1e-10).
+    (transl_except); for O. dioica transcripts without genome positions, protein identity >= --known-identity with a
+    gold-standard protein of any of the three assemblies. Status of each frame: "known" (the selenocysteine codon of a
+    known gene), "known gene, other TGA" (another TGA of a gold-standard gene), "stage 1 prediction without
+    selenocysteine" (cysteine homologues and others), "other frame of a known transcript", or "candidate".
+    Candidates of the same gene are listed across the O. dioica assemblies (blastp identity >= --group-identity,
+    E <= 1e-10) and in the other species (blastp E <= --cmp-evalue with the U of both aligned).
 Outputs: work in --work; tables stage2_secis_scan_summary.tsv (hits per genome, real and shuffled, by score),
 stage2_secis_scan_hits.tsv (genome-scan hits at or above the comparative threshold, flagged when also at the genome
 threshold, with the nearest known gene and the candidates of the comparative screen),
@@ -340,7 +345,7 @@ def strand_coords(length, strand, x, y):
     return length - x, length - y + 1
 
 
-def sec_frames(s, h0, min_codons, internal):
+def sec_frames(s, h0, min_codons, internal, min_before=0):
     """Frames through a TGA read as selenocysteine (one per TGA), ending before position h0 of the strand sequence s,
     longest first."""
     out = []
@@ -358,7 +363,7 @@ def sec_frames(s, h0, min_codons, internal):
             while k + 3 <= len(s) and s[k:k + 3] not in STOPS: k += 3
             if k + 3 <= h0:
                 nb, na = (u - start) // 3, (k - u - 3) // 3
-                if nb + 1 + na >= min_codons:
+                if nb + 1 + na >= min_codons and nb >= min_before:
                     out.append({"start": start, "tga": u, "stop": k, "before": nb, "after": na, "codons": nb + 1 + na,
                                 "start_kind": kind, "class": "internal" if na >= internal else "C-terminal",
                                 "distance": h0 - (k + 3), "protein": translate(s[start:k])})
@@ -529,7 +534,7 @@ def transcript_frames(name, s, hits, meta, a):
     for _, strand, x, y, bits, ev in sorted(hits, key=lambda h: -h[4]):
         ss = s if strand == "+" else rc(s)
         h0, h1 = strand_coords(len(s), strand, x, y)
-        frames = [c for c in sec_frames(ss, h0, a.min_codons, a.internal) if (strand, c["tga"]) not in seen]
+        frames = [c for c in sec_frames(ss, h0, a.min_codons, a.internal, a.min_before) if (strand, c["tga"]) not in seen]
         lo = longest_orf(ss) if frames else ""
         for c in frames:
             seen.add((strand, c["tga"]))
@@ -637,12 +642,26 @@ class Blast:
 
 def overlap_known(contig, strand, gpos, gold_g, stage1_g):
     """Known gene at a genomic TGA position (first base, lowest coordinate): gold-standard selenocysteine codon of the
-    assembly, else a stage 1 prediction whose coding sequence holds the TGA."""
+    assembly; else a stage 1 prediction whose coding sequence holds the TGA; else a TGA inside the coding span of a
+    gold-standard model ("other TGA")."""
     for gene, c, st, cds, sec in gold_g:
         if c == contig and st == strand and sec is not None and sec == gpos: return f"gold standard {gene}"
     for lo, hi, st, pid, lab, cds in stage1_g.get(contig, []):
         if st == strand and lo <= gpos < hi and any(x <= gpos < y for x, y in cds): return f"stage 1 {pid} ({lab})"
+    for gene, c, st, cds, sec in gold_g:
+        if c == contig and st == strand and min(x for x, _ in cds) <= gpos < max(y for _, y in cds):
+            return f"gold standard {gene} (other TGA)"
     return ""
+
+
+def status_of(known):
+    """Status of a candidate from its known gene: known selenoprotein codon, another codon of a known gene, a stage 1
+    prediction without selenocysteine (cysteine homologue, unaligned), or none."""
+    if not known: return "candidate"
+    k = known.split("; ")[0]
+    if "(other TGA)" in k: return "known gene, other TGA"
+    if k.startswith("stage 1") and "selenocysteine" not in k: return "stage 1 prediction without selenocysteine"
+    return "known"
 
 
 def near_known(contig, strand, h_lo, h_hi, gold_g, stage1_g, window=3000):
@@ -768,7 +787,14 @@ def screen(a):
                 if x[4] == "selenocysteine" or (g in a.heldout and x[4].startswith("selenocysteine")))
     # known genes, blastp
     for i, c in enumerate(cands): c["id"] = f"cand{i + 1}"
-    human = {k: v for k, v in read_fasta(a.human)} if os.path.exists(a.human) else {}
+    human, desc = {}, {}
+    if os.path.exists(a.human):
+        with opener(a.human) as fh:
+            for l in fh:
+                if l.startswith(">"):
+                    k, _, d = l[1:].strip().partition(" ")
+                    desc[k] = re.sub(r" \[Homo sapiens\]$", "", d)
+        human = {k: v for k, v in read_fasta(a.human)}
     hb = Blast(human, a.work, "human").search({c["id"]: c["protein"] for c in cands}, a.evalue, a.cpus) if human else {}
     gb = Blast(gold_prot, a.work, "gold").search({c["id"]: c["protein"] for c in cands}, a.evalue, a.cpus) if gold_prot else {}
     for c in cands:
@@ -778,22 +804,31 @@ def screen(a):
             known = overlap_known(c["contig"], c["genomic_strand"], c["genomic_tga"], gold.get(g, []), stage1.get(g, {}))
             if c.get("annotated_sec") == "yes": known = (known + "; " if known else "") + "annotated selenocysteine"
         h = gb.get(c["id"])
-        if not known and h and h[0].split(".", 1)[0] == g and h[2] >= a.known_identity and h[4] == "U":
-            known = f"gold standard {h[0].split('.', 1)[1]} (protein)"
-        c["known"] = known
+        if not known and g in DIOICA and h and h[2] >= a.known_identity:   # transcripts without genome positions
+            gene = h[0].split(".", 1)[1]
+            known = f"gold standard {gene} (protein)" if h[4] == "U" else f"gold standard {gene} (protein, other TGA)"
+        c["known"], c["status"] = known, status_of(known)
         if c.get("partner_site"):
             pg, pc, pst, pp = c["partner_site"]
             c["partner_known"] = overlap_known(pc, pst, pp, gold.get(pg, []), stage1.get(pg, {}))
         c["gold_hit"] = f"{h[0]} ({h[2]:.0f}%, U aligned to {h[4]})" if h else ""
         hh = hb.get(c["id"])
-        c["human_hit"] = f"{hh[0]} (E={hh[1]:.1e}, {hh[2]:.0f}%, U aligned to {hh[4]})" if hh else ""
-    # O. dioica candidates grouped across assemblies
-    dio = [c for c in cands if c["genome"] in DIOICA and c["model"] == "oikopleura"]
-    groups = group_candidates(dio, a)
-    for c in cands: c["assemblies"] = groups.get(c["id"], "")
+        c["human_hit"] = f"{hh[0]} {desc.get(hh[0], '')} (E={hh[1]:.1e}, {hh[2]:.0f}%, U aligned to {hh[4]})" if hh else ""
+    # other frames of a transcript that holds a known selenoprotein codon
+    with_known = {(c["genome"], c["source"], c["model"], c["sequence"]) for c in cands
+                  if c["screen"] == "transcript" and c["status"] == "known"}
+    for c in cands:
+        if c["status"] == "candidate" and c["screen"] == "transcript" and (c["genome"], c["source"], c["model"], c["sequence"]) in with_known:
+            c["status"] = "other frame of a known transcript"
+    # candidates of the same gene in other O. dioica assemblies and in other species
+    groups, other_species = group_candidates([c for c in cands if c["genome"] not in CONTROLS], a)
+    for c in cands:
+        c["assemblies"] = groups.get(c["id"], "")
+        c["other_species"] = other_species.get(c["id"], "")
     cols = ["id", "screen", "genome", "source", "model", "sequence", "strand", "secis_from", "secis_to", "bits",
             "evalue", "rank", "class", "start_kind", "before", "after", "codons", "distance", "longest_orf",
-            "contig", "genomic_tga", "known", "gold_hit", "human_hit", "assemblies", "partner", "partner_known", "protein"]
+            "contig", "genomic_tga", "gene", "status", "known", "gold_hit", "human_hit", "assemblies", "other_species",
+            "partner", "partner_known", "protein"]
     for c in cands:
         if c["genomic_tga"] != "": c["genomic_tga"] += 1     # 1-based in the table
     with open(f"{a.tables}/stage2_uga_screen.tsv", "w") as o:
@@ -802,22 +837,28 @@ def screen(a):
     # summary per genome, source and model
     def gene_of(c):
         k = c["known"].split("; ")[0]
-        if k.startswith("gold standard"): return k.split()[2]
-        if k == "annotated selenocysteine": return c.get("gene") or c["sequence"]
-        return k.split()[2] if k.startswith("stage 1") else k
+        if k.startswith("gold standard"): return "gold:" + k.split()[2]
+        if k == "annotated selenocysteine": return "annotated:" + (c.get("gene") or c["sequence"])
+        if "annotated selenocysteine" in c["known"] and c.get("gene"): return "annotated:" + c["gene"]
+        return "stage1:" + k.split()[2] if k.startswith("stage 1") else k
     with open(f"{a.tables}/stage2_uga_screen_summary.tsv", "w") as o:
         o.write("genome\tsource\tmodel\tsequences\tsequences with a SECIS hit (comparative: hits at the threshold)\t"
-                "sequences with a frame (comparative: regions with an alignment to another species)\tcandidates\tinternal\t"
-                "C-terminal\tknown\tknown genes recovered\treference genes\tother candidates\n")
+                "sequences with a frame (comparative: regions with an alignment to another species)\tframes\tknown\t"
+                "known genes recovered\treference genes\tknown gene, other TGA\tother frame of a known transcript\t"
+                "stage 1 prediction without selenocysteine\tcandidates\tcandidates in another species\n")
         keys = list(stats) + [k for k in dict.fromkeys((c["genome"], c["source"], c["model"]) for c in cands) if k not in stats]
         for k in keys:
             cs = [c for c in cands if (c["genome"], c["source"], c["model"]) == k]
-            kn = [c for c in cs if c["known"]]
-            ref = len(gold.get(k[0], [])) if k[0] in DIOICA else refgenes.get(k, "")
+            kn = [c for c in cs if c["status"] == "known"]
+            if k[0] in DIOICA: rec, ref = {x for x in map(gene_of, kn) if x.startswith("gold:")}, len(gold.get(k[0], []))
+            elif k[0] in CONTROLS: rec, ref = {x for x in map(gene_of, kn) if x.startswith("annotated:")}, refgenes.get(k, "")
+            else: rec, ref = {x for x in map(gene_of, kn) if x.startswith("stage1:")}, refgenes.get(k, "")
+            n = collections.Counter(c["status"] for c in cs)
             o.write(f"{k[0]}\t{k[1]}\t{k[2]}\t{stats[k].get('sequences', '')}\t"
                     f"{stats[k].get('with SECIS', stats[k].get('SECIS hits', ''))}\t{stats[k].get('with a frame', '')}\t{len(cs)}\t"
-                    f"{sum(c['class'] == 'internal' for c in cs)}\t{sum(c['class'] == 'C-terminal' for c in cs)}\t"
-                    f"{len(kn)}\t{len({gene_of(c) for c in kn})}\t{ref}\t{len(cs) - len(kn)}\n")
+                    f"{n['known']}\t{len(rec)}\t{ref}\t{n['known gene, other TGA']}\t{n['other frame of a known transcript']}\t"
+                    f"{n['stage 1 prediction without selenocysteine']}\t{n['candidate']}\t"
+                    f"{sum(1 for c in cs if c['status'] == 'candidate' and c['other_species'])}\n")
     print(f"{len(cands)} candidates", flush=True)
     # genome-scan hits at or above the threshold, with the nearest known gene upstream and their candidates
     idx = collections.defaultdict(list)
@@ -840,20 +881,40 @@ def screen(a):
 
 
 def group_candidates(cands, a):
-    """Assemblies holding a matching candidate (blastp identity >= group_identity, E <= 1e-10), for each candidate:
-    id -> "OKI,OSKA,OdB3"."""
-    if not cands: return {}
+    """For each candidate: the O. dioica assemblies holding a matching candidate (blastp identity >= --group-identity,
+    E <= 1e-10), and the other species holding a candidate whose U aligns to its U (blastp E <= --cmp-evalue, local
+    alignment BLOSUM62). Returns two dicts id -> "genome,genome"."""
+    if not cands: return {}, {}
+    from Bio import Align
+    from Bio.Align import substitution_matrices
+    al = Align.PairwiseAligner(mode="local", substitution_matrix=substitution_matrices.load("BLOSUM62"),
+                               open_gap_score=-11, extend_gap_score=-1)
     seqs = {c["id"]: c["protein"].rstrip("*") for c in cands}
+    genome = {c["id"]: c["genome"] for c in cands}
     b = Blast(seqs, a.work, "candidates")
     with open(f"{b.dir}/q.faa", "w") as o:
-        for k, s in seqs.items(): o.write(f">{k}\n{s.replace('U', 'X')}\n")
-    pairs = collections.defaultdict(set)
-    for l in run(["blastall", "-p", "blastp", "-d", "db.faa", "-i", "q.faa", "-e", "1e-10", "-m", "8", "-a",
-                  str(a.cpus), "-v", "50", "-b", "50"], b.dir).splitlines():
+        for k, v in seqs.items(): o.write(f">{k}\n{v.replace('U', 'X')}\n")
+    same, other = collections.defaultdict(set), collections.defaultdict(set)
+    checked = {}
+    for l in run(["blastall", "-p", "blastp", "-d", "db.faa", "-i", "q.faa", "-e", str(a.cmp_evalue), "-m", "8", "-a",
+                  str(a.cpus), "-v", "100", "-b", "100"], b.dir).splitlines():
         f = l.split("\t")
-        if float(f[2]) >= a.group_identity: pairs[f[0]].add(f[1])
-    genome = {c["id"]: c["genome"] for c in cands}
-    return {k: ",".join(sorted({genome[x] for x in pairs[k] | {k}}, key=DIOICA.index)) for k in seqs}
+        q, t, ident, ev = f[0], f[1], float(f[2]), float(f[10])
+        if q == t: continue
+        if species(genome[q]) == species(genome[t]):
+            if genome[q] in DIOICA and genome[t] in DIOICA and ident >= a.group_identity and ev <= 1e-10: same[q].add(genome[t])
+        elif (q, t) not in checked:
+            x, y = seqs[q], seqs[t]
+            ok = False
+            if "U" in x and "U" in y:
+                aln = al.align(x.replace("U", "X"), y.replace("U", "X"))[0]
+                ux, uy = x.index("U"), y.index("U")
+                ok = any(q0 <= ux < q1 and t0 + ux - q0 == uy for (q0, q1), (t0, t1) in zip(*aln.aligned))
+            checked[(q, t)] = ok
+            if ok: other[q].add(genome[t])
+    order = lambda gs: sorted(gs, key=lambda g: (OIKOPLEURA + HELDOUT).index(g) if g in OIKOPLEURA + HELDOUT else 99)
+    return ({k: ",".join(order(same[k] | {genome[k]})) for k in seqs if genome[k] in DIOICA},
+            {k: ",".join(order(other[k])) for k in seqs if other[k]})
 
 
 def main():
@@ -879,6 +940,8 @@ def main():
     ap.add_argument("--cmp-bits", type=float, default=None, help="comparative threshold for all genomes (default: per genome)")
     ap.add_argument("--cmp-fp", type=float, default=100.0, help="expected false regions per genome at the comparative threshold")
     ap.add_argument("--min-codons", type=int, default=40)
+    ap.add_argument("--min-before", type=int, default=10, help="codons before the TGA in the transcript screen (the "
+                    "spliced leader of O. dioica mRNAs holds a TGA in one frame; the earliest known selenocysteine is codon 13)")
     ap.add_argument("--internal", type=int, default=10)
     ap.add_argument("--upstream", type=int, default=5000)
     ap.add_argument("--cmp-evalue", type=float, default=1e-5)
