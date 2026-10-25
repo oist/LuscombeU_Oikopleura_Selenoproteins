@@ -50,8 +50,9 @@ screen (light; reads the outputs of scan):
     gold-standard protein of any of the three assemblies. Status of each frame: "known" (the selenocysteine codon of a
     known gene), "known gene, other TGA" (another TGA of a gold-standard gene), "stage 1 prediction without
     selenocysteine" (cysteine homologues and others), "other frame of a known transcript", "homolog of a known
-    selenoprotein" (partner of the comparative screen at a known selenocysteine codon, or U aligned to the U of a
-    gold-standard or human selenoprotein), or "candidate".
+    selenoprotein" (partner of the comparative screen at a known selenocysteine codon or at such a homolog, or U
+    aligned to the U of a gold-standard or human selenoprotein), "upstream of the SECIS of a known gene" (comparative
+    screen: a known selenoprotein gene ends at most 3 kb before the SECIS hit), or "candidate".
     Candidates of the same gene are listed across the O. dioica assemblies (blastp identity >= --group-identity,
     E <= --cmp-evalue) and in the other species (blastp E <= --cmp-evalue with the U of both aligned; U read as C).
 Outputs: work in --work; tables stage2_secis_scan_summary.tsv (hits per genome, real and shuffled, by score),
@@ -829,6 +830,21 @@ def screen(a):
         h, hh = gb.get(c["id"]), hb.get(c["id"])
         if status_of(c.get("partner_known", "")) == "known" or (h and h[4] == "U") or (hh and hh[4] == "U"):
             c["status"] = "homolog of a known selenoprotein"
+    # ... and those whose partner is itself such a copy (SELENOK of O. vanhoeffeni through that of O. albicans)
+    site = {(c["genome"], c["contig"], c["strand"], c["genomic_tga"]): c for c in cands if c["screen"] == "comparative"}
+    for _ in range(3):
+        for c in cands:
+            p = site.get(c.get("partner_site"))
+            if c["status"] == "candidate" and p and p["status"] in ("known", "homolog of a known selenoprotein"):
+                c["status"] = "homolog of a known selenoprotein"
+    # comparative candidates upstream of the SECIS of a known selenoprotein gene (its coding sequence ends at most
+    # 3 kb before the SECIS hit, and the TGA is not in it): the SECIS belongs to that gene
+    seleno1 = {g: {k: [x for x in v if x[4].startswith("selenocysteine")] for k, v in d.items()} for g, d in stage1.items()}
+    for c in cands:
+        if c["status"] != "candidate" or c["screen"] != "comparative": continue
+        x, y = c["secis_from"], c["secis_to"]
+        if near_known(c["contig"], c["strand"], min(x, y) - 1, max(x, y), gold.get(c["genome"], []), seleno1.get(c["genome"], {})):
+            c["status"] = "upstream of the SECIS of a known gene"
     # candidates of the same gene in other O. dioica assemblies and in other species
     groups, other_species = group_candidates([c for c in cands if c["genome"] not in CONTROLS], a)
     for c in cands:
@@ -854,8 +870,8 @@ def screen(a):
         o.write("genome\tsource\tmodel\tsequences\tsequences with a SECIS hit (comparative: hits at the threshold)\t"
                 "sequences with a frame (comparative: regions with an alignment to another species)\tframes\tknown\t"
                 "known genes recovered\treference genes\tknown gene, other TGA\tother frame of a known transcript\t"
-                "stage 1 prediction without selenocysteine\thomolog of a known selenoprotein\tcandidates\t"
-                "candidates in another species\n")
+                "stage 1 prediction without selenocysteine\thomolog of a known selenoprotein\t"
+                "upstream of the SECIS of a known gene\tcandidates\tcandidates in another species\n")
         keys = list(stats) + [k for k in dict.fromkeys((c["genome"], c["source"], c["model"]) for c in cands) if k not in stats]
         for k in keys:
             cs = [c for c in cands if (c["genome"], c["source"], c["model"]) == k]
@@ -867,7 +883,8 @@ def screen(a):
             o.write(f"{k[0]}\t{k[1]}\t{k[2]}\t{stats[k].get('sequences', '')}\t"
                     f"{stats[k].get('with SECIS', stats[k].get('SECIS hits', ''))}\t{stats[k].get('with a frame', '')}\t{len(cs)}\t"
                     f"{n['known']}\t{len(rec)}\t{ref}\t{n['known gene, other TGA']}\t{n['other frame of a known transcript']}\t"
-                    f"{n['stage 1 prediction without selenocysteine']}\t{n['homolog of a known selenoprotein']}\t{n['candidate']}\t"
+                    f"{n['stage 1 prediction without selenocysteine']}\t{n['homolog of a known selenoprotein']}\t"
+                    f"{n['upstream of the SECIS of a known gene']}\t{n['candidate']}\t"
                     f"{sum(1 for c in cs if c['status'] == 'candidate' and c['other_species'])}\n")
     print(f"{len(cands)} candidates", flush=True)
     # genome-scan hits at or above the threshold, with the nearest known gene upstream and their candidates

@@ -899,3 +899,16 @@ no earlier step waits for them.
   (partner at a known selenocysteine codon, or U aligned to the U of a gold-standard or human selenoprotein), so
   that "candidate" holds only proteins of no known selenoprotein family; --known-identity lowered to 80 % (an OSKA2016
   SELENOW_pair1 transcript at 89 % was a candidate).
+- Step 4, third make uga-screen (2026-10-25, commit d2c5bfb): candidates supported in another species (U aligned to
+  U) are only the KKSU family (all O. dioica sets and O. albicans) and the M. erythrocephalus/B. stygius repeat. The
+  transcript screen also finds TXNL1 (thioredoxin-like protein 1, best human hit NP_004777.1, 40-41 % identity) in
+  all three O. dioica assemblies at the codon of curation/candidates.tsv (OKI2018 NC_137292.1:13041527, OSKA2016
+  S27:260385, OdB3 FN653019.1:362479): a 168-codon frame ending ...KKVGUG and a stop codon, SECIS 29.0-31.8 bits in
+  the annotation transcripts (23.6-31.8 bits in the transcript assemblies), 67-95 nt after the stop codon. By the
+  rule fixed in advance for step 5 (SECIS above background in the three assemblies, TGA conserved), it qualifies;
+  its other species are to check in step 5. A weaker case: CPLANE2-like (best human hit NP_112169.2, ciliogenesis and
+  planar polarity effector 2), C-terminal TGA, SECIS 37.6-42.8 bits, in OSKA2016 and OdB3 only.
+  Classification changes: homolog status propagated through the partner of the comparative screen (SELENOK of
+  O. vanhoeffeni through that of O. albicans); comparative candidates upstream of the SECIS of a known selenoprotein
+  gene (its coding sequence ends at most 3 kb before the hit; for example a TGA of the gene upstream of OSKA2016
+  GPX_chr1a, whose SECIS scores 59.1 bits) get the status "upstream of the SECIS of a known gene".
