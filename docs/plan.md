@@ -921,3 +921,15 @@ no earlier step waits for them.
   labelled unaligned), NC_137295.1:2369276 (30.1 bits) and the step-3 locus NC_137291.1:11878408 (28.1 bits).
   Provisional Results and Methods written (section "UGA/SECIS screens outside the known families"). Next: step 5
   (TXNL1; the KKSU family in the other species and other databases).
+- Step 5 started (2026-10-26): stage2/candidate_genes.py (make candidate-genes). Candidates in curation/candidates.tsv
+  (TXNL1; KKSU, the family of step 4, provisional name after its C-terminus, rows for OKI2018, OSKA2016, OdB3 and
+  O. albicans) and curation/candidates.faa (the OKI2018 frames of the screen, and the O. albicans KKSU open stretch).
+  (1) The rule fixed in advance for TXNL1, applied to both: TGA at the curated position and a SECIS of at least
+  20 bits (Oikopleura model, 2 kb after the next stop codon) in the three O. dioica assemblies -> counted, otherwise
+  candidate; the genome thresholds of step 4 given for comparison. (2) tblastn against the six Oikopleura assemblies,
+  the three held-out appendicularians, the ten other tunicates and the two amphioxus: best locus, codon aligned to the
+  U (read beyond the alignment end when it stops at most 5 codons before the U, flagged), codons to the next stop,
+  SECIS after it (Oikopleura model and RF00031). (3) blastp against the RefSeq proteomes (vertebrates, tunicates,
+  amphioxus): residue aligned to the U and length after it. Local test (OKI2018 chromosome 2 and OdB3 FN653019.1):
+  contexts of candidates.tsv reproduced (MSELKKVGUG*APS; KKSU NWKPGKKSU*MLY); SECIS OKI2018 TXNL1 31.0 bits, OdB3
+  29.0, OKI2018 KKSU 36.6.

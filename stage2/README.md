@@ -210,6 +210,15 @@ predictions and the annotated selenocysteines of the controls. Tested on a reduc
 gold-standard genes: all found by the transcript screen; the comparative test, OdB3 standing in for another
 species, found the five genes present in both).
 
+## Candidate genes (`candidate_genes.py`, `make candidate-genes`)
+
+Step 5 of the plan of 2026-10-24. Candidates: `curation/candidates.tsv` and `curation/candidates.faa` (TXNL1; the
+KKSU family of step 4). The rule fixed in advance for TXNL1, applied to every candidate: TGA at the curated position
+and a SECIS of at least 20 bits (Oikopleura model) in the 2 kb after the next stop codon, in the three *O. dioica*
+assemblies; then tblastn against the appendicularian, tunicate and amphioxus genomes (codon aligned to the
+selenocysteine, codons to the next stop, SECIS after it with both models) and blastp against the RefSeq proteomes.
+Tested on OKI2018 chromosome 2 and the OdB3 TXNL1 contig (contexts of `candidates.tsv` reproduced).
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences

@@ -7,7 +7,7 @@ Baseline of the three *O. dioica* assemblies, written as data:
 | `baseline_sec_genes.tsv` | 18 Sec genes per assembly: Sec codon (lowest coordinate of the TGA), strand, Sec context of the protein alignment, status (`sec`, `uncertain`), notes on assembly errors |
 | `machinery_pstk.tsv` | PSTK protein alignment spans (RefSeq model truncated in OKI2018) |
 | `machinery_proteins.faa` | curated *O. dioica* machinery proteins from transcripts, added to the appendicularian Selenoprofiles profiles (header: family, genome, source): PSTK from the OKI2018 Trinity transcriptome and from the OSKA2016 transcript assembly; SEPHS2, with its Sec, from the OSKA2016 transcript assembly |
-| `candidates.tsv` | candidate Sec genes not counted in the baseline (thioredoxin-like protein 1) |
+| `candidates.tsv`, `candidates.faa` | candidate selenoprotein genes not in the baseline: thioredoxin-like protein 1 (TXNL1) and the family found by the UGA/SECIS screens of step 4 (provisional name KKSU, after its C-terminus), with their codons in each assembly; their proteins (U for the candidate selenocysteine), queries of `make candidate-genes` |
 
 The Sec codons were placed by aligning curated reference proteins and checking the Sec context; transcripts and
 cross-assembly comparison support them (see the stage 1 tables). Assembly errors are recorded, not corrected.
