@@ -337,11 +337,20 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     glob = Align.PairwiseAligner(mode="global", substitution_matrix=substitution_matrices.load("BLOSUM62"),
                                  open_gap_score=-10, extend_gap_score=-0.5)
     glob.end_insertion_score = glob.end_deletion_score = 0
-    axis_label = next(k for k, v in d["refs"].items() if v.get("axis") == "yes")
-    axis = d["seqs"][axis_label]
-    secpos = [int(p) for p in d["refs"][axis_label].get("selenocysteine", "").split(",") if p]
+    axis_label = next((k for k, v in d["refs"].items() if v.get("axis") == "yes"), None)
+    first = next(g for g in GENOMES if g in d["gprot"])
+    if axis_label is None:   # no reference protein of another lineage: the first gold-standard protein is the axis
+        axis = d["gprot"][first]
+        secpos = [i + 1 for i, c in enumerate(axis) if c == "U"]
+        ref_domains = []
+        axis_name = f"{rf.NAMES[first]} gold-standard"
+    else:
+        axis = d["seqs"][axis_label]
+        secpos = [int(p) for p in d["refs"][axis_label].get("selenocysteine", "").split(",") if p]
+        ref_domains = d["refs"][axis_label]["domains"]
+        axis_name = axis_label
     doms = []
-    for s in d["refs"][axis_label]["domains"]:
+    for s in ref_domains:
         acc, span, name = s.split(":", 2)
         d0, d1 = map(int, span.split("-"))
         doms.append((d0, d1, name))
@@ -350,8 +359,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         rows.append((refs_y[lbl], d["seqs"][lbl], "black", lbl, rf.protein_map(d["seqs"][lbl], axis, al)))
     # the gold-standard proteins of the other assemblies go through the first one (global alignment), so that the
     # three, nearly identical, are drawn alike where their similarity to the reference is low
-    first = next(g for g in GENOMES if g in d["gprot"])
-    m_first = rf.protein_map(d["gprot"][first], axis, al)
+    m_first = rf.protein_map(d["gprot"][first], axis, al) if axis_label else {i: i + 1 for i in range(len(axis))}
     if not secpos:   # first reference without selenocysteine (a cysteine homolog): the residue aligned to the gold U
         secpos = [m_first[i] for i, c in enumerate(d["gprot"][first]) if c == "U" and i in m_first]
     for k, g in enumerate(GENOMES):
@@ -405,7 +413,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     ax.set_xticks(range(0, len(axis) + 1, step))
     ax.set_yticks([]); [ax.spines[s].set_visible(False) for s in ("left", "right", "top")]
     ax.tick_params(axis="x", pad=1)
-    ax.set_xlabel(f"residue of the {axis_label} protein", fontsize=5, labelpad=1)
+    ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
 def key(fig, used_sites):

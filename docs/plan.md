@@ -955,3 +955,9 @@ no earlier step waits for them.
   - Defect: tblastn found no hit at all in S. clava, B. schlosseri, P. mammillata and B. floridae, although blastp finds
     TXNL1 in the S. clava and B. schlosseri proteomes (E 1e-38, 8e-31): to diagnose (their cached rows.json must be
     removed before a rerun).
+- Baseline decision on TXNL1 and KKSU deferred (2026-10-26, Charles: see their reannotation plots first). Prepared:
+  curation/baseline_candidates.tsv (the two genes in the format of the baseline, status "candidate") and make
+  gold-candidates (curation/gold_standard.py on them, outputs in curation/gold_candidates and
+  results/tables/gold_candidates.tsv, the baseline and its gold standard untouched); figures/reannotation_inputs.py
+  takes no UniProt reference if none exists (KKSU), and figures/reannotation_page.py then uses the first
+  gold-standard protein as the axis of the protein panel.

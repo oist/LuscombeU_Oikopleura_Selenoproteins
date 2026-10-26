@@ -133,7 +133,8 @@ def main():
     ap.add_argument("--gold", default="curation/gold_standard")
     ap.add_argument("--genome", nargs="*", default=[], help="genome=FASTA of the contigs (to locate RefSeq proteins)")
     ap.add_argument("--embl", nargs="*", default=[], help="EMBL accessions of OdB3 contigs (GenBank models)")
-    ap.add_argument("--reference", nargs="+", required=True, help="label=UniProt accession; the first gives the axis")
+    ap.add_argument("--reference", nargs="*", default=[], help="label=UniProt accession; the first gives the axis "
+                    "(without one, the page uses the first gold-standard protein as axis)")
     ap.add_argument("--reference-fasta", nargs="*", default=[],
                     help="label=FASTA:sequence name:accession, for a reference protein without UniProt entry (gaps removed; "
                          "X read as selenocysteine, as in the Selenoprofiles outputs)")
