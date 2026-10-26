@@ -1004,3 +1004,30 @@ no earlier step waits for them.
   candidate_genes.py: the proteome residue aligned to the U is also read at the same offset beyond the end of the
   local alignment when it stops fewer than --extend (5) residues before the U (column residue_note "extended"), as in
   the figure (human TXNL1 G283). To do: make candidate-genes (the genome searches are cached).
+- SECIS model description (2026-10-27; stage2/secis_model_description.py, figures/secis_model_figures.py, make
+  secis-description; repository files only). Seeds: 76 from 10 families and 6 species; median identity 0.45 over the
+  consensus positions; 25 of 2,850 pairs >= 0.7 (23 O. dioica orthologs, 0.72-0.91; two GPX paralog pairs in Oalb
+  and Ovan); 54 groups at 0.7, largest 3 (training already dropped seeds >= 90% identical). Structure: helix 1 (5 bp),
+  internal loop with UGA (5') and GA (3') in all seeds, helix 2 (10 bp), AAA in a 5-nt loop below helix 3 (3 bp) in
+  all seeds: the form 2 arrangement (Grundner-Culemann 1999). Pairing in the seed alignment (83/83/94% canonical,
+  MI q < 0.05 at 18/18 pairs) is matched by decoys aligned to the same model (83/78/88%, 12/18 pairs): the alignment
+  makes these statistics, so R-scape on the seeds would not test conservation (non-homologous sequences aligned to
+  the model); R-scape was not run (building it here was refused; not needed). Evidence instead from the orthologous
+  SECIS of the three O. dioica assemblies aligned by sequence: single changes from a canonical pair kept it 18/27
+  (expected 0.29 with the transition rate of unpaired positions; p = 5.5e-5), double changes 10/11 (expected 0.43;
+  p = 0.0015); core motif positions never changed (152 comparisons), paired 18% and other unpaired 28% of positions
+  differ; same with OSKA or OdB3 as reference. Genome scans at the genome threshold, by class: O. dioica 10 of 74 hits
+  without a gene upstream (28.1-36.9 bits; 2.4 expected), 4 of them 0.8-1.4 kb upstream of the TXNL1 codon in the
+  three assemblies; other Oikopleura 21 of 64 (33.0-46.7 bits; 1.8 expected), some in pairs as from repeats; held-out
+  7 of 12; non-target tunicates 3 of 12 (the other 9 after stage 1 selenoproteins: the step 4 sentence "the model does
+  not recognise" corrected). Controls: human selenoprotein mRNAs up to 31.5 bits, others up to 22.8; C. intestinalis
+  37.3 and 28.3. Manuscript: two paragraphs on the model, Figures SECIS-MODEL and SECIS-SCORES, Methods "Description of
+  the SECIS model"; references Walczak1996, GrundnerCulemann1999, Rivas2017.
+- TXNL1 and KKSU SECIS in training? Assessment (2026-10-27): they have the motifs and helix 3 of the seeds, score
+  29.0-36.6 bits (lower half of the training windows, 25.6-59.1), and are as distant from the seeds (nearest 0.61-0.68)
+  as seeds of different genes (median 0.62): they would add two families (6 of 117 windows). Against: both were
+  found by this model (self-reinforcement; their family folds would not be independent), and retraining changes
+  every model-dependent number (steps 3 to 5). Proposal: not now; include them in one final rebuild if stage 2 adds
+  genes. To examine: the 31 Oikopleura genome-threshold hits without a gene upstream (results/tables/
+  stage2_secis_scan_classes.tsv): repeats, missed selenoprotein genes, other frames; and the conserved hits upstream
+  of TXNL1.

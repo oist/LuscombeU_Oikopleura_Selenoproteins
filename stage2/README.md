@@ -210,6 +210,21 @@ predictions and the annotated selenocysteines of the controls. Tested on a reduc
 gold-standard genes: all found by the transcript screen; the comparative test, OdB3 standing in for another
 species, found the five genes present in both).
 
+## Description of the SECIS model (`secis_model_description.py`, `make secis-description`)
+
+Reads repository files only (the model, its seeds, the gold-standard windows after the stop codons, the training
+window table). Seeds realigned with `cmalign`: identities over the consensus positions and single-linkage groups at
+0.7; per consensus position, residue counts; per base pair, canonical pairs, pair types and mutual information with
+a permutation p-value over one seed per group. The same pair statistics for decoys (best hits of the model in 20
+dinucleotide-shuffled copies of each gold-standard window, `cmsearch --max`, the 76 best), because a structural
+alignment gives complementary bases to sequences that are not SECIS elements. Changes between the orthologous SECIS
+hits of the three *O. dioica* assemblies, aligned by sequence to the OKI2018 hit (`--reference-genome`), counted by
+three-taxon parsimony and compared with the fraction of new bases that would keep a canonical pair (transition rate
+from the other unpaired positions). The SECIS hits of TXNL1 and KKSU (not in training) are described as the seeds.
+cmsearch tables are cached in `work/stage2/secis_model_description/` (the decoy search takes about 6 minutes with
+8 CPUs). Figures: `figures/secis_model_figures.py` (also classes the genome-scan hits at the genome threshold,
+`results/tables/stage2_secis_scan_classes.tsv`).
+
 ## Candidate genes (`candidate_genes.py`, `make candidate-genes`)
 
 Step 5 of the plan of 2026-10-24. Candidates: `curation/candidates.tsv` and `curation/candidates.faa` (TXNL1; the

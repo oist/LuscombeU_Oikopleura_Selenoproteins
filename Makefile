@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen candidate-genes selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description candidate-genes selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -184,6 +184,12 @@ uga-screen:
 # genomes (codon at the selenocysteine position, SECIS after the stop codon) and blastp against RefSeq proteomes
 # (about an hour), for example
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=6:00:00 scripts/run_in_container.sh make candidate-genes
+# Description of the Oikopleura SECIS model (seeds, base pairs against decoys, changes between O. dioica orthologs)
+# and its scores in genomes and controls (reads repository files only; about 7 minutes with 8 CPUs)
+secis-description:
+	python3 stage2/secis_model_description.py
+	python3 figures/secis_model_figures.py
+
 candidate-genes:
 	python3 stage2/candidate_genes.py --jobs 4
 

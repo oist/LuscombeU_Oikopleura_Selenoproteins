@@ -469,8 +469,52 @@ SECIS elements in the 3′ windows of genes: at that score, about one evaluation
 in 1,500 passed in the species folds (3 of 4,691). Scans of whole genomes call for a threshold set on genome-wide background
 (Stage 2).
 
+The 76 seeds come from ten families (GPX 23, SELENOW 19, DIO 12, SEPHS2 6, SELENOF 4, TXNRD 4, and 2 each of
+SELENOK, SELENOO, SELENOS and SELENOT) and are diverse (Figure SECIS-MODEL B): over the consensus positions, the
+median identity between two seeds is 0.45 (quartiles 0.40 and 0.49), and only 25 of the 2,850 pairs reach 0.7, 23 of
+them the same gene in two *O. dioica* assemblies (0.72 to 0.91) and two pairs of GPX copies of *O. albicans* and
+*O. vanhoeffeni*. Clustered at 0.7, the seeds form 54 groups, the largest of three (the same gene in the three
+*O. dioica* assemblies). Training dropped seeds at least 90% identical to another (Methods), so that the absence of
+near-identical groups is partly by construction. The model has 66 consensus positions and 18 base pairs in three
+helices (Figure SECIS-MODEL A), as RF00031 has 64 and 18. Between helices 1 and 2, all seeds have UGA on the 5′
+strand and GA on the 3′ strand of the internal loop, the conserved bases of the non-Watson–Crick pairs that form the
+base of helix 2 in mammalian SECIS elements [@Walczak1996]; between helices 2 and 3, all have AAA, in a loop of five
+nucleotides on the 5′ side below helix 3 (three pairs, at least two of them canonical in 72 seeds). This is the
+arrangement of form 2 SECIS elements, in which an additional helix lies above the unpaired adenosines
+[@GrundnerCulemann1999]; no seed has its only AAR motif in the apical loop, as form 1 elements have. Since the seeds
+were selected through the model, these features describe what the model recognises, not all appendicularian SECIS
+elements.
+
+Pairing in the seeds does not by itself show that the structure is conserved, because the alignment to a covariance
+model favours complementary bases. In the seed alignment, 83%, 83% and 94% of the bases of helices 1, 2 and 3 form
+canonical pairs (Watson–Crick or G·U), and the mutual information between the two columns of each of the 18 pairs is
+above that of permuted columns (q < 0.05; one seed per group of the clustering). The best hits of the model in
+dinucleotide-shuffled windows (decoys; 76 hits of 12.6 to 25.2 bits), aligned in the same way, reach 83%, 78% and
+88% (Figure SECIS-MODEL C), with mutual information above permutation at 12 of the 18 pairs; they differ more from
+the seeds in the motifs: 70, 56 and 21 of the 76 decoys have the UGA, the GA and an AAR motif at those positions. Covariation tests such as R-scape
+[@Rivas2017] are meant for homologous sequences aligned independently of the structure; the seeds belong to
+different genes and were aligned to the model. The orthologous SECIS elements of the three *O. dioica* assemblies,
+aligned by sequence, offer such a test (Methods). In 19 genes, 18 of the 27 single-base changes from a canonical pair
+kept a canonical pair, against 29% expected if the new base were random (with the fraction of transitions, 0.39,
+observed at the other unpaired positions; binomial p = 5.5 × 10^-5^), and 10 of the 11 changes at both bases of a
+canonical pair kept one (expected 43%; p = 0.0015). The motifs did not change in any of the 152 comparisons of their
+positions, whereas 18% of the paired positions and 28% of the other unpaired positions differed between assemblies
+(Figure SECIS-MODEL D). The base pairs of the model are therefore maintained in the evolution of *O. dioica* SECIS
+elements, and the motifs are invariant.
+
+Figure SECIS-MODEL (`figures/secis_model.pdf`). The *Oikopleura* SECIS model. A, consensus sequence and structure of
+the 76 seeds: arcs, base pairs, coloured by the fraction of seeds with a canonical pair; letters shaded by the
+fraction of seeds with the most frequent residue (bold, at least 90%); bars, helices and motifs. B, identity between
+two seeds over the consensus positions, for all pairs of seeds and for those of the same gene in two *O. dioica*
+assemblies (log scale). C, fraction of canonical pairs at each base pair in the seeds and in decoys (the best hits
+of the model in dinucleotide-shuffled windows), aligned to the model in the same way. D, changes between the
+orthologous SECIS elements of the three *O. dioica* assemblies at the base pairs of the model: fraction of single and
+double changes from a canonical pair that keep a canonical pair, observed and expected for random new bases
+(binomial test); below, fraction of positions that differ between the assemblies.
+
 <!-- Figure SECIS-2 shows the first model; to redraw with the new model (held-out scores of
-results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives). -->
+results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives), or replace by Figure SECIS-MODEL and
+Figure SECIS-SCORES. -->
 
 ## UGA/SECIS screens outside the known families
 
@@ -485,9 +529,32 @@ Thresholds for whole genomes were set from shuffled copies of the six *Oikopleur
 hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
 *Oikopleura* species (618 to 1,287 Mb). At these thresholds, the scans found 23, 22 and 29 hits in OKI2018, OSKA2016
 and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of one
-of the 18 known genes, and two more in each assembly after TXNL1 and KKSU, described below. In the four non-target tunicates, hits were as frequent as in their shuffled copies at every
-score (in *C. intestinalis*, 267 against 344 at 15 bits): genome-wide, the model does not recognise the SECIS
-elements of ascidians and salps.
+of the 18 known genes, and two more in each assembly after TXNL1 and KKSU, described below. In the four non-target tunicates, hits were about as frequent as in their shuffled copies at
+each score up to 30 bits (in *C. intestinalis*, 267 against 344 at 15 bits; Figure SECIS-SCORES A), but 9 of their 12
+hits at the genome threshold follow a stage 1 selenoprotein prediction: the model recognises some of their SECIS
+elements, at scores that background also reaches.
+
+At the genome thresholds, hits that follow no gene found by our searches remain (Figure SECIS-SCORES B): 10 of the
+74 hits of the three *O. dioica* assemblies (28.1 to 36.9 bits, where the hits after selenoprotein genes score 29.0 to
+59.1, median 40.4), against 2.4 expected false hits, and 21 of the 64 hits of the other *Oikopleura* species (33.0 to
+46.7 bits), against 1.8 expected. Four of the *O. dioica* hits lie 0.8 to 1.4 kb upstream of the TXNL1 codon in the
+three assemblies (in OSKA2016, one of them in the 5′ untranslated part of the TXNL1 transcript). In *O. albicans*, two contigs each carry two
+hits 391 and 411 nucleotides apart, and two hits of *O. vanhoeffeni* on one contig have the same score, as expected
+from repeated sequences. The held-out appendicularians have 7 such hits of their 12. In human and *C. intestinalis*
+RefSeq mRNAs, the hits of the *Oikopleura* model above which a frame through a TGA was found score up to 31.5 and
+37.3 bits for selenoprotein mRNAs and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C).
+
+<!-- To examine: the 31 Oikopleura hits at the genome threshold without a gene upstream (repeats, missed
+selenoprotein genes, other frames); results/tables/stage2_secis_scan_classes.tsv. -->
+
+Figure SECIS-SCORES (`figures/secis_scores.pdf`). Scores of the *Oikopleura* SECIS model in genomes and transcripts.
+A, hits per megabase (both strands) at or above each score in each genome (solid) and in its copy shuffled in
+windows of 1,000 nucleotides (dashed), by group of genomes. B, hits at the genome threshold (grey tick: the score
+with one expected false hit in the genome), by what lies upstream on the same strand: a selenoprotein gene (a
+gold-standard gene, or a stage 1 selenocysteine prediction for the other genomes), a copy of a known selenoprotein
+found by the comparative screen, KKSU, a stage 1 prediction without selenocysteine, or nothing found by the
+searches. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
+of 20 bits or more, for human and *C. intestinalis* mRNAs, with the *Oikopleura* model and RF00031.
 
 The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
 all 18 known genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in the OdB3
@@ -539,7 +606,11 @@ meet it. The SECIS hits score 31.0, 30.7 and 29.0 bits in OKI2018, OSKA2016 and 
 after the stop codon, and 36.6, 31.3 and 30.8 bits for KKSU, 222 to 262 nucleotides after it; all six are also at or
 above the genome thresholds of the screens (28 to 29 bits). We therefore added both genes to the baseline and built
 their gold-standard models (Figure CANDIDATES), keeping them in a figure of their own because their selenocysteine
-rests on the TGA and the SECIS hits alone, without a selenoprotein homolog in other organisms. TXNL1 encodes 168 residues in the three assemblies (four
+rests on the TGA and the SECIS hits alone, without a selenoprotein homolog in other organisms. Their SECIS elements,
+which were not among the training sequences, have the motifs of the seeds (UGA and GA in the internal loop, AAA below
+helix 3, three canonical pairs in helix 3) and differ from the seeds as much as seeds of different genes differ from
+each other (identity to the nearest seed 0.61 to 0.68; between a seed and the nearest seed that is not its ortholog,
+median 0.62, quartiles 0.59 and 0.66); in helix 3 of KKSU, OSKA2016 and OdB3 have a C·G pair where OKI2018 has U·A. TXNL1 encodes 168 residues in the three assemblies (four
 coding exons) and KKSU 68 to 70 (three coding exons). The public models with the same exon chains end at the TGA,
 read as a stop codon, except in OKI2018, where KKSU lies in the 3′ UTR of the RefSeq mRNA of a 173-residue protein
 whose best human hit is RING finger protein 11 (XM_081776455.1), as SELENOW_PAR and the SELENOW pair lie in the mRNAs
@@ -888,6 +959,31 @@ above the training threshold were counted per megabase. The final model was trai
 windows and calibrated with the default `cmcalibrate` settings. The procedure is implemented in
 `stage2/secis_model_training.py` of the analysis repository (`make secis-v2`); the model is
 `results/models/oikopleura_secis.cm`.
+
+## Description of the SECIS model
+
+The seeds of the final model were realigned to it with `cmalign`. Identity between two seeds was counted over the
+consensus positions where both have a residue, and seeds were grouped by single linkage at 0.7. For each base pair of
+the consensus structure, we counted the seeds with a canonical pair (Watson–Crick or G·U), and computed the mutual
+information between the two columns over one seed per group, with a p-value from 2,000 permutations of one column
+(Benjamini–Hochberg correction over the 18 pairs). Decoys were the best hits of the model (`cmsearch --max`, top
+strand) in 20 dinucleotide-shuffled copies [@Altschul1985] of each window after the stop codon of the gold-standard
+models; the 76 best were aligned and analysed as the seeds. For the orthologous SECIS elements of the three
+*O. dioica* assemblies, the best hit of the model in each window was found in the same way; the OKI2018 hit was
+placed on the consensus positions by `cmalign`, and the windows of OSKA2016 and OdB3 were aligned to it by sequence
+(local alignment of the hit and 50 nucleotides on each side; match 2, mismatch −3, gap opening −5, extension −2;
+Biopython [@Cock2009]), so that the structure did not guide the alignment of the orthologs. At each base pair where
+two assemblies shared a pair and the third differed, we counted one change from the shared pair (three-taxon
+parsimony). For a change from a canonical pair at one base, the probability of keeping a canonical pair was that of
+the new base being one of those that pair with the unchanged base, with transitions taking the fraction observed at
+the other unpaired positions and the two transversions half of the rest each; for a change at both bases, the sum
+over the canonical pairs of the products of these probabilities. The observed numbers of changes that kept a
+canonical pair were compared with the sums of these probabilities by one-sided binomial tests (SciPy). With
+OSKA2016 or OdB3 as reference instead of OKI2018, the conclusions were the same (single changes, 19 of 33 kept,
+p = 7 × 10^-5^; double changes, 10 of 12 and 12 of 14, p = 0.005 and 0.002). Hits of the genome scans at the genome
+threshold were classed by the gene upstream on the same strand (within 3 kb of its stop codon) and by the frames of
+the comparative screen. The procedure is `stage2/secis_model_description.py` and `figures/secis_model_figures.py` of
+the analysis repository (`make secis-description`).
 
 ## UGA/SECIS screens
 
