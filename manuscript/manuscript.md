@@ -618,9 +618,10 @@ of upstream genes.
 
 The *O. dioica* TXNL1 protein aligns with the C-terminal PITH domain of human TXNL1 (residues 120 to 283 of 289), not
 with its N-terminal thioredoxin domain, and its selenocysteine is aligned with Gly283 of the human protein; it is
-followed by one residue (...KKVGUG). The RefSeq TXNL1 proteins of vertebrates, tunicates and *Branchiostoma
-lanceolatum* (285 to 293 residues) have no selenocysteine, and the best hit in the *B. floridae* proteome, a protein of
-217 residues with a PITH domain, has a cysteine at that position. In the genomes of *O. albicans*,
+followed by one residue (...KKVGUG). In the RefSeq TXNL1 proteins of three vertebrates, five tunicates and
+*Branchiostoma lanceolatum* (285 to 293 residues), the residue at that position is a glycine followed by six
+residues; the best hit in the *B. floridae* proteome, a protein of 217 residues with a PITH domain, has a cysteine
+there, followed by 24 residues. In the genomes of *O. albicans*,
 *O. vanhoeffeni*, *M. erythrocephalus*, *F. borealis* and three salps (*Thalia democratica*, *Pegea* sp. and
 *Salpa thompsoni*), the codon aligned to the selenocysteine is a glycine codon, followed by six codons and a stop
 codon, with no SECIS hit after it (4.2 bits in *T. democratica*); in *Halocynthia roretzi* it is a tryptophan codon,
