@@ -475,7 +475,8 @@ results/tables/stage2_secis_v2_heldout.tsv against the evaluation negatives). --
 ## UGA/SECIS screens outside the known families
 
 > **Provisional section (2026-10-26, step 4 of the plan; `stage2/uga_secis_screen.py`, `make secis-scan` and
-> `make uga-screen`; `results/tables/stage2_secis_scan_*.tsv` and `stage2_uga_screen*.tsv`).**
+> `make uga-screen`; `results/tables/stage2_secis_scan_*.tsv` and `stage2_uga_screen*.tsv`; run of 2026-10-26 with
+> the 20 gold-standard genes).**
 
 To look for selenoproteins outside the families known from other organisms, we searched genomes and transcripts for
 SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them (Methods).
@@ -483,27 +484,28 @@ SECIS elements with the *Oikopleura* model, then for reading frames through a TG
 Thresholds for whole genomes were set from shuffled copies of the six *Oikopleura* assemblies, at one expected false
 hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
 *Oikopleura* species (618 to 1,287 Mb). At these thresholds, the scans found 23, 22 and 29 hits in OKI2018, OSKA2016
-and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of a
-gold-standard gene. In the four non-target tunicates, hits were as frequent as in their shuffled copies at every
+and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of one
+of the 18 known genes, and two more in each assembly after TXNL1 and KKSU, described below. In the four non-target tunicates, hits were as frequent as in their shuffled copies at every
 score (in *C. intestinalis*, 267 against 344 at 15 bits): genome-wide, the model does not recognise the SECIS
 elements of ascidians and salps.
 
 The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
-all 18 gold-standard genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in
-the OdB3 ESTs. With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no
-model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. In the positive controls, it found
+all 18 known genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in the OdB3
+ESTs. With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no
+model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. It found TXNL1 and KKSU in all six
+transcript sets. In the positive controls, it found
 16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3 with the *Oikopleura* model; in
 *C. intestinalis* RefSeq mRNAs, 11 and 6 of 17.
 
 The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both,
-found 14 to 15 gold-standard genes in each *O. dioica* assembly, and 20 of 28, 11 of 20 and 9 of 16 stage 1
+found 14 to 15 of the known genes in each *O. dioica* assembly, and KKSU, and 20 of 28, 11 of 20 and 9 of 16 stage 1
 selenocysteine predictions in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. Ten more alignments were copies of
 known selenoproteins absent from stage 1: SELENOK in *O. albicans* and *O. vanhoeffeni*, whose C-terminus
 ...GGUGR aligns with that of *O. dioica* SELENOK (stage 1 found SELENOK in no appendicularian), and copies of TXNRD,
 GPX, DIO and SELENOW. In the held-out genomes, six short TGA-containing stretches (five *M. erythrocephalus* contigs
 and one *B. stygius* contig) aligned with one another: a repeated element, not a gene.
 
-One family of no known selenoprotein family was found by both screens in the three *O. dioica* assemblies and by the
+One gene of no known selenoprotein family was found by both screens in the three *O. dioica* assemblies and by the
 comparative screen in *O. albicans*. In *O. dioica* its frame encodes 68 to 70 residues: an N-terminal part rich in
 lysine and glycine, a hydrophobic segment (NLDVLMSALMLVLVFYIF(L/V), Kyte–Doolittle mean 2.2) and the
 C-terminus RRKF(T/S)NWKPGKKSU, where the TGA is followed directly by a stop codon. The gene lies in the 3′ part of a
@@ -519,13 +521,11 @@ this the last residue, as in other C-terminal selenoproteins whose selenocystein
 The transcript screen also found, in the three assemblies, a frame of 168 codons whose best human hit is
 thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to
 31.8 bits in the annotated transcripts and ESTs (23.6 in the OSKA2016 transcript assembly), 67 to 95 nucleotides after
-the stop codon: the TXNL1 candidate noted earlier, examined below. In OKI2018,
-four genome-scan hits at the genome threshold follow no known gene: the SECIS of the new family, one 1.4 kb upstream
-of the TXNL1 codon (similar hits lie upstream of it in OSKA2016 and OdB3), one on NC_137295.1 (30.1 bits) and one on
-NC_137291.1 (28.1 bits).
+the stop codon: the TXNL1 candidate noted earlier, examined below. In OKI2018, three genome-scan hits at the genome
+threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the TXNL1 codon (similar hits lie 0.8 to
+1.3 kb upstream of it in OSKA2016 and OdB3), one on NC_137295.1 (30.1 bits) and one on NC_137291.1 (28.1 bits).
 
-<!-- Numbers of this section are from the run before TXNL1 and KKSU joined the gold standard (2026-10-26); to update
-after the rerun of make uga-screen, where they become known genes. Table and figure for the screens to add. -->
+<!-- Table and figure for the screens to add. -->
 
 ## Two selenoprotein genes outside the known families
 
@@ -554,7 +554,9 @@ lanceolatum* (285 to 293 residues) have no selenocysteine, and the best hit in t
 *Salpa thompsoni*), the codon aligned to the selenocysteine is a glycine codon, followed by six codons and a stop
 codon, with no SECIS hit after it (4.2 bits in *T. democratica*); in *Halocynthia roretzi* it is a tryptophan codon,
 and in *O. longicauda*, *B. stygius*, the three *Ciona* species and *B. lanceolatum* the alignments do not reach that
-position. Among the genomes examined, the selenocysteine of TXNL1 and its SECIS are
+position. In the genomes of *Styela clava*, *Botryllus schlosseri*, *Phallusia mammillata* and *B. floridae*,
+tblastn found no locus at E ≤ 10^-5^ for either candidate, although the searched databases were complete and their
+proteomes hold TXNL1. Among the genomes examined, the selenocysteine of TXNL1 and its SECIS are
 therefore found in *O. dioica* only.
 
 KKSU was found by tblastn, with the OKI2018 protein or the *O. albicans* frame, in the six *Oikopleura* assemblies (two
@@ -562,12 +564,14 @@ loci in *O. longicauda*) and in the held-out *B. stygius* and *M. erythrocephalu
 the selenocysteine is followed directly by a stop codon, and a SECIS hit follows in the six *Oikopleura* species (21.0
 to 36.6 bits; 21.6 bits in *O. vanhoeffeni*, below its genome threshold), but not in the *B. stygius* and
 *M. erythrocephalus* contigs. KKSU was not found in *F. borealis*, the other tunicates or *Branchiostoma*, and has no
-blastp hit in the RefSeq proteomes of human, mouse, zebrafish, tunicates and *Branchiostoma*: among the genomes
-examined, it is a family of the Oikopleuridae.
+blastp hit in the RefSeq proteomes of human, mouse, zebrafish, tunicates and *Branchiostoma* (for *S. clava*,
+*B. schlosseri*, *P. mammillata* and *B. floridae*, only the proteomes inform): among the genomes examined, it is a
+family of the Oikopleuridae.
 
-<!-- To check before final text: tblastn gave no hit at all, for any query, in Scla, Bsch, Pmam and Bflo, whereas
-blastp finds TXNL1 in the Scla and Bsch proteomes (diagnostics pending); the absence of KKSU in these four genomes
-rests on the proteomes only. -->
+<!-- tblastn without any hit in Scla, Bsch, Pmam and Bflo: databases checked complete (2026-10-27; 380, 220, 311 and
+432 sequences, 377, 496, 240 and 513 Mb). Possible reason, not tested: TXNL1 split into short exons, each below the
+E-value threshold in genomes of this size (about 51 bits needed at 377 Mb). The absence of KKSU in these four species
+rests on the proteomes. -->
 
 Figure CANDIDATES (`figures/reannotation_candidates.pdf`). Gold-standard models of TXNL1 and KKSU, two genes outside
 the known selenoprotein families, in three *O. dioica* assemblies; drawn as in Figure REANNOTATION. Middle: for TXNL1,
@@ -938,7 +942,8 @@ alignment beyond its end when the alignment stopped at most five codons before i
 stop codon and the best hits of the *Oikopleura* model and of RF00031 (0 bits or more) in the 2,000 nucleotides
 after that stop codon. The proteins were also compared by blastp (E ≤ 10^-5^) with the RefSeq proteomes of 11
 species (three vertebrates, six tunicates and two *Branchiostoma*), and the residue aligned to the selenocysteine
-was read in a local alignment (BLOSUM62). The procedure is `stage2/candidate_genes.py` of the analysis repository
+was read in a local alignment (BLOSUM62), or at the same offset beyond its end when the alignment stopped at most
+five residues before it. The procedure is `stage2/candidate_genes.py` of the analysis repository
 (`make candidate-genes`).
 
 ## Stage 2

@@ -992,3 +992,15 @@ no earlier step waits for them.
   mRNA); new Results section on the two genes (rule, TXNL1 PITH domain and the Gly of other species, KKSU in the
   Oikopleuridae) with the legend of Figure CANDIDATES and Methods "Candidate genes". To do: make uga-screen
   (step 4 numbers), then update the step 4 section; diagnose the tblastn genomes without hits.
+- Step 4 rerun with the 20-gene gold standard (2026-10-26, commit 837c4cd): TXNL1 and KKSU found in all six O. dioica
+  transcript sets; KKSU by the comparative screen in the three assemblies (TXNL1 has no partner TGA); the 18 known
+  genes as before. Genome-scan hits after gold-standard genes: 20, 18, 18; OKI2018 hits after none: three (1.4 kb
+  upstream of the TXNL1 codon, NC_137295.1, NC_137291.1). The only candidates supported in another species are the
+  B. stygius / M. erythrocephalus repeat. Manuscript step 4 section updated. make gold-standard rerun: unchanged.
+- tblastn without hits in Scla, Bsch, Pmam, Bflo (2026-10-27): the databases are complete (formatdb 380, 220, 311 and
+  432 sequences; Statistics_db-len, in residues for tblastn, x3 = 377, 496, 240 and 513 Mb; the same ratio to the
+  gzipped file size as Blan and Tdem). No technical failure: no locus at E <= 1e-5 (a 168-aa query against 377 Mb
+  needs about 51 bits per HSP). Written into the step 5 text; the proteomes are the evidence there.
+  candidate_genes.py: the proteome residue aligned to the U is also read at the same offset beyond the end of the
+  local alignment when it stops fewer than --extend (5) residues before the U (column residue_note "extended"), as in
+  the figure (human TXNL1 G283). To do: make candidate-genes (the genome searches are cached).

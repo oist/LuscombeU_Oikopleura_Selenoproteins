@@ -18,8 +18,9 @@ step 4 (provisional name KKSU, after its C-terminus), to which the same rule is 
    of the frame, and the best SECIS hits of the Oikopleura model and of RF00031 in the --window nt after that stop
    codon, on the strand of the hit.
 3. Proteomes (--proteomes: RefSeq proteins of the genomes that have them, vertebrates included): blastp (E <=
-   --evalue); best hit, the residue aligned to the U in a local alignment (BLOSUM62) and the length of the hit
-   protein after that residue.
+   --evalue); best hit, the residue aligned to the U in a local alignment (BLOSUM62; when the alignment stops fewer
+   than --extend residues before the U, the residue at the same offset beyond its end, flagged "extended") and the
+   length of the hit protein after that residue.
 Outputs: results/tables/stage2_candidates_rule.tsv (the rule), stage2_candidates_genomes.tsv (tblastn),
 stage2_candidates_proteomes.tsv (blastp).
 """
@@ -270,11 +271,17 @@ def proteome_hits(g, a, prot):
     for q, (hit, ev, ident) in best.items():
         x, t = prot[q], seqs[hit]
         aln = al.align(x.replace("U", "C"), t.replace("U", "C"))[0]
-        u, res, pos = x.find("U"), "-", None
-        for (q0, q1), (t0, t1) in zip(*aln.aligned):
+        u, res, pos, note = x.find("U"), "-", None, ""
+        blocks = list(zip(*aln.aligned))
+        for (q0, q1), (t0, t1) in blocks:
             if q0 <= u < q1: pos = t0 + u - q0; res = t[pos]; break
+        if pos is None and blocks:   # the alignment stops just before the U: same offset beyond its end
+            (_, q1), (_, t1) = blocks[-1]
+            if 0 <= u - q1 < a.extend and t1 + u - q1 < len(t):
+                pos, note = t1 + u - q1, "extended"; res = t[pos]
+        if pos is not None: pos = int(pos)
         out.append({"candidate": q, "genome": g, "protein": hit, "description": desc.get(hit, ""), "evalue": ev,
-                    "identity": ident, "length": len(t), "residue": res,
+                    "identity": ident, "length": len(t), "residue": res, "residue_note": note,
                     "position": pos + 1 if pos is not None else "",
                     "residues_after": len(t) - pos - 1 if pos is not None else ""})
     return out
@@ -331,8 +338,8 @@ def main():
     # 3. proteomes
     out = []
     for g in a.proteomes: out += proteome_hits(g, a, prot)
-    cols = ["candidate", "genome", "protein", "description", "evalue", "identity", "length", "residue", "position",
-            "residues_after"]
+    cols = ["candidate", "genome", "protein", "description", "evalue", "identity", "length", "residue", "residue_note",
+            "position", "residues_after"]
     with open(f"{a.tables}/stage2_candidates_proteomes.tsv", "w") as o:
         o.write("\t".join(cols) + "\n")
         for r in out: o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
