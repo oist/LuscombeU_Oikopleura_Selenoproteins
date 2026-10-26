@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen candidate-genes gold-candidates selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen candidate-genes selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -187,12 +187,6 @@ uga-screen:
 candidate-genes:
 	python3 stage2/candidate_genes.py --jobs 4
 
-# Gold-standard models of the candidate genes (curation/baseline_candidates.tsv: TXNL1, KKSU), in their own outputs,
-# so that the baseline and its gold standard stay as they are (minutes; reuses the transcript alignments of
-# gold-standard), for example
-#   sbatch -p compute --cpus-per-task=2 --mem=16G --time=1:00:00 scripts/run_in_container.sh make gold-candidates
-gold-candidates:
-	python3 curation/gold_standard.py --baseline curation/baseline_candidates.tsv --out curation/gold_candidates --table results/tables/gold_candidates.tsv
 
 # Orthology of the appendicularian selenoproteins, with the approach used for the machinery: reciprocal best hits,
 # trees, LG+C60+F+G (PMSF) trees, then a first-pass summary per appendicularian clade (stage2/README.md)
@@ -237,9 +231,12 @@ machinery-scheme:
 # SEPHS2; page 2, the Rdx family (SELENOW paralogs and SELENOT), then SELENOF, SELENOK and SELENOS.
 REANNOTATION_PAGE1 = GPX_PAR GPX_chr1a GPX_chr1b GPX_chr2 DIO_PAR DIO_chr1 TXNRD SELENOO SEPHS2
 REANNOTATION_PAGE2 = SELENOW_PAR SELENOW_chr1a SELENOW_chr2 SELENOW_pair1 SELENOW_pair2 SELENOT SELENOF SELENOK SELENOS
+# genes added to the baseline in step 5 (2026-10-26), drawn in their own figure in the same style
+REANNOTATION_CANDIDATES = TXNL1 KKSU
 reannotation-pages:
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE1) --name reannotation_page
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE2) --name reannotation_page2
+	python3 figures/reannotation_page.py --genes $(REANNOTATION_CANDIDATES) --name reannotation_candidates
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:

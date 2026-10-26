@@ -973,3 +973,11 @@ no earlier step waits for them.
   inputs (--table option added to figures/reannotation_inputs.py); figures/reannotation_page.py places a C-terminal
   selenocysteine a few residues beyond the end of the local alignment, so that it is drawn (TXNL1: at human G283).
   curation/gold_candidates/*.fa were ignored by git (needed for the SECIS boxes): .gitignore exception added.
+- Decision (2026-10-26, Charles, after the plots): TXNL1 and KKSU join the baseline (curation/baseline_sec_genes.tsv,
+  status sec, note on how they entered), so that all computations include them for now; they can be removed later if
+  doubts remain. In figures, same style but their own figure (make reannotation-pages: reannotation_candidates), to
+  signal that they need the reader's attention. The separate candidate run (baseline_candidates.tsv, make
+  gold-candidates, curation/gold_candidates) is removed; their figure inputs join figures/reannotation_inputs.sh. To do:
+  make gold-standard (20 genes per assembly), then the figure, the manuscript counts, and make uga-screen (they become
+  known genes). Not rerun now: the SECIS model of step 3 (trained on the 18 genes); a later make secis-v2 would include
+  their windows.
