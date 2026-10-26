@@ -933,3 +933,25 @@ no earlier step waits for them.
   amphioxus): residue aligned to the U and length after it. Local test (OKI2018 chromosome 2 and OdB3 FN653019.1):
   contexts of candidates.tsv reproduced (MSELKKVGUG*APS; KKSU NWKPGKKSU*MLY); SECIS OKI2018 TXNL1 31.0 bits, OdB3
   29.0, OKI2018 KKSU 36.6.
+- Step 5, make candidate-genes on Deigo (2026-10-26, commits 09bdc95 and 4b13c80).
+  - Rule (fixed in advance for TXNL1, applied to KKSU): both counted. TXNL1: TGA, then one codon and a stop codon,
+    in OKI2018, OSKA2016 and OdB3 (context MSELKKVGUG*APS / MNELKKVGUG*APS as curated); SECIS 31.0, 30.7, 29.0 bits
+    after the stop codon (genome thresholds of step 4: 28, 28, 29). KKSU: TGA followed directly by a stop codon in the
+    three assemblies; SECIS 36.6, 31.3, 30.8 bits.
+  - KKSU in other genomes (tblastn): found in all six Oikopleura assemblies and in B. stygius and M. erythrocephalus
+    (49-63 % identity to the OKI2018 protein), always with the TGA followed directly by a stop codon (TAA; TAG in
+    M. erythrocephalus); SECIS after it in the six Oikopleura assemblies (O. longicauda 36.5, O. albicans 31.9,
+    O. vanhoeffeni 21.6 bits; RF00031 17.4 at most), none after the B. stygius and M. erythrocephalus hits; no hit in
+    F. borealis, the ten other tunicates, amphioxus, or any RefSeq proteome (human included). The stop codon right
+    after the TGA is conserved across species whose proteins are only 50-60 % identical, as expected if the TGA is read
+    and the next codon ends the protein.
+  - TXNL1 in other genomes: no TGA at the position of the O. dioica selenocysteine. The codon just after the end of the
+    alignment is a glycine codon in O. albicans, O. vanhoeffeni, M. erythrocephalus, F. borealis and the three salps
+    (read in frame beyond the alignment, which stops just before that position; the 6 codons that follow to a stop
+    may be intron in species whose protein continues); the position is not aligned in O. longicauda, B. stygius, the
+    ascidians and B. lanceolatum; no SECIS after any of these loci. RefSeq TXNL1 of human, mouse, zebrafish, ascidians,
+    Thalia and B. lanceolatum: 285-293 aa, with the C-terminal PITH domain; the O. dioica C-terminus does not align
+    with them. The O. dioica protein (168 aa) is the thioredoxin domain and a linker ending in selenocysteine-glycine.
+  - Defect: tblastn found no hit at all in S. clava, B. schlosseri, P. mammillata and B. floridae, although blastp finds
+    TXNL1 in the S. clava and B. schlosseri proteomes (E 1e-38, 8e-31): to diagnose (their cached rows.json must be
+    removed before a rerun).
