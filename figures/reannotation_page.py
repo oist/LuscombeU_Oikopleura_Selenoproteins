@@ -360,6 +360,13 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     # the gold-standard proteins of the other assemblies go through the first one (global alignment), so that the
     # three, nearly identical, are drawn alike where their similarity to the reference is low
     m_first = rf.protein_map(d["gprot"][first], axis, al) if axis_label else {i: i + 1 for i in range(len(axis))}
+    # a selenocysteine a few residues beyond the end of the local alignment (C-terminal, as in TXNL1): the residues up to
+    # it are placed after the last aligned one, so that it is drawn
+    u = d["gprot"][first].find("U")
+    if m_first and u > max(m_first) and u - max(m_first) <= 10:
+        last = max(m_first)
+        for i in range(last + 1, u + 1):
+            if m_first[last] + i - last <= len(axis): m_first[i] = m_first[last] + i - last
     if not secpos:   # first reference without selenocysteine (a cysteine homolog): the residue aligned to the gold U
         secpos = [m_first[i] for i, c in enumerate(d["gprot"][first]) if c == "U" and i in m_first]
     for k, g in enumerate(GENOMES):

@@ -131,6 +131,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--gene", required=True)
     ap.add_argument("--gold", default="curation/gold_standard")
+    ap.add_argument("--table", default="results/tables/gold_standard.tsv", help="gold-standard table (contig of each gene)")
     ap.add_argument("--genome", nargs="*", default=[], help="genome=FASTA of the contigs (to locate RefSeq proteins)")
     ap.add_argument("--embl", nargs="*", default=[], help="EMBL accessions of OdB3 contigs (GenBank models)")
     ap.add_argument("--reference", nargs="*", default=[], help="label=UniProt accession; the first gives the axis "
@@ -167,7 +168,7 @@ def main():
         cand = [r for r in allrows if r["kind"] == "annotation" and r["item"] != "transcript frame"]
         tsites = table_sites(allrows)
         seen = set()
-        contig = next(r2["contig"] for r2 in csv.DictReader(open("results/tables/gold_standard.tsv"), delimiter="\t")
+        contig = next(r2["contig"] for r2 in csv.DictReader(open(a.table), delimiter="\t")
                       if r2["genome"] == g and r2["gene"] == gene)
         genome = dict(read_fasta(genomes[g], {contig})) if g in genomes else {}
         cseq = next((v for k, v in genome.items() if k.split()[0] == contig), "")

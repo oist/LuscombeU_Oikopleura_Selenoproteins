@@ -951,7 +951,12 @@ no earlier step waits for them.
     may be intron in species whose protein continues); the position is not aligned in O. longicauda, B. stygius, the
     ascidians and B. lanceolatum; no SECIS after any of these loci. RefSeq TXNL1 of human, mouse, zebrafish, ascidians,
     Thalia and B. lanceolatum: 285-293 aa, with the C-terminal PITH domain; the O. dioica C-terminus does not align
-    with them. The O. dioica protein (168 aa) is the thioredoxin domain and a linker ending in selenocysteine-glycine.
+    with them in blastp. Correction (2026-10-26, from the reannotation plot): the O. dioica protein (168 aa) aligns with
+    the PITH domain of human TXNL1 (residues 120-283), not with its thioredoxin domain, which it lacks; its
+    selenocysteine stands where human and C. intestinalis TXNL1 have the glycine of their C-terminus ...V(G)KKGESH
+    (human G283). The 6 codons to a stop codon read after the glycine codon in O. albicans, O. vanhoeffeni,
+    M. erythrocephalus, F. borealis and the salps are this KKGESH end, not intron: in those species the TGA position
+    holds a glycine and the protein ends 6 residues later, as in human.
   - Defect: tblastn found no hit at all in S. clava, B. schlosseri, P. mammillata and B. floridae, although blastp finds
     TXNL1 in the S. clava and B. schlosseri proteomes (E 1e-38, 8e-31): to diagnose (their cached rows.json must be
     removed before a rerun).
@@ -961,3 +966,10 @@ no earlier step waits for them.
   results/tables/gold_candidates.tsv, the baseline and its gold standard untouched); figures/reannotation_inputs.py
   takes no UniProt reference if none exists (KKSU), and figures/reannotation_page.py then uses the first
   gold-standard protein as the axis of the protein panel.
+- Reannotation plots of the candidates (2026-10-26, gold-candidates run of Charles, commit 4b3445d): TXNL1 168 aa in the
+  three assemblies (4 coding exons; public models with the same exon chain end at the TGA read as stop); KKSU 68-70 aa
+  (3 exons; ANISEED and GenBank models end at the TGA read as stop; in OKI2018 the RefSeq mRNA of XP_081632581.1, a
+  173 aa protein, holds KKSU in its 3' UTR, as in an operon). figures/reannotation_inputs_candidates.sh builds their
+  inputs (--table option added to figures/reannotation_inputs.py); figures/reannotation_page.py places a C-terminal
+  selenocysteine a few residues beyond the end of the local alignment, so that it is drawn (TXNL1: at human G283).
+  curation/gold_candidates/*.fa were ignored by git (needed for the SECIS boxes): .gitignore exception added.
