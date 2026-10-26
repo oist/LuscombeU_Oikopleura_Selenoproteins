@@ -139,7 +139,7 @@ run --gene TXNL1 --embl FN653019.1 --reference "human=O43396" \
            "OSKA:Oidioi.CG.OSKA2016.S27.g15032.01.t=same coding exons; TGA read as stop" \
            "OdB3:CBY22487.1=same exon chain; TGA read as stop" \
     --gold-note "OSKA=5′ UTR exon from the transcripts" \
-    --reference-note "human=the O. dioica protein aligns with the PITH domain only (human residues 120-283)"
+    --reference-note "human=the O. dioica protein aligns with the PITH domain only, residues 120-283"
 
 run --gene KKSU --embl FN653017.1 \
     --reference-fasta "O. albicans=curation/candidates.faa:KKSU_Oalb:SCLG01000111.1 (genome; open stretch of the comparative screen)" \

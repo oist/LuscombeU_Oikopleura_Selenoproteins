@@ -981,3 +981,14 @@ no earlier step waits for them.
   make gold-standard (20 genes per assembly), then the figure, the manuscript counts, and make uga-screen (they become
   known genes). Not rerun now: the SECIS model of step 3 (trained on the 18 genes); a later make secis-v2 would include
   their windows.
+- Gold standard with 20 genes (2026-10-26, commit 3fb327e, run by Charles): only the six TXNL1/KKSU rows added, the
+  54 earlier rows unchanged. 60 codons, 59 models, all complete; 57 with a 3' UTR (median 303, 4-695); 184 introns,
+  27 atypical (14.7%); TGA read as stop in 17 public models (OKI 3, OSKA 5, OdB3 9); 11 without annotated CDS (OKI
+  KKSU added: in the 3' part of RefSeq XM_081776455.1, mRNA of a RING finger protein 11 homolog, XP_081632581.1).
+  Figure CANDIDATES drawn (make reannotation-pages: figures/reannotation_candidates.*; new options of
+  reannotation_page.py: --fit, key right below the genes and page cut below it, 125 mm; --sources, last line of the
+  key). Manuscript: gold-standard counts updated (the SECIS model section now says it was trained on the 53 models
+  of the 18 known genes); step 4 text corrected (KKSU is not annotated in RefSeq, it lies in the 3' UTR of another
+  mRNA); new Results section on the two genes (rule, TXNL1 PITH domain and the Gly of other species, KKSU in the
+  Oikopleuridae) with the legend of Figure CANDIDATES and Methods "Candidate genes". To do: make uga-screen
+  (step 4 numbers), then update the step 4 section; diagnose the tblastn genomes without hits.

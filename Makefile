@@ -236,7 +236,8 @@ REANNOTATION_CANDIDATES = TXNL1 KKSU
 reannotation-pages:
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE1) --name reannotation_page
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE2) --name reannotation_page2
-	python3 figures/reannotation_page.py --genes $(REANNOTATION_CANDIDATES) --name reannotation_candidates
+	python3 figures/reannotation_page.py --genes $(REANNOTATION_CANDIDATES) --name reannotation_candidates --fit \
+	  --sources "human: UniProt; C. intestinalis: RefSeq; O. albicans: open stretch of the comparative screen on its genome (accessions in the paragraphs)"
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:

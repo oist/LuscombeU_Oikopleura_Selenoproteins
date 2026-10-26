@@ -20,7 +20,8 @@ Each gene has three parts (thin rulers separate rows and columns of genes):
   similar residues to the OdB3 protein (BLOSUM62 > 0, selenocysteine read as cysteine, over the aligned part of a
   global alignment with free end gaps, internal gaps counted as differences; none when OdB3 has no model).
 The assembly names and the labels of the protein rows (one row per reference species, then the gold-standard
-proteins) are written once per row of genes, on the left; the key is at the bottom of the page. Sizes are physical (mm), so that rows of genes keep the same density.
+proteins) are written once per row of genes, on the left; the key is at the bottom of the page (with --fit, right
+below the genes, and the page is cut below it). Sizes are physical (mm), so that rows of genes keep the same density.
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
 of step 2. Output: <out>/<name>.{pdf,svg,png}.
 """
@@ -423,9 +424,10 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
-def key(fig, used_sites):
-    """Key at the bottom of the page: items one after the other, a new line when the page width is reached; one
-    group for the gene models, one for the proteins."""
+def key(fig, used_sites, sources, top=None):
+    """Key at the bottom of the page (or below the genes, its top at top mm): items one after the other, a new line
+    when the page width is reached; one group for the gene models, one for the proteins. Returns its height and its
+    bottom (mm)."""
     W = PAGE_W - LEFT - RIGHT
     G = 8.5                                       # width of a glyph, mm
 
@@ -468,7 +470,7 @@ def key(fig, used_sites):
                 (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black"),
                 (lambda ax, cx, y: ax.text(cx + 7, y, "92", fontsize=4.5, color="black", va="center", ha="right"),
                  f"% similar residues to the {rf.NAMES[SIM_TO]} protein (BLOSUM62 > 0; global alignment, aligned part)", "black"),
-                (None, "human: UniProt; C. intestinalis: stage 1 predictions on its genome (accessions in the paragraphs)", "black")]
+                (None, sources, "black")]
     lines, line, cx = [], [], 0
     for group in (models[:4], models[4:], introns, proteins):
         for f, text, col in group:
@@ -477,14 +479,15 @@ def key(fig, used_sites):
             line.append((cx, f, text, col)); cx += w
         lines.append(line); line, cx = [], 0
     h = 3.4 * len(lines)
-    ax = fig.add_axes([LEFT / PAGE_W, BOTTOM / PAGE_H, W / PAGE_W, h / PAGE_H])
+    bottom = BOTTOM if top is None else top - h
+    ax = fig.add_axes([LEFT / PAGE_W, bottom / PAGE_H, W / PAGE_W, h / PAGE_H])
     ax.set_xlim(0, W); ax.set_ylim(-h, 0); ax.axis("off")
     for k, line in enumerate(lines):
         y = -1.7 - 3.4 * k
         for cx, f, text, col in line:
             if f: f(ax, cx, y)
             ax.text(cx + (G if f else 0), y, text, fontsize=5.5, va="center", color=col)
-    return h
+    return h, bottom
 
 
 def main():
@@ -499,6 +502,9 @@ def main():
     ap.add_argument("--short", type=int, default=200, help="drawn length (nt) of a shortened stretch")
     ap.add_argument("--name", default="reannotation_page")
     ap.add_argument("--out", default="figures")
+    ap.add_argument("--sources", default="human: UniProt; C. intestinalis: stage 1 predictions on its genome (accessions in the paragraphs)",
+                    help="last line of the key: where the reference proteins come from")
+    ap.add_argument("--fit", action="store_true", help="key right below the genes, and the page cut below the key")
     a = ap.parse_args()
     global SECIS_BITS
     SECIS_BITS = a.secis_bits
@@ -552,13 +558,13 @@ def main():
                          ha="center", va="center", color=GOLD)
         rulers.append((row_top, row_bottom))
         top = axN_bottom - 6
-    key_h = key(fig, used)
+    key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None)
     # thin rulers: between rows of genes and above the key, and between the columns of each row
     from matplotlib.lines import Line2D
     rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)
     W = PAGE_W - LEFT - RIGHT
     for k, (rt, rb) in enumerate(rulers):
-        y = (rb + (rulers[k + 1][0] if k + 1 < len(rulers) else BOTTOM + key_h)) / 2
+        y = (rb + (rulers[k + 1][0] if k + 1 < len(rulers) else key_bottom + key_h)) / 2
         fig.add_artist(Line2D([fx(2), fx(PAGE_W - RIGHT)], [fy(y), fy(y)], **rule))
         top_ = (rt + (rulers[k - 1][1] if k else PAGE_H)) / 2 if k else rt
         for c in (1, 2):
@@ -566,9 +572,12 @@ def main():
             fig.add_artist(Line2D([fx(x), fx(x)], [fy(rt), fy(rb)], **rule))
     os.makedirs(a.out, exist_ok=True)
     out = os.path.join(a.out, a.name)
+    from matplotlib.transforms import Bbox
+    crop = Bbox.from_extents(0, (key_bottom - BOTTOM) * MM, PAGE_W * MM, PAGE_H * MM) if a.fit else None
     for ext in ("pdf", "svg", "png"):
-        fig.savefig(f"{out}.{ext}", dpi=200 if ext == "png" else None)
-    print("written", out, f"(lowest paragraph ends {top + 6:.0f} mm from the bottom of the page; key {BOTTOM + key_h:.0f} mm)")
+        fig.savefig(f"{out}.{ext}", dpi=200 if ext == "png" else None, bbox_inches=crop)
+    print("written", out, f"(lowest paragraph ends {top + 6:.0f} mm from the bottom of the page; key {key_bottom + key_h:.0f} mm)"
+          + (f"; page cut to {PAGE_H - key_bottom + BOTTOM:.0f} mm" if a.fit else ""))
 
 
 if __name__ == "__main__":
