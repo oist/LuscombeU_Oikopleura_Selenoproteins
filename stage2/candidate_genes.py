@@ -23,7 +23,7 @@ step 4 (provisional name KKSU, after its C-terminus), to which the same rule is 
 Outputs: results/tables/stage2_candidates_rule.tsv (the rule), stage2_candidates_genomes.tsv (tblastn),
 stage2_candidates_proteomes.tsv (blastp).
 """
-import argparse, collections, concurrent.futures, csv, gzip, os, re, subprocess, sys, xml.etree.ElementTree as ET
+import argparse, collections, concurrent.futures, csv, gzip, json, os, re, subprocess, sys, xml.etree.ElementTree as ET
 
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 STOPS = {"TAA", "TAG", "TGA"}
@@ -152,20 +152,28 @@ def tblastn_genome(g, a, sheet, prot, secis):
     """tblastn of the candidate proteins against one genome; returns rows."""
     d = f"{a.work}/{g}"
     os.makedirs(d, exist_ok=True)
+    done = f"{d}/rows.json"
+    if os.path.exists(done): return json.load(open(done))   # a rerun does not search the genome again
     fa = f"{d}/genome.fa"
     lengths = {}
     with open(fa, "w") as o:
         for k, s in read_fasta(sheet[g]["fasta"]):
             o.write(f">{k}\n{s.upper()}\n"); lengths[k] = len(s)
     run(["formatdb", "-i", "genome.fa", "-p", "F"], d)
+    names = list(prot)
     with open(f"{d}/q.faa", "w") as o:
-        for k, s in prot.items(): o.write(f">{k}\n{s.replace('U', 'X')}\n")
+        for k in names: o.write(f">{k}\n{prot[k].replace('U', 'X')}\n")
     run(["blastall", "-p", "tblastn", "-d", "genome.fa", "-i", "q.faa", "-e", str(a.evalue), "-F", "F", "-m", "7",
          "-v", "20", "-b", "20", "-a", str(a.cpus_per_genome), "-o", "tblastn.xml"], d)
     hsps = collections.defaultdict(list)
     for _, it in ET.iterparse(f"{d}/tblastn.xml"):
         if it.tag != "Iteration": continue
-        q = it.findtext("Iteration_query-def").split()[0]
+        # legacy BLAST leaves out the query definition of a query without hit: queries by iteration number
+        num = int(it.findtext("Iteration_iter-num") or 0)
+        qdef = it.findtext("Iteration_query-def")
+        q = qdef.split()[0] if qdef else (names[num - 1] if 0 < num <= len(names) else None)
+        if q is None or q not in prot:
+            it.clear(); continue
         for hit in it.iter("Hit"):
             contig = hit.findtext("Hit_def").split()[0]
             for h in hit.iter("Hsp"):
@@ -227,6 +235,7 @@ def tblastn_genome(g, a, sheet, prot, secis):
         r["secis_RF00031"] = b["RF00031"][0] if "RF00031" in b else ""
     for x in os.listdir(d):   # the genome copy and its database are large
         if x.startswith("genome.fa"): os.remove(os.path.join(d, x))
+    json.dump(out, open(done + ".tmp", "w")); os.replace(done + ".tmp", done)
     return out
 
 

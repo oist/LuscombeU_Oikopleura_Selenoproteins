@@ -468,7 +468,10 @@ def comparative_screen(a, summary, T, sheet):
     best, partnered = {}, set()
     for _, it in ET.iterparse(f"{d}/tblastx.xml"):
         if it.tag != "Iteration": continue
-        q = it.findtext("Iteration_query-def").split()[0]
+        qdef = it.findtext("Iteration_query-def")   # absent from legacy BLAST XML for a query without hit
+        if not qdef:
+            it.clear(); continue
+        q = qdef.split()[0]
         for hit in it.iter("Hit"):
             t = hit.findtext("Hit_def").split()[0]
             if species(regions[t]["genome"]) == species(regions[q]["genome"]): continue
