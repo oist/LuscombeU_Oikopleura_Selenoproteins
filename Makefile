@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -204,6 +204,13 @@ candidate-genes:
 #   sbatch -p compute --cpus-per-task=4 --mem=16G --time=1:00:00 scripts/run_in_container.sh make txnl1-homologs
 txnl1-homologs:
 	python3 stage2/txnl1_homologs.py
+
+# The two TXNL1-related genes of O. dioica (full-length TXNL1 and the selenocysteine copy, PITH region only) in the
+# other genomes and proteomes (structure, codon at the selenocysteine position, SECIS), a tree of the PITH regions
+# rooted on PITHD1, and the neighbourhood of the full-length copy (GPR107-like gene; about an hour), for example
+#   sbatch -p compute --cpus-per-task=16 --mem=32G --time=6:00:00 scripts/run_in_container.sh make txnl1-paralogs
+txnl1-paralogs:
+	python3 stage2/txnl1_paralogs.py
 
 
 # Orthology of the appendicularian selenoproteins, with the approach used for the machinery: reciprocal best hits,

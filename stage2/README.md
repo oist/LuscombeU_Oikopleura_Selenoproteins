@@ -257,6 +257,21 @@ protein, blastx of the locus). Outputs `results/tables/stage2_txnl1_homologs.tsv
 `stage2_txnl1_homologs_summary.tsv`. Tested on synthetic data (a split TXNL1-like gene, a thioredoxin gene next to
 it, a PITH paralog and an unannotated copy).
 
+## The two TXNL1-related genes (`txnl1_paralogs.py`, `make txnl1-paralogs`)
+
+After `make txnl1-homologs`: *O. dioica* has a full-length TXNL1 (thioredoxin domain and PITH region; OKI2018
+XP_081633344.1), the reciprocal best hit of human TXNL1, and the selenocysteine copy, with the PITH region only. With
+the OKI2018 copies as queries: (1) in the three assemblies, the residue of the full-length copy and of human TXNL1
+aligned to the selenocysteine; (2) tblastn against the appendicularian, tunicate and amphioxus genomes: each site
+(colinear HSPs of either query) with its structure (full-length, PITH only), the codon aligned to the selenocysteine,
+the codons to the next stop, SECIS hits after it, the annotation and the best human gene; (3) blastp against the
+RefSeq proteomes and the annotated *O. dioica* proteins; (4) a tree of the PITH regions (TXNL1 and PITHD1 proteins,
+and genome sites without an annotated protein; MAFFT, ClipKIT, IQ-TREE), rooted on PITHD1; (5) the neighbourhood of
+the full-length copy (a GPR107-like gene: merged model in OSKA2016; transcripts aligned to both). Outputs
+`results/tables/stage2_txnl1_paralogs_{queries,sites,proteins,tree,neighbours}.tsv`, `results/trees/txnl1_pith/`,
+`figures/txnl1_pith_tree.{png,pdf}`. Tested on synthetic data (two *O. dioica*-like assemblies, one with a merged
+model, a genome without annotation holding both copies, and a proteome with TXNL1 and PITHD1).
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences

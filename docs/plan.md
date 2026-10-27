@@ -1085,3 +1085,9 @@ no earlier step waits for them.
   TXNL1 at the selenocysteine position; PITH tree; the OSKA merged model as a possible example of merged genes.
   Genome-locus grouping of txnl1_homologs.py splits or merges some loci (overlapping HSPs across short introns);
   the protein searches are the reliable part.
+- make txnl1-paralogs written (2026-10-27; stage2/txnl1_paralogs.py, tested on synthetic data): the full-length TXNL1
+  and the selenocysteine copy in the other genomes and proteomes (structure, codon at the selenocysteine position,
+  SECIS), a PITH tree rooted on PITHD1, and the neighbourhood of the full-length copy (GPR107-like gene, merged
+  OSKA2016 model, transcripts spanning both). Gene symbol of the selenocysteine copy: Charles proposes PITHD1L1;
+  to settle after the tree (a symbol based on PITHD1 fits if the copy groups with PITHD1, one based on TXNL1 if it
+  groups with TXNL1, as its best hits suggest).
