@@ -1091,3 +1091,19 @@ no earlier step waits for them.
   OSKA2016 model, transcripts spanning both). Gene symbol of the selenocysteine copy: Charles proposes PITHD1L1;
   to settle after the tree (a symbol based on PITHD1 fits if the copy groups with PITHD1, one based on TXNL1 if it
   groups with TXNL1, as its best hits suggest).
+- TXNL1 paralogs, results (2026-10-27, make txnl1-paralogs, two runs by Charles). Residue aligned to the
+  selenocysteine: glycine followed by six residues in the full-length O. dioica TXNL1 (OSKA2016 and OdB3 ...GEAGEAH,
+  OKI2018 ...GEVGERE) and in human TXNL1 (...GKKGESH, His289). Other genomes: a full-length TXNL1 with a glycine codon
+  and six codons in O. albicans, O. vanhoeffeni, M. erythrocephalus, F. borealis and the three salps (tryptophan in
+  H. roretzi); no PITH-only copy outside O. dioica, except a 123-residue PITH-only TXNL1 protein in C. intestinalis
+  (XP_078490523.1, LOC144746873; glycine and six residues; groups with Ciona TXNL1, 96), absent from C. robusta.
+  The O. longicauda PITH-only fragments (contig ends) group with Oikopleuridae TXNL1, not with the selenocysteine copy.
+  PITH tree (rooted on PITHD1, 15 sequences, including the O. dioica PITHD1 homolog XP_081636562.1): the
+  selenocysteine copy is in the TXNL1 clade, sister to the O. dioica full-length TXNL1 (92), the pair sister to the
+  TXNL1 of the other Oikopleuridae (95), F. borealis outside (appendicularian clade 100): a duplication in the
+  O. dioica lineage. Neighbourhood: a GPR107-like gene upstream of the full-length TXNL1 on the same strand (579, 610
+  and 2,152 nt between the hits in OKI2018, OSKA2016 and OdB3), two models in OKI2018 and OdB3, one merged model in
+  OSKA2016, no transcript aligned to both. The supports drawn in the first figure were read from nodes after
+  rerooting, which moves them along the path to the new root; corrected (supports read by bipartition; the values
+  above are off that path). Symbol: PITHD1L1 would place the gene in the PITHD1 family, which the tree contradicts;
+  to discuss with Charles.

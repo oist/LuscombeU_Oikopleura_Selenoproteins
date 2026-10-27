@@ -491,8 +491,9 @@ def main():
                 res = t[pos] if pos is not None else "-"
                 gl = hg.get(k, [])
                 margin = gl[0][2] - gl[1][2] if len(gl) > 1 else 1e9
-                if key not in tree_seqs or len(region) > len(tree_seqs[key][1]):
-                    tree_seqs[key] = (safe(f"{g}|{label or k}|{k}|{bg or 'none'}|{structure}|{res}"), clean(region), bg, margin)
+                rank = (k.startswith("NP_"), len(region))   # one protein per gene: curated RefSeq first, then the longest
+                if key not in tree_seqs or rank > tree_seqs[key][4]:
+                    tree_seqs[key] = (safe(f"{g}|{label or k}|{k}|{bg or 'none'}|{structure}|{res}"), clean(region), bg, margin, rank)
         print(f"proteome {g}: {len(hits)} proteins", flush=True)
     cols = ["genome", "protein", "description", "gene", "length", "bits", "structure", "thioredoxin_coverage",
             "pith_coverage", "best_human_gene", "best_human_bits", "next_human_gene", "residue_at_sec", "position",
@@ -508,24 +509,35 @@ def main():
         if r["genome"] in with_proteome and (r["annotation"] or r["genome"] in a.dioica): continue
         if len(r["pith_sequence"]) < a.min_length or r["best_human_gene"] not in (a.human_gene, a.outgroup_gene): continue
         name = safe(f"{r['genome']}|site{r['site']}|{r['contig']}|{r['best_human_gene']}|{r['structure']}|{(r.get('codon') if r.get('residue') == '*' else r.get('residue')) or '-'}")
-        tree_seqs[(r["genome"], f"site{r['site']}")] = (name, r["pith_sequence"], r["best_human_gene"], r["human_margin"])
+        tree_seqs[(r["genome"], f"site{r['site']}")] = (name, r["pith_sequence"], r["best_human_gene"], r["human_margin"], None)
     os.makedirs(a.tree_dir, exist_ok=True)
     base = os.path.join(a.tree_dir, "txnl1_pith")
-    for ext in ("faa", "aln", "trimmed", "treefile", "iqtree", "log", "ckp.gz"):
-        if os.path.exists(f"{base}.{ext}"): os.remove(f"{base}.{ext}")
-    with open(f"{base}.faa", "w") as o:
-        for name, s, *_ in tree_seqs.values(): o.write(f">{name}\n{s}\n")
-    with open(f"{base}.aln", "w") as o:
-        run(["mafft", "--localpair", "--maxiterate", "1000", "--thread", str(a.cpus), "--quiet", f"{base}.faa"], stdout=o)
-    run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed", "-m", "gappy", "-g", "0.9"])
-    run(["iqtree2", "-s", f"{base}.trimmed", "-m", "MFP", "-B", "1000", "-T", str(a.cpus), "--prefix", base,
-         "--quiet", "--seed", "1"])
-    for ext in ("bionj", "ckp.gz", "mldist", "model.gz", "splits.nex", "uniqueseq.phy", "contree"):
-        if os.path.exists(f"{base}.{ext}"): os.remove(f"{base}.{ext}")
+    faa = "".join(f">{v[0]}\n{v[1]}\n" for v in tree_seqs.values())
+    if os.path.exists(f"{base}.treefile") and os.path.exists(f"{base}.faa") and open(f"{base}.faa").read() == faa:
+        print("tree: same sequences as the existing tree, which is reused", flush=True)
+    else:
+        for ext in ("faa", "aln", "trimmed", "treefile", "iqtree", "log", "ckp.gz", "rooted.nwk"):
+            if os.path.exists(f"{base}.{ext}"): os.remove(f"{base}.{ext}")
+        with open(f"{base}.faa", "w") as o: o.write(faa)
+        with open(f"{base}.aln", "w") as o:
+            run(["mafft", "--localpair", "--maxiterate", "1000", "--thread", str(a.cpus), "--quiet", f"{base}.faa"], stdout=o)
+        run(["clipkit", f"{base}.aln", "-o", f"{base}.trimmed", "-m", "gappy", "-g", "0.9"])
+        run(["iqtree2", "-s", f"{base}.trimmed", "-m", "MFP", "-B", "1000", "-T", str(a.cpus), "--prefix", base,
+             "--quiet", "--seed", "1"])
+        for ext in ("bionj", "ckp.gz", "mldist", "model.gz", "splits.nex", "uniqueseq.phy", "contree"):
+            if os.path.exists(f"{base}.{ext}"): os.remove(f"{base}.{ext}")
     from Bio import Phylo
     tree = Phylo.read(f"{base}.treefile", "newick")
     for c in tree.get_nonterminals():
         if c.name and re.fullmatch(r"\d+(\.\d+)?", c.name): c.confidence, c.name = float(c.name), None
+    # supports belong to bipartitions; Bio.Phylo keeps them on nodes, which rerooting reverses along the new root path,
+    # so they are read back by bipartition after rerooting
+    all_tips = frozenset(x.name for x in tree.get_terminals())
+    support = {}
+    for c in tree.get_nonterminals():
+        if c.confidence is None: continue
+        s = frozenset(x.name for x in c.get_terminals())
+        support[s] = support[all_tips - s] = c.confidence
     gene_of_tip = {v[0]: v[2] for v in tree_seqs.values()}
     margin_of_tip = {v[0]: v[3] for v in tree_seqs.values()}
     # root: the clade of the sequences whose best human gene is --outgroup-gene (by at least --root-margin bits), found
@@ -544,17 +556,23 @@ def main():
             o1 = next((c for c in out if c.name.startswith("Hsap")), out[0])
             tree.root_with_outgroup(o1)
             rooted = f"{o1.name} ({a.outgroup_gene} sequences not monophyletic)"
+    for c in tree.get_nonterminals():
+        c.confidence = support.get(frozenset(x.name for x in c.get_terminals()))
     Phylo.write(tree, f"{base}.rooted.nwk", "newick")
     # the clade of each O. dioica copy: its sister group and support
     trows = []
     for c in tree.get_terminals():
         if not c.name.startswith(safe(a.tree_dioica) + "_"): continue
-        path = tree.get_path(c)
-        parent = path[-2] if len(path) > 1 else tree.root
+        path = [tree.root] + tree.get_path(c)
+        parent = path[-2]
+        grand = path[-3] if len(path) > 2 else None
         sisters = [t.name for t in parent.get_terminals() if t is not c]
-        trows.append([c.name, parent.confidence if parent.confidence is not None else "", len(sisters), ", ".join(sisters)])
+        nxt = [t.name for t in grand.get_terminals() if t not in parent.get_terminals()] if grand is not None else []
+        trows.append([c.name, parent.confidence if parent.confidence is not None else "", len(sisters), ", ".join(sisters),
+                      grand.confidence if grand is not None and grand.confidence is not None else "", len(nxt), ", ".join(nxt)])
     with open(f"{a.prefix}_tree.tsv", "w") as o:
-        o.write(f"tip\tsupport_of_smallest_clade\tsisters\tsister_tips (tree rooted on {rooted or 'midpoint not applied'})\n")
+        o.write(f"tip\tsupport_of_smallest_clade\tsisters\tsister_tips\tsupport_of_next_clade\tnext_clade_added\t"
+                f"next_clade_added_tips (tree rooted on {rooted or 'nothing'}; supports read by bipartition)\n")
         for r in trows: o.write("\t".join(str(x) for x in r) + "\n")
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
