@@ -995,6 +995,15 @@ threshold were classed by the gene upstream on the same strand (within 3 kb of i
 the comparative screen. The procedure is `stage2/secis_model_description.py` and `figures/secis_model_figures.py` of
 the analysis repository (`make secis-description`).
 
+For the hits at the genome threshold without a selenoprotein gene upstream, we recorded the annotated transcripts at
+the hit and upstream on the same strand (OKI2018, OSKA2016, OdB3 and the annotated non-target genomes), compared the
+5,000 nucleotides upstream of the hit with the human RefSeq proteome and the gold-standard proteins by blastx (legacy
+BLAST 2.2.26, top strand, E ≤ 10^-5^; best human and best gold-standard hit, with the stop codons inside the
+alignment), counted the copies of the hit and 50 nucleotides on each side in its own genome (blastn, at least 80%
+identity over at least 80% of the query), and searched the same sequence in the other *Oikopleura* assemblies (best
+blastn alignment, and a genome-scan hit within 300 nucleotides of it). The procedure is `stage2/secis_orphan_hits.py`
+(`make secis-orphans`).
+
 ## UGA/SECIS screens
 
 Genomes were scanned with `cmsearch` (both strands, default filters, hits of 15 bits or more) and the *Oikopleura*
