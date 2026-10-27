@@ -660,6 +660,11 @@ threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the 
 
 ## Two selenoprotein genes outside the known families
 
+<!-- To revise (2026-10-27, make txnl1-homologs): each O. dioica assembly also has a full-length TXNL1 (thioredoxin
+domain + PITH, 285 residues; OKI XP_081633344.1), the reciprocal best hit of human TXNL1; the selenocysteine gene is a
+PITH-only paralog, 64-68% identical to it. Rename the gene, and redo the comparison with other species (the best
+locus per genome and the RefSeq TXNL1 proteins are full-length orthologs). docs/plan.md. -->
+
 > **Provisional section (2026-10-26, step 5 of the plan; `stage2/candidate_genes.py`, `make candidate-genes`;
 > `results/tables/stage2_candidates_*.tsv`).**
 

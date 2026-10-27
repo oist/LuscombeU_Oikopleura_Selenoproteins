@@ -1068,3 +1068,20 @@ no earlier step waits for them.
   the human TXNL1 C-terminal tail (six residues after Gly283, ending with His289) coordinates the RPN11 zinc in the
   degrading proteasome (Arkinson2025, Lee2026); the *O. dioica* selenocysteine sits at the position of Gly283,
   followed by one residue, and the protein lacks the thioredoxin domain.
+- TXNL1 homologs (2026-10-27, make txnl1-homologs, run by Charles; results/tables/stage2_txnl1_homologs*.tsv). The
+  selenocysteine gene is not the TXNL1 ortholog. Each assembly also has a full-length TXNL1 (thioredoxin domain + PITH,
+  285 residues: OKI XP_081633344.1, NC_137292.1 at 10.70 Mb, minus strand, 2.34 Mb from the selenocysteine gene;
+  OdB3 CBY22771.1, FN653019.1, 1.02 Mb from it; OSKA S14.g11310, a 756-residue model whose best human hit is GPR107,
+  probably a GPR107-like gene merged with TXNL1). Human TXNL1 and the full-length gene are reciprocal best hits
+  (OKI and OdB3: 205-206 bits, 40% identity over residues 9-287; back to TXNL1 at 205 bits, TXN 91). The
+  selenocysteine gene hits human TXNL1 first (132-134 bits, margin 79-82 over PITHD1), but its best hit in its own
+  assembly is the full-length gene (64-68% identity over residues 7-166, against about 40% with human TXNL1); next, a
+  PITHD1 homolog (33-34%). Thioredoxin part of human TXNL1 (1-117): best protein hit the full-length gene in OKI
+  (69 bits), a DNAJB4-like protein in OSKA and OdB3 (72 bits; full-length TXNL1 second, 68-71 bits); the domain alone
+  does not separate TXNL1 from TXN (blastx of the thioredoxin exons: TXN 61, TXNDC2 57). No thioredoxin-domain hit
+  near the selenocysteine gene. Reading: a PITH-only paralog of TXNL1, from a duplication in the tunicate or
+  appendicularian lineage. To do: name; whether other appendicularians have the PITH-only copy (step 5 compared the
+  best locus per genome and RefSeq TXNL1 proteins, i.e. full-length orthologs); residue of the full-length O. dioica
+  TXNL1 at the selenocysteine position; PITH tree; the OSKA merged model as a possible example of merged genes.
+  Genome-locus grouping of txnl1_homologs.py splits or merges some loci (overlapping HSPs across short introns);
+  the protein searches are the reliable part.
