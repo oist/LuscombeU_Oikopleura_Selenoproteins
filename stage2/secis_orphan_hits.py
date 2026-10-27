@@ -200,7 +200,7 @@ def main():
     qlen = {k: len(s) for k, s in q_hit.items()}
     copies, cons = collections.Counter(), collections.defaultdict(dict)
     scan_by = collections.defaultdict(list)
-    for r in scan: scan_by[(r["genome"], r["contig"], r["strand"])].append((min(int(r["from"]), int(r["to"])), float(r["bits"])))
+    for r in scan: scan_by[(r["genome"], r["contig"], r["strand"])].append((min(int(r["from"]), int(r["to"])), float(r["bits"]), r["from"]))
     for g, db in dbs.items():
         rows = blast_tab(["blastall", "-p", "blastn", "-d", db, "-i", fa_hit, "-e", "1e-5", "-F", "F", "-m", "8", "-a", str(a.cpus)])
         best = {}
@@ -215,8 +215,9 @@ def main():
             h = next(x for x in hits if x["id"] == q)
             strand = "+" if r["se"] > r["ss"] else "-"   # the query is in the orientation of the hit
             pos = min(r["ss"], r["se"])
-            near = [b for p, b in scan_by[(g, r["s"], strand)] if abs(p - pos) <= a.near + qlen[q]]
-            cons[q][g] = f"{r['ident']:.0f}%/{100 * r['cov']:.0f}%" + (f" SECIS {max(near):.1f}" if near else "")
+            near = [(b, f) for p, b, f in scan_by[(g, r["s"], strand)] if abs(p - pos) <= a.near + qlen[q]]
+            nb = max(near) if near else None
+            cons[q][g] = f"{r['ident']:.0f}%/{100 * r['cov']:.0f}%" + (f" SECIS {nb[0]:.1f} at {r['s']}:{nb[1]}" if nb else "")
     # output
     cols = ["genome", "contig", "strand", "from", "to", "bits", "class", "annotation_at_hit", "annotated_upstream"]
     for kind in ("human", "gold"):

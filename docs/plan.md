@@ -1041,3 +1041,14 @@ no earlier step waits for them.
   SECIS stay out of the model. New: stage2/secis_orphan_hits.py (make secis-orphans) for the 48 hits of the classes
   "nothing found upstream" and "stage 1 prediction without selenocysteine". Literature round 3: openalex_round3.sh
   (outside the repository).
+- Hits without a selenoprotein gene (2026-10-27, make secis-orphans, two runs; the second reports the best human and
+  the best gold-standard blastx hit). O. dioica (10): 2 copies of the DIO_chr1 SECIS on extra OdB3 contigs, 2 repeats
+  (25 and 53 copies), 4 = one element conserved in the three assemblies between a MARS1-like gene and TXNL1 (in the
+  5' UTR of the OSKA TXNL1 transcript), OSKA S54 conserved (26.5 and 27.0 bits in OKI and OdB3), OKI NC_137295.1
+  without counterpart. Other Oikopleura (26): 8 copies of known families by blastx (DIO, GPX, SELENOK, SELENOT,
+  SELENOW; all five stage 1 predictions without selenocysteine), among them an O. longicauda SELENOK (TGA aligned to
+  the selenocysteine, 69 nt before the hit, after a CPLANE2-like region as in O. dioica); 1 repeat; 4 O. albicans hits
+  after an OGG1-like region on two haplotype contigs; 13 without protein hit. Held-out: 5 of 9 copies of GPX, SELENOT,
+  SELENOW. Figure SECIS-SCORES B: final classes (copy of a known selenoprotein 19, repeated sequence 3, nothing found
+  30) in stage2_secis_scan_classes.tsv (final_class, evidence); manuscript paragraph rewritten. To consider: the
+  MARS1-TXNL1 and S54 elements; O. longicauda SELENOK for the census (step 9).

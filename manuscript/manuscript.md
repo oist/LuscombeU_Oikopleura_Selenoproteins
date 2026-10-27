@@ -539,21 +539,37 @@ each score up to 30 bits (in *C. intestinalis*, 267 against 344 at 15 bits; Figu
 hits at the genome threshold follow a stage 1 selenoprotein prediction: the model recognises some of their SECIS
 elements, at scores that background also reaches.
 
-At the genome thresholds, hits that follow no gene found by our searches remain (Figure SECIS-SCORES B): 10 of the
-74 hits of the three *O. dioica* assemblies (28.1 to 36.9 bits, where the hits after selenoprotein genes score 29.0 to
-59.1, median 40.4), against 2.4 expected false hits, and 21 of the 64 hits of the other *Oikopleura* species (33.0 to
-46.7 bits), against 1.8 expected. Four of the *O. dioica* hits lie 0.8 to 1.4 kb upstream of the TXNL1 codon in the
-three assemblies (in OSKA2016, one of them in the 5′ untranslated part of the TXNL1 transcript). In *O. albicans*, two contigs each carry two
-hits 391 and 411 nucleotides apart, and two hits of *O. vanhoeffeni* on one contig have the same score, as expected
-from repeated sequences. The held-out appendicularians have 7 such hits of their 12. In human and *C. intestinalis*
+At the genome thresholds, 10 of the 74 hits of the three *O. dioica* assemblies (28.1 to 36.9 bits, where the hits
+after selenoprotein genes score 29.0 to 59.1, median 40.4), against 2.4 expected false hits, and 26 of the 64 hits of
+the other *Oikopleura* species (33.0 to 49.9 bits; 21 without a gene upstream and 5 after stage 1 predictions without
+selenocysteine), against 1.8 expected, follow no selenoprotein gene found by the screens. Searches around them
+(Methods; Figure SECIS-SCORES B) explain part of them. Two *O. dioica* hits are copies of the DIO_chr1 SECIS on
+additional OdB3 contigs, one of them after the end of a coding sequence identical to OdB3 DIO_chr1, and two lie in
+repeated sequences (25 and 53 copies in their assembly). Four belong to one element found in the three assemblies (91
+to 96% identity), between the gene of a methionyl-tRNA synthetase (best human hit MARS1) and the TXNL1 coding
+sequence, 0.8 to 1.4 kb upstream of the TXNL1 codon; one of the hits lies in the 5′ untranslated part of the TXNL1
+transcript in OSKA2016, and another in an intron of a RefSeq transcript in OKI2018, and no frame through a TGA is
+known there. Of the last two, one (OSKA2016 contig S54) is found in the other two assemblies, where it scores 26.5 and
+27.0 bits, with no gene within 4 kb upstream, and one (OKI2018 NC_137295.1) has no counterpart in them. In the other
+*Oikopleura* species, 8 hits follow, 38 to 1,077 nucleotides before them, a region similar to a gold-standard
+selenoprotein (DIO, GPX, SELENOK, SELENOT or SELENOW), including the five after stage 1 predictions without
+selenocysteine: copies of known families that stage 1 and the comparative screen missed. One of them, in
+*O. longicauda*, lies 69 nucleotides after a region similar to SELENOK whose TGA aligns with the selenocysteine, and
+that region follows one similar to CPLANE2, as SELENOK follows a CPLANE2-like gene in *O. dioica*; stage 1 had found
+SELENOK in no appendicularian, and the comparative screen in *O. albicans* and *O. vanhoeffeni* only. One more hit lies
+in a repeated sequence (19 copies). The four *O. albicans* hits, in two pairs 391 and 411 nucleotides apart, follow a
+region similar to the DNA glycosylase OGG1, on two contigs that are probably the two haplotypes of one locus; the 13
+others have no protein hit in the 5 kb upstream. In the held-out appendicularians, 5 of the 9 hits without a
+selenoprotein gene follow regions similar to GPX, SELENOT or SELENOW (two of them with a stop codon in the aligned
+frame). In human and *C. intestinalis*
 RefSeq mRNAs, the hits of the *Oikopleura* model above which a frame through a TGA was found score up to 31.5 and
 37.3 bits for selenoprotein mRNAs and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C). With RF00031,
 the three human mRNAs classed as others above 38 bits are transcripts of GPX1 and DIO1 in which the frame found does
 not end at an annotated selenocysteine codon; their hit is the SECIS element of the gene, with the score it has in the
 other transcripts of these genes.
 
-<!-- To examine: the 31 Oikopleura hits at the genome threshold without a gene upstream (repeats, missed
-selenoprotein genes, other frames); results/tables/stage2_secis_scan_classes.tsv. -->
+<!-- Tables: results/tables/stage2_secis_scan_classes.tsv (classes; evidence) and stage2_secis_orphan_hits.tsv. To
+consider: the conserved element between MARS1 and TXNL1, and the OSKA2016 S54 element (structure, transcripts). -->
 
 Figure SECIS-SCORES (`figures/secis_scores.pdf`). Scores of the *Oikopleura* SECIS model in genomes and transcripts.
 A, hits per megabase (both strands) at or above each score in each genome (solid) and in its copy shuffled in
@@ -561,8 +577,9 @@ windows of 1,000 nucleotides (dashed), by group of genomes. B, hits at the genom
 with one expected false hit in the genome), by what lies upstream on the same strand (colours and symbols; the two
 frequent classes drawn partly transparent): a selenoprotein gene (a
 gold-standard gene, or a stage 1 selenocysteine prediction for the other genomes), a copy of a known selenoprotein
-found by the comparative screen, KKSU, a stage 1 prediction without selenocysteine, or nothing found by the
-searches. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
+(found by the comparative screen, by blastx of the 5 kb upstream of the hit against the gold-standard proteins, or by
+alignment with the hit of a selenoprotein gene in another assembly), KKSU, a repeated sequence (at least 10 copies of
+the hit in the genome), or nothing found by these searches. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
 of 20 bits or more, for human and *C. intestinalis* mRNAs, with the *Oikopleura* model and RF00031.
 
 The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of

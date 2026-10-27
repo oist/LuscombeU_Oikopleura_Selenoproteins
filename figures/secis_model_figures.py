@@ -15,8 +15,10 @@ figures/secis_scores.{pdf,svg,png} (from the step 4 tables):
   A. hits per Mb (both strands) at or above each score, in each genome and in its window-shuffled copy.
   B. hits at the genome threshold, by what lies upstream on the same strand: a selenoprotein gene (gold standard or
      stage 1 selenocysteine prediction), a copy of a known selenoprotein found by the comparative screen, KKSU (step
-     5 loci), a stage 1 prediction without selenocysteine, a TGA pair shared with another species, or nothing found.
-     The classes are also written to results/tables/stage2_secis_scan_classes.tsv.
+     5 loci), a stage 1 prediction without selenocysteine, a TGA pair shared with another species, or nothing found;
+     then, from results/tables/stage2_secis_orphan_hits.tsv when it exists (refine), copies of known selenoproteins
+     found by blastx or by alignment to the hit of a selenoprotein gene in another assembly, and repeated sequences.
+     The classes are written to results/tables/stage2_secis_scan_classes.tsv (class: screens; final_class: figure).
   C. controls: best score per RefSeq mRNA with a frame through a TGA upstream of a hit of 20 bits or more, human and
      C. intestinalis, Oikopleura model and RF00031, for selenoprotein mRNAs and the others.
 """
@@ -36,7 +38,8 @@ HELIX_COLOURS = {"1": "#4C72B0", "2": "#DD8452", "3": "#55A868"}
 # class: colour (Okabe-Ito palette), marker, transparency (frequent classes only)
 CLASSES = [("selenoprotein gene", "#D55E00", "o", 0.6), ("copy of a known selenoprotein", "#0072B2", "s", 1.0),
            ("KKSU", "#CC79A7", "D", 1.0), ("stage 1 prediction without selenocysteine", "#009E73", "^", 1.0),
-           ("TGA pair shared with another species", "#E69F00", "v", 1.0), ("nothing found upstream", "#000000", "X", 0.6)]
+           ("TGA pair shared with another species", "#E69F00", "v", 1.0), ("repeated sequence", "#56B4E9", "P", 1.0),
+           ("nothing found upstream", "#000000", "X", 0.6)]
 
 
 def tsv(path): return list(csv.DictReader(open(path), delimiter="\t"))
@@ -210,12 +213,53 @@ def classify(a):
         elif any(r["status"] == "candidate" and r["other_species"] for r in st): c = "TGA pair shared with another species"
         else: c = "nothing found upstream"
         out.append({"genome": h["genome"], "contig": h["contig"], "strand": h["strand"], "from": frm, "to": to,
-                    "bits": h["bits"], "class": c, "upstream": up, "candidates": h["candidates of the comparative screen"]})
+                    "bits": h["bits"], "class": c, "upstream": up, "candidates": h["candidates of the comparative screen"],
+                    "final_class": c, "evidence": "comparative screen" if c == "copy of a known selenoprotein" else ""})
+    refine(a, out, hits)
     with open(f"{a.tables}/stage2_secis_scan_classes.tsv", "w") as o:
         cols = list(out[0])
         o.write("\t".join(cols) + "\n")
         for r in out: o.write("\t".join(str(r[c]) for c in cols) + "\n")
     return out
+
+
+def refine(a, classes, hits, max_dist=2000, min_copies=10):
+    """Final classes from the examination of the hits without a selenoprotein gene upstream
+    (results/tables/stage2_secis_orphan_hits.tsv, stage2/secis_orphan_hits.py), when that table exists: a copy of a
+    known selenoprotein when the best gold-standard blastx hit of the upstream region ends within max_dist nt of the
+    hit, or when the hit aligns with a genome-scan hit of another assembly that follows a selenoprotein gene; a repeated
+    sequence when the hit and its flanks have at least min_copies copies in the genome. The class of the screens is
+    kept in the column class (input of stage2/secis_orphan_hits.py); the figure uses final_class."""
+    path = f"{a.tables}/stage2_secis_orphan_hits.tsv"
+    if not os.path.exists(path): return
+    orphan = {(r["genome"], r["contig"], r["from"]): r for r in tsv(path)}
+    seleno_hits = {(h["genome"], h["contig"], h["from"]): h for h in hits
+                   if h["known gene upstream (distance from its stop codon)"].startswith("gold standard") or
+                   "(selenocysteine" in h["known gene upstream (distance from its stop codon)"]}
+    for r in classes:
+        o = orphan.get((r["genome"], r["contig"], str(r["from"])))
+        if o is None: continue
+        if o["blastx_gold"] and o["blastx_gold_end_to_hit"] and int(o["blastx_gold_end_to_hit"]) <= max_dist:
+            r["final_class"] = "copy of a known selenoprotein"
+            r["evidence"] = (f"blastx: {o['blastx_gold']}, {o['blastx_gold_identity']}% identity, ending "
+                             f"{o['blastx_gold_end_to_hit']} nt before the hit")
+            continue
+        partner = None
+        for m in re.finditer(r"(\w+) [\d.]+%/[\d.]+% SECIS ([\d.]+) at (\S+):(\d+)", o["conservation (identity/coverage; scan hit nearby)"]):
+            k = (m.group(1), m.group(3), m.group(4))
+            if k in seleno_hits: partner = (k, seleno_hits[k]["known gene upstream (distance from its stop codon)"])
+        if partner is None:   # tables written before the coordinates were added: a unique score in that genome
+            for m in re.finditer(r"(\w+) [\d.]+%/[\d.]+% SECIS ([\d.]+)(?! at)", o["conservation (identity/coverage; scan hit nearby)"]):
+                same = [h for h in hits if h["genome"] == m.group(1) and h["bits"] == m.group(2)]
+                if len(same) == 1 and (same[0]["genome"], same[0]["contig"], same[0]["from"]) in seleno_hits:
+                    partner = ((same[0]["genome"], same[0]["contig"], same[0]["from"]),
+                               same[0]["known gene upstream (distance from its stop codon)"])
+        if partner:
+            r["final_class"] = "copy of a known selenoprotein"
+            r["evidence"] = f"aligns with the hit after {partner[1].split(' (')[0]} in {partner[0][0]}"
+        elif int(o["copies_in_genome"]) >= min_copies:
+            r["final_class"] = "repeated sequence"
+            r["evidence"] = f"{o['copies_in_genome']} copies in the genome"
 
 
 def scores_figure(a):
@@ -250,7 +294,7 @@ def scores_figure(a):
         if thr.get(g) not in (None, "-"):
             ax.plot([float(thr[g])] * 2, [-y - 0.32, -y + 0.32], color="#888888", lw=1.0, zorder=1)
         for lab, _, _, _ in CLASSES:   # frequent classes first, rare ones drawn on top
-            for r in (r for r in classes if r["genome"] == g and r["class"] == lab):
+            for r in (r for r in classes if r["genome"] == g and r["final_class"] == lab):
                 c, m, al = style_of[lab]
                 jitter = (zlib.crc32(f"{r['contig']}{r['from']}".encode()) % 5 - 2) * 0.05
                 ax.scatter(float(r["bits"]), -y + jitter, s=13 if m != "X" else 15, color=c, marker=m, alpha=al,
@@ -258,7 +302,7 @@ def scores_figure(a):
     ax.set_yticks([-y for y in range(len(order))]); ax.set_yticklabels([NAMES[g] for g in order], style="italic")
     ax.set_xlabel("score (bits)")
     for lab, c, m, al in CLASSES:
-        nn = sum(r["class"] == lab for r in classes)
+        nn = sum(r["final_class"] == lab for r in classes)
         if nn: ax.scatter([], [], s=16, color=c, marker=m, alpha=al, lw=0, label=f"{lab} ({nn})")
     ax.plot([], [], color="#888888", lw=1.0, marker="|", ls="none", markersize=7, label="genome threshold")
     ax.legend(frameon=False, loc="lower right", fontsize=6)
