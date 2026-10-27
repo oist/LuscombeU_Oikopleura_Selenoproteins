@@ -390,7 +390,7 @@ SELENOT (1) and MsrA (1) predictions.
 To train SECIS models and appendicularian profiles on reliable sequences, we built a gene model for each curated
 selenocysteine codon of the three *O. dioica* assemblies, from their transcripts, their public annotations and the
 stage 1 predictions (Methods; Figure REANNOTATION). The genes are the 18 genes of known selenoprotein families and
-two genes found by the screens described below, TXNL1 and KKSU (Figure CANDIDATES). Of the 60 codons (20 genes in
+two genes found by the screens described below, TXNL1.b and KKSU (Figure CANDIDATES). Of the 60 codons (20 genes in
 each assembly), 59 received a model; the exception is OdB3 SELENOO, whose exon with the selenocysteine codon is not
 in the assembly. All 59 models are
 complete, from an ATG to a stop codon, through the selenocysteine. All but one are supported by transcripts; OdB3
@@ -467,7 +467,7 @@ the 3′ region of each gene. We therefore trained a second model in the same wa
 section and evaluated it on families and species left out of training (Methods).
 
 The positive windows were the 2,000 nucleotides after the stop codon of the 53 gold-standard models of the 18 known
-genes (TXNL1 and KKSU joined the gold standard after the screens below) and of 58
+genes (TXNL1.b and KKSU joined the gold standard after the screens below) and of 58
 selenocysteine predictions of *O. longicauda* (22), *O. albicans* (20) and *O. vanhoeffeni* (16), shortened at the
 next selenoprotein coding sequence on the same strand (SELENOW_pair2, before SELENOW_pair1, in the three *O. dioica*
 assemblies) or at a contig end (20 windows of the three other species). The negative windows were random windows of
@@ -567,7 +567,7 @@ Thresholds for whole genomes were set from shuffled copies of the six *Oikopleur
 hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
 *Oikopleura* species (618 to 1,287 Mb). At these thresholds, the scans found 23, 22 and 29 hits in OKI2018, OSKA2016
 and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of one
-of the 18 known genes, and two more in each assembly after TXNL1 and KKSU, described below. In the four non-target tunicates, hits were about as frequent as in their shuffled copies at
+of the 18 known genes, and two more in each assembly after TXNL1.b and KKSU, described below. In the four non-target tunicates, hits were about as frequent as in their shuffled copies at
 each score up to 30 bits (in *C. intestinalis*, 267 against 344 at 15 bits; Figure SECIS-SCORES A), but 9 of their 12
 hits at the genome threshold follow a stage 1 selenoprotein prediction: the model recognises some of their SECIS
 elements, at scores that background also reaches.
@@ -579,8 +579,8 @@ selenocysteine), against 1.8 expected, follow no selenoprotein gene found by the
 (Methods; Figure SECIS-SCORES B) explain part of them. Two *O. dioica* hits are copies of the DIO_chr1 SECIS on
 additional OdB3 contigs, one of them after the end of a coding sequence identical to OdB3 DIO_chr1, and two lie in
 repeated sequences (25 and 53 copies in their assembly). Four belong to one element found in the three assemblies (91
-to 96% identity), between the gene of a methionyl-tRNA synthetase (best human hit MARS1) and the TXNL1 coding
-sequence, 0.8 to 1.4 kb upstream of the TXNL1 codon; one of the hits lies in the 5′ untranslated part of the TXNL1
+to 96% identity), between the gene of a methionyl-tRNA synthetase (best human hit MARS1) and the TXNL1.b coding
+sequence, 0.8 to 1.4 kb upstream of the TXNL1.b codon; one of the hits lies in the 5′ untranslated part of the TXNL1.b
 transcript in OSKA2016, and another in an intron of a RefSeq transcript in OKI2018, and no frame through a TGA is
 known there. Of the last two, one (OSKA2016 contig S54) is found in the other two assemblies, where it scores 26.5 and
 27.0 bits, with no gene within 4 kb upstream, and one (OKI2018 NC_137295.1) has no counterpart in them. In the other
@@ -602,7 +602,7 @@ not end at an annotated selenocysteine codon; their hit is the SECIS element of 
 other transcripts of these genes.
 
 <!-- Tables: results/tables/stage2_secis_scan_classes.tsv (classes; evidence) and stage2_secis_orphan_hits.tsv. To
-consider: the conserved element between MARS1 and TXNL1, and the OSKA2016 S54 element (structure, transcripts). -->
+consider: the conserved element between MARS1 and TXNL1.b, and the OSKA2016 S54 element (structure, transcripts). -->
 
 ![Figure SECIS-SCORES](../figures/secis_scores.png)
 
@@ -621,7 +621,7 @@ of 20 bits or more, for human and *C. intestinalis* mRNAs, with the *Oikopleura*
 The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
 all 18 known genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in the OdB3
 ESTs. With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no
-model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. It found TXNL1 and KKSU in all six
+model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. It found TXNL1.b and KKSU in all six
 transcript sets. In the positive controls, it found
 16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3 with the *Oikopleura* model; in
 *C. intestinalis* RefSeq mRNAs, 11 and 6 of 17.
@@ -652,57 +652,79 @@ were among those that earlier searches missed [@Haft2025].
 The transcript screen also found, in the three assemblies, a frame of 168 codons whose best human hit is
 thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to
 31.8 bits in the annotated transcripts and ESTs (23.6 in the OSKA2016 transcript assembly), 67 to 95 nucleotides after
-the stop codon: the TXNL1 candidate noted earlier, examined below. In OKI2018, three genome-scan hits at the genome
-threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the TXNL1 codon (similar hits lie 0.8 to
+the stop codon: the TXNL1 candidate noted earlier (TXNL1.b, examined below). In OKI2018, three genome-scan hits at the genome
+threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the TXNL1.b codon (similar hits lie 0.8 to
 1.3 kb upstream of it in OSKA2016 and OdB3), one on NC_137295.1 (30.1 bits) and one on NC_137291.1 (28.1 bits).
 
 <!-- Table and figure for the screens to add. -->
 
 ## Two selenoprotein genes outside the known families
 
-<!-- To revise (2026-10-27, make txnl1-homologs): each O. dioica assembly also has a full-length TXNL1 (thioredoxin
-domain + PITH, 285 residues; OKI XP_081633344.1), the reciprocal best hit of human TXNL1; the selenocysteine gene is a
-PITH-only paralog, 64-68% identical to it. Rename the gene, and redo the comparison with other species (the best
-locus per genome and the RefSeq TXNL1 proteins are full-length orthologs). docs/plan.md. -->
+> **Provisional section (2026-10-26, revised 2026-10-27; step 5 of the plan; `stage2/candidate_genes.py`,
+> `stage2/txnl1_homologs.py`, `stage2/txnl1_paralogs.py`, `make candidate-genes`, `make txnl1-homologs`,
+> `make txnl1-paralogs`; `results/tables/stage2_candidates_*.tsv`, `stage2_txnl1_*.tsv`).**
 
-> **Provisional section (2026-10-26, step 5 of the plan; `stage2/candidate_genes.py`, `make candidate-genes`;
-> `results/tables/stage2_candidates_*.tsv`).**
+For the TXNL1 candidate (TXNL1.b below), we had fixed a rule before the screens: the codon at the curated position
+must be TGA, and a SECIS hit of at least 20 bits must lie in the 2,000 nucleotides after the next stop codon of its
+frame, in each of the three *O. dioica* assemblies (Methods). TXNL1.b and the new family, which we call KKSU after its
+C-terminus, both meet it. The SECIS hits score 31.0, 30.7 and 29.0 bits in OKI2018, OSKA2016 and OdB3 for TXNL1.b, 67
+to 95 nucleotides after the stop codon, and 36.6, 31.3 and 30.8 bits for KKSU, 222 to 262 nucleotides after it; all
+six are also at or above the genome thresholds of the screens (28 to 29 bits). We therefore added both genes to the
+baseline and built their gold-standard models (Figure CANDIDATES), keeping them in a figure of their own because their
+selenocysteine rests on the TGA and the SECIS hits alone, without a selenoprotein homolog in other organisms. Their
+SECIS elements, which were not among the training sequences, have the motifs of the seeds (UGA and GA in the internal
+loop, AAA below helix 3, three canonical pairs in helix 3) and differ from the seeds as much as seeds of different
+genes differ from each other (identity to the nearest seed 0.61 to 0.68; between a seed and the nearest seed that is
+not its ortholog, median 0.62, quartiles 0.59 and 0.66); in helix 3 of KKSU, OSKA2016 and OdB3 have a C·G pair where
+OKI2018 has U·A. TXNL1.b encodes 168 residues in the three assemblies (four coding exons) and KKSU 68 to 70 (three
+coding exons). The public models with the same exon chains end at the TGA, read as a stop codon, except in OKI2018,
+where KKSU lies in the 3′ UTR of the RefSeq mRNA of a 173-residue protein whose best human hit is RING finger protein
+11 (XM_081776455.1), as SELENOW_PAR and the SELENOW pair lie in the mRNAs of upstream genes.
 
-For the TXNL1 candidate, we had fixed a rule before the screens: the codon at the curated position must be TGA, and
-a SECIS hit of at least 20 bits must lie in the 2,000 nucleotides after the next stop codon of its frame, in each of
-the three *O. dioica* assemblies (Methods). TXNL1 and the new family, which we call KKSU after its C-terminus, both
-meet it. The SECIS hits score 31.0, 30.7 and 29.0 bits in OKI2018, OSKA2016 and OdB3 for TXNL1, 67 to 95 nucleotides
-after the stop codon, and 36.6, 31.3 and 30.8 bits for KKSU, 222 to 262 nucleotides after it; all six are also at or
-above the genome thresholds of the screens (28 to 29 bits). We therefore added both genes to the baseline and built
-their gold-standard models (Figure CANDIDATES), keeping them in a figure of their own because their selenocysteine
-rests on the TGA and the SECIS hits alone, without a selenoprotein homolog in other organisms. Their SECIS elements,
-which were not among the training sequences, have the motifs of the seeds (UGA and GA in the internal loop, AAA below
-helix 3, three canonical pairs in helix 3) and differ from the seeds as much as seeds of different genes differ from
-each other (identity to the nearest seed 0.61 to 0.68; between a seed and the nearest seed that is not its ortholog,
-median 0.62, quartiles 0.59 and 0.66); in helix 3 of KKSU, OSKA2016 and OdB3 have a C·G pair where OKI2018 has U·A. TXNL1 encodes 168 residues in the three assemblies (four
-coding exons) and KKSU 68 to 70 (three coding exons). The public models with the same exon chains end at the TGA,
-read as a stop codon, except in OKI2018, where KKSU lies in the 3′ UTR of the RefSeq mRNA of a 173-residue protein
-whose best human hit is RING finger protein 11 (XM_081776455.1), as SELENOW_PAR and the SELENOW pair lie in the mRNAs
-of upstream genes.
+TXNL1.b is a paralog of TXNL1 that has lost the thioredoxin domain. Its best hit in the human proteome is TXNL1 (132
+to 134 bits, 40 to 42% identity over residues 123 to 281 of the human protein; PITHD1 next, 79 to 82 bits lower), but
+each *O. dioica* assembly also encodes a full-length TXNL1, with the thioredoxin and PITH domains (285 residues in
+OKI2018, XP_081633344.1, and OdB3), which we call TXNL1.a after the nomenclature guidelines for tunicate genes, where
+paralogs that share one human ortholog take the suffixes .a, .b [@Stolfi2015]. Human TXNL1 and TXNL1.a are reciprocal
+best hits (205 to 206 bits, 39 to 40% identity over residues 9 to 287 or 289 of the human protein; back to TXNL1 at
+205 to 206 bits, thioredoxin TXN 91), and TXNL1.a is the best hit of TXNL1.b in its own assembly (64 to 68% identity over 95% of
+TXNL1.b), ahead of a PITHD1 homolog (33 to 34%). The two genes lie on opposite strands of OKI2018 chromosome 2, 2.3 Mb
+apart, and of the OdB3 contig FN653019.1, 1.0 Mb apart. In a tree of the PITH regions of the TXNL1 and PITHD1 proteins
+and loci of tunicates, *Branchiostoma* and vertebrates, rooted on PITHD1 (Figure TXNL1-TREE), TXNL1.b is the sister of
+TXNL1.a (ultrafast bootstrap 92), and the pair is the sister of the TXNL1 of the other Oikopleuridae examined (95),
+with *F. borealis* outside them (appendicularian clade, 100): the duplication took place in the *O. dioica* lineage,
+after its divergence from these species. The PITHD1 proteins, including the *O. dioica* homolog, form a separate
+clade.
 
-The *O. dioica* TXNL1 protein aligns with the C-terminal PITH domain of human TXNL1 (residues 120 to 283 of 289), not
-with its N-terminal thioredoxin domain, and its selenocysteine is aligned with Gly283 of the human protein; it is
-followed by one residue (...KKVGUG). Human TXNL1 binds the regulatory particle of the proteasome [@Andersen2009; @Gao2025]:
-its PITH domain lies on the RPN11 deubiquitinase and its thioredoxin domain extends towards RPN2 and RPN13 [@Lee2026],
-and in the degrading proteasome its C-terminal tail covers the catalytic groove of RPN11, its last residue, His289,
-coordinating the zinc of the active site [@Arkinson2025; @Lee2026]. The *O. dioica* protein has no thioredoxin
-domain, and has one residue after its selenocysteine where the human protein has six after Gly283. In the RefSeq TXNL1 proteins of three vertebrates, five tunicates and
-*Branchiostoma lanceolatum* (285 to 293 residues), the residue at that position is a glycine followed by six
-residues; the best hit in the *B. floridae* proteome, a protein of 217 residues with a PITH domain, has a cysteine
-there, followed by 24 residues. In the genomes of *O. albicans*,
+TXNL1.b aligns with the PITH domain of human TXNL1 (residues 120 to 283 of 289), and its selenocysteine is aligned with
+Gly283; it is followed by one residue (...KKVGUG). At that position, TXNL1.a has a glycine followed by six residues
+(...GEAGEAH in OSKA2016 and OdB3, ...GEVGERE in OKI2018), as human TXNL1 (...GKKGESH). Human TXNL1 binds the regulatory
+particle of the proteasome [@Andersen2009; @Gao2025]: its PITH domain lies on the RPN11 deubiquitinase and its
+thioredoxin domain extends towards RPN2 and RPN13 [@Lee2026], and in the degrading proteasome its C-terminal tail covers
+the catalytic groove of RPN11, its last residue, His289, coordinating the zinc of the active site [@Arkinson2025;
+@Lee2026]. TXNL1.b has no thioredoxin domain and no CxxC motif, and has one residue after its selenocysteine where
+TXNL1.a and human TXNL1 have six.
+
+In the other genomes, only full-length TXNL1 orthologs have the glycine. In the genomes of *O. albicans*,
 *O. vanhoeffeni*, *M. erythrocephalus*, *F. borealis* and three salps (*Thalia democratica*, *Pegea* sp. and
-*Salpa thompsoni*), the codon aligned to the selenocysteine is a glycine codon, followed by six codons and a stop
-codon, with no SECIS hit after it (4.2 bits in *T. democratica*); in *Halocynthia roretzi* it is a tryptophan codon,
-and in *O. longicauda*, *B. stygius*, the three *Ciona* species and *B. lanceolatum* the alignments do not reach that
-position. In the genomes of *Styela clava*, *Botryllus schlosseri*, *Phallusia mammillata* and *B. floridae*,
-tblastn found no locus at E ≤ 10^-5^ for either candidate, although the searched databases were complete and their
-proteomes hold TXNL1. Among the genomes examined, the selenocysteine of TXNL1 and its SECIS are
-therefore found in *O. dioica* only.
+*Salpa thompsoni*), the codon aligned to the selenocysteine of TXNL1.b, in a full-length TXNL1 locus, is a glycine
+codon followed by six codons and a stop codon, with no SECIS hit after it (4.2 bits in *T. democratica*); in
+*Halocynthia roretzi* it is a tryptophan codon. In the RefSeq TXNL1 proteins of three vertebrates, five tunicates and
+*Branchiostoma lanceolatum*, the residue at that position is a glycine followed by six residues. No TXNL1 limited to
+the PITH region was found outside *O. dioica*, except in *C. intestinalis*, whose RefSeq proteome holds a 123-residue
+protein of this kind (XP_078490523.1; a glycine and six residues at that position), grouped with the *Ciona* TXNL1 in
+the tree (96) and absent from the *C. robusta* proteome; in *O. longicauda*, two PITH fragments at contig ends group
+with the TXNL1 of the Oikopleuridae, not with TXNL1.b. No TXNL1 was found in the RefSeq proteomes of
+*Phallusia mammillata* and *B. floridae*, which hold a PITHD1 homolog (blastp, E ≤ 10^-5^), nor in their genomes
+(tblastn); in the genomes of *Styela clava* and *Botryllus schlosseri*, whose proteomes hold TXNL1, tblastn found no
+locus with TXNL1.b and, with TXNL1.a, only the thioredoxin part of the *B. schlosseri* gene. Among the genomes examined,
+TXNL1.b, its selenocysteine and its SECIS are found in *O. dioica* only.
+
+<!-- Check the supports (92, 95, 100, 96) on the rerun of make txnl1-paralogs (human NP_004777.1 in the tree; supports
+read by bipartition). In OSKA2016, TXNL1.a is part of a 756-residue model that also holds a GPR107-like protein,
+encoded upstream on the same strand; OKI2018 and OdB3 annotate the two genes separately (579 and 2,152 nt between the
+tblastn hits), and no transcript of the three assemblies aligns to both: a merged model, possibly at an operon (to
+check with the spliced leader). -->
 
 KKSU was found by tblastn, with the OKI2018 protein or the *O. albicans* frame, in the six *Oikopleura* assemblies (two
 loci in *O. longicauda*) and in the held-out *B. stygius* and *M. erythrocephalus*. In all of them the TGA aligned to
@@ -720,12 +742,20 @@ rests on the proteomes. -->
 
 ![Figure CANDIDATES](../figures/reannotation_candidates.png)
 
-Figure CANDIDATES (`figures/reannotation_candidates.pdf`). Gold-standard models of TXNL1 and KKSU, two genes outside
-the known selenoprotein families, in three *O. dioica* assemblies; drawn as in Figure REANNOTATION. Middle: for TXNL1,
-the human protein (UniProt) and the *C. intestinalis* protein (RefSeq), with the Pfam domains of the human protein;
+Figure CANDIDATES (`figures/reannotation_candidates.pdf`). Gold-standard models of TXNL1.b and KKSU, two genes outside
+the known selenoprotein families, in three *O. dioica* assemblies; drawn as in Figure REANNOTATION. Middle: for TXNL1.b,
+the human and *C. intestinalis* TXNL1 proteins (UniProt, RefSeq), with the Pfam domains of the human protein;
 the residue aligned to the selenocysteine is a glycine in both; for KKSU, which has no homolog outside the
 Oikopleuridae, the *O. albicans* frame of the comparative screen, on the coordinates of the OKI2018 gold-standard
 protein. Percentage of similar residues to the OdB3 protein as in Figure REANNOTATION.
+
+![Figure TXNL1-TREE](../figures/txnl1_pith_tree.png)
+
+Figure TXNL1-TREE (`figures/txnl1_pith_tree.pdf`; provisional drawing). Maximum-likelihood tree of the PITH regions
+of TXNL1 and PITHD1, rooted on the PITHD1 clade, with ultrafast bootstrap supports. Tips: genome, protein (RefSeq) or
+genome locus (tblastn site), best human gene, structure (full-length: thioredoxin and PITH; PITH only) and the residue
+aligned to the selenocysteine of TXNL1.b (codon for a TGA). Orange, TXNL1.b; blue, other OKI2018 proteins; grey,
+PITHD1.
 
 # Discussion
 
@@ -739,7 +769,7 @@ The *Oikopleura* SECIS model may have abstracted the appendicularian SECIS eleme
 the elements that our searches found, so that the searches can be repeated on related genomes. The second is enough
 for the census of this study; only the first would make the model a description that lasts rather than a step to be
 replaced. Some results favour abstraction: the model detected windows of species (84 of 111) and of families (81 of
-111) left out of its training; it scored at 29 to 37 bits the SECIS elements of TXNL1 and KKSU, which were not in
+111) left out of its training; it scored at 29 to 37 bits the SECIS elements of TXNL1.b and KKSU, which were not in
 training and differ from the seeds as much as seeds of different genes differ from each other; and the base pairs it
 models are maintained in the evolution of *O. dioica* SECIS elements. Other results point to a record of our searches:
 the seeds were selected through the model itself, by bootstrap from RF00031, so that their uniformity (all with the
@@ -834,7 +864,7 @@ pipeline are also tested with nf-test [@Forer2025].
 The baseline lists, for each of the three *O. dioica* assemblies, the selenocysteine codons of the selenoprotein genes, placed
 by aligning curated reference proteins and checking the residues around the selenocysteine, and supported by transcripts and
 by comparison between assemblies. Assembly errors at a gene were recorded, not corrected. Two genes outside the known
-families, TXNL1 and KKSU, were added after the UGA/SECIS screens, when they met a rule fixed in advance (Candidate
+families, TXNL1.b and KKSU, were added after the UGA/SECIS screens, when they met a rule fixed in advance (Candidate
 genes).
 
 ## Gold-standard gene models
@@ -1137,7 +1167,7 @@ species when their selenocysteines aligned (blastp E ≤ 10^-5^, selenocysteine 
 
 ## Candidate genes
 
-The rule for TXNL1 was set before the screens and applied to it and to KKSU: in each of the three *O. dioica*
+The rule for TXNL1.b was set before the screens and applied to it and to KKSU: in each of the three *O. dioica*
 assemblies, the codon at the curated position must be TGA, and the best hit of the *Oikopleura* SECIS model
 (`cmsearch`, sense strand) in the 2,000 nucleotides after the next stop codon of its frame must reach 20 bits, the
 threshold for 3′ windows; a gene meeting it in the three assemblies was added to the baseline. The candidate proteins
@@ -1152,6 +1182,26 @@ species (three vertebrates, six tunicates and two *Branchiostoma*), and the resi
 was read in a local alignment (BLOSUM62), or at the same offset beyond its end when the alignment stopped at most
 five residues before it. The procedure is `stage2/candidate_genes.py` of the analysis repository
 (`make candidate-genes`).
+
+## TXNL1 homologs and paralogs
+
+Human TXNL1 (NP_004777.1), its thioredoxin part (residues 1 to 117; Pfam PF00085 at 12 to 104) and its PITH part
+(118 to 289) were compared by blastp (legacy BLAST 2.2.26, no filter, E ≤ 10^-3^) with the proteins of each
+*O. dioica* assembly (annotated coding sequences translated from the genome, and the gold-standard proteins) and by
+tblastn with its genome, and TXNL1.b was compared with the human RefSeq proteome (hits grouped by gene) and with its
+own assembly; each best subject was compared back with the human proteome (`stage2/txnl1_homologs.py`,
+`make txnl1-homologs`). TXNL1.a, the best blastp hit of human TXNL1 outside the TXNL1.b locus, and TXNL1.b of OKI2018
+were then compared by tblastn (E ≤ 10^-5^) with the 21 genomes of the previous section, colinear HSPs within 20 kb
+forming a site, and by blastp with the RefSeq proteomes; for each site or protein, we recorded the coverage of the
+thioredoxin and PITH parts of TXNL1.a (boundary at the residue aligned to human residue 117), the residue or codon
+aligned to the selenocysteine of TXNL1.b, and the best human gene (blastp). The PITH regions of the TXNL1 and PITHD1
+proteins (one protein per gene, curated RefSeq entries first, then the longest; for *O. dioica*, OKI2018 only) and of
+the genome sites without an annotated protein (at least 60 residues, taken from the best HSP at each position of the
+query) were aligned with MAFFT L-INS-i [@Katoh2013], trimmed with ClipKIT (gappy mode, 0.9) [@Steenwyk2020] and
+analysed with IQ-TREE 2 (ModelFinder, 1,000 ultrafast bootstrap replicates) [@Minh2020; @Kalyaanamoorthy2017;
+@Hoang2017]. The tree was rooted on the clade of the sequences whose best human gene is PITHD1 (by at least 10 bits
+over the next gene), and supports were read by bipartition after rooting (`stage2/txnl1_paralogs.py`,
+`make txnl1-paralogs`).
 
 ## Stage 2
 

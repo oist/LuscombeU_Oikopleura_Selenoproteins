@@ -504,11 +504,13 @@ def main():
     ap.add_argument("--out", default="figures")
     ap.add_argument("--sources", default="human: UniProt; C. intestinalis: stage 1 predictions on its genome (accessions in the paragraphs)",
                     help="last line of the key: where the reference proteins come from")
+    ap.add_argument("--labels", nargs="*", default=[], help="displayed names, as gene=label (for example TXNL1=TXNL1.b)")
     ap.add_argument("--fit", action="store_true", help="key right below the genes, and the page cut below the key")
     a = ap.parse_args()
     global SECIS_BITS
     SECIS_BITS = a.secis_bits
     genes = [load(g, a) for g in a.genes]
+    labels = dict(x.split("=", 1) for x in a.labels)
     col_w = (PAGE_W - LEFT - RIGHT - 2 * COL_GAP) / 3
     fig = plt.figure(figsize=(PAGE_W * MM, PAGE_H * MM))
     fx = lambda mm: mm / PAGE_W
@@ -530,7 +532,7 @@ def main():
         row_top, row_bottom = top + 1.5, axN_bottom - 1.0
         for k, d in enumerate(row):
             left = LEFT + k * (col_w + COL_GAP)
-            fig.text(fx(left), fy(top), d["gene"], fontsize=8, fontweight="bold", va="top")
+            fig.text(fx(left), fy(top), labels.get(d["gene"], d["gene"]), fontsize=8, fontweight="bold", va="top")
             axA = fig.add_axes([fx(left), fy(axA_bottom), fx(col_w), fy(hA)])
             axA.set_ylim(-hA, 0)
             draw_models(axA, d, tracks, col_w)

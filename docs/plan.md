@@ -1107,3 +1107,12 @@ no earlier step waits for them.
   rerooting, which moves them along the path to the new root; corrected (supports read by bipartition; the values
   above are off that path). Symbol: PITHD1L1 would place the gene in the PITHD1 family, which the tree contradicts;
   to discuss with Charles.
+- Names (2026-10-27, Charles): TXNL1.a for the full-length O. dioica TXNL1 and TXNL1.b for the selenocysteine copy,
+  after the tunicate nomenclature guidelines (Stolfi et al. 2015: paralogs sharing one human ortholog take .a, .b;
+  "-like" discouraged). Capitalisation of O. dioica gene symbols deferred. Applied to the manuscript (step 5 rewritten
+  with the results of make txnl1-homologs and make txnl1-paralogs; Figure TXNL1-TREE and Methods "TXNL1 homologs and
+  paralogs" added) and to Figure CANDIDATES (figures/reannotation_page.py --labels TXNL1=TXNL1.b). The internal
+  identifier stays "TXNL1" in curation/ (baseline, candidates, gold standard), the scripts and the result tables until
+  the capitalisation is settled, so that both changes are made in one pass. Corrections made on the way: the
+  P. mammillata and B. floridae proteomes hold no TXNL1 (only a PITHD1 homolog; the earlier text said they held TXNL1);
+  TXNL1.b has no CxxC motif.
