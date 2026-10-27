@@ -44,7 +44,7 @@ import argparse, collections, concurrent.futures, csv, json, os, re, shutil, sub
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from uga_secis_screen import read_fasta, rc, opener, read_gff_transcripts   # noqa: E402
+from uga_secis_screen import read_fasta, rc, opener, read_gff_transcripts, attributes   # noqa: E402
 from candidate_genes import Secis, after_codon, CODE                          # noqa: E402
 from txnl1_homologs import Db, blast, clean, annotated_proteins, gold_loci, overlaps, loci, human_genes  # noqa: E402
 
@@ -166,6 +166,43 @@ def covered(hsps, lo, hi):
     return len(pos) / (hi - lo + 1) if hi >= lo else 0
 
 
+def model_structure(gff, model_id):
+    """Contig, strand, exons and coding segments (1-based inclusive, genome order) and the phase of the first coding
+    segment in transcript order, of the annotated model whose CDS rows carry protein_id (or Parent) model_id."""
+    rows = [l.rstrip("\n").split("\t") for l in opener(gff) if not l.startswith("#")]
+    rows = [f for f in rows if len(f) >= 9 and f[2] in ("CDS", "exon")]
+    cds, parents, contig, strand = [], set(), None, "+"
+    for f in rows:
+        if f[2] != "CDS": continue
+        at = attributes(f[8])
+        par = at.get("Parent", "").split(",")[0]
+        if at.get("protein_id") == model_id or par == model_id:
+            cds.append((int(f[3]), int(f[4]), int(f[7]) if f[7] in "012" else 0))
+            parents.add(par); contig, strand = f[0], f[6]
+    cds.sort()
+    exons = sorted({(int(f[3]), int(f[4])) for f in rows if f[2] == "exon" and attributes(f[8]).get("Parent", "").split(",")[0] in parents})
+    phase = (cds[0][2] if strand == "+" else cds[-1][2]) if cds else 0
+    return contig, strand, exons or [(x, y) for x, y, _ in cds], [(x, y) for x, y, _ in cds], phase
+
+
+def coding_positions(cds, strand):
+    """Genomic positions (1-based) of the coding bases, in transcript order."""
+    out = []
+    for x, y in (cds if strand == "+" else cds[::-1]):
+        out += list(range(x, y + 1)) if strand == "+" else list(range(y, x - 1, -1))
+    return out
+
+
+def splice_sites(seq, exons, strand):
+    """Donor-acceptor dinucleotides of the introns between exons (genome order), read in gene orientation."""
+    out = []
+    for (x1, y1), (x2, y2) in zip(exons, exons[1:]):
+        if x2 <= y1 + 1: continue
+        d, c = seq[y1:y1 + 2], seq[x2 - 3:x2 - 1]
+        out.append(f"{d}-{c}" if strand == "+" else f"{rc(c)}-{rc(d)}")
+    return out
+
+
 def read_proteome(path):
     seqs, desc, name = {}, {}, None
     with opener(path) as fh:
@@ -192,7 +229,10 @@ def main():
     ap.add_argument("--samplesheet", default="stage1/samplesheet.csv")
     ap.add_argument("--data", default="data/genomes")
     ap.add_argument("--gold", default="curation/gold_standard")
-    ap.add_argument("--sec-gene", default="TXNL1", help="gold-standard name of the selenocysteine copy")
+    ap.add_argument("--sec-gene", default="TXNL1.b", help="gold-standard name of the selenocysteine copy")
+    ap.add_argument("--full-gene", default="TXNL1.a", help="name of the full-length copy")
+    ap.add_argument("--figure-inputs", default="figures/inputs",
+                    help="where reannotation_<sec-gene>.paralogs.{tsv,fa} go (the full-length copy, for make reannotation-pages)")
     ap.add_argument("--dioica", nargs="+", default=DIOICA)
     ap.add_argument("--query-genome", default="OKI")
     ap.add_argument("--genomes", nargs="*", default=GENOMES)
@@ -247,7 +287,7 @@ def main():
                     default=None)
 
     # 1. queries
-    qrows, copies = [], {}
+    qrows, copies, fig_rows, fig_fa = [], {}, [], []
     for g in a.dioica:
         gold = {k.split("|")[0]: s.upper().rstrip("*") for k, s in read_fasta(f"{a.gold}/{g}.proteins.faa")}   # U kept
         sec = gold[a.sec_gene]
@@ -261,23 +301,46 @@ def main():
         if not rows: sys.exit(f"{g}: no full-length copy found")
         fid = max(rows, key=lambda r: r["bits"])["s"]
         full, note = cand[fid], ""
+        trim = (0, len(full))
         hb = pair(al, h, full)
         if len(full) > 1.3 * len(h):   # merged model: keep the part aligned with human TXNL1 and the tail after it
             y0, end = hb[0][1][0], min(len(full), hb[-1][1][1] + len(h) - hb[-1][0][1])
-            full, note = full[y0:end], f"trimmed to residues {y0 + 1}-{end} of {len(full)}"
+            full, note, trim = full[y0:end], f"trimmed to residues {y0 + 1}-{end} of {len(full)}", (y0, end)
             hb = pair(al, h, full)
         u = sec.find("U")
         copies[g] = {"sec": sec, "full": full, "full_id": fid, "sec_locus": sloc, "full_locus": ann[fid]}
         sb = pair(al, sec, full)
         for label, prot, pid, blocks, loc in (
-                ("selenocysteine copy", sec, f"gold:{a.sec_gene}", None, sloc),
-                ("full-length copy", full, fid, sb, (ann[fid]["contig"], ann[fid]["strand"], ann[fid]["lo"], ann[fid]["hi"]))):
+                (f"{a.sec_gene} (selenocysteine copy)", sec, f"gold:{a.sec_gene}", None, sloc),
+                (f"{a.full_gene} (full-length copy)", full, fid, sb, (ann[fid]["contig"], ann[fid]["strand"], ann[fid]["lo"], ann[fid]["hi"]))):
             if blocks is None: pos, pn = u, ""
             else: pos, pn = mapped(blocks, u, a.extend, len(prot))
             qrows.append([g, label, pid, len(prot), f"{loc[0]}:{loc[2] + 1}-{loc[3]}{loc[1]}" if loc else "",
                           prot[pos] if pos is not None else "", (pos + 1) if pos is not None else "", pn,
                           len(prot) - pos - 1 if pos is not None else "", prot[pos:] if pos is not None else "",
-                          note if label == "full-length copy" else ""])
+                          note if label.startswith(a.full_gene) else ""])
+        # the full-length copy for Figure CANDIDATES: model, codon aligned to the selenocysteine, drawn span
+        contig, strand, exons, cds, phase = model_structure(sheet[g]["annotation"], fid)
+        cpos = coding_positions(cds, strand)
+        pu, _ = mapped(pair(al, sec, cand[fid]), u, a.extend, len(cand[fid]))
+        seq = next((s.upper() for k, s in read_fasta(sheet[g]["fasta"]) if k == contig), "")
+        if pu is not None and phase + 3 * pu + 3 <= len(cpos) and seq:
+            codon = sorted(cpos[phase + 3 * pu:phase + 3 * pu + 3])
+            part = cpos[phase + 3 * trim[0]:min(len(cpos), phase + 3 * trim[1])]
+            db = {"OKI": "RefSeq", "OSKA": "ANISEED", "OdB3": "GenBank"}.get(g, "annotation")
+            src = "annotation; make txnl1-paralogs"
+            fig_rows += [("paralog", g, fid, "label", a.full_gene, "make txnl1-paralogs"),
+                         ("paralog", g, fid, "database", db, ""), ("paralog", g, fid, "strand", strand, src),
+                         ("paralog", g, fid, "exons", ";".join(f"{x}-{y}" for x, y in exons), src),
+                         ("paralog", g, fid, "cds", ";".join(f"{x}-{y}" for x, y in cds), src),
+                         ("paralog", g, fid, "sites", ";".join(splice_sites(seq, exons, strand)), "genome sequence"),
+                         ("paralog", g, fid, "anchor", f"{codon[0]}-{codon[-1]}",
+                          f"codon aligned to the selenocysteine of {a.sec_gene} (local alignment, BLOSUM62)"),
+                         ("paralog", g, fid, "span", f"{min(part)}-{max(part)}", "coding part aligned to human TXNL1")]
+            if trim != (0, len(cand[fid])):
+                fig_rows.append(("paralog", g, fid, "note", f"model of {len(cand[fid])} residues; drawn: residues "
+                                 f"{trim[0] + 1}-{trim[1]}, aligned to human TXNL1", "make txnl1-paralogs"))
+            fig_fa.append((f"paralog:{g}", full))
         if g == a.query_genome:
             trx_end = None
             for (x0, x1), (y0, y1) in hb:   # human residue split-1 -> full-length copy
@@ -289,6 +352,14 @@ def main():
                   (pos + 1) if pos is not None else "", pn, len(h) - pos - 1 if pos is not None else "",
                   h[pos:] if pos is not None else "", f"thioredoxin/PITH boundary of the full-length query: residue "
                   f"{copies[a.query_genome]['trx_end']} (human {a.split - 1})"])
+    if fig_rows:
+        os.makedirs(a.figure_inputs, exist_ok=True)
+        base_in = os.path.join(a.figure_inputs, f"reannotation_{a.sec_gene}.paralogs")
+        with open(f"{base_in}.tsv", "w") as o:
+            o.write("kind\tassembly\tname\tfield\tvalue\tsource\n")
+            for r in fig_rows: o.write("\t".join(r) + "\n")
+        with open(f"{base_in}.fa", "w") as o:
+            for k, s in fig_fa: o.write(f">{k}\n{s}\n")
     with open(f"{a.prefix}_queries.tsv", "w") as o:
         o.write("genome\tcopy\tprotein\tlength\tlocation\tresidue_at_sec\tposition\tnote\tresidues_after\t"
                 "c_terminus\tremark\n")
@@ -298,7 +369,7 @@ def main():
     upos = sec_q.find("U")
     fpos, _ = mapped(pair(al, sec_q, full_q), upos, a.extend, len(full_q))
     queries = {"sec": sec_q.replace("U", "X"), "full": full_q}
-    print(f"queries: {a.query_genome} selenocysteine copy ({len(sec_q)} aa), full-length copy {Q['full_id']} "
+    print(f"queries: {a.query_genome} {a.sec_gene} ({len(sec_q)} aa), {a.full_gene} {Q['full_id']} "
           f"({len(full_q)} aa, thioredoxin part 1-{trx_end})", flush=True)
 
     # 2 and 5. genomes
@@ -349,10 +420,10 @@ def main():
                          else "thioredoxin only" if trx_cov >= 0.3 else "partial")
             up = S["lo"] if strand == "+" else lengths[S["contig"]] - S["hi"]
             cp, note = codon_at(sh, upos, seq, strand, a.extend) if sh else (None, "not aligned")
-            src = "selenocysteine copy"
+            src = "sec"   # names given at output (the cached results do not depend on them)
             if cp is None and fh and fpos is not None:
                 cp, note = codon_at(fh, fpos, seq, strand, a.extend)
-                src = "full-length copy"
+                src = "full"
             row = {"genome": g, "site": n, "contig": S["contig"], "strand": strand, "from": S["lo"] + 1, "to": S["hi"],
                    "structure": structure, "thioredoxin_coverage": f"{trx_cov:.2f}", "pith_coverage": f"{pith_cov:.2f}",
                    "bits_sec": f"{S['sec']['bits']:.1f}" if "sec" in S else "",
@@ -423,6 +494,9 @@ def main():
             results[g] = r
             print(f"{g}: {len(r['sites'])} sites", flush=True)
     sites = [r for g in genomes for r in results[g]["sites"]]
+    names = {"sec": a.sec_gene, "full": a.full_gene, "selenocysteine copy": a.sec_gene, "full-length copy": a.full_gene}
+    for r in sites:
+        if r.get("codon_source"): r["codon_source"] = names.get(r["codon_source"], r["codon_source"])
     hg = to_human({f"{r['genome']}|{r['site']}": r["pith_sequence"] for r in sites if len(r["pith_sequence"]) >= 20}, "sites_to_human")
     for r in sites:
         gl = hg.get(f"{r['genome']}|{r['site']}", [])
@@ -486,7 +560,8 @@ def main():
             if keep and sb:
                 region = t[sb[0][1][0]:]
                 if len(region) < a.min_length: continue
-                label = gene.get(k, "") if g not in a.dioica else ("selenocysteine copy" if k.startswith("gold:") else bg + "-like")
+                label = gene.get(k, "") if g not in a.dioica else (a.sec_gene if k.startswith("gold:") else
+                                                                    a.full_gene if k == copies[g]["full_id"] else bg + "-like")
                 key = (g, label or k) if g not in a.dioica else (g, k)
                 res = t[pos] if pos is not None else "-"
                 gl = hg.get(k, [])
@@ -579,13 +654,13 @@ def main():
     n = len(tree.get_terminals())
     fig = plt.figure(figsize=(11, max(4, 0.22 * n)))
     ax = fig.add_subplot(1, 1, 1)
-    colours = {c.name: ("#D55E00" if "selenocysteine" in c.name else "#0072B2" if c.name.startswith(safe(a.tree_dioica)) else
+    colours = {c.name: ("#D55E00" if safe(a.sec_gene) in c.name else "#0072B2" if c.name.startswith(safe(a.tree_dioica)) else
                         "#777777" if gene_of_tip.get(c.name) == a.outgroup_gene and margin_of_tip.get(c.name, 0) >= a.root_margin
                         else "black") for c in tree.get_terminals()}
     Phylo.draw(tree, axes=ax, do_show=False, label_colors=colours, label_func=lambda c: c.name if c.is_terminal() else "",
                branch_labels=lambda cl: f"{cl.confidence:.0f}" if cl.confidence is not None and not cl.is_terminal() else "")
     ax.set_title(f"PITH regions of TXNL1 and {a.outgroup_gene}; rooted on {rooted or 'none'}; IQ-TREE, ultrafast bootstrap "
-                 f"support; orange: O. dioica selenocysteine copy, blue: other {a.tree_dioica} proteins, grey: {a.outgroup_gene}",
+                 f"support; orange: {a.sec_gene}, blue: other {a.tree_dioica} proteins, grey: {a.outgroup_gene}",
                  fontsize=8, loc="left")
     for s in ("top", "right", "left"): ax.spines[s].set_visible(False)
     ax.set_yticks([]); ax.set_ylabel("")

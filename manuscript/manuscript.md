@@ -713,15 +713,15 @@ codon followed by six codons and a stop codon, with no SECIS hit after it (4.2 b
 *Branchiostoma lanceolatum*, the residue at that position is a glycine followed by six residues. No TXNL1 limited to
 the PITH region was found outside *O. dioica*, except in *C. intestinalis*, whose RefSeq proteome holds a 123-residue
 protein of this kind (XP_078490523.1; a glycine and six residues at that position), grouped with the *Ciona* TXNL1 in
-the tree (96) and absent from the *C. robusta* proteome; in *O. longicauda*, two PITH fragments at contig ends group
+the tree (97) and absent from the *C. robusta* proteome; in *O. longicauda*, two PITH fragments at contig ends group
 with the TXNL1 of the Oikopleuridae, not with TXNL1.b. No TXNL1 was found in the RefSeq proteomes of
 *Phallusia mammillata* and *B. floridae*, which hold a PITHD1 homolog (blastp, E ≤ 10^-5^), nor in their genomes
 (tblastn); in the genomes of *Styela clava* and *Botryllus schlosseri*, whose proteomes hold TXNL1, tblastn found no
 locus with TXNL1.b and, with TXNL1.a, only the thioredoxin part of the *B. schlosseri* gene. Among the genomes examined,
 TXNL1.b, its selenocysteine and its SECIS are found in *O. dioica* only.
 
-<!-- Check the supports (92, 95, 100, 96) on the rerun of make txnl1-paralogs (human NP_004777.1 in the tree; supports
-read by bipartition). In OSKA2016, TXNL1.a is part of a 756-residue model that also holds a GPR107-like protein,
+<!-- Supports checked on the rerun of make txnl1-paralogs (2026-10-27; human NP_004777.1 in the tree; supports read by
+bipartition): 92, 95, 100, 97. In OSKA2016, TXNL1.a is part of a 756-residue model that also holds a GPR107-like protein,
 encoded upstream on the same strand; OKI2018 and OdB3 annotate the two genes separately (579 and 2,152 nt between the
 tblastn hits), and no transcript of the three assemblies aligns to both: a merged model, possibly at an operon (to
 check with the spliced leader). -->
@@ -747,7 +747,10 @@ the known selenoprotein families, in three *O. dioica* assemblies; drawn as in F
 the human and *C. intestinalis* TXNL1 proteins (UniProt, RefSeq), with the Pfam domains of the human protein;
 the residue aligned to the selenocysteine is a glycine in both; for KKSU, which has no homolog outside the
 Oikopleuridae, the *O. albicans* frame of the comparative screen, on the coordinates of the OKI2018 gold-standard
-protein. Percentage of similar residues to the OdB3 protein as in Figure REANNOTATION.
+protein. For TXNL1.b, its paralog TXNL1.a in each assembly (black): public model, aligned on the codon aligned to the
+selenocysteine of TXNL1.b, and protein (the OSKA2016 model, merged with an upstream GPR107-like gene, drawn for the
+part aligned to human TXNL1). Percentage of similar residues to the OdB3 TXNL1.b or KKSU protein as in Figure
+REANNOTATION.
 
 ![Figure TXNL1-TREE](../figures/txnl1_pith_tree.png)
 

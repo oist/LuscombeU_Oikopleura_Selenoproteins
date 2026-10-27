@@ -23,7 +23,9 @@ The assembly names and the labels of the protein rows (one row per reference spe
 proteins) are written once per row of genes, on the left; the key is at the bottom of the page (with --fit, right
 below the genes, and the page is cut below it). Sizes are physical (mm), so that rows of genes keep the same density.
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
-of step 2. Output: <out>/<name>.{pdf,svg,png}.
+of step 2; when figures/inputs/reannotation_<gene>.paralogs.{tsv,fa} exist (make txnl1-paralogs), the paralog of each
+assembly is drawn below the gold-standard model (public model, aligned on its codon aligned to the selenocysteine)
+and its protein below the gold-standard proteins. Output: <out>/<name>.{pdf,svg,png}.
 """
 import argparse, collections, csv, math, os, sys
 import matplotlib
@@ -41,6 +43,7 @@ plt.rcParams.update({"svg.fonttype": "none", "font.family": "sans-serif", "font.
                      "font.size": 6, "hatch.linewidth": 0.4, "xtick.labelsize": 5, "xtick.major.size": 1.5,
                      "xtick.major.width": 0.4, "axes.linewidth": 0.4})
 GOLD, PUBLIC, OTHER, SEC, SECIS, DOM = rf.GOLD, rf.PUBLIC, rf.OTHER, rf.SEC, rf.SECIS, rf.DOM
+PARALOG = "0.1"                            # paralog of the gene (public model and protein)
 GENOMES, NAMES, SITE_COLOURS = rf.GENOMES, rf.NAMES, rf.SITE_COLOURS
 MM = 1 / 25.4
 PAGE_W, PAGE_H = 210, 297                  # mm
@@ -95,6 +98,17 @@ def load(gene, a):
             if l.startswith(">"): name = l[1:].split("|")[0]
             elif name == gene: d["gprot"][g] = l.strip()
     d["secis"] = rf.secis_hits(a.cm, a.gold, gene)
+    d["par"], d["par_seqs"] = {}, {}
+    if os.path.exists(f"{a.inputs}/reannotation_{gene}.paralogs.tsv"):
+        for r in csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.paralogs.tsv"), delimiter="\t"):
+            d["par"].setdefault(r["assembly"], {"name": r["name"]})[r["field"]] = r["value"]
+        d["par_seqs"] = rf.read_fasta(f"{a.inputs}/reannotation_{gene}.paralogs.fa")
+    xp = {}
+    for g, m in d["par"].items():   # nucleotides from the codon aligned to the selenocysteine
+        c0, c1 = map(int, m["anchor"].split("-"))
+        xp[g] = (lambda p, s0=c0: p - s0) if m["strand"] == "+" else (lambda p, s1=c1: s1 - p)
+    pspan = {g: (min(xp[g](int(v)) for v in m["span"].split("-")), max(xp[g](int(v)) for v in m["span"].split("-")) + 1)
+             for g, m in d["par"].items()}
     xr = {g: ((lambda p, s0=sec[0]: p - s0) if st == "+" else (lambda p, s1=sec[1]: s1 - p))
           for g, (st, ex, cds, sec) in d["gold"].items() if ex}       # nucleotides from the TGA
     span = {g: (min(min(xr[g](p), xr[g](q)) for p, q in d["gold"][g][1]),
@@ -102,7 +116,8 @@ def load(gene, a):
     longest = max(b - a_ for a_, b in span.values())
     d["margin"] = a.margin or int(min(400, max(150, 0.15 * longest)))
     win = {g: (v[0] - d["margin"], v[1] + d["margin"]) for g, v in span.items()}
-    X0, X1 = min(v[0] for v in win.values()), max(v[1] for v in win.values())
+    pwin = {g: (v[0] - d["margin"], v[1] + d["margin"]) for g, v in pspan.items()}
+    X0, X1 = min(v[0] for v in list(win.values()) + list(pwin.values())), max(v[1] for v in list(win.values()) + list(pwin.values()))
     # stretches longer than --long nt without any drawn exon (a long intron) are drawn --short nt long, with a break
     feats = []
     for g in xr:
@@ -111,6 +126,10 @@ def load(gene, a):
             for p, q in rf.blocks(m["exons"]):
                 a0, a1 = max(min(xr[g](p), xr[g](q)), win[g][0]), min(max(xr[g](p), xr[g](q)) + 1, win[g][1])
                 if a1 > a0: feats.append((a0, a1))
+    for g, m in d["par"].items():
+        for p, q in rf.blocks(m["exons"]):
+            a0, a1 = max(min(xp[g](p), xp[g](q)), pwin[g][0]), min(max(xp[g](p), xp[g](q)) + 1, pwin[g][1])
+            if a1 > a0: feats.append((a0, a1))
     feats.sort()
     breaks, end = [], feats[0][1]
     for a0, a1 in feats[1:]:
@@ -126,6 +145,8 @@ def load(gene, a):
     d["fwd"], d["raw_breaks"] = fwd, breaks
     d["breaks"] = [(fwd(b0), fwd(b1)) for b0, b1 in breaks]
     d["x"] = {g: (lambda p, f=xr[g]: fwd(f(p))) for g in xr}
+    d["xp"] = {g: (lambda p, f=xp[g]: fwd(f(p))) for g in xp}
+    d["pwin"] = {g: (fwd(v[0]), fwd(v[1])) for g, v in pwin.items()}
     d["xr"] = xr
     d["span"] = {g: (fwd(v[0]), fwd(v[1])) for g, v in span.items()}
     d["win"] = {g: (fwd(v[0]), fwd(v[1])) for g, v in win.items()}
@@ -158,6 +179,10 @@ def notes(d):
             text = "no gold-standard model" + (f": {d['gold_notes'][g]}." if d["gold_notes"].get(g) else ".")
         elif d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
         out.append((NAMES[g], text))
+    if d["par"]:
+        lbl = next(iter(d["par"].values())).get("label", "paralog")
+        out.append((lbl, "; ".join(f"{NAMES[g]} {m.get('database', '')} {short(m['name'])}" + (f" ({m['note']})" if m.get("note") else "")
+                                   for g, m in sorted(d["par"].items(), key=lambda kv: GENOMES.index(kv[0]))) + "."))
     out.append(("proteins", "; ".join(f"{lbl} {v.get('accession', '').replace('UniProt ', '')}" + (f" ({v['note']})" if v.get("note") else "")
                                       for lbl, v in d["refs"].items()) + "."))
     return out
@@ -209,14 +234,18 @@ def secis_box(ax, x0, x1, y, strong=True):
 
 
 def layout_models(genes):
-    """y (mm, 0 at the top, downwards) of the public and gold-standard tracks of each assembly, the same for the
-    genes of a row, and the height of the part."""
+    """y (mm, 0 at the top, downwards) of the public, gold-standard and (when a gene of the row has one) paralog
+    tracks of each assembly, the same for the genes of a row, and the height of the part."""
     y, tracks = -3.4, {}
+    has_par = any(d["par"] for d in genes)
     for g in GENOMES:
         y -= 2.2                       # letters of the models and counts of exons beyond the window
         pub = y
         y -= PAIR                      # public and gold-standard models of one assembly: closer than two assemblies
         tracks[g] = {"pub": pub, "gold": y}
+        if has_par:
+            y -= PAIR + 0.6
+            tracks[g]["par"] = y
         y -= 2.0
     return tracks, -y + 0.4
 
@@ -263,6 +292,20 @@ def draw_models(ax, d, tracks, col_w):
             end = max(end, x1)
             ax.text(end + 0.8 * ntmm, t["gold"], f"{bits:.0f}", fontsize=4.5, color=SECIS, va="center")
         last_gold = t["gold"]
+        if g in d["par"]:
+            m, xpg = d["par"][g], d["xp"][g]
+            plo, phi = d["pwin"][g]
+            e, c = rf.blocks(m["exons"]), rf.blocks(m.get("cds", ""))
+            touches = lambda b: max(xpg(b[0]), xpg(b[1])) + 1 > plo and min(xpg(b[0]), xpg(b[1])) < phi
+            e_in, c_in = [b for b in e if touches(b)], [b for b in c if touches(b)]
+            drawn = draw_model(ax, t["par"], e_in, c_in, xpg, PARALOG, sites=rf.site_map(e, m.get("sites", "")), clip=(plo, phi))
+            mark_breaks(ax, d, t["par"], drawn, ntmm)
+            if e_in:
+                xm = max(plo, min(min(xpg(p), xpg(q)) for p, q in e_in)); xM = min(phi, max(max(xpg(p), xpg(q)) + 1 for p, q in e_in))
+                n_left = sum(max(xpg(p), xpg(q)) < plo for p, q in e); n_right = sum(min(xpg(p), xpg(q)) > phi for p, q in e)
+                if n_left: ax.text(xm, t["par"] + 1.0, f"◀ {n_left}", fontsize=4.5, color=PARALOG, va="bottom")
+                if n_right: ax.text(xM, t["par"] + 1.0, f"{n_right} ▶", fontsize=4.5, color=PARALOG, va="bottom", ha="right")
+            last_gold = t["par"]
     ax.plot([1.5, 1.5], [last_gold - 1.2, -2.4], color=SEC, lw=0.5, ls=(0, (2, 1.5)), zorder=1)
     ax.text(1.5, -2.3, "TGA", color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
     ax.set_xlim(X0, X1)
@@ -311,7 +354,12 @@ def layout_proteins(genes):
     gold = []
     for _ in GENOMES:
         gold.append(y); y -= 2.3
-    return refs, gold, -(y + 2.3) + 1.6
+    par = []
+    if any(d["par_seqs"] for d in genes):
+        y -= 0.5
+        for _ in GENOMES:
+            par.append(y); y -= 2.3
+    return refs, gold, par, -(y + 2.3) + 1.6
 
 
 SIM_TO = "OdB3"   # gold-standard protein to which the similarity of the other proteins is given
@@ -330,7 +378,7 @@ def similarity(q, ref, aligner):
     return 100 * similar / columns
 
 
-def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
+def draw_proteins(ax, d, refs_y, gold_y, par_y, col_w, fig):
     from Bio import Align
     from Bio.Align import substitution_matrices
     al = Align.PairwiseAligner(mode="local", substitution_matrix=substitution_matrices.load("BLOSUM62"),
@@ -375,6 +423,9 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
         m = m_first if g == first else {i: m_first[j - 1] for i, j in rf.protein_map(d["gprot"][g], d["gprot"][first], glob).items()
                                         if j - 1 in m_first}
         rows.append((gold_y[k], d["gprot"][g], GOLD, g, m))
+    for k, g in enumerate(GENOMES):   # paralogs: on the axis through their own local alignment
+        s = d["par_seqs"].get(f"paralog:{g}")
+        if s and par_y: rows.append((par_y[k], s, PARALOG, f"paralog:{g}", rf.protein_map(s, axis, al)))
     ref = d["gprot"].get(SIM_TO)
     sim = {lbl: similarity(p, ref, glob) for _, p, _, lbl, _ in rows if ref and lbl != SIM_TO}
     ends = [(m[min(m)] - min(m), m[max(m)] + len(p) - 1 - max(m)) for _, p, _, _, m in rows]   # with unaligned residues
@@ -424,7 +475,7 @@ def draw_proteins(ax, d, refs_y, gold_y, col_w, fig):
     ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
-def key(fig, used_sites, sources, top=None):
+def key(fig, used_sites, sources, top=None, paralog=None):
     """Key at the bottom of the page (or below the genes, its top at top mm): items one after the other, a new line
     when the page width is reached; one group for the gene models, one for the proteins. Returns its height and its
     bottom (mm)."""
@@ -457,6 +508,9 @@ def key(fig, used_sites, sources, top=None):
                "number of exons beyond the drawn region", "black"),
               (lambda ax, cx, y: ax.text(cx + 6, y, "a b", fontsize=5, fontweight="bold", color=PUBLIC, va="center", ha="right"),
                "public models of the same row, as named in the paragraph", "black")]
+    if paralog:
+        models.insert(3, (lambda ax, cx, y: exon(ax, cx, y, PARALOG),
+                          f"{paralog} (public model; aligned on its codon aligned to the selenocysteine)", "black"))
     sites = ["GT-AG"] + [k for k in SITE_COLOURS if k in used_sites] + \
             (["other"] if any(v not in SITE_COLOURS and v not in ("GT-AG", "?", "") for v in used_sites) else [])
     introns = [(None, "intron splice sites (drawn length unchanged):", "black")]
@@ -472,7 +526,8 @@ def key(fig, used_sites, sources, top=None):
                  f"% similar residues to the {rf.NAMES[SIM_TO]} protein (BLOSUM62 > 0; global alignment, aligned part)", "black"),
                 (None, sources, "black")]
     lines, line, cx = [], [], 0
-    for group in (models[:4], models[4:], introns, proteins):
+    split = 5 if paralog else 4
+    for group in (models[:split], models[split:], introns, proteins):
         for f, text, col in group:
             w = (G if f else 0) + width_mm(text, 5.5) + 3.5
             if line and cx + w > W: lines.append(line); line, cx = [], 0
@@ -525,7 +580,7 @@ def main():
         row = genes[r:r + 3]
         tracks, hA = layout_models(row)
         paras, indent, hN = layout_notes(row, col_w)
-        refs_y, gold_y, hB = layout_proteins(row)
+        refs_y, gold_y, par_y, hB = layout_proteins(row)
         axA_bottom = top - 3.5 - hA
         axB_bottom = axA_bottom - 6.0 - hB
         axN_bottom = axB_bottom - 7.0 - hN          # paragraph below the proteins (axis and its label above it)
@@ -541,7 +596,7 @@ def main():
             draw_notes(axN, paras[d["gene"]], indent)
             axB = fig.add_axes([fx(left), fy(axB_bottom), fx(col_w), fy(hB)])
             axB.set_ylim(-hB, 0)
-            draw_proteins(axB, d, refs_y, gold_y, col_w, fig)
+            draw_proteins(axB, d, refs_y, gold_y, par_y, col_w, fig)
             if k == 0:
                 lab = blended_transform_factory(fig.transFigure, axA.transData)
                 for g in GENOMES:
@@ -549,6 +604,10 @@ def main():
                     axA.text(fx(LEFT - 1.5), t["pub"], DB[g], transform=lab, fontsize=5, ha="right", va="center", color="0.25")
                     axA.text(fx(LEFT - 1.5), t["gold"], "gold standard", transform=lab, fontsize=5.5, ha="right", va="center", color=GOLD)
                     axA.text(fx(2), t["pub"], NAMES[g], transform=lab, fontsize=5.5, fontweight="bold", ha="left", va="center")
+                    pm = next((x["par"][g] for x in row if g in x["par"]), None)
+                    if "par" in t and pm:
+                        axA.text(fx(LEFT - 1.5), t["par"], f"{pm.get('label', 'paralog')}, {pm.get('database', '')}", transform=lab,
+                                 fontsize=5.5, ha="right", va="center", color=PARALOG)
                 axA.text(fx(LEFT - 1.5), -hA - 0.5, "nt from TGA", transform=lab, fontsize=5, ha="right", va="top", color="0.25")
                 labB = blended_transform_factory(fig.transFigure, axB.transData)
                 for sp, yy in refs_y.items():
@@ -558,9 +617,16 @@ def main():
                     axB.text(fx(LEFT - 1.5), yy, NAMES[g], transform=labB, fontsize=5.5, ha="right", va="center", color=GOLD)
                 axB.text(fx(4), (gold_y[0] + gold_y[-1]) / 2, "gold standard", transform=labB, fontsize=5.5, rotation=90,
                          ha="center", va="center", color=GOLD)
+                if par_y:
+                    plabel = next((next(iter(x["par"].values())).get("label", "paralog") for x in row if x["par"]), "paralog")
+                    for g, yy in zip(GENOMES, par_y):
+                        axB.text(fx(LEFT - 1.5), yy, NAMES[g], transform=labB, fontsize=5.5, ha="right", va="center", color=PARALOG)
+                    axB.text(fx(9), (par_y[0] + par_y[-1]) / 2, plabel, transform=labB, fontsize=5.5, rotation=90,
+                             ha="center", va="center", color=PARALOG)
         rulers.append((row_top, row_bottom))
         top = axN_bottom - 6
-    key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None)
+    plabel = next((next(iter(d["par"].values())).get("label", "paralog") for d in genes if d["par"]), None)
+    key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel)
     # thin rulers: between rows of genes and above the key, and between the columns of each row
     from matplotlib.lines import Line2D
     rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)

@@ -7,7 +7,7 @@ The seeds are realigned to the model with cmalign, and so are two other sets, wi
   of the model on the top strand of each copy (cmsearch --max); the --decoys best of these (by default as many as the
   seeds). They show how much pairing a structural alignment gives to sequences that are not SECIS elements.
 - gold-standard hits: the best hit of the model in each of these windows (cmsearch --max); among them the genes that
-  joined the gold standard after training (--extra: TXNL1, KKSU), and the orthologous hits of the three O. dioica
+  joined the gold standard after training (--extra: TXNL1.b, KKSU), and the orthologous hits of the three O. dioica
   assemblies, compared by sequence (see ortholog_events).
 The cmsearch tables are kept in --work and reused when the model and the sequences are unchanged.
 
@@ -304,7 +304,7 @@ def main():
     ap.add_argument("--cm", default="results/models/oikopleura_secis.cm")
     ap.add_argument("--seeds", default="results/models/oikopleura_secis.seeds.fa")
     ap.add_argument("--windows", nargs="+", default=[f"curation/gold_standard/{g}.after_stop.fa" for g in ("OKI", "OSKA", "OdB3")])
-    ap.add_argument("--extra", nargs="+", default=["TXNL1", "KKSU"], help="genes added to the gold standard after training")
+    ap.add_argument("--extra", nargs="+", default=["TXNL1.b", "KKSU"], help="genes added to the gold standard after training")
     ap.add_argument("--baseline", default="curation/baseline_sec_genes.tsv", help="gene families")
     ap.add_argument("--training-windows", default="results/tables/stage2_secis_v2_windows.tsv",
                     help="lengths of the training windows (some are shortened at the next gene)")

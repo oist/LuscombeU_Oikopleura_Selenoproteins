@@ -180,7 +180,7 @@ def main():
     ap.add_argument("--genomes", nargs="+", default=["OKI", "OSKA", "OdB3"])
     ap.add_argument("--samplesheet", default="stage1/samplesheet.csv")
     ap.add_argument("--gold", default="curation/gold_standard")
-    ap.add_argument("--gene", default="TXNL1", help="gold-standard gene name")
+    ap.add_argument("--gene", default="TXNL1.b", help="gold-standard gene name")
     ap.add_argument("--human", default="data/genomes/Hsap")
     ap.add_argument("--human-gene", default="TXNL1")
     ap.add_argument("--human-txnl1", default="NP_004777.1")

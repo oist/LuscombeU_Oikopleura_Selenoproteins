@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Step 5 of the plan (docs/plan.md, 2026-10-24): candidate selenoprotein genes outside the baseline
-(curation/candidates.tsv; proteins in curation/candidates.faa, U for the candidate selenocysteine): TXNL1
+(curation/candidates.tsv; proteins in curation/candidates.faa, U for the candidate selenocysteine): TXNL1.b
 (thioredoxin-like protein 1), for which the rule below was fixed in advance, and the family found by the screens of
 step 4 (provisional name KKSU, after its C-terminus), to which the same rule is applied.
 
@@ -154,7 +154,9 @@ def tblastn_genome(g, a, sheet, prot, secis):
     d = f"{a.work}/{g}"
     os.makedirs(d, exist_ok=True)
     done = f"{d}/rows.json"
-    if os.path.exists(done): return json.load(open(done))   # a rerun does not search the genome again
+    if os.path.exists(done):   # a rerun does not search the genome again, unless the candidates changed (a renaming)
+        rows = json.load(open(done))
+        if {r["candidate"] for r in rows} <= set(prot): return rows
     fa = f"{d}/genome.fa"
     lengths = {}
     with open(fa, "w") as o:

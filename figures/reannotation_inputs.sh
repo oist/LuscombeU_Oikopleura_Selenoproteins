@@ -133,7 +133,7 @@ run --gene SELENOW_pair2 --embl FN653018.1 --reference "human=P63302" \
 # Genes added to the baseline in step 5 (2026-10-26), drawn in their own figure (make reannotation-pages:
 # reannotation_candidates). KKSU has no homolog outside the Oikopleuridae: its reference is the O. albicans open stretch of
 # the comparative screen of step 4 (curation/candidates.faa), and the page draws its proteins on the OKI2018 protein.
-run --gene TXNL1 --embl FN653019.1 --reference "human=O43396" \
+run --gene TXNL1.b --embl FN653019.1 --reference "human=O43396" \
     --reference-fasta "C. intestinalis=figures/inputs/reference_TXNL1_Cint.fa:XP_078490413.1:XP_078490413.1" \
     --note "OKI:XP_081630352.1=same exon chain; TGA read as stop" \
            "OSKA:Oidioi.CG.OSKA2016.S27.g15032.01.t=same coding exons; TGA read as stop" \

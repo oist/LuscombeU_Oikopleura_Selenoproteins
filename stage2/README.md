@@ -220,7 +220,7 @@ dinucleotide-shuffled copies of each gold-standard window, `cmsearch --max`, the
 alignment gives complementary bases to sequences that are not SECIS elements. Changes between the orthologous SECIS
 hits of the three *O. dioica* assemblies, aligned by sequence to the OKI2018 hit (`--reference-genome`), counted by
 three-taxon parsimony and compared with the fraction of new bases that would keep a canonical pair (transition rate
-from the other unpaired positions). The SECIS hits of TXNL1 and KKSU (not in training) are described as the seeds.
+from the other unpaired positions). The SECIS hits of TXNL1.b and KKSU (not in training) are described as the seeds.
 cmsearch tables are cached in `work/stage2/secis_model_description/` (the decoy search takes about 6 minutes with
 8 CPUs). Figures: `figures/secis_model_figures.py` (also classes the genome-scan hits at the genome threshold,
 `results/tables/stage2_secis_scan_classes.tsv`).
@@ -237,30 +237,31 @@ OKI2018 chromosome 2 and two OdB3 contigs (with the gold-standard proteins stand
 
 ## Candidate genes (`candidate_genes.py`, `make candidate-genes`)
 
-Step 5 of the plan of 2026-10-24. Candidates: `curation/candidates.tsv` and `curation/candidates.faa` (TXNL1; the
-KKSU family of step 4). The rule fixed in advance for TXNL1, applied to every candidate: TGA at the curated position
+Step 5 of the plan of 2026-10-24. Candidates: `curation/candidates.tsv` and `curation/candidates.faa` (TXNL1.b; the
+KKSU family of step 4). The rule fixed in advance for TXNL1.b, applied to every candidate: TGA at the curated position
 and a SECIS of at least 20 bits (Oikopleura model) in the 2 kb after the next stop codon, in the three *O. dioica*
 assemblies; then tblastn against the appendicularian, tunicate and amphioxus genomes (codon aligned to the
 selenocysteine, codons to the next stop, SECIS after it with both models) and blastp against the RefSeq proteomes.
-Tested on OKI2018 chromosome 2 and the OdB3 TXNL1 contig (contexts of `candidates.tsv` reproduced).
+Tested on OKI2018 chromosome 2 and the OdB3 TXNL1.b contig (contexts of `candidates.tsv` reproduced).
 
 ## TXNL1 homologs (`txnl1_homologs.py`, `make txnl1-homologs`)
 
-Whether the *O. dioica* TXNL1 (168 residues, PITH region only) and human TXNL1 are reciprocal best hits, what the next
-hits of *O. dioica* TXNL1 are in its own assembly, and where the thioredoxin part of human TXNL1 (residues 1-117) and
-its PITH part (118-289) hit. In each of the three *O. dioica* assemblies: blastp of *O. dioica* TXNL1 against the human
+Whether *O. dioica* TXNL1.b (168 residues, PITH region only, selenocysteine) and human TXNL1 are reciprocal best hits,
+what the next hits of TXNL1.b are in its own assembly, and where the thioredoxin part of human TXNL1 (residues 1-117) and
+its PITH part (118-289) hit. In each of the three *O. dioica* assemblies: blastp of TXNL1.b against the human
 RefSeq proteome (hits grouped by gene, margin to the next gene); blastp of human TXNL1 and of its two parts against
 the proteins of the assembly (annotated coding sequences translated from the genome, and the gold-standard proteins)
-and tblastn against its genome (colinear HSPs grouped into loci); the same with *O. dioica* TXNL1 itself; each top
-subject placed relative to the TXNL1 gold-standard locus and back-searched against the human proteome (blastp of the
+and tblastn against its genome (colinear HSPs grouped into loci); the same with TXNL1.b itself; each top
+subject placed relative to the TXNL1.b gold-standard locus and back-searched against the human proteome (blastp of the
 protein, blastx of the locus). Outputs `results/tables/stage2_txnl1_homologs.tsv` and
 `stage2_txnl1_homologs_summary.tsv`. Tested on synthetic data (a split TXNL1-like gene, a thioredoxin gene next to
 it, a PITH paralog and an unannotated copy).
 
-## The two TXNL1-related genes (`txnl1_paralogs.py`, `make txnl1-paralogs`)
+## TXNL1.a and TXNL1.b (`txnl1_paralogs.py`, `make txnl1-paralogs`)
 
-After `make txnl1-homologs`: *O. dioica* has a full-length TXNL1 (thioredoxin domain and PITH region; OKI2018
-XP_081633344.1), the reciprocal best hit of human TXNL1, and the selenocysteine copy, with the PITH region only. With
+After `make txnl1-homologs`: *O. dioica* has a full-length TXNL1, TXNL1.a (thioredoxin domain and PITH region;
+OKI2018 XP_081633344.1), the reciprocal best hit of human TXNL1, and the selenocysteine copy TXNL1.b, with the PITH
+region only (names after the tunicate nomenclature guidelines, Stolfi et al. 2015). With
 the OKI2018 copies as queries: (1) in the three assemblies, the residue of the full-length copy and of human TXNL1
 aligned to the selenocysteine; (2) tblastn against the appendicularian, tunicate and amphioxus genomes: each site
 (colinear HSPs of either query) with its structure (full-length, PITH only), the codon aligned to the selenocysteine,
@@ -269,7 +270,8 @@ RefSeq proteomes and the annotated *O. dioica* proteins; (4) a tree of the PITH 
 and genome sites without an annotated protein; MAFFT, ClipKIT, IQ-TREE), rooted on PITHD1; (5) the neighbourhood of
 the full-length copy (a GPR107-like gene: merged model in OSKA2016; transcripts aligned to both). Outputs
 `results/tables/stage2_txnl1_paralogs_{queries,sites,proteins,tree,neighbours}.tsv`, `results/trees/txnl1_pith/`,
-`figures/txnl1_pith_tree.{png,pdf}`. Tested on synthetic data (two *O. dioica*-like assemblies, one with a merged
+`figures/txnl1_pith_tree.{png,pdf}`, and the TXNL1.a models and proteins drawn with TXNL1.b in Figure CANDIDATES
+(`figures/inputs/reannotation_TXNL1.b.paralogs.{tsv,fa}`: model, codon aligned to the selenocysteine, drawn span). Tested on synthetic data (two *O. dioica*-like assemblies, one with a merged
 model, a genome without annotation holding both copies, and a proteome with TXNL1 and PITHD1).
 
 ## Orthology of the selenoproteins

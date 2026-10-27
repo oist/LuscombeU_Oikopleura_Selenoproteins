@@ -179,7 +179,7 @@ secis-scan:
 uga-screen:
 	python3 stage2/uga_secis_screen.py screen
 
-# Step 5: candidate genes outside the baseline (curation/candidates.tsv and .faa: TXNL1, the KKSU family): the rule
+# Step 5: candidate genes outside the baseline (curation/candidates.tsv and .faa: TXNL1.b, the KKSU family): the rule
 # fixed in advance in the three O. dioica assemblies, tblastn against the appendicularian, tunicate and amphioxus
 # genomes (codon at the selenocysteine position, SECIS after the stop codon) and blastp against RefSeq proteomes
 # (about an hour), for example
@@ -200,12 +200,12 @@ candidate-genes:
 	python3 stage2/candidate_genes.py --jobs 4
 
 # TXNL1 homologs in the three O. dioica assemblies: reciprocal best hits with human TXNL1, next hits of O. dioica
-# TXNL1 in its own assembly, hits of the thioredoxin and PITH parts of human TXNL1 (a few minutes), for example
+# TXNL1.b in its own assembly, hits of the thioredoxin and PITH parts of human TXNL1 (a few minutes), for example
 #   sbatch -p compute --cpus-per-task=4 --mem=16G --time=1:00:00 scripts/run_in_container.sh make txnl1-homologs
 txnl1-homologs:
 	python3 stage2/txnl1_homologs.py
 
-# The two TXNL1-related genes of O. dioica (full-length TXNL1 and the selenocysteine copy, PITH region only) in the
+# The two TXNL1 genes of O. dioica (TXNL1.a, full-length, and TXNL1.b, selenocysteine, PITH region only) in the
 # other genomes and proteomes (structure, codon at the selenocysteine position, SECIS), a tree of the PITH regions
 # rooted on PITHD1, and the neighbourhood of the full-length copy (GPR107-like gene; about an hour), for example
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=6:00:00 scripts/run_in_container.sh make txnl1-paralogs
@@ -256,13 +256,13 @@ machinery-scheme:
 # SEPHS2; page 2, the Rdx family (SELENOW paralogs and SELENOT), then SELENOF, SELENOK and SELENOS.
 REANNOTATION_PAGE1 = GPX_PAR GPX_chr1a GPX_chr1b GPX_chr2 DIO_PAR DIO_chr1 TXNRD SELENOO SEPHS2
 REANNOTATION_PAGE2 = SELENOW_PAR SELENOW_chr1a SELENOW_chr2 SELENOW_pair1 SELENOW_pair2 SELENOT SELENOF SELENOK SELENOS
-# genes added to the baseline in step 5 (2026-10-26), drawn in their own figure in the same style
-REANNOTATION_CANDIDATES = TXNL1 KKSU
+# genes added to the baseline in step 5 (2026-10-26), drawn in their own figure in the same style; TXNL1.b with its
+# paralog TXNL1.a (figures/inputs/reannotation_TXNL1.b.paralogs.*, written by make txnl1-paralogs)
+REANNOTATION_CANDIDATES = TXNL1.b KKSU
 reannotation-pages:
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE1) --name reannotation_page
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_PAGE2) --name reannotation_page2
 	python3 figures/reannotation_page.py --genes $(REANNOTATION_CANDIDATES) --name reannotation_candidates --fit \
-	  --labels TXNL1=TXNL1.b \
 	  --sources "human: UniProt; C. intestinalis: RefSeq; O. albicans: open stretch of the comparative screen on its genome (accessions in the paragraphs)"
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)

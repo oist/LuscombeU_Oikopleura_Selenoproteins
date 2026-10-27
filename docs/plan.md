@@ -1116,3 +1116,12 @@ no earlier step waits for them.
   the capitalisation is settled, so that both changes are made in one pass. Corrections made on the way: the
   P. mammillata and B. floridae proteomes hold no TXNL1 (only a PITHD1 homolog; the earlier text said they held TXNL1);
   TXNL1.b has no CxxC motif.
+- Renaming done (2026-10-27, Charles: "go ahead"): the internal identifier of the selenocysteine gene is now TXNL1.b in
+  curation/ (baseline, candidates, gold standard: identifiers and gene column only; the family stays TXNL1), in
+  results/tables/gold_standard.tsv (gene column), in the figure inputs (reannotation_TXNL1.b.*) and in the script
+  defaults. A rerun of make gold-standard must leave curation/gold_standard/ unchanged (check). The other tables
+  change at the reruns of uga-screen, secis-description, candidate-genes, txnl1-homologs and txnl1-paralogs; the cache
+  of candidate-genes is redone when the candidate names change. Figure CANDIDATES: TXNL1.a (public model aligned on
+  its codon aligned to the selenocysteine, and protein) drawn with TXNL1.b, from
+  figures/inputs/reannotation_TXNL1.b.paralogs.{tsv,fa} written by make txnl1-paralogs. Tree supports checked on the
+  rerun: 92, 95, 100 and 97 (Ciona TXNL1 with the C. intestinalis PITH-only protein).
