@@ -711,6 +711,31 @@ the residue aligned to the selenocysteine is a glycine in both; for KKSU, which 
 Oikopleuridae, the *O. albicans* frame of the comparative screen, on the coordinates of the OKI2018 gold-standard
 protein. Percentage of similar residues to the OdB3 protein as in Figure REANNOTATION.
 
+# Discussion
+
+<!-- To write after the census (step 11 of the plan). Provisional paragraphs below. -->
+
+## What the *Oikopleura* SECIS model has learned
+
+> **Provisional paragraph (2026-10-27).**
+
+The *Oikopleura* SECIS model may have abstracted the appendicularian SECIS element, or only recorded in a compact form
+the elements that our searches found, so that the searches can be repeated on related genomes. The second is enough
+for the census of this study; only the first would make the model a description that lasts rather than a step to be
+replaced. Some results favour abstraction: the model detected windows of species (84 of 111) and of families (81 of
+111) left out of its training; it scored at 29 to 37 bits the SECIS elements of TXNL1 and KKSU, which were not in
+training and differ from the seeds as much as seeds of different genes differ from each other; and the base pairs it
+models are maintained in the evolution of *O. dioica* SECIS elements. Other results point to a record of our searches:
+the seeds were selected through the model itself, by bootstrap from RF00031, so that their uniformity (all with the
+form 2 arrangement and AAA below helix 3) may describe the model as much as the elements; 19 of the 111 training
+windows have no hit with any of the models compared, and may hold SECIS elements of other shapes; and outside the
+appendicularians the model finds few known SECIS elements (3 of 25 human selenoprotein genes, against 16 with
+RF00031), although most of its best hits in ascidian and salp genomes follow selenoprotein genes. We do not settle
+the question here. Whether one model can describe the SECIS elements of all eukaryotes, or several lineage-specific
+models are needed, could be decided by work centred on the SECIS element itself across the tree of life, with
+evaluations that hold out whole lineages and with experimental evidence of selenocysteine insertion; until then, we
+present the model as a description of *Oikopleura* SECIS elements that reproduces our searches on related genomes.
+
 # Methods
 
 <!-- Stage 2 subsections are placeholders until stage 2 is run. -->
