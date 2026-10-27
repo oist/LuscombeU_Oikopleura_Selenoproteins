@@ -244,6 +244,19 @@ assemblies; then tblastn against the appendicularian, tunicate and amphioxus gen
 selenocysteine, codons to the next stop, SECIS after it with both models) and blastp against the RefSeq proteomes.
 Tested on OKI2018 chromosome 2 and the OdB3 TXNL1 contig (contexts of `candidates.tsv` reproduced).
 
+## TXNL1 homologs (`txnl1_homologs.py`, `make txnl1-homologs`)
+
+Whether the *O. dioica* TXNL1 (168 residues, PITH region only) and human TXNL1 are reciprocal best hits, what the next
+hits of *O. dioica* TXNL1 are in its own assembly, and where the thioredoxin part of human TXNL1 (residues 1-117) and
+its PITH part (118-289) hit. In each of the three *O. dioica* assemblies: blastp of *O. dioica* TXNL1 against the human
+RefSeq proteome (hits grouped by gene, margin to the next gene); blastp of human TXNL1 and of its two parts against
+the proteins of the assembly (annotated coding sequences translated from the genome, and the gold-standard proteins)
+and tblastn against its genome (colinear HSPs grouped into loci); the same with *O. dioica* TXNL1 itself; each top
+subject placed relative to the TXNL1 gold-standard locus and back-searched against the human proteome (blastp of the
+protein, blastx of the locus). Outputs `results/tables/stage2_txnl1_homologs.tsv` and
+`stage2_txnl1_homologs_summary.tsv`. Tested on synthetic data (a split TXNL1-like gene, a thioredoxin gene next to
+it, a PITH paralog and an unannotated copy).
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences
