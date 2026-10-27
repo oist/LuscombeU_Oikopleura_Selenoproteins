@@ -33,9 +33,10 @@ NAMES = {"OKI": "O. dioica OKI2018", "OSKA": "O. dioica OSKA2016", "OdB3": "O. d
 GROUPS = [("O. dioica", ["OKI", "OSKA", "OdB3"]), ("other Oikopleura", ["Olon", "Oalb", "Ovan"]),
           ("held-out appendicularians", ["Bsty", "Mery", "Fbor"]), ("non-target tunicates", ["Cint", "Csav", "Scla", "Tdem"])]
 HELIX_COLOURS = {"1": "#4C72B0", "2": "#DD8452", "3": "#55A868"}
-CLASSES = [("selenoprotein gene", "#C44E52"), ("copy of a known selenoprotein", "#DD8452"), ("KKSU", "#8172B3"),
-           ("stage 1 prediction without selenocysteine", "#937860"), ("TGA pair shared with another species", "#64B5CD"),
-           ("nothing found upstream", "#4D4D4D")]
+# class: colour (Okabe-Ito palette), marker, transparency (frequent classes only)
+CLASSES = [("selenoprotein gene", "#D55E00", "o", 0.6), ("copy of a known selenoprotein", "#0072B2", "s", 1.0),
+           ("KKSU", "#CC79A7", "D", 1.0), ("stage 1 prediction without selenocysteine", "#009E73", "^", 1.0),
+           ("TGA pair shared with another species", "#E69F00", "v", 1.0), ("nothing found upstream", "#000000", "X", 0.6)]
 
 
 def tsv(path): return list(csv.DictReader(open(path), delimiter="\t"))
@@ -53,73 +54,87 @@ def save(fig, out):
     print("written", out)
 
 
+LOGO_COLOURS = {"A": "#009E73", "C": "#0072B2", "G": "#E69F00", "U": "#D55E00"}
+
+
+def letter(ax, ch, x, y, w, h, colour):
+    """Draw letter ch filling the box (x, y, w, h) in data coordinates."""
+    from matplotlib.textpath import TextPath
+    from matplotlib.patches import PathPatch
+    from matplotlib.font_manager import FontProperties
+    import matplotlib.transforms as mt
+    tp = TextPath((0, 0), ch, size=1, prop=FontProperties(family="DejaVu Sans", weight="bold"))
+    bb = tp.get_extents()
+    tr = mt.Affine2D().translate(-bb.x0, -bb.y0).scale(w / bb.width, h / bb.height).translate(x, y)
+    ax.add_patch(PathPatch(tr.transform_path(tp), facecolor=colour, edgecolor="none"))
+
+
 def model_figure(a):
     pos = tsv(f"{a.tables}/{a.prefix}_positions.tsv")
     pairs = tsv(f"{a.tables}/{a.prefix}_pairs.tsv")
-    seeds = tsv(f"{a.tables}/{a.prefix}_seeds.tsv")
     summ = {r["measure"]: r["value"] for r in tsv(f"{a.tables}/{a.prefix}_summary.tsv")}
-    fig = plt.figure(figsize=(7.2, 5.2))
-    gs = fig.add_gridspec(2, 3, height_ratios=[1.15, 1], hspace=0.45, wspace=0.42)
-    # A. structure
-    ax = fig.add_subplot(gs[0, :])
     n = len(pos)
     sp = [r for r in pairs if r["set"] == "seeds"]
+    fig = plt.figure(figsize=(7.2, 5.6))
+    gs = fig.add_gridspec(2, 2, width_ratios=[1.15, 1], height_ratios=[1, 1], hspace=0.5, wspace=0.38)
+    # A. structure, logo of the seeds, weight of each position in the model
+    ga = gs[0, 0].subgridspec(4, 1, height_ratios=[1.5, 0.75, 0.55, 0.32], hspace=0.2)
+    ax = fig.add_subplot(ga[0])
     cmap = plt.get_cmap("viridis")
     for r in sp:
         i, j, f = int(r["i"]), int(r["j"]), float(r["canonical_fraction"])
-        c, w = (i + j) / 2, j - i
-        ax.add_patch(Arc((c, 0.9), w, w * 0.32, theta1=0, theta2=180, color=cmap((f - 0.5) / 0.5), lw=1.4))
+        ax.add_patch(Arc(((i + j) / 2, 0), j - i, (j - i) * 0.55, theta1=0, theta2=180, color=cmap((f - 0.5) / 0.5), lw=1.1))
+    ax.set_xlim(0.5, n + 0.5); ax.set_ylim(0, (n - 1) * 0.55 / 2 + 1); ax.axis("off")
+    cax = ax.inset_axes([0.0, 0.84, 0.16, 0.06])
+    cb = fig.colorbar(plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0.5, 1.0)), cax=cax, orientation="horizontal")
+    cb.set_ticks([0.5, 0.75, 1.0]); cb.ax.tick_params(labelsize=5, length=1.5, pad=1)
+    cb.set_label("canonical pairs (seeds)", fontsize=5.5, labelpad=1); cb.ax.xaxis.set_label_position("top")
+    ax.set_title(f"A  consensus structure of the {summ['seeds']} seeds", loc="left", fontweight="bold")
+    # logo
+    ax = fig.add_subplot(ga[1])
     for r in pos:
-        k, frac = int(r["position"]), float(r["most_frequent_fraction"])
-        shade = str(round(0.75 - 0.75 * max(0.0, (frac - 0.4) / 0.6), 2))
-        ax.text(k, 0.25, r["consensus"].upper(), ha="center", va="center", fontsize=6.3, family="monospace",
-                color=shade, fontweight="bold" if frac >= 0.9 else "normal")
-    # helices and motifs
-    hel = collections.defaultdict(list)
-    for r in sp: hel[r["helix"]].append((int(r["i"]), int(r["j"])))
-    for h, ps in hel.items():
-        lo5, hi5 = min(p[0] for p in ps), max(p[0] for p in ps)
-        lo3, hi3 = min(p[1] for p in ps), max(p[1] for p in ps)
-        for x0, x1 in ((lo5, hi5), (lo3, hi3)):
-            ax.plot([x0 - 0.4, x1 + 0.4], [-0.25, -0.25], color=HELIX_COLOURS[h], lw=2, solid_capstyle="butt")
-        ax.text((lo5 + hi5) / 2, -0.75, f"helix {h}", ha="center", va="center", fontsize=6.3, color=HELIX_COLOURS[h])
-    core = [(11, 13, "UGA"), (54, 55, "GA"), (26, 28, "AAA")]
-    for x0, x1, lab in core:
-        ax.plot([x0 - 0.4, x1 + 0.4], [-0.25, -0.25], color="black", lw=2, solid_capstyle="butt")
-        ax.text((x0 + x1) / 2, -0.75, lab, ha="center", va="center", fontsize=6.3)
-    ax.set_xlim(0, n + 1); ax.set_ylim(-1.1, n * 0.16 + 1.2)
-    ax.set_aspect("auto"); ax.axis("off")
-    sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(0.5, 1.0))
-    cb = fig.colorbar(sm, ax=ax, fraction=0.015, pad=0.01, aspect=12)
-    cb.set_label("seeds with a canonical pair", fontsize=6.3); cb.ax.tick_params(labelsize=6)
-    ax.set_title(f"A  consensus of the {summ['seeds']} seeds (66 positions; bold: residue in at least 90% of the seeds)",
-                 loc="left", fontweight="bold")
-    # B. identities
-    ax = fig.add_subplot(gs[1, 0])
-    ident = tsv(f"{a.tables}/{a.prefix}_identities.tsv")
-    vals = [float(r["identity"]) for r in ident]
-    orth = [float(r["identity"]) for r in ident if r["orthologous"] == "yes"]
-    bins = [x / 40 for x in range(8, 41)]
-    ax.hist(vals, bins=bins, color="#BBBBBB", label=f"all pairs of seeds ({len(vals):,})")
-    ax.hist(orth, bins=bins, color="#C44E52", label=f"orthologs, O. dioica ({len(orth)})")
-    ax.set_yscale("log")
-    ax.set_xlabel("identity (consensus positions)"); ax.set_ylabel("pairs of seeds")
-    ax.legend(frameon=False, loc="upper right")
-    ax.set_title("B  diversity of the seeds", loc="left", fontweight="bold")
-    # C. seeds against decoys
-    ax = fig.add_subplot(gs[1, 1])
-    dp = {(r["i"], r["j"]): float(r["canonical_fraction"]) for r in pairs if r["set"] == "decoys"}
+        k, info = int(r["position"]), float(r["information_bits"])
+        cnt = {b: int(r[b]) for b in "ACGU"}
+        tot = sum(cnt.values())
+        y = 0.0
+        for b in sorted("ACGU", key=lambda b: cnt[b]):
+            h = info * cnt[b] / tot
+            if h > 0.01: letter(ax, b, k - 0.43, y, 0.86, h, LOGO_COLOURS[b])
+            y += h
+    ax.set_xlim(0.5, n + 0.5); ax.set_ylim(0, 2)
+    ax.set_yticks([0, 1, 2]); ax.set_ylabel("seeds\n(bits)", fontsize=6)
+    ax.set_xticks([])
+    for side in ("top", "right", "bottom"): ax.spines[side].set_visible(False)
+    # weight in the model
+    ax = fig.add_subplot(ga[2])
+    hel = {}
     for r in sp:
-        ax.scatter(dp[(r["i"], r["j"])], float(r["canonical_fraction"]), s=12, color=HELIX_COLOURS[r["helix"]], zorder=3)
-    ax.plot([0.5, 1], [0.5, 1], color="#999999", lw=0.6, ls="--")
-    for h, c in HELIX_COLOURS.items(): ax.scatter([], [], s=12, color=c, label=f"helix {h}")
-    ax.set_xlim(0.5, 1.02); ax.set_ylim(0.5, 1.02)
-    ax.set_xlabel(f"decoys ({summ['decoys (best hits in shuffled windows)']}; {summ['decoy scores (bits)']} bits)")
-    ax.set_ylabel("seeds")
-    ax.legend(frameon=False, loc="lower right")
-    ax.set_title("C  canonical pairs per base pair", loc="left", fontweight="bold")
+        hel[int(r["i"])] = r["helix"]; hel[int(r["j"])] = r["helix"]
+    core = {11: "UGA", 12: "UGA", 13: "UGA", 54: "GA", 55: "GA", 26: "AAA", 27: "AAA", 28: "AAA"}
+    for r in pos:
+        k = int(r["position"])
+        c = HELIX_COLOURS[hel[k]] if k in hel else ("black" if k in core else "#AAAAAA")
+        ax.bar(k, float(r["model_relative_entropy_bits"]), width=0.8, color=c)
+    ax.set_xlim(0.5, n + 0.5); ax.set_ylim(0, 2)
+    ax.set_yticks([0, 1, 2]); ax.set_ylabel("model\n(bits)", fontsize=6)
+    ax.set_xticks([])
+    for side in ("top", "right", "bottom"): ax.spines[side].set_visible(False)
+    # helices and motifs
+    ax = fig.add_subplot(ga[3])
+    groups = collections.defaultdict(list)
+    for r in sp: groups[r["helix"]].append((int(r["i"]), int(r["j"])))
+    for h, ps in groups.items():
+        for x0, x1 in ((min(p[0] for p in ps), max(p[0] for p in ps)), (min(p[1] for p in ps), max(p[1] for p in ps))):
+            ax.plot([x0 - 0.4, x1 + 0.4], [0.75, 0.75], color=HELIX_COLOURS[h], lw=2, solid_capstyle="butt")
+            ax.text((x0 + x1) / 2, 0.05, h, ha="center", va="center", fontsize=6, color=HELIX_COLOURS[h])
+    for x0, x1, lab in ((11, 13, "UGA"), (54, 55, "GA"), (26, 28, "AAA")):
+        ax.plot([x0 - 0.4, x1 + 0.4], [0.75, 0.75], color="black", lw=2, solid_capstyle="butt")
+        ax.text((x0 + x1) / 2, 0.05, lab, ha="center", va="center", fontsize=6)
+    ax.set_xlim(0.5, n + 0.5); ax.set_ylim(-0.4, 1); ax.axis("off")
+    ax.text(0.5, -0.45, "consensus position 1-66 (helices 1, 2, 3 coloured; core motifs black)", ha="left", va="top",
+            fontsize=5.5, color="#555555", transform=ax.transData)
     # D. orthologs
-    ax = fig.add_subplot(gs[1, 2])
+    ax = fig.add_subplot(gs[0, 1])
     bars = []
     for kind, lab in (("single", "single\nchange"), ("double", "double\nchange")):
         k, nn = map(int, summ[f"orthologs: {kind} changes from a canonical pair, kept canonical"].split("/"))
@@ -138,11 +153,39 @@ def model_figure(a):
     ax.legend(frameon=False, loc="upper center", ncol=2, bbox_to_anchor=(0.5, 1.02), handlelength=1, columnspacing=0.8)
     rates = []
     for cat, lab in (("paired", "paired"), ("core", "core motifs"), ("other unpaired", "other unpaired")):
-        s, c = int(summ[f"orthologs: {cat} sites"]), int(summ[f"orthologs: {cat} sites with a change"])
-        rates.append(f"{lab} {100 * c / s:.0f}%")
-    ax.text(0.5, -0.36, "sites that differ: " + ", ".join(rates), transform=ax.transAxes, ha="center", fontsize=6)
-    ax.set_title(f"D  orthologs ({summ['orthologs: genes compared (three assemblies)']} genes, 3 assemblies)",
+        s_, c = int(summ[f"orthologs: {cat} sites"]), int(summ[f"orthologs: {cat} sites with a change"])
+        rates.append(f"{lab} {100 * c / s_:.0f}%")
+    ax.text(0.5, -0.3, "positions that differ: " + ", ".join(rates), transform=ax.transAxes, ha="center", fontsize=6)
+    ax.set_title(f"D  orthologous SECIS, {summ['orthologs: genes compared (three assemblies)']} genes, 3 assemblies",
                  loc="left", fontweight="bold")
+    # B. identities
+    ax = fig.add_subplot(gs[1, 0])
+    ident = tsv(f"{a.tables}/{a.prefix}_identities.tsv")
+    vals = [float(r["identity"]) for r in ident]
+    orth = [r for r in ident if r["orthologous"] == "yes"]
+    seeds_o = {r[k] for r in orth for k in ("seed_1", "seed_2")}
+    genes_o = {x.split("|")[1].rsplit("/", 1)[0] for x in seeds_o}
+    bins = [x / 40 for x in range(8, 41)]
+    ax.hist(vals, bins=bins, color="#BBBBBB", label=f"all {summ['seeds']} seeds: {len(vals):,} pairs")
+    ax.hist([float(r["identity"]) for r in orth], bins=bins, color="#C44E52",
+            label=f"{len(seeds_o)} O. dioica seeds of {len(genes_o)} genes:\n{len(orth)} pairs of orthologs")
+    ax.set_yscale("log")
+    ax.set_xlabel("identity (consensus positions)"); ax.set_ylabel("pairs of seeds")
+    ax.legend(frameon=False, loc="upper right", fontsize=6)
+    ax.set_title("B  diversity of the seeds", loc="left", fontweight="bold")
+    # C. seeds against decoys
+    ax = fig.add_subplot(gs[1, 1])
+    dp = {(r["i"], r["j"]): float(r["canonical_fraction"]) for r in pairs if r["set"] == "decoys"}
+    for r in sp:
+        ax.scatter(dp[(r["i"], r["j"])], float(r["canonical_fraction"]), s=12, color=HELIX_COLOURS[r["helix"]], zorder=3)
+    ax.plot([0.5, 1], [0.5, 1], color="#999999", lw=0.6, ls="--")
+    for h, c in HELIX_COLOURS.items(): ax.scatter([], [], s=12, color=c, label=f"helix {h}")
+    ax.set_xlim(0.5, 1.02); ax.set_ylim(0.5, 1.02)
+    ax.set_xlabel(f"decoys: best hits in shuffled windows\n({summ['decoys (best hits in shuffled windows)']} hits, "
+                  f"{summ['decoy scores (bits)'].replace('-', ' to ')} bits)")
+    ax.set_ylabel(f"seeds ({summ['seeds']})")
+    ax.legend(frameon=False, loc="lower right")
+    ax.set_title("C  canonical pairs at each base pair", loc="left", fontweight="bold")
     save(fig, f"{a.figures}/secis_model")
 
 
@@ -202,21 +245,24 @@ def scores_figure(a):
     # B. classes
     ax = fig.add_subplot(gs[1, :])
     order = [g for _, gens in GROUPS for g in gens]
-    col = dict(CLASSES)
+    style_of = {lab: (c, m, al) for lab, c, m, al in CLASSES}
     for y, g in enumerate(order):
-        xs = [r for r in classes if r["genome"] == g]
-        for r in xs:
-            jitter = (zlib.crc32(f"{r['contig']}{r['from']}".encode()) % 7 - 3) * 0.06
-            ax.scatter(float(r["bits"]), -y + jitter, s=9, color=col[r["class"]], zorder=3, lw=0)
         if thr.get(g) not in (None, "-"):
-            ax.plot([float(thr[g])] * 2, [-y - 0.35, -y + 0.35], color="#999999", lw=0.8)
+            ax.plot([float(thr[g])] * 2, [-y - 0.32, -y + 0.32], color="#888888", lw=1.0, zorder=1)
+        for lab, _, _, _ in CLASSES:   # frequent classes first, rare ones drawn on top
+            for r in (r for r in classes if r["genome"] == g and r["class"] == lab):
+                c, m, al = style_of[lab]
+                jitter = (zlib.crc32(f"{r['contig']}{r['from']}".encode()) % 5 - 2) * 0.05
+                ax.scatter(float(r["bits"]), -y + jitter, s=13 if m != "X" else 15, color=c, marker=m, alpha=al,
+                           zorder=2 if al < 1 else 3, lw=0)
     ax.set_yticks([-y for y in range(len(order))]); ax.set_yticklabels([NAMES[g] for g in order], style="italic")
     ax.set_xlabel("score (bits)")
-    for lab, c in CLASSES:
+    for lab, c, m, al in CLASSES:
         nn = sum(r["class"] == lab for r in classes)
-        if nn: ax.scatter([], [], s=12, color=c, label=f"{lab} ({nn})")
+        if nn: ax.scatter([], [], s=16, color=c, marker=m, alpha=al, lw=0, label=f"{lab} ({nn})")
+    ax.plot([], [], color="#888888", lw=1.0, marker="|", ls="none", markersize=7, label="genome threshold")
     ax.legend(frameon=False, loc="lower right", fontsize=6)
-    ax.set_title("B  hits at the genome threshold (grey tick), by what lies upstream on the same strand", loc="left",
+    ax.set_title("B  hits at the genome threshold, by what lies upstream on the same strand", loc="left",
                  fontweight="bold")
     # C. controls
     ax = fig.add_subplot(gs[2, :2])
@@ -231,10 +277,12 @@ def scores_figure(a):
             groups.append((f"{NAMES[g]}, {'Oikopleura' if model == 'oikopleura' else 'RF00031'}", seqs))
     for y, (lab, seqs) in enumerate(groups):
         for b, kn in seqs.values():
-            jitter = (zlib.crc32(f"{lab}{b}{kn}".encode()) % 7 - 3) * 0.05
-            ax.scatter(b, -y + jitter, s=8, lw=0, color="#C44E52" if kn else "#4D4D4D", zorder=3)
+            jitter = (zlib.crc32(f"{lab}{b}{kn}".encode()) % 5 - 2) * 0.05
+            ax.scatter(b, -y + jitter, s=13 if kn else 15, lw=0, marker="o" if kn else "X", alpha=0.7,
+                       color="#D55E00" if kn else "#000000", zorder=3)
     ax.set_yticks([-y for y in range(len(groups))]); ax.set_yticklabels([g[0] for g in groups])
-    ax.scatter([], [], s=10, color="#C44E52", label="selenoprotein mRNAs"); ax.scatter([], [], s=10, color="#4D4D4D", label="other mRNAs")
+    ax.scatter([], [], s=13, lw=0, marker="o", alpha=0.7, color="#D55E00", label="selenoprotein mRNAs")
+    ax.scatter([], [], s=15, lw=0, marker="X", alpha=0.7, color="#000000", label="other mRNAs")
     ax.legend(frameon=False, fontsize=6, loc="upper right", bbox_to_anchor=(1.45, 1.05))
     ax.set_xlabel("best score per mRNA (bits)")
     ax.set_title("C  controls: RefSeq mRNAs with a TGA frame upstream of a hit of 20 bits or more", loc="left", fontweight="bold")

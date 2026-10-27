@@ -20,7 +20,8 @@ Outputs (results/tables/, prefix stage2_secis_v2_model):
 - _identities.tsv: identity between each two seeds, and whether they are orthologous (same gene, two O. dioica
   assemblies).
 - _positions.tsv: per consensus position: consensus residue, structure, residue counts in the seeds, fraction of the
-  most frequent residue.
+  most frequent residue, information content of the seeds (2 minus the Shannon entropy, bits), and relative entropy
+  of the match emissions of the model (model_weights).
 - _pairs.tsv: per base pair of the consensus structure, in the seeds and in the decoys: canonical pairs (Watson-Crick
   and G-U), pair types, mutual information (bits) between the two columns and its p-value by permutation
   (--permutations shuffles of one column among the cluster representatives, so that the near-identical seeds of
@@ -171,6 +172,40 @@ def motifs(s, pos):
     return {"core_5p": "".join(at(k) for k in pos["core5"]), "core_3p": "".join(at(k) for k in pos["core3"]),
             "AAR_loop_2_3": bool(re.search("AA[AG]", loop23.replace("-", ""))),
             "AAR_apical": bool(re.search("AA[AG]", apical.replace("-", ""))), "loop_2_3": loop23, "apical_loop": apical}
+
+
+def model_weights(cm, n):
+    """Relative entropy (bits) of the match emissions of the model at each consensus position, against its null model
+    (uniform in this model): ML and MR states for unpaired positions; for a base pair, the relative entropy of the 16
+    pair emissions of the MP state, half to each position. Assumes a model without bifurcation (consensus positions
+    then follow the nodes: left positions from the 5' end, right positions from the 3' end)."""
+    text = open(cm).read()
+    null = [float(x) for x in re.search(r"^NULL\s+(.*)$", text, re.M).group(1).split()]
+    q = [0.25 * 2 ** x for x in null]
+    q = [x / sum(q) for x in q]
+    body = text.split("\nCM\n", 1)[1].split("\n//", 1)[0]
+    if "[ BIF" in body: sys.exit("model_weights: bifurcations are not handled")
+    w, left, right, node = [0.0] * n, 0, n + 1, None
+    for line in body.splitlines():
+        m = re.match(r"\s+\[ (\w+)\s+\d+ \]", line)
+        if m:
+            node = m.group(1)
+            if node in ("MATP", "MATL"): left += 1
+            if node in ("MATP", "MATR"): right -= 1
+            continue
+        f = line.split()
+        if not f or f[0] not in ("MP", "ML", "MR"): continue
+        if f[0] == "MP" and node == "MATP":
+            bg = [qa * qb for qa in q for qb in q]
+            p = [b * 2 ** float(x) for b, x in zip(bg, f[-16:])]
+            t = sum(p); p = [x / t for x in p]
+            re_ = sum(x * math.log2(x / b) for x, b in zip(p, bg) if x > 0)
+            w[left - 1] += re_ / 2; w[right - 1] += re_ / 2
+        elif (f[0] == "ML" and node == "MATL") or (f[0] == "MR" and node == "MATR"):
+            p = [b * 2 ** float(x) for b, x in zip(q, f[-4:])]
+            t = sum(p); p = [x / t for x in p]
+            w[(left if f[0] == "ML" else right) - 1] += sum(x * math.log2(x / b) for x, b in zip(p, q) if x > 0)
+    return w
 
 
 def ortholog_events(real, rmaps, windows, pairs, hel, npos, core, genomes=("OKI", "OSKA", "OdB3"), flank=50):
@@ -400,13 +435,17 @@ def main():
             o.write(f"{x}\t{y}\t{v:.3f}\t{'yes' if orth else 'no'}\n")
 
     # positions
+    weights = model_weights(a.cm, len(cons))
     with open(f"{a.tables}/{a.prefix}_positions.tsv", "w") as o:
-        o.write("position\tconsensus\tstructure\tA\tC\tG\tU\tgap\tmost_frequent_fraction\n")
+        o.write("position\tconsensus\tstructure\tA\tC\tG\tU\tgap\tmost_frequent_fraction\tinformation_bits\t"
+                "model_relative_entropy_bits\n")
         for k in range(len(cons)):
             c = collections.Counter(aln[n][k] for n in names)
             res = sum(c[x] for x in "ACGU")
             top = max("ACGU", key=lambda x: c[x])
-            o.write(f"{k + 1}\t{cons[k]}\t{ss[k]}\t{c['A']}\t{c['C']}\t{c['G']}\t{c['U']}\t{c['-']}\t{c[top] / res:.3f}\n")
+            info = 2 + sum(c[x] / res * math.log2(c[x] / res) for x in "ACGU" if c[x])
+            o.write(f"{k + 1}\t{cons[k]}\t{ss[k]}\t{c['A']}\t{c['C']}\t{c['G']}\t{c['U']}\t{c['-']}\t{c[top] / res:.3f}\t"
+                    f"{info:.3f}\t{weights[k]:.3f}\n")
 
     # pairs
     ps = pair_stats(aln, reps, cons, pairs, hel, a.permutations, rng)

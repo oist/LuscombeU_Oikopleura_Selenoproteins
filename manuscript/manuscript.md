@@ -479,7 +479,10 @@ near-identical groups is partly by construction. The model has 66 consensus posi
 helices (Figure SECIS-MODEL A), as RF00031 has 64 and 18. Between helices 1 and 2, all seeds have UGA on the 5′
 strand and GA on the 3′ strand of the internal loop, the conserved bases of the non-Watson–Crick pairs that form the
 base of helix 2 in mammalian SECIS elements [@Walczak1996]; between helices 2 and 3, all have AAA, in a loop of five
-nucleotides on the 5′ side below helix 3 (three pairs, at least two of them canonical in 72 seeds). This is the
+nucleotides on the 5′ side below helix 3 (three pairs, at least two of them canonical in 72 seeds). The model
+gives the motifs most weight (relative entropy of 1.84 to 1.98 bits per position, against a mean of 0.74), and its
+pair emissions weigh paired positions more than their conservation in the seeds would (0.80 bits at position 16 of
+helix 2, where the seeds carry 0.05 bits of information). This is the
 arrangement of form 2 SECIS elements, in which an additional helix lies above the unpaired adenosines
 [@GrundnerCulemann1999]; no seed has its only AAR motif in the apical loop, as form 1 elements have. Since the seeds
 were selected through the model, these features describe what the model recognises, not all appendicularian SECIS
@@ -502,11 +505,13 @@ positions, whereas 18% of the paired positions and 28% of the other unpaired pos
 (Figure SECIS-MODEL D). The base pairs of the model are therefore maintained in the evolution of *O. dioica* SECIS
 elements, and the motifs are invariant.
 
-Figure SECIS-MODEL (`figures/secis_model.pdf`). The *Oikopleura* SECIS model. A, consensus sequence and structure of
-the 76 seeds: arcs, base pairs, coloured by the fraction of seeds with a canonical pair; letters shaded by the
-fraction of seeds with the most frequent residue (bold, at least 90%); bars, helices and motifs. B, identity between
-two seeds over the consensus positions, for all pairs of seeds and for those of the same gene in two *O. dioica*
-assemblies (log scale). C, fraction of canonical pairs at each base pair in the seeds and in decoys (the best hits
+Figure SECIS-MODEL (`figures/secis_model.pdf`). The *Oikopleura* SECIS model. A, consensus structure of the 76 seeds
+at the 66 consensus positions: arcs, base pairs, coloured by the fraction of seeds with a canonical pair; sequence
+logo of the seeds (information content, bits); relative entropy of the emissions of the model at each position
+against its null model (bits; for a base pair, half of the relative entropy of the pair emissions to each position),
+coloured by helix, black for the core motifs; bars, helices and motifs. B, identity between two seeds over the
+consensus positions, for all pairs of the 76 seeds and for the pairs of orthologs among the 38 *O. dioica* seeds of
+17 genes that have one (log scale). C, fraction of canonical pairs at each base pair in the seeds and in decoys (the best hits
 of the model in dinucleotide-shuffled windows), aligned to the model in the same way. D, changes between the
 orthologous SECIS elements of the three *O. dioica* assemblies at the base pairs of the model: fraction of single and
 double changes from a canonical pair that keep a canonical pair, observed and expected for random new bases
@@ -542,7 +547,10 @@ three assemblies (in OSKA2016, one of them in the 5′ untranslated part of the 
 hits 391 and 411 nucleotides apart, and two hits of *O. vanhoeffeni* on one contig have the same score, as expected
 from repeated sequences. The held-out appendicularians have 7 such hits of their 12. In human and *C. intestinalis*
 RefSeq mRNAs, the hits of the *Oikopleura* model above which a frame through a TGA was found score up to 31.5 and
-37.3 bits for selenoprotein mRNAs and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C).
+37.3 bits for selenoprotein mRNAs and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C). With RF00031,
+the three human mRNAs classed as others above 38 bits are transcripts of GPX1 and DIO1 in which the frame found does
+not end at an annotated selenocysteine codon; their hit is the SECIS element of the gene, with the score it has in the
+other transcripts of these genes.
 
 <!-- To examine: the 31 Oikopleura hits at the genome threshold without a gene upstream (repeats, missed
 selenoprotein genes, other frames); results/tables/stage2_secis_scan_classes.tsv. -->
@@ -550,7 +558,8 @@ selenoprotein genes, other frames); results/tables/stage2_secis_scan_classes.tsv
 Figure SECIS-SCORES (`figures/secis_scores.pdf`). Scores of the *Oikopleura* SECIS model in genomes and transcripts.
 A, hits per megabase (both strands) at or above each score in each genome (solid) and in its copy shuffled in
 windows of 1,000 nucleotides (dashed), by group of genomes. B, hits at the genome threshold (grey tick: the score
-with one expected false hit in the genome), by what lies upstream on the same strand: a selenoprotein gene (a
+with one expected false hit in the genome), by what lies upstream on the same strand (colours and symbols; the two
+frequent classes drawn partly transparent): a selenoprotein gene (a
 gold-standard gene, or a stage 1 selenocysteine prediction for the other genomes), a copy of a known selenoprotein
 found by the comparative screen, KKSU, a stage 1 prediction without selenocysteine, or nothing found by the
 searches. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
