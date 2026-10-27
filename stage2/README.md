@@ -288,6 +288,17 @@ upstream of the last one, codons to the stop codon; each compared with the sense
 fraction), and summed over the genes of OSKA2016, with all genes and with one gene per family. Reads repository files
 only. Outputs `results/tables/stage2_sec_codon_positions.tsv` and `_summary.tsv`.
 
+## Tandem stop codons and SECIS-like hits (`tandem_stops.py`, `make tandem-stops`)
+
+A path to a C-terminal selenoprotein: a gene ending with a TGA followed, within one or two codons, by another stop codon
+would gain a selenocysteine and at most two more residues if a SECIS element appeared downstream (as KKSU). For each
+annotated genome (one coding sequence per gene): the primary stop codon and the next in-frame stop codons (at +1, +2,
++3, against the per-codon frequency of stop codons at +4 to +33); the best hit of the genome scan of step 4 (and of its
+shuffled copy, same coordinates) in the 2,000 nt after the stop codon, by class (TGA with a stop at +1 or +2, TGA
+otherwise, TAA or TAG, known selenoproteins); candidates of the path class with a hit at the genome threshold. Tested on
+a synthetic genome (both strands, CDS rows with and without the stop codon, a known selenoprotein). Outputs
+`results/tables/stage2_tandem_stops_{codons,secis,candidates}.tsv`; per gene in `work/stage2/tandem_stops/`.
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences
