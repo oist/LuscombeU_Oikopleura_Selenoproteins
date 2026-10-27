@@ -70,16 +70,21 @@ def aligner():
 def pair(al, x, y):
     """Aligned blocks [((x0, x1), (y0, y1))] of the best local alignment of x and y."""
     def norm(s): return s.upper().replace("U", "C").replace("*", "X")
-    return [tuple(map(tuple, b)) for b in zip(*al.align(norm(x), norm(y))[0].aligned)]
+    try:
+        aln = al.align(norm(x), norm(y))[0]
+    except (IndexError, ValueError):   # no alignment with a positive score
+        return []
+    return [tuple(map(tuple, b)) for b in zip(*aln.aligned)]
 
 
-def mapped(blocks, i, extend=0):
-    """Position in y aligned to position i of x (0-based), "extended" beyond the end, or (None, "")."""
+def mapped(blocks, i, extend=0, length=None):
+    """Position in y aligned to position i of x (0-based), "extended" beyond the end of the alignment (within y, of
+    length length), or (None, "")."""
     for (x0, x1), (y0, y1) in blocks:
         if x0 <= i < x1: return int(y0 + i - x0), ""
     if blocks:
         (_, x1), (_, y1) = blocks[-1]
-        if 0 <= i - x1 < extend: return int(y1 + i - x1), "extended"
+        if 0 <= i - x1 < extend and (length is None or y1 + i - x1 < length): return int(y1 + i - x1), "extended"
     return None, ""
 
 
@@ -268,7 +273,7 @@ def main():
                 ("selenocysteine copy", sec, f"gold:{a.sec_gene}", None, sloc),
                 ("full-length copy", full, fid, sb, (ann[fid]["contig"], ann[fid]["strand"], ann[fid]["lo"], ann[fid]["hi"]))):
             if blocks is None: pos, pn = u, ""
-            else: pos, pn = mapped(blocks, u, a.extend)
+            else: pos, pn = mapped(blocks, u, a.extend, len(prot))
             qrows.append([g, label, pid, len(prot), f"{loc[0]}:{loc[2] + 1}-{loc[3]}{loc[1]}" if loc else "",
                           prot[pos] if pos is not None else "", (pos + 1) if pos is not None else "", pn,
                           len(prot) - pos - 1 if pos is not None else "", prot[pos:] if pos is not None else "",
@@ -279,7 +284,7 @@ def main():
                 if x0 <= a.split - 2: trx_end = int(y0 + min(x1, a.split - 1) - x0)
             copies[g]["trx_end"] = trx_end or a.split - 1
     hb = pair(al, copies[a.query_genome]["sec"], h)
-    pos, pn = mapped(hb, copies[a.query_genome]["sec"].find("U"), a.extend)
+    pos, pn = mapped(hb, copies[a.query_genome]["sec"].find("U"), a.extend, len(h))
     qrows.append(["Hsap", "human TXNL1", a.human_txnl1, len(h), "", h[pos] if pos is not None else "",
                   (pos + 1) if pos is not None else "", pn, len(h) - pos - 1 if pos is not None else "",
                   h[pos:] if pos is not None else "", f"thioredoxin/PITH boundary of the full-length query: residue "
@@ -291,7 +296,7 @@ def main():
     Q = copies[a.query_genome]
     sec_q, full_q, trx_end = Q["sec"], Q["full"], Q["trx_end"]
     upos = sec_q.find("U")
-    fpos, _ = mapped(pair(al, sec_q, full_q), upos, a.extend)
+    fpos, _ = mapped(pair(al, sec_q, full_q), upos, a.extend, len(full_q))
     queries = {"sec": sec_q.replace("U", "X"), "full": full_q}
     print(f"queries: {a.query_genome} selenocysteine copy ({len(sec_q)} aa), full-length copy {Q['full_id']} "
           f"({len(full_q)} aa, thioredoxin part 1-{trx_end})", flush=True)
@@ -468,7 +473,7 @@ def main():
         for k in sorted(hits, key=lambda k: -hits[k]):
             t = seqs[k]
             fb, sb = pair(al, full_q, t), pair(al, sec_q, t)
-            pos, pn = mapped(sb, upos, a.extend)
+            pos, pn = mapped(sb, upos, a.extend, len(t))
             bg, bb, ng = gene_txt(hg.get(k, []))
             trx_cov, pith_cov = x_coverage(fb, 0, trx_end), x_coverage(fb, trx_end, len(full_q))
             structure = ("full-length" if trx_cov >= 0.3 and pith_cov >= 0.3 else "PITH only" if pith_cov >= 0.3
