@@ -1125,3 +1125,10 @@ no earlier step waits for them.
   its codon aligned to the selenocysteine, and protein) drawn with TXNL1.b, from
   figures/inputs/reannotation_TXNL1.b.paralogs.{tsv,fa} written by make txnl1-paralogs. Tree supports checked on the
   rerun: 92, 95, 100 and 97 (Ciona TXNL1 with the C. intestinalis PITH-only protein).
+- Reruns after the renaming (2026-10-27, Charles): curation/gold_standard reproduced unchanged; the other tables changed
+  in the names only; Figure CANDIDATES drawn with TXNL1.a. Introns (make txnl1-introns, new; repository files only): the
+  three coding introns of TXNL1.b (phase 0) are at the positions of three of the five coding introns of TXNL1.a, in the
+  three assemblies; TXNL1.a has one more intron in the shared region (phase 1, codon 157) and one in the thioredoxin
+  part (phase 2, codon 67): a duplication of genomic DNA, not a retrocopy. Coincidence question (Charles): selenoproteins
+  are mostly oxidoreductases, many with a thioredoxin fold, but the TXNL1.b selenocysteine replaces a glycine at the
+  start of the C-terminal tail, not a redox cysteine, and the thioredoxin domain is lost; possible Discussion item.

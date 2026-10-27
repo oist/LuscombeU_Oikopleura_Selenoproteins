@@ -274,6 +274,13 @@ the full-length copy (a GPR107-like gene: merged model in OSKA2016; transcripts 
 (`figures/inputs/reannotation_TXNL1.b.paralogs.{tsv,fa}`: model, codon aligned to the selenocysteine, drawn span). Tested on synthetic data (two *O. dioica*-like assemblies, one with a merged
 model, a genome without annotation holding both copies, and a proteome with TXNL1 and PITHD1).
 
+## Introns of TXNL1.a and TXNL1.b (`txnl1_introns.py`, `make txnl1-introns`)
+
+Coding introns of TXNL1.b (gold standard) and TXNL1.a (public model, from `figures/inputs/reannotation_TXNL1.b.paralogs.*`)
+in the three *O. dioica* assemblies: residue after each intron and phase, the TXNL1.b positions carried onto TXNL1.a
+through a local alignment; shared when the other gene has an intron of the same phase at the same aligned residue.
+Reads repository files only. Output `results/tables/stage2_txnl1_introns.tsv`.
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences

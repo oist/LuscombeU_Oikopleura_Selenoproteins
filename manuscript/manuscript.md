@@ -689,7 +689,11 @@ paralogs that share one human ortholog take the suffixes .a, .b [@Stolfi2015]. H
 best hits (205 to 206 bits, 39 to 40% identity over residues 9 to 287 or 289 of the human protein; back to TXNL1 at
 205 to 206 bits, thioredoxin TXN 91), and TXNL1.a is the best hit of TXNL1.b in its own assembly (64 to 68% identity over 95% of
 TXNL1.b), ahead of a PITHD1 homolog (33 to 34%). The two genes lie on opposite strands of OKI2018 chromosome 2, 2.3 Mb
-apart, and of the OdB3 contig FN653019.1, 1.0 Mb apart. In a tree of the PITH regions of the TXNL1 and PITHD1 proteins
+apart, and of the OdB3 contig FN653019.1, 1.0 Mb apart. In the three assemblies, the three coding introns of TXNL1.b
+lie at the positions and phases of three of the five coding introns of TXNL1.a (phase 0, after residues 128, 190 and
+245 of TXNL1.a in OKI2018 and OdB3); TXNL1.a has one more intron in the region aligned with TXNL1.b (phase 1, in codon
+157) and one in its thioredoxin part (Figure CANDIDATES). The shared introns point to a duplication of genomic
+DNA rather than to a retrotransposed copy. In a tree of the PITH regions of the TXNL1 and PITHD1 proteins
 and loci of tunicates, *Branchiostoma* and vertebrates, rooted on PITHD1 (Figure TXNL1-TREE), TXNL1.b is the sister of
 TXNL1.a (ultrafast bootstrap 92), and the pair is the sister of the TXNL1 of the other Oikopleuridae examined (95),
 with *F. borealis* outside them (appendicularian clade, 100): the duplication took place in the *O. dioica* lineage,
@@ -1204,7 +1208,9 @@ query) were aligned with MAFFT L-INS-i [@Katoh2013], trimmed with ClipKIT (gappy
 analysed with IQ-TREE 2 (ModelFinder, 1,000 ultrafast bootstrap replicates) [@Minh2020; @Kalyaanamoorthy2017;
 @Hoang2017]. The tree was rooted on the clade of the sequences whose best human gene is PITHD1 (by at least 10 bits
 over the next gene), and supports were read by bipartition after rooting (`stage2/txnl1_paralogs.py`,
-`make txnl1-paralogs`).
+`make txnl1-paralogs`). The coding introns of TXNL1.b and TXNL1.a (residue after the intron and phase) were compared
+on the coordinates of TXNL1.a, those of TXNL1.b carried through the local alignment of the two proteins
+(`stage2/txnl1_introns.py`, `make txnl1-introns`).
 
 ## Stage 2
 
