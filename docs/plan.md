@@ -1052,3 +1052,8 @@ no earlier step waits for them.
   SELENOW. Figure SECIS-SCORES B: final classes (copy of a known selenoprotein 19, repeated sequence 3, nothing found
   30) in stage2_secis_scan_classes.tsv (final_class, evidence); manuscript paragraph rewritten. To consider: the
   MARS1-TXNL1 and S54 elements; O. longicauda SELENOK for the census (step 9).
+- Figure SECIS-SCORES B (2026-10-27, Charles): genome thresholds kept strict (one expected false hit per genome);
+  hits below them, down to the comparative threshold, drawn small (orange after a selenoprotein gene) to show the
+  background; legend below the panel. Figures embedded in manuscript/manuscript.md (PNG, SVG for the scheme and the
+  tube map): PIPELINE (figures/pipeline_metro.svg copied from the pipeline repository), TREES, SECIS-1,
+  REANNOTATION, SECIS-MODEL, SECIS-SCORES, CANDIDATES; legends added for PIPELINE, TREES and SECIS-1.

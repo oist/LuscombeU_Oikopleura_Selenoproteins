@@ -13,7 +13,8 @@ figures/secis_model.{pdf,svg,png} (from stage2/secis_model_description.py):
 
 figures/secis_scores.{pdf,svg,png} (from the step 4 tables):
   A. hits per Mb (both strands) at or above each score, in each genome and in its window-shuffled copy.
-  B. hits at the genome threshold, by what lies upstream on the same strand: a selenoprotein gene (gold standard or
+  B. hits at the genome threshold, by what lies upstream on the same strand (hits below it, down to the comparative
+     threshold, drawn small: orange after a selenoprotein gene, grey otherwise): a selenoprotein gene (gold standard or
      stage 1 selenocysteine prediction), a copy of a known selenoprotein found by the comparative screen, KKSU (step
      5 loci), a stage 1 prediction without selenocysteine, a TGA pair shared with another species, or nothing found;
      then, from results/tables/stage2_secis_orphan_hits.tsv when it exists (refine), copies of known selenoproteins
@@ -265,11 +266,13 @@ def refine(a, classes, hits, max_dist=2000, min_copies=10):
 def scores_figure(a):
     summ = tsv(f"{a.tables}/stage2_secis_scan_summary.tsv")
     classes = classify(a)
-    fig = plt.figure(figsize=(7.2, 6.4))
-    gs = fig.add_gridspec(3, 4, height_ratios=[1, 1.5, 0.9], hspace=0.6, wspace=0.35)
+    fig = plt.figure(figsize=(7.2, 7.0))
+    gs = fig.add_gridspec(4, 4, height_ratios=[1, 1.6, 0.12, 0.9], hspace=0.6, wspace=0.35)   # row 2: room for the legend of B
     bins = [15, 20, 25, 30, 35, 40, 50]
     rows = {(r["genome"], r["set"]): r for r in summ if not r["genome"].startswith("#")}
     thr = {r["genome"]: r["genome threshold (bits)"] for r in summ if r["set"] == "genome"}
+    cmp_thr = {r["genome"]: r["comparative threshold (bits)"] for r in summ if r["set"] == "genome"}
+    below = [h for h in tsv(f"{a.tables}/stage2_secis_scan_hits.tsv") if h["at the genome threshold"] == "no"]
     colours = plt.get_cmap("tab10")
     for k, (title, gens) in enumerate(GROUPS):
         ax = fig.add_subplot(gs[0, k])
@@ -290,9 +293,18 @@ def scores_figure(a):
     ax = fig.add_subplot(gs[1, :])
     order = [g for _, gens in GROUPS for g in gens]
     style_of = {lab: (c, m, al) for lab, c, m, al in CLASSES}
+    seleno_up = lambda h: (h["known gene upstream (distance from its stop codon)"].startswith("gold standard") or
+                           "(selenocysteine" in h["known gene upstream (distance from its stop codon)"])
     for y, g in enumerate(order):
         if thr.get(g) not in (None, "-"):
-            ax.plot([float(thr[g])] * 2, [-y - 0.32, -y + 0.32], color="#888888", lw=1.0, zorder=1)
+            ax.plot([float(thr[g])] * 2, [-y - 0.32, -y + 0.32], color="#555555", lw=1.1, zorder=1)
+        if cmp_thr.get(g) not in (None, "-"):
+            ax.plot([float(cmp_thr[g])] * 2, [-y - 0.25, -y + 0.25], color="#BBBBBB", lw=1.0, zorder=1)
+        # hits below the genome threshold (listed down to the comparative threshold): background
+        for h in (h for h in below if h["genome"] == g):
+            jitter = (zlib.crc32(f"{h['contig']}{h['from']}".encode()) % 5 - 2) * 0.05
+            ax.scatter(float(h["bits"]), -y + jitter, s=4, lw=0, alpha=0.45, zorder=1.5,
+                       color="#D55E00" if seleno_up(h) else "#999999")
         for lab, _, _, _ in CLASSES:   # frequent classes first, rare ones drawn on top
             for r in (r for r in classes if r["genome"] == g and r["final_class"] == lab):
                 c, m, al = style_of[lab]
@@ -304,12 +316,18 @@ def scores_figure(a):
     for lab, c, m, al in CLASSES:
         nn = sum(r["final_class"] == lab for r in classes)
         if nn: ax.scatter([], [], s=16, color=c, marker=m, alpha=al, lw=0, label=f"{lab} ({nn})")
-    ax.plot([], [], color="#888888", lw=1.0, marker="|", ls="none", markersize=7, label="genome threshold")
-    ax.legend(frameon=False, loc="lower right", fontsize=6)
-    ax.set_title("B  hits at the genome threshold, by what lies upstream on the same strand", loc="left",
+    ax.plot([], [], color="#555555", lw=1.1, marker="|", ls="none", markersize=7, label="genome threshold")
+    nb = len([h for h in below if h["genome"] in order])
+    ax.scatter([], [], s=5, lw=0, alpha=0.6, color="#999999",
+               label=f"below it ({nb}; orange: after a selenoprotein gene)")
+    ax.plot([], [], color="#BBBBBB", lw=1.0, marker="|", ls="none", markersize=6,
+            label="comparative threshold (hits listed down to it)")
+    ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3, fontsize=6, columnspacing=1.2,
+              handletextpad=0.3)
+    ax.set_title("B  genome-scan hits; at the genome threshold, by what lies upstream on the same strand", loc="left",
                  fontweight="bold")
     # C. controls
-    ax = fig.add_subplot(gs[2, :2])
+    ax = fig.add_subplot(gs[3, :2])
     scr = tsv(f"{a.tables}/stage2_uga_screen.tsv")
     groups = []
     for g in ("Hsap", "Cint"):

@@ -109,6 +109,14 @@ counts those that support the codon. A MultiQC report summarises the results of 
 uses the settings of the underlying tools: the eukaryotic and machinery profile sets of Selenoprofiles for eukaryotes,
 the Rfam SECIS model at its gathering threshold, and the Rfam tRNA-Sec model together with Secmarker.
 
+![Figure PIPELINE](../figures/pipeline_metro.svg)
+
+Figure PIPELINE (`figures/pipeline_metro.svg`, copied from `docs/images/selenoproteins_metro.svg` of the pipeline
+repository). Tube map of the pipeline: input samplesheet; selenoprotein genes (Selenoprofiles, miniprot cross-check,
+SECIS search); tRNA-Sec genes (Secmarker, cmsearch, optionally tRNAscan-SE); annotation checks when a GFF3 annotation
+is given, with the optional transcript screen; reporting (assembly statistics, selenocysteine summary, optional
+expectation check, MultiQC). Dashed lines, optional routes.
+
 The pipeline's test runs every process on three small genomes. On human chromosome 22, it predicted selenoprotein O
 (SELENOO) with its selenocysteine codon, found by both Selenoprofiles and miniprot, supported by a transcript and
 correctly annotated in a test annotation; in the yeast genome, which has no selenoprotein, it predicted none.
@@ -201,6 +209,14 @@ which exposes their position in trees to long-branch attraction [@Bergsten2005].
 under a site-heterogeneous model (LG+C60 with posterior mean site frequencies, PMSF) [@Wang2017], after removing the
 fastest-evolving sites, and with approximately unbiased (AU) tests of alternative positions (Table LBA). Figure TREES
 shows the PMSF trees.
+
+![Figure TREES, SEPHS](../figures/phylogeny_SEPHS2_collapsed_pmsf.png)
+![Figure TREES, PSTK](../figures/phylogeny_pstk_collapsed_pmsf.png)
+![Figure TREES, SECIS-binding proteins](../figures/phylogeny_SBP2_collapsed_pmsf.png)
+
+Figure TREES (`figures/phylogeny_<family>_collapsed_pmsf.pdf`). Trees of SEPHS, PSTK and the SECIS-binding proteins
+under LG+C60+F+G with posterior mean site frequencies, with 1,000 ultrafast bootstrap replicates; clades collapsed by
+taxonomic group (Methods).
 
 The appendicularian PSTK are PSTK and not KTI12: the two families separated with 100% support in every analysis.
 The appendicularian proteins (*O. dioica*, *O. albicans* and *O. vanhoeffeni*; the fragments of the other genomes were
@@ -341,6 +357,13 @@ hits reached 22.6 bits. Lowering the threshold to 20 bits would therefore have r
 per genome while accepting background hits, and most selenoprotein 3′ sequences would still have no hit. The Rfam
 model does not recognise most appendicularian SECIS elements, rather than recognising them below its threshold.
 
+![Figure SECIS-1](../figures/stage1_secis_scores.png)
+
+Figure SECIS-1 (`figures/stage1_secis_scores.pdf`). RF00031 scores of the 3′ sequences that Selenoprofiles writes after
+each prediction, for the selenocysteine predictions and the other predictions, and of 200 random genomic windows of
+the same length per genome, in the nine appendicularian genomes (best score per sequence; grey band, no hit of 0 bits
+or more). Dashed line, gathering threshold (35 bits); dotted line, 20 bits; numbers, sequences of at least 20 bits.
+
 > **Provisional paragraph (2026-10-24, step 1 of the plan in docs/plan.md; `results/tables/stage2_secis_hits*.tsv`,
 > `make secis-hits`).** Restricted to the validated hits of the six *Oikopleura* assemblies; it is to replace the two
 > paragraphs above, which count all predictions of the nine genomes (decision of 2026-10-24 on the genome sets).
@@ -406,6 +429,9 @@ SELENOW_chr2 is also known from a transcript that reads through into the next ge
 split genes at the selenocysteine codon: the OdB3 annotation splits five genes there into two or three models
 (DIO_PAR, DIO_chr1, GPX_chr1a, GPX_chr1b and SELENOS), and the OSKA2016 annotation joins SEPHS2 to the upstream gene
 and the two genes of the SELENOW pair into one model, and splits SELENOO into three models.
+
+![Figure REANNOTATION, page 1](../figures/reannotation_page.png)
+![Figure REANNOTATION, page 2](../figures/reannotation_page2.png)
 
 Figure REANNOTATION (two pages, `figures/reannotation_page.pdf` and `figures/reannotation_page2.pdf`). Reannotation of
 the 18 selenoprotein genes in three *O. dioica* assemblies, grouped by family (page 1: glutathione peroxidases,
@@ -505,6 +531,8 @@ positions, whereas 18% of the paired positions and 28% of the other unpaired pos
 (Figure SECIS-MODEL D). The base pairs of the model are therefore maintained in the evolution of *O. dioica* SECIS
 elements, and the motifs are invariant.
 
+![Figure SECIS-MODEL](../figures/secis_model.png)
+
 Figure SECIS-MODEL (`figures/secis_model.pdf`). The *Oikopleura* SECIS model. A, consensus structure of the 76 seeds
 at the 66 consensus positions: arcs, base pairs, coloured by the fraction of seeds with a canonical pair; sequence
 logo of the seeds (information content, bits); relative entropy of the emissions of the model at each position
@@ -571,6 +599,8 @@ other transcripts of these genes.
 <!-- Tables: results/tables/stage2_secis_scan_classes.tsv (classes; evidence) and stage2_secis_orphan_hits.tsv. To
 consider: the conserved element between MARS1 and TXNL1, and the OSKA2016 S54 element (structure, transcripts). -->
 
+![Figure SECIS-SCORES](../figures/secis_scores.png)
+
 Figure SECIS-SCORES (`figures/secis_scores.pdf`). Scores of the *Oikopleura* SECIS model in genomes and transcripts.
 A, hits per megabase (both strands) at or above each score in each genome (solid) and in its copy shuffled in
 windows of 1,000 nucleotides (dashed), by group of genomes. B, hits at the genome threshold (grey tick: the score
@@ -579,7 +609,8 @@ frequent classes drawn partly transparent): a selenoprotein gene (a
 gold-standard gene, or a stage 1 selenocysteine prediction for the other genomes), a copy of a known selenoprotein
 (found by the comparative screen, by blastx of the 5 kb upstream of the hit against the gold-standard proteins, or by
 alignment with the hit of a selenoprotein gene in another assembly), KKSU, a repeated sequence (at least 10 copies of
-the hit in the genome), or nothing found by these searches. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
+the hit in the genome), or nothing found by these searches; small symbols, hits below the genome threshold, listed
+down to the comparative threshold (light grey tick), orange when they follow a selenoprotein gene. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
 of 20 bits or more, for human and *C. intestinalis* mRNAs, with the *Oikopleura* model and RF00031.
 
 The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
@@ -670,6 +701,8 @@ family of the Oikopleuridae.
 432 sequences, 377, 496, 240 and 513 Mb). Possible reason, not tested: TXNL1 split into short exons, each below the
 E-value threshold in genomes of this size (about 51 bits needed at 377 Mb). The absence of KKSU in these four species
 rests on the proteomes. -->
+
+![Figure CANDIDATES](../figures/reannotation_candidates.png)
 
 Figure CANDIDATES (`figures/reannotation_candidates.pdf`). Gold-standard models of TXNL1 and KKSU, two genes outside
 the known selenoprotein families, in three *O. dioica* assemblies; drawn as in Figure REANNOTATION. Middle: for TXNL1,

@@ -25,3 +25,6 @@ outgroup family, the paralogs of the gene that names the family and the vertebra
 the protein lengths (median and range for collapsed tips).
 
 The schematic (`machinery_scheme.*`) is Figure SCHEME of the manuscript, in the introduction, with its legend.
+
+`pipeline_metro.svg`: tube map of the pipeline (Figure PIPELINE), copied from `docs/images/selenoproteins_metro.svg` of
+oist/LuscombeU_Selenoproteins_Pipeline (branch dev, last changed in commit 75a00e4); to refresh when the pipeline changes.
