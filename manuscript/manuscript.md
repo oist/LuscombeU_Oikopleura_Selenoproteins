@@ -13,7 +13,7 @@ Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which i
 an essential trace element, with a narrow range between deficiency and toxicity [@Rayman2012]. Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in
 which it forms the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox
 homeostasis, and iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [@Labunskyy2014]. Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced
-their selenocysteine by cysteine [@Mariotti2012; @Jiang2012]. Selenocysteine is inserted by a dedicated machinery. In
+their selenocysteine by cysteine [@Mariotti2012; @Jiang2012; @Tico2026review; @Tico2026vertebrates]. Selenocysteine is inserted by a dedicated machinery. In
 eukaryotes, a stem–loop structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion
 sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
 elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
@@ -237,7 +237,10 @@ and SECISBP2L formed one clade (79 to 98%) that excluded the tunicate and amphio
 origin of the two vertebrate paralogs by a duplication in early vertebrates, SECISBP2L-type proteins being the only
 SECIS-binding proteins of invertebrate deuterostomes [@Donovan2009]. The appendicularian protein is thus the
 ortholog of the single tunicate SECIS-binding protein, a co-ortholog of vertebrate SECISBP2 and SECISBP2L, which
-explains its best hits to SECISBP2L.
+explains its best hits to SECISBP2L. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish embryos
+without Sbp2 still make a subset of selenoproteins, and only the loss of both genes abolishes their synthesis
+[@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for oligodendrocyte
+differentiation [@Dai2022].
 
 Appendicularians have two SEPHS genes. The second copy, found in OKI2018, *O. longicauda*, *O. albicans* and
 *O. vanhoeffeni*, carries a residue other than selenocysteine (alanine or serine where aligned). In every analysis it
@@ -504,25 +507,26 @@ them the same gene in two *O. dioica* assemblies (0.72 to 0.91) and two pairs of
 near-identical groups is partly by construction. The model has 66 consensus positions and 18 base pairs in three
 helices (Figure SECIS-MODEL A), as RF00031 has 64 and 18. Between helices 1 and 2, all seeds have UGA on the 5′
 strand and GA on the 3′ strand of the internal loop, the conserved bases of the non-Watson–Crick pairs that form the
-base of helix 2 in mammalian SECIS elements [@Walczak1996]; between helices 2 and 3, all have AAA, in a loop of five
+base of helix 2 in mammalian SECIS elements, part of a kink-turn motif [@Walczak1996; @Latreche2009]; between helices 2 and 3, all have AAA, in a loop of five
 nucleotides on the 5′ side below helix 3 (three pairs, at least two of them canonical in 72 seeds). The model
 gives the motifs most weight (relative entropy of 1.84 to 1.98 bits per position, against a mean of 0.74), and its
 pair emissions weigh paired positions more than their conservation in the seeds would (0.80 bits at position 16 of
 helix 2, where the seeds carry 0.05 bits of information). This is the
 arrangement of form 2 SECIS elements, in which an additional helix lies above the unpaired adenosines
-[@GrundnerCulemann1999]; no seed has its only AAR motif in the apical loop, as form 1 elements have. Since the seeds
+[@GrundnerCulemann1999; @Krol2002]; no seed has its only AAR motif in the apical loop, as form 1 elements have. Since the seeds
 were selected through the model, these features describe what the model recognises, not all appendicularian SECIS
 elements.
 
 Pairing in the seeds does not by itself show that the structure is conserved, because the alignment to a covariance
-model favours complementary bases. In the seed alignment, 83%, 83% and 94% of the bases of helices 1, 2 and 3 form
+model favours complementary bases, even in non-homologous sequences [@Gao2023]. In the seed alignment, 83%, 83% and 94% of the bases of helices 1, 2 and 3 form
 canonical pairs (Watson–Crick or G·U), and the mutual information between the two columns of each of the 18 pairs is
 above that of permuted columns (q < 0.05; one seed per group of the clustering). The best hits of the model in
 dinucleotide-shuffled windows (decoys; 76 hits of 12.6 to 25.2 bits), aligned in the same way, reach 83%, 78% and
 88% (Figure SECIS-MODEL C), with mutual information above permutation at 12 of the 18 pairs; they differ more from
 the seeds in the motifs: 70, 56 and 21 of the 76 decoys have the UGA, the GA and an AAR motif at those positions. Covariation tests such as R-scape
-[@Rivas2017] are meant for homologous sequences aligned independently of the structure; the seeds belong to
-different genes and were aligned to the model. The orthologous SECIS elements of the three *O. dioica* assemblies,
+[@Rivas2017] are meant for homologous sequences aligned independently of the structure; the seeds belong
+to different genes and were aligned to the model, as in structure-based alignments of SECIS elements from many
+species [@Chapple2009]. The orthologous SECIS elements of the three *O. dioica* assemblies,
 aligned by sequence, offer such a test (Methods). In 19 genes, 18 of the 27 single-base changes from a canonical pair
 kept a canonical pair, against 29% expected if the new base were random (with the fraction of transitions, 0.39,
 observed at the other unpaired positions; binomial p = 5.5 × 10^-5^), and 10 of the 11 changes at both bases of a
@@ -556,7 +560,8 @@ Figure SECIS-SCORES. -->
 > the 20 gold-standard genes).**
 
 To look for selenoproteins outside the families known from other organisms, we searched genomes and transcripts for
-SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them (Methods).
+SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them (Methods), the
+approach that found new selenoproteins in mammals and in *Drosophila* [@Kryukov1999; @Lescure1999; @Castellano2001].
 
 Thresholds for whole genomes were set from shuffled copies of the six *Oikopleura* assemblies, at one expected false
 hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
@@ -621,8 +626,9 @@ transcript sets. In the positive controls, it found
 16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3 with the *Oikopleura* model; in
 *C. intestinalis* RefSeq mRNAs, 11 and 6 of 17.
 
-The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both,
-found 14 to 15 of the known genes in each *O. dioica* assembly, and KKSU, and 20 of 28, 11 of 20 and 9 of 16 stage 1
+The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both (as
+in comparative gene prediction, where conservation around an in-frame TGA indicates a selenocysteine codon
+[@Parra2003; @Castellano2004]), found 14 to 15 of the known genes in each *O. dioica* assembly, and KKSU, and 20 of 28, 11 of 20 and 9 of 16 stage 1
 selenocysteine predictions in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. Ten more alignments were copies of
 known selenoproteins absent from stage 1: SELENOK in *O. albicans* and *O. vanhoeffeni*, whose C-terminus
 ...GGUGR aligns with that of *O. dioica* SELENOK (stage 1 found SELENOK in no appendicularian), and copies of TXNRD,
@@ -640,7 +646,8 @@ supported by the OKI2018 and OSKA2016 transcripts and seven OdB3 ESTs; its SECIS
 RRRFCNWTPGKKSU, with a SECIS of 31.9 bits 395 nucleotides after the stop codon. The family has no blastp hit in the
 human RefSeq proteome. A TGA followed by a stop codon may simply end a protein; read as selenocysteine, it would make
 this the last residue, as in other C-terminal selenoproteins whose selenocysteine lies among the last residues
-(SELENOK, SELENOS).
+(SELENOK, SELENOS). In prokaryotes, selenoprotein families with the selenocysteine close to one end of the protein
+were among those that earlier searches missed [@Haft2025].
 
 The transcript screen also found, in the three assemblies, a frame of 168 codons whose best human hit is
 thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to
@@ -675,7 +682,11 @@ of upstream genes.
 
 The *O. dioica* TXNL1 protein aligns with the C-terminal PITH domain of human TXNL1 (residues 120 to 283 of 289), not
 with its N-terminal thioredoxin domain, and its selenocysteine is aligned with Gly283 of the human protein; it is
-followed by one residue (...KKVGUG). In the RefSeq TXNL1 proteins of three vertebrates, five tunicates and
+followed by one residue (...KKVGUG). Human TXNL1 binds the regulatory particle of the proteasome [@Andersen2009; @Gao2025]:
+its PITH domain lies on the RPN11 deubiquitinase and its thioredoxin domain extends towards RPN2 and RPN13 [@Lee2026],
+and in the degrading proteasome its C-terminal tail covers the catalytic groove of RPN11, its last residue, His289,
+coordinating the zinc of the active site [@Arkinson2025; @Lee2026]. The *O. dioica* protein has no thioredoxin
+domain, and has one residue after its selenocysteine where the human protein has six after Gly283. In the RefSeq TXNL1 proteins of three vertebrates, five tunicates and
 *Branchiostoma lanceolatum* (285 to 293 residues), the residue at that position is a glycine followed by six
 residues; the best hit in the *B. floridae* proteome, a protein of 217 residues with a PITH domain, has a cysteine
 there, followed by 24 residues. In the genomes of *O. albicans*,
@@ -728,7 +739,9 @@ training and differ from the seeds as much as seeds of different genes differ fr
 models are maintained in the evolution of *O. dioica* SECIS elements. Other results point to a record of our searches:
 the seeds were selected through the model itself, by bootstrap from RF00031, so that their uniformity (all with the
 form 2 arrangement and AAA below helix 3) may describe the model as much as the elements; 19 of the 111 training
-windows have no hit with any of the models compared, and may hold SECIS elements of other shapes; and outside the
+windows have no hit with any of the models compared, and may hold SECIS elements of other shapes, such as those with
+cytidines in place of the unpaired adenosines [@Korotkov2002] or GGGA in place of the AUGA of the internal loop
+[@Novoselov2007]; and outside the
 appendicularians the model finds few known SECIS elements (3 of 25 human selenoprotein genes, against 16 with
 RF00031), although most of its best hits in ascidian and salp genomes follow selenoprotein genes. We do not settle
 the question here. Whether one model can describe the SECIS elements of all eukaryotes, or several lineage-specific
@@ -935,22 +948,21 @@ found in a few sequences only, such as retained introns or rare isoforms (at lea
 proteins). Trees were inferred with IQ-TREE 2.3.6 [@Minh2020], with ModelFinder [@Kalyaanamoorthy2017] restricted to
 the LG, WAG and JTT matrices and 1,000 ultrafast bootstrap replicates [@Hoang2017]. The alignments had 83 sequences
 and 419 sites for PSTK (selected model LG+F+I+R5), 117 and 454 for SEPHS (LG+R6) and 81 and 444 for the
-SECIS-binding proteins (LG+I+R6). PSTK and SEPHS were also analysed under LG+C20+F+G [REF: Le, Lartillot and Gascuel 2008]. In the
+SECIS-binding proteins (LG+I+R6). PSTK and SEPHS were also analysed under LG+C20+F+G [@Le2008]. In the
 display trees, nodes with less than 50% support were collapsed into polytomies and clades of a single taxonomic
 group were drawn as one tip, except for appendicularians, other tunicates and cephalochordates; supports were kept on
 their bipartitions when the trees were rerooted.
 
 *Long-branch analyses.* Each tree was reanalysed (1) under LG+C60+F+G with posterior mean site frequencies (PMSF)
-[@Wang2017; REF: Le, Lartillot and Gascuel 2008], with the maximum-likelihood tree as guide tree and 1,000 ultrafast
-bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 40% of the sites [REF: slow-fast
-method], ranked by their empirical Bayesian rates (IQ-TREE `-wsr`) under the selected model on the
+[@Le2008; @Wang2017], with the maximum-likelihood tree as guide tree and 1,000 ultrafast
+bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 40% of the sites [@Brinkmann1999], ranked by their empirical Bayesian rates (IQ-TREE `-wsr`) under the selected model on the
 maximum-likelihood tree, each reduced alignment being analysed as above; and (3) for PSTK, without the long-branched
 proteins of the insect-gut fungi *Smittium* and *Zancudomyces*. In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
 (for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.
 
-AU tests [REF: Shimodaira 2002] compared the unconstrained tree with the best trees found under topological
+AU tests [@Shimodaira2002] compared the unconstrained tree with the best trees found under topological
 constraints (IQ-TREE `-g`), with 10,000 RELL replicates. For each family, the constraint grouped the appendicularian
 clade with the other tunicate proteins of the same form. For SEPHS, two more constraints placed the appendicularian
 selenocysteine clade inside the clade of all tunicate SEPHS, and at the position expected for an ortholog: grouped

@@ -1057,3 +1057,14 @@ no earlier step waits for them.
   background; legend below the panel. Figures embedded in manuscript/manuscript.md (PNG, SVG for the scheme and the
   tube map): PIPELINE (figures/pipeline_metro.svg copied from the pipeline repository), TREES, SECIS-1,
   REANNOTATION, SECIS-MODEL, SECIS-SCORES, CANDIDATES; legends added for PIPELINE, TREES and SECIS-1.
+- Discussion, provisional paragraph "What the *Oikopleura* SECIS model has learned" (2026-10-27, Charles approved).
+  Kept for later at his request: cite earlier SECIS work across lineages in that paragraph; test the model on
+  *F. borealis* (held out, outside *Oikopleura*).
+- Literature, third round (2026-10-27; OpenAlex script of round 3, run by Charles; 1,316 works; abstracts read
+  outside the repository; metadata from PubMed): see manuscript/overlap_check.md. 22 entries added to
+  manuscript/references.bib; [REF] placeholders filled for C20/C60 (Le2008), slow-fast (Brinkmann1999) and the AU
+  test (Shimodaira2002); the operon example stays open. New citations in the Introduction, the orthology of the
+  SECIS-binding proteins, the SECIS model description, step 4, step 5 and the Discussion. Lead for the Discussion:
+  the human TXNL1 C-terminal tail (six residues after Gly283, ending with His289) coordinates the RPN11 zinc in the
+  degrading proteasome (Arkinson2025, Lee2026); the *O. dioica* selenocysteine sits at the position of Gly283,
+  followed by one residue, and the protein lacks the thioredoxin domain.
