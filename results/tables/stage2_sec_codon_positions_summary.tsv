@@ -1,0 +1,13 @@
+set	measure	genes	value	p_or_expected
+OSKA, all genes	rank of the Sec codon by distance to the nearest junction (mean mid-rank; expected 0.5)	18	0.582	0.89
+OSKA, all genes	rank of the Sec codon by codons to the stop codon (mean mid-rank; expected 0.5)	20	0.508	0.55
+OSKA, all genes	codon split by an intron	18	observed 0	expected 0.2
+OSKA, all genes	codon within 30 nt of a junction (split included)	18	observed 5	expected 6.2
+OSKA, all genes	codon in the last coding exon	18	observed 6	expected 4.6
+OSKA, all genes	codon among the last 3 before the stop codon	20	observed 6	expected 0.40; P(X >= observed) = 1.7e-06
+OSKA, one gene per family (12 families)	rank of the Sec codon by distance to the nearest junction (mean mid-rank; expected 0.5)	12	0.589	0.86
+OSKA, one gene per family (12 families)	rank of the Sec codon by codons to the stop codon (mean mid-rank; expected 0.5)	12	0.362	0.049
+OSKA, one gene per family (12 families)	codon split by an intron	12	observed 0	expected 0.1
+OSKA, one gene per family (12 families)	codon within 30 nt of a junction (split included)	12	observed 4	expected 4.3
+OSKA, one gene per family (12 families)	codon in the last coding exon	12	observed 6	expected 2.2
+OSKA, one gene per family (12 families)	codon among the last 3 before the stop codon	12	observed 6	expected 0.22; P(X >= observed) = 1.8e-08

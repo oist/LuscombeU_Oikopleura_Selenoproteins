@@ -1132,3 +1132,14 @@ no earlier step waits for them.
   part (phase 2, codon 67): a duplication of genomic DNA, not a retrocopy. Coincidence question (Charles): selenoproteins
   are mostly oxidoreductases, many with a thioredoxin fold, but the TXNL1.b selenocysteine replaces a glycine at the
   start of the C-terminal tail, not a redox cysteine, and the thioredoxin domain is lost; possible Discussion item.
+- Position of the selenocysteine codon (2026-10-27, question of Charles: are TGA codons near exon boundaries more than
+  by chance? make sec-positions, new; repository files only). OSKA2016, 20 genes (18 with coding introns): no excess
+  near junctions (mean mid-rank 0.58 against 0.5, one-sided p = 0.89; 5 codons within 30 nt of a junction against 6.2
+  expected; no codon split by an intron, 0.2 expected); the two closest are SEPHS2 (1 nt) and SELENOT (2 nt). Strong
+  excess at the C-terminus: 6 of 20 genes have the codon among the last 3 before the stop (KKSU, TXNL1.b, TXNRD,
+  SELENOS 1-2; SELENOK, SELENOO 3), against 0.4 expected (P = 2e-6; one gene per family, 6 of 12, P = 2e-8); test
+  chosen after looking, and four of the six families have a C-terminal selenocysteine in other animals too. Both new
+  genes are C-terminal: KKSU (TGA followed directly by a stop codon) fits Charles's scenario (an ancestral TGA stop
+  becomes a Sec codon when a SECIS is gained); TXNL1.b's TGA replaces the GGA glycine codon of TXNL1.a (one
+  substitution). Possible test on Deigo: tandem stop codons (TGA followed by a stop) at the end of O. dioica genes,
+  and SECIS-like hits after them. Not in the manuscript yet.

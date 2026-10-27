@@ -281,6 +281,13 @@ in the three *O. dioica* assemblies: residue after each intron and phase, the TX
 through a local alignment; shared when the other gene has an intron of the same phase at the same aligned residue.
 Reads repository files only. Output `results/tables/stage2_txnl1_introns.tsv`.
 
+## Position of the selenocysteine codon (`sec_codon_positions.py`, `make sec-positions`)
+
+In each gold-standard model: coding exon of the selenocysteine codon, distance to the nearest coding exon junction and
+upstream of the last one, codons to the stop codon; each compared with the sense codons of the same gene (mid-rank
+fraction), and summed over the genes of OSKA2016, with all genes and with one gene per family. Reads repository files
+only. Outputs `results/tables/stage2_sec_codon_positions.tsv` and `_summary.tsv`.
+
 ## Orthology of the selenoproteins
 
 The approach of the machinery applied to the selenoprotein families that have appendicularian sequences
