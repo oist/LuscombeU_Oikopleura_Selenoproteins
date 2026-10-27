@@ -230,7 +230,7 @@ cmsearch tables are cached in `work/stage2/secis_model_description/` (the decoy 
 The genome-scan hits at the genome threshold classed "nothing found upstream" or "stage 1 prediction without
 selenocysteine" (`results/tables/stage2_secis_scan_classes.tsv`): annotated transcripts at the hit and upstream on
 the same strand (genomes with an annotation), blastx of the 5 kb upstream against the human RefSeq proteome and the
-gold-standard proteins (stop codons inside the alignment, with the residue aligned to each), copies of the hit in its
+gold-standard proteins (best human and best gold-standard hit, each with the stop codons inside the alignment and the residue aligned to each), copies of the hit in its
 own genome (blastn, 80% identity over 80% of the hit and 50 nt flanks), and conservation in the other *Oikopleura*
 assemblies (best HSP, and a genome-scan hit nearby). Output `results/tables/stage2_secis_orphan_hits.tsv`. Tested on
 OKI2018 chromosome 2 and two OdB3 contigs (with the gold-standard proteins standing in for the human proteome).

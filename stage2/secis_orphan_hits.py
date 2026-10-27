@@ -9,7 +9,8 @@ selenocysteine". For each hit (genome coordinates, strand of the hit):
    transcript that ends upstream on the same strand within --upstream nt (distance from the end of its coding
    sequence and from its 3' end);
 2. blastx (legacy BLAST, top strand, no filter, E <= --evalue) of the --upstream nt before the hit against the human
-   RefSeq proteome and the gold-standard proteins: best hit, its distance to the hit, and the stop codons inside the
+   RefSeq proteome and the gold-standard proteins: best human hit and best gold-standard hit, each with its distance
+   to the hit and the stop codons inside the
    aligned part of the upstream region, each as codon>aligned residue (TGA>U, a selenocysteine of a gold-standard
    protein, or a TGA facing a residue of a human protein would point to a missed gene; stops facing gaps usually
    mark introns crossed by the ungapped extension);
@@ -165,30 +166,32 @@ def main():
             if l.startswith(">"):
                 name, _, d = l[1:].strip().partition(" ")
                 desc[name] = re.sub(r" \[[^]]+\]$", "", d)
-    bx = {}
+    bx = collections.defaultdict(dict)   # query -> {"human": best human hit, "gold": best gold-standard hit}
     xml = run(["blastall", "-p", "blastx", "-d", pdb, "-i", fa_up, "-e", str(a.evalue), "-F", "F", "-S", "1", "-m", "7",
-               "-v", "5", "-b", "5", "-a", str(a.cpus)])
+               "-v", "100", "-b", "100", "-a", str(a.cpus)])
     import xml.etree.ElementTree as ET
     names = list(q_up)
     for it in ET.fromstring(xml).iter("Iteration"):
         num = int(it.findtext("Iteration_iter-num") or 0)
         qdef = it.findtext("Iteration_query-def")
         q = qdef.split()[0] if qdef else names[num - 1]
-        hit = it.find("Iteration_hits/Hit")
-        if hit is None: continue
-        hsp = hit.find("Hit_hsps/Hsp")
-        sid = hit.findtext("Hit_def").split()[0]
-        qf, qt = int(hsp.findtext("Hsp_query-from")), int(hsp.findtext("Hsp_query-to"))
-        qseq, hseq = hsp.findtext("Hsp_qseq"), hsp.findtext("Hsp_hseq")
-        # stop codons inside the HSP: the codon read in the upstream region, and the residue aligned to it
-        stops, pos = [], min(qf, qt) - 1
-        for c, d in zip(qseq, hseq):
-            if c == "-": continue
-            if c == "*": stops.append(f"{q_up[q][pos:pos + 3]}>{d}")
-            pos += 3
-        bx[q] = {"subject": sid, "description": desc.get(sid, ""), "evalue": float(hsp.findtext("Hsp_evalue")),
-                 "identity": f"{100 * int(hsp.findtext('Hsp_identity')) / int(hsp.findtext('Hsp_align-len')):.0f}",
-                 "to_hit": len(q_up[q]) - max(qf, qt), "stops": len(stops), "aligned_to_stops": ",".join(stops)}
+        for hit in it.iter("Hit"):   # in decreasing order of score
+            sid = hit.findtext("Hit_def").split()[0]
+            kind = "gold" if sid.startswith("gold|") else "human"
+            if kind in bx[q]: continue
+            hsp = hit.find("Hit_hsps/Hsp")
+            qf, qt = int(hsp.findtext("Hsp_query-from")), int(hsp.findtext("Hsp_query-to"))
+            qseq, hseq = hsp.findtext("Hsp_qseq"), hsp.findtext("Hsp_hseq")
+            # stop codons inside the HSP: the codon read in the upstream region, and the residue aligned to it
+            stops, pos = [], min(qf, qt) - 1
+            for c, d in zip(qseq, hseq):
+                if c == "-": continue
+                if c == "*": stops.append(f"{q_up[q][pos:pos + 3]}>{d}")
+                pos += 3
+            bx[q][kind] = {"subject": sid if kind == "human" else sid.split("|")[2] + " (" + sid.split("|")[1] + ")",
+                           "description": desc.get(sid, ""), "evalue": float(hsp.findtext("Hsp_evalue")),
+                           "identity": f"{100 * int(hsp.findtext('Hsp_identity')) / int(hsp.findtext('Hsp_align-len')):.0f}",
+                           "to_hit": len(q_up[q]) - max(qf, qt), "stops": len(stops), "aligned_to_stops": ",".join(stops)}
     # 3-4. copies in the own genome, conservation in the other Oikopleura assemblies
     targets = [g for g in sheet if g in set(genomes) | set(OIKOPLEURA)]
     missing = [g for g in targets if not os.path.exists(sheet[g]["fasta"])]
@@ -215,18 +218,21 @@ def main():
             near = [b for p, b in scan_by[(g, r["s"], strand)] if abs(p - pos) <= a.near + qlen[q]]
             cons[q][g] = f"{r['ident']:.0f}%/{100 * r['cov']:.0f}%" + (f" SECIS {max(near):.1f}" if near else "")
     # output
-    cols = ["genome", "contig", "strand", "from", "to", "bits", "class", "annotation_at_hit", "annotated_upstream",
-            "blastx_best", "blastx_evalue", "blastx_identity", "blastx_end_to_hit", "stops_in_hsp", "aligned_to_stops",
-            "copies_in_genome", "conservation (identity/coverage; scan hit nearby)"]
+    cols = ["genome", "contig", "strand", "from", "to", "bits", "class", "annotation_at_hit", "annotated_upstream"]
+    for kind in ("human", "gold"):
+        cols += [f"blastx_{kind}", f"blastx_{kind}_evalue", f"blastx_{kind}_identity", f"blastx_{kind}_end_to_hit",
+                 f"blastx_{kind}_stops", f"blastx_{kind}_aligned_to_stops"]
+    cols += ["copies_in_genome", "conservation (identity/coverage; scan hit nearby)"]
     with open(a.out, "w") as o:
         o.write("\t".join(cols) + "\n")
         for h in hits:
-            b = bx.get(h["id"], {})
             an = ann.get(h["id"], ("", "")) if sheet[h["genome"]].get("annotation") else ("no annotation", "no annotation")
-            row = [h["genome"], h["contig"], h["strand"], h["from"], h["to"], h["bits"], h["class"], an[0], an[1],
-                   f"{b['subject']} {b['description']}".strip() if b else "", f"{b['evalue']:.1e}" if b else "",
-                   b.get("identity", ""), b.get("to_hit", ""), b.get("stops", ""), b.get("aligned_to_stops", ""),
-                   copies.get(h["id"], 0), "; ".join(f"{g} {v}" for g, v in cons[h["id"]].items())]
+            row = [h["genome"], h["contig"], h["strand"], h["from"], h["to"], h["bits"], h["class"], an[0], an[1]]
+            for kind in ("human", "gold"):
+                b = bx[h["id"]].get(kind, {})
+                row += [f"{b['subject']} {b['description']}".strip() if b else "", f"{b['evalue']:.1e}" if b else "",
+                        b.get("identity", ""), b.get("to_hit", ""), b.get("stops", ""), b.get("aligned_to_stops", "")]
+            row += [copies.get(h["id"], 0), "; ".join(f"{g} {v}" for g, v in cons[h["id"]].items())]
             o.write("\t".join(str(x) for x in row) + "\n")
     print(f"{len(hits)} hits -> {a.out}")
     if not a.keep:
