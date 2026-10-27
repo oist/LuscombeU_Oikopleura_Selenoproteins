@@ -1031,3 +1031,13 @@ no earlier step waits for them.
   genes. To examine: the 31 Oikopleura genome-threshold hits without a gene upstream (results/tables/
   stage2_secis_scan_classes.tsv): repeats, missed selenoprotein genes, other frames; and the conserved hits upstream
   of TXNL1.
+- Figures SECIS-MODEL and SECIS-SCORES revised (2026-10-27, Charles's comments): model figure 2x2 (A structure with
+  a sequence logo of the seeds and the relative entropy of the model emissions per position, mean 0.740 bits as
+  cmstat; D on its right; B and C below); B labels give 76 seeds and the 38 O. dioica seeds of 17 genes with
+  orthologs; scores panel B with Okabe-Ito colours, one marker per class, transparency for the two frequent classes,
+  less jitter, the genome-threshold tick in the legend. The human RF00031 controls classed as other mRNAs above 38
+  bits are GPX1 (NM_001329502.2) and DIO1 (NM_001039715.3, NM_001324316.2) transcripts whose frame does not end at an
+  annotated selenocysteine: their hit is the SECIS of the gene (text added). Decision (Charles): the TXNL1 and KKSU
+  SECIS stay out of the model. New: stage2/secis_orphan_hits.py (make secis-orphans) for the 48 hits of the classes
+  "nothing found upstream" and "stage 1 prediction without selenocysteine". Literature round 3: openalex_round3.sh
+  (outside the repository).
