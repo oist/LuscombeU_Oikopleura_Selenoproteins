@@ -1143,3 +1143,13 @@ no earlier step waits for them.
   becomes a Sec codon when a SECIS is gained); TXNL1.b's TGA replaces the GGA glycine codon of TXNL1.a (one
   substitution). Possible test on Deigo: tandem stop codons (TGA followed by a stop) at the end of O. dioica genes,
   and SECIS-like hits after them. Not in the manuscript yet.
+- Tandem stop codons (2026-10-28, make tandem-stops, run by Charles). In the three O. dioica assemblies, 32-36% of
+  genes end with TGA; 535 to 700 genes per assembly (3.5-4%) end with a TGA followed by another stop codon at +1 or +2,
+  as often as the background frequency of stop codons predicts (enrichment at +1 after TGA 0.94-1.02; after TAA and TAG
+  0.45-0.83). SECIS-like hits of at least 20 bits in the 2 kb after these genes: 0, 1 and 1 (0-0.17%), as after TAA or
+  TAG genes (0.07-0.09%; Fisher p 0.39-1); known selenoprotein genes: 67-88%. The only genes of the class with a hit
+  at the genome threshold are known C-terminal selenoproteins whose selenocysteine was annotated as a stop (TXNRD,
+  SELENOS, KKSU, TXNL1.b; a SELENOW pair copy on an extra OdB3 contig; S. clava TXNRD2): no new candidate. The path is
+  available in hundreds of genes, but leaves no excess of SECIS-like elements after them (limited power: such hits are
+  rare after any gene). Side observation: relative to TAA and TAG, TGA is more often followed by a stop at +1 in
+  tunicates and Branchiostoma, not in vertebrates (not tested further).
