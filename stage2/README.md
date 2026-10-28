@@ -363,8 +363,11 @@ searches it with `--cut_ga` (reporting and inclusion threshold), without `--seci
 `truth_sets.py` writes the reference sets (`results/tables/stage2_truth_sets.tsv`, one table per genome in
 `work/stage2/truth/`): the gold standard of the three *O. dioica* assemblies; its models lifted, with minimap2, to
 three new assemblies of the same cryptic species from Plessy et al. 2024 (KUM-M3-7f, Okinawa; AOM-5-5f, Osaka;
-Bar2_p4, Barcelona; `config/genomes.tsv`, role `test`), with the status of each lifted model; and, for the other
-*Oikopleura* species, the stage 1 predictions kept by step 1 and the KKSU sites of the comparative screen.
+Bar2_p4, Barcelona; `config/genomes.tsv`, role `test`), with the status of each lifted model and the codon read
+at the lifted selenocysteine position (a segment end that falls in an indel is placed from the nearest aligned base
+within 30 nt; regions and alignments are kept in `work/stage2/truth/`); and, for the other *Oikopleura* species, the
+stage 1 predictions kept by step 1 and the KKSU sites of the comparative screen. The benchmark counts every
+reference whose codon is a TGA on the assembly, including lifted models disrupted by an indel of the assembly.
 
 ### Pipeline runs (`stage2/run/`)
 
@@ -389,6 +392,8 @@ codon (Selenoprofiles label, miniprot support), its family, the labels of predic
 codon is missed, the exon structure of the prediction (identical introns; coding bases shared with the reference)
 and the SECIS score; per run and genome, the counts, and the Sec sites outside the reference set. Outputs:
 `results/tables/stage2_benchmark_{genes,summary,other_sites}.tsv`. Stage 1 is read from `work/stage1/pipeline`.
+The target also copies the parameters, software versions and execution trace of each run to
+`results/pipeline_info/stage2_<run>_*`.
 The fair tests are the gold-standard assemblies in the `loo_*` runs, and the new assemblies in all runs; the gold
 assemblies in `eval` are training data (upper bound).
 

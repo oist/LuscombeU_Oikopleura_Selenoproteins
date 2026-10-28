@@ -23,13 +23,13 @@ Three kinds of reference, by genome:
 Coordinates: 1-based, inclusive; the selenocysteine codon is given by its lowest coordinate, on both strands (as in
 the pipeline's sec_sites tables). Outputs: --out/<genome>.truth.tsv and --table (all genomes).
 """
-import argparse, collections, csv, os, re, subprocess, sys, tempfile
+import argparse, collections, csv, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from uga_secis_screen import read_fasta, rc, CODE, attributes   # noqa: E402
 
-COLS = ["genome", "gene", "profile", "contig", "strand", "sec_start", "cds", "source", "status", "protein_identity",
-        "copies", "note"]
+COLS = ["genome", "gene", "profile", "contig", "strand", "sec_start", "codon", "cds", "source", "status",
+        "protein_identity", "copies", "note"]
 GOLD = ["OKI", "OSKA", "OdB3"]
 
 
@@ -148,7 +148,8 @@ def chain(records, window):
     return best, chosen, pmap
 
 
-def lift(target, source, models, src_seq, src_prot, tgt_fasta, work, flank, window, copy_identity, threads):
+def lift(target, source, models, src_seq, src_prot, tgt_fasta, work, flank, window, copy_identity, threads,
+         extrapolate):
     rows = []
     q = f"{work}/{target}.regions.fa"
     regions = {}
@@ -166,35 +167,54 @@ def lift(target, source, models, src_seq, src_prot, tgt_fasta, work, flank, wind
     tgt = None
     for gene, m in models.items():
         row = {"genome": target, "gene": gene, "profile": profile_of(gene), "source": f"lift:{source}", "copies": "",
-               "contig": "", "strand": "", "sec_start": "", "cds": "", "protein_identity": "", "note": ""}
+               "contig": "", "strand": "", "sec_start": "", "codon": "", "cds": "", "protein_identity": "", "note": ""}
         if gene not in recs:
             rows.append(dict(row, status="not found")); continue
         best, chosen, pmap = chain(recs[gene], window)
         lo = regions[gene]
-        strand = m["strand"] if best["strand"] == "+" else ("-" if m["strand"] == "+" else "+")
-        ends, partial, indel = [], False, False
-        for a, b in m["cds"]:
-            x, y = pmap.get(a - lo), pmap.get(b - lo)
-            if x is None or y is None: partial = True; continue
-            x, y = sorted((x + 1, y + 1))
+        step = 1 if best["strand"] == "+" else -1     # target positions follow (+) or reverse (-) query positions
+        strand = m["strand"] if step == 1 else ("-" if m["strand"] == "+" else "+")
+
+        def project(p, inward):
+            """Target position (1-based) of source position p; an unaligned base (indel at a segment end) is
+            placed from the nearest aligned base up to --extrapolate nt inward, keeping the distance."""
+            for k in range(extrapolate + 1):
+                t = pmap.get(p + inward * k - lo)
+                if t is not None: return t - step * inward * k + 1, k
+            return None, None
+
+        ends, missing, indel, moved = [], [], False, 0
+        for i, (a, b) in enumerate(m["cds"]):
+            (x, kx), (y, ky) = project(a, 1), project(b, -1)
+            if x is None or y is None: missing.append(i + 1); continue
+            moved += (kx > 0) + (ky > 0)
+            x, y = sorted((x, y))
             if y - x != b - a: indel = True
             ends.append((x, y))
         sec = [pmap.get(m["sec"] + i - lo) for i in range(3)]
-        sec_ok = all(v is not None for v in sec)
+        sec_ok = all(v is not None for v in sec) and max(sec) - min(sec) == 2
         row.update(contig=best["t"], strand=strand, cds=cds_text(sorted(ends)))
         if sec_ok: row["sec_start"] = min(sec) + 1
         cov = [r for r in recs[gene] if r not in chosen and r["match"] / r["alen"] >= copy_identity
                and r["qs"] <= m["sec"] - lo and r["qe"] >= m["sec"] + 3 - lo]
         row["copies"] = len(cov)
-        if partial or not sec_ok:
-            rows.append(dict(row, status="partial", note="coding segment end or codon not aligned")); continue
+        notes = []
+        if len(chosen) > 1: notes.append(f"{len(chosen)} alignments")
+        if moved: notes.append(f"{moved} segment end(s) placed from a neighbouring aligned base")
         if tgt is None:
             tgt = dict(read_fasta(tgt_fasta))
         seq = tgt[best["t"]]
+        if sec_ok:
+            c = seq[min(sec):min(sec) + 3].upper()
+            row["codon"] = c if strand == "+" else rc(c)
+        if missing or not sec_ok:
+            what = ([f"coding segment(s) {', '.join(map(str, missing))} of {len(m['cds'])} not aligned"]
+                    if missing else [])
+            if not sec_ok: what.append("selenocysteine codon not aligned")
+            rows.append(dict(row, status="partial", note="; ".join(what + notes))); continue
         cds = sorted(ends)
         nt = coding(seq, cds, strand)
         off = sec_offset(cds, strand, row["sec_start"])
-        codon = nt[off:off + 3].upper() if off is not None else ""
         ref = src_prot.get(gene)
         if ref is None:                          # no gold protein: the source model read on its assembly
             src_nt = coding(src_seq[m["contig"]], m["cds"], m["strand"])
@@ -202,14 +222,15 @@ def lift(target, source, models, src_seq, src_prot, tgt_fasta, work, flank, wind
         prot = translate(nt, off)
         row["protein_identity"] = f"{identity(prot.rstrip('*'), ref.rstrip('*')):.3f}"
         inner = prot[:-1]
-        if codon != "TGA": status = f"codon not TGA ({codon})"
-        elif len(nt) % 3 or "*" in inner: status = "disrupted"
-        elif not prot.endswith("*"): status = "disrupted"
+        if row.get("codon") != "TGA": status = f"codon not TGA ({row.get('codon')})"
+        elif len(nt) % 3 or "*" in inner or not prot.endswith("*"):
+            status = "disrupted"
+            if len(nt) % 3: notes.append(f"coding length {len(nt)} not a multiple of 3")
+            if "*" in inner: notes.append(f"stop codon at residue {inner.index('*') + 1} of {len(inner)}")
+            if not prot.endswith("*"): notes.append("no stop codon at the lifted end")
         elif indel: status = "complete, in-frame indels"
         else: status = "complete"
-        notes = []
         if not nt.upper().startswith("ATG"): notes.append("no ATG at the lifted start")
-        if len(chosen) > 1: notes.append(f"{len(chosen)} alignments")
         row["note"] = "; ".join(notes)
         rows.append(dict(row, status=status))
     return rows
@@ -236,13 +257,15 @@ def stage1_reference(genome, gtf, validated, candidates):
         if gid not in sec: continue
         rows.append({"genome": genome, "gene": gid, "profile": gid.split(".")[0], "contig": where[gid][0],
                      "strand": where[gid][1], "sec_start": sec[gid], "cds": cds_text(sorted(cds[gid])),
-                     "source": "stage1, validated (step 1)", "status": "reference", "protein_identity": "",
+                     "source": "stage1, validated (step 1)", "status": "reference", "codon": "TGA",
+                     "protein_identity": "",
                      "copies": "", "note": ""})
     for r in csv.DictReader(open(candidates), delimiter="\t"):
         if r["candidate"] == "KKSU" and r["genome"] == genome and r["codon"] == "TGA" and r["position"]:
             rows.append({"genome": genome, "gene": f"KKSU_{genome}", "profile": "KKSU", "contig": r["contig"],
                          "strand": r["strand"], "sec_start": int(r["position"]), "cds": "",
-                         "source": "comparative screen (tblastn)", "status": "reference", "protein_identity": "",
+                         "source": "comparative screen (tblastn)", "status": "reference", "codon": "TGA",
+                         "protein_identity": "",
                          "copies": "", "note": "no gene model"})
     return rows
 
@@ -260,6 +283,8 @@ def main():
     ap.add_argument("--flank", type=int, default=500)
     ap.add_argument("--window", type=int, default=50000)
     ap.add_argument("--copy-identity", type=float, default=0.95)
+    ap.add_argument("--extrapolate", type=int, default=30,
+                    help="nt inward from an unaligned segment end within which an aligned base places it")
     ap.add_argument("--threads", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 4)))
     ap.add_argument("--out", default="work/stage2/truth")
     ap.add_argument("--table", default="results/tables/stage2_truth_sets.tsv")
@@ -278,18 +303,18 @@ def main():
     models = {g: gold_models(f"{a.gold}/{g}.gff3", g) for g in a.gold_genomes}
     for g in a.gold_genomes:
         write(g, [{"genome": g, "gene": gene, "profile": profile_of(gene), "contig": m["contig"], "strand": m["strand"],
-                   "sec_start": m["sec"], "cds": cds_text(m["cds"]), "source": "gold standard", "status": "gold",
-                   "protein_identity": "", "copies": "", "note": ""} for gene, m in sorted(models[g].items())])
-    with tempfile.TemporaryDirectory() as work:
-        for pair in a.lift:
-            target, source = pair.split("=")
-            tf, sf = f"{a.genomes}/{target}/genome.fna.gz", f"{a.genomes}/{source}/genome.fna.gz"
-            if not os.path.exists(tf) or not os.path.exists(sf):
-                print(f"warning: {tf} or {sf} missing; {target} skipped", file=sys.stderr); continue
-            src_seq = dict(read_fasta(sf))
-            src_prot = {h.split("|")[0]: q for h, q in read_fasta_headers(f"{a.gold}/{source}.proteins.faa")}
-            write(target, lift(target, source, models.get(source) or gold_models(f"{a.gold}/{source}.gff3", source),
-                               src_seq, src_prot, tf, work, a.flank, a.window, a.copy_identity, a.threads))
+                   "sec_start": m["sec"], "codon": "TGA", "cds": cds_text(m["cds"]), "source": "gold standard",
+                   "status": "gold", "protein_identity": "", "copies": "", "note": ""}
+                  for gene, m in sorted(models[g].items())])
+    for pair in a.lift:                          # regions and alignments are kept in --out for inspection
+        target, source = pair.split("=")
+        tf, sf = f"{a.genomes}/{target}/genome.fna.gz", f"{a.genomes}/{source}/genome.fna.gz"
+        if not os.path.exists(tf) or not os.path.exists(sf):
+            print(f"warning: {tf} or {sf} missing; {target} skipped", file=sys.stderr); continue
+        src_seq = dict(read_fasta(sf))
+        src_prot = {h.split("|")[0]: q for h, q in read_fasta_headers(f"{a.gold}/{source}.proteins.faa")}
+        write(target, lift(target, source, models.get(source) or gold_models(f"{a.gold}/{source}.gff3", source),
+                           src_seq, src_prot, tf, a.out, a.flank, a.window, a.copy_identity, a.threads, a.extrapolate))
     for g in a.reference:
         write(g, stage1_reference(g, f"{a.stage1}/{g}.selenoprofiles.gtf", a.validated, a.candidates))
     if a.table:

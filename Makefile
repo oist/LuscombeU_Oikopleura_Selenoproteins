@@ -317,6 +317,11 @@ stage2-truth:
 # Stage 1 and stage 2 settings against the reference sets (seconds; reads the pipeline outputs of each run present)
 stage2-benchmark:
 	python3 stage2/benchmark.py
+	@mkdir -p results/pipeline_info && for d in work/stage2/pipeline/*/pipeline_info; do \
+	    r=$$(basename $$(dirname $$d)); \
+	    cp $$(ls -t $$d/params_*.json | head -1) results/pipeline_info/stage2_$${r}_params.json; \
+	    cp $$(ls -t $$d/execution_trace_*.txt | head -1) results/pipeline_info/stage2_$${r}_execution_trace.txt; \
+	    cp $$d/*software_mqc_versions.yml results/pipeline_info/stage2_$${r}_software_versions.yml; done
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 

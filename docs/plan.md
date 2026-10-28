@@ -1180,3 +1180,11 @@ no earlier step waits for them.
   compares None (no GO terms). build_profiles.py now appends the keys of the standard configuration that the build
   did not write (only go_terms, in GPX, among the families built here; checked on the 15 standard configurations).
   The machinery profiles are not affected (none has go_terms). Rebuild with make stage2-inputs, then resume the runs.
+- Stage 2 reference sets, first version (2026-10-28, make stage2-truth on Deigo): lifts of the gold models complete
+  for 15 to 16 of 20 genes in KUM, AOM and Bar2 (in-frame indels in 1 to 2); 4, 4 and 2 partial (a coding segment end
+  or the codon not aligned: DIO_chr1, GPX_PAR, GPX_chr1a, SELENOO in KUM; DIO_chr1, GPX_chr1b, SELENOO, SELENOW_pair2
+  in AOM; DIO_chr1, SELENOS in Bar2) and 1 or 2 disrupted (AOM GPX_PAR, protein identity 0.02 to the gold protein;
+  Bar2 GPX_chr1a, identity 1.00, and GPX_chr1b). The benchmark counted only complete lifts. Changed: segment ends in an
+  indel are placed from the nearest aligned base (30 nt), the codon at the lifted position is recorded, and the
+  benchmark counts every reference whose codon is a TGA (disrupted models are expected in Nanopore assemblies: indels);
+  structure compared for complete models only; regions and PAF kept in work/stage2/truth/ for inspection.

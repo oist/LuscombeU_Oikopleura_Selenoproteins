@@ -17,8 +17,10 @@ coordinate) is looked up:
   is ignored on both sides;
 - secis: the best SECIS score in the 3' sequence of the prediction (reported by the pipeline only above the threshold
   of the model in that run).
-The summary counts the gold-standard and stage 1 references and the lifted models read as complete (the gene table
-lists every reference with a codon). Sec sites of a run (selenocysteine label or miniprot) at no reference codon
+The summary counts the references whose codon is a TGA on the assembly, including lifted models that are
+disrupted (frameshift or premature stop codon, often an indel of the assembly) or partial (a coding segment not
+aligned); the structure is compared only for complete models (gene table: every reference with a codon, and its
+status). Sec sites of a run (selenocysteine label or miniprot) at no reference codon
 are listed as other sites, for every genome of the run, including those without reference (held-out genomes).
 Outputs: --genes (one row per run, genome and reference gene), --summary (one row per run and genome), --other.
 """
@@ -32,8 +34,10 @@ GENOMES = ["OKI", "OSKA", "OdB3", "KUM", "AOM", "Bar2", "Olon", "Oalb", "Ovan", 
 
 
 def usable(r):
-    """References counted in the summary: gold standard, stage 1 references, and lifts read as complete."""
-    return r["status"] in ("gold", "reference") or r["status"].startswith("complete")
+    """References counted in the summary: those whose selenocysteine codon is a TGA on the assembly (gold standard,
+    stage 1 references, and lifted models whatever the state of the rest of the model)."""
+    return r.get("codon", "TGA") == "TGA" if "codon" in r else (
+        r["status"] in ("gold", "reference") or r["status"].startswith("complete"))
 
 
 def segments(text):
@@ -130,7 +134,7 @@ def main():
                        "locus": "", "introns_exact": "", "cds_sensitivity": "", "cds_precision": "",
                        "secis": s.get("secis_score", "") if s and s.get("secis_score") not in (".", None) else ""}
                 ref_cds = segments(r["cds"])
-                if preds is not None and ref_cds:
+                if preds is not None and ref_cds and not r["status"].startswith(("partial", "disrupted", "codon")):
                     if sp_id == ".":
                         lo, hi = ref_cds[0][0], ref_cds[-1][1]
                         labels = sorted({p.rsplit(".", 1)[1] for p, c in preds.items()
