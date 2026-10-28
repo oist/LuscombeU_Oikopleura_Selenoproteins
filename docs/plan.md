@@ -1205,3 +1205,14 @@ no earlier step waits for them.
   SELENOO, probably KUM DIO_chr1), SELENOO in Bar2 (no OdB3 reference), copies (a second SELENOK 10 kb from the first
   in KUM; DIO copies in Bar2; the OSKA2016 GPX_PAR copy on S12 known from step 4; OdB3 haplotype contigs), and miniprot
   calls 3 nt from the codon (SELENOF, GPX_chr1b); no site outside a selenoprotein gene.
+- Filter diagnosis (2026-10-28, make stage2-diagnose, run by Charles): with E0, Selenoprofiles predicts SELENOS in
+  OSKA2016, OdB3, KUM, AOM and Bar2 with the label selenocysteine (coverage 0.98-0.99, identity with the profile
+  0.29-0.30, AWSI z-score -0.84 to -1.01), and only the motif clause of the standard SELENOS filter (5 of 9 residues
+  conserved in vertebrates; the O. dioica proteins have 3 or 4) removes it. The predictions that passed earlier (OSKA2016
+  with the standard profile, OKI2018 and KUM with LOO_OKI) were shorter (coverage 0.68-0.72) and aligned so that 5
+  residues matched. No other SELENOS candidate of the six assemblies has the label selenocysteine (unaligned, pseudo,
+  proline or arginine). Change (stage2/profile_config_overrides.tsv, applied by build_profiles.py): the motif is
+  required only for predictions not labelled selenocysteine. The two O. albicans references lost with E0 (DIO.9,
+  GPX.24) are fragments of 55 and 49 residues removed by the default length/coverage filter (len > 60 or coverage >
+  0.4): with E0 their coverage is 0.20 and 0.25 (0.23 and 0.52 with the standard profile, plus a second exon for DIO.9);
+  kept as they are. Next: rebuild the profiles, rerun eval, eval_miniprot and the loo runs, then the benchmark.

@@ -346,7 +346,9 @@ keep their columns (`mafft --add --keeplength`); a member whose selenocysteine f
 column of the standard alignment is removed. KKSU and TXNL1b have no standard profile: their members are aligned
 with MAFFT L-INS-i and their configuration replaces the AWSI filter, which needs more sequences, by
 `x.label != 'pseudo'`. *B. stygius*, *M. erythrocephalus* and *F. borealis* are held out of every build (decision of
-2026-10-24).
+2026-10-24). Configuration keys listed in `stage2/profile_config_overrides.tsv` replace those of the standard
+configuration, with the reason: the SELENOS filter no longer requires the vertebrate motif (5 of 9 residues) for
+predictions labelled selenocysteine, because it removed the *O. dioica* SELENOS (`make stage2-diagnose`).
 
 | Build (`work/stage2/profiles/`) | Selenoprotein members | Machinery members (stage 1) | Used by runs |
 |---|---|---|---|

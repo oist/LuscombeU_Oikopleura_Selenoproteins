@@ -23,9 +23,10 @@ members.tsv). New families (--new-families, no standard profile): the members ar
 configuration sets p2g_refiltering to x.label != 'pseudo' instead of the default AWSI filter, which needs more
 sequences. Each alignment is then built with "selenoprofiles build" (all sequences as BLAST queries), loading the
 standard configuration when there is one; keys of the standard configuration that the build does not write back
-(go_terms, used by the GPX filter) are appended to the new configuration. Profiles of standard families keep the
-standard names, so that they replace the standard ones in a copy of the Selenoprofiles data (pipeline option
---selenoprofiles_overrides); new names must be requested in the profiles column of the samplesheet.
+(go_terms, used by the GPX filter) are appended to the new configuration, and the keys of --config-overrides
+replace those of the build (stage2/profile_config_overrides.tsv: the SELENOS filter). Profiles of standard families
+keep the standard names, so that they replace the standard ones in a copy of the Selenoprofiles data (pipeline
+option --selenoprofiles_overrides); new names must be requested in the profiles column of the samplesheet.
 
 Outputs in --out: <family>.fa, .fa.config and .fa.profile_data (only profiles, so that the directory can be passed to
 --selenoprofiles_overrides), members.tsv; alignments before the build in --out/alignments/; with --archive, a .tar.gz
@@ -95,6 +96,27 @@ def restore_config_keys(loaded, built):
     return missing
 
 
+def read_overrides(path):
+    """family -> [(key, value)] from a TSV with columns family, key, value, reason."""
+    out = {}
+    if path and os.path.exists(path):
+        for r in csv.DictReader(open(path), delimiter="\t"):
+            out.setdefault(r["family"], []).append((r["key"], r["value"]))
+    return out
+
+
+def apply_overrides(built, pairs):
+    """Replace (or add) keys of a built profile configuration."""
+    lines = open(built).read().splitlines()
+    for key, value in pairs:
+        new = f"{key} = {value}"
+        idx = [i for i, l in enumerate(lines) if l.split("=", 1)[0].strip() == key]
+        if idx: lines[idx[0]] = new
+        else: lines.append(new)
+    open(built, "w").write("\n".join(lines) + "\n")
+    return [k for k, _ in pairs]
+
+
 def run(cmd, **kw):
     p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, **kw)
     if p.returncode:
@@ -123,6 +145,8 @@ def main():
     ap.add_argument("--out", default="work/stage2/profiles")
     ap.add_argument("--archive", default="")
     ap.add_argument("--no-build", action="store_true")
+    ap.add_argument("--config-overrides", default="stage2/profile_config_overrides.tsv",
+                    help="TSV (family, key, value, reason): configuration keys replaced after the build")
     a = ap.parse_args()
 
     families = a.families or gold_families(a.gold, [g for g in a.gold_genomes if g not in a.held_out]) + \
@@ -132,6 +156,7 @@ def main():
     for f in os.listdir(out):                    # profiles of an earlier build (the directory feeds the pipeline)
         if re.search(r"\.fa(\.config|\.profile_data)?$", f): os.remove(f"{out}/{f}")
 
+    overrides = read_overrides(a.config_overrides)
     gold = {}
     for g in a.gold_genomes:
         for h, s in read_fasta(f"{a.gold}/{g}.proteins.faa"):
@@ -248,8 +273,10 @@ def main():
             run(["selenoprofiles", "build", "-i", merged, "-o", dest, "-load", cfg, "-queries", "all", "-name", fam,
                  "-y"], env=env)
             restored = restore_config_keys(cfg, f"{dest}.config")
+            changed = apply_overrides(f"{dest}.config", overrides[fam]) if fam in overrides else []
             msg += f" -> {sum(1 for _ in read_fasta(dest))} in the profile"
             if restored: msg += f"; configuration keys restored: {', '.join(restored)}"
+            if changed: msg += f"; configuration keys replaced ({a.config_overrides}): {', '.join(changed)}"
         print(msg, flush=True)
     with open(f"{out}/members.tsv", "w") as o:
         for row in log: o.write("\t".join(map(str, row)) + "\n")
