@@ -1174,3 +1174,9 @@ no earlier step waits for them.
   13, 14 and 13 of 20, 20 and 19 genes in OKI2018, OSKA2016 and OdB3). Pipeline release 0.2.0 has every option
   needed; the samplesheet profiles column is quoted ("eukarya,machinery,KKSU,TXNL1b"; nf-schema reads CSV quotes).
   Not tested locally: selenoprofiles build (installing it here was refused), minimap2 on the real new assemblies.
+- Stage 2 first eval run (2026-10-28, Charles): Selenoprofiles failed on B. stygius with the E0 GPX profile
+  ("'>' not supported between NoneType and int" in p2g_refiltering): "selenoprofiles build -load" writes back only the
+  keys of its parameter list, so go_terms was dropped from GPX.fa.config, and the GPX filter x.go_score() > 0 then
+  compares None (no GO terms). build_profiles.py now appends the keys of the standard configuration that the build
+  did not write (only go_terms, in GPX, among the families built here; checked on the 15 standard configurations).
+  The machinery profiles are not affected (none has go_terms). Rebuild with make stage2-inputs, then resume the runs.

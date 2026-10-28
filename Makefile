@@ -286,7 +286,7 @@ machinery-table:
 	python3 stage2/machinery_table.py
 
 # Stage 2 (steps 6 and 7 of the plan of 2026-10-24). Inputs, in the image (Selenoprofiles; about 1 h on 4 CPUs):
-#   sbatch --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
+#   sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
 # - profiles: E0 (gold standard of the three O. dioica assemblies; machinery from their stage 1 predictions), LOO_<g>
 #   (the same without one assembly), final (also the validated stage 1 predictions of the three other Oikopleura
 #   species, and the curated proteins of other species); B. stygius, M. erythrocephalus and F. borealis held out;

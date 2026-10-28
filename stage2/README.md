@@ -396,8 +396,8 @@ assemblies in `eval` are training data (upper bound).
 
 ```bash
 ml singularity
-scripts/fetch.sh                                                    # adds KUM, AOM, Bar2 (Zenodo)
-sbatch --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
+sbatch [--partition=<partition>] scripts/run_in_container.sh scripts/fetch.sh    # adds KUM, AOM, Bar2 (Zenodo)
+sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
 # one after the other, from the repository root (eval_miniprot right after eval reuses its Selenoprofiles tasks)
 for run in default eval eval_miniprot loo_OKI loo_OSKA loo_OdB3; do
     NXF_WORK=<scratch>/stage2 PROFILE=<profile> stage2/run/run.sh $run || break
