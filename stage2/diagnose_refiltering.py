@@ -33,18 +33,22 @@ def job(spec, a):
         env = dict(os.environ, HOME=work, DIAG_CONFIG=f"{folder}/{family}.fa.config", DIAG_OUT=out)
         subprocess.run(["selenoprofiles", "-setup"], env=env, check=True, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL)
+        # Selenoprofiles 4.5.8 refuses actions on the command line (strict option parsing); its configuration file
+        # accepts them
+        action = f"import sys; sys.path.insert(0, {HERE!r}); import refiltering_hook; refiltering_hook.report(x)"
+        with open(f"{work}/.selenoprofiles_config.txt", "a") as o:
+            o.write(f"\nACTION.pre_filtering.zz_diagnose = {action}\n")
         target = f"{work}/{genome}.fa"
         with gzip.open(f"{a.genomes}/{genome}/genome.fna.gz", "rb") as i, open(target, "wb") as o:
             shutil.copyfileobj(i, o)
-        action = f"import sys; sys.path.insert(0, {HERE!r}); import refiltering_hook; refiltering_hook.report(x)"
         p = subprocess.run(["selenoprofiles", "-o", f"{work}/results", "-t", target, "-s", genome, "-p", family,
                             "-selenoprofiles_data_dir", os.path.abspath(a.data), "-profiles_folder", folder,
-                            "-temp", work, "-ncpus", "1", "-ACTION.pre_filtering.zz_diagnose", action],
+                            "-temp", work, "-ncpus", "1"],
                            env=env, cwd=work, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if p.returncode:
             return spec, out, f"selenoprofiles failed ({p.returncode}): {p.stderr[-1500:]}"
         if not os.path.exists(out):
-            open(out, "w").close()
+            return spec, out, "no candidate prediction reported (action not run?)"
         return spec, out, "done"
     finally:
         shutil.rmtree(work, ignore_errors=True)
