@@ -1,0 +1,13 @@
+# Stage 2, run "eval": stage 2 settings with the evaluation profiles E0 (gold standard of OKI2018, OSKA2016 and OdB3;
+# machinery from their stage 1 predictions), on the three gold-standard assemblies (training), the three new
+# assemblies of the same species, the three other Oikopleura species and the three held-out genomes.
+# With stage2/run/stage2.config (3' sequences of 2,000 nt).
+# Paths are relative to the repository root, from which the pipeline is launched (stage2/run/run.sh).
+input: stage2/run/samplesheet_eval.csv
+outdir: work/stage2/pipeline/eval
+selenoprofiles_data: data/references/selenoprofiles_data
+trnasec_cm: data/references/RF01852.cm
+# Oikopleura SECIS model (results/models/oikopleura_secis.cm) with a gathering threshold of 20 bits added by
+# stage2/cm_thresholds.py (make stage2-inputs): the pipeline searches it with --cut_ga
+secis_cm: work/stage2/models/oikopleura_secis.cm
+selenoprofiles_overrides: work/stage2/profiles/E0

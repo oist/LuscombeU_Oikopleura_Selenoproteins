@@ -67,7 +67,18 @@ while IFS=$'\t' read -r archive url md5 member dest member_md5 notes; do
     fi
     [[ $member == PLACEHOLDER* ]] && { echo "SKIP $dest: archive member not yet filled in config/archives.tsv"; fail=1; continue; }
     mkdir -p "$(dirname "$dest")"
-    unzip -p "$z" "$member" > "$dest.tmp"
+    case $archive in
+        *.tar.gz|*.tgz)   # member: extended regular expression matching exactly one path inside the archive
+            paths=$(tar -tzf "$z" | grep -E -- "$member" || true)
+            n=$(printf '%s' "$paths" | grep -c . || true)
+            if [[ $n -ne 1 ]]; then
+                echo "MISSING $dest: '$member' matches $n entries of $archive; FASTA entries of the archive:"
+                tar -tzf "$z" | grep -E '\.(fa|fasta|fna)(\.gz)?$' | head -20 | sed 's/^/    /'
+                fail=1; continue
+            fi
+            tar -xzOf "$z" "$paths" > "$dest.tmp" ;;
+        *) unzip -p "$z" "$member" > "$dest.tmp" ;;
+    esac
     if [[ -n $member_md5 ]] && ! echo "$member_md5  $dest.tmp" | md5sum -c --quiet -; then
         echo "MD5 mismatch: $member in $z"; rm -f "$dest.tmp"; fail=1; continue
     fi

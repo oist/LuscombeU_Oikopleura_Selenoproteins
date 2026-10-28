@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Search the genomes with the appendicularian machinery profiles and compare with stage 1.
 
-Runs Selenoprofiles with the profiles built by build_machinery_profiles.py on each genome (resumable: a genome whose
-GTF exists is skipped), then writes a table of predictions per genome and family, by Selenoprofiles label, next to
-the stage 1 predictions of the standard profiles: <out>/comparison.tsv.
+Runs Selenoprofiles with the profiles built by build_profiles.py (make machinery-profiles) on each genome
+(resumable: a genome whose GTF exists is skipped), then writes a table of predictions per genome and family, by
+Selenoprofiles label, next to the stage 1 predictions of the standard profiles: <out>/comparison.tsv.
 """
 import argparse, collections, glob, gzip, os, re, shutil, subprocess, tempfile
 

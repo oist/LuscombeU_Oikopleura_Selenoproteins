@@ -46,7 +46,8 @@ windows, maximum number of rounds, calibration length of the intermediate rounds
 
 ## Appendicularian profiles of the Sec machinery
 
-`build_machinery_profiles.py` extends each standard Selenoprofiles profile of the machinery set (SEPHS2, pstk, SecS,
+`build_profiles.py` (here with the options of `make machinery-profiles`) extends each standard Selenoprofiles profile
+of the machinery set (SEPHS2, pstk, SecS,
 eEFsec, SBP2, secp43) with appendicularian proteins: the stage 1 predictions labelled "homologue" or "selenocysteine"
 that are at least half the median profile length, and the curated transcript proteins of
 `curation/machinery_proteins.faa`. They are added with `mafft --add --keeplength`, so the columns and the standard
@@ -62,7 +63,7 @@ sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh m
 
 | Target | Output | Time on 1 CPU (measured) |
 |---|---|---|
-| `machinery-profiles` | `work/stage2/machinery_profiles/`; copied to `results/models/machinery_profiles/` and `results/models/appendicularia_machinery_profiles.tar.gz` | 2 min |
+| `machinery-profiles` | `work/stage2/machinery_profiles/` (profiles; alignments before the build in `alignments/`); copied to `results/models/machinery_profiles/` and `results/models/appendicularia_machinery_profiles.tar.gz` | 2 min |
 | `machinery-test` | `work/stage2/machinery_test/` (resumable per genome); `results/tables/stage2_machinery_profiles_test.tsv` | about 75 min for the nine genomes |
 
 | `machinery-fragments` | PSTK predictions discarded by Selenoprofiles in the genomes without a PSTK prediction, classified by blastp against the PSTK found elsewhere and KTI12 (`curation/machinery_outgroups.faa`); `results/tables/stage2_machinery_fragments.tsv` | about 5 min per genome |
@@ -329,3 +330,81 @@ SELENOW, TXNRD), to give a first global view before family-by-family analyses.
 
 Known gap: SELENOK was not predicted by the stage 1 settings in any appendicularian genome, so that its tree, if
 any, lacks the *O. dioica* protein until the stage 2 re-calling or a curated protein from transcripts.
+
+## Stage 2: profiles, runs and benchmark (steps 6 and 7)
+
+Goal: settings and data files of the pipeline for annotating the selenoproteins of new appendicularian assemblies,
+measured against the gold standard on assemblies the profiles have not seen.
+
+### Inputs (`make stage2-inputs`, `make stage2-truth`)
+
+`build_profiles.py` builds Selenoprofiles profiles from the standard ones and appendicularian proteins (sources and
+rules in `--help`): gold-standard proteins (the profile of a gene is its name up to the first `_`, without dots:
+TXNL1.b goes to the profile TXNL1b, because Selenoprofiles reads the family of a prediction up to the first dot),
+stage 1 machinery predictions, validated stage 1 selenoprotein predictions and curated proteins. Standard families
+keep their columns (`mafft --add --keeplength`); a member whose selenocysteine falls outside the selenocysteine
+column of the standard alignment is removed. KKSU and TXNL1b have no standard profile: their members are aligned
+with MAFFT L-INS-i and their configuration replaces the AWSI filter, which needs more sequences, by
+`x.label != 'pseudo'`. *B. stygius*, *M. erythrocephalus* and *F. borealis* are held out of every build (decision of
+2026-10-24).
+
+| Build (`work/stage2/profiles/`) | Selenoprotein members | Machinery members (stage 1) | Used by runs |
+|---|---|---|---|
+| `E0` | gold standard of OKI2018, OSKA2016, OdB3 | the same three assemblies | `eval`, `eval_miniprot` |
+| `LOO_<g>` | the same without assembly `<g>` | the same without `<g>` | `loo_<g>` |
+| `final` | E0 + validated stage 1 predictions of *O. longicauda*, *O. albicans*, *O. vanhoeffeni* + *O. albicans* KKSU | the six *Oikopleura* assemblies | `final` |
+
+The final profiles are copied to `results/models/stage2_profiles/` (alignments and configurations) and archived with
+their `.profile_data` in `work/stage2/appendicularia_selenoprofiles.tar.gz` (for Zenodo); the members of every
+build are listed in `results/tables/stage2_profile_members.tsv`. `cm_thresholds.py` writes the *Oikopleura* SECIS
+model with a gathering threshold of 20 bits (`work/stage2/models/oikopleura_secis.cm`), so that the pipeline
+searches it with `--cut_ga` (reporting and inclusion threshold), without `--secis_min_bits`.
+
+`truth_sets.py` writes the reference sets (`results/tables/stage2_truth_sets.tsv`, one table per genome in
+`work/stage2/truth/`): the gold standard of the three *O. dioica* assemblies; its models lifted, with minimap2, to
+three new assemblies of the same cryptic species from Plessy et al. 2024 (KUM-M3-7f, Okinawa; AOM-5-5f, Osaka;
+Bar2_p4, Barcelona; `config/genomes.tsv`, role `test`), with the status of each lifted model; and, for the other
+*Oikopleura* species, the stage 1 predictions kept by step 1 and the KKSU sites of the comparative screen.
+
+### Pipeline runs (`stage2/run/`)
+
+Each run has a params file `stage2/run/<run>.yaml` and a samplesheet; `stage2/run/run.sh <run>` launches the
+pipeline (release 0.2.0) with it. Stage 2 settings (`stage2/run/stage2.config`, added by `run.sh`): Selenoprofiles
+3′ sequences of 2,000 nt (the window length on which the 20-bit threshold was set), the *Oikopleura* SECIS model at
+its gathering threshold, the appendicularian profiles (`--selenoprofiles_overrides`), and the profiles column
+`"eukarya,machinery,KKSU,TXNL1b"` (quoted: the field contains commas).
+
+| Run | Profiles | Genomes | Purpose |
+|---|---|---|---|
+| `default` | standard; Rfam RF00031 | KUM, AOM, Bar2 | stage 1 settings on the new assemblies (stage 1 itself covers the others) |
+| `eval` | E0 | 3 gold, 3 new, Olon, Oalb, Ovan, Bsty, Mery, Fbor | stage 2 settings |
+| `eval_miniprot` | E0 | as `eval` | miniprot `-C 0.5` (`stage2/run/miniprot_C05.config`): exons at GA-AG introns |
+| `loo_OKI`, `loo_OSKA`, `loo_OdB3` | LOO_<g> | `<g>` and the new assembly of its species | profiles without the species tested |
+| `final` | final | as `eval` | census (after the benchmark) |
+
+### Benchmark (`make stage2-benchmark`)
+
+`benchmark.py` compares each run present with the reference sets: per reference gene, the Sec site at the reference
+codon (Selenoprofiles label, miniprot support), its family, the labels of predictions overlapping the gene when the
+codon is missed, the exon structure of the prediction (identical introns; coding bases shared with the reference)
+and the SECIS score; per run and genome, the counts, and the Sec sites outside the reference set. Outputs:
+`results/tables/stage2_benchmark_{genes,summary,other_sites}.tsv`. Stage 1 is read from `work/stage1/pipeline`.
+The fair tests are the gold-standard assemblies in the `loo_*` runs, and the new assemblies in all runs; the gold
+assemblies in `eval` are training data (upper bound).
+
+### Reproduce
+
+```bash
+ml singularity
+scripts/fetch.sh                                                    # adds KUM, AOM, Bar2 (Zenodo)
+sbatch --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
+# one after the other, from the repository root (eval_miniprot right after eval reuses its Selenoprofiles tasks)
+for run in default eval eval_miniprot loo_OKI loo_OSKA loo_OdB3; do
+    NXF_WORK=<scratch>/stage2 PROFILE=<profile> stage2/run/run.sh $run || break
+done
+scripts/run_in_container.sh make stage2-benchmark
+```
+
+The expected selenoproteome of *O. dioica* for the pipeline's expectation check, with the new profile names, is in
+`stage2/run/expectation_oikopleura_dioica.csv`.
+

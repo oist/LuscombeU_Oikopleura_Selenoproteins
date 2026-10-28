@@ -1153,3 +1153,24 @@ no earlier step waits for them.
   available in hundreds of genes, but leaves no excess of SECIS-like elements after them (limited power: such hits are
   rare after any gene). Side observation: relative to TAA and TAG, TGA is more often followed by a stop at +1 in
   tunicates and Branchiostoma, not in vertebrates (not tested further).
+- Stage 2 prepared (2026-10-28, steps 6 and 7; request of Charles: profiles from the gold standard, the SECIS model and
+  non-default parameters, to recommend for new appendicularian assemblies). Test assemblies added on Charles's offer:
+  KUM-M3-7f, AOM-5-5f and Bar2_p4 of Plessy et al. 2024 (Zenodo 10.5281/zenodo.10241527, CC0; config/genomes.tsv role
+  `test`; fetch.sh now extracts members of .tar.gz archives), new assemblies of the three cryptic species, the main use
+  case. Reference for them: gold models lifted with minimap2 (stage2/truth_sets.py; checked locally by lifting
+  OKI2018 onto itself: 20 of 20 identical, 3 read as disrupted on the assembly, as in the gold standard; lifts across
+  cryptic species find nothing, as intended). Profiles (stage2/build_profiles.py, which replaces
+  build_machinery_profiles.py; make machinery-profiles keeps its old options): builds E0 (gold standard), LOO_<g>
+  (without one assembly) and final (plus validated stage 1 predictions of O. longicauda, O. albicans and
+  O. vanhoeffeni); new profiles KKSU and TXNL1b (no dot: Selenoprofiles reads the family up to the first dot) with
+  p2g_refiltering x.label != 'pseudo' instead of the AWSI filter; B. stygius, M. erythrocephalus and F. borealis held
+  out of all builds (decision of 2026-10-24, so the machinery is rebuilt without them here). Checked locally without
+  Selenoprofiles (--no-build): all 59 gold proteins align their selenocysteine to the selenocysteine column of the
+  standard profiles; mafft --keeplength drops 0 to 11 residues per protein. SECIS: the Oikopleura model with GA 20 added
+  (stage2/cm_thresholds.py), so the pipeline uses --cut_ga; the pipeline's -T 20 alone would leave inclusion at
+  E <= 0.01. Selenoprofiles 3' sequences cut to 2,000 nt (default 6,000), the window length of the 20-bit threshold.
+  Runs (stage2/run/): default (stage 1 settings on the new assemblies), eval, eval_miniprot (-C 0.5, for exons at
+  GA-AG introns), loo_OKI/OSKA/OdB3, final; benchmark stage2/benchmark.py (tested locally on the stage 1 sites table:
+  13, 14 and 13 of 20, 20 and 19 genes in OKI2018, OSKA2016 and OdB3). Pipeline release 0.2.0 has every option
+  needed; the samplesheet profiles column is quoted ("eukarya,machinery,KKSU,TXNL1b"; nf-schema reads CSV quotes).
+  Not tested locally: selenoprofiles build (installing it here was refused), minimap2 on the real new assemblies.

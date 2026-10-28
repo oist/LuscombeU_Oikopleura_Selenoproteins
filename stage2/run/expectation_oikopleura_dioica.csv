@@ -1,0 +1,9 @@
+# Expected selenoprotein genes per haploid genome of Oikopleura dioica (the three cryptic species: OKI2018, OSKA2016
+# and OdB3 gold standards of this repository, curation/baseline_sec_genes.tsv), for the pipeline options
+# --expectation <this file> --expectation_lineage Oikopleura_dioica. One column per Selenoprofiles profile (family
+# level; the pipeline does not assign subfamilies): DIO 2 (PAR and chr1), GPX 4, SELENOW 5 (PAR, chr1a, chr2 and the
+# chr1 pair), TXNL1b and KKSU from the profiles of this repository (samplesheet profiles column
+# "eukarya,machinery,KKSU,TXNL1b"). TXNRD, SELENOT and SELENOK lie on the X-specific region: with
+# --expectation_copies 2 (both haplotypes assembled), add --expectation_hemizygous TXNRD,SELENOT,SELENOK for males.
+Lineage,DIO,GPX,KKSU,SELENOF,SELENOK,SELENOO,SELENOS,SELENOT,SELENOW,SEPHS2,TXNL1b,TXNRD
+Oikopleura_dioica,2,4,1,1,1,1,1,1,5,1,1,1

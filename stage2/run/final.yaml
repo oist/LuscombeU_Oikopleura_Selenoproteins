@@ -1,0 +1,12 @@
+# Stage 2, run "final": stage 2 settings with the final profiles (gold standard, validated stage 1 predictions of
+# O. longicauda, O. albicans and O. vanhoeffeni, curated proteins), for the census. Settings to update after the
+# benchmark (miniprot options).
+# Paths are relative to the repository root, from which the pipeline is launched (stage2/run/run.sh).
+input: stage2/run/samplesheet_final.csv
+outdir: work/stage2/pipeline/final
+selenoprofiles_data: data/references/selenoprofiles_data
+trnasec_cm: data/references/RF01852.cm
+# Oikopleura SECIS model (results/models/oikopleura_secis.cm) with a gathering threshold of 20 bits added by
+# stage2/cm_thresholds.py (make stage2-inputs): the pipeline searches it with --cut_ga
+secis_cm: work/stage2/models/oikopleura_secis.cm
+selenoprofiles_overrides: work/stage2/profiles/final

@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -60,7 +60,8 @@ stage1-figures:
 # Machinery: appendicularian Selenoprofiles profiles, and their test on the genomes (Selenoprofiles in the image)
 #   sbatch --cpus-per-task=4 scripts/run_in_container.sh make machinery
 machinery-profiles:
-	python3 stage2/build_machinery_profiles.py --out work/stage2/machinery_profiles
+	python3 stage2/build_profiles.py --families SEPHS2 pstk SecS eEFsec SBP2 secp43 --gold-genomes \
+	    --stage1-genomes OKI OSKA OdB3 Olon Oalb Ovan Bsty Mery Fbor --held-out OdB3 --out work/stage2/machinery_profiles
 	@mkdir -p results/models/machinery_profiles && cp work/stage2/machinery_profiles/*.fa* work/stage2/machinery_profiles/members.tsv results/models/machinery_profiles/ && \
 	    tar -czf results/models/appendicularia_machinery_profiles.tar.gz -C work/stage2/machinery_profiles $$(cd work/stage2/machinery_profiles && ls *.fa *.fa.config *.fa.profile_data)
 
@@ -283,6 +284,39 @@ reannotation-pages:
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:
 	python3 stage2/machinery_table.py
+
+# Stage 2 (steps 6 and 7 of the plan of 2026-10-24). Inputs, in the image (Selenoprofiles; about 1 h on 4 CPUs):
+#   sbatch --cpus-per-task=4 scripts/run_in_container.sh make stage2-inputs stage2-truth
+# - profiles: E0 (gold standard of the three O. dioica assemblies; machinery from their stage 1 predictions), LOO_<g>
+#   (the same without one assembly), final (also the validated stage 1 predictions of the three other Oikopleura
+#   species, and the curated proteins of other species); B. stygius, M. erythrocephalus and F. borealis held out;
+# - the Oikopleura SECIS model with a gathering threshold of 20 bits (the pipeline then searches it with --cut_ga).
+# Then the pipeline runs (stage2/run/run.sh <run>; see stage2/README.md), then make stage2-benchmark.
+STAGE2_PROFILES = work/stage2/profiles
+STAGE2_BUILDS = E0 LOO_OKI LOO_OSKA LOO_OdB3 final
+stage2-inputs:
+	@mkdir -p work/stage2/models
+	python3 stage2/cm_thresholds.py --ga 20 results/models/oikopleura_secis.cm work/stage2/models/oikopleura_secis.cm
+	python3 stage2/build_profiles.py --stage1-genomes OKI OSKA OdB3 --out $(STAGE2_PROFILES)/E0
+	for g in OKI OSKA OdB3; do \
+	    python3 stage2/build_profiles.py --stage1-genomes OKI OSKA OdB3 --held-out Bsty Mery Fbor $$g \
+	        --out $(STAGE2_PROFILES)/LOO_$$g || exit 1; done
+	python3 stage2/build_profiles.py --stage1-genomes OKI OSKA OdB3 Olon Oalb Ovan --validated-genomes Olon Oalb Ovan \
+	    --candidates curation/candidates.faa --out $(STAGE2_PROFILES)/final \
+	    --archive work/stage2/appendicularia_selenoprofiles.tar.gz
+	@mkdir -p results/models/stage2_profiles && rm -f results/models/stage2_profiles/*.fa results/models/stage2_profiles/*.fa.config && \
+	    cp $(STAGE2_PROFILES)/final/*.fa $(STAGE2_PROFILES)/final/*.fa.config results/models/stage2_profiles/
+	awk 'NR == 1 {print "build\t" $$0} FNR > 1 {n = split(FILENAME, p, "/"); print p[n - 1] "\t" $$0}' \
+	    $(foreach b,$(STAGE2_BUILDS),$(STAGE2_PROFILES)/$(b)/members.tsv) > results/tables/stage2_profile_members.tsv
+
+# Reference sets: gold standard, gold models lifted to the new assemblies of the same species (minimap2), validated
+# stage 1 predictions of the other Oikopleura species (minutes)
+stage2-truth:
+	python3 stage2/truth_sets.py
+
+# Stage 1 and stage 2 settings against the reference sets (seconds; reads the pipeline outputs of each run present)
+stage2-benchmark:
+	python3 stage2/benchmark.py
 
 machinery: machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence
 

@@ -1,0 +1,8 @@
+# Stage 2, run "default": the pipeline with the stage 1 settings (default parameters, Rfam RF00031 at its gathering
+# threshold, standard Selenoprofiles profiles) on the three new assemblies, for comparison with the stage 2 settings.
+# Paths are relative to the repository root, from which the pipeline is launched (stage2/run/run.sh).
+input: stage2/run/samplesheet_new.csv
+outdir: work/stage2/pipeline/default
+selenoprofiles_data: data/references/selenoprofiles_data
+trnasec_cm: data/references/RF01852.cm
+secis_cm: data/references/RF00031.cm
