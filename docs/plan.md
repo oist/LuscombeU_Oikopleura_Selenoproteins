@@ -1226,3 +1226,13 @@ no earlier step waits for them.
   selenocysteine prediction in O. longicauda (SCLD01158551.1) and in O. albicans (SCLG01000103.1), without a SECIS hit
   of 20 bits in 2 kb: to validate in step 8 (census). Recommended settings written (stage2/recommended/README.md;
   make stage2-bundle builds the deposit archive). Next: run final (census input), make stage2-bundle.
+- Stage 2 final run (2026-10-29, Charles; final profiles, pipeline miniprot options) and deposit archive built
+  (work/stage2/appendicularia_selenoprotein_annotation.tar.gz). Same codons found as eval in the six O. dioica
+  assemblies (20, 20, 19; 19, 18, 19). In O. longicauda, O. albicans and O. vanhoeffeni, miniprot now finds 22, 16 and 14
+  of the stage 1 references (eval: 9, 10, 3), as expected since their own proteins are queries (not a test); the two
+  O. albicans fragments stay missed. All sites new in final are miniprot calls 3 to 9 nt from a codon found at the same
+  gene or copy (mostly DIO, with the more divergent DIO queries of the other species), plus one B. stygius SELENOW
+  fragment and one M. erythrocephalus GPX miniprot site; six eval sites in the other species are no longer called.
+  Pipeline improvement to consider (release 0.3.0): merge miniprot sites within a few codons of another site of the
+  same strand into one, and ship the stage 2 profiles and SECIS model as an appendicularian option. Stage 2 complete;
+  next: manuscript section on stage 2, then step 8 (hit validation, round 2) and step 9 (census, from the final run).
