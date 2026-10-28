@@ -397,6 +397,15 @@ The target also copies the parameters, software versions and execution trace of 
 The fair tests are the gold-standard assemblies in the `loo_*` runs, and the new assemblies in all runs; the gold
 assemblies in `eval` are training data (upper bound).
 
+### Filter diagnosis (`make stage2-diagnose`)
+
+`diagnose_refiltering.py` runs Selenoprofiles with one profile on one genome (jobs `genome:family:build`, build =
+`standard` or a directory of `work/stage2/profiles/`) and, through a pre-filtering action (`refiltering_hook.py`),
+reports for every candidate prediction the measures used by the filters (coverage, identity with the profile, AWSI
+z-scores, selenocysteine alignment, number of profile sequences) and the value of `p2g_filtering`, `p2g_refiltering`
+and each of its `and` clauses: `results/tables/stage2_refiltering_diagnosis.tsv` (column
+`refiltering_clauses_false`: the clauses that remove the prediction).
+
 ### Reproduce
 
 ```bash

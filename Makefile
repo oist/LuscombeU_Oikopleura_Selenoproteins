@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -313,6 +313,11 @@ stage2-inputs:
 # stage 1 predictions of the other Oikopleura species (minutes)
 stage2-truth:
 	python3 stage2/truth_sets.py
+
+# Which filter of a profile removes a prediction (Selenoprofiles with one profile per job; about 1 h on 4 CPUs):
+#   sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-diagnose
+stage2-diagnose:
+	python3 stage2/diagnose_refiltering.py
 
 # Stage 1 and stage 2 settings against the reference sets (seconds; reads the pipeline outputs of each run present)
 stage2-benchmark:

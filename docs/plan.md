@@ -1188,3 +1188,20 @@ no earlier step waits for them.
   indel are placed from the nearest aligned base (30 nt), the codon at the lifted position is recorded, and the
   benchmark counts every reference whose codon is a TGA (disrupted models are expected in Nanopore assemblies: indels);
   structure compared for complete models only; regions and PAF kept in work/stage2/truth/ for inspection.
+- Stage 2 benchmark, first results (2026-10-28, runs default, eval, eval_miniprot, loo_* by Charles). Reference
+  codons verified TGA: 20, 20, 19 in OKI2018, OSKA2016, OdB3; 19, 18, 19 in KUM, AOM, Bar2 (lifts). Sec codons
+  found (Selenoprofiles label selenocysteine or miniprot): stage 1 13, 14, 13; stage 1 settings on the new assemblies
+  12, 12, 11; eval 20, 19, 18 and 19, 17, 18; leave-one-assembly-out (fair test) OKI 20, KUM 19, OSKA 19, AOM 17,
+  OdB3 18, Bar2 18. Every reference found by Selenoprofiles has a SECIS hit at the 20-bit threshold. The only gene
+  missed in the O. dioica assemblies is SELENOS (OSKA2016, OdB3, AOM, Bar2), with no Selenoprofiles prediction at the
+  locus; miniprot with -C 0.5 recovers it in OSKA2016, OdB3 and Bar2 (not AOM) and changes nothing else in the found
+  counts. Selenoprofiles found SELENOS in OSKA2016 in stage 1 (standard profile) and in OKI2018 and KUM with LOO_OKI,
+  not with E0: the standard SELENOS refiltering requires 5 of 9 residues conserved in vertebrates (the gold proteins
+  have 3 or 4) and an AWSI z-score above -2; which clause removes it is tested by make stage2-diagnose (new).
+  SELENOT and SEPHS2 are found by Selenoprofiles only, never by miniprot (their selenocysteine codons are 2 and 1 nt
+  from a donor site, where miniprot can move the junction to avoid the in-frame stop codon). Structures (eval,
+  O. dioica): median coding-base sensitivity and precision 1.00, identical introns in 6 to 10 of 15 to 18 genes.
+  Sec sites outside the references in the new assemblies: genes whose lift missed the codon (AOM GPX_chr1b and
+  SELENOO, probably KUM DIO_chr1), SELENOO in Bar2 (no OdB3 reference), copies (a second SELENOK 10 kb from the first
+  in KUM; DIO copies in Bar2; the OSKA2016 GPX_PAR copy on S12 known from step 4; OdB3 haplotype contigs), and miniprot
+  calls 3 nt from the codon (SELENOF, GPX_chr1b); no site outside a selenoprotein gene.
