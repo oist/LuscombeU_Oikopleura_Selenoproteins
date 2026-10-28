@@ -28,7 +28,8 @@ import argparse, collections, csv, os, re, sys
 
 RUNS = ["stage1=work/stage1/pipeline", "default=work/stage2/pipeline/default", "eval=work/stage2/pipeline/eval",
         "eval_miniprot=work/stage2/pipeline/eval_miniprot", "loo_OKI=work/stage2/pipeline/loo_OKI",
-        "loo_OSKA=work/stage2/pipeline/loo_OSKA", "loo_OdB3=work/stage2/pipeline/loo_OdB3"]
+        "loo_OSKA=work/stage2/pipeline/loo_OSKA", "loo_OdB3=work/stage2/pipeline/loo_OdB3",
+        "final=work/stage2/pipeline/final"]
 GENE_ID = re.compile(r'gene_id "([^"]+)"')
 GENOMES = ["OKI", "OSKA", "OdB3", "KUM", "AOM", "Bar2", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"]
 
