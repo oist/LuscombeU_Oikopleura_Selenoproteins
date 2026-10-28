@@ -24,7 +24,7 @@ DEFAULT = [f"{g}:SELENOS:{b}" for g in ["OKI", "OSKA", "OdB3", "KUM", "AOM", "Ba
 
 def job(spec, a):
     genome, family, build = spec.split(":")
-    folder = (f"{a.data}/selenoprotein_profiles" if build == "standard" else os.path.abspath(f"{a.profiles}/{build}"))
+    folder = os.path.abspath(f"{a.data}/selenoprotein_profiles" if build == "standard" else f"{a.profiles}/{build}")
     out = os.path.abspath(f"{a.out}/{genome}.{family}.{build}.tsv")
     if os.path.exists(out) and not a.force: return spec, out, "kept from an earlier run"
     if os.path.exists(out): os.remove(out)
