@@ -22,9 +22,10 @@ columns, so that the column-based options of the standard configuration stay val
 members.tsv). New families (--new-families, no standard profile): the members are aligned with MAFFT L-INS-i, and the
 configuration sets p2g_refiltering to x.label != 'pseudo' instead of the default AWSI filter, which needs more
 sequences. Each alignment is then built with "selenoprofiles build" (all sequences as BLAST queries), loading the
-standard configuration when there is one. Profiles of standard families keep the standard names, so that they replace
-the standard ones in a copy of the Selenoprofiles data (pipeline option --selenoprofiles_overrides); new names must be
-requested in the profiles column of the samplesheet.
+standard configuration when there is one; keys of the standard configuration that the build does not write back
+(go_terms, used by the GPX filter) are appended to the new configuration. Profiles of standard families keep the
+standard names, so that they replace the standard ones in a copy of the Selenoprofiles data (pipeline option
+--selenoprofiles_overrides); new names must be requested in the profiles column of the samplesheet.
 
 Outputs in --out: <family>.fa, .fa.config and .fa.profile_data (only profiles, so that the directory can be passed to
 --selenoprofiles_overrides), members.tsv; alignments before the build in --out/alignments/; with --archive, a .tar.gz
@@ -71,6 +72,27 @@ def gold_families(gold, genomes):
 
 def u_columns(aln):
     return {i for _, s in aln for i, c in enumerate(s) if c in "Uu"}
+
+
+def config_keys(path):
+    """Keys of a Selenoprofiles profile configuration (lines "key = value"; the space before "=" is optional)."""
+    out = {}
+    for l in open(path):
+        if "=" in l and l.split("=", 1)[0].strip():
+            out.setdefault(l.split("=", 1)[0].strip(), l.rstrip("\n"))
+    return out
+
+
+def restore_config_keys(loaded, built):
+    """Append to the built configuration the lines of the loaded one whose key it lacks. "selenoprofiles build"
+    writes only the keys of its parameter list (filters, options, tags), so that, for example, go_terms is lost and
+    a filter calling x.go_score() then fails (go_score returns None without GO terms: GPX)."""
+    have, want = config_keys(built), config_keys(loaded)
+    missing = [k for k in want if k not in have and k != "queries"]
+    if missing:
+        with open(built, "a") as o:
+            for k in missing: o.write(want[k] + "\n")
+    return missing
 
 
 def run(cmd, **kw):
@@ -225,7 +247,9 @@ def main():
                 cfg = f"{std}.config"
             run(["selenoprofiles", "build", "-i", merged, "-o", dest, "-load", cfg, "-queries", "all", "-name", fam,
                  "-y"], env=env)
+            restored = restore_config_keys(cfg, f"{dest}.config")
             msg += f" -> {sum(1 for _ in read_fasta(dest))} in the profile"
+            if restored: msg += f"; configuration keys restored: {', '.join(restored)}"
         print(msg, flush=True)
     with open(f"{out}/members.tsv", "w") as o:
         for row in log: o.write("\t".join(map(str, row)) + "\n")
