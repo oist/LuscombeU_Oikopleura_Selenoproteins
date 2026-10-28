@@ -1,6 +1,6 @@
 # Stage 2, run "final": stage 2 settings with the final profiles (gold standard, validated stage 1 predictions of
-# O. longicauda, O. albicans and O. vanhoeffeni, curated proteins), for the census. Settings to update after the
-# benchmark (miniprot options).
+# O. longicauda, O. albicans and O. vanhoeffeni, curated proteins), for the census. miniprot with the pipeline's
+# options: the benchmark of 2026-10-29 found no gain with -C 0.5 once the SELENOS filter was changed.
 # Paths are relative to the repository root, from which the pipeline is launched (stage2/run/run.sh).
 input: stage2/run/samplesheet_final.csv
 outdir: work/stage2/pipeline/final

@@ -421,6 +421,13 @@ done
 scripts/run_in_container.sh make stage2-benchmark
 ```
 
+### Recommended settings (`stage2/recommended/`, `make stage2-bundle`)
+
+`stage2/recommended/README.md` describes the settings chosen from the benchmark for new appendicularian assemblies
+(final profiles, SECIS model with its threshold, 2,000-nt 3′ sequences, the profiles column; miniprot with the
+pipeline's options). `make stage2-bundle` assembles them with the data files into
+`work/stage2/appendicularia_selenoprotein_annotation.tar.gz`, for Zenodo.
+
 The expected selenoproteome of *O. dioica* for the pipeline's expectation check, with the new profile names, is in
 `stage2/run/expectation_oikopleura_dioica.csv`.
 

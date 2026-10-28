@@ -1,0 +1,10 @@
+# Parameters for oist/LuscombeU_Selenoproteins_Pipeline (release 0.2.0) on appendicularian genomes (see README.md).
+input: samplesheet.csv
+outdir: results
+# Selenoprofiles data: a local copy made by "selenoprofiles -download"; leave out to let the pipeline download it
+# selenoprofiles_data: /path/to/selenoprofiles_data
+selenoprofiles_overrides: appendicularia_selenoprofiles.tar.gz
+secis_cm: oikopleura_secis.cm
+# For Oikopleura dioica:
+# expectation: expectation_oikopleura_dioica.csv
+# expectation_lineage: Oikopleura_dioica

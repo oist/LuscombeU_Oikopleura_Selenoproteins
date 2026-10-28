@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -318,6 +318,19 @@ stage2-truth:
 #   sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-diagnose
 stage2-diagnose:
 	python3 stage2/diagnose_refiltering.py
+
+# Deposit archive of the recommended settings and data files (stage2/recommended/README.md), after stage2-inputs
+STAGE2_BUNDLE = work/stage2/appendicularia_selenoprotein_annotation
+stage2-bundle:
+	@test -s work/stage2/appendicularia_selenoprofiles.tar.gz || { echo "run make stage2-inputs first"; exit 1; }
+	rm -rf $(STAGE2_BUNDLE) && mkdir -p $(STAGE2_BUNDLE)
+	cp stage2/recommended/README.md stage2/recommended/params.yaml stage2/recommended/samplesheet.csv $(STAGE2_BUNDLE)/
+	cp stage2/run/stage2.config $(STAGE2_BUNDLE)/appendicularia.config
+	cp stage2/run/expectation_oikopleura_dioica.csv work/stage2/appendicularia_selenoprofiles.tar.gz $(STAGE2_BUNDLE)/
+	cp work/stage2/models/oikopleura_secis.cm $(STAGE2_BUNDLE)/oikopleura_secis.cm
+	cp work/stage2/profiles/final/members.tsv $(STAGE2_BUNDLE)/profile_members.tsv
+	tar -czf $(STAGE2_BUNDLE).tar.gz -C work/stage2 appendicularia_selenoprotein_annotation
+	@echo "$(STAGE2_BUNDLE).tar.gz"
 
 # Stage 1 and stage 2 settings against the reference sets (seconds; reads the pipeline outputs of each run present)
 stage2-benchmark:

@@ -1216,3 +1216,13 @@ no earlier step waits for them.
   GPX.24) are fragments of 55 and 49 residues removed by the default length/coverage filter (len > 60 or coverage >
   0.4): with E0 their coverage is 0.20 and 0.25 (0.23 and 0.52 with the standard profile, plus a second exon for DIO.9);
   kept as they are. Next: rebuild the profiles, rerun eval, eval_miniprot and the loo runs, then the benchmark.
+- Stage 2 benchmark with the SELENOS change (2026-10-29, rerun by Charles). Every O. dioica reference codon is found
+  in eval and in the leave-one-species-out runs: 20/20 in OKI2018 and OSKA2016, 19/19 in OdB3, 19/19, 18/18, 19/19 in
+  KUM, AOM, Bar2 (stage 1 settings: 11 to 14). SELENOS is now found by Selenoprofiles in OSKA2016, OdB3, KUM, AOM and
+  Bar2 (SECIS 39.3 to 43.8 bits) and by miniprot only in OKI2018. Every codon found by Selenoprofiles has a SECIS hit of
+  at least 20 bits. miniprot -C 0.5 changes no count of found genes any more (it adds miniprot support to SELENOS in
+  three assemblies, removes it from OKI2018 GPX_chr1a, and moves single extra sites in O. albicans and
+  O. vanhoeffeni): not adopted; the pipeline's miniprot options are kept. New with the change: a SELENOS
+  selenocysteine prediction in O. longicauda (SCLD01158551.1) and in O. albicans (SCLG01000103.1), without a SECIS hit
+  of 20 bits in 2 kb: to validate in step 8 (census). Recommended settings written (stage2/recommended/README.md;
+  make stage2-bundle builds the deposit archive). Next: run final (census input), make stage2-bundle.
