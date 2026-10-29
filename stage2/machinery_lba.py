@@ -15,6 +15,14 @@ trimmed alignment of results/trees/<family>.trimmed:
             positions of the appendicularian clade: inside the clade of all tunicate sequences, and next to the
             tunicate copies of the same form with the other form (and the second appendicularian copy) as their
             sister; under the ML model and under LG+C60+F+G with the site frequencies of the PMSF analysis
+  hypotheses AU tests of the positions listed for the family in --hypotheses (stage2/au_hypotheses.tsv), under the
+            same two models: each hypothesis is a set of clades (constraint tree), each clade an expression of leaf
+            sets joined by " + " (union) and " - " (difference): app (the appendicularian clade), appclade:<regex>
+            (the largest clade of appendicularian leaves that holds every appendicularian leaf matching the regular
+            expression; when they are in several clades, the largest of each, together), mrca:<regex> (the smallest clade of the maximum-likelihood tree that holds every leaf
+            matching it), group:<taxonomic group> (also vertebrates, chordates, animals and non-animals: classified
+            leaves outside the animal groups of stage2/taxonomy.py), re:<regex>; the resolved clades
+            are written to <out>/<family>.hypotheses.tsv
 The summaries of all families are also gathered in results/tables/stage2_machinery_lba.tsv.
 For each tree, the summary records the support of the clades that the conclusions rest on: the appendicularian clade,
 the family against the outgroup (PSTK) and the appendicularians with the other tunicates.
@@ -26,7 +34,10 @@ analysis. The other tunicates are those of the orthologous form only: for SEPHS,
 left out (ORTHOLOG_EXCLUDE).
 Outputs: <out>/<family>.* and <out>/<family>.summary.tsv
 """
-import argparse, os, re, shutil, subprocess
+import argparse, os, re, shutil, subprocess, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from taxonomy import load_taxa, classify, ANIMALS   # noqa: E402  (load_taxa re-exported for the other scripts)
 
 # tunicate sequences of a paralogous form, left out of the "other tunicates" that the appendicularian clade is
 # tested against: the glycine (non-Sec) SEPHS of ascidians, which the second, non-Sec SEPHS of the oikopleurids joins
@@ -60,14 +71,6 @@ def best_model(iqtree_report):
     return m.group(1) if m else "LG+G4"
 
 
-def load_taxa(path):
-    """genus (or genome code) -> taxonomic group, from config/taxon_groups.tsv"""
-    taxa = {}
-    if os.path.exists(path):
-        for l in open(path):
-            if l.startswith("#") or l.startswith("genus\t") or "\t" not in l: continue
-            g, grp = l.rstrip("\n").split("\t"); taxa[g] = grp
-    return taxa
 
 
 def taxon(name, groups, taxa):
@@ -77,9 +80,7 @@ def taxon(name, groups, taxa):
     if g == "outgroup": return "outgroup"
     if g in ("appendicularian", "curated"): return "Appendicularians"
     if g == "tunicate": return "Other tunicates"
-    first = re.sub(r"^(sps1|sps2|sps)_", "", name.split("|")[0])
-    if first.startswith("Human_"): return "Mammals"
-    return taxa.get(re.split(r"[_.]", first)[0], "unclassified")
+    return classify(name, taxa)
 
 
 def read_tree(treefile):
@@ -138,7 +139,10 @@ def main():
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--out", default="results/trees/lba")
     ap.add_argument("--table", default="results/tables/stage2_machinery_lba.tsv")
+    ap.add_argument("--hypotheses", default="stage2/au_hypotheses.tsv",
+                    help="positions to test by AU tests (analysis hypotheses): family, id, hypothesis, clades")
     a = ap.parse_args()
+    hypotheses = read_hypotheses(a.hypotheses) if "hypotheses" in a.analyses else {}
     os.makedirs(a.out, exist_ok=True)
     for fam in a.families:
         aln, ml = f"{a.trees}/{fam}.trimmed", f"{a.trees}/{fam}.treefile"
@@ -222,6 +226,8 @@ def main():
                          f"p-AU of the constrained tree = {p_au}", "", ""))
         if "orthology" in a.analyses and excl:
             rows += orthology_tests(fam, base, aln, ml, model, seqs, sets, tax, excl, a.cpus)
+        if "hypotheses" in a.analyses and fam in hypotheses:
+            rows += hypothesis_tests(fam, base, aln, ml, model, seqs, sets, tax, hypotheses[fam], a.cpus)
         with open(f"{base}.summary.tsv", "w") as o:
             for r in rows: o.write("\t".join(map(str, r)) + "\n")
         print(open(f"{base}.summary.tsv").read(), flush=True)
@@ -282,6 +288,140 @@ def orthology_tests(fam, base, aln, ml, model, seqs, sets, tax, excl, cpus):
                     "--prefix", au], cpus)
         for (h, (_, _, text)), p in zip(hyp.items(), p_values(f"{au}.iqtree", len(trees))):
             rows.append((f"AU test: {text}", label, len(seqs[0][1]), len(seqs), f"p-AU of the constrained tree = {p}", "", ""))
+    return rows
+
+
+VERTEBRATES = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe-finned fishes",
+               "Cartilaginous fishes", "Jawless fishes"}
+GROUP_ALIASES = {"vertebrates": VERTEBRATES, "chordates": VERTEBRATES | {"Cephalochordates", "Other tunicates"},
+                 "animals": ANIMALS}
+
+
+def read_hypotheses(path):
+    """family -> [(id, hypothesis, [clade expressions])]"""
+    out = {}
+    if path and os.path.exists(path):
+        for l in open(path):
+            if l.startswith("#") or l.startswith("family\t") or not l.strip(): continue
+            fam, hid, text, clades = l.rstrip("\n").split("\t")[:4]
+            out.setdefault(fam, []).append((hid, text, [c.strip() for c in clades.split(";") if c.strip()]))
+    return out
+
+
+def tree_sides(treefile):
+    """All bipartition sides (both sides of each internal branch) of an unrooted tree, as frozensets."""
+    t = read_tree(treefile)
+    names = frozenset(x.name for x in t.get_terminals())
+    sides = set()
+    for c in t.get_nonterminals():
+        leaves = frozenset(x.name for x in c.get_terminals())
+        if 1 < len(leaves) < len(names) - 1: sides |= {leaves, names - leaves}
+    return names, sides
+
+
+def resolve(expr, names, sides, tax, app):
+    """Leaf set of a clade expression (see the hypotheses analysis); raises ValueError when it cannot be resolved."""
+    parts = re.split(r"\s+([+-])\s+", " " + expr.strip())
+    parts = ["+"] + [p for p in parts if p.strip()] if parts[0].strip() else ["+"] + parts[1:]
+    out = set()
+    for op, term in zip(parts[0::2], parts[1::2]):
+        kind, _, arg = term.strip().partition(":")
+        if kind == "app": leaves = set(app)
+        elif kind == "group" and arg == "non-animals":
+            leaves = {n for n in names if tax[n] not in ANIMALS and tax[n] != "unclassified"}
+        elif kind == "group":
+            groups = GROUP_ALIASES.get(arg, {arg})
+            leaves = {n for n in names if tax[n] in groups}
+        elif kind == "re": leaves = {n for n in names if re.search(arg, n)}
+        elif kind in ("appclade", "mrca"):
+            hits = {n for n in names if re.search(arg, n) and (kind == "mrca" or tax[n] == "Appendicularians")}
+            if not hits: raise ValueError(f"{term}: no leaf matches")
+            if kind == "appclade":
+                cands = [x for x in sides if hits <= x and all(tax[n] == "Appendicularians" for n in x)]
+                if cands: leaves = set(max(cands, key=len))
+                else:   # leaves in several clades: the largest appendicularian clade of each, together
+                    leaves = set()
+                    for h in hits:
+                        own = [x for x in sides if h in x and all(tax[n] == "Appendicularians" for n in x)]
+                        leaves |= set(max(own, key=len)) if own else {h}
+            else:
+                cands = [x for x in sides if hits <= x]
+                if not cands: raise ValueError(f"{term}: no clade holds the matching leaves")
+                leaves = set(min(cands, key=len))
+        else: raise ValueError(f"unknown term {term}")
+        out = out | leaves if op == "+" else out - leaves
+    return out
+
+
+def constraint_newick(sets, names):
+    """Newick constraint tree with each leaf set as a clade (sets nested or disjoint), other leaves at the root."""
+    sets = sorted({frozenset(x) for x in sets}, key=len, reverse=True)
+    for i, x in enumerate(sets):
+        for y in sets[i + 1:]:
+            if x & y and not y <= x: raise ValueError("clades overlap without nesting")
+    def parent(x):
+        sup = [y for y in sets if x < y]
+        return min(sup, key=len) if sup else None
+    children = {x: [] for x in sets}; top = []
+    for x in sets:
+        (children[parent(x)] if parent(x) else top).append(x)
+    def node(x):
+        inner = set().union(*children[x]) if children[x] else set()
+        return "(" + ",".join([node(c) for c in children[x]] + sorted(x - inner)) + ")"
+    used = set().union(*sets) if sets else set()
+    return "(" + ",".join([node(x) for x in top] + sorted(set(names) - used)) + ");"
+
+
+def hypothesis_tests(fam, base, aln, ml, model, seqs, sets, tax, specs, cpus):
+    names, sides = tree_sides(ml)
+    resolved = []
+    with open(f"{base}.hypotheses.tsv", "w") as o:
+        o.write("id\thypothesis\tclades\tsizes\tin the ML tree\tleaves\n")
+        for hid, text, exprs in specs:
+            try:
+                cl = [resolve(e, names, sides, tax, sets["app"]) for e in exprs]
+                for c in cl:
+                    if not 2 <= len(c) <= len(names) - 2: raise ValueError(f"a clade of {len(c)} leaves")
+                nwk = constraint_newick(cl, names)
+            except ValueError as e:
+                print(f"{fam}: hypothesis {hid} not tested: {e}", flush=True)
+                o.write(f"{hid}\t{text}\t{'; '.join(exprs)}\tnot resolved: {e}\t\t\n"); continue
+            inml = all(frozenset(c) in sides for c in cl)
+            o.write(f"{hid}\t{text}\t{'; '.join(exprs)}\t{','.join(str(len(c)) for c in cl)}\t"
+                    f"{'yes' if inml else 'no'}\t{' | '.join(' '.join(sorted(c)) for c in cl)}\n")
+            resolved.append((hid, text, cl, nwk))
+    models = {"ml": (["-m", model], ml, model)}
+    if os.path.exists(f"{base}.pmsf.treefile"):          # PMSF analysis done: the same tests under LG+C60+F+G
+        sitefreq = f"{base}.pmsf.sitefreq"
+        if not os.path.exists(sitefreq):
+            sitefreq = f"{base}.sitefreq.sitefreq"
+            if not os.path.exists(sitefreq):
+                iqtree(["-s", aln, "-m", "LG+C60+F+G", "-ft", ml, "-n", "0", "--prefix", f"{base}.sitefreq"], cpus)
+        models["pmsf"] = (["-m", "LG+C60+F+G", "-fs", sitefreq], f"{base}.pmsf.treefile", "LG+C60+F+G (PMSF)")
+    rows = []
+    for tag, (margs, best, label) in models.items():
+        trees = [best]
+        for hid, text, cl, nwk in resolved:
+            prefix = f"{base}.{tag}.hyp_{hid}"
+            with open(f"{prefix}.constraint.nwk", "w") as o: o.write(nwk + "\n")
+            if finished(prefix) and not all(is_split(f"{prefix}.treefile", c) for c in cl):
+                for f in os.listdir(os.path.dirname(base)):
+                    if f.startswith((f"{fam}.{tag}.hyp_{hid}.", f"{fam}.{tag}.hypotheses_au.")) and \
+                            not f.endswith(".constraint.nwk"):
+                        os.remove(os.path.join(os.path.dirname(base), f))
+            if not finished(prefix):
+                iqtree(["-s", aln] + margs + ["-g", f"{prefix}.constraint.nwk", "--prefix", prefix], cpus)
+            trees.append(f"{prefix}.treefile")
+        if len(trees) == 1: continue
+        au = f"{base}.{tag}.hypotheses_au"
+        with open(f"{au}.treels", "w") as o:
+            for t in trees: o.write(open(t).read().strip() + "\n")
+        if not os.path.exists(f"{au}.iqtree"):
+            iqtree(["-s", aln] + margs + ["-z", f"{au}.treels", "-te", best, "-n", "0", "-zb", "10000", "-au",
+                    "--prefix", au], cpus)
+        for (hid, text, _, _), p in zip(resolved, p_values(f"{au}.iqtree", len(trees))):
+            rows.append((f"AU test: {text}", label, len(seqs[0][1]), len(seqs), f"p-AU of the constrained tree = {p}",
+                         "", ""))
     return rows
 
 

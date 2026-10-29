@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -233,18 +233,30 @@ txnl1-introns:
 # trees, LG+C60+F+G (PMSF) trees, then a first-pass summary per appendicularian clade (stage2/README.md)
 SELENO_TREES = DIO GPX MsrA SELENOF SELENOK SELENOL SELENOO SELENOS SELENOT SELENOU SELENOW TXNRD
 
-# Reciprocal best hits of the stage 1 selenoprotein predictions (all genomes) against the human RefSeq proteome
+# Appendicularian predictions of the selenoprotein trees. Round 2 (step 8, from 2026-10-29): stage 2 final run, with
+# the O. dioica genes as gold-standard proteins; first pass (2026-10-24): make selenoprotein-rbh selenoprotein-phylogeny
+# selenoprotein-orthology SELENO_PREDICTIONS=work/stage1/pipeline/selenoprofiles GOLD=
+SELENO_PREDICTIONS = work/stage2/pipeline/final/selenoprofiles
+GOLD = curation/gold_standard
+# Best hits: SELENO_PREDICTIONS for the genomes they hold, stage 1 predictions for the other genomes
+SELENO_RBH = $(sort $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa) \
+  $(filter-out $(addprefix work/stage1/pipeline/selenoprofiles/,$(notdir $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa))), \
+    $(wildcard work/stage1/pipeline/selenoprofiles/*.selenoprofiles.faa)))
+
+# Reciprocal best hits of the selenoprotein predictions (all genomes) against the human RefSeq proteome
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=12:00:00 scripts/run_in_container.sh make selenoprotein-rbh
 selenoprotein-rbh:
-	python3 stage2/machinery_rbh.py --families selenoproteins --table results/tables/stage2_selenoprotein_rbh.tsv
+	python3 stage2/machinery_rbh.py --families selenoproteins --predictions $(SELENO_RBH) \
+	  --table results/tables/stage2_selenoprotein_rbh.tsv
 
-# Trees of the families of SELENO_TREES that have appendicularian sequences (stage 1 predictions; human RefSeq
-# proteins of each family as references); starts afresh, removing results/trees/selenoproteins
+# Trees of the families of SELENO_TREES that have appendicularian sequences (SELENO_PREDICTIONS, GOLD); human RefSeq
+# proteins of each family (and MIEN1 for SELENOW) as references; starts afresh, removing results/trees/selenoproteins
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2-00:00:00 scripts/run_in_container.sh make selenoprotein-phylogeny
 selenoprotein-phylogeny:
 	rm -rf results/trees/selenoproteins
 	python3 stage2/machinery_phylogeny.py --families $(SELENO_TREES) --max-per-group 3 --min-fraction 0.3 \
-	  --stage2 work/stage1/pipeline/selenoprofiles --out results/trees/selenoproteins --figures figures/selenoproteins --formats pdf
+	  --stage2 $(SELENO_PREDICTIONS) $(if $(GOLD),--gold $(GOLD)) \
+	  --out results/trees/selenoproteins --figures figures/selenoproteins --formats pdf
 	python3 figures/phylogeny_collapsed.py --families $(SELENO_TREES) --trees results/trees/selenoproteins \
 	  --groups-dir results/trees/selenoproteins --figures figures/selenoproteins --formats pdf
 
@@ -258,9 +270,17 @@ selenoprotein-pmsf:
 	  --groups-dir results/trees/selenoproteins --tree-suffix .pmsf --suffix _pmsf --model-label "LG+C60+F+G (PMSF)" \
 	  --figures figures/selenoproteins --formats pdf
 
+# AU tests of the positions of stage2/au_hypotheses.tsv (step 8), under the ML model and LG+C60+F+G (PMSF), after
+# selenoprotein-pmsf (keeps finished analyses); clades resolved in results/trees/selenoproteins/lba/<family>.hypotheses.tsv
+#   sbatch -p compute --cpus-per-task=8 --mem=32G --time=1-00:00:00 scripts/run_in_container.sh make selenoprotein-au
+SELENO_AU = DIO SELENOF SELENOO SELENOT SELENOW
+selenoprotein-au:
+	python3 stage2/machinery_lba.py --families $(SELENO_AU) --trees results/trees/selenoproteins --analyses pmsf hypotheses \
+	  --out results/trees/selenoproteins/lba --table results/tables/stage2_selenoprotein_lba.tsv
+
 # First-pass orthology of each appendicularian clade, from the trees and best hits (seconds; reads results/ only)
 selenoprotein-orthology:
-	python3 stage2/selenoprotein_orthology.py
+	python3 stage2/selenoprotein_orthology.py $(if $(GOLD),,--annotation results/tables/stage1_annotation.tsv)
 
 # Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)
 machinery-scheme:

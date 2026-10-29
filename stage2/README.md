@@ -93,7 +93,8 @@ flagged as ambiguous, for phylogeny. Needs `data/genomes/Hsap/protein.faa.gz` (f
 
 ### Phylogenies: sequences
 
-`machinery_phylogeny.py` combines the profile sequences (at most three per taxonomic group with `--max-per-group 3`),
+`machinery_phylogeny.py` combines the profile sequences (at most three per taxonomic group with `--max-per-group 3`;
+groups from `taxonomy.py`, below),
 the SPS1/SPS2-labelled sequences of Mariotti et al. 2015 (SEPHS), the predictions of the other tunicates,
 cephalochordates and vertebrates (stage 1) and of the appendicularians (stage 2), the curated transcript proteins,
 and, for PSTK and the SECIS-binding proteins, the RefSeq proteins of the genomes that have them (KTI12 proteins join
@@ -115,6 +116,14 @@ alignments). Outputs per family in `results/trees/`: `.faa`, `.groups.tsv`, `.re
 `.treefile`, `.iqtree`; figures `figures/phylogeny_<family>.*` (full trees) and `_collapsed.*` (display trees,
 `figures/phylogeny_collapsed.py`). About 4 hours on 8 CPUs, most of it the C20 tree of SEPHS.
 
+Taxonomic groups (`taxonomy.py`, shared by the tree, long-branch, orthology and figure scripts) are read from the
+sequence names: genome code or genus at the start of the name, Ensembl species prefix of a protein identifier and
+UniProt species mnemonic of an entry name (`config/taxon_codes.tsv`), then any token that is a known genus
+(`config/taxon_groups.tsv`, case-insensitive), then descriptive bacterial names; the rest is "unclassified". The
+machinery trees of `results/trees/` (2026-10-19 to 10-24) were built before this module, when only the first token was
+looked up and sequences left unclassified escaped the limit of three per group: a rerun at a later commit subsamples
+the profile sequences differently (the earlier commits reproduce them).
+
 ### Long-branch analyses (`machinery_lba.py`, `make machinery-lba`)
 
 Appendicularian proteins evolve fast, so their position is exposed to long-branch attraction. For each family:
@@ -123,7 +132,7 @@ rates), each reduced alignment reanalysed; removal of named long branches (`--ex
 in PSTK); an AU test of the grouping of the appendicularian clade with the other tunicates of the same form; for SEPHS,
 two more AU tests (appendicularian selenocysteine clade inside the clade of all tunicate SEPHS, and at the position
 expected for an ortholog), under the selected model and under LG+C60+F+G with the PMSF site frequencies. Leaves are
-assigned to taxa by genus or genome code; the appendicularian clade is the largest one in the maximum-likelihood tree.
+assigned to taxa by `taxonomy.py`; the appendicularian clade is the largest one in the maximum-likelihood tree.
 Outputs: `results/trees/lba/` (trees, reports, site rates, `<family>.summary.tsv`), `results/tables/stage2_machinery_lba.tsv`
 (all families), and, through `machinery-lba-figures`, the display trees of the PMSF trees
 (`figures/phylogeny_<family>_collapsed_pmsf.*`). About 2 hours on 8 CPUs. `make machinery-lba` starts afresh; to
@@ -306,16 +315,26 @@ The approach of the machinery applied to the selenoprotein families that have ap
 (`SELENO_TREES` in the Makefile: DIO, GPX, MsrA, SELENOF, SELENOK, SELENOL, SELENOO, SELENOS, SELENOT, SELENOU,
 SELENOW, TXNRD), to give a first global view before family-by-family analyses.
 
-1. `make selenoprotein-rbh`: `machinery_rbh.py --families selenoproteins` on the stage 1 predictions of all genomes.
+Two rounds, set by the Makefile variables `SELENO_PREDICTIONS` and `GOLD`. First pass (2026-10-24): stage 1
+predictions of the appendicularians (`SELENO_PREDICTIONS=work/stage1/pipeline/selenoprofiles GOLD=`). Round 2 (step 8,
+the default from 2026-10-29): predictions of the stage 2 final run (`work/stage2/pipeline/final`), in which the
+predictions of OKI, OSKA and OdB3 that overlap a gold-standard gene of the family are replaced by its gold-standard
+protein (leaf `<genome>_gold_<gene>`, recorded in `<family>.removed.tsv`); the test assemblies KUM, AOM and Bar2 are
+not in the trees.
+
+1. `make selenoprotein-rbh`: `machinery_rbh.py --families selenoproteins` on the predictions of `SELENO_PREDICTIONS`
+   for the genomes it holds and on the stage 1 predictions of the other genomes.
    Each family has its human genes (`SELENOPROTEIN_GENES`: for example GPX1 to GPX8, DIO1 to DIO3, SELENOW and
    SELENOV), possibly none (SELENOL, SELENOU: status "best hit only"); the margin is the score of the best expected
    gene minus that of the best other gene, so that a small margin flags paralogs that best hits do not separate.
    Output `results/tables/stage2_selenoprotein_rbh.tsv`.
 2. `make selenoprotein-phylogeny`: `machinery_phylogeny.py` with the same settings as the machinery trees
    (profile sequences, at most three per taxonomic group; stage 1 predictions of the other tunicates,
-   cephalochordates and vertebrates; human RefSeq proteins of the family, and of a related family as outgroup for
-   TXNRD (GSR) and SELENOF (SELENOM); curation, MAFFT, ClipKIT, IQ-TREE), with the stage 1 predictions of the
-   appendicularians and `--min-fraction 0.3`, since the profiles of some families mix short and long proteins.
+   cephalochordates and vertebrates; human RefSeq proteins of the family, of a related family as outgroup for
+   TXNRD (GSR) and SELENOF (SELENOM), and of a related gene as reference for SELENOW (MIEN1, the cysteine homolog
+   that is the best human hit of the SelW-like proteins of tunicates and amphioxus); curation, MAFFT, ClipKIT,
+   IQ-TREE), with the appendicularian sequences of the round and `--min-fraction 0.3`, since the profiles of some
+   families mix short and long proteins.
    Families without appendicularian sequence are collected but not aligned. Outputs `results/trees/selenoproteins/`
    and `figures/selenoproteins/phylogeny_<family>.pdf`, `phylogeny_<family>_collapsed.pdf`.
 3. `make selenoprotein-pmsf`: `machinery_lba.py --analyses pmsf` on these trees (LG+C60+F+G with PMSF, guide: the
@@ -325,8 +344,22 @@ SELENOW, TXNRD), to give a first global view before family-by-family analyses.
    into appendicularian clades and reads, for each, its support, its sister group, the human genes of the nearest
    side that contains vertebrate sequences (human RefSeq proteins and vertebrate predictions with their best human
    hit), and the best human hits of its members. Outputs `results/tables/stage2_selenoprotein_orthology.{tsv,md}`.
-   This is a summary for review, not an assignment: the families that it leaves open are then analysed as the
-   machinery was (AU tests, site removal, domains).
+   Gold-standard proteins are labelled "gold standard", named by their gene, and take the best human hits of the
+   predictions they replaced. With `GOLD=` (first pass), the curated genes among stage 1 predictions are named from
+   `results/tables/stage1_annotation.tsv`. This is a summary for review, not an assignment: the families that it
+   leaves open are then analysed as the machinery was (AU tests, site removal, domains).
+5. `make selenoprotein-au` (after `selenoprotein-pmsf`): `machinery_lba.py --analyses pmsf hypotheses` on the families
+   of `SELENO_AU` (DIO, SELENOF, SELENOO, SELENOT, SELENOW), with the positions of `au_hypotheses.tsv`: for each, a
+   constraint tree (clades given as expressions of leaf sets: the appendicularian clade, appendicularian clades
+   holding named leaves, the smallest clade holding named leaves, taxonomic groups, regular expressions; see the
+   script), a constrained search, and an AU test of the constrained trees against the unconstrained one, under the
+   model of the maximum-likelihood tree and under LG+C60+F+G with the PMSF site frequencies. Tested positions: the
+   appendicularian SELENOF, SELENOO and SELENOT with the other tunicates and inside the chordate (SELENOF, SELENOT) or
+   animal (SELENOO) clade; SELENOW_PAR outside the smallest clade of the human SELENOW and SELENOV, and with the
+   appendicularian SELENOW of chromosome 1 or of chromosome 2; the animal sequences of the smallest clade of the
+   human and gold-standard DIO as one clade, without the non-animal DIO. Outputs `results/trees/selenoproteins/lba/<family>.hypotheses.tsv`
+   (resolved leaf sets, and whether each clade is in the maximum-likelihood tree), `.hyp_<id>.*` (constrained
+   trees), `.hypotheses_au.iqtree` (AU tests), and rows "AU test: ..." in `results/tables/stage2_selenoprotein_lba.tsv`.
 
 Known gap: SELENOK was not predicted by the stage 1 settings in any appendicularian genome, so that its tree, if
 any, lacks the *O. dioica* protein until the stage 2 re-calling or a curated protein from transcripts.

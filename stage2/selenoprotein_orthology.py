@@ -14,9 +14,12 @@ a clade of one. For each clade, read on the unrooted tree:
     predictions with their best human hit), with the support of that side and its numbers of other tunicate and
     vertebrate sequences;
   - the best human hits of its members (results/tables/stage2_selenoprotein_rbh.tsv), as gene and status;
-  - the Selenoprofiles labels of its members (selenocysteine, cysteine, homologue...), and the curated O. dioica
-    genes among them (curation/baseline_sec_genes.tsv, matched to the stage 1 predictions by their selenocysteine
-    codon in results/tables/stage1_annotation.tsv, so that only predictions with a selenocysteine are named).
+  - the Selenoprofiles labels of its members (selenocysteine, cysteine, homologue...; "gold standard" for the
+    gold-standard proteins, leaves <genome>_gold_<gene>), and the curated O. dioica genes among them: the genes of the
+    gold-standard proteins, and, with --annotation (trees of stage 1 predictions), the genes of
+    curation/baseline_sec_genes.tsv matched to the stage 1 predictions by their selenocysteine codon in
+    results/tables/stage1_annotation.tsv, so that only predictions with a selenocysteine are named.
+The best human hits of a gold-standard protein are those of the predictions it replaced (<family>.removed.tsv).
 This is a summary for review: the reading is root-free but depends on the tree, and a side that holds most of the
 tree, or genes of several paralogs, does not assign the clade to one gene.
 Outputs: --table (one row per family, tree and appendicularian clade) and --markdown (the same, readable).
@@ -37,6 +40,22 @@ def split_name(leaf):
     """Genome code and prediction of a leaf named <genome>_<prediction> by machinery_phylogeny.py."""
     g, _, pred = leaf.partition("_")
     return g, pred
+
+
+def gold_gene(leaf):
+    """Gene of a gold-standard leaf (<genome>_gold_<gene>), else None."""
+    m = re.match(r"[A-Za-z0-9]+_gold_(.+)$", leaf)
+    return m.group(1) if m else None
+
+
+def replaced(path):
+    """gold-standard leaf -> predictions it replaced, from <family>.removed.tsv of machinery_phylogeny.py."""
+    out = collections.defaultdict(list)
+    if os.path.exists(path):
+        for r in csv.DictReader(open(path), delimiter="\t"):
+            m = re.fullmatch(r"gold-standard gene (\S+) used", r["reason"])
+            if m: out[f"{split_name(r['sequence'])[0]}_gold_{m.group(1)}"].append(r["sequence"])
+    return out
 
 
 def human_gene(leaf, groups, rbh):
@@ -83,8 +102,8 @@ def baseline_names(baseline, annotation):
     return out
 
 
-def analyse(fam, label, treefile, groups, tax, rbh, curated=None):
-    curated = curated or {}
+def analyse(fam, label, treefile, groups, tax, rbh, curated=None, gold=None):
+    curated, gold = curated or {}, gold or {}
     tree = lba.read_tree(treefile)
     names, sd = sides(tree)
     app = {n for n in names if tax[n] == "Appendicularians"}
@@ -99,10 +118,12 @@ def analyse(fam, label, treefile, groups, tax, rbh, curated=None):
         members = sorted(T)
         hits = collections.Counter()
         for n in members:
-            r = rbh.get(split_name(n))
-            hits[f"{r['best_human_gene']} ({r['status']})" if r else "not in the best-hit table"] += 1
-        labels = collections.Counter(n.rsplit(".", 1)[-1] for n in members)
-        named = sorted(f"{split_name(n)[0]}:{curated[split_name(n)]}" for n in members if split_name(n) in curated)
+            for p in (gold.get(n) or ["(none)"] if gold_gene(n) else [n]):
+                r = rbh.get(split_name(p))
+                hits[f"{r['best_human_gene']} ({r['status']})" if r else "not in the best-hit table"] += 1
+        labels = collections.Counter("gold standard" if gold_gene(n) else n.rsplit(".", 1)[-1] for n in members)
+        named = sorted([f"{split_name(n)[0]}:{curated[split_name(n)]}" for n in members if split_name(n) in curated] +
+                       [f"{split_name(n)[0]}:{gold_gene(n)}" for n in members if gold_gene(n)])
         rows.append({
             "family": fam, "tree": label, "clade": k, "sequences": len(T),
             "labels": ", ".join(f"{l} {v}" for l, v in sorted(labels.items(), key=lambda kv: (-kv[1], kv[0]))),
@@ -130,7 +151,8 @@ def main():
     ap.add_argument("--rbh", default="results/tables/stage2_selenoprotein_rbh.tsv")
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--baseline", default="curation/baseline_sec_genes.tsv")
-    ap.add_argument("--annotation", default="results/tables/stage1_annotation.tsv")
+    ap.add_argument("--annotation", default="", help="stage 1 annotation table, to name the curated genes among stage "
+                    "1 predictions (trees of the first pass: results/tables/stage1_annotation.tsv)")
     ap.add_argument("--table", default="results/tables/stage2_selenoprotein_orthology.tsv")
     ap.add_argument("--markdown", default="results/tables/stage2_selenoprotein_orthology.md")
     a = ap.parse_args()
@@ -140,7 +162,8 @@ def main():
     else:
         print(f"WARNING: {a.rbh} not found; best human hits left empty", flush=True)
     taxa = lba.load_taxa(a.taxa)
-    curated = baseline_names(a.baseline, a.annotation) if os.path.exists(a.baseline) and os.path.exists(a.annotation) else {}
+    curated = baseline_names(a.baseline, a.annotation) if a.annotation and os.path.exists(a.baseline) and \
+        os.path.exists(a.annotation) else {}
     rows = []
     for fam in a.families:
         gfile = f"{a.trees}/{fam}.groups.tsv"
@@ -151,7 +174,7 @@ def main():
             if not os.path.exists(tf): continue
             leaves = {x.name for x in lba.read_tree(tf).get_terminals()}
             tax = {n: lba.taxon(n, groups, taxa) for n in leaves}
-            rows += analyse(fam, label, tf, groups, tax, rbh, curated)
+            rows += analyse(fam, label, tf, groups, tax, rbh, curated, replaced(f"{a.trees}/{fam}.removed.tsv"))
     if not rows: raise SystemExit("no tree found")
     cols = list(rows[0])
     with open(a.table, "w") as o:

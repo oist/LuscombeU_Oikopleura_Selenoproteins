@@ -66,7 +66,8 @@ make machinery-domains        # trees and AU tests of each domain of PSTK, SEPHS
 make selenoprotein-rbh        # best hits of the selenoprotein predictions against the human proteome
 make selenoprotein-phylogeny  # trees of the selenoprotein families with appendicularian sequences
 make selenoprotein-pmsf       # the same under LG+C60+F+G (PMSF)
-make selenoprotein-orthology  # first-pass orthology of each appendicularian selenoprotein clade
+make selenoprotein-au         # AU tests of positions of appendicularian clades (stage2/au_hypotheses.tsv)
+make selenoprotein-orthology  # orthology summary of each appendicularian selenoprotein clade
 ```
 
 The Makefile documents each target (inputs, outputs and the cluster submissions that worked); `stage2/README.md`

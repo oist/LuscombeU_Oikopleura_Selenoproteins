@@ -11,7 +11,10 @@ A column gives the length of each protein (unaligned), or for a collapsed tip th
 proteins, to show which sequences are partial. The trees and alignments themselves are not changed. Inputs: results/trees/<family>.treefile and .groups.tsv
 (or another directory with --trees). Outputs: <figures>/phylogeny_<family>_collapsed.{png,pdf}.
 """
-import argparse, copy, re
+import argparse, copy, os, re, sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "stage2"))
+from taxonomy import load_taxa, classify   # noqa: E402
 
 KEEP = {"Appendicularians", "Other tunicates", "Cephalochordates"}
 # Highlighted references: the related family used as outgroup, the paralogs that the appendicularian proteins could be
@@ -29,10 +32,7 @@ def leaf_group(name, groups, taxa):
     g = groups.get(name, "profile")
     if g == "outgroup": return "outgroup"
     if g == "curated": return "Appendicularians"
-    first = name.split("|")[0]
-    first = re.sub(r"^(sps1|sps2|sps)_", "", first)
-    if first.startswith("Human_"): return "Mammals"
-    return taxa.get(first.split("_")[0], "unclassified")
+    return classify(name, taxa)
 
 
 def main():
@@ -49,11 +49,7 @@ def main():
     ap.add_argument("--model-label", default="", help="model named in the figure title")
     ap.add_argument("--formats", nargs="+", default=["png", "pdf"], help="file formats written")
     a = ap.parse_args()
-    taxa = {}
-    for l in open(a.taxa):
-        if l.startswith("#") or l.startswith("genus\t"): continue
-        g, grp = l.rstrip("\n").split("\t"); taxa[g] = grp
-    import os
+    taxa = load_taxa(a.taxa)
     for fam in a.families:
         if not os.path.exists(f"{a.trees}/{fam}{a.tree_suffix}.treefile"):
             print(fam, "no tree; skipped"); continue

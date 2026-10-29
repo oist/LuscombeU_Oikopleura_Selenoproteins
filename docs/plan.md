@@ -1241,3 +1241,36 @@ no earlier step waits for them.
   Stage 2 runs and benchmark), provisional; test assemblies added to the genome Methods, recommended settings to the
   data availability. Inferences flagged in the text: KUM DIO_chr1 as the extra DIO site ("probably"), miniprot moving
   junctions at SELENOT and SEPHS2 ("not tested"). Next: step 8 (hit validation, round 2).
+- Step 8 started (2026-10-29): hit validation, round 2 (code; trees to run on Deigo).
+  - Taxonomy: new stage2/taxonomy.py, shared by machinery_phylogeny.py, machinery_lba.py, selenoprotein_orthology.py,
+    secis_validated_hits.py, machinery_domains.py, machinery_table.py and figures/phylogeny_collapsed.py. Groups from
+    the genome code or genus at the start of a name, the Ensembl species prefix of a protein identifier and the
+    UniProt species mnemonic (new config/taxon_codes.tsv), then any token that is a known genus (about 210 genera
+    added to config/taxon_groups.tsv; new groups Cartilaginous fishes, Hemichordates, Haptophytes, Rhizarians,
+    Metamonads, Land plants, Viruses), then descriptive bacterial names. In the first-pass selenoprotein trees, 8
+    leaves stay unclassified (no species in the name). Side effects of a rerun at this commit (results of earlier
+    commits not recomputed): (1) machinery and selenoprotein trees: sequences formerly unclassified now count in the
+    limit of three per group, so the profile subsampling changes; (2) Table MACHINERY: unchanged (checked); (3) step 1
+    (make secis-hits): 17 more hits would be "left out" as "nearest relatives non-animal": the selenocysteine DIO of
+    OdB3 (5, current-model SECIS 50 to 55 bits), O. longicauda (5), O. albicans (4) and O. vanhoeffeni (2), and
+    O. albicans SELENOO.4. In the first-pass DIO tree the selenocysteine DIO clades, curated DIO_PAR and DIO_chr1
+    included, have alveolate and amoebozoan DIO as nearest relatives (bootstrap 59 to 66), sequences that the
+    earlier taxonomy left unclassified. Step 1 tables kept as committed; DIO added to the AU tests.
+  - Trees, round 2 (make selenoprotein-phylogeny; Makefile variables SELENO_PREDICTIONS, GOLD): appendicularian
+    sequences from the stage 2 final run; in OKI, OSKA and OdB3, predictions overlapping a gold-standard gene are
+    replaced by the gold-standard protein (leaf <genome>_gold_<gene>; removed.tsv records it); KUM, AOM and Bar2 not
+    in the trees; human MIEN1 added to the SELENOW references (RELATED_GENES). Best hits (make selenoprotein-rbh) from
+    the final-run predictions for the genomes of that run and stage 1 predictions for the others, since prediction
+    numbers differ between runs. selenoprotein_orthology.py: gold-standard leaves labelled "gold standard", named by
+    gene, with the best hits of the predictions they replaced; the stage 1 naming of curated genes only with
+    --annotation (first pass). First pass reproducible with SELENO_PREDICTIONS=work/stage1/pipeline/selenoprofiles GOLD=.
+  - Held-out genomes (B. stygius, M. erythrocephalus, F. borealis) kept in the trees: the trees train nothing, and
+    these genomes widen the sampling of appendicularians; they stay held out of the profiles and SECIS model.
+  - AU tests (make selenoprotein-au, after selenoprotein-pmsf; machinery_lba.py analysis hypotheses;
+    stage2/au_hypotheses.tsv): each hypothesis a constraint tree whose clades are expressions of leaf sets (app,
+    appclade:, mrca:, group:, re:, joined by + and -), constrained search and AU test against the ML tree, under the
+    ML model and LG+C60+F+G with the PMSF site frequencies. Hypotheses: SELENOF, SELENOT with the other tunicates and
+    inside the chordates; SELENOO with the selenocysteine SELENOO of the other tunicates and inside the clade of human
+    and Ciona selenocysteine SELENOO; SELENOW_PAR outside the smallest clade holding human SELENOW and SELENOV, with
+    the appendicularian SELENOW of chromosome 1, with that of chromosome 2; DIO: the animal sequences of the smallest
+    clade holding the human DIO and the gold-standard DIO as one clade (non-animal DIO outside).

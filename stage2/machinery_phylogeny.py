@@ -11,8 +11,11 @@ Families and outgroups:
 Selenoprotein families (make selenoprotein-phylogeny; families of stage2/machinery_rbh.py SELENOPROTEIN_GENES): the
 human RefSeq proteins of the family are added (for example GPX1 to GPX8), and those of a related family as outgroup
 where one is set in OUTGROUP_GENES (GSR for TXNRD, SELENOM for SELENOF); other families are rooted at the midpoint
-for display. The appendicularian sequences are then the stage 1 predictions (--stage2 pointing to the stage 1
-directory); a family without appendicularian sequence is collected but not aligned.
+for display. The appendicularian sequences are then the Selenoprofiles predictions of --stage2 (the stage 1 directory in the first
+pass, the stage 2 final run in round 2); with --gold, those of the gold-standard assemblies that overlap a
+gold-standard gene of the family are replaced by its gold-standard protein (<genome>|gold_<gene>); RELATED_GENES adds
+human proteins related to a family (MIEN1 for SELENOW); a family without appendicularian sequence is collected but
+not aligned.
 Sequences: the profile sequences (optionally at most --max-per-group per taxonomic group, the longest kept), the stage 1
 predictions of the other tunicates, cephalochordates and vertebrates, the stage 2 predictions of the appendicularians
 (appendicularian profiles), and the curated transcript proteins. For PSTK and the SECIS-binding proteins, which have no
@@ -33,6 +36,7 @@ import argparse, glob, gzip, os, re, statistics, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from machinery_rbh import SELENOPROTEIN_GENES   # human genes of each selenoprotein family
+from taxonomy import load_taxa, classify         # taxonomic group of a sequence name
 
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
 TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho"}
@@ -45,8 +49,12 @@ KEEP_PARTIAL = {"appendicularian", "curated", "tunicate"}
 REFSEQ_FAMILIES = {"pstk": ["PSTK", "KTI12"], "SBP2": ["SECISBP2", "SECISBP2L"]}
 # human genes of a related family, added as outgroup
 OUTGROUP_GENES = {"pstk": ["KTI12"], "TXNRD": ["GSR"], "SELENOF": ["SELENOM"]}
+# human genes related to a family without belonging to it, added as references (not outgroup): MIEN1, a cysteine
+# homolog of SELENOW and the best human hit of the SelW-like proteins of tunicates and amphioxus (plan, step 8)
+RELATED_GENES = {"SELENOW": ["MIEN1"]}
 HUMAN_GENES = {"pstk": ["PSTK", "KTI12"], "SEPHS2": ["SEPHS1", "SEPHS2"], "SBP2": ["SECISBP2", "SECISBP2L"],
-               **{f: g + OUTGROUP_GENES.get(f, []) for f, g in SELENOPROTEIN_GENES.items() if f != "SEPHS2"}}
+               **{f: g + RELATED_GENES.get(f, []) + OUTGROUP_GENES.get(f, [])
+                  for f, g in SELENOPROTEIN_GENES.items() if f != "SEPHS2"}}
 OUTGROUP_PATTERN = {"pstk": r"KTI12|[Kk]iller toxin.insensitive"}
 COLOURS = {"appendicularian": "#c0392b", "tunicate": "#e67e22", "vertebrate": "#2471a3", "outgroup": "#7f8c8d",
            "cephalochordate": "#117a65", "reference": "#2c3e50",
@@ -78,6 +86,10 @@ def main():
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
     ap.add_argument("--stage2", default="work/stage2/machinery_test")
     ap.add_argument("--curated", default="curation/machinery_proteins.faa")
+    ap.add_argument("--gold", default="", help="gold-standard directory (<genome>.gff3, <genome>.proteins.faa): in "
+                    "--gold-genomes, the predictions that overlap a gold-standard gene of the family are replaced by "
+                    "its gold-standard protein, named <genome>|gold_<gene>")
+    ap.add_argument("--gold-genomes", nargs="*", default=["OKI", "OSKA", "OdB3"])
     ap.add_argument("--references", default="curation/mariotti2015_sps.faa",
                     help="labelled reference proteins, header <family>|<label>|<source>")
     ap.add_argument("--genomes", default="data/genomes", help="RefSeq proteins and annotations of the genomes")
@@ -129,7 +141,7 @@ def main():
         for n, s in sorted(prof, key=lambda x: -len(clean(x[1].replace("-", "")))):   # longest first
             sp = re.search(r"\[([^\]]+)\]", n)
             name = f"{(sp.group(1) if sp else n.split()[0])}|{n.split()[0]}"
-            grp = taxa.get(re.split(r"[ _|]", re.sub(r"^(sps1|sps2|sps)_", "", name))[0], "unclassified")
+            grp = classify(name, taxa)
             if a.max_per_group and grp != "unclassified":
                 if per_group.get(grp, 0) >= a.max_per_group: continue
                 per_group[grp] = per_group.get(grp, 0) + 1
@@ -139,7 +151,7 @@ def main():
             for n, s in sorted(read_fasta(a.references), key=lambda x: -len(x[1])):
                 f = n.split("|")
                 if f[0] != fam: continue
-                key = (taxa.get(re.split(r"[ _|.]", f[1])[0], "unclassified"), f[1].rsplit(".", 1)[-1])
+                key = (classify(f[1], taxa), f[1].rsplit(".", 1)[-1])
                 if a.max_per_group and key[0] != "unclassified":
                     if per_type.get(key, 0) >= a.max_per_group: continue
                     per_type[key] = per_type.get(key, 0) + 1
@@ -164,13 +176,21 @@ def main():
                         skipped.append((label(f"{g}|{pid}"), kind(g), "human stage 1 prediction (human RefSeq proteins used)"))
                         continue
                     add(f"{g}|{pid}", s, kind(g))
+        gold = gold_models(a.gold, a.gold_genomes, fam) if a.gold else {}
         for faa in sorted(glob.glob(f"{a.stage2}/*.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in APPENDICULARIANS: continue
             for n, s in read_fasta(faa):
                 pid = n.split()[0]
                 if pid.split(".")[0].removesuffix("_app") == fam and len(clean(s)) >= a.min_fraction * med:
+                    hit = overlapping_gold(n, gold.get(g, {}))
+                    if hit:
+                        skipped.append((label(f"{g}|{pid}"), "appendicularian", f"gold-standard gene {hit} used"))
+                        continue
                     add(f"{g}|{pid.replace('_app', '')}", s, "appendicularian")
+        for g in sorted(gold):
+            for gene, (_, _, _, _, seq) in sorted(gold[g].items()):
+                add(f"{g}|gold_{gene}", seq, "curated")
         if os.path.exists(a.curated):
             for n, s in read_fasta(a.curated):
                 f = n.split("|")
@@ -230,7 +250,7 @@ def draw(treefile, groups, fam, figdir, formats=("png", "pdf")):
     out = [c for c in tree.get_terminals() if groups.get(c.name) == "outgroup"]
     taxa = load_taxa("config/taxon_groups.tsv")
     prok = [c for c in tree.get_terminals() if groups.get(c.name) == "profile" and
-            taxa.get(re.sub(r"^(sps1|sps2|sps)_", "", c.name).split("_")[0]) in ("Bacteria", "Archaea")]
+            classify(c.name, taxa) in ("Bacteria", "Archaea")]
 
     def reroot(t):
         try:
@@ -302,14 +322,36 @@ def core_filter(aln, groups, min_core):
     return out
 
 
-def load_taxa(path):
-    """genus (or genome code) -> taxonomic group, from config/taxon_groups.tsv"""
-    taxa = {}
-    if os.path.exists(path):
-        for l in open(path):
-            if l.startswith("#") or l.startswith("genus\t") or "\t" not in l: continue
-            g, grp = l.rstrip("\n").split("\t"); taxa[g] = grp
-    return taxa
+def gold_models(gold, genomes, fam):
+    """genome -> gene -> (contig, strand, start, end, protein) of the gold-standard genes of a family (the profile of
+    a gene is its name up to the first "_", without dots, as in stage2/build_profiles.py)."""
+    out = {}
+    for g in genomes:
+        gff, faa = f"{gold}/{g}.gff3", f"{gold}/{g}.proteins.faa"
+        if not os.path.exists(gff): continue
+        prot = {n.split("|")[0]: s.replace("*", "") for n, s in read_fasta(faa)}
+        spans = {}
+        for l in open(gff):
+            f = l.rstrip("\n").split("\t")
+            if len(f) < 9 or f[2] != "CDS": continue
+            gene = re.search(r"Parent=rna-([^;]+)", f[8]).group(1)[len(g) + 1:]
+            if gene.split("_")[0].replace(".", "") != fam or gene not in prot: continue
+            c = spans.setdefault(gene, [f[0], f[6], int(f[3]), int(f[4])])
+            c[2], c[3] = min(c[2], int(f[3])), max(c[3], int(f[4]))
+        out[g] = {gene: (c[0], c[1], c[2], c[3], prot[gene]) for gene, c in spans.items()}
+    return out
+
+
+def overlapping_gold(header, genes):
+    """Gold-standard gene whose coding span overlaps a Selenoprofiles prediction (header with chromosome:, strand:
+    and positions:), or None."""
+    loc = dict(re.findall(r"(chromosome|strand|positions):(\S+)", header))
+    pos = [int(x) for x in re.findall(r"\d+", loc.get("positions", ""))]
+    if not pos: return None
+    lo, hi = min(pos), max(pos)
+    for gene, (contig, strand, start, end, _) in genes.items():
+        if contig == loc.get("chromosome") and strand == loc.get("strand") and lo <= end and hi >= start: return gene
+    return None
 
 
 def refseq_family_proteins(genome_dir, genes, gene_of, human, cpus):

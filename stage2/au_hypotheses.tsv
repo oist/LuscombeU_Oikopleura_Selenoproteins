@@ -1,0 +1,19 @@
+# Positions of appendicularian clades tested by AU tests (stage2/machinery_lba.py, analysis hypotheses; make
+# selenoprotein-au). Clades: expressions of leaf sets, separated by ";" when a hypothesis has several clades; terms
+# joined by " + " (union) and " - " (difference): app, appclade:<regex>, mrca:<regex>, group:<taxonomic group>
+# (also vertebrates, chordates, animals, non-animals), re:<regex>. The O. dioica leaves are the gold-standard proteins (OKI_gold_<gene>).
+# Step 8 of the plan of 2026-10-24: SELENOF, SELENOO and SELENOT place the appendicularian clade outside the animal or
+# tunicate clade in the first-pass trees, and SELENOW_PAR is sister to the SELENOV of placental mammals. DIO added
+# (2026-10-29): with the taxonomy of stage2/taxonomy.py, the nearest relatives of the selenocysteine DIO clades in the
+# first-pass tree, curated DIO_PAR and DIO_chr1 included, are alveolate and amoebozoan DIO (bootstrap 59 to 66).
+family	id	hypothesis	clades
+SELENOF	tunicates	appendicularian SELENOF with the SELENOF of the other tunicates	app + group:Other tunicates
+SELENOF	chordates	appendicularian SELENOF inside the chordate SELENOF	app + group:chordates
+SELENOO	tunicates	appendicularian SELENOO with the selenocysteine SELENOO of the other tunicates	app + group:Other tunicates - re:\.cysteine$
+SELENOO	animals	appendicularian SELENOO inside the clade of the human and tunicate selenocysteine SELENOO	app + mrca:^Human_SELENOO_|^Crob_SELENOO\.[0-9]+\.selenocysteine
+SELENOT	tunicates	appendicularian SELENOT with the SELENOT of the other tunicates	app + group:Other tunicates
+SELENOT	chordates	appendicularian SELENOT inside the chordate SELENOT	app + group:chordates
+SELENOW	not_SELENOV	SELENOW_PAR outside the smallest clade that holds the human SELENOW and SELENOV	mrca:^Human_SELENO[WV]_ - appclade:gold_SELENOW_PAR
+SELENOW	with_chr1	SELENOW_PAR with the appendicularian SELENOW of chromosome 1 (chr1a and the pair)	appclade:gold_SELENOW_PAR + appclade:gold_SELENOW_(chr1a|pair)
+SELENOW	with_chr2	SELENOW_PAR with the appendicularian SELENOW of chromosome 2	appclade:gold_SELENOW_PAR + appclade:gold_SELENOW_chr2
+DIO	animals	appendicularian selenocysteine DIO inside the animal DIO: the animal sequences of the smallest clade that holds the human DIO and the gold-standard O. dioica DIO, as one clade	mrca:^Human_DIO[123]_|gold_DIO_ - group:non-animals
