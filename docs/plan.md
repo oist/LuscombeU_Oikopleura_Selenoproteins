@@ -1236,3 +1236,8 @@ no earlier step waits for them.
   Pipeline improvement to consider (release 0.3.0): merge miniprot sites within a few codons of another site of the
   same strand into one, and ship the stage 2 profiles and SECIS model as an appendicularian option. Stage 2 complete;
   next: manuscript section on stage 2, then step 8 (hit validation, round 2) and step 9 (census, from the final run).
+- Manuscript (2026-10-29): stage 2 Results section ("Settings for appendicularian genomes recover the selenoproteome
+  of O. dioica in new assemblies", Table STAGE2) and Methods (Stage 2 profiles; Test assemblies and reference genes;
+  Stage 2 runs and benchmark), provisional; test assemblies added to the genome Methods, recommended settings to the
+  data availability. Inferences flagged in the text: KUM DIO_chr1 as the extra DIO site ("probably"), miniprot moving
+  junctions at SELENOT and SEPHS2 ("not tested"). Next: step 8 (hit validation, round 2).
