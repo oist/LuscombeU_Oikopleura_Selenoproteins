@@ -764,6 +764,81 @@ genome locus (tblastn site), best human gene, structure (full-length: thioredoxi
 aligned to the selenocysteine of TXNL1.b (codon for a TGA). Orange, TXNL1.b; blue, other OKI2018 proteins; grey,
 PITHD1.
 
+## Settings for appendicularian genomes recover the selenoproteome of *O. dioica* in new assemblies
+
+> **Provisional section (2026-10-29, steps 6 and 7 of the plan in docs/plan.md; `results/tables/stage2_benchmark_*.tsv`,
+> `stage2/README.md`, `make stage2-benchmark`).**
+
+We then turned the results above into settings for appendicularian genomes, and tested them on assemblies that had
+not contributed to them. Each standard Selenoprofiles profile of a family of the gold standard was extended with the
+gold-standard proteins of the three *O. dioica* assemblies, and each profile of the machinery with the stage 1
+machinery predictions of these assemblies; KKSU and TXNL1.b, which have no standard profile, received new profiles made
+of their gold-standard proteins (Methods). With these profiles, the pipeline used the *Oikopleura* SECIS model at
+20 bits, searched in the 2,000 nucleotides after each prediction, the window length on which that threshold was set.
+As test assemblies, we used assemblies of the three cryptic species from other individuals: KUM-M3-7f (Okinawa),
+AOM-5-5f (Osaka) and Bar2_p4 (Barcelona) [@Plessy2024]. Their reference genes are the gold-standard models of the same
+species, aligned to them: 17, 16 and 15 models were carried over complete (one or two with in-frame indels), and the
+selenocysteine codon could be placed for 19, 18 and 19 genes; the other models were carried over with a frameshift or
+an early stop codon, probably indels of these long-read assemblies, or only in part. Because the gold-standard
+assemblies trained the profiles, the fair test builds the profiles without the species tested: we made one set
+without each gold-standard assembly, and tested it on that assembly and on the new assembly of the same species.
+
+With these settings, the pipeline found every reference selenocysteine codon in the six assemblies, also when the
+profiles did not contain the species tested, against 11 to 14 with the default settings (Table STAGE2). TXNL1.b was
+found in all six assemblies, and KKSU also in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, although its
+profile held only *O. dioica* proteins. In the six assemblies, every codon found by Selenoprofiles had a SECIS hit of
+at least 20 bits after its gene (24.0 bits or more). The two methods of the pipeline complemented each other:
+Selenoprofiles found 17 to 19 codons per assembly and miniprot 15 to 18. SELENOT and SEPHS2 were found by
+Selenoprofiles only, in every assembly; their selenocysteine codons lie 2 and 1 nucleotides from an intron, where
+miniprot may move the junction to avoid an in-frame stop codon (not tested). Zero to two genes per assembly were found by miniprot only. The gene models of
+Selenoprofiles were close to the reference models without reproducing them: in the median gene they covered 98 to
+100% of the coding bases of the reference, with 99 to 100% of their own coding bases inside it, but their introns were
+identical to those of the reference in 5 to 10 of the 15 to 19 genes compared.
+
+| Assembly | Same species as | Reference genes | Default settings | Stage 2 | Stage 2, profiles without the species |
+|---|---|---|---|---|---|
+| OKI2018 | | 20 | 13 | 20 | 20 |
+| KUM-M3-7f | OKI2018 | 19 | 12 | 19 | 19 |
+| OSKA2016 | | 20 | 14 | 20 | 20 |
+| AOM-5-5f | OSKA2016 | 18 | 12 | 18 | 18 |
+| OdB3 | | 19 | 13 | 19 | 19 |
+| Bar2_p4 | OdB3 | 19 | 11 | 19 | 19 |
+
+<!-- Table from results/tables/stage2_benchmark_summary.tsv (runs stage1 and default; eval; loo_OKI, loo_OSKA,
+loo_OdB3), results of 2026-10-29. -->
+
+Table STAGE2. Selenocysteine codons of the reference genes found by the pipeline, by Selenoprofiles (selenocysteine
+label) or miniprot. Reference genes: the gold-standard genes (the OdB3 assembly lacks the codon of SELENOO), or, for
+the new assemblies, the gold-standard models of the same species whose codon could be placed on the assembly as a
+TGA. Default settings: stage 1, and the same settings on the new assemblies. Stage 2: profiles built from the gold
+standard of the three *O. dioica* assemblies, *Oikopleura* SECIS model. Last column: profiles built without the gold
+standard of the species of the assembly.
+
+One change to a standard filter was needed. In a first run, SELENOS was missed in four of the six assemblies.
+Selenoprofiles had predicted it, with its selenocysteine codon aligned to the selenocysteine of the profile and over
+98 to 99% of the profile query, but the standard filter of this family also requires 5 of 9 residues conserved in
+vertebrates, and the *O. dioica* SELENOS proteins have 3 or 4 of them; no other SELENOS candidate of the six
+assemblies was labelled selenocysteine. We therefore kept this requirement only for predictions not labelled
+selenocysteine (Methods). Lowering the weight of splice signals in miniprot, to favour exons at GA–AG introns,
+recovered SELENOS by miniprot in three assemblies before this change, but changed no count of codons found after it,
+and was not kept.
+
+Outside the reference genes, the pipeline called selenocysteine codons only in selenoprotein genes of the six
+assemblies: genes whose codon could not be carried over (GPX_chr1b and SELENOO in AOM-5-5f, probably DIO_chr1 in
+KUM-M3-7f, and SELENOO in Bar2_p4, which has no OdB3 model to carry over); other copies of selenoprotein genes (a
+second SELENOK 10 kb from the first in KUM-M3-7f, DIO copies in Bar2_p4, the GPX_PAR copy of OSKA2016 found by the
+screens, and the haplotype contigs of OdB3); and miniprot calls 3 nucleotides from a codon found in the same gene.
+
+In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, whose references are the stage 1 predictions kept in step 1
+and the KKSU genes, the stage 2 settings found all the reference codons except two fragments of 49 and 55 residues in
+*O. albicans*, which Selenoprofiles' length filter removes; they also predicted selenocysteine forms of SELENOS in
+*O. longicauda* and *O. albicans*, to be examined with the census. In the three held-out genomes, *B. stygius*,
+*M. erythrocephalus* and *F. borealis*, they called 7, 9 and 21 selenocysteine codons, against 6, 7 and 21 with the
+default settings, including KKSU in the first two. For the census and for other appendicularian assemblies, we built
+final profiles that also contain the validated predictions of the three other *Oikopleura* species, and we deposit
+them with the SECIS model, the pipeline configuration and the expected selenoproteome of *O. dioica* (Data and code
+availability).
+
 # Discussion
 
 <!-- To write after the census (step 11 of the plan). Provisional paragraphs below. -->
@@ -793,8 +868,6 @@ present the model as a description of *Oikopleura* SECIS elements that reproduce
 
 # Methods
 
-<!-- Stage 2 subsections are placeholders until stage 2 is run. -->
-
 ## Genome assemblies, annotations and transcripts
 
 Genes are named by the symbols of their human orthologs (HGNC), given at their first mention (the human tRNA-Sec gene
@@ -817,7 +890,9 @@ with *Ciona robusta* (KH assembly, GCF_000224145.3, the genome of the published 
 *C. intestinalis*) and *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the default settings, to compare the
 appendicularians with other tunicates. As positive controls for the default settings, we used the human
 (GRCh38.p14, GCF_000001405.40), mouse (GRCm39, GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes, with
-their RefSeq annotations.
+their RefSeq annotations. To test the settings of stage 2 on new assemblies of the three cryptic species of
+*O. dioica*, we used the long-read assemblies KUM-M3-7f (Okinawa), AOM-5-5f (Osaka) and Bar2_p4 (Barcelona)
+[@Plessy2024], which have no public gene annotation.
 
 Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
 by Bliznina et al. [-@Bliznina2021] (109,877 sequences; Zenodo, <https://doi.org/10.5281/zenodo.23472675>); for OSKA2016,
@@ -1212,17 +1287,76 @@ over the next gene), and supports were read by bipartition after rooting (`stage
 on the coordinates of TXNL1.a, those of TXNL1.b carried through the local alignment of the two proteins
 (`stage2/txnl1_introns.py`, `make txnl1-introns`).
 
-## Stage 2
+## Stage 2 profiles
 
-<!-- To write after stage 2: leave-one-genome-out evaluation; non-target genomes; threshold; lineage reference
-proteins and profile HMMs; re-calling. -->
+> **Provisional section (2026-10-29; `stage2/build_profiles.py`, `make stage2-inputs`).**
+
+Selenoprofiles profiles were built from the standard ones and appendicularian proteins: the gold-standard proteins of
+the families of the gold standard (the profile of a gene being its name up to the first underscore, without dots,
+since Selenoprofiles reads the family of a prediction up to the first dot: TXNL1.b goes to the profile TXNL1b); for
+the machinery, the stage 1 predictions labelled "homologue" or "selenocysteine" and at least half as long as the
+median sequence of the standard profile, and the proteins reconstructed from transcripts (Appendicularian profiles of
+the selenocysteine machinery), of the three *O. dioica* assemblies (evaluation profiles) or of the six *Oikopleura*
+assemblies (final profiles), replaced in a gold-standard assembly by its gold-standard protein when there is one;
+and, for the final profiles only, the selenocysteine predictions of *O. longicauda*, *O. albicans* and
+*O. vanhoeffeni* kept in step 1 (with the same length rule) and the *O. albicans* KKSU frame of the comparative
+screen. Proteins of *B. stygius*, *M. erythrocephalus* and *F. borealis* were never used. For standard families, the
+proteins were added to the standard alignment with MAFFT `--add --keeplength` [@Katoh2013], which keeps its columns
+and therefore the column-based filters of its configuration; a protein whose selenocysteine fell outside the
+selenocysteine column of the standard alignment would have been removed (none was). KKSU and TXNL1b were aligned with
+MAFFT L-INS-i, and their configuration replaced the default filter on the alignment-weighted sequence identity
+(AWSI), which needs more sequences, by the exclusion of pseudogenes alone. Each alignment was built into a profile
+with `selenoprofiles build` (all sequences as BLAST queries), loading the standard configuration; the keys that the
+build does not write back were restored (the Gene Ontology terms of the GPX profile, without which its filter fails),
+and the SELENOS filter, which requires 5 of 9 residues conserved in vertebrates, was changed to require them only from
+predictions not labelled selenocysteine, that is, without a TGA aligned to the selenocysteine of the profile
+(`stage2/profile_config_overrides.tsv`). We built evaluation
+profiles from the three *O. dioica* assemblies (E0), three sets each without one of them (leave-one-species-out), and
+the final profiles; the proteins of each build are listed in `results/tables/stage2_profile_members.tsv`. A copy of
+the *Oikopleura* SECIS model was given gathering, trusted and noise cutoffs of 20 bits, so that the pipeline, which
+searches with `--cut_ga`, reports and includes hits from 20 bits.
+
+## Test assemblies and reference genes
+
+> **Provisional section (2026-10-29; `stage2/truth_sets.py`, `make stage2-truth`).**
+
+The test assemblies KUM-M3-7f, AOM-5-5f and Bar2_p4 were downloaded from Zenodo
+(<https://doi.org/10.5281/zenodo.10241527>, archive `Oidioi_genomes.tar.gz`) [@Plessy2024]. For each, the genomic
+region of each gold-standard gene of the same species (coding sequence and 500 nucleotides on each side) was aligned
+to the assembly with minimap2 [@Li2018] (`-x asm20 -c --cs=long`); the coding segments and the selenocysteine codon
+were carried over base by base through the best alignment, completed by the other alignments of the region on the
+same sequence and strand, in the same order and within 50 kb, a segment end falling in an indel being placed from the
+nearest aligned base within 30 nucleotides. The carried-over model was read on the assembly and classified as
+complete, complete with in-frame indels, disrupted (frameshift or premature stop codon) or partial, and the codon at
+the carried-over selenocysteine position was recorded; a gene was a reference when this codon was TGA. For
+*O. longicauda*, *O. albicans* and *O. vanhoeffeni*, the references were the stage 1 selenocysteine predictions kept in
+step 1 and the KKSU sites of the comparative screen.
+
+## Stage 2 runs and benchmark
+
+> **Provisional section (2026-10-29; `stage2/run/`, `stage2/benchmark.py`, `stage2/diagnose_refiltering.py`).**
+
+The pipeline (release 0.2.0) ran with the profiles of a build (`--selenoprofiles_overrides`), the profile sets
+`eukarya` and `machinery` and the profiles KKSU and TXNL1b, the *Oikopleura* SECIS model with its cutoffs, and
+Selenoprofiles writing 2,000 nucleotides of 3′ sequence (`-three_prime_length 2000`); miniprot kept the options of the
+pipeline (`-I`), and a variant with splice signals weighted by 0.5 (`-C 0.5`) was tested. The runs were: the default
+settings on the three new assemblies; the E0 profiles on the twelve appendicularian assemblies; each
+leave-one-species-out set on the left-out gold-standard assembly and the new assembly of the same species; and the
+final profiles on the twelve assemblies. A reference codon was found when a selenocysteine codon of the run had the
+same contig, strand and position, called by Selenoprofiles with the label "selenocysteine" or by miniprot. For the
+complete reference models, the Selenoprofiles prediction holding the codon was compared with the reference: identical
+introns, and the fractions of reference coding bases it covers and of its coding bases inside the reference, stop
+codons excluded. To find which filter removed a prediction, Selenoprofiles was run with one profile and an action
+that records, before filtering, the measures and the value of each clause of the profile's filters.
 
 ## Data and code availability
 
 The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.2.0 for
 stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>.
 The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
-[Other Zenodo DOIs to add: pipeline release, machinery profiles and SECIS models.]
+The settings recommended for appendicularian genomes (profiles, SECIS model, pipeline configuration, expected
+selenoproteome of *O. dioica*) are described in `stage2/recommended/README.md` of the analysis repository and will be
+deposited on Zenodo. [Other Zenodo DOIs to add: pipeline release, machinery profiles and SECIS models.]
 
 # Acknowledgements
 
