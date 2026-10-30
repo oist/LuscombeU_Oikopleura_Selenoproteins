@@ -839,6 +839,111 @@ final profiles that also contain the validated predictions of the three other *O
 them with the SECIS model, the pipeline configuration and the expected selenoproteome of *O. dioica* (Data and code
 availability).
 
+## Orthology of the selenoprotein genes
+
+> **Provisional section (2026-10-30, step 8 of the plan in docs/plan.md; `results/tables/stage2_selenoprotein_table.md`,
+> `stage2_selenoprotein_rbh.tsv`, `stage2_selenoprotein_orthology.tsv`, `stage2_selenoprotein_lba.tsv`,
+> `results/trees/selenoproteins/`).** The AU tests of SELENOK and SELENOS are pending (`make selenoprotein-au`).
+
+The family names of the gold-standard genes come from the Selenoprofiles profiles that predicted them, and a profile
+finds homologs of its family, not necessarily orthologs of a named human gene. As for the machinery, we therefore
+compared the proteins with the human proteome and placed them in trees of their families, under the selected model
+and under LG+C60 with PMSF, with AU tests of alternative positions (Methods). The trees cover the 12 families in which
+the final run predicted appendicularian genes; in the three *O. dioica* assemblies, the gold-standard proteins
+replaced the predictions they overlap. Table SELENO-ORTHOLOGY summarises the evidence for the 17 gold-standard genes
+of these families; SEPHS2 is treated with the machinery, and TXNL1.b and KKSU above.
+
+The thioredoxin reductase and the glutathione peroxidases were placed with or next to the proteins of the other
+tunicates. The *O. dioica*
+TXNRD was a reciprocal best hit of human TXNRD1 in the three assemblies (1 to 18 bits ahead of the next human gene),
+and the appendicularian TXNRD clade (eight genomes, 100%) was sister to the TXNRD of the other tunicates (92% in the
+maximum-likelihood tree, 98% under PMSF). The four *O. dioica* GPX genes had GPX4 as best hit (10 to 58 bits ahead).
+In the maximum-likelihood tree they formed one appendicularian clade of eight genomes (48%), sister to a group of
+tunicate, amphioxus and vertebrate GPX (78%) whose vertebrate members are GPX4; under PMSF they formed two clades,
+GPX_PAR with GPX_chr2 (61%) and GPX_chr1a with GPX_chr1b (100%), the second next to the GPX of the other tunicates
+(53%) and the first next to both (49%).
+
+SELENOO, SELENOT and SELENOF were reciprocal best hits of the human gene of their name in each assembly that has a
+model, far ahead of any other human gene (469 to 501, 114 to 118 and 95 to 101 bits), but their appendicularian clades were not placed
+with the other tunicates. The oikopleurid SELENOO clade (seven genomes, 99 to 100%) was sister to a clade of the
+selenocysteine SELENOO of tunicates, a tick, amphioxus and vertebrates (44%, 93% under PMSF), apart from a cysteine
+SELENOO paralog of tunicates, amphioxus, turtle and chicken, and its grouping with the selenocysteine SELENOO of the other tunicates was rejected (AU test, p = 0.034
+under the selected model and 0.045 under PMSF), whereas a tree in which these tunicate proteins form a clade without
+the appendicularians was not (p = 0.47 and 0.59). The appendicularian SELENOT clade (nine genomes, 66 to 75%) branched
+between a group of mostly protist, plant and nematode SELENOT proteins and the other animal SELENOT (90 and 86%); its grouping
+with the SELENOT of the other tunicates was not rejected (p = 0.13 and 0.20). A placement inside the chordate SELENOT
+was rejected under PMSF (p = 0.009), but so was every tree in which the chordate SELENOT form a clade (p = 0.042 and
+0.012), because nematode and insect proteins fall among them, so this test does not bear on the appendicularians. The
+appendicularian SELENOF clade (nine genomes, 58 to 79%) was next to plant and green-algal SELENOF (Sep15; 33% and
+81%); neither its grouping with the other tunicates (p = 0.26 and 0.091) nor a placement inside the chordate SELENOF
+(p = 0.41 and 0.13) was rejected.
+
+SELENOK and SELENOS had no hit in the human proteome. Their appendicularian clades, each of five genomes (100%, and
+93 to 95%), had the human SELENOK and SELENOS as nearest vertebrate genes. The SELENOS clade was next to two
+green-algal proteins (83% and 55%), at the base of the animal SELENOS, which formed a clade with it; the SELENOK clade
+was next to kinetoplastid, green-algal and chelicerate proteins (33% and 25%). <!-- AU tests pending: SELENOK and
+SELENOS with the other tunicates and inside the chordates (with controls for SELENOK). -->
+
+Best hits did not separate the deiodinase paralogs: DIO_PAR had DIO2 as best hit (6 to 12 bits ahead of the next
+gene; reciprocal in OKI2018), and DIO_chr1 DIO3 (1 bit ahead). In the maximum-likelihood tree, both genes belonged to
+one appendicularian clade of seven genomes (77%); under PMSF, DIO_PAR formed a clade of six genomes (95%) and DIO_chr1
+an *O. dioica* clade (100%) next to two alveolate deiodinases (34%). A tree in which the animal deiodinases, the
+appendicularian selenocysteine ones included, form a clade without the non-animal proteins was not rejected (p = 0.43
+and 0.35). The appendicularian DIO are therefore animal deiodinases whose relationships to DIO1, DIO2 and DIO3 are
+not resolved.
+
+The five SELENOW genes of *O. dioica* fell into four appendicularian clades. SELENOW_chr1a was a reciprocal best hit of
+human SELENOW (32 to 71 bits ahead of SELENOV), and the two genes of the SELENOW pair had SELENOW as best hit (13 to 19
+bits ahead), in an *O. dioica* clade (98 to 99%). SELENOW_PAR had SELENOV as reciprocal best hit, by 0.4 and 2.7 bits (OdB3 and OKI2018);
+its clade (six genomes, 99 to 100%) was next to two profile proteins of unrecorded species in the
+maximum-likelihood tree (89%), and next to the mammalian SELENOV under PMSF (92%). SELENOV arose in placental mammals by
+duplication of SELENOW [@Mariotti2012], so that a SELENOV ortholog is not expected in appendicularians, and the data
+did not require this position: neither SELENOW_PAR outside the smallest clade holding human SELENOW and SELENOV
+(p = 0.53 and 0.64), nor its grouping with SELENOW_chr1a and the pair (p = 0.33 and 0.34) or with SELENOV (p = 0.21
+and 0.20) was rejected; its grouping with SELENOW_chr2 was rejected under the selected model (p = 0.031) and not under
+PMSF (p = 0.054). SELENOW_chr2 had human MIEN1 as best hit in the three assemblies (55 to 64 bits), and no hit to SELENOW or
+SELENOV. Its clade, of nine genomes (87 and 93%), belonged to a group (77 and 91%) of SELENOW-like proteins with
+selenocysteine from zebrafish, tilapia, *Ciona* and amphioxus, an *Artemia* protein with selenocysteine, a *Tribolium* protein
+with threonine and human MIEN1, which has cysteine at the selenocysteine position; human SELENOW and SELENOV lay outside
+this group. SELENOW_chr2 thus belongs to a SELENOW-like lineage that has a selenocysteine form in fishes, ascidians and
+amphioxus and a cysteine form in human. We keep the gold-standard names, which name the profile family.
+
+Thus no test placed an appendicularian selenoprotein outside the animal proteins of its family, and the genes keep
+their family names. Their positions within the families are, as for PSTK, mostly unresolved; for SELENOO, as for the
+selenocysteine SEPHS2, the data reject the grouping with the orthologs of the other tunicates.
+
+| Gene | Best human hit | Appendicularian clade (sequences, genomes) | Support ML / PMSF | Sister group, ML | Sister group, PMSF | Nearest vertebrate genes |
+|---|---|---|---|---|---|---|
+| DIO_PAR | DIO2 (3; 1 reciprocal; margin 6.1 to 12 bits) | 26, 7 | 77 / 95* | Appendicularians 42, Other tunicates 4, Alveolates 2, Bacteria 2 (67) | Appendicularians 45, Other tunicates 4, Bacteria 2 (89) | DIO1 (3), DIO2 (3), DIO3 (4) |
+| DIO_chr1 | DIO3 (2; 1 reciprocal; margin 1 bits) | 26, 7 | 77 / 100* | Appendicularians 42, Other tunicates 4, Alveolates 2, Bacteria 2 (67) | Alveolates 2 (34) | DIO1 (3), DIO2 (3), DIO3 (4) |
+| GPX_PAR | GPX4 (2; 1 reciprocal; margin 55 to 58 bits) | 59, 8 | 48 / 61* | Other tunicates 28, Appendicularians 8, Cephalochordates 4, Mammals 4, Ray-finned fishes 2, Birds 1, Flatworms 1 (78) | Appendicularians 23, Other tunicates 22, Flatworms 1 (49) | GPX4 (6) |
+| GPX_chr1a | GPX4 (3; 2 reciprocal; margin 28 to 37 bits) | 59, 8 | 48 / 100* | Other tunicates 28, Appendicularians 8, Cephalochordates 4, Mammals 4, Ray-finned fishes 2, Birds 1, Flatworms 1 (78) | Other tunicates 22, Flatworms 1 (53) | GPX4 (6) |
+| GPX_chr1b | GPX4 (3; 0 reciprocal; margin 10.4 to 19.6 bits) | 59, 8 | 48 / 100* | Other tunicates 28, Appendicularians 8, Cephalochordates 4, Mammals 4, Ray-finned fishes 2, Birds 1, Flatworms 1 (78) | Other tunicates 22, Flatworms 1 (53) | GPX4 (6) |
+| GPX_chr2 | GPX4 (3; 0 reciprocal; margin 34 to 43 bits) | 59, 8 | 48 / 61* | Other tunicates 28, Appendicularians 8, Cephalochordates 4, Mammals 4, Ray-finned fishes 2, Birds 1, Flatworms 1 (78) | Appendicularians 23, Other tunicates 22, Flatworms 1 (49) | GPX4 (6) |
+| SELENOF | SELENOF (3; 3 reciprocal; margin 95.1 to 101 bits) | 10, 9 | 79 / 58 | Land plants 3, Green algae 2 (33) | Land plants 3, Green algae 2 (81) | SELENOM (1) |
+| SELENOK | none (3) | 5, 5 | 100 / 100 | Kinetoplastids 3, Green algae 2, Chelicerates 1 (33) | Kinetoplastids 3, Green algae 2, Chelicerates 1 (25) | SELENOK (1) |
+| SELENOO | SELENOO (2; 2 reciprocal; margin 469 to 501 bits) | 10, 7 | 99 / 100 | Other tunicates 12, Mammals 5, Ray-finned fishes 4, Cephalochordates 2, Amphibians 1, Birds 1, Chelicerates 1, Lobe-finned fishes 1, Reptiles 1 (44) | Other tunicates 12, Mammals 5, Ray-finned fishes 4, Cephalochordates 2, Amphibians 1, Birds 1, Chelicerates 1, Lobe-finned fishes 1, Reptiles 1 (93) | SELENOO (4) |
+| SELENOS | none (2) | 5, 5 | 95 / 93 | Green algae 2 (83) | Green algae 2 (55) | SELENOS (1) |
+| SELENOT | SELENOT (3; 3 reciprocal; margin 114 to 118 bits) | 11, 9 | 75 / 66 | Alveolates 6, Kinetoplastids 4, Green algae 3, Land plants 3, Nematodes 3, Stramenopiles 2, Mammals 1 (90) | Alveolates 6, Kinetoplastids 4, Green algae 3, Land plants 3, Nematodes 3, Stramenopiles 2, Mammals 1 (86) | SELENOT (5) |
+| SELENOW_chr1a | SELENOW (3; 3 reciprocal; margin 32.3 to 70.5 bits) | 5, 5 | 35 / 40* | Appendicularians 4, Other tunicates 1 (57) | Appendicularians 2, Green algae 1 (42) | SELENOV (2), SELENOW (4) |
+| SELENOW_pair1 | SELENOW (3; 0 reciprocal; margin 12.7 to 18.8 bits) | 8, 3 | 99 / 98 | Appendicularians 9, Other tunicates 1 (63) | Appendicularians 9, Green algae 1 (35) | SELENOV (2), SELENOW (4) |
+| SELENOW_pair2 | SELENOW (3; 0 reciprocal; margin 14.2 to 17.3 bits) | 8, 3 | 99 / 98 | Appendicularians 9, Other tunicates 1 (63) | Appendicularians 9, Green algae 1 (35) | SELENOV (2), SELENOW (4) |
+| SELENOW_PAR | SELENOV (2; 2 reciprocal; margin 0.4 to 2.7 bits) | 7, 6 | 99 / 100 | unclassified 2 (89) | Mammals 3 (92) | SELENOV (2), SELENOW (4) |
+| SELENOW_chr2 | MIEN1 (3; outside the family, 55.5 to 63.9 bits above its genes) | 19, 9 | 87 / 93 | Cephalochordates 2, Appendicularians 1, Crustaceans 1, Other insects 1 (80) | Cephalochordates 2, Appendicularians 1 (72) | MIEN1 (3) |
+| TXNRD | TXNRD1 (3; 3 reciprocal; margin 1 to 18 bits) | 9, 8 | 100 / 100 | Other tunicates 10 (92) | Other tunicates 10 (98) | TXNRD1 (2), TXNRD3 (3) |
+
+<!-- Table generated by stage2/selenoprotein_table.py (make selenoprotein-table;
+results/tables/stage2_selenoprotein_table.md), from the round 2 trees of 2026-10-30. -->
+
+Table SELENO-ORTHOLOGY. Orthology of the gold-standard genes of the selenoprotein families. Best human hit: best human
+gene of the final-run predictions that the gold-standard proteins replaced (number of assemblies, of which reciprocal;
+margin to the next human gene); "none", no hit. Appendicularian clade: the clade of appendicularian sequences of the
+maximum-likelihood tree that holds the gene (sequences, genomes); support: ultrafast bootstrap under the selected
+model and under LG+C60+F+G with PMSF (*, the PMSF clade holding the gene has other members). Sister group: taxonomic
+groups of the smallest side of a bipartition that holds the clade and other sequences, with its support
+("unclassified": profile sequences without species name). Nearest vertebrate genes: human genes in the smallest such
+side that holds vertebrate sequences with a known human gene (number of sequences).
+
 # Discussion
 
 <!-- To write after the census (step 11 of the plan). Provisional paragraphs below. -->
@@ -1106,6 +1211,46 @@ of at least 90%, in the tree of one part were tested for compatibility with the 
 the other part. The analysis was repeated under LG+C60+F+G with PMSF, the site frequencies of each part being
 estimated on its maximum-likelihood tree; the full-length PMSF tree, pruned, was added to the tested trees.
 
+## Orthology of the selenoprotein genes
+
+> **Provisional section (2026-10-30).** Methods of the second round of hit validation (`stage2/machinery_rbh.py`,
+> `stage2/machinery_phylogeny.py`, `stage2/machinery_lba.py`, `stage2/au_hypotheses.tsv`,
+> `stage2/selenoprotein_orthology.py`, `stage2/selenoprotein_table.py`, `stage2/taxonomy.py`).
+
+The methods of the machinery were applied to the selenoprotein families in which the final stage 2 run predicted
+appendicularian genes (DIO, GPX, MsrA, SELENOF, SELENOK, SELENOL, SELENOO, SELENOS, SELENOT, SELENOU, SELENOW and
+TXNRD), with the following differences. Best hits were computed for the predictions of the final run in the nine
+appendicularian genomes and for the stage 1 predictions in the other genomes; the expected human genes of each family
+were those of its name (for example GPX1 to GPX8, DIO1 to DIO3, SELENOW and SELENOV for SELENOW). The trees combined
+the profile sequences (at most three per taxonomic group), the stage 1 predictions in the other tunicates, the
+cephalochordates and the vertebrate controls, the predictions of the final run in the nine appendicularian genomes at
+least 30% as long as the median profile sequence (the profiles of some families mix short and long proteins), and the
+human RefSeq proteins of the family, with those of a related family as outgroup for TXNRD (GSR) and SELENOF (SELENOM),
+and human MIEN1, the best human hit of part of the tunicate SELENOW, in the SELENOW tree. In OKI2018, OSKA2016 and OdB3,
+the predictions that overlap a gold-standard gene of the family on the same strand were replaced by its gold-standard
+protein, which took their best hits; the new *O. dioica* assemblies used as tests of stage 2 were left out. Trees
+without outgroup were rooted at the midpoint for display.
+
+Taxonomic groups were assigned from the sequence names in this order: the genome code or genus at the start of the
+name; the Ensembl species prefix of a protein identifier and the UniProt species mnemonic of an entry name; any other
+word of the name that is a known genus; and descriptive bacterial names (`config/taxon_groups.tsv`,
+`config/taxon_codes.tsv`). Eight of the 1,053 sequences of the trees could not be assigned (profile sequences with no
+species in the name). The machinery trees were built with the first rule only, which left more profile sequences unassigned and thus
+outside the limit of three per group.
+
+Each appendicularian clade (largest group of appendicularian sequences forming a side of a bipartition) was described
+on the unrooted maximum-likelihood and PMSF trees by its support, its sister group (the smallest side of a bipartition
+holding the clade and other sequences) and its nearest vertebrate genes (the human genes in the smallest such side
+that holds vertebrate sequences with a known human gene: human proteins, and vertebrate predictions with their best
+human hit). AU tests compared, for each family, the unconstrained tree with the best trees found under each of a set
+of constraints, all in one test, under the selected model and under LG+C60+F+G with the PMSF site frequencies. Each
+constraint was given as clades of leaf sets: the appendicularian clade, the appendicularian clades holding named
+gold-standard proteins, the smallest clade holding named sequences, taxonomic groups (tunicates other than
+appendicularians; chordates; animals) and differences of these sets. Where the reference group of a hypothesis did
+not form a clade of the maximum-likelihood tree (for example chordate proteins with nematode or insect proteins among
+them), a control constraint made the group a clade with the appendicularian clade outside it, so that a rejection of
+the group's monophyly could be told apart from a rejection of the appendicularian position.
+
 ## SECIS scores against genomic background
 
 For each prediction, Selenoprofiles writes the sequence downstream of the predicted coding sequence, up to 6,000
@@ -1121,7 +1266,11 @@ that follow each selenocysteine codon on its strand.
 evidence against it from the first round of hit validation: a best human hit (reciprocal best-hit analysis) in an
 unrelated family, MIEN1 counting as related to SELENOW and SEPHS1 to SEPHS2, or nearest relatives in the tree of its
 family (the smallest side of a bipartition holding it and non-appendicularian sequences) that are all bacterial,
-archaeal, fungal or of other non-animal groups. The curated *O. dioica* genes were always kept.
+archaeal, fungal or of other non-animal groups. The curated *O. dioica* genes were always kept. Taxonomic groups were
+those of the machinery trees, assigned from the first word of the name. With the extended assignment used for the
+second round (Orthology of the selenoprotein genes), the nearest relatives of 24 of the 111 selenocysteine
+predictions, among them curated deiodinases, are of non-animal groups only (alveolate and amoebozoan deiodinases,
+for example), and none are bacterial, archaeal or fungal only; their positions were tested in the second round.
 
 ## First appendicularian SECIS model
 

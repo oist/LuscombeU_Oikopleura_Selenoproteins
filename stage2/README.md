@@ -349,13 +349,13 @@ not in the trees.
    `results/tables/stage1_annotation.tsv`. This is a summary for review, not an assignment: the families that it
    leaves open are then analysed as the machinery was (AU tests, site removal, domains).
 5. `make selenoprotein-au` (after `selenoprotein-pmsf`): `machinery_lba.py --analyses pmsf hypotheses` on the families
-   of `SELENO_AU` (DIO, SELENOF, SELENOO, SELENOT, SELENOW), with the positions of `au_hypotheses.tsv`: for each, a
+   of `SELENO_AU` (DIO, SELENOF, SELENOK, SELENOO, SELENOS, SELENOT, SELENOW), with the positions of `au_hypotheses.tsv`: for each, a
    constraint tree (clades given as expressions of leaf sets: the appendicularian clade, appendicularian clades
    holding named leaves, the smallest clade holding named leaves, taxonomic groups, regular expressions; see the
    script), a constrained search, and an AU test of the constrained trees against the unconstrained one, under the
    model of the maximum-likelihood tree and under LG+C60+F+G with the PMSF site frequencies. Tested positions: the
-   appendicularian SELENOF, SELENOO and SELENOT with the other tunicates and inside the chordate (SELENOF, SELENOT) or
-   animal (SELENOO) clade; SELENOW_PAR outside the smallest clade of the human SELENOW and SELENOV, and with the
+   appendicularian SELENOF, SELENOK, SELENOO, SELENOS and SELENOT with the other tunicates and inside the chordate
+   (SELENOF, SELENOK, SELENOS, SELENOT) or animal (SELENOO) clade; SELENOW_PAR outside the smallest clade of the human SELENOW and SELENOV, and with the
    appendicularian SELENOW of chromosome 1, of chromosome 2, or with the mammalian SELENOV; the animal sequences of
    the smallest clade of the human and gold-standard DIO as one clade, without the non-animal DIO. Where the reference
    group of a hypothesis is not a clade of the trees, a control places the group as a clade with the appendicularian
@@ -363,9 +363,12 @@ not in the trees.
    the appendicularians. All constrained trees of a family enter one AU test (redone when the set changes). Outputs `results/trees/selenoproteins/lba/<family>.hypotheses.tsv`
    (resolved leaf sets, and whether each clade is in the maximum-likelihood tree), `.hyp_<id>.*` (constrained
    trees), `.hypotheses_au.iqtree` (AU tests), and rows "AU test: ..." in `results/tables/stage2_selenoprotein_lba.tsv`.
+6. `make selenoprotein-table`: `selenoprotein_table.py`, Table SELENO-ORTHOLOGY of the manuscript (one row per
+   gold-standard gene: best human hits of the predictions it replaced, its appendicularian clade, sister group and
+   nearest vertebrate genes). Outputs `results/tables/stage2_selenoprotein_table.{tsv,md}`.
 
-Known gap: SELENOK was not predicted by the stage 1 settings in any appendicularian genome, so that its tree, if
-any, lacks the *O. dioica* protein until the stage 2 re-calling or a curated protein from transcripts.
+SELENOK, missed by the stage 1 settings in every appendicularian genome, is in the round 2 trees (stage 2 final run
+and gold-standard proteins).
 
 ## Stage 2: profiles, runs and benchmark (steps 6 and 7)
 

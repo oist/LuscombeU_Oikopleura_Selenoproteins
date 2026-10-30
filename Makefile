@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -273,7 +273,7 @@ selenoprotein-pmsf:
 # AU tests of the positions of stage2/au_hypotheses.tsv (step 8), under the ML model and LG+C60+F+G (PMSF), after
 # selenoprotein-pmsf (keeps finished analyses); clades resolved in results/trees/selenoproteins/lba/<family>.hypotheses.tsv
 #   sbatch -p compute --cpus-per-task=8 --mem=32G --time=1-00:00:00 scripts/run_in_container.sh make selenoprotein-au
-SELENO_AU = DIO SELENOF SELENOO SELENOT SELENOW
+SELENO_AU = DIO SELENOF SELENOK SELENOO SELENOS SELENOT SELENOW
 selenoprotein-au:
 	python3 stage2/machinery_lba.py --families $(SELENO_AU) --trees results/trees/selenoproteins --analyses pmsf hypotheses \
 	  --out results/trees/selenoproteins/lba --table results/tables/stage2_selenoprotein_lba.tsv
@@ -281,6 +281,10 @@ selenoprotein-au:
 # First-pass orthology of each appendicularian clade, from the trees and best hits (seconds; reads results/ only)
 selenoprotein-orthology:
 	python3 stage2/selenoprotein_orthology.py $(if $(GOLD),,--annotation results/tables/stage1_annotation.tsv)
+
+# Table SELENO-ORTHOLOGY of the manuscript (round 2: gold-standard genes), after selenoprotein-orthology (seconds)
+selenoprotein-table:
+	python3 stage2/selenoprotein_table.py
 
 # Schematic of the selenocysteine machinery (figures/machinery_scheme.{pdf,svg}; seconds, no input)
 machinery-scheme:

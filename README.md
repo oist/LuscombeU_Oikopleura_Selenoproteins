@@ -68,6 +68,7 @@ make selenoprotein-phylogeny  # trees of the selenoprotein families with appendi
 make selenoprotein-pmsf       # the same under LG+C60+F+G (PMSF)
 make selenoprotein-au         # AU tests of positions of appendicularian clades (stage2/au_hypotheses.tsv)
 make selenoprotein-orthology  # orthology summary of each appendicularian selenoprotein clade
+make selenoprotein-table      # Table SELENO-ORTHOLOGY (gold-standard genes)
 ```
 
 The Makefile documents each target (inputs, outputs and the cluster submissions that worked); `stage2/README.md`
