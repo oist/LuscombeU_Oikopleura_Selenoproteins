@@ -1382,7 +1382,7 @@ no earlier step waits for them.
   sites); uninformative for the appendicularians. One PMSF control p-AU printed as 7.6e-61 (deltaL 69.0, as its
   hypothesis): a numerical artefact of the AU fit, read as p < 0.001. Written into the manuscript.
 - Final run collected (2026-10-30, make stage2-collect, commit 1d630fb): census preview without contig checks
-  (make census-contigs not run yet): 246 loci in the twelve assemblies, 59 of them gold-standard genes, one left out
+  (make census-contigs not run yet): 247 loci in the twelve assemblies, 59 of them gold-standard genes, one left out
   (F. borealis DIO.14, best human hit GPX1). HGT screen: no candidate with introns; 27 intronless candidates whose
   family is confirmed by best hits, all in the three non-Oikopleura genomes: cysteine SELENOO of B. stygius,
   F. borealis and M. erythrocephalus next to Stenotrophomonas and Xylella SelO (100 / 99), and further F. borealis
