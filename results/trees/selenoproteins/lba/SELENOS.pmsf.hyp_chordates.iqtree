@@ -1,0 +1,138 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOS.trimmed
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 23 sequences with 218 amino-acid sites
+Number of constant sites: 8 (= 3.66972% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 8 (= 3.66972% of all sites)
+Number of parsimony informative sites: 193
+Number of distinct site patterns: 215
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+SSF+F+G4
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 1.5306
+
+ Category  Relative_rate  Proportion
+  1         0.2300         0.2500
+  2         0.5936         0.2500
+  3         1.0522         0.2500
+  4         2.1242         0.2500
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -5930.8155 (s.e. 173.3790)
+Unconstrained log-likelihood (without tree): -1169.1378
+Number of free parameters (#branches + #model parameters): 63
+Akaike information criterion (AIC) score: 11987.6309
+Corrected Akaike information criterion (AICc) score: 12039.9945
+Bayesian information criterion (BIC) score: 12200.8541
+
+Total tree length (sum of branch lengths): 23.0505
+Sum of internal branch lengths: 14.2495 (61.8183% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Equus_caballus_gi_149691084_ref_XP_001490943.1' is drawn at root
+
++--Equus_caballus_gi_149691084_ref_XP_001490943.1
+|
+|     +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
+|  +--|
+|  |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
+|  |  |     +--|
+|  |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
+|  |  |  +--|
+|  |  |  |  +---Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
+|  |  +--|
+|  |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
+|  |     |  +--|
+|  |     |  |  +--Drer_SELENOS.4.selenocysteine
+|  |     +--|
+|  |        |     +-----Ixodes_scapularis_gi_215500567_gb_EEC10061.1
+|  |        |  +--|
+|  |        |  |  |      +**Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
+|  |        |  |  +------|
+|  |        |  |         |                                  +------Se_user_SelS_Ostreococcus_lucimarinus
+|  |        |  |         +----------------------------------|
+|  |        |  |                                            +--Se_user_SelS_Ostreococcus_tauri
+|  |        +--|
+|  |           |  +------Blan_SELENOS.1.unaligned
+|  |           +--|
+|  |              |               +--Cint_SELENOS.1.selenocysteine
+|  |              |            +--|
+|  |              |            |  +--Crob_SELENOS.1.selenocysteine
+|  |              |         +--|
+|  |              |         |  +--Csav_SELENOS.4.selenocysteine
+|  |              |  +------|
+|  |              |  |      +---Pmam_SELENOS.2.selenocysteine
+|  |              +--|
+|  |                 |                 +---Oalb_SELENOS.2.selenocysteine
+|  |                 |              +--|
+|  |                 |              |  |  +--OKI_gold_SELENOS
+|  |                 |              |  +--|
+|  |                 |              |     |  +**OSKA_gold_SELENOS
+|  |                 |              |     +--|
+|  |                 |              |        +--OdB3_gold_SELENOS
+|  |                 +--------------|
+|  |                                +--Olon_SELENOS.7.selenocysteine
++--|
+|  +--Mmus_SELENOS.2.selenocysteine
+|
++**Human_SELENOS_NP_060915.2
+
+Tree in newick format:
+
+(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2665460789,((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3649693533,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.1126486878,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2143820962):0.0888803677,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8082720433):0.0919389408,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.3180233532,Drer_SELENOS.4.selenocysteine:0.2522477012):0.2267209773,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.1281197341,(Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:0.0000024183,(Se_user_SelS_Ostreococcus_lucimarinus:1.2337456002,Se_user_SelS_Ostreococcus_tauri:0.0367880940):5.7288139426):1.2759026156):0.5134100145,(Blan_SELENOS.1.unaligned:1.2241874533,((((Cint_SELENOS.1.selenocysteine:0.0209053982,Crob_SELENOS.1.selenocysteine:0.0229216428):0.1021002671,Csav_SELENOS.4.selenocysteine:0.3780259875):0.3730603397,Pmam_SELENOS.2.selenocysteine:0.7059647400):1.2094184398,((Oalb_SELENOS.2.selenocysteine:0.7722060949,(OKI_gold_SELENOS:0.1848200262,(OSKA_gold_SELENOS:0.0000010000,OdB3_gold_SELENOS:0.0426226995):0.0341304287):0.6069310717):0.3223628232,Olon_SELENOS.7.selenocysteine:0.5577647786):2.4889046326):0.1082752631):0.1161621182):0.2763766824):0.2735961826):0.0937015696):0.2707291362,Mmus_SELENOS.2.selenocysteine:0.1559270409):0.0480363982,Human_SELENOS_NP_060915.2:0.0000022818);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOS.pmsf.hyp_chordates.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0917253,0.0924532,0.0339724,0.0366416,0.00655185,0.0613929,0.0922106,0.0982771,0.00849313,0.0296045,0.0744965,0.0778937,0.0237807,0.0274206,0.0536278,0.0754671,0.0344577,0.0145596,0.0269352,0.0400388}+G4{1.53063}" --length 218
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOS.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOS.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 17:45:51 2026
+Total CPU time used: 140.73 seconds (0h:2m:20s)
+Total wall-clock time used: 17.8572 seconds (0h:0m:17s)
+
