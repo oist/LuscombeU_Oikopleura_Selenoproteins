@@ -16,12 +16,16 @@ filters and down to very low scores.
      non-Watson-Crick quartet below helix 2 (5'-AUGA ... GA-3', with the G·A pairs not formed in the predicted
      structure); also GGGA instead of UGA [Novoselov et al. 2007];
    - helix_2: base pairs from that closing pair to the first unpaired base on both strands (bulges of 1 nt allowed);
-   - AAR: two or three unpaired A (AA or AAA, then R) on the 5' strand or in the loop, 9 to 16 nt after the 5' UGA
-     (the AAR of form 1 and form 2 elements); CC: two unpaired C in the same place [Korotkov et al. 2002].
+   - AA: two unpaired A on the 5' strand or in the loop, 9 to 16 nt after the 5' UGA (the AAR motif of form 1 and
+     form 2 elements); CC: two unpaired C in the same place [Korotkov et al. 2002].
 3. Best scores of the Oikopleura SECIS model and of RF00031 (and of any other --models) on the domain with --flank nt
    on each side, from cmsearch --max (no filters) --toponly -T --min-bits.
 Outputs: --out (one row per domain). Coordinates are 1-based on the input sequences, which are read as given (sense
 strand).
+
+core_patterns() is a second screen without folding and without model: a 5' UGA, then (after 0 to 2 nt) a helix of at
+least 8 base pairs (Watson-Crick or G-U, at most one mismatch after the first two pairs, no gap) closed on the 3' side
+(after 0 to 2 nt) by GA, 40 to 110 nt after the UGA, with AA 9 to 18 nt after the UGA.
 """
 import argparse, collections, concurrent.futures, os, random, re, subprocess, tempfile
 
@@ -124,7 +128,7 @@ def features(seq, db):
                 q = i - s5   # last base of the 5' UGA
                 window = seq[q + 9:q + 17]
                 unp = "".join(c if p[q + 9 + x] == -1 else "." for x, c in enumerate(window)) if q + 17 <= n else ""
-                aar = bool(re.search(r"AA[AG]", unp)) or bool(re.search(r"AA", unp))
+                aar = "AA" in unp
                 cc = "CC" in unp
                 cand = (bp, aar or cc, kind, i, j, s5, s3, aar, cc)
                 if best is None or (cand[1], cand[0]) > (best[1], best[0]): best = cand
@@ -132,6 +136,30 @@ def features(seq, db):
     bp, _, kind, i, j, s5, s3, aar, cc = best
     return {"quartet": f"{kind}@{i - s5 - (2 if kind == 'UGA' else 3) + 1}/GA@{j + s3 + 1}", "helix_2_pairs": bp,
             "AAR": "yes" if aar else "", "CC": "yes" if cc else ""}
+
+
+PAIRS = {("A", "U"), ("U", "A"), ("G", "C"), ("C", "G"), ("G", "U"), ("U", "G")}
+
+
+def core_patterns(s, min_helix=8, max_mismatches=1):
+    """SECIS core patterns without folding (see the module description): [(UGA position, GA position, helix pairs,
+    mismatches)], 0-based."""
+    s = s.upper().replace("T", "U")
+    out = []
+    for p in (m.start() for m in re.finditer("(?=UGA)", s)):
+        if "AA" not in s[p + 9:p + 19]: continue
+        for q in (m.start() + p + 40 for m in re.finditer("(?=GA)", s[p + 40:p + 111])):
+            best = None
+            for s5 in (0, 1, 2):
+                for s3 in (0, 1, 2):
+                    i, j, h, mm = p + 3 + s5, q - 1 - s3, 0, 0
+                    while i + h < j - h - 3:
+                        if (s[i + h], s[j - h]) in PAIRS: h += 1
+                        elif mm < max_mismatches and h >= 2: mm += 1; h += 1
+                        else: break
+                    if h >= min_helix and (best is None or h > best[2]): best = (p, q, h, mm)
+            if best: out.append(best)
+    return out
 
 
 def cm_scores(cands, models, flank, seqs, min_bits, cpus, work):

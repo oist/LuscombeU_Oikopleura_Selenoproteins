@@ -265,6 +265,19 @@ transcript length after it and SECIS hits there; `stage2_candidate_transcripts_p
 the rule). Without such a position, the codon aligned by tblastn is used. Tested on a synthetic gene (five exons,
 minus strand, transcript stored in both orientations, SECIS seed in the 3' UTR): codon position and exon reproduced.
 
+## SECIS element of SELENOI (`selenoi_regions.py`, `selenoi_secis_search.py`, `secis_stemloop_screen.py`)
+
+`make selenoi-regions` writes the regions around SELENOI (the three *O. dioica* assemblies, the tblastn loci of the
+other appendicularians, tunicates and amphioxus, the stage 1 sites of vertebrates and *C. intestinalis*) and the
+*O. dioica* SELENOI transcripts to `results/sequences/selenoi_regions.fa` (with `selenoi_regions.tsv`), so that the
+search runs without the genomes. `make selenoi-secis` (`selenoi_secis_search.py`) locates the candidate codon in
+each appendicularian region (tblastn of the 45 residues before the U), places the transcripts on their region
+(retention or splicing of the segment that holds the codon), and searches the 3' sequences (3 kb; 8 kb for
+vertebrates) with the covariance models without filters (`cmsearch --max`, against dinucleotide shuffles), with the
+stem-loop screen of `secis_stemloop_screen.py` (local minimum free energy stem-loops, then SECIS features) and core
+patterns without folding, and compares five *Oikopleura* species (MAFFT, RNAalifold). The stem-loop screen and the
+core patterns are calibrated on the gold-standard 3' sequences (known SECIS elements against nt 1001-2000).
+
 ## TXNL1 homologs (`txnl1_homologs.py`, `make txnl1-homologs`)
 
 Whether *O. dioica* TXNL1.b (168 residues, PITH region only, selenocysteine) and human TXNL1 are reciprocal best hits,

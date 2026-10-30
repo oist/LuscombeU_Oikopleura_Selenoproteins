@@ -1523,3 +1523,29 @@ no earlier step waits for them.
   members must therefore be built from the genomes: make selenok-regions (stage2/extract_regions.py,
   curation/selenok_loci.tsv) extracts 9 kb around each screen locus; gene models then built here by protein-to-genome
   alignment of the O. dioica SELENOK. results/sequences/ (small FASTA and TSV files) no longer ignored by git.
+- SELENOI SECIS, wider search (2026-10-31, Charles: "search harder for a SECIS in / near SELENOI ... by just
+  screening for stem-loops first"). make selenoi-regions (commit 91fc51e) gave the sequences; analysis
+  stage2/selenoi_secis_search.py (make selenoi-secis; run here first, numbers below). Findings:
+  - The TGA is also in O. albicans and O. vanhoeffeni (tblastn of the 45 residues before the U on their regions):
+    ...KTN[TGA]QI in both; the five species read TGA-Q-I, then diverge (stop after 2 codons in OKI2018 and
+    O. vanhoeffeni, 9 in OSKA2016, 17 in OdB3, 24 in O. albicans). Not found in O. longicauda (contig of 1.2 kb),
+    B. stygius, M. erythrocephalus, F. borealis.
+  - The TGA lies 9 nt inside a segment of 103-108 nt that the other transcripts splice out (OKI2018 _i3, OSKA2016
+    seq2, three OdB3 ESTs; they end ...IIPT|SISSL*); the TGA transcripts retain it. The only placement of that
+    junction consistent with the genome has AG...AG ends, not one of the O. dioica intron classes: to check.
+  - A gene on the same strand, conserved in the three O. dioica species (MKLAVTLLSCSVVLA...), starts 306-348 nt
+    after the TGA; the transcripts end 250-324 nt after it.
+  - Covariance models without filters (cmsearch --max, 3 kb after the TGA): best Oikopleura model 9.5 to 13.5 bits,
+    appendicularia model 10.4 to 15.4, RF00031 5.8 to 9.5; dinucleotide shuffles of the same sequences: medians 10.1,
+    10.3, 7.8, 95th percentiles 15.4, 15.1, 11.0. Positive controls: the vertebrate SELENOI SECIS 1.1-1.3 kb after the
+    codon (Oikopleura model 18.3-26.3, RF00031 17.4-22.5). C. intestinalis (stage 1 SELENOI site, miniprot,
+    ...ENSD[TGA]HAA...): no SECIS either (11.8, 9.3 bits).
+  - Stem-loop screen (first 600 nt): no stem-loop with the SECIS features in OKI2018, OSKA2016, O. albicans,
+    O. vanhoeffeni; OdB3 437-594 (inside the downstream gene; z -0.93 to 1.32, at most 12.2 bits). Calibration on the
+    gold-standard 3' sequences: 49 of 59 known SECIS in a stem-loop, 24 with the features; background 0.26 per kb.
+  - Core patterns (no folding, no model): 0 to 3 per 600 nt (background 1.73 per kb in the shuffles; 34 of 59 known
+    SECIS recovered, 1.36 per kb in the gold-standard background).
+  - Five-species alignment of the 450 nt after the TGA (identity 38-90%): RNAalifold consensus of 8 base pairs,
+    -1.72 kcal/mol, no conserved stem-loop.
+  Reading (inference): no SECIS; the TGA most likely ends a truncated protein (...KTD) of the intron-retaining
+  transcripts; SELENOI stays "candidate, not counted". To run on Deigo for the tables: make selenoi-secis.

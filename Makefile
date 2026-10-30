@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenoi-secis stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -378,6 +378,13 @@ selenok-regions:
 #   sbatch -p compute --cpus-per-task=1 --mem=8G --time=1:00:00 scripts/run_in_container.sh make selenoi-regions
 selenoi-regions:
 	python3 stage2/selenoi_regions.py
+
+# Wider search for the SECIS element of SELENOI, from stem-loops rather than from a SECIS model, with covariance
+# models without filters, core patterns, a comparison of five Oikopleura species and calibrations on the gold-standard
+# 3' sequences (reads results/sequences/selenoi_regions.fa and repository files; about 15 minutes on 4 CPUs), for
+#   sbatch -p compute --cpus-per-task=4 --mem=8G --time=2:00:00 scripts/run_in_container.sh make selenoi-secis
+selenoi-secis:
+	python3 stage2/selenoi_secis_search.py
 
 # Step 9 follow-up 2: why the final SELENOK profile misses the SELENOK genes that the UGA/SECIS screens found in
 # O. longicauda, O. albicans, O. vanhoeffeni and M. erythrocephalus (and how it does in the other appendicularians and
