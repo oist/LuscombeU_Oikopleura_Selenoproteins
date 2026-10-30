@@ -483,16 +483,13 @@ foreign-looking sequences; one HGT screen, with no false positive allowed).
    selenocysteine codons now carry the Selenoprofiles prediction identifier, and `predictions` lists every prediction
    with its coding exons); `machinery_census.py` on the final-run predictions gives
    `results/tables/stage2_final_machinery_census.{tsv,md}` (fragments: those of the machinery analysis).
-2. `scripts/run_tiara.sh` (Deigo, outside the image: Tiara needs an older Python): Tiara 1.0.3 classes of the contigs
-   of at least 3,000 nt, `work/stage2/census/tiara/<genome>.tiara.tsv`. `TIARA_IMAGE` is a Singularity image with
-   Tiara, built for example with Wave from conda-forge (command in the script).
-3. `make census-contigs` (Deigo): `census_contigs.py`, for each contig carrying a prediction or a selenocysteine
+2. `make census-contigs` (Deigo): `census_contigs.py`, for each contig carrying a prediction or a selenocysteine
    codon, its length and GC content, and, on a window of 2, 5 or 10 kb centred on its predictions, GC content and
    distance of the tetranucleotide composition (centred log-ratio of canonical tetranucleotide counts) to the median
-   of random windows of the same genome and length, as percentiles and robust z-scores; the Tiara classes when
-   present. Per genome: length, contigs, N50, GC, and the bases of each Tiara class. Outputs
+   of random windows of the same genome and length, as percentiles and robust z-scores; Tiara classes when a Tiara
+   output is present (not run: decision of 2026-10-30 in `docs/plan.md`). Per genome: length, contigs, N50, GC, and the bases of each Tiara class. Outputs
    `results/tables/stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`.
-4. `make census` (seconds, from `results/` only): `census.py` merges the selenocysteine codons into loci, decides for
+3. `make census` (seconds, from `results/` only): `census.py` merges the selenocysteine codons into loci, decides for
    each locus whether it is counted (rules in the script: left out only on evidence against it, contig classified
    non-eukaryotic by Tiara, best human hit in another family, or composition outlier with non-animal nearest
    relatives; gold-standard genes always counted), and records the flags (composition and GC outliers, nearest
@@ -501,9 +498,10 @@ foreign-looking sequences; one HGT screen, with no false positive allowed).
    definition, no screen). The strict HGT screen lists every appendicularian leaf of the round 2 trees whose nearest
    relatives outside the appendicularians, or outside the tunicates (a transfer before the split of the tunicate
    lineages, like that of cellulose synthase), are all bacterial, archaeal or fungal, with its contig checks and a
-   status: contamination (Tiara, composition), other family (best human hit elsewhere: the tree lacks the animal
+   status: contamination (composition; Tiara if run), other family (best human hit elsewhere: the tree lacks the animal
    members of its family, as for the thioredoxins found by the DIO profile), family not confirmed (no human hit),
    placement not stable under PMSF, candidate without intron, or candidate for the tests. An old transfer is
    expected to match its genome in composition; its evidence is its presence at the same place of the tree in
-   several species and assemblies. Outputs
+   several species and assemblies; the column of foreign sequences shows the donor lineage, to compare between
+   candidates (an ancestral symbiont predicts one donor lineage; bacteria taken up with food predict several). Outputs
    `results/tables/stage2_census_loci.tsv`, `stage2_census.{tsv,md}`, `stage2_hgt_screen.tsv`.

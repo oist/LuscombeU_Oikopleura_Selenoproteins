@@ -174,7 +174,8 @@ def placements(trees, taxa):
                     support = sd.get(near)
                     res[key] = (kind_of(others), ", ".join(f"{k} {v}" for k, v in others.most_common()),
                                 "NA" if support is None else f"{support:.0f}", fam,
-                                sum(tax[x] == "Other tunicates" for x in near))
+                                sum(tax[x] == "Other tunicates" for x in near),
+                                sorted(x for x in near if tax[x] not in inside))
                 if label == "ML":
                     own = [s for s in sd if n in s and all(tax[x] == "Appendicularians" for x in s)]
                     clade = max(own, key=len) if own else {n}
@@ -331,6 +332,7 @@ def main():
                     "best_human_hit": f"{best} ({hit['status']})" if hit else "-",
                     "nearest_relatives_ML": f"{ml[0]}: {ml[1]} ({ml[2]})",
                     "nearest_relatives_PMSF": f"{pm[0]}: {pm[1]} ({pm[2]})" if pm else "-",
+                    "foreign sequences (ML)": " ".join(ml[5]),
                     "contig": p.get("contig", ""), "contig_length": ctg.get("length", ""),
                     "coding_exons": p.get("coding_exons", ""), "composition_z": ctg.get("composition_robust_z", ""),
                     "gc_z": ctg.get("gc_robust_z", ""), "tiara": tiara,

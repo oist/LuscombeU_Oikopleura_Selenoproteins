@@ -70,7 +70,7 @@ make selenoprotein-au         # AU tests of positions of appendicularian clades 
 make selenoprotein-orthology  # orthology summary of each appendicularian selenoprotein clade
 make selenoprotein-table      # Table SELENO-ORTHOLOGY (gold-standard genes)
 make stage2-collect           # tables of the stage 2 final run
-make census-contigs           # contig composition and Tiara classes (after scripts/run_tiara.sh)
+make census-contigs           # GC and tetranucleotide composition of the contigs with predictions
 make census                   # census of the selenoprotein genes, contamination flags, HGT screen
 ```
 

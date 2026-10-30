@@ -1336,7 +1336,7 @@ no earlier step waits for them.
   selenocysteine SelW-like proteins of zebrafish, tilapia, Ciona, amphioxus and Artemia, and human MIEN1 (cysteine at
   the selenocysteine column); described as a SELENOW-like lineage, names kept. AU tests added for SELENOK and SELENOS
   (non-animal sister groups in round 2), with controls for SELENOK; to run (make selenoprotein-au).
-- Step 9 started (2026-10-30): census code. stage1/collect.py now also writes the Selenoprofiles identifier of each
+- Step 9 started (2026-10-30): census code (Tiara part dropped later the same day, see below). stage1/collect.py now also writes the Selenoprofiles identifier of each
   codon and a predictions table (all labels, coding exons); make stage2-collect applies it to the final run and
   reruns the machinery census on the final-run predictions. Contamination screen: Tiara (scripts/run_tiara.sh, own
   image: Tiara needs Python < 3.10, outside environment.yml) and composition checks (stage2/census_contigs.py, make
@@ -1363,3 +1363,15 @@ no earlier step waits for them.
   bacterial thioredoxin-like sequences of the profile. Status added: "other family" (best human hit outside the
   family of the tree) and "family not confirmed" (no human hit although the family has human members); a test of an
   old transfer needs a tree of the right family with broad eukaryotic and bacterial sampling.
+- Decision (2026-10-30, Charles): Tiara is not run. Only old transfers are expected. Hypothesis of Charles: the
+  ancestral tunicate had a symbiont, since lost; losses in parallel after the split of appendicularians and other
+  tunicates would leave room for appendicularian-specific transfers (improbable, but transfer without symbiont is
+  judged less probable). Old transfers match their genome in composition and lie on host contigs, so contig
+  classification adds little; the evidence is presence at the same place of the tree in several species and
+  assemblies, and introns shared between species (as for the tunicate GH6-containing genes: Li et al. 2020, Genes,
+  doi:10.3390/genes11080937, shared splice sites in all tunicates examined; GH6-1 and the GH6 part of CesA form two
+  independent monophyletic groups). scripts/run_tiara.sh removed; census_contigs.py still reads a Tiara output if
+  one is placed in work/stage2/census/tiara/. The HGT screen lists the foreign sequences next to each candidate, to
+  compare donor lineages: one lineage across candidates fits an ancestral symbiont, several lineages fit uptake of
+  bacteria with food (appendicularians filter bacteria from the water). To consider for candidates: intron positions
+  compared between species. The screen covers only the genes of the selenoprotein families.
