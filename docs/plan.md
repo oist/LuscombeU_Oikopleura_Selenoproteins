@@ -1389,3 +1389,12 @@ no earlier step waits for them.
   SELENOO next to a Pseudomonas protein; cysteine GPX of F. borealis (and two of B. stygius) next to Salmonella,
   Cellvibrio or Delftia GPX; one F. borealis MsrA. B. stygius may be contaminated by M. erythrocephalus (Pichon et al.
   2019), so their shared clade may come from one source. Contig checks needed before reading further.
+- Introns and NMD (2026-10-30, question of Charles). Single-exon Selenoprofiles predictions in the final run:
+  OKI 12/51, OSKA 18/56, OdB3 18/66, Olon 60/133, Oalb 32/72, Ovan 35/67, Bsty 39/55, Mery 30/55, Fbor 211/239. In
+  F. borealis most splice junctions are non-canonical (Charles, 2026-10-24) and the prediction tools do not model
+  them; B. stygius and M. erythrocephalus are fragmented: "no intron" in the HGT screen says little for these three
+  genomes (to check with transcripts or a spliced alignment that allows non-canonical junctions). Gold standard: 5 of
+  59 models intronless (SELENOW_PAR in the three assemblies, SELENOW_pair2 in OSKA2016 and OdB3); the selenocysteine
+  codon lies more than 55 nt upstream of the last exon junction in 32 models (the mammalian rule for
+  junction-dependent NMD; selenoprotein mRNAs are NMD substrates when the UGA is read as a stop: Moriarty et al. 1998,
+  doi:10.1128/MCB.18.5.2932; Sun et al. 2001, doi:10.1091/mbc.12.4.1009) and in the last exon in 18.
