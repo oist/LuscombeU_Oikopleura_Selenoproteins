@@ -34,11 +34,22 @@ after the codon on the contig (no room for a SECIS element in the search window)
 3,000 nt (no Tiara class).
 
 Strict HGT screen (candidates only; the tests come after): every appendicularian leaf of the round 2 ML trees whose
-nearest relatives are all bacterial, archaeal or fungal, whatever its label. Status: "contamination (Tiara ...)";
-"contamination likely (composition outlier)"; "not testable (one coding exon)" (bacterial genes have no intron, and
-the strict standard requires introns or spliced transcripts); "placement not stable (PMSF)" when the PMSF tree does
-not give the same kind of nearest relatives; "candidate" otherwise, to be tested (AU tests against vertical descent,
-other assemblies or individuals, transcripts).
+nearest relatives outside the appendicularians are all bacterial, archaeal or fungal (a transfer after the split
+from the other tunicates, or contamination), or whose appendicularian clade lies in a clade of tunicate sequences
+whose nearest relatives outside the tunicates are all bacterial, archaeal or fungal (a transfer before that split,
+like that of cellulose synthase; the slower ascidian sequences then share the placement, which long-branch
+attraction of the appendicularian sequences alone would not explain), whatever its label. An old transfer is not
+expected to differ from its genome in composition (amelioration), nor to sit on a contig that Tiara calls
+prokaryotic; the evidence for it is its presence at the same place of the tree in several species and assemblies.
+A placement means something only for sequences of the family of the tree: a profile also finds homologs of other
+families (thioredoxins with the DIO profile, for example), whose nearest relatives in the tree are then the few
+sequences of their own family that the profile holds, often bacterial, because the animal members of that family are
+not in the tree. Status: "contamination (Tiara ...)"; "contamination likely (composition outlier)"; "other family"
+(best human hit in another family: to be placed in a tree of that family); "family not confirmed" (no hit in the
+human proteome although the family has human members); "placement not stable (PMSF)"
+when the PMSF tree does not give the same kind of nearest relatives; "candidate, no intron" (bacterial genes have
+no intron: such a candidate needs presence in other assemblies or species, or spliced transcripts); "candidate"
+otherwise, to be tested (AU tests against vertical descent, other assemblies or individuals, transcripts).
 
 Outputs: --loci (one row per locus), --table and --markdown (counted loci per family and genome, appendicularians
 from this census, other genomes from stage 1 with the same locus definition and no screen), --hgt.
@@ -119,10 +130,22 @@ def gold_genes(gold, genomes):
     return out
 
 
+def kind_of(others):
+    kinds = set(others) - {"unclassified"}
+    if kinds and kinds <= PROKARYOTES: return "prokaryotic"
+    if kinds and kinds <= PROKARYOTES | {"Fungi"}: return "bacterial or fungal"
+    if kinds and not kinds & ANIMALS: return "non-animal"
+    return "animal" if kinds else "unclassified"
+
+
 def placements(trees, taxa):
-    """(genome, prediction) -> {tree: (kind, groups, support)} for the appendicularian leaves of the round 2 trees;
-    kind: prokaryotic, bacterial or fungal, non-animal, animal. Gold-standard leaves stand for the predictions they
-    replaced, and kept sequences for the identical ones removed."""
+    """(genome, prediction) -> {tree: (kind, groups, support, family)} for the appendicularian leaves of the round 2
+    trees, at two levels: the nearest relatives outside the appendicularians (keys ML, PMSF) and outside the
+    tunicates (keys ML_tunicates, PMSF_tunicates: the smallest side holding the leaf and sequences other than
+    appendicularian or other tunicate ones, with the number of other tunicate sequences in it); kind: prokaryotic,
+    bacterial or fungal, non-animal, animal. Key "genomes": the genomes of the largest clade of appendicularian
+    sequences holding the leaf (ML tree). Gold-standard leaves stand for the predictions they replaced, and kept
+    sequences for the identical ones removed."""
     out = collections.defaultdict(dict)
     for tf in sorted(glob.glob(f"{trees}/*.treefile")):
         fam = os.path.basename(tf)[: -len(".treefile")]
@@ -139,23 +162,27 @@ def placements(trees, taxa):
             if not os.path.exists(path): continue
             names, sd = sides(lba.read_tree(path))
             tax = {n: lba.taxon(n, groups, taxa) for n in names}
+            tunicates = {"Appendicularians", "Other tunicates", "unclassified"}
             for n in names:
                 if tax[n] != "Appendicularians": continue
-                cand = [s for s in sd if n in s and any(tax[x] != "Appendicularians" for x in s)]
-                if not cand: continue
-                near = min(cand, key=len)
-                others = collections.Counter(tax[x] for x in near if tax[x] != "Appendicularians")
-                kinds = set(others) - {"unclassified"}
-                if kinds and kinds <= PROKARYOTES: kind = "prokaryotic"
-                elif kinds and kinds <= PROKARYOTES | {"Fungi"}: kind = "bacterial or fungal"
-                elif kinds and not kinds & ANIMALS: kind = "non-animal"
-                elif kinds: kind = "animal"
-                else: kind = "unclassified"
-                text = ", ".join(f"{k} {v}" for k, v in others.most_common())
-                support = sd.get(near)
+                res = {}
+                for key, inside in ((label, {"Appendicularians"}), (f"{label}_tunicates", tunicates)):
+                    cand = [s for s in sd if n in s and any(tax[x] not in inside for x in s)]
+                    if not cand: continue
+                    near = min(cand, key=len)
+                    others = collections.Counter(tax[x] for x in near if tax[x] not in inside)
+                    support = sd.get(near)
+                    res[key] = (kind_of(others), ", ".join(f"{k} {v}" for k, v in others.most_common()),
+                                "NA" if support is None else f"{support:.0f}", fam,
+                                sum(tax[x] == "Other tunicates" for x in near),
+                                sorted(x for x in near if tax[x] not in inside))
+                if label == "ML":
+                    own = [s for s in sd if n in s and all(tax[x] == "Appendicularians" for x in s)]
+                    clade = max(own, key=len) if own else {n}
+                    res["genomes"] = sorted({x.partition("_")[0] for x in clade})
                 for leaf in [n] + stand_for.get(n, []):
                     g, _, pid = leaf.partition("_")
-                    out[(g, pid)][label] = (kind, text, "NA" if support is None else f"{support:.0f}", fam)
+                    out[(g, pid)].update(res)
     return out
 
 
@@ -272,23 +299,40 @@ def main():
     hgt = []
     by_contig = collections.defaultdict(list)
     for (g, pid), p in preds.items(): by_contig[(g, p["contig"])].append(pid)
+    foreign = ("prokaryotic", "bacterial or fungal")
     for (g, pid), pl in sorted(place.items()):
-        ml, pm = pl.get("ML"), pl.get("PMSF")
-        if not ml or ml[0] not in ("prokaryotic", "bacterial or fungal") or pid.startswith("gold_"): continue
+        if pid.startswith("gold_"): continue
+        mlt, pmt = pl.get("ML_tunicates"), pl.get("PMSF_tunicates")
+        if pl.get("ML") and pl["ML"][0] in foreign:          # foreign relatives next to the appendicularian sequences
+            ml, pm, level = pl.get("ML"), pl.get("PMSF"), "appendicularians"
+        elif mlt and mlt[0] in foreign and mlt[4]:            # ... next to a clade of tunicate sequences
+            ml, pm, level = mlt, pmt, "tunicates"
+        else: continue
         p = preds.get((g, pid), {})
         ctg = contigs.get((g, p.get("contig", "")), {})
         tiara = (ctg.get("tiara_first_stage") or "").lower()
         comp_z = fnum(ctg.get("composition_robust_z"))
         animal_neighbours = sorted(x for x in by_contig.get((g, p.get("contig", "")), []) if x != pid and
                                    place.get((g, x), {}).get("ML", ("",))[0] == "animal")
+        hit = rbh.get((g, pid), {})
+        best = hit.get("best_human_gene", "")
         if tiara in NONEUKARYOTIC: status = f"contamination (Tiara: {tiara})"
         elif comp_z is not None and comp_z > COMPOSITION_Z: status = "contamination likely (composition outlier)"
-        elif p.get("coding_exons") == "1": status = "not testable (one coding exon)"
-        elif not pm or pm[0] not in ("prokaryotic", "bacterial or fungal"): status = "placement not stable (PMSF)"
+        elif hit.get("status", "").startswith("other gene") and best not in RELATED.get(ml[3], set()):
+            status = f"other family ({best}): its animal homologs are not in this tree"
+        elif hit.get("status") == "no hit" and hit.get("expected_gene", "-") != "-":
+            status = "family not confirmed (no human hit)"
+        elif not pm or pm[0] not in foreign: status = "placement not stable (PMSF)"
+        elif p.get("coding_exons") == "1": status = "candidate, no intron (needs presence in other assemblies or species)"
         else: status = "candidate"
         hgt.append({"genome": g, "prediction": pid, "family": ml[3], "label": pid.rsplit(".", 1)[-1],
+                    "foreign relatives next to": level,
+                    "other tunicate sequences in that clade": ml[4] if level == "tunicates" else 0,
+                    "genomes of its appendicularian clade": ",".join(pl.get("genomes", [])),
+                    "best_human_hit": f"{best} ({hit['status']})" if hit else "-",
                     "nearest_relatives_ML": f"{ml[0]}: {ml[1]} ({ml[2]})",
                     "nearest_relatives_PMSF": f"{pm[0]}: {pm[1]} ({pm[2]})" if pm else "-",
+                    "foreign sequences (ML)": " ".join(ml[5]),
                     "contig": p.get("contig", ""), "contig_length": ctg.get("length", ""),
                     "coding_exons": p.get("coding_exons", ""), "composition_z": ctg.get("composition_robust_z", ""),
                     "gc_z": ctg.get("gc_robust_z", ""), "tiara": tiara,

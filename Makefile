@@ -345,9 +345,9 @@ stage2-diagnose:
 
 # Step 9: census of the appendicularian selenoproteins from the stage 2 final run (stage2/README.md, "Census").
 # 1. stage2-collect (minutes): tables of the final run (results/tables/stage2_final_*.tsv) and its machinery census
-# 2. scripts/run_tiara.sh (outside the image; TIARA_IMAGE): Tiara classes of the contigs, work/stage2/census/tiara/
-# 3. census-contigs (about an hour): composition of the contigs with predictions, Tiara classes if present
-# 4. census (seconds; reads results/ only, after selenoprotein-rbh, -phylogeny and -pmsf of round 2)
+# 2. census-contigs (about an hour): composition of the contigs with predictions (Tiara classes if a Tiara output
+#    is placed in work/stage2/census/tiara/; not run, decision of 2026-10-30 in docs/plan.md)
+# 3. census (seconds; reads results/ only, after selenoprotein-rbh, -phylogeny and -pmsf of round 2)
 CENSUS_GENOMES = OKI OSKA OdB3 KUM AOM Bar2 Olon Oalb Ovan Bsty Mery Fbor
 stage2-collect:
 	python3 stage1/collect.py --outdir work/stage2/pipeline/final --out-dir results/tables --prefix stage2_final
