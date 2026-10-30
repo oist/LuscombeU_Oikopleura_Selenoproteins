@@ -6,14 +6,23 @@
 # tunicate clade in the first-pass trees, and SELENOW_PAR is sister to the SELENOV of placental mammals. DIO added
 # (2026-10-29): with the taxonomy of stage2/taxonomy.py, the nearest relatives of the selenocysteine DIO clades in the
 # first-pass tree, curated DIO_PAR and DIO_chr1 included, are alveolate and amoebozoan DIO (bootstrap 59 to 66).
+# Controls (2026-10-30): where the reference group of a hypothesis is not a clade of the round 2 trees (non-chordate
+# sequences among the chordate ones, for example), the same group as a clade with the appendicularian clade outside it,
+# so that a rejection of the hypothesis can be told from a rejection of the monophyly of the group. with_SELENOV:
+# position of SELENOW_PAR in the PMSF tree of round 2 (sister to the mammalian SELENOV), tested under both models.
 family	id	hypothesis	clades
 SELENOF	tunicates	appendicularian SELENOF with the SELENOF of the other tunicates	app + group:Other tunicates
 SELENOF	chordates	appendicularian SELENOF inside the chordate SELENOF	app + group:chordates
+SELENOF	tunicates_control	control: SELENOF of the other tunicates as a clade, appendicularian SELENOF outside it	group:Other tunicates
+SELENOF	chordates_control	control: chordate SELENOF as a clade, appendicularian SELENOF outside it	group:chordates
 SELENOO	tunicates	appendicularian SELENOO with the selenocysteine SELENOO of the other tunicates	app + group:Other tunicates - re:\.cysteine$
 SELENOO	animals	appendicularian SELENOO inside the clade of the human and tunicate selenocysteine SELENOO	app + mrca:^Human_SELENOO_|^Crob_SELENOO\.[0-9]+\.selenocysteine
+SELENOO	tunicates_control	control: selenocysteine SELENOO of the other tunicates as a clade, appendicularian SELENOO outside it	group:Other tunicates - re:\.cysteine$
 SELENOT	tunicates	appendicularian SELENOT with the SELENOT of the other tunicates	app + group:Other tunicates
 SELENOT	chordates	appendicularian SELENOT inside the chordate SELENOT	app + group:chordates
+SELENOT	chordates_control	control: chordate SELENOT as a clade, appendicularian SELENOT outside it	group:chordates
 SELENOW	not_SELENOV	SELENOW_PAR outside the smallest clade that holds the human SELENOW and SELENOV	mrca:^Human_SELENO[WV]_ - appclade:gold_SELENOW_PAR
 SELENOW	with_chr1	SELENOW_PAR with the appendicularian SELENOW of chromosome 1 (chr1a and the pair)	appclade:gold_SELENOW_PAR + appclade:gold_SELENOW_(chr1a|pair)
 SELENOW	with_chr2	SELENOW_PAR with the appendicularian SELENOW of chromosome 2	appclade:gold_SELENOW_PAR + appclade:gold_SELENOW_chr2
+SELENOW	with_SELENOV	SELENOW_PAR with the mammalian SELENOV	appclade:gold_SELENOW_PAR + mrca:^Human_SELENOV_|^SelV\.
 DIO	animals	appendicularian selenocysteine DIO inside the animal DIO: the animal sequences of the smallest clade that holds the human DIO and the gold-standard O. dioica DIO, as one clade	mrca:^Human_DIO[123]_|gold_DIO_ - group:non-animals

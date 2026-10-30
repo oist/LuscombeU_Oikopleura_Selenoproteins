@@ -1274,3 +1274,33 @@ no earlier step waits for them.
     and Ciona selenocysteine SELENOO; SELENOW_PAR outside the smallest clade holding human SELENOW and SELENOV, with
     the appendicularian SELENOW of chromosome 1, with that of chromosome 2; DIO: the animal sequences of the smallest
     clade holding the human DIO and the gold-standard DIO as one clade (non-animal DIO outside).
+- Step 8, round 2 trees and AU tests on Deigo (2026-10-30, commit 8e823ae; make selenoprotein-rbh, -phylogeny,
+  -pmsf, -au, -orthology). p-AU, ML model / LG+C60+F+G PMSF (alignment sites, sequences):
+  - SELENOO (724 sites, 76 sequences): the oikopleurid clade (10, gold OKI and OSKA) is now sister to the animal
+    selenocysteine SELENOO (bootstrap 44 ML, 93 PMSF); the first-pass placement next to Phytophthora SelO is gone.
+    Inside the human and Ciona selenocysteine SELENOO clade: in the ML tree (0.604 / 0.620); with the selenocysteine
+    SELENOO of the other tunicates: 0.086 / 0.238.
+  - SELENOF (176 sites, 50 sequences): appendicularian clade (10, nine genomes) sister to plant and green-algal Sep15
+    (33 ML, 81 PMSF). With the other tunicates 0.284 / 0.069; inside the chordates 0.524 / 0.105. Neither group is a
+    clade of the trees (insect SELENOF among them).
+  - SELENOT (269 sites, 63 sequences): appendicularian clade (11, nine genomes) between a group of protist, plant and
+    nematode SELT sequences (C. elegans SELT-2 among them) and the other animal SELENOT (90 ML, 86 PMSF). With the
+    other tunicates (a clade of the trees) 0.126 / 0.183; inside the chordates 0.088 / 0.0069. The chordates are not
+    a clade of the trees even without the appendicularians (nematode and insect sequences inside): the PMSF
+    rejection may reject chordate monophyly rather than the appendicularian position; control added.
+  - SELENOW (124 sites, 134 sequences): SELENOW_PAR clade (7: gold OKI, OSKA, OdB3; B. stygius, O. albicans,
+    O. vanhoeffeni) sister to two profile sequences without species name (Se_user_SelW_1 and _2) and Euplotes
+    (89) in the ML tree, sister to the mammalian SELENOV in the PMSF tree (92). Outside the smallest clade of human
+    SELENOW and SELENOV: in the ML tree (0.464 / 0.601); with the appendicularian SELENOW of chromosome 1 (chr1a and the
+    pair): 0.296 / 0.333; with that of chromosome 2: 0.023 / 0.050. SELENOV arose in placental mammals by duplication
+    of SELENOW (Mariotti et al. 2012, doi:10.1371/journal.pone.0033066), so a sister relationship of SELENOW_PAR with
+    SELENOV cannot be orthology; the PMSF placement is not required by the data (p-AU 0.601 for the alternative).
+    The chromosome 2 clade (19 sequences, nine genomes) has MIEN1 as best human hit (14 of 19) and amphioxus
+    sequences as sister (80 / 72). Vertebrate SELENOW is not a clade of these trees (short alignment).
+  - DIO (290 sites, 153 sequences): the animal sequences of the smallest clade of the human and gold-standard DIO as
+    one clade: 0.431 / 0.347 (not rejected). The ML tree holds DIO_PAR and DIO_chr1 in one appendicularian clade (26,
+    support 77); the PMSF tree separates them, DIO_chr1 sister to two alveolate DIO (34).
+  - Added (2026-10-30): controls where the reference group is not a clade of the trees (SELENOF other tunicates and
+    chordates, SELENOO selenocysteine SELENOO of the other tunicates, SELENOT chordates) and SELENOW_PAR with the
+    mammalian SELENOV (the PMSF position) under both models; machinery_lba.py redoes an AU test when its set of trees
+    changes (the earlier code kept the old report). To run: make selenoprotein-au (finished constrained searches kept).

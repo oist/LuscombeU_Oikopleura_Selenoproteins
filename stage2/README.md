@@ -356,8 +356,11 @@ not in the trees.
    model of the maximum-likelihood tree and under LG+C60+F+G with the PMSF site frequencies. Tested positions: the
    appendicularian SELENOF, SELENOO and SELENOT with the other tunicates and inside the chordate (SELENOF, SELENOT) or
    animal (SELENOO) clade; SELENOW_PAR outside the smallest clade of the human SELENOW and SELENOV, and with the
-   appendicularian SELENOW of chromosome 1 or of chromosome 2; the animal sequences of the smallest clade of the
-   human and gold-standard DIO as one clade, without the non-animal DIO. Outputs `results/trees/selenoproteins/lba/<family>.hypotheses.tsv`
+   appendicularian SELENOW of chromosome 1, of chromosome 2, or with the mammalian SELENOV; the animal sequences of
+   the smallest clade of the human and gold-standard DIO as one clade, without the non-animal DIO. Where the reference
+   group of a hypothesis is not a clade of the trees, a control places the group as a clade with the appendicularian
+   clade outside it: a rejection of both means that the data reject the monophyly of the group, not the position of
+   the appendicularians. All constrained trees of a family enter one AU test (redone when the set changes). Outputs `results/trees/selenoproteins/lba/<family>.hypotheses.tsv`
    (resolved leaf sets, and whether each clade is in the maximum-likelihood tree), `.hyp_<id>.*` (constrained
    trees), `.hypotheses_au.iqtree` (AU tests), and rows "AU test: ..." in `results/tables/stage2_selenoprotein_lba.tsv`.
 

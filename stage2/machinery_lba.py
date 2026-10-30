@@ -414,8 +414,11 @@ def hypothesis_tests(fam, base, aln, ml, model, seqs, sets, tax, specs, cpus):
             trees.append(f"{prefix}.treefile")
         if len(trees) == 1: continue
         au = f"{base}.{tag}.hypotheses_au"
-        with open(f"{au}.treels", "w") as o:
-            for t in trees: o.write(open(t).read().strip() + "\n")
+        treels = "".join(open(t).read().strip() + "\n" for t in trees)
+        if not os.path.exists(f"{au}.treels") or open(f"{au}.treels").read() != treels:
+            for f in os.listdir(os.path.dirname(base) or "."):   # set of trees changed: AU test redone
+                if f.startswith(f"{fam}.{tag}.hypotheses_au."): os.remove(os.path.join(os.path.dirname(base), f))
+            with open(f"{au}.treels", "w") as o: o.write(treels)
         if not os.path.exists(f"{au}.iqtree"):
             iqtree(["-s", aln] + margs + ["-z", f"{au}.treels", "-te", best, "-n", "0", "-zb", "10000", "-au",
                     "--prefix", au], cpus)
