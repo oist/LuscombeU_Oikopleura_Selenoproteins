@@ -949,6 +949,145 @@ groups of the smallest side of a bipartition that holds the clade and other sequ
 ("unclassified": profile sequences without species name). Nearest vertebrate genes: human genes in the smallest such
 side that holds vertebrate sequences with a known human gene (number of sequences).
 
+## The selenoproteomes of appendicularians
+
+> **Provisional section (2026-10-30, step 9 of the plan in docs/plan.md; `results/tables/stage2_census_genes.md`,
+> `stage2_census.tsv`, `stage2_census_loci.tsv`, `stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`,
+> `stage2_hgt_screen.tsv`; `make stage2-collect`, `census-contigs`, `census`).** Operons (step 10) not yet included.
+
+We then took the census of the selenoprotein genes in the nine appendicularian genomes, from the final stage 2 run
+(Methods). Each selenocysteine codon found by Selenoprofiles or miniprot was counted once per locus, and each locus
+was assigned to the *O. dioica* gene of the smallest appendicularian clade that holds it and a gold-standard protein
+in the trees of the previous section. The UGA/SECIS screens had found a few genes that the final run did not predict;
+they were added, without gene model. Before counting, each contig carrying a prediction was compared with the rest of
+its genome (GC content, tetranucleotide composition and open reading frame density), and a locus was left out only
+on evidence against it (Methods). Table CENSUS gives the result.
+
+The three *O. dioica* assemblies have the 20 genes of the gold standard, except the SELENOO of OdB3, whose
+selenocysteine exon is missing from the assembly. The three new assemblies have the same genes: the reference genes
+lifted onto them (Table STAGE2) and, among their other loci, loci of the same families where the codon could not be
+lifted (DIO in KUM-M3-7f, GPX and SELENOO in AOM-5-5f, SELENOO in Bar2_p4). The other loci are extra copies: the
+second GPX_PAR of OSKA2016, a second SELENOK 10 kb from the first in KUM-M3-7f, DIO copies in Bar2_p4, and ten loci of
+OdB3, six of them copies of DIO_chr1, probably haplotypes kept in the assembly. The selenoproteome of *O. dioica* is
+therefore of 20 genes in each of its three cryptic species.
+
+The other *Oikopleura* species share most of these genes: loci of 11 of the 20 were found in *O. longicauda*, 17 in
+*O. albicans* and 15 in *O. vanhoeffeni*, some only by the screens (SELENOK in the three species; DIO_chr1 and TXNRD in
+*O. vanhoeffeni*). TXNL1.b was found in none of them, as expected from its origin by duplication in the *O. dioica*
+lineage, and the SELENOW pair only in *O. dioica* (and one *O. albicans* screen locus that matches SELENOW_pair1).
+Several genes have more copies in these assemblies than in *O. dioica*: DIO_PAR has six loci in *O. longicauda* and
+five in *O. albicans*, GPX_PAR eight in *O. longicauda*, and SELENOW_chr2 five in *O. longicauda* and four in
+*O. vanhoeffeni*. These assemblies are fragmented (N50 of 2.4 kb for *O. longicauda*) and may keep both haplotypes,
+as OdB3 does, so these numbers are upper bounds. Selenoprofiles also predicted selenocysteine forms of SELENOS in
+*O. longicauda* and *O. albicans*, which fall in the appendicularian SELENOS clade with the *O. dioica* genes; no SECIS
+element was found in the 2,000 nucleotides after them, although the *O. albicans* gene lies on a contig of 547 kb.
+
+In *B. stygius* and *M. erythrocephalus*, whose assemblies have N50 values of 1.3 and 1.9 kb, loci of 8 and 7 of the
+20 genes were found, many of them on contigs shorter than 3 kb; genes missing from these assemblies may be present in
+the genomes.
+In *F. borealis*, the only appendicularian outside the Oikopleuridae, 5 of the 20 genes were found (SELENOF, SELENOT,
+SELENOW_chr2, SEPHS2 and TXNRD), with seven GPX loci outside the clades of the *O. dioica* GPX genes, and two families
+absent from the Oikopleuridae: SELENOL (two loci) and SELENOU (one locus, with a SECIS element of 23.6 bits). KKSU,
+found in every oikopleurid genome, was not found in *F. borealis*.
+
+Compared with the other tunicates, analysed with the default settings of stage 1, the appendicularians lack several
+families (Table CENSUS-FAMILIES): SELENON was found in eight of the ten other tunicates, FrnE in eight, SELENOH and
+MSRB in six, and SELENOI in *C. intestinalis*, but none in any appendicularian; SELENOL was found in nine other
+tunicates and, among appendicularians, only in *F. borealis*. SELENOU, found in *F. borealis*, was found in no other
+tunicate, but in both amphioxus species. KKSU and TXNL1.b were found only in appendicularians. SELENOW has four to
+seven loci in each *Oikopleura* assembly, against one to five in the other tunicates. These absences are absences of
+predictions: unlike the machinery genes, the selenoprotein families were not given absence tests.
+
+The contig checks left out one locus, a *F. borealis* DIO-like prediction whose best human hit is GPX1. No
+selenoprotein of the census lies on a contig that looks foreign to its genome together with a non-animal placement.
+The checks also bear on the 72 appendicularian sequences, of any label, that the trees place next to bacteria or
+fungi, candidates for horizontal gene transfer (Methods). Thirty-five belong to other families (thioredoxins and other
+proteins found by the DIO profile, whose animal relatives are not in its tree) or have no hit in the human proteome
+although their family has human members. Sixteen lie on contigs that look foreign to their genome: those of
+*B. stygius* and *M. erythrocephalus*, cysteine SELENOO, DIO-like proteins and GPX, on contigs of 26 to 324 kb that
+are 88 to 93% open reading frames, as bacterial DNA is, against 21 and 15% for the 2-kb windows of these genomes, and
+seven of *F. borealis* on contigs of distinct composition. The SELENOO and DIO-like clades that *B. stygius* and
+*M. erythrocephalus* share with *F. borealis* are therefore best explained by bacterial contamination of the same
+lineage in the three samples. The remaining 21 *F. borealis* sequences, all predicted without intron and 16 of them on
+contigs shorter than 3 kb, cannot be tested with these data: the whole *F. borealis* assembly is dense in open reading
+frames (80% for its 2-kb windows), including the contigs of its selenoprotein genes with SECIS elements, and most of
+its genes are predicted without introns. We found no credible case of horizontal gene transfer in the selenoprotein
+families.
+
+| Gene of the clade | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
+|---|---|---|---|---|---|---|---|---|---|
+| DIO_PAR | 1 (1) | 1 (1) | 2 (2) | 5 (3) +1 | 5 (3) | 2 (2) |  |  |  |
+| DIO_chr1 | 1 (0) | 1 (1) | 5 (4) +2 |  |  | +2 |  |  |  |
+| GPX_PAR | 1 (1) | 2 (2) | 1 (0) | 7 (5) +1 | 2 (2) +1 | 2 (2) | 1 (0) +1 |  |  |
+| GPX_chr1a | 1 (1) | 1 (1) | 2 (2) | 1 (0) | 2 (0) | 2 (1) +1 | 1 (1) | 1 (0) |  |
+| GPX_chr1b | 1 (1) | 1 (1) | 1 (1) |  | 1 (1) | 1 (1) +1 |  |  |  |
+| GPX_chr2 | 1 (1) | 1 (1) | 1 (1) |  | 1 (1) | 3 (2) |  |  |  |
+| SELENOF | 1 (1) | 1 (1) | 1 (1) | 2 (1) | 1 (0) | 1 (0) | 1 (0) | 1 (0) | 1 (0) |
+| SELENOK | 1 (1) | 1 (1) | 1 (1) | +1 | +1 | +1 |  | +1 |  |
+| SELENOO | 1 (1) | 1 (1) |  |  | 1 (0) |  |  |  |  |
+| SELENOS | 1 (0) | 1 (1) | 1 (1) | 1 (0) | 1 (0) |  |  |  |  |
+| SELENOT | 1 (1) | 1 (1) | 1 (1) | 2 (1) | 1 (0) | 1 (1) +1 | +1 | 1 (0) | 1 (0) |
+| SELENOW_chr1a | 1 (1) | 1 (1) | 1 (1) |  | 1 (1) | 1 (1) | +1 |  |  |
+| SELENOW_pair1 | 1 (1) | 1 (1) | 2 (2) |  | +1 |  |  |  |  |
+| SELENOW_pair2 | 1 (1) | 1 (1) | 2 (2) |  |  |  |  |  |  |
+| SELENOW_PAR | 1 (1) | 1 (0) | 1 (1) |  | 1 (1) | 1 (0) +1 | 1 (0) +1 |  |  |
+| SELENOW_chr2 | 1 (1) | 1 (1) | 1 (1) | 5 (5) | 2 (0) | 4 (3) | 1 (0) | 2 (0) | 1 (0) |
+| SEPHS2 | 1 (1) | 1 (1) | 1 (1) | 2 (2) | 1 (1) | 1 (1) |  |  | 1 (1) |
+| TXNRD | 1 (1) | 1 (1) | 1 (1) | 1 (1) | 1 (1) | +1 |  | +1 | 1 (1) |
+| TXNL1.b | 1 (1) | 1 (1) | 1 (1) |  |  |  |  |  |  |
+| KKSU | 1 (1) | 1 (1) | 1 (1) | 2 (2) | 2 (1) | 1 (1) | 1 (0) | 1 (0) |  |
+| GPX, other clades |  |  |  | 1 (0) |  |  |  | 1 (0) | 7 (5) |
+| GPX_chr1a/GPX_chr1b |  |  |  | 2 (2) |  | 1 (0) | 1 (0) | 1 (0) |  |
+| MsrA, other clades |  |  |  |  |  | 1 (0) |  |  |  |
+| SELENOL, other clades |  |  |  |  |  |  |  |  | 2 (0) |
+| SELENOO, other clades |  |  |  | 1 (1) |  | 1 (0) |  |  |  |
+| SELENOU, other clades |  |  |  |  |  |  |  |  | 1 (1) |
+| SELENOW, other clades |  |  |  | 2 (1) |  |  | 1 (0) | 1 (0) | 3 (1) |
+
+<!-- Table generated by stage2/census.py (make census; results/tables/stage2_census_genes.md), census of 2026-10-30. -->
+
+Table CENSUS. Selenoprotein loci of the appendicularian genomes, by the *O. dioica* gene of their clade. Each cell
+gives the loci predicted by the final stage 2 run, with in brackets those followed by a SECIS element of at least
+20 bits, and "+n" the loci found only by the UGA/SECIS screens, without gene model. Gene of the clade: the
+gold-standard genes of the smallest clade of appendicularian sequences that holds the locus in the maximum-likelihood
+tree of its family (two genes when that clade holds both); "other clades": loci of the family in no such clade.
+Several loci in an assembly may be copies, haplotypes kept in the assembly or fragments of one gene.
+
+| Family | OKI2018 | OSKA2016 | OdB3 | *O. lon.* | *O. alb.* | *O. van.* | *B. sty.* | *M. ery.* | *F. bor.* | *C. int.* | *C. rob.* | *C. sav.* | *H. ror.* | *S. cla.* | *B. sch.* | *P. mam.* | *T. dem.* | *Pegea* | *S. tho.* | *B. flo.* | *B. lan.* | human | mouse | zebrafish |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| DIO | 2 | 2 | 7 | 5 | 5 | 2 |  |  |  | 2 | 2 | 2 | 3 | 5 | 3 | 6 |  |  |  | 10 | 13 | 3 | 3 | 4 |
+| FrnE |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  |  | 1 | 1 | 1 |  |  |  |
+| GPX | 4 | 5 | 5 | 11 | 6 | 9 | 3 | 3 | 7 | 6 | 5 | 5 | 3 | 6 | 8 | 6 | 7 | 5 | 4 | 5 | 5 | 7 | 6 | 8 |
+| KKSU | 1 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| MSRB |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |  | 1 | 1 | 2 | 1 | 1 | 2 | 1 | 3 |
+| MsrA |  |  |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  |  |
+| SELENOE |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 |
+| SELENOF | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  | 1 | 1 | 1 | 1 | 1 | 1 | 2 | 2 | 1 | 1 | 1 |
+| SELENOH |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |  |  |  | 1 | 1 |  | 1 | 1 | 1 | 1 | 1 | 1 |
+| SELENOI |  |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |
+| SELENOJ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 2 |  |  | 1 |
+| SELENOK | 1 | 1 | 1 |  |  |  |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 |  |  |  |  | 1 | 1 | 2 | 5 | 1 |
+| SELENOL |  |  |  |  |  |  |  |  | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  | 2 | 1 | 1 |  |  | 1 |
+| SELENOM |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 |
+| SELENON |  |  |  |  |  |  |  |  |  | 1 | 1 | 1 | 1 |  |  | 1 | 1 | 1 | 3 | 1 | 2 | 2 | 1 | 2 |
+| SELENOO | 1 | 1 |  | 1 | 1 | 1 |  |  |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 2 |
+| SELENOP |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 4 | 6 | 5 | 5 | 8 |
+| SELENOS | 1 | 1 | 1 | 1 | 1 |  |  |  |  | 1 | 1 | 1 |  |  |  | 1 |  |  |  | 1 |  | 1 | 1 | 1 |
+| SELENOT | 1 | 1 | 1 | 2 | 1 | 1 |  | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 2 | 1 | 2 | 1 |  | 1 | 1 | 2 | 1 | 5 |
+| SELENOU |  |  |  |  |  |  |  |  | 1 |  |  |  |  |  |  |  |  |  |  | 1 | 1 |  |  | 3 |
+| SELENOW | 5 | 5 | 7 | 7 | 4 | 6 | 3 | 3 | 4 | 2 | 2 | 1 | 1 | 3 | 5 | 1 | 2 | 1 | 1 | 1 | 1 | 3 | 2 | 6 |
+| SEPHS2 | 1 | 1 | 1 | 2 | 1 | 1 |  |  | 1 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| TXNL1b | 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| TXNRD | 1 | 1 | 1 | 1 | 1 |  |  |  | 1 | 2 | 1 | 1 | 2 | 2 | 2 | 2 | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 2 |
+| Total | 20 | 21 | 27 | 34 | 23 | 23 | 8 | 9 | 18 | 23 | 20 | 19 | 17 | 25 | 27 | 24 | 21 | 14 | 19 | 37 | 43 | 36 | 34 | 53 |
+
+<!-- From results/tables/stage2_census.tsv (make census); the columns of KUM-M3-7f, AOM-5-5f and Bar2_p4 are left out. -->
+
+Table CENSUS-FAMILIES. Selenoprotein loci per family: appendicularians from the census (final stage 2 run, loci
+counted), other genomes from stage 1 (default settings, all loci, no screen). Vertebrate counts include
+multiple selenocysteine codons of SELENOP more than 30 nucleotides apart and processed pseudogenes.
+
+
 # Discussion
 
 <!-- To write after the census (step 11 of the plan). Provisional paragraphs below. -->
@@ -1255,6 +1394,54 @@ appendicularians; chordates; animals) and differences of these sets. Where the r
 not form a clade of the maximum-likelihood tree (for example chordate proteins with nematode or insect proteins among
 them), a control constraint made the group a clade with the appendicularian clade outside it, so that a rejection of
 the group's monophyly could be told apart from a rejection of the appendicularian position.
+
+## Census of the selenoprotein genes
+
+> **Provisional section (2026-10-30).** `stage1/collect.py --prefix stage2_final`, `stage2/census_contigs.py`,
+> `stage2/census.py` (`make stage2-collect`, `census-contigs`, `census`).
+
+*Loci.* The selenocysteine codons of the final stage 2 run (Selenoprofiles predictions labelled selenocysteine, and
+miniprot calls) were merged into loci when they lay on the same contig and strand within 30 nucleotides of each other
+or belonged to the same Selenoprofiles prediction. Each locus took the family and SECIS score of its Selenoprofiles
+prediction, or else of its miniprot call. A locus was assigned to a gene: in OKI2018, OSKA2016 and OdB3, the
+gold-standard gene that holds it, and in the three new *O. dioica* assemblies, the lifted gold-standard model that
+holds it; otherwise the gold-standard genes of the smallest clade of appendicularian sequences that holds its
+prediction and a gold-standard protein in the maximum-likelihood tree of its family (Orthology of the selenoprotein
+genes); for SEPHS2, TXNL1.b and KKSU, families of one *O. dioica* gene without tree, that gene. The loci of the
+UGA/SECIS screens that the final run did not predict (comparative-screen TGAs classified as homologs of a known
+selenoprotein, candidates whose partner in another genome leads to a gene, and SECIS-scan hits classified as copies of
+a known selenoprotein) were added without gene model, with the gene of their best gold-standard hit or of their
+partner. For the other tunicates, the cephalochordates and the vertebrates, loci were made in the same way from the
+selenocysteine codons of stage 1, without assignment or screen.
+
+*Contig checks.* For each genome, 2,000 windows of 2, 5 and 10 kb were drawn at random positions on the contigs at
+least that long (fixed seed). For each window and for each contig carrying a prediction (on the window of the largest
+of these lengths that fits in it, centred on its predictions, and on the 2-kb window), we computed the GC content, the
+composition distance (Euclidean distance between the centred log-ratio of its 136 canonical tetranucleotide counts,
+plus one, and the component-wise median of the windows of the same length) and the open reading frame density
+(fraction of its bases in stop-to-stop open reading frames of at least 100 codons in any of the six frames, other
+bases than A, C, G, T ending a frame); and, for each contig, the open reading frame density of the whole contig.
+Values were compared with the windows of the same genome and length as robust z-scores, (x − median) / (1.4826 ×
+median absolute deviation). A contig was a composition outlier when the z-score of its composition distance exceeded
+5 on either window, and ORF-dense when at least 60% of it, and at least 0.3 more than the median of the 2-kb windows of
+its genome, was in such open reading frames, at a GC content of at most 50% and a length of at least 5 kb (in tests on
+random sequence, the density was 0.03 at 40% GC and 0.84 at 65% GC, and 0.97 for coding sequence). The second
+condition was added after the first results, because the median of the *F. borealis* windows is 0.80.
+
+*Decisions.* The rules were fixed before the census, except the second condition of ORF density. A locus in a gold-standard gene was always counted. Another locus
+was left out if its best human hit was in another family (MIEN1 counting as related to SELENOW and SEPHS1 to SEPHS2),
+or if its contig was a composition outlier or ORF-dense and its nearest relatives in the tree of its family were all
+non-animal (taxonomic groups as in the trees). Other flags were reported without effect: GC outlier (|z| > 5), no SECIS
+hit, less than 500 nucleotides of contig after the codon, miniprot only, contig shorter than 3 kb.
+
+*Horizontal gene transfer.* Every appendicularian sequence of the trees, whatever its label, whose nearest relatives
+outside the appendicularians (the smallest side of a bipartition holding it and other sequences), or outside the
+tunicates when its appendicularian clade lies in a clade of tunicate sequences, were all bacterial, archaeal or fungal
+in the maximum-likelihood tree was listed. Its status was, in this order: contamination likely (composition outlier
+or ORF-dense contig); other family (best human hit in another family: its animal relatives are not in the tree);
+family not confirmed (no hit in the human proteome although the family has human members); placement not stable (the
+PMSF tree does not give the same kind of nearest relatives); candidate without intron (a single coding exon); or
+candidate.
 
 ## SECIS scores against genomic background
 

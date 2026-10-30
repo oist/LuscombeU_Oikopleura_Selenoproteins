@@ -1427,3 +1427,18 @@ no earlier step waits for them.
   by bacterial contamination of one lineage in the three samples. Left: 21 intronless F. borealis entries, 16 of them
   on contigs shorter than 3 kb, not testable with these data. No credible candidate of horizontal transfer in the
   selenoprotein families.
+- Step 9, census (2026-10-30). census.py now assigns each locus to the O. dioica gene of its clade (gold-standard
+  gene; lifted model in KUM, AOM, Bar2; else the gold-standard genes of the smallest appendicularian clade holding it
+  in the round 2 ML tree) and adds the loci of the step 4 screens that the final run did not predict (22, without
+  gene model; among them SELENOK of O. longicauda, O. albicans, O. vanhoeffeni and M. erythrocephalus, which the final
+  run missed: Olon only as a 46-aa "unaligned" fragment, the others not at all; TXNRD of O. vanhoeffeni and
+  M. erythrocephalus). Table CENSUS (results/tables/stage2_census_genes.md): O. dioica 20 genes in OKI2018 and
+  OSKA2016, 19 in OdB3 (SELENOO exon missing), the same in the new assemblies; loci of 11, 17, 15 of the 20 genes in
+  O. longicauda, O. albicans, O. vanhoeffeni, 8 and 7 in B. stygius and M. erythrocephalus, 5 in F. borealis (with
+  SELENOL x2, SELENOU x1, 7 GPX outside the O. dioica clades; no KKSU). TXNL1.b only in O. dioica; SELENOW pair only
+  in O. dioica (plus one O. albicans screen locus assigned by its partner). Not found in any appendicularian but in
+  other tunicates: SELENON (8 of 10), FrnE (8), SELENOH (6), MSRB (6), SELENOI (C. intestinalis); SELENOL in 9 other
+  tunicates and only F. borealis. No absence tests for these families (to consider: tblastn of the ascidian proteins,
+  as for the machinery). Results and Methods written into the manuscript (section "The selenoproteomes of
+  appendicularians", Tables CENSUS and CENSUS-FAMILIES; Methods "Census of the selenoprotein genes"). Next: absence
+  tests for SELENON, SELENOH, MSRB, FrnE, SELENOL and SELENOI if wanted; step 10 (SECIS and operons).

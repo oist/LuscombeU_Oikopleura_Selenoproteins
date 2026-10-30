@@ -20,7 +20,8 @@ prediction when it has one, else those of its miniprot call.
 
 Decision for each locus (rules fixed before the census; contamination is the default explanation of foreign-looking
 sequences, but a locus is left out only on evidence against it):
-  counted (gold standard)  the locus lies in a gold-standard gene of OKI2018, OSKA2016 or OdB3 (always counted);
+  counted (gold standard)  the locus lies in a gold-standard gene of OKI2018, OSKA2016 or OdB3, or in a gold-standard
+                           model lifted onto KUM-M3-7f, AOM-5-5f or Bar2_p4 (always counted);
   left out                 Tiara classifies its contig as bacteria, archaea, prokarya or organelle; or the best human
                            hit of its prediction lies in another family (RELATED genes count as the family: MIEN1 for
                            SELENOW, SEPHS1 for SEPHS2); or its contig is a composition outlier (robust z-score of the
@@ -54,8 +55,20 @@ when the PMSF tree does not give the same kind of nearest relatives; "candidate,
 no intron: such a candidate needs presence in other assemblies or species, or spliced transcripts); "candidate"
 otherwise, to be tested (AU tests against vertical descent, other assemblies or individuals, transcripts).
 
+Gene of the clade: for a locus in a gold-standard gene, that gene; otherwise the gold-standard genes of the smallest
+clade of appendicularian sequences of the ML tree that holds the prediction and a gold-standard protein (several
+when that clade holds several genes); for the families without tree of one O. dioica gene (SEPHS2, TXNL1.b, KKSU),
+that gene.
+
 Outputs: --loci (one row per locus), --table and --markdown (counted loci per family and genome, appendicularians
-from this census, other genomes from stage 1 with the same locus definition and no screen), --hgt.
+from this census, other genomes from stage 1 with the same locus definition and no screen), --genes-table and
+--genes-markdown (counted loci per gene of the clade and appendicularian genome; in brackets, those with a SECIS
+hit; "+n", loci found only by the screens of step 4), --hgt.
+
+Loci of the step 4 screens (--screen, --scan) that the final run did not predict are added as "counted (screen)":
+comparative-screen TGAs classified as homologs of a known selenoprotein, candidates whose partner in another genome
+leads to a gene, and SECIS-scan hits classified as copies of a known selenoprotein; their gene comes from their best
+gold-standard hit, else from their partner. They have no gene model and stay out of the family table.
 """
 import argparse, collections, csv, glob, os, re, sys
 
@@ -86,6 +99,10 @@ ORF_DENSE_MARGIN = 0.3 # ... and at least this much above the median of the 2-kb
 GENOME_ORF = {}        # genome -> median open reading frame density of its 2-kb windows (read in main)
 GC_Z = 5.0
 RELATED = {"SELENOW": {"MIEN1"}, "SEPHS2": {"SEPHS1"}}
+SINGLE_GENE = {"KKSU": "KKSU", "TXNL1b": "TXNL1.b", "SEPHS2": "SEPHS2"}   # families of one O. dioica gene, no tree
+GENE_ORDER = ["DIO_PAR", "DIO_chr1", "GPX_PAR", "GPX_chr1a", "GPX_chr1b", "GPX_chr2", "SELENOF", "SELENOK", "SELENOO",
+              "SELENOS", "SELENOT", "SELENOW_chr1a", "SELENOW_pair1", "SELENOW_pair2", "SELENOW_PAR", "SELENOW_chr2",
+              "SEPHS2", "TXNRD", "TXNL1.b", "KKSU"]
 NONEUKARYOTIC = {"bacteria", "archaea", "prokarya", "organelle", "mitochondrion", "plastid"}
 PROKARYOTES = {"Bacteria", "Archaea"}
 
@@ -125,9 +142,15 @@ def loci(sites):
     return out
 
 
-def gold_genes(gold, genomes):
-    """genome -> [(contig, strand, start, end, gene)] from the gene features of the gold-standard GFF3 files."""
+def gold_genes(gold, genomes, truth=None):
+    """genome -> [(contig, strand, start, end, gene)] from the gene features of the gold-standard GFF3 files, and,
+    for the new O. dioica assemblies (ODIOICA_TESTS), from the gold-standard models lifted onto them
+    (results/tables/stage2_truth_sets.tsv; span of the lifted coding sequence, or the codon when there is none)."""
     out = collections.defaultdict(list)
+    for r in rows(truth):
+        if r["genome"] not in ODIOICA_TESTS or not r["contig"]: continue
+        pos = [int(x) for x in re.findall(r"\d+", r["cds"])] or ([int(r["sec_start"])] if r["sec_start"] else [])
+        if pos: out[r["genome"]].append((r["contig"], r["strand"], min(pos), max(pos) + 2, r["gene"]))
     for g in genomes:
         path = f"{gold}/{g}.gff3"
         if not os.path.exists(path): continue
@@ -189,6 +212,10 @@ def placements(trees, taxa):
                     own = [s for s in sd if n in s and all(tax[x] == "Appendicularians" for x in s)]
                     clade = max(own, key=len) if own else {n}
                     res["genomes"] = sorted({x.partition("_")[0] for x in clade})
+                    # gold-standard genes of the smallest appendicularian clade holding the leaf and a gold leaf
+                    gold = [s for s in own + [frozenset([n])] if any("_gold_" in x for x in s)]
+                    res["gold_genes"] = sorted({x.split("_gold_", 1)[1] for x in min(gold, key=len) if "_gold_" in x}) \
+                        if gold else []
                 for leaf in [n] + stand_for.get(n, []):
                     g, _, pid = leaf.partition("_")
                     out[(g, pid)].update(res)
@@ -211,6 +238,55 @@ def composition_z(ctg):
     return max(zs) if zs else None
 
 
+SCREEN_STATUSES = ("homolog of a known selenoprotein", "candidate")
+
+
+def parse_partner(text):
+    """'OKI NC_137294.1:7274834 (+), E=...' -> (genome, contig, position, strand), or None."""
+    m = re.match(r"(\S+) (\S+):(\d+) \(([+-])\)", text or "")
+    return (m.group(1), m.group(2), int(m.group(3)), m.group(4)) if m else None
+
+
+def screen_loci(screen, scan, genomes):
+    """Selenoprotein loci found by the UGA/SECIS screens of step 4 (stage2/uga_secis_screen.py): comparative-screen
+    TGAs classified as homologs of a known selenoprotein, or candidates (kept when their partner in another genome
+    leads to a gene), and SECIS-scan hits classified as copies of a known selenoprotein. Returns dictionaries with
+    genome, contig, strand, position (TGA, or SECIS hit), gene (from the best gold-standard hit, else to resolve
+    through the partner), partner, evidence, SECIS bits."""
+    out = []
+    for r in rows(screen):
+        if r["screen"] != "comparative" or r["genome"] not in genomes or r["status"] not in SCREEN_STATUSES: continue
+        if not r.get("genomic_tga", "").isdigit(): continue
+        m = re.match(r"\S+?\.(\S+) \(\d+%, U aligned to U\)", r.get("gold_hit", ""))
+        out.append({"genome": r["genome"], "contig": r["contig"], "strand": r["strand"], "pos": int(r["genomic_tga"]),
+                    "gene": m.group(1) if m else "", "partner": parse_partner(r.get("partner")), "kind": "TGA",
+                    "evidence": f"UGA/SECIS screen ({r['id']}, {r['status']})", "secis": r["bits"],
+                    "candidate": r["status"] == "candidate"})
+    for r in rows(scan):
+        if r.get("final_class") != "copy of a known selenoprotein" or r["genome"] not in genomes: continue
+        m = re.match(r"blastx: (\S+) \(", r.get("evidence", "")) or re.search(r"gold standard (\S+) in", r.get("evidence", ""))
+        out.append({"genome": r["genome"], "contig": r["contig"], "strand": r["strand"], "pos": int(r["from"]),
+                    "gene": m.group(1) if m else "", "partner": None, "kind": "SECIS",
+                    "evidence": f"SECIS scan ({r['evidence']})", "secis": r["bits"], "candidate": False})
+    return out
+
+
+def near(a_, genome, contig, strand, pos, kind):
+    """Census or screen loci of the same contig and strand that hold the same gene: a TGA within 300 nt, or a SECIS hit
+    within 5,000 nt downstream of the TGA (on the strand of the gene)."""
+    out = []
+    for r in a_:
+        if (r["genome"], r["contig"], r["strand"]) != (genome, contig, strand): continue
+        tga = int(r["sec_codon_start"]) if "sec_codon_start" in r else r["pos"]
+        rkind = "TGA" if "sec_codon_start" in r else r["kind"]
+        if kind == rkind == "TGA" or kind == rkind == "SECIS": ok = abs(tga - pos) <= 300 if kind == "TGA" else abs(tga - pos) <= 3000
+        else:
+            t, h = (tga, pos) if rkind == "TGA" else (pos, tga)
+            ok = 0 <= (h - t if strand == "+" else t - h) <= 5000
+        if ok: out.append(r)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--sites", default="results/tables/stage2_final_sec_sites.tsv")
@@ -221,11 +297,17 @@ def main():
     ap.add_argument("--trees", default="results/trees/selenoproteins")
     ap.add_argument("--gold", default="curation/gold_standard")
     ap.add_argument("--stage1", default="results/tables/stage1_sec_sites.tsv")
+    ap.add_argument("--screen", default="results/tables/stage2_uga_screen.tsv")
+    ap.add_argument("--scan", default="results/tables/stage2_secis_scan_classes.tsv")
+    ap.add_argument("--truth", default="results/tables/stage2_truth_sets.tsv",
+                    help="reference genes of the stage 2 benchmark: gold-standard models lifted onto KUM, AOM, Bar2")
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--loci", default="results/tables/stage2_census_loci.tsv")
     ap.add_argument("--table", default="results/tables/stage2_census.tsv")
     ap.add_argument("--markdown", default="results/tables/stage2_census.md")
     ap.add_argument("--hgt", default="results/tables/stage2_hgt_screen.tsv")
+    ap.add_argument("--genes-table", default="results/tables/stage2_census_genes.tsv")
+    ap.add_argument("--genes-markdown", default="results/tables/stage2_census_genes.md")
     a = ap.parse_args()
     sites = collections.defaultdict(list)
     for r in rows(a.sites): sites[r["genome"]].append(r)
@@ -236,7 +318,7 @@ def main():
         if fnum(r.get("median_orf_fraction_2kb")) is not None: GENOME_ORF[r["genome"]] = fnum(r["median_orf_fraction_2kb"])
     if not contigs: print(f"WARNING: {a.contigs} not found; no contig checks", flush=True)
     rbh = {(r["genome"], r["prediction"]): r for r in rows(a.rbh)}
-    gold = gold_genes(a.gold, ["OKI", "OSKA", "OdB3"])
+    gold = gold_genes(a.gold, ["OKI", "OSKA", "OdB3"], a.truth)
     place = placements(a.trees, lba.load_taxa(a.taxa))
     out = []
     for g in APPENDICULARIANS + ODIOICA_TESTS:
@@ -292,6 +374,7 @@ def main():
                                                                                  for r in loc)
                         else "Selenoprofiles" if sp else "miniprot",
                         "coding_exons": p.get("coding_exons", ""), "gold_standard_gene": gname or "-",
+                        "clade_gene": gname or "/".join(pl.get("gold_genes", [])) or SINGLE_GENE.get(fam, "-"),
                         "secis_bits": "" if secis is None else f"{secis:g}", "transcripts": "" if tx is None else tx,
                         "best_human_hit": f"{best} ({hit['status']})" if hit else "-",
                         "nearest_relatives_ML": f"{ml[0]}: {ml[1]} ({ml[2]})" if ml else "-",
@@ -299,13 +382,39 @@ def main():
                         "contig_length": length or "", "composition_z": ctg.get("composition_robust_z", ""),
                         "gc_z": ctg.get("gc_robust_z", ""), "tiara": tiara or "", "decision": decision,
                         "reason": reason, "flags": "; ".join(flags)})
+    # loci of the step 4 screens that the final run did not predict
+    extra = []
+    for x in screen_loci(a.screen, a.scan, APPENDICULARIANS):
+        if near(out, x["genome"], x["contig"], x["strand"], x["pos"], x["kind"]): continue
+        if near(extra, x["genome"], x["contig"], x["strand"], x["pos"], x["kind"]): continue
+        extra.append(x)
+    gene_at = lambda g, c, st, pos: next((n_ for c_, s_, b, e, n_ in gold.get(g, []) if c_ == c and s_ == st and
+                                          b - 300 <= pos <= e + 300), "")
+    for _ in range(3):   # resolve genes through partners (a partner may itself be a screen locus)
+        for x in extra:
+            if x["gene"] or not x["partner"]: continue
+            pg, pc, pp, ps = x["partner"]
+            hit = gene_at(pg, pc, ps, pp) or next((r["clade_gene"] for r in near(out, pg, pc, ps, pp, "TGA")
+                                                   if r["clade_gene"] != "-"), "") or \
+                next((y["gene"] for y in near(extra, pg, pc, ps, pp, "TGA") if y["gene"]), "")
+            x["gene"] = hit
+    for x in extra:
+        if x["candidate"] and not x["gene"]: continue          # unsupported candidates (repeats) left aside
+        fam = re.split(r"[_.]", x["gene"])[0] if x["gene"] else "-"
+        out.append({k: "" for k in out[0]} | {
+            "genome": x["genome"], "family": fam, "contig": x["contig"], "strand": x["strand"],
+            "sec_codon_start": x["pos"] if x["kind"] == "TGA" else "", "sec_codon_end": "", "codons": 1 if x["kind"] == "TGA" else 0,
+            "selenoprofiles_id": "-", "evidence": x["evidence"], "gold_standard_gene": "-",
+            "clade_gene": x["gene"] or "-", "secis_bits": x["secis"], "best_human_hit": "-",
+            "nearest_relatives_ML": "-", "nearest_relatives_PMSF": "-", "decision": "counted (screen)",
+            "flags": "no gene model" + ("; SECIS hit, codon not placed" if x["kind"] == "SECIS" else "")})
     with open(a.loci, "w") as o:
         w = csv.DictWriter(o, fieldnames=list(out[0]), delimiter="\t", lineterminator="\n")
         w.writeheader(); w.writerows(out)
     # counts: appendicularians from the census, other genomes from stage 1 (same locus definition, no screen)
     counts = collections.defaultdict(collections.Counter)
     for r in out:
-        if r["decision"].startswith("counted"): counts[r["genome"]][r["family"]] += 1
+        if r["decision"] in ("counted", "counted (gold standard)"): counts[r["genome"]][r["family"]] += 1
     st1 = collections.defaultdict(list)
     for r in rows(a.stage1): st1[r["genome"]].append(r)
     for g in OTHERS:
@@ -326,6 +435,33 @@ def main():
         o.write("| Total | " + " | ".join(str(sum(counts[g].values())) for g in genomes) + " |\n")
         o.write("| Left out | " + " | ".join(str(left[g]) if g in APPENDICULARIANS + ODIOICA_TESTS else "not screened"
                                              for g in genomes) + " |\n")
+    # counted loci by the O. dioica gene of their clade (appendicularians only)
+    by_gene = collections.defaultdict(collections.Counter)
+    with_secis = collections.defaultdict(collections.Counter)
+    by_screen = collections.defaultdict(collections.Counter)
+    for r in out:
+        if not r["decision"].startswith("counted"): continue
+        gene = r["clade_gene"] if r["clade_gene"] != "-" else f"{r['family']} (no O. dioica gene in its clade)"
+        if r["decision"] == "counted (screen)": by_screen[gene][r["genome"]] += 1; continue
+        by_gene[gene][r["genome"]] += 1
+        with_secis[gene][r["genome"]] += r["secis_bits"] != ""
+    for x in by_screen: by_gene[x] += collections.Counter()
+    app = [g for g in APPENDICULARIANS + ODIOICA_TESTS if any(by_gene[x][g] or by_screen[x][g] for x in by_gene)]
+    order = sorted(by_gene, key=lambda x: (GENE_ORDER.index(x) if x in GENE_ORDER else len(GENE_ORDER), x))
+    with open(a.genes_table, "w") as o:
+        o.write("gene\t" + "\t".join(app) + "\n")
+        o.write("# counts: loci predicted by the final run; '+n': loci found only by the step 4 screens\n")
+        for x in order: o.write(x + "\t" + "\t".join(f"{by_gene[x][g]}" + (f"+{by_screen[x][g]}" if by_screen[x][g] else "")
+                                                     for g in app) + "\n")
+    app_md = [g for g in app if g in APPENDICULARIANS]          # the new O. dioica assemblies: in the TSV only
+    with open(a.genes_markdown, "w") as o:
+        o.write("| Gene of the clade | " + " | ".join(NAMES.get(g, g) for g in app_md) + " |\n|---|" + "---|" * len(app_md) + "\n")
+        for x in order:
+            if not any(by_gene[x][g] or by_screen[x][g] for g in app_md): continue
+            label = x.replace(" (no O. dioica gene in its clade)", ", other clades")
+            o.write(f"| {label} | " + " | ".join(
+                ((f"{by_gene[x][g]} ({with_secis[x][g]})" if by_gene[x][g] else "") +
+                 (f" +{by_screen[x][g]}" if by_screen[x][g] else "")).strip() for g in app_md) + " |\n")
     # strict HGT screen
     hgt = []
     by_contig = collections.defaultdict(list)
