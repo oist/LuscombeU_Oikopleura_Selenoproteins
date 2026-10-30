@@ -1491,3 +1491,17 @@ no earlier step waits for them.
   aligned to the candidate U, and searches SECIS in the transcripts after the stop codon; candidate_genes.py
   (--transcripts) uses these positions for the rule (OSKA2016 included). Tested on a synthetic gene. To run: make
   candidate-genes (minutes; genome searches cached).
+- make candidate-genes with candidate_transcripts.py (2026-10-30, commit 27e8a7c). SELENOI transcripts placed on the
+  assemblies: OKI2018 TRINITY_DN1283_c0_g1_i2 and _i5 (NC_137292.1:6700889, -, exon 7 of 7; same position as
+  tblastn), OSKA2016 comp21960_c0_seq1 (S24:93093, -, exon 7 of 7; KIIPTKTDUQIHQKSSIR*, TAA 9 codons after), OdB3
+  EST KT0AAA233YG01RM2 (FN653023.1:889579, -, exon 5 of 5 of the EST; same as tblastn). TGA in the assembly in the
+  three. No SECIS hit of either model in the transcripts after the stop codon (402, 255 and 544 nt) nor in the 2 kb
+  of genome after it. Isoforms with the alternative end (VFKIIPTS(I/M)SS(L/I)): OKI2018 _i3, OSKA2016
+  comp21960_c0_seq2, OdB3 three ESTs. Verdict: candidate (rule not met), not counted; the codons after the TGA differ
+  between the three cryptic species while those before it are conserved. Other transcripts of the absence table
+  (TRINITY_DN530, comp19304: CEPT1/CHPT1-like, TGT at the aligned position) are paralogs.
+- Step 9 follow-up 1 closed (2026-10-30): absence tests and SELENOI written into the census section of the
+  manuscript (Results: two paragraphs after the comparison with other tunicates; Methods: "Absence tests" extended to
+  the selenoprotein families, "Candidate genes" with candidate_transcripts.py). SELENON, SELENOH, MSRB1 absent from
+  appendicularians, FrnE and SELENOL from the Oikopleuridae (within the limits of tblastn on these assemblies).
+  Next: follow-up 2 (screen-found SELENOK proteins into the SELENOK profile before the deposit), then step 10.

@@ -953,7 +953,9 @@ side that holds vertebrate sequences with a known human gene (number of sequence
 
 > **Provisional section (2026-10-30, step 9 of the plan in docs/plan.md; `results/tables/stage2_census_genes.md`,
 > `stage2_census.tsv`, `stage2_census_loci.tsv`, `stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`,
-> `stage2_hgt_screen.tsv`; `make stage2-collect`, `census-contigs`, `census`).** Operons (step 10) not yet included.
+> `stage2_hgt_screen.tsv`, `stage2_absence_<family>.*.tsv`, `stage2_candidate_transcripts.tsv`,
+> `stage2_candidates_rule.tsv`; `make stage2-collect`, `census-contigs`, `census`, `selenoprotein-absence`,
+> `candidate-genes`).** Operons (step 10) not yet included.
 
 We then took the census of the selenoprotein genes in the nine appendicularian genomes, from the final stage 2 run
 (Methods). Each selenocysteine codon found by Selenoprofiles or miniprot was counted once per locus, and each locus
@@ -995,8 +997,34 @@ families (Table CENSUS-FAMILIES): SELENON was found in eight of the ten other tu
 MSRB in six, and SELENOI in *C. intestinalis*, but none in any appendicularian; SELENOL was found in nine other
 tunicates and, among appendicularians, only in *F. borealis*. SELENOU, found in *F. borealis*, was found in no other
 tunicate, but in both amphioxus species. KKSU and TXNL1.b were found only in appendicularians. SELENOW has four to
-seven loci in each *Oikopleura* assembly, against one to five in the other tunicates. These absences are absences of
-predictions: unlike the machinery genes, the selenoprotein families were not given absence tests.
+seven loci in each *Oikopleura* assembly, against one to five in the other tunicates.
+
+To tell absent genes from genes missed by the profiles, these six families were given absence tests, as the
+machinery genes were: the selenocysteine forms predicted in the other genomes were searched in the appendicularian
+genomes and the *O. dioica* transcriptomes, and each candidate was compared with them and with human proteins of
+related families (Methods). The positive controls, the predictions of each family scored in the same way, had
+margins of 45 to 1,125 bits. No candidate was found for SELENOH. For SELENON, the only candidate was a 36-residue
+fragment of an OSKA2016 transcript, nearly identical to human SELENON, which we attribute to contamination of that
+transcriptome. FrnE and SELENOL were found only in *F. borealis* (margins of 177 and 46 bits). MSRB candidates were
+found in every appendicularian genome except that of *O. vanhoeffeni*, but each was closer to human MSRB2 or MSRB3
+than to the MSRB1-type selenoproteins (margins of −56 to 0 bits): appendicularians have cysteine MSRB of the
+MSRB2/MSRB3 type, as predicted by the final run, and no MSRB1. Within the limits of tblastn on these assemblies,
+SELENON, SELENOH and MSRB1 are thus absent from the appendicularians, and FrnE and SELENOL from the Oikopleuridae.
+
+SELENOI, in contrast, was found in every appendicularian genome (margins of 42 to 175 bits against human CEPT1 and
+CHPT1). SELENOI is the ethanolamine phosphotransferase EPT1, whose vertebrate form carries a selenocysteine about ten
+residues before its C-terminus. In each *O. dioica* transcriptome, some transcripts of the gene end with an exon that
+has an in-frame TGA at the position aligned to the selenocysteine of human, mouse and zebrafish SELENOI, in the
+motif KIIPTKTDU (OKI2018: two of the six isoforms of one Trinity gene; OSKA2016: one of two; OdB3: one of four ESTs
+that reach the C-terminus), while the others end with another sequence, VFKIIPTS(I/M)SS(L/I), apparently from an
+alternative last exon. Placed on the assemblies, these transcripts give a TGA at the same position of the last exon
+in the three cryptic species, but the codons after it differ: a second TGA after two codons in OKI2018, a TAA after
+nine codons in OSKA2016 and after 17 in OdB3. No SECIS element was found after the stop codon, by the *Oikopleura*
+model or by RF00031, either in the transcripts (255 to 544 nucleotides) or in the 2,000 nucleotides of genome
+(Methods). SELENOI therefore does not meet the rule set for the candidate genes and was not counted; whether its TGA
+encodes selenocysteine in *O. dioica* is not known. In the other appendicularians, the tblastn alignments did not
+reach the codon, except in *F. borealis*, where the codon read in frame just beyond the alignment is ATT
+(isoleucine); the ascidian and amphioxus EPT1 proteins of RefSeq end before that position.
 
 The contig checks left out one locus, a *F. borealis* DIO-like prediction whose best human hit is GPX1. No
 selenoprotein of the census lies on a contig that looks foreign to its genome together with a non-animal placement.
@@ -1266,6 +1294,16 @@ genomes) and with proteins of related families: TIA1-like RNA-binding proteins f
 database for SECp43, KTI12 for PSTK. The margin, the score of the best hit to the gene minus that of the best hit to
 the related family, classified the candidate as supported (at least 30 bits), ambiguous (10 to 30 bits) or a related
 protein. The stage 1 predictions of the gene, scored in the same way, served as positive controls.
+
+The same test was applied to the selenoprotein families predicted in other tunicates but in no appendicularian
+(SELENON, SELENOH, MSRB, FrnE, SELENOL and SELENOI). The queries and references were the selenocysteine forms
+predicted in stage 1 (for MSRB, the MSRB1-type forms only, without the profile sequences, since the MSRB profile
+mixes MSRB1 with MSRB2 and MSRB3), and the related families were human RefSeq proteins: calmodulin (CALM1) for the
+EF-hand of SELENON; SELENOW, SELENOV and SELENOT for SELENOH; MSRB2 and MSRB3 for MSRB; GSTK1 for FrnE; thioredoxin
+(TXN) for SELENOL; CEPT1 and CHPT1 for SELENOI. For each candidate, the residue aligned to the selenocysteine of its
+best reference was read in a local alignment (BLOSUM62, selenocysteine scored as cysteine) of its protein translated
+with TGA as selenocysteine (for transcripts, the open reading frame read through TGA codons). The procedure is
+`stage2/machinery_absence.py` of the analysis repository (`make machinery-absence`, `make selenoprotein-absence`).
 
 ## Orthology of the machinery genes
 
@@ -1603,7 +1641,15 @@ stop codon and the best hits of the *Oikopleura* model and of RF00031 (0 bits or
 after that stop codon. The proteins were also compared by blastp (E ≤ 10^-5^) with the RefSeq proteomes of 11
 species (three vertebrates, six tunicates and two *Branchiostoma*), and the residue aligned to the selenocysteine
 was read in a local alignment (BLOSUM62), or at the same offset beyond its end when the alignment stopped at most
-five residues before it. The procedure is `stage2/candidate_genes.py` of the analysis repository
+five residues before it.
+
+SELENOI, found by the absence tests, has no curated position. The transcripts of the three *O. dioica* transcript
+sets that encode it were aligned to their assembly as for the gold-standard models (`minimap2 -x splice:hq -un`,
+junctions placed by the same procedure), and in each the open reading frame read through TGA that aligned best to
+the candidate protein (local alignment, BLOSUM62) gave the codon aligned to its selenocysteine, which was mapped to
+the assembly; the rule was applied at that position. The best SECIS hits of the *Oikopleura* model and of RF00031
+(0 bits or more) were also searched in each transcript after the stop codon that follows that codon. The procedures
+are `stage2/candidate_transcripts.py` and `stage2/candidate_genes.py` of the analysis repository
 (`make candidate-genes`).
 
 ## TXNL1 homologs and paralogs
