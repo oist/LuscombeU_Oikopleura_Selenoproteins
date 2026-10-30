@@ -20,6 +20,12 @@ in `work/`.
 | `stage2_machinery_table.{md,tsv}` | `make machinery-table` | Table MACHINERY of the manuscript: census with orthology evidence |
 | `stage2_selenoprotein_rbh.tsv` | `make selenoprotein-rbh` | reciprocal best hits of the stage 1 selenoprotein predictions against the human proteome |
 | `stage2_selenoprotein_lba.tsv` | `make selenoprotein-pmsf`, `make selenoprotein-au` | supports of the largest appendicularian clade in the selenoprotein trees, maximum likelihood and PMSF; AU tests of the positions of `stage2/au_hypotheses.tsv` (DIO, SELENOF, SELENOK, SELENOO, SELENOS, SELENOT, SELENOW) |
+| `stage2_final_{sec_sites,genes_summary,trnasec,annotation,predictions}.tsv` | `make stage2-collect` | tables of the stage 2 final run, as for stage 1 (predictions: every Selenoprofiles prediction with its coding exons) |
+| `stage2_final_machinery_census.{tsv,md}` | `make stage2-collect` | machinery census of the stage 2 final run |
+| `stage2_census_contigs.tsv`, `stage2_census_genomes.tsv` | `make census-contigs` | composition (GC, tetranucleotides) and Tiara classes of the contigs with predictions; genome summaries |
+| `stage2_census_loci.tsv` | `make census` | selenocysteine loci of the appendicularian genomes, with the decision of the census and its flags |
+| `stage2_census.{tsv,md}` | `make census` | selenoprotein genes per family and genome: appendicularians (census) and other genomes (stage 1) |
+| `stage2_hgt_screen.tsv` | `make census` | appendicularian sequences with bacterial, archaeal or fungal nearest relatives, with contig checks and status |
 | `stage2_selenoprotein_table.{tsv,md}` | `make selenoprotein-table` | Table SELENO-ORTHOLOGY: best hits, clade, sister group and nearest vertebrate genes of each gold-standard gene |
 | `stage2_selenoprotein_orthology.{tsv,md}` | `make selenoprotein-orthology` | orthology summary of each appendicularian selenoprotein clade (first pass: stage 1 predictions; round 2: stage 2 final run and gold-standard proteins) |
 | `stage2_secis_hits.tsv`, `stage2_secis_hits_summary.tsv`, `stage2_secis_hits_families.tsv` | `make secis-hits` | step 1: validated selenocysteine hits with their RF00031 and current-model SECIS scores; per genome and per family |

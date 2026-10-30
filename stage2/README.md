@@ -470,3 +470,35 @@ pipeline's options). `make stage2-bundle` assembles them with the data files int
 The expected selenoproteome of *O. dioica* for the pipeline's expectation check, with the new profile names, is in
 `stage2/run/expectation_oikopleura_dioica.csv`.
 
+
+## Census (step 9)
+
+Census of the selenoprotein genes of the nine appendicularian genomes (and of the three new *O. dioica* assemblies),
+from the stage 2 final run, with a contamination screen and the list of candidates for the strict screen of
+horizontal gene transfer (decision of 2026-10-24 in `docs/plan.md`: contamination is the default explanation of
+foreign-looking sequences; one HGT screen, with no false positive allowed).
+
+1. `make stage2-collect` (Deigo, minutes): `stage1/collect.py --prefix stage2_final` on `work/stage2/pipeline/final`
+   gives `results/tables/stage2_final_{sec_sites,genes_summary,trnasec,annotation,predictions}.tsv` (the
+   selenocysteine codons now carry the Selenoprofiles prediction identifier, and `predictions` lists every prediction
+   with its coding exons); `machinery_census.py` on the final-run predictions gives
+   `results/tables/stage2_final_machinery_census.{tsv,md}` (fragments: those of the machinery analysis).
+2. `scripts/run_tiara.sh` (Deigo, outside the image: Tiara needs an older Python): Tiara 1.0.3 classes of the contigs
+   of at least 3,000 nt, `work/stage2/census/tiara/<genome>.tiara.tsv`. `TIARA_IMAGE` is a Singularity image with
+   Tiara, built for example with Wave from conda-forge (command in the script).
+3. `make census-contigs` (Deigo): `census_contigs.py`, for each contig carrying a prediction or a selenocysteine
+   codon, its length and GC content, and, on a window of 2, 5 or 10 kb centred on its predictions, GC content and
+   distance of the tetranucleotide composition (centred log-ratio of canonical tetranucleotide counts) to the median
+   of random windows of the same genome and length, as percentiles and robust z-scores; the Tiara classes when
+   present. Per genome: length, contigs, N50, GC, and the bases of each Tiara class. Outputs
+   `results/tables/stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`.
+4. `make census` (seconds, from `results/` only): `census.py` merges the selenocysteine codons into loci, decides for
+   each locus whether it is counted (rules in the script: left out only on evidence against it, contig classified
+   non-eukaryotic by Tiara, best human hit in another family, or composition outlier with non-animal nearest
+   relatives; gold-standard genes always counted), and records the flags (composition and GC outliers, nearest
+   relatives in the round 2 ML and PMSF trees, no SECIS hit, codon near the contig end, miniprot only). The counts
+   are compared with the other tunicates, the cephalochordates and the vertebrates (stage 1 codons, same locus
+   definition, no screen). The strict HGT screen lists every appendicularian leaf of the round 2 trees whose nearest
+   relatives are all bacterial, archaeal or fungal, with its contig checks and a status (contamination, not testable
+   without intron, placement not stable under PMSF, or candidate for the tests). Outputs
+   `results/tables/stage2_census_loci.tsv`, `stage2_census.{tsv,md}`, `stage2_hgt_screen.tsv`.

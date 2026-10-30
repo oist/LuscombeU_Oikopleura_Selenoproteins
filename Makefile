@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -342,6 +342,27 @@ stage2-truth:
 #   sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-diagnose
 stage2-diagnose:
 	python3 stage2/diagnose_refiltering.py
+
+# Step 9: census of the appendicularian selenoproteins from the stage 2 final run (stage2/README.md, "Census").
+# 1. stage2-collect (minutes): tables of the final run (results/tables/stage2_final_*.tsv) and its machinery census
+# 2. scripts/run_tiara.sh (outside the image; TIARA_IMAGE): Tiara classes of the contigs, work/stage2/census/tiara/
+# 3. census-contigs (about an hour): composition of the contigs with predictions, Tiara classes if present
+# 4. census (seconds; reads results/ only, after selenoprotein-rbh, -phylogeny and -pmsf of round 2)
+CENSUS_GENOMES = OKI OSKA OdB3 KUM AOM Bar2 Olon Oalb Ovan Bsty Mery Fbor
+stage2-collect:
+	python3 stage1/collect.py --outdir work/stage2/pipeline/final --out-dir results/tables --prefix stage2_final
+	mkdir -p work/stage2/census/machinery
+	for g in $(CENSUS_GENOMES); do ln -sf ../../pipeline/final/selenoprofiles/$$g.selenoprofiles.gtf work/stage2/census/machinery/$$g.gtf; done
+	python3 stage2/machinery_census.py --trnasec results/tables/stage2_final_trnasec.tsv --test-dir work/stage2/census/machinery \
+	  --fragments work/stage2/machinery_fragments/fragments.tsv \
+	  --table results/tables/stage2_final_machinery_census.tsv --markdown results/tables/stage2_final_machinery_census.md
+
+#   sbatch -p compute --cpus-per-task=2 --mem=32G --time=12:00:00 scripts/run_in_container.sh make census-contigs
+census-contigs:
+	python3 stage2/census_contigs.py --genomes $(CENSUS_GENOMES)
+
+census:
+	python3 stage2/census.py
 
 # Deposit archive of the recommended settings and data files (stage2/recommended/README.md), after stage2-inputs
 STAGE2_BUNDLE = work/stage2/appendicularia_selenoprotein_annotation

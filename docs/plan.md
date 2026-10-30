@@ -1328,3 +1328,25 @@ no earlier step waits for them.
   supported); the chromosome 2 SELENOW are MIEN1-like by best hit and placement but selenoproteins (gold standard),
   as in step 1. Next: step 9 (census from the final run, contamination screen, strict HGT screen), with the
   appendicularian cysteine SelO near bacteria and the SELENOS of O. longicauda and O. albicans to check there.
+- Manuscript, step 8 (2026-10-30): Results section "Orthology of the selenoprotein genes" with Table SELENO-ORTHOLOGY
+  (stage2/selenoprotein_table.py, make selenoprotein-table; one row per gold-standard gene) and Methods; step 1
+  Methods note: with the extended taxonomy, 24 of the 111 selenocysteine predictions would have non-animal nearest
+  relatives only (alveolate and amoebozoan DIO, among others), none bacterial, archaeal or fungal only (checked on
+  the first-pass trees). SELENOW_chr2: best hit MIEN1 (no hit to SELENOW or SELENOV) and in a group (77 / 91) with
+  selenocysteine SelW-like proteins of zebrafish, tilapia, Ciona, amphioxus and Artemia, and human MIEN1 (cysteine at
+  the selenocysteine column); described as a SELENOW-like lineage, names kept. AU tests added for SELENOK and SELENOS
+  (non-animal sister groups in round 2), with controls for SELENOK; to run (make selenoprotein-au).
+- Step 9 started (2026-10-30): census code. stage1/collect.py now also writes the Selenoprofiles identifier of each
+  codon and a predictions table (all labels, coding exons); make stage2-collect applies it to the final run and
+  reruns the machinery census on the final-run predictions. Contamination screen: Tiara (scripts/run_tiara.sh, own
+  image: Tiara needs Python < 3.10, outside environment.yml) and composition checks (stage2/census_contigs.py, make
+  census-contigs: GC and tetranucleotide distance of a 2-10 kb window around the predictions against random windows
+  of the same genome, as percentiles and robust z-scores; tested on a synthetic genome with a bacterial contig: robust
+  z 97.5 against -1.1 for a host contig, percentile 98.7 diluted by the contaminant's own windows). stage2/census.py
+  (make census): loci (codons within 30 nt or in one prediction merged), decisions fixed in advance (left out: Tiara
+  non-eukaryotic, best human hit in another family, or composition outlier z > 5 with non-animal nearest relatives;
+  gold-standard genes always counted), flags, counts against the other tunicates (stage 1, no screen), and the strict
+  HGT screen (round 2 leaves with bacterial, archaeal or fungal nearest relatives; status contamination, not testable
+  without intron, placement not stable under PMSF, or candidate). Tested on synthetic loci built from the round 2
+  trees: the DIO cysteine clade of B. stygius, F. borealis and M. erythrocephalus (nearest relatives two bacterial
+  DIO, 88%) and the cysteine SELENOO near bacteria appear in the screen as expected.
