@@ -1474,3 +1474,9 @@ no earlier step waits for them.
   SELENOI added to step 5's candidate genes (curation/candidates.faa; codons located by tblastn in the three
   assemblies, then the rule: TGA and SECIS of at least 20 bits in the 2 kb after the stop codon in the three
   assemblies; other genomes and proteomes as for TXNL1.b and KKSU). To run: make candidate-genes.
+- make candidate-genes with SELENOI (2026-10-30, commit da275c9): only the proteome table has SELENOI. The genome
+  searches were taken from the cache of the previous run, whose test (the cached candidates a subset of the current
+  ones) let new candidates through unsearched: fixed (the candidate proteins searched are recorded beside the rows,
+  and any change triggers a new search). Proteomes: the human, mouse and zebrafish SELENOI have their selenocysteine
+  aligned to the candidate U (positions 387, 388, 387; 10 to 13 residues after it); the ascidian and amphioxus EPT1
+  RefSeq proteins (374 to 392 aa) do not reach that position, except B. schlosseri (H, by extension). To rerun.

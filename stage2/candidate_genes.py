@@ -157,9 +157,11 @@ def tblastn_genome(g, a, sheet, prot, secis):
     d = f"{a.work}/{g}"
     os.makedirs(d, exist_ok=True)
     done = f"{d}/rows.json"
-    if os.path.exists(done):   # a rerun does not search the genome again, unless the candidates changed (a renaming)
-        rows = json.load(open(done))
-        if {r["candidate"] for r in rows} <= set(prot): return rows
+    # a rerun does not search the genome again, unless the candidate proteins changed (names or sequences; the
+    # candidates searched are recorded beside the rows, since candidates without a hit leave no row)
+    searched = {k: v for k, v in prot.items()}
+    if os.path.exists(done) and os.path.exists(done + ".candidates"):
+        if json.load(open(done + ".candidates")) == searched: return json.load(open(done))
     fa = f"{d}/genome.fa"
     lengths = {}
     with open(fa, "w") as o:
@@ -242,6 +244,7 @@ def tblastn_genome(g, a, sheet, prot, secis):
     for x in os.listdir(d):   # the genome copy and its database are large
         if x.startswith("genome.fa"): os.remove(os.path.join(d, x))
     json.dump(out, open(done + ".tmp", "w")); os.replace(done + ".tmp", done)
+    json.dump(searched, open(done + ".candidates", "w"))
     return out
 
 
