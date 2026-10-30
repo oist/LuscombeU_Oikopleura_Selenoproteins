@@ -20,6 +20,8 @@ Options for selenoprotein families (make selenoprotein-absence): --labels select
 and queries (for example only "selenocysteine", the selenoprotein form); --no-profile leaves out the profile sequences
 (a profile can mix paralogs, such as MSRB1 with MSRB2 and MSRB3); --outgroup-human adds the human RefSeq proteins of
 named genes (data/genomes/Hsap, protein_id -> gene from the RefSeq annotation) as outgroups.
+Each candidate also gets the residues aligned to the selenocysteine positions of its best reference (local alignment
+of its protein with TGA read as U: for transcripts, the open reading frame read through TGA codons) and that protein.
 Outputs in --out: <gene>.candidates.tsv (one row per candidate), <gene>.controls.tsv, <gene>.summary.tsv (per target).
 """
 import argparse, collections, glob, gzip, os, re, shutil, subprocess, tempfile
@@ -32,6 +34,35 @@ TRANSCRIPTOMES = {"OKI": "OKI_trinity", "OSKA": "OSKA_tx", "OdB3": "OdB3_est"}
 
 
 def tr(s): return "".join(CODE.get(s[i:i + 3].upper(), "X") for i in range(0, len(s) - 2, 3))
+
+
+def tr_u(s):
+    """Translation with TGA read as selenocysteine (U)."""
+    return "".join("U" if s[i:i + 3].upper() == "TGA" else CODE.get(s[i:i + 3].upper(), "X")
+                   for i in range(0, len(s) - 2, 3))
+
+
+def at_sec(cand, ref):
+    """Residues of a candidate protein aligned to the selenocysteine positions (U) of its best reference, by a local
+    alignment (BLOSUM62, U scored as C): the residue, "-" for a gap, "outside" when the alignment does not reach it."""
+    if "U" not in ref: return "no U in reference"
+    from Bio import Align
+    from Bio.Align import substitution_matrices
+    clean = lambda x: "".join(c if c in "ACDEFGHIKLMNPQRSTVWY" else ("C" if c == "U" else "X") for c in x)
+    al = Align.PairwiseAligner(mode="local", substitution_matrix=substitution_matrices.load("BLOSUM62"),
+                               open_gap_score=-10, extend_gap_score=-0.5)
+    try: aln = al.align(clean(cand), clean(ref))[0]
+    except (IndexError, ValueError): return "no alignment"
+    out = []
+    for i in (k for k, c in enumerate(ref) if c == "U"):
+        res = "outside"
+        for (c0, c1), (r0, r1) in zip(*aln.aligned):
+            if r0 <= i < r1: res = cand[c0 + i - r0]; break
+        else:
+            if any(r0 <= i for (_, _), (r0, _) in zip(*aln.aligned)) and \
+                    any(i < r1 for (_, _), (_, r1) in zip(*aln.aligned)): res = "-"
+        out.append(f"U{i + 1}:{res}")
+    return ",".join(out)
 
 
 def read_fasta(path):
@@ -113,6 +144,7 @@ def main():
         for n, s in read_fasta(a.outgroup_faa):
             f = n.split("|")
             if f[0] == a.gene: outgroups.append((f"OUT|file|{f[1]}", s))
+    ref_seq = {n: s for n, s in refs}
     db = f"{d}/refs.faa"
     with open(db, "w") as o:
         for n, s in refs + outgroups: o.write(f">{n}\n{s}\n")
@@ -144,7 +176,7 @@ def main():
                           "-a", str(a.cpus)], cwd=d).splitlines():
                 f = l.split("\t"); s0, s1 = int(f[8]), int(f[9])
                 hits[(f[1], "+" if s1 > s0 else "-")].append((min(s0, s1), max(s0, s1), float(f[11])))
-            cands = []
+            cands, readthroughs = [], {}
             for (sub, strand), hs in hits.items():
                 hs.sort(); locus = [hs[0]]
                 for h in hs[1:] + [None]:
@@ -156,14 +188,19 @@ def main():
                         st = b[0] - 1 if strand == "+" else len(seq) - b[1]
                         fr = st % 3; prot = tr(nt[fr:]); p = (st - fr) // 3
                         i = prot.rfind("*", 0, p) + 1; j = prot.find("*", p); prot = prot[i:(j if j >= 0 else len(prot))]
+                        rt = tr_u(nt[fr:])          # read-through: TGA as U, only TAA and TAG end the frame
+                        i2 = rt.rfind("*", 0, p) + 1; j2 = rt.find("*", p); readthrough = rt[i2:(j2 if j2 >= 0 else len(rt))]
                     else:  # translations of the non-overlapping hits, in gene order
                         parts, last = [], 0
                         for x in sorted(locus, key=lambda x: -x[2]):
                             if all(x[1] < y[0] or x[0] > y[1] for y in parts): parts.append(x)
                         parts.sort(key=lambda x: x[0] if strand == "+" else -x[0])
-                        prot = "".join(tr(seq[x[0] - 1:x[1]] if strand == "+" else seq[x[0] - 1:x[1]].translate(COMP)[::-1])
-                                       for x in parts)
-                    cands.append((f"CAND|{g}|{kind}:{sub}:{locus[0][0]}-{locus[-1][1]}:{strand}", prot.replace("*", "")))
+                        readthrough = "".join(tr_u(seq[x[0] - 1:x[1]] if strand == "+" else
+                                                   seq[x[0] - 1:x[1]].translate(COMP)[::-1]) for x in parts)
+                        prot = readthrough.replace("U", "*")
+                    name = f"CAND|{g}|{kind}:{sub}:{locus[0][0]}-{locus[-1][1]}:{strand}"
+                    cands.append((name, prot.replace("*", "")))
+                    readthroughs[name] = readthrough.replace("*", "")
                     if h is not None: locus = [h]
             if cands:
                 with open(f"{d}/c.faa", "w") as o:
@@ -174,14 +211,16 @@ def main():
                 r, rs = bc.get((n, "REF"), (0, "-")); x, xs = bc.get((n, "OUT"), (0, "-"))
                 m = r - x
                 status = "supported" if m >= a.min_margin else "ambiguous" if m >= a.ambiguous_margin else "related protein"
-                rows.append((g, kind, n.split("|", 2)[2], len(s), r, rs, x, xs, f"{m:.1f}", status))
+                rows.append((g, kind, n.split("|", 2)[2], len(s), r, rs, x, xs, f"{m:.1f}", status,
+                             at_sec(readthroughs.get(n, s), ref_seq.get(rs, "")) if r else "", readthroughs.get(n, s)))
                 if top is None or m > top[0]: top = (m, n.split("|", 2)[2], status)
             summary.append((g, kind, len(cands), sum(1 for r in rows if r[0] == g and r[1] == kind and r[9] == "supported"),
                             sum(1 for r in rows if r[0] == g and r[1] == kind and r[9] == "ambiguous"),
                             f"{top[0]:.1f}" if top else "-", top[1] if top else "-"))
             print(g, kind, len(cands), "candidates", flush=True)
     with open(f"{a.out}/{a.gene}.candidates.tsv", "w") as o:
-        o.write("target\ttype\tlocus\tlength\tref_bits\tbest_reference\toutgroup_bits\tbest_outgroup\tmargin\tstatus\n")
+        o.write("target\ttype\tlocus\tlength\tref_bits\tbest_reference\toutgroup_bits\tbest_outgroup\tmargin\tstatus\t"
+                "at_reference_selenocysteine\tprotein_tga_as_U\n")
         for r in rows: o.write("\t".join(map(str, r)) + "\n")
     with open(f"{a.out}/{a.gene}.summary.tsv", "w") as o:
         o.write("target\ttype\tcandidates\tsupported\tambiguous\tbest_margin\tbest_candidate\n")

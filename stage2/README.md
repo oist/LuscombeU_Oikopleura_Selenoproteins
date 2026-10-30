@@ -371,7 +371,9 @@ not in the trees.
    genomes) searched in each appendicularian genome and transcriptome by tblastn, each candidate scored against them
    and against human proteins of related families (CALM1 for the EF-hand of SELENON; SELENOW, SELENOV, SELENOT for
    SELENOH; MSRB2 and MSRB3 for MSRB, whose references are the MSRB1-type selenocysteine forms only; GSTK1 for FrnE;
-   TXN for SELENOL; CEPT1 and CHPT1 for SELENOI). Outputs `results/tables/stage2_absence_<family>.{summary,candidates,controls}.tsv`.
+   TXN for SELENOL; CEPT1 and CHPT1 for SELENOI); for each candidate, the residues aligned to the selenocysteine of
+   its best reference (TGA read as U; transcripts read through TGA codons) and that protein. Outputs
+   `results/tables/stage2_absence_<family>.{summary,candidates,controls}.tsv`.
 
 SELENOK, missed by the stage 1 settings in every appendicularian genome, is in the round 2 trees (stage 2 final run
 and gold-standard proteins).

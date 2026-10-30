@@ -1450,3 +1450,14 @@ no earlier step waits for them.
   --outgroup-human); make selenoprotein-absence: selenocysteine forms of stage 1 as queries and references,
   outgroups CALM1 (SELENON EF-hand), SELENOW/SELENOV/SELENOT (SELENOH), MSRB2/MSRB3 (MSRB, references MSRB1-type only),
   GSTK1 (FrnE), TXN (SELENOL), CEPT1/CHPT1 (SELENOI). To run on Deigo.
+- Absence tests, first run (2026-10-30, commit 4223f79). Positive controls: margins of 45 to 593 bits. SELENOH: no
+  candidate in any genome or transcriptome. SELENON: none in the genomes; one 36-aa ORF of an OSKA2016 transcript
+  (comp56540_c0_seq1), 77.8 bits to a human SELENON isoform of the profile, no outgroup hit: to inspect (a near
+  identical human-like fragment would point to contamination of the transcriptome). MSRB: every candidate closer to
+  human MSRB2 or MSRB3 than to the MSRB1-type selenocysteine forms (margins -20 to -56; F. borealis 0): no MSRB1.
+  FrnE and SELENOL: only F. borealis (supported, 177 and 46 bits). SELENOI: supported candidates in every genome and
+  in the three O. dioica transcriptomes (O. dioica transcripts: ORFs of about 390 aa, 285 bits to zebrafish SELENOI,
+  175 bits closer than to CEPT1): an EPT1/SELENOI ortholog is present; whether it carries a selenocysteine is not
+  known, since the final run predicted no SELENOI. machinery_absence.py now reports, for each candidate, the residues
+  aligned to the selenocysteine of its best reference (TGA read as U; transcript ORFs read through TGA) and the
+  protein. To rerun: make selenoprotein-absence.
