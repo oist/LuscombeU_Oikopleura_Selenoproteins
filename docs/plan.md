@@ -1304,3 +1304,27 @@ no earlier step waits for them.
     chordates, SELENOO selenocysteine SELENOO of the other tunicates, SELENOT chordates) and SELENOW_PAR with the
     mammalian SELENOV (the PMSF position) under both models; machinery_lba.py redoes an AU test when its set of trees
     changes (the earlier code kept the old report). To run: make selenoprotein-au (finished constrained searches kept).
+- Step 8, AU tests with controls (2026-10-30, commit 952221b; one AU test per family and model, all constrained
+  trees together, so the earlier p-values shift slightly). p-AU, ML model / LG+C60+F+G PMSF:
+  - SELENOT: with the other tunicates 0.134 / 0.197; inside the chordates 0.118 / 0.009; control (chordates a clade,
+    appendicularians outside) 0.042 / 0.012. The data reject chordate monophyly itself (nematode and insect SELENOT
+    among the chordate sequences), so the chordate test says nothing about the appendicularian position; the grouping
+    with the other tunicates is not rejected.
+  - SELENOO: with the selenocysteine SELENOO of the other tunicates 0.034 / 0.045 (rejected at 0.05, narrowly);
+    control 0.469 / 0.591; inside the clade of human and Ciona selenocysteine SELENOO 0.544 / 0.594 (the ML tree).
+    The oikopleurid clade (gold OKI, OSKA, OdB3) is sister to the animal selenocysteine SELENOO (tunicates, tick,
+    amphioxus, vertebrates; 93 PMSF), outside the deuterostome cysteine SELENOO paralog (tunicates, amphioxus,
+    turtle, chicken). Other appendicularian cysteine SELENOO copies (F. borealis, B. stygius, M. erythrocephalus)
+    group with bacterial SelO (99 to 100): for the census (step 9, contamination and HGT screens).
+  - SELENOF: no rejection (0.261 / 0.091 with the other tunicates, 0.412 / 0.125 inside the chordates; controls
+    0.317 / 0.610 and 0.598 / 0.461): the position is unresolved.
+  - SELENOW: SELENOW_PAR with the chromosome 2 SELENOW 0.031 / 0.054; with the chromosome 1 SELENOW 0.325 / 0.336;
+    with the mammalian SELENOV 0.212 / 0.198; outside the human SELENOW-SELENOV clade 0.528 / 0.642. Only the grouping
+    with the chromosome 2 (MIEN1-like) clade is rejected, under the ML model only; the PMSF placement next to SELENOV
+    is one of several positions the data allow, and cannot be orthology (SELENOV is placental; Mariotti et al. 2012).
+  - DIO: 0.431 / 0.347 (unchanged; one hypothesis).
+  Conclusion of step 8: no appendicularian selenoprotein clade is placed outside the animals by a test; the
+  gold-standard genes keep their family names. SELENOW_PAR stays named after SELENOW (its SELENOV-like position is not
+  supported); the chromosome 2 SELENOW are MIEN1-like by best hit and placement but selenoproteins (gold standard),
+  as in step 1. Next: step 9 (census from the final run, contamination screen, strict HGT screen), with the
+  appendicularian cysteine SelO near bacteria and the SELENOS of O. longicauda and O. albicans to check there.
