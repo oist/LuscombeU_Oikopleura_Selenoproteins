@@ -180,10 +180,12 @@ secis-scan:
 uga-screen:
 	python3 stage2/uga_secis_screen.py screen
 
-# Step 5: candidate genes outside the baseline (curation/candidates.tsv and .faa: TXNL1.b, the KKSU family): the rule
+# Step 5: candidate genes outside the baseline (curation/candidates.tsv and .faa: TXNL1.b, the KKSU family; SELENOI
+# from the absence tests of step 9, its codons located through its transcripts aligned to the O. dioica assemblies,
+# stage2/candidate_transcripts.py, which reads the transcript alignments of make gold-standard): the rule
 # fixed in advance in the three O. dioica assemblies, tblastn against the appendicularian, tunicate and amphioxus
 # genomes (codon at the selenocysteine position, SECIS after the stop codon) and blastp against RefSeq proteomes
-# (about an hour), for example
+# (about an hour; minutes when the genome searches are cached), for example
 #   sbatch -p compute --cpus-per-task=16 --mem=32G --time=6:00:00 scripts/run_in_container.sh make candidate-genes
 # Description of the Oikopleura SECIS model (seeds, base pairs against decoys, changes between O. dioica orthologs)
 # and its scores in genomes and controls (reads repository files only; about 7 minutes with 8 CPUs)
@@ -198,6 +200,7 @@ secis-orphans:
 	python3 stage2/secis_orphan_hits.py
 
 candidate-genes:
+	python3 stage2/candidate_transcripts.py
 	python3 stage2/candidate_genes.py --jobs 4
 
 # TXNL1 homologs in the three O. dioica assemblies: reciprocal best hits with human TXNL1, next hits of O. dioica

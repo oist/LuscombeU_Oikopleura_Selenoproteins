@@ -5,7 +5,8 @@
 step 4 (provisional name KKSU, after its C-terminus), to which the same rule is applied; SELENOI (selenoprotein I,
 the ethanolamine phosphotransferase EPT1), found by the absence tests of step 9 (2026-10-30): a C-terminal isoform with
 an in-frame TGA at the selenocysteine position of vertebrate SELENOI in transcripts of the three O. dioica species, the
-gene missed by every earlier search; its codons in the three assemblies are located by tblastn (--locate).
+gene missed by every earlier search; its codons in the three assemblies are located through the transcripts that
+encode it, aligned to the assemblies (stage2/candidate_transcripts.py, --transcripts), or else by tblastn (--locate).
 
 1. Rule in the three O. dioica assemblies: at the curated position of each assembly, the codon must be TGA, and the
    best SECIS hit of the Oikopleura model (results/models/oikopleura_secis.cm, cmsearch on the top strand) in the
@@ -313,6 +314,9 @@ def main():
     ap.add_argument("--locus-span", type=int, default=20000, help="HSPs within this distance of the best one form its locus")
     ap.add_argument("--locate", nargs="*", default=["SELENOI"],
                     help="candidates without curated rows whose codon is located by tblastn in the O. dioica assemblies")
+    ap.add_argument("--transcripts", default="results/tables/stage2_candidate_transcripts_positions.tsv",
+                    help="positions of the codons of --locate candidates in transcripts aligned to the O. dioica "
+                         "assemblies (stage2/candidate_transcripts.py); used in place of the tblastn positions")
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--work", default="work/stage2/candidates")
@@ -337,8 +341,18 @@ def main():
         for r in sorted(out, key=lambda r: (r["candidate"], order.get(r["genome"], 99))):
             o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
     # 1. the rule, in the three O. dioica assemblies (candidates of --locate without curated rows: the position of the
-    # codon aligned to their U by tblastn in each assembly)
+    # codon in the transcripts aligned to each assembly, the position supported by most transcripts; otherwise the
+    # position of the codon aligned to their U by tblastn)
     have = {(r["gene"], r["genome"]) for r in rows}
+    if os.path.exists(a.transcripts):
+        for r in csv.DictReader(open(a.transcripts), delimiter="\t"):
+            if r["gene"] in a.locate and r["genome"] in DIOICA and (r["gene"], r["genome"]) not in have:
+                n = len(r["transcripts"].split(","))
+                rows.append({"genome": r["genome"], "gene": r["gene"], "contig": r["contig"], "codon": r["codon"],
+                             "strand": r["strand"], "context": "",
+                             "notes": f"position of the codon in {n} transcript{'s' if n > 1 else ''} aligned to the "
+                                      f"assembly ({r['transcripts']})"})
+                have.add((r["gene"], r["genome"]))
     for r in out:
         if r["candidate"] in a.locate and r["genome"] in DIOICA and (r["candidate"], r["genome"]) not in have and \
                 r.get("position"):

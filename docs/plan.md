@@ -1480,3 +1480,14 @@ no earlier step waits for them.
   and any change triggers a new search). Proteomes: the human, mouse and zebrafish SELENOI have their selenocysteine
   aligned to the candidate U (positions 387, 388, 387; 10 to 13 residues after it); the ascidian and amphioxus EPT1
   RefSeq proteins (374 to 392 aa) do not reach that position, except B. schlosseri (H, by extension). To rerun.
+- make candidate-genes rerun (2026-10-30, commit d470695): SELENOI codon located by tblastn in OKI2018
+  (NC_137292.1:6700889, -) and OdB3 (FN653023.1:889579, -), TGA in both, contexts KIIPTKTDUQI*KQK (OKI2018: the
+  second TGA ends the frame, 2 codons after) and KIIPTKTDUQIPEKVQFDNHRSSKFE*IAE (OdB3: TAA, 17 codons after); no
+  SECIS hit of either model (cmsearch, 0 bits) in the 2 kb after the stop codon in either assembly; OSKA2016 (S24): U
+  position not aligned by tblastn (short last exon). Rule not met: SELENOI stays a candidate. Other genomes: U position
+  not aligned (Olon, Oalb, Ovan, Bsty, Mery, ascidians, amphioxus), Fbor ATT (I, extended), Csav AAA (K, extended).
+  To complete the evidence: stage2/candidate_transcripts.py places the SELENOI transcripts of the three assemblies on
+  their assembly (minimap2 alignments of make gold-standard, junction placement of gold_standard.py), maps the codon
+  aligned to the candidate U, and searches SECIS in the transcripts after the stop codon; candidate_genes.py
+  (--transcripts) uses these positions for the rule (OSKA2016 included). Tested on a synthetic gene. To run: make
+  candidate-genes (minutes; genome searches cached).

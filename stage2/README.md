@@ -254,6 +254,17 @@ assemblies; then tblastn against the appendicularian, tunicate and amphioxus gen
 selenocysteine, codons to the next stop, SECIS after it with both models) and blastp against the RefSeq proteomes.
 Tested on OKI2018 chromosome 2 and the OdB3 TXNL1.b contig (contexts of `candidates.tsv` reproduced).
 
+SELENOI (`curation/candidates.faa`), found by the absence tests of step 9, has no curated row: its codons are located
+by `candidate_transcripts.py` (run first by `make candidate-genes`). The transcripts that encode it in the three
+*O. dioica* transcript sets (rows of `results/tables/stage2_absence_SELENOI.candidates.tsv`) are placed on their
+assembly with the minimap2 alignments of `make gold-standard` (`work/stage2/gold_standard/<genome>.transcripts.paf`;
+aligned again, these transcripts only, when that file is missing) and the junction placement of
+`curation/gold_standard.py`; the codon aligned to the first U of the candidate protein is mapped to the assembly
+(`results/tables/stage2_candidate_transcripts.tsv`: codon in the transcript and in the assembly, exon, stop codon,
+transcript length after it and SECIS hits there; `stage2_candidate_transcripts_positions.tsv`: the positions used by
+the rule). Without such a position, the codon aligned by tblastn is used. Tested on a synthetic gene (five exons,
+minus strand, transcript stored in both orientations, SECIS seed in the 3' UTR): codon position and exon reproduced.
+
 ## TXNL1 homologs (`txnl1_homologs.py`, `make txnl1-homologs`)
 
 Whether *O. dioica* TXNL1.b (168 residues, PITH region only, selenocysteine) and human TXNL1 are reciprocal best hits,
