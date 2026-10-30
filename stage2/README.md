@@ -484,21 +484,25 @@ foreign-looking sequences; one HGT screen, with no false positive allowed).
    with its coding exons); `machinery_census.py` on the final-run predictions gives
    `results/tables/stage2_final_machinery_census.{tsv,md}` (fragments: those of the machinery analysis).
 2. `make census-contigs` (Deigo): `census_contigs.py`, for each contig carrying a prediction or a selenocysteine
-   codon, its length and GC content, and, on a window of 2, 5 or 10 kb centred on its predictions, GC content and
-   distance of the tetranucleotide composition (centred log-ratio of canonical tetranucleotide counts) to the median
-   of random windows of the same genome and length, as percentiles and robust z-scores; Tiara classes when a Tiara
-   output is present (not run: decision of 2026-10-30 in `docs/plan.md`). Per genome: length, contigs, N50, GC, and the bases of each Tiara class. Outputs
-   `results/tables/stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`.
+   codon, its length, GC content and open reading frame density (fraction of bases in open reading frames of at
+   least 100 codons, six frames: bacterial DNA is mostly coding); on a window of 2, 5 or 10 kb centred on its
+   predictions, GC content, distance of the tetranucleotide composition (centred log-ratio of canonical
+   tetranucleotide counts) to the median of random windows of the same genome and length, and open reading frame
+   density, as percentiles and robust z-scores; the same on the 2-kb window (in fragmented assemblies the longer
+   reference windows come only from the few long contigs, which may themselves be contaminants). Tiara classes when
+   a Tiara output is present (not run: decision of 2026-10-30 in `docs/plan.md`). Per genome: length, contigs, N50,
+   and for each window length the fraction of the assembly in contigs at least that long and the medians of the
+   reference windows. Outputs `results/tables/stage2_census_contigs.tsv`, `stage2_census_genomes.tsv`.
 3. `make census` (seconds, from `results/` only): `census.py` merges the selenocysteine codons into loci, decides for
    each locus whether it is counted (rules in the script: left out only on evidence against it, contig classified
-   non-eukaryotic by Tiara, best human hit in another family, or composition outlier with non-animal nearest
-   relatives; gold-standard genes always counted), and records the flags (composition and GC outliers, nearest
+   non-eukaryotic by Tiara, best human hit in another family, or composition outlier or ORF-dense contig with
+   non-animal nearest relatives; gold-standard genes always counted), and records the flags (composition and GC outliers, nearest
    relatives in the round 2 ML and PMSF trees, no SECIS hit, codon near the contig end, miniprot only). The counts
    are compared with the other tunicates, the cephalochordates and the vertebrates (stage 1 codons, same locus
    definition, no screen). The strict HGT screen lists every appendicularian leaf of the round 2 trees whose nearest
    relatives outside the appendicularians, or outside the tunicates (a transfer before the split of the tunicate
    lineages, like that of cellulose synthase), are all bacterial, archaeal or fungal, with its contig checks and a
-   status: contamination (composition; Tiara if run), other family (best human hit elsewhere: the tree lacks the animal
+   status: contamination (composition, ORF density; Tiara if run), other family (best human hit elsewhere: the tree lacks the animal
    members of its family, as for the thioredoxins found by the DIO profile), family not confirmed (no human hit),
    placement not stable under PMSF, candidate without intron, or candidate for the tests. An old transfer is
    expected to match its genome in composition; its evidence is its presence at the same place of the tree in

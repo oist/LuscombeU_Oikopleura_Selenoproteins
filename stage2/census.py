@@ -24,10 +24,12 @@ sequences, but a locus is left out only on evidence against it):
   left out                 Tiara classifies its contig as bacteria, archaea, prokarya or organelle; or the best human
                            hit of its prediction lies in another family (RELATED genes count as the family: MIEN1 for
                            SELENOW, SEPHS1 for SEPHS2); or its contig is a composition outlier (robust z-score of the
-                           tetranucleotide distance above COMPOSITION_Z) and its nearest relatives in the ML tree of
-                           its family are all non-animal;
+                           tetranucleotide distance above COMPOSITION_Z, on the largest window or the 2-kb window) or
+                           ORF-dense (at least ORF_DENSE of the contig in open reading frames of 100 codons or more,
+                           at GC up to ORF_DENSE_MAX_GC, contig of ORF_DENSE_MIN_LENGTH nt or more), and its nearest
+                           relatives in the ML tree of its family are all non-animal;
   counted                  otherwise.
-Flags reported with each locus (not decisive alone): composition outlier; GC outlier (robust z-score beyond GC_Z);
+Flags reported with each locus (not decisive alone): composition outlier; ORF-dense contig; GC outlier (robust z-score beyond GC_Z);
 nearest relatives in the ML and PMSF trees (prokaryotic, bacterial or fungal, other non-animal, animal, not in the
 tree); no SECIS hit (the model of the final run, the Oikopleura model at 20 bits); fewer than END_NT nucleotides
 after the codon on the contig (no room for a SECIS element in the search window); miniprot only; contig shorter than
@@ -44,7 +46,7 @@ prokaryotic; the evidence for it is its presence at the same place of the tree i
 A placement means something only for sequences of the family of the tree: a profile also finds homologs of other
 families (thioredoxins with the DIO profile, for example), whose nearest relatives in the tree are then the few
 sequences of their own family that the profile holds, often bacterial, because the animal members of that family are
-not in the tree. Status: "contamination (Tiara ...)"; "contamination likely (composition outlier)"; "other family"
+not in the tree. Status: "contamination (Tiara ...)"; "contamination likely" (composition outlier, or ORF-dense contig); "other family"
 (best human hit in another family: to be placed in a tree of that family); "family not confirmed" (no hit in the
 human proteome although the family has human members); "placement not stable (PMSF)"
 when the PMSF tree does not give the same kind of nearest relatives; "candidate, no intron" (bacterial genes have
@@ -75,6 +77,9 @@ NAMES = {"OKI": "*O. dioica* OKI2018", "OSKA": "*O. dioica* OSKA2016", "OdB3": "
 MERGE_NT = 30
 END_NT = 500
 COMPOSITION_Z = 5.0
+ORF_DENSE = 0.6        # fraction of a contig in long open reading frames (stage2/census_contigs.py) ...
+ORF_DENSE_MAX_GC = 0.5 # ... counted only at GC up to 50%, where random sequence gives at most about 0.3
+ORF_DENSE_MIN_LENGTH = 5000
 GC_Z = 5.0
 RELATED = {"SELENOW": {"MIEN1"}, "SEPHS2": {"SEPHS1"}}
 NONEUKARYOTIC = {"bacteria", "archaea", "prokarya", "organelle", "mitochondrion", "plastid"}
@@ -186,6 +191,20 @@ def placements(trees, taxa):
     return out
 
 
+def orf_dense(ctg):
+    """Contig mostly made of long open reading frames, as bacterial DNA is (see the constants)."""
+    orf, gc, length = fnum(ctg.get("contig_orf_fraction")), fnum(ctg.get("gc")), fnum(ctg.get("length"))
+    return (orf is not None and gc is not None and length is not None and orf >= ORF_DENSE and
+            gc <= ORF_DENSE_MAX_GC and length >= ORF_DENSE_MIN_LENGTH)
+
+
+def composition_z(ctg):
+    """Largest composition robust z-score of the contig (window of the largest reference length, and 2-kb window)."""
+    zs = [fnum(ctg.get(k)) for k in ("composition_robust_z", "composition_robust_z_2kb")]
+    zs = [z for z in zs if z is not None]
+    return max(zs) if zs else None
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--sites", default="results/tables/stage2_final_sec_sites.tsv")
@@ -231,11 +250,12 @@ def main():
             hit = rbh.get((g, pid), {})
             pl = place.get((g, pid), {})
             ml, pm = pl.get("ML"), pl.get("PMSF")
-            comp_z, gc_z = fnum(ctg.get("composition_robust_z")), fnum(ctg.get("gc_robust_z"))
+            comp_z, gc_z = composition_z(ctg), fnum(ctg.get("gc_robust_z"))
             tiara = (ctg.get("tiara_first_stage") or "").lower()
             tiara2 = (ctg.get("tiara_second_stage") or "").lower()
             flags = []
             if comp_z is not None and comp_z > COMPOSITION_Z: flags.append("composition outlier")
+            if orf_dense(ctg): flags.append(f"ORF-dense contig ({ctg.get('contig_orf_fraction')})")
             if gc_z is not None and abs(gc_z) > GC_Z: flags.append("GC outlier")
             if ml and ml[0] != "animal": flags.append(f"nearest relatives {ml[0]} (ML)")
             if pm and pm[0] != "animal": flags.append(f"nearest relatives {pm[0]} (PMSF)")
@@ -253,6 +273,8 @@ def main():
                 decision, reason = "left out", f"best human hit in another family ({best})"
             elif "composition outlier" in flags and ml and ml[0] in ("prokaryotic", "bacterial or fungal", "non-animal"):
                 decision, reason = "left out", f"composition outlier with {ml[0]} nearest relatives"
+            elif orf_dense(ctg) and ml and ml[0] in ("prokaryotic", "bacterial or fungal", "non-animal"):
+                decision, reason = "left out", f"ORF-dense contig with {ml[0]} nearest relatives"
             else: decision = "counted"
             p = preds.get((g, pid), {})
             out.append({"genome": g, "family": fam, "contig": contig, "strand": strand, "sec_codon_start": start,
@@ -311,13 +333,14 @@ def main():
         p = preds.get((g, pid), {})
         ctg = contigs.get((g, p.get("contig", "")), {})
         tiara = (ctg.get("tiara_first_stage") or "").lower()
-        comp_z = fnum(ctg.get("composition_robust_z"))
+        comp_z = composition_z(ctg)
         animal_neighbours = sorted(x for x in by_contig.get((g, p.get("contig", "")), []) if x != pid and
                                    place.get((g, x), {}).get("ML", ("",))[0] == "animal")
         hit = rbh.get((g, pid), {})
         best = hit.get("best_human_gene", "")
         if tiara in NONEUKARYOTIC: status = f"contamination (Tiara: {tiara})"
         elif comp_z is not None and comp_z > COMPOSITION_Z: status = "contamination likely (composition outlier)"
+        elif orf_dense(ctg): status = f"contamination likely (ORF-dense contig, {ctg.get('contig_orf_fraction')})"
         elif hit.get("status", "").startswith("other gene") and best not in RELATED.get(ml[3], set()):
             status = f"other family ({best}): its animal homologs are not in this tree"
         elif hit.get("status") == "no hit" and hit.get("expected_gene", "-") != "-":
@@ -335,6 +358,8 @@ def main():
                     "foreign sequences (ML)": " ".join(ml[5]),
                     "contig": p.get("contig", ""), "contig_length": ctg.get("length", ""),
                     "coding_exons": p.get("coding_exons", ""), "composition_z": ctg.get("composition_robust_z", ""),
+                    "composition_z_2kb": ctg.get("composition_robust_z_2kb", ""),
+                    "contig_orf_fraction": ctg.get("contig_orf_fraction", ""), "contig_gc": ctg.get("gc", ""),
                     "gc_z": ctg.get("gc_robust_z", ""), "tiara": tiara,
                     "animal-placed predictions on the contig": " ".join(animal_neighbours) or "-", "status": status})
     if hgt:

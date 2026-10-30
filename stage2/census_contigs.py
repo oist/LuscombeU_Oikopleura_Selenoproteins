@@ -14,10 +14,18 @@ For each genome of --genomes (data/genomes/<genome>/genome.fna.gz):
     ((x - median) / (1.4826 MAD) of the reference windows; contaminant windows among the reference windows raise
     the percentiles of contaminant contigs less than the robust z-scores); contigs shorter than the shortest window
     have no composition test;
+  - the same GC and composition measures on the 2-kb window centred on the predictions, against the 2-kb reference
+    windows: in fragmented assemblies, the longer reference windows come only from the few long contigs, which may
+    themselves be contaminants, whereas the 2-kb windows sample most of the assembly;
+  - the open reading frame density: the fraction of bases in stop-to-stop open reading frames of at least
+    ORF_CODONS codons (six frames, N as a stop), on the window (with its robust z-score against the reference windows
+    of the same length) and on the whole contig. Bacterial DNA is mostly coding (about 85 to 90%), animal genomic DNA
+    much less; random sequence of 30 to 45% GC has few long open frames (GC-rich sequence has more);
   - Tiara classes (first and second stage) of the contig, read from <tiara-dir>/<genome>.tiara.tsv when present
-    (Tiara classifies sequences of at least 3,000 nt).
-Per genome (--genome-table): assembly length, contigs, N50, median GC of the 10-kb reference windows, the 99th
-percentile of their composition distances, and the bases of the contigs of each Tiara first-stage class.
+    (Tiara classifies sequences of at least 3,000 nt; not run, decision of 2026-10-30).
+Per genome (--genome-table): assembly length, contigs, N50; for each reference length, the fraction of the assembly
+in contigs at least that long, the median GC and open reading frame density of the reference windows, and the 99th
+percentile of their composition distances; the bases of the contigs of each Tiara first-stage class.
 Outputs: --table (one row per genome and contig) and --genome-table.
 """
 import argparse, collections, csv, gzip, os, random, sys
@@ -26,6 +34,7 @@ import numpy as np
 
 GENOMES = ["OKI", "OSKA", "OdB3", "KUM", "AOM", "Bar2", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"]
 WINDOWS = [2000, 5000, 10000]
+ORF_CODONS = 100
 CODE = np.full(256, 4, dtype=np.uint8)
 for i, b in enumerate(b"ACGT"): CODE[b] = i; CODE[b + 32] = i     # upper and lower case
 
@@ -56,6 +65,30 @@ def composition(seq):
     a4 = a.astype(np.int64)
     code = a4[:-3] * 64 + a4[1:-2] * 16 + a4[2:-1] * 4 + a4[3:]
     return gc, np.bincount(CANON[code[v]], minlength=136).astype(float)
+
+
+def orf_fraction(seq, min_codons=ORF_CODONS):
+    """Fraction of the bases of a sequence (bytes) in stop-to-stop open reading frames of at least min_codons codons,
+    in any of the six frames (TAA, TAG, TGA, and codons with a base other than A, C, G, T, end a frame)."""
+    a = CODE[np.frombuffer(seq, dtype=np.uint8)]
+    L = len(a)
+    if L < 3 * min_codons: return 0.0
+    cov = np.zeros(L, dtype=bool)
+    rc = np.where(a < 4, 3 - a, 4)[::-1]
+    for strand, s_ in ((0, a), (1, rc)):
+        for f in range(3):
+            n = (L - f) // 3
+            c = s_[f:f + 3 * n].reshape(n, 3)
+            stop = (c[:, 0] == 3) & (((c[:, 1] == 0) & ((c[:, 2] == 0) | (c[:, 2] == 2))) |
+                                     ((c[:, 1] == 2) & (c[:, 2] == 0)))
+            stop |= (c >= 4).any(axis=1)
+            bounds = np.concatenate(([-1], np.flatnonzero(stop), [n]))
+            lengths = np.diff(bounds) - 1
+            for k in np.flatnonzero(lengths >= min_codons):
+                st, en = f + 3 * (bounds[k] + 1), f + 3 * bounds[k + 1]
+                if strand == 0: cov[st:en] = True
+                else: cov[L - en:L - st] = True
+    return float(cov.mean())
 
 
 def clr(counts):
@@ -136,30 +169,30 @@ def main():
                 x = rng.randrange(int(ends[-1]))
                 i = int(np.searchsorted(ends, x, side="right"))
                 wanted[long_[i][0]].append((w, x - (int(ends[i - 1]) if i else 0)))
-        ref = {w: {"gc": [], "clr": []} for w in WINDOWS}
+        ref = {w: {"gc": [], "clr": [], "orf": []} for w in WINDOWS}
         contigs = {}
         for n, s in read_fasta(fasta):
             for w, x in wanted.get(n, ()):
                 gc, k = composition(s[x:x + w])
-                if gc == gc: ref[w]["gc"].append(gc); ref[w]["clr"].append(clr(k))
+                if gc == gc:
+                    ref[w]["gc"].append(gc); ref[w]["clr"].append(clr(k)); ref[w]["orf"].append(orf_fraction(s[x:x + w]))
             if n in where[g]:
                 L = len(s)
                 fit = [w for w in WINDOWS if w <= L]
                 gc_all, _ = composition(s)
-                rec = {"length": L, "gc": gc_all, "window": fit[-1] if fit else None}
-                if fit:
-                    w = fit[-1]
-                    mid = int(np.median(where[g][n]))
+                rec = {"length": L, "gc": gc_all, "window": fit[-1] if fit else None, "orf": orf_fraction(s), "w": {}}
+                mid = int(np.median(where[g][n]))
+                for w in fit:
                     x = min(max(0, mid - w // 2), L - w)
                     wgc, k = composition(s[x:x + w])
-                    rec["wgc"], rec["wclr"] = wgc, clr(k)
+                    rec["w"][w] = (wgc, clr(k), orf_fraction(s[x:x + w]))
                 contigs[n] = rec
         stats = {}
         for w in WINDOWS:
             if not ref[w]["clr"]: continue
             m = np.median(np.array(ref[w]["clr"]), axis=0)
             d = np.array([np.linalg.norm(v - m) for v in ref[w]["clr"]])
-            stats[w] = (np.array(ref[w]["gc"]), m, d)
+            stats[w] = (np.array(ref[w]["gc"]), m, d, np.array(ref[w]["orf"]))
         tiara = read_tiara(f"{a.tiara_dir}/{g}.tiara.tsv")
         for n in sorted(contigs):
             rec = contigs[n]
@@ -167,15 +200,25 @@ def main():
             row = {"genome": g, "contig": n, "length": rec["length"], "gc": f"{rec['gc']:.4f}",
                    "predictions_and_sites": len(where[g][n]), "window": w or "", "window_gc": "",
                    "gc_percentile": "", "gc_robust_z": "", "composition_distance": "", "composition_percentile": "",
-                   "composition_robust_z": "",
+                   "composition_robust_z": "", "orf_fraction_window": "", "orf_robust_z": "",
+                   "contig_orf_fraction": f"{rec['orf']:.3f}", "gc_robust_z_2kb": "", "composition_robust_z_2kb": "",
+                   "orf_robust_z_2kb": "",
                    "tiara_first_stage": tiara.get(n, ("", ""))[0] if tiara else "not run",
                    "tiara_second_stage": tiara.get(n, ("", ""))[1] if tiara else ""}
             if w and w in stats:
-                gcs, m, d = stats[w]
-                dist = float(np.linalg.norm(rec["wclr"] - m))
-                row.update({"window_gc": f"{rec['wgc']:.4f}", "gc_percentile": percentile(gcs, rec["wgc"]),
-                            "gc_robust_z": robust_z(gcs, rec["wgc"]), "composition_distance": f"{dist:.3f}",
-                            "composition_percentile": percentile(d, dist), "composition_robust_z": robust_z(d, dist)})
+                gcs, m, d, orfs = stats[w]
+                wgc, wclr, worf = rec["w"][w]
+                dist = float(np.linalg.norm(wclr - m))
+                row.update({"window_gc": f"{wgc:.4f}", "gc_percentile": percentile(gcs, wgc),
+                            "gc_robust_z": robust_z(gcs, wgc), "composition_distance": f"{dist:.3f}",
+                            "composition_percentile": percentile(d, dist), "composition_robust_z": robust_z(d, dist),
+                            "orf_fraction_window": f"{worf:.3f}", "orf_robust_z": robust_z(orfs, worf)})
+            if WINDOWS[0] in rec["w"] and WINDOWS[0] in stats:
+                gcs, m, d, orfs = stats[WINDOWS[0]]
+                wgc, wclr, worf = rec["w"][WINDOWS[0]]
+                row.update({"gc_robust_z_2kb": robust_z(gcs, wgc),
+                            "composition_robust_z_2kb": robust_z(d, float(np.linalg.norm(wclr - m))),
+                            "orf_robust_z_2kb": robust_z(orfs, worf)})
             if tiara and n not in tiara and rec["length"] < 3000: row["tiara_first_stage"] = "too short"
             rows.append(row)
         ls = sorted(lengths.values(), reverse=True)
@@ -183,10 +226,14 @@ def main():
         for L in ls:
             acc += L
             if acc >= half: n50 = L; break
-        gr = {"genome": g, "assembly_length": sum(ls), "contigs": len(ls), "N50": n50,
-              "median_gc_10kb": f"{np.median(stats[10000][0]):.4f}" if 10000 in stats else "",
-              "composition_distance_p99_10kb": f"{np.percentile(stats[10000][2], 99):.3f}" if 10000 in stats else "",
-              "tiara": "run" if tiara else "not run"}
+        gr = {"genome": g, "assembly_length": sum(ls), "contigs": len(ls), "N50": n50}
+        for w in WINDOWS:
+            kb = f"{w // 1000}kb"
+            gr[f"fraction_in_contigs_{kb}"] = f"{sum(L for L in ls if L >= w) / sum(ls):.3f}"
+            gr[f"median_gc_{kb}"] = f"{np.median(stats[w][0]):.4f}" if w in stats else ""
+            gr[f"median_orf_fraction_{kb}"] = f"{np.median(stats[w][3]):.3f}" if w in stats else ""
+            gr[f"composition_distance_p99_{kb}"] = f"{np.percentile(stats[w][2], 99):.3f}" if w in stats else ""
+        gr["tiara"] = "run" if tiara else "not run"
         if tiara:
             bases = collections.Counter()
             for n, (c1, _) in tiara.items(): bases[c1] += lengths.get(n, 0)

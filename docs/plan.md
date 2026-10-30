@@ -1398,3 +1398,17 @@ no earlier step waits for them.
   codon lies more than 55 nt upstream of the last exon junction in 32 models (the mammalian rule for
   junction-dependent NMD; selenoprotein mRNAs are NMD substrates when the UGA is read as a stop: Moriarty et al. 1998,
   doi:10.1128/MCB.18.5.2932; Sun et al. 2001, doi:10.1091/mbc.12.4.1009) and in the last exon in 18.
+- Census contig checks, first run (2026-10-30, commit d66521f). Assemblies: N50 1.3 kb (B. stygius), 1.9 kb
+  (M. erythrocephalus), 2.4 kb (O. longicauda), 2.8 kb (F. borealis), 0.2 to 16 Mb for the others. Composition
+  outliers (robust z > 5) among the contigs with predictions: OdB3 1, O. longicauda 1, M. erythrocephalus 4,
+  F. borealis 9 (109 of its 222 contigs shorter than 2 kb, untested). Census decisions unchanged. HGT screen: 7 entries
+  now "contamination likely (composition outlier)" (F. borealis cysteine DIO-like and GPX, one SELENOO), 25 intronless
+  candidates left. Caveat found: in fragmented assemblies the 10-kb reference windows come only from the few long
+  contigs; the B. stygius SELENOO candidates lie on 49- and 137-kb contigs and B. stygius GPX.1 on a 178-kb contig,
+  long for an assembly of N50 1.3 kb, which is itself a reason to suspect a high-coverage contaminant, and they are
+  compared with windows of such contigs (z -0.5, -0.2, -0.7). Added: comparisons on the 2-kb window against 2-kb
+  reference windows; open reading frame density (fraction of bases in open frames of at least 100 codons, six frames)
+  of the window and of the whole contig (tests: random 40% GC 0.03, random 65% GC 0.84, coding-dense 0.97; hence the
+  rule only at GC up to 50%); per genome, the fraction of the assembly in contigs of each window length and the
+  reference medians. New rule fixed before the rerun: ORF-dense contig (at least 0.6 of the contig in long open
+  frames, GC up to 50%, contig of 5 kb or more) treated as a composition outlier. To rerun: make census-contigs.
