@@ -1505,3 +1505,13 @@ no earlier step waits for them.
   the selenoprotein families, "Candidate genes" with candidate_transcripts.py). SELENON, SELENOH, MSRB1 absent from
   appendicularians, FrnE and SELENOL from the Oikopleuridae (within the limits of tblastn on these assemblies).
   Next: follow-up 2 (screen-found SELENOK proteins into the SELENOK profile before the deposit), then step 10.
+- Step 9 follow-up 2 started (2026-10-30): SELENOK of the other Oikopleura species into the SELENOK profile before the
+  deposit. The screens found SELENOK in O. longicauda (SECIS scan, codon not placed; final run: a 46-aa "unaligned"
+  fragment), O. albicans and O. vanhoeffeni (comparative screen, C-terminal open stretches of 34 and 21 aa ending
+  GGUGR) and M. erythrocephalus (held out; 25 aa); the final run predicted none of them. The screen frames are
+  C-terminal fragments, not usable as profile members. First, why the final SELENOK profile (24 sequences; filters:
+  blast E < 0.01, p2g_refiltering identity with profile >= 0.12) misses them: make selenok-diagnose
+  (diagnose_refiltering.py with SELENOK and the final build in OKI2018, the three Oikopleura species and the three
+  held-out appendicularians; candidate predictions before filtering, now with their proteins). If the genes are
+  found and filtered, their predicted proteins (Olon, Oalb, Ovan only; Mery stays held out) can become profile
+  members; if not found, protein-to-genome alignment at the screen loci.

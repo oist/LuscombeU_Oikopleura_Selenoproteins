@@ -4,7 +4,8 @@ Called by a pre_filtering action of Selenoprofiles (-ACTION.pre_filtering...) wi
 the filters of the profile are applied. Writes one line per prediction to $DIAG_OUT: prediction, position, label,
 measures used by the filters, and the value of the p2g_filtering and p2g_refiltering expressions of the profile
 configuration ($DIAG_CONFIG) and of each top-level "and" clause of p2g_refiltering, so that the clause that removes a
-prediction can be read.
+prediction can be read. When $DIAG_FAA is set, the protein of each prediction (Selenoprofiles notation: U for a
+selenocysteine) is appended there in FASTA format, named as in the table.
 """
 import ast, os
 
@@ -53,3 +54,6 @@ def report(x):
            str(hi)] + [value(e, x) for e in exprs]
     with open(out, "a") as o:
         o.write("\t".join(row) + "\n")
+    if os.environ.get("DIAG_FAA"):
+        with open(os.environ["DIAG_FAA"], "a") as o:
+            o.write(f">{row[0]}\n{value('x.protein()', x)}\n")

@@ -9,8 +9,9 @@ assemblies with the standard, E0 and LOO_OKI profiles (the benchmark of 2026-10-
 standard profile in OSKA2016 in stage 1 and with LOO_OKI in OKI2018 and KUM, but with no other build), and GPX and
 DIO in O. albicans (two stage 1 references not found with E0).
 Selenoprofiles runs with the full Selenoprofiles data (Gene Ontology and tag database, used by some filters) and the
-profile folder of the build. Outputs: --out/<genome>.<family>.<build>.tsv, and --table (all jobs, with the
-reference gene, if any, that overlaps each prediction).
+profile folder of the build. Outputs: --out/<genome>.<family>.<build>.tsv and .faa (the proteins of the candidate
+predictions), --table (all jobs, with the reference gene, if any, that overlaps each prediction) and, with --faa, the
+proteins of all jobs (named <genome>|<family>|<build>|<prediction>).
 """
 import argparse, concurrent.futures, csv, gzip, os, shutil, subprocess, sys, tempfile
 
@@ -27,10 +28,12 @@ def job(spec, a):
     folder = os.path.abspath(f"{a.data}/selenoprotein_profiles" if build == "standard" else f"{a.profiles}/{build}")
     out = os.path.abspath(f"{a.out}/{genome}.{family}.{build}.tsv")
     if os.path.exists(out) and not a.force: return spec, out, "kept from an earlier run"
-    if os.path.exists(out): os.remove(out)
+    for f in (out, out[:-4] + ".faa"):
+        if os.path.exists(f): os.remove(f)
     work = tempfile.mkdtemp(dir=os.path.abspath(a.out))
     try:
-        env = dict(os.environ, HOME=work, DIAG_CONFIG=f"{folder}/{family}.fa.config", DIAG_OUT=out)
+        env = dict(os.environ, HOME=work, DIAG_CONFIG=f"{folder}/{family}.fa.config", DIAG_OUT=out,
+                   DIAG_FAA=out[:-4] + ".faa")
         subprocess.run(["selenoprofiles", "-setup"], env=env, check=True, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL)
         # Selenoprofiles 4.5.8 refuses actions on the command line (strict option parsing); its configuration file
@@ -63,6 +66,7 @@ def main():
     ap.add_argument("--truth", default="results/tables/stage2_truth_sets.tsv")
     ap.add_argument("--out", default="work/stage2/diagnose_refiltering")
     ap.add_argument("--table", default="results/tables/stage2_refiltering_diagnosis.tsv")
+    ap.add_argument("--faa", default="", help="proteins of the candidate predictions of all jobs")
     ap.add_argument("--threads", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 4)))
     ap.add_argument("--force", action="store_true", help="rerun jobs whose output exists")
     a = ap.parse_args()
@@ -97,6 +101,16 @@ def main():
             except ValueError: ref = ""
             failing = [c for c, v in zip(cols[n + 2:], r[n + 2:]) if v != "True"]
             rows.append([genome, family, build, ref] + r[:n] + [r[n], r[n + 1], " | ".join(failing)])
+    if a.faa:
+        with open(a.faa, "w") as o:
+            for spec in a.jobs:
+                genome, family, build = spec.split(":")
+                path = f"{a.out}/{genome}.{family}.{build}.faa"
+                if not os.path.exists(path): continue
+                name = None
+                for l in open(path):
+                    if l.startswith(">"): name = l[1:].strip()
+                    elif name: o.write(f">{genome}|{family}|{build}|{name}\n{l.strip()}\n")
     if rows and a.table:
         with open(a.table, "w") as o:
             o.write("\t".join(head) + "\n")

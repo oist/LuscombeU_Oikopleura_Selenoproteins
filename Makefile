@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -362,6 +362,17 @@ stage2-truth:
 #   sbatch [--partition=<partition>] --cpus-per-task=4 scripts/run_in_container.sh make stage2-diagnose
 stage2-diagnose:
 	python3 stage2/diagnose_refiltering.py
+
+# Step 9 follow-up 2: why the final SELENOK profile misses the SELENOK genes that the UGA/SECIS screens found in
+# O. longicauda, O. albicans, O. vanhoeffeni and M. erythrocephalus (and how it does in the other appendicularians and
+# OKI2018): candidate predictions before filtering, with their proteins (minutes), for example
+#   sbatch -p compute --cpus-per-task=4 --mem=16G --time=4:00:00 scripts/run_in_container.sh make selenok-diagnose
+SELENOK_DIAG_GENOMES = OKI Olon Oalb Ovan Bsty Mery Fbor
+SELENOK_DIAG_BUILDS = final
+selenok-diagnose:
+	python3 stage2/diagnose_refiltering.py --jobs $(foreach b,$(SELENOK_DIAG_BUILDS),$(foreach g,$(SELENOK_DIAG_GENOMES),$(g):SELENOK:$(b))) \
+	  --out work/stage2/diagnose_selenok --table results/tables/stage2_selenok_diagnosis.tsv \
+	  --faa results/tables/stage2_selenok_diagnosis.faa
 
 # Step 9: census of the appendicularian selenoproteins from the stage 2 final run (stage2/README.md, "Census").
 # 1. stage2-collect (minutes): tables of the final run (results/tables/stage2_final_*.tsv) and its machinery census
