@@ -26,7 +26,8 @@ sequences, but a locus is left out only on evidence against it):
                            SELENOW, SEPHS1 for SEPHS2); or its contig is a composition outlier (robust z-score of the
                            tetranucleotide distance above COMPOSITION_Z, on the largest window or the 2-kb window) or
                            ORF-dense (at least ORF_DENSE of the contig in open reading frames of 100 codons or more,
-                           at GC up to ORF_DENSE_MAX_GC, contig of ORF_DENSE_MIN_LENGTH nt or more), and its nearest
+                           and ORF_DENSE_MARGIN above the median of the 2-kb windows of its genome, at GC up to
+                           ORF_DENSE_MAX_GC, contig of ORF_DENSE_MIN_LENGTH nt or more), and its nearest
                            relatives in the ML tree of its family are all non-animal;
   counted                  otherwise.
 Flags reported with each locus (not decisive alone): composition outlier; ORF-dense contig; GC outlier (robust z-score beyond GC_Z);
@@ -78,8 +79,11 @@ MERGE_NT = 30
 END_NT = 500
 COMPOSITION_Z = 5.0
 ORF_DENSE = 0.6        # fraction of a contig in long open reading frames (stage2/census_contigs.py) ...
-ORF_DENSE_MAX_GC = 0.5 # ... counted only at GC up to 50%, where random sequence gives at most about 0.3
+ORF_DENSE_MAX_GC = 0.5 # ... counted only at GC up to 50%, where random sequence gives at most about 0.3 ...
 ORF_DENSE_MIN_LENGTH = 5000
+ORF_DENSE_MARGIN = 0.3 # ... and at least this much above the median of the 2-kb windows of its genome (added
+                       # 2026-10-30 after the second contig run: the median of F. borealis is 0.80)
+GENOME_ORF = {}        # genome -> median open reading frame density of its 2-kb windows (read in main)
 GC_Z = 5.0
 RELATED = {"SELENOW": {"MIEN1"}, "SEPHS2": {"SEPHS1"}}
 NONEUKARYOTIC = {"bacteria", "archaea", "prokarya", "organelle", "mitochondrion", "plastid"}
@@ -192,10 +196,12 @@ def placements(trees, taxa):
 
 
 def orf_dense(ctg):
-    """Contig mostly made of long open reading frames, as bacterial DNA is (see the constants)."""
+    """Contig mostly made of long open reading frames, as bacterial DNA is, and denser than its genome (see the
+    constants)."""
     orf, gc, length = fnum(ctg.get("contig_orf_fraction")), fnum(ctg.get("gc")), fnum(ctg.get("length"))
-    return (orf is not None and gc is not None and length is not None and orf >= ORF_DENSE and
-            gc <= ORF_DENSE_MAX_GC and length >= ORF_DENSE_MIN_LENGTH)
+    base = GENOME_ORF.get(ctg.get("genome"))
+    return (orf is not None and gc is not None and length is not None and base is not None and
+            orf >= max(ORF_DENSE, base + ORF_DENSE_MARGIN) and gc <= ORF_DENSE_MAX_GC and length >= ORF_DENSE_MIN_LENGTH)
 
 
 def composition_z(ctg):
@@ -210,6 +216,7 @@ def main():
     ap.add_argument("--sites", default="results/tables/stage2_final_sec_sites.tsv")
     ap.add_argument("--predictions", default="results/tables/stage2_final_predictions.tsv")
     ap.add_argument("--contigs", default="results/tables/stage2_census_contigs.tsv")
+    ap.add_argument("--genome-table", default="results/tables/stage2_census_genomes.tsv")
     ap.add_argument("--rbh", default="results/tables/stage2_selenoprotein_rbh.tsv")
     ap.add_argument("--trees", default="results/trees/selenoproteins")
     ap.add_argument("--gold", default="curation/gold_standard")
@@ -225,6 +232,8 @@ def main():
     if not sites: raise SystemExit(f"no selenocysteine codon in {a.sites}")
     preds = {(r["genome"], r["prediction"]): r for r in rows(a.predictions)}
     contigs = {(r["genome"], r["contig"]): r for r in rows(a.contigs)}
+    for r in rows(a.genome_table):
+        if fnum(r.get("median_orf_fraction_2kb")) is not None: GENOME_ORF[r["genome"]] = fnum(r["median_orf_fraction_2kb"])
     if not contigs: print(f"WARNING: {a.contigs} not found; no contig checks", flush=True)
     rbh = {(r["genome"], r["prediction"]): r for r in rows(a.rbh)}
     gold = gold_genes(a.gold, ["OKI", "OSKA", "OdB3"])

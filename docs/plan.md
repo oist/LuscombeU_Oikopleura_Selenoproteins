@@ -1412,3 +1412,18 @@ no earlier step waits for them.
   rule only at GC up to 50%); per genome, the fraction of the assembly in contigs of each window length and the
   reference medians. New rule fixed before the rerun: ORF-dense contig (at least 0.6 of the contig in long open
   frames, GC up to 50%, contig of 5 kb or more) treated as a composition outlier. To rerun: make census-contigs.
+- Census contig checks, second run (2026-10-30, commit 26ec103). Median open reading frame density of the 2-kb
+  windows: O. dioica 0.41 to 0.44, O. longicauda 0.34, O. albicans 0.16, O. vanhoeffeni 0.00, M. erythrocephalus 0.15,
+  B. stygius 0.21 (but 0.76 for 5-kb and 0.89 for 10-kb windows: its contigs of 10 kb or more, 2.9% of the assembly,
+  are mostly ORF-dense, bacterial-like), F. borealis 0.80 at every window length. The F. borealis selenoprotein genes
+  with SECIS hits lie on contigs of the same density (GPX.4, GPX.5, GPX.12, SELENOW.4: 0.70 to 0.77): either a
+  compact genome with long open frames (most of its predictions are single-exon) or an assembly largely made of
+  non-animal DNA; these checks cannot tell (Tiara or a database search could). Rule revised after seeing these data:
+  an ORF-dense contig must also exceed the median of its genome by 0.3 (as first written, the rule left out
+  F. borealis SELENOF.2, in DNA typical of its assembly). Census: 247 loci, 59 gold-standard genes, one left out
+  (F. borealis DIO.14, best human hit GPX1). HGT screen: the B. stygius (6) and M. erythrocephalus (3) entries,
+  cysteine SELENOO, DIO-like and GPX, lie on ORF-dense contigs of 26 to 324 kb (0.88 to 0.93) and are "contamination
+  likely": the SELENOO and DIO-like clades shared by B. stygius, M. erythrocephalus and F. borealis are best explained
+  by bacterial contamination of one lineage in the three samples. Left: 21 intronless F. borealis entries, 20 of them
+  on contigs shorter than 3 kb, not testable with these data. No credible candidate of horizontal transfer in the
+  selenoprotein families.
