@@ -1515,3 +1515,11 @@ no earlier step waits for them.
   held-out appendicularians; candidate predictions before filtering, now with their proteins). If the genes are
   found and filtered, their predicted proteins (Olon, Oalb, Ovan only; Mery stays held out) can become profile
   members; if not found, protein-to-genome alignment at the screen loci.
+- make selenok-diagnose (2026-10-31, commit 5c7698f): the final SELENOK profile gives no candidate prediction at all,
+  before filtering, in O. albicans, O. vanhoeffeni and M. erythrocephalus; in O. longicauda an "unaligned" fragment
+  (SCLD01109698.1:5846-5983, -, coverage 0.55; the SECIS scan locus) and a "serine" fragment (SCLD01095635.1);
+  in B. stygius an "unaligned" fragment, in F. borealis four "glycine" fragments; OKI2018 control found (coverage
+  0.99). The genes are missed at the search, not by the filters (short exons, as for TXNL1 and KKSU). The profile
+  members must therefore be built from the genomes: make selenok-regions (stage2/extract_regions.py,
+  curation/selenok_loci.tsv) extracts 9 kb around each screen locus; gene models then built here by protein-to-genome
+  alignment of the O. dioica SELENOK. results/sequences/ (small FASTA and TSV files) no longer ignored by git.
