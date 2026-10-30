@@ -2,7 +2,10 @@
 """Step 5 of the plan (docs/plan.md, 2026-10-24): candidate selenoprotein genes outside the baseline
 (curation/candidates.tsv; proteins in curation/candidates.faa, U for the candidate selenocysteine): TXNL1.b
 (thioredoxin-like protein 1), for which the rule below was fixed in advance, and the family found by the screens of
-step 4 (provisional name KKSU, after its C-terminus), to which the same rule is applied.
+step 4 (provisional name KKSU, after its C-terminus), to which the same rule is applied; SELENOI (selenoprotein I,
+the ethanolamine phosphotransferase EPT1), found by the absence tests of step 9 (2026-10-30): a C-terminal isoform with
+an in-frame TGA at the selenocysteine position of vertebrate SELENOI in transcripts of the three O. dioica species, the
+gene missed by every earlier search; its codons in the three assemblies are located by tblastn (--locate).
 
 1. Rule in the three O. dioica assemblies: at the curated position of each assembly, the codon must be TGA, and the
    best SECIS hit of the Oikopleura model (results/models/oikopleura_secis.cm, cmsearch on the top strand) in the
@@ -305,6 +308,8 @@ def main():
     ap.add_argument("--evalue", type=float, default=1e-5)
     ap.add_argument("--extend", type=int, default=5)
     ap.add_argument("--locus-span", type=int, default=20000, help="HSPs within this distance of the best one form its locus")
+    ap.add_argument("--locate", nargs="*", default=["SELENOI"],
+                    help="candidates without curated rows whose codon is located by tblastn in the O. dioica assemblies")
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--work", default="work/stage2/candidates")
@@ -315,15 +320,6 @@ def main():
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     rows, prot = read_candidates(a.candidates, a.proteins)
     secis = Secis({"oikopleura": a.model, "RF00031": a.rfam}, a.work)
-    # 1. the rule
-    res = rule(a, rows, sheet, secis)
-    cols = ["gene", "genome", "contig", "codon", "strand", "codon_found", "codons_after", "context", "context_found",
-            "secis_bits", "secis_position", "genome_threshold", "verdict", "notes"]
-    with open(f"{a.tables}/stage2_candidates_rule.tsv", "w") as o:
-        o.write("\t".join(cols) + "\n")
-        for r in res: o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
-    for gene in sorted({r["gene"] for r in res}):
-        print(gene, next(r["verdict"] for r in res if r["gene"] == gene), flush=True)
     # 2. other genomes
     genomes = [g for g in a.genomes if g in sheet]
     out = []
@@ -337,6 +333,23 @@ def main():
         o.write("\t".join(cols) + "\n")
         for r in sorted(out, key=lambda r: (r["candidate"], order.get(r["genome"], 99))):
             o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
+    # 1. the rule, in the three O. dioica assemblies (candidates of --locate without curated rows: the position of the
+    # codon aligned to their U by tblastn in each assembly)
+    have = {(r["gene"], r["genome"]) for r in rows}
+    for r in out:
+        if r["candidate"] in a.locate and r["genome"] in DIOICA and (r["candidate"], r["genome"]) not in have and \
+                r.get("position"):
+            rows.append({"genome": r["genome"], "gene": r["candidate"], "contig": r["contig"], "codon": r["position"],
+                         "strand": r["strand"], "context": "",
+                         "notes": "position of the codon aligned to the U by tblastn of the candidate protein"})
+    res = rule(a, rows, sheet, secis)
+    cols = ["gene", "genome", "contig", "codon", "strand", "codon_found", "codons_after", "context", "context_found",
+            "secis_bits", "secis_position", "genome_threshold", "verdict", "notes"]
+    with open(f"{a.tables}/stage2_candidates_rule.tsv", "w") as o:
+        o.write("\t".join(cols) + "\n")
+        for r in res: o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
+    for gene in sorted({r["gene"] for r in res}):
+        print(gene, next(r["verdict"] for r in res if r["gene"] == gene), flush=True)
     # 3. proteomes
     out = []
     for g in a.proteomes: out += proteome_hits(g, a, prot)

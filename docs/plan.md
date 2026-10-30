@@ -1461,3 +1461,16 @@ no earlier step waits for them.
   known, since the final run predicted no SELENOI. machinery_absence.py now reports, for each candidate, the residues
   aligned to the selenocysteine of its best reference (TGA read as U; transcript ORFs read through TGA) and the
   protein. To rerun: make selenoprotein-absence.
+- Absence tests, rerun (2026-10-30, commit d9b0868): SELENOI is a candidate selenoprotein of O. dioica. Transcripts of
+  the three species (OKI2018 Trinity TRINITY_DN1283_c0_g1_i2 and _i5, OSKA2016 comp21960_c0_seq1, OdB3 EST
+  KT0AAA233YG01RM2), read through TGA, encode an EPT1/SELENOI protein (394 aa in OKI2018, 285 bits to zebrafish
+  SELENOI, 175 bits closer than to CEPT1) with an in-frame TGA aligned to the selenocysteine of zebrafish SELENOI, in
+  a conserved C-terminal motif ...VFKIIPTKTDU-QI; other isoforms of the same genes end ...VFKIIPTS(I/M)SS(L/I)
+  without it, apparently an alternative last exon. In OKI2018 a second in-frame TGA follows 3 codons later (OSKA2016
+  H, OdB3 P). Missed by stage 1, the final run (no SELENOI prediction at all) and the step 4 screens (no SECIS hit
+  above threshold in these transcripts). The genomic candidates of the other species stop before the selenocysteine
+  region (short exon). SELENON: the OSKA2016 transcript fragment (36 aa, GEPLQFVFEEIKWQQELSWEEAARR..., 77.8 bits to a
+  human SELENON isoform) is near identical to human SELENON: contamination of that transcriptome, not counted.
+  SELENOI added to step 5's candidate genes (curation/candidates.faa; codons located by tblastn in the three
+  assemblies, then the rule: TGA and SECIS of at least 20 bits in the 2 kb after the stop codon in the three
+  assemblies; other genomes and proteomes as for TXNL1.b and KKSU). To run: make candidate-genes.
