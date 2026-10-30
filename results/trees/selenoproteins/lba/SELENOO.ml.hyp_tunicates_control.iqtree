@@ -1,0 +1,240 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOO.trimmed
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 76 sequences with 724 amino-acid sites
+Number of constant sites: 27 (= 3.72928% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 27 (= 3.72928% of all sites)
+Number of parsimony informative sites: 668
+Number of distinct site patterns: 716
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+I+R6
+
+State frequencies: (model)
+
+Model of rate heterogeneity: Invar+FreeRate with 6 categories
+Proportion of invariable sites: 0.0224
+Site proportion and rates:  (0.1251,0.0630) (0.1675,0.2471) (0.1686,0.5071) (0.1618,0.9497) (0.2619,1.6276) (0.0927,3.0773)
+
+ Category  Relative_rate  Proportion
+  0         0              0.0224
+  1         0.0630         0.1251
+  2         0.2471         0.1675
+  3         0.5071         0.1686
+  4         0.9497         0.1618
+  5         1.6276         0.2619
+  6         3.0773         0.0927
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -51798.9432 (s.e. 1138.5013)
+Unconstrained log-likelihood (without tree): -4753.2734
+Number of free parameters (#branches + #model parameters): 160
+Akaike information criterion (AIC) score: 103917.8863
+Corrected Akaike information criterion (AICc) score: 104009.3961
+Bayesian information criterion (BIC) score: 104651.4529
+
+Total tree length (sum of branch lengths): 50.5444
+Sum of internal branch lengths: 18.3617 (36.3279% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_' is drawn at root
+
++------------Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_
+|
+|                                                 +--ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor
+|                                              +--|
+|                                              |  |  +--ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex
+|                                              |  +--|
+|                                              |     +--Drer_SELENOO.2.selenocysteine
+|                                          +---|
+|                                          |   +-----Drer_SELENOO.9.selenocysteine
+|                                       +--|
+|                                       |  |  +--ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha
+|                                       |  +--|
+|                                       |     |           +--ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom
+|                                       |     |        +--|
+|                                       |     |        |  |        +--ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau
+|                                       |     |        |  |     +--|
+|                                       |     |        |  |     |  +--ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur
+|                                       |     |        |  |  +--|
+|                                       |     |        |  |  |  +--Human_SELENOO_NP_113642.1
+|                                       |     |        |  +--|
+|                                       |     |        |     +--Mmus_SELENOO.1.selenocysteine
+|                                       |     |     +--|
+|                                       |     |     |  +--ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut
+|                                       |     |  +--|
+|                                       |     |  |  +--ENSACAP00000002181_Acar_ENSACAP00000002181_Acar
+|                                       |     +--|
+|                                       |        +--ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro
+|                                    +--|
+|                                    |  |   +--Bflo_SELENOO.12.selenocysteine
+|                                    |  +---|
+|                                    |      +--Blan_SELENOO.12.unaligned
+|                                 +--|
+|                                 |  +---------Ixodes_scapularis_gi_215498714_gb_EEC08208.1
+|                              +--|
+|                              |  |                  +**ENSCINP00000005632_Cint_ENSCINP00000005632_Cint
+|                              |  |               +--|
+|                              |  |               |  +**Crob_SELENOO.1.selenocysteine
+|                              |  |            +--|
+|                              |  |            |  +--Cint_SELENOO.1.selenocysteine
+|                              |  |        +---|
+|                              |  |        |   |  +--ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav
+|                              |  |        |   +--|
+|                              |  |        |      +--Csav_SELENOO.3.pseudo
+|                              |  |     +--|
+|                              |  |     |  |     +------Pege_SELENOO.1.unaligned
+|                              |  |     |  |  +--|
+|                              |  |     |  |  |  +---Stho_SELENOO.8.selenocysteine
+|                              |  |     |  +--|
+|                              |  |     |     +-----Tdem_SELENOO.2.selenocysteine
+|                              |  |  +--|
+|                              |  |  |  +-----Pmam_SELENOO.8.selenocysteine
+|                              |  +--|
+|                              |     |  +-----Bsch_SELENOO.1.selenocysteine
+|                              |     +--|
+|                              |        |  +----Hror_SELENOO.1.selenocysteine
+|                              |        +--|
+|                              |           +--Scla_SELENOO.1.selenocysteine
+|                           +--|
+|                           |  |              +--Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1
+|                           |  |  +-----------|
+|                           |  |  |           +--SelO_P.sojae_SelO_P.sojae
+|                           |  +--|
+|                           |     |        +-----Mery_SELENOO.2.unaligned
+|                           |     |     +--|
+|                           |     |     |  |  +----Olon_SELENOO.1.unaligned
+|                           |     |     |  +--|
+|                           |     |     |     +--Olon_SELENOO.5.pseudo
+|                           |     |  +--|
+|                           |     |  |  |     +---Oalb_SELENOO.5.selenocysteine
+|                           |     |  |  |  +--|
+|                           |     |  |  |  |  +---Ovan_SELENOO.4.unaligned
+|                           |     |  |  +--|
+|                           |     |  |     |      +--OdB3_SELENOO.5.unaligned
+|                           |     |  |     |   +--|
+|                           |     |  |     |   |  +--OSKA_gold_SELENOO
+|                           |     |  |     +---|
+|                           |     |  |         +--OKI_gold_SELENOO
+|                           |     +--|
+|                           |        |  +--------Mery_SELENOO.6.unaligned
+|                           |        +--|
+|                           |           +----Olon_SELENOO.8.unaligned
+|                        +--|
+|                        |  +-----------------Fbor_SELENOO.2.cysteine
+|                     +--|
+|                     |  |              +--ENSGALP00000012216_ENSGALP00000012216
+|                     |  |          +---|
+|                     |  |          |   +--ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin
+|                     |  |       +--|
+|                     |  |       |  |    +--Bflo_SELENOO.3.cysteine
+|                     |  |       |  +----|
+|                     |  |       |       +--Blan_SELENOO.4.cysteine
+|                     |  +-------|
+|                     |          |        +-----Bsch_SELENOO.4.cysteine
+|                     |          |     +--|
+|                     |          |     |  +---Scla_SELENOO.3.cysteine
+|                     |          |  +--|
+|                     |          |  |  +----Hror_SELENOO.3.cysteine
+|                     |          +--|
+|                     |             +---------Pmam_SELENOO.1.cysteine
+|                  +--|
+|                  |  |        +------Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1
+|                  |  |   +----|
+|                  |  |   |    +-----gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5
+|                  |  +---|
+|                  |      |  +--------gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506
+|                  |      +--|
+|                  |         |                      +--Fbor_SELENOO.4.cysteine
+|                  |         |                   +--|
+|                  |         |                   |  +--Fbor_SELENOO.8.cysteine
+|                  |         |                +--|
+|                  |         |                |  +--Fbor_SELENOO.11.unaligned
+|                  |         |             +--|
+|                  |         |             |  +--Fbor_SELENOO.6.cysteine
+|                  |         |       +-----|
+|                  |         |       |     +--Fbor_SELENOO.9.unaligned
+|                  |         |  +----|
+|                  |         |  |    +---------------Fbor_SELENOO.16.unaligned
+|                  |         +--|
+|                  |            |        +---------Fbor_SELENOO.13.unaligned
+|                  |            +--------|
+|                  |                     +----------Fbor_SELENOO.18.unaligned
+|               +--|
+|               |  +-----------------------------------------Fbor_SELENOO.17.unaligned
+|            +--|
+|            |  |             +--Ricinus_communis_gi_223547341_gb_EEF48836.1
+|            |  |          +--|
+|            |  |          |  +--Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1
+|            |  |  +-------|
+|            |  |  |       +--Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001
+|            |  +--|
+|            |     |          +----Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1
+|            |     |      +---|
+|            |     |      |   |  +----Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020
+|            |     |      |   +--|
+|            |     |      |      +--gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2
+|            |     |   +--|
+|            |     |   |  +---------Fbor_SELENOO.1.cysteine
+|            |     +---|
+|            |         |        +--Bsty_SELENOO.1.cysteine
+|            |         |     +--|
+|            |         |     |  +--Mery_SELENOO.1.cysteine
+|            |         |  +--|
+|            |         |  |  +--Bsty_SELENOO.2.cysteine
+|            |         +--|
+|            |            +---Fbor_SELENOO.21.cysteine
++------------|
+|            +-----------------------------YPL222W_Scer_YPL222W_Scer
+|
+|            +--Fbor_SELENOO.14.unaligned
++------------|
+             +--Fbor_SELENOO.19.unaligned
+
+Tree in newick format:
+
+(Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_:1.1328620954,(((((((((((((ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor:0.2426420492,(ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex:0.1555334639,Drer_SELENOO.2.selenocysteine:0.1444883468):0.0515758259):0.0974029709,Drer_SELENOO.9.selenocysteine:0.5246766610):0.3926968309,(ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha:0.2301786922,((((ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom:0.2023703967,(((ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau:0.1507793139,ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur:0.1279596103):0.0344987730,Human_SELENOO_NP_113642.1:0.0855536026):0.0413564616,Mmus_SELENOO.1.selenocysteine:0.1466769160):0.1376568977):0.1641085553,ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut:0.1143325321):0.0516215148,ENSACAP00000002181_Acar_ENSACAP00000002181_Acar:0.2447111008):0.0638036518,ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro:0.3083209195):0.1065141936):0.1454348257):0.1813906256,(Bflo_SELENOO.12.selenocysteine:0.0690910799,Blan_SELENOO.12.unaligned:0.0948941543):0.4102911898):0.0988341493,Ixodes_scapularis_gi_215498714_gb_EEC08208.1:0.8926663343):0.0474104940,((((((ENSCINP00000005632_Cint_ENSCINP00000005632_Cint:0.0000010357,Crob_SELENOO.1.selenocysteine:0.0000028015):0.0519280437,Cint_SELENOO.1.selenocysteine:0.0386475812):0.2290884747,(ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav:0.0169628841,Csav_SELENOO.3.pseudo:0.0091249951):0.3298832944):0.3421148700,((Pege_SELENOO.1.unaligned:0.6230351818,Stho_SELENOO.8.selenocysteine:0.4009565490):0.0955115196,Tdem_SELENOO.2.selenocysteine:0.5728590238):0.1670065635):0.0626776632,Pmam_SELENOO.8.selenocysteine:0.5674193951):0.2266866283,(Bsch_SELENOO.1.selenocysteine:0.5048861892,(Hror_SELENOO.1.selenocysteine:0.4342522455,Scla_SELENOO.1.selenocysteine:0.3297229453):0.1187908469):0.1637458373):0.1117673040):0.1996409168,((Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1:0.1488188837,SelO_P.sojae_SelO_P.sojae:0.1212369923):1.0298302087,(((Mery_SELENOO.2.unaligned:0.5430482295,(Olon_SELENOO.1.unaligned:0.4980433604,Olon_SELENOO.5.pseudo:0.2957994185):0.0578586169):0.1923769356,((Oalb_SELENOO.5.selenocysteine:0.3464145532,Ovan_SELENOO.4.unaligned:0.3507851625):0.1962937586,((OdB3_SELENOO.5.unaligned:0.1443352652,OSKA_gold_SELENOO:0.0297149739):0.0426890383,OKI_gold_SELENOO:0.0777129722):0.3790322477):0.2304166061):0.1747028988,(Mery_SELENOO.6.unaligned:0.7780616655,Olon_SELENOO.8.unaligned:0.4471533833):0.2369940627):0.3059717633):0.1456602178):0.1660994450,Fbor_SELENOO.2.cysteine:1.5888979742):0.3105165436,(((ENSGALP00000012216_ENSGALP00000012216:0.1417759607,ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin:0.2663110830):0.3961082385,(Bflo_SELENOO.3.cysteine:0.0346881760,Blan_SELENOO.4.cysteine:0.0614029213):0.4456486803):0.1826394493,(((Bsch_SELENOO.4.cysteine:0.5414427703,Scla_SELENOO.3.cysteine:0.3686478469):0.1260509461,Hror_SELENOO.3.cysteine:0.4326110785):0.1460179239,Pmam_SELENOO.1.cysteine:0.9041963057):0.0987359550):0.7047134603):0.1329939488,((Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1:0.6012014067,gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5:0.5879548988):0.4920657206,(gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506:0.8285020118,((((((Fbor_SELENOO.4.cysteine:0.1937718341,Fbor_SELENOO.8.cysteine:0.1350933840):0.0454870051,Fbor_SELENOO.11.unaligned:0.2322084280):0.0527772903,Fbor_SELENOO.6.cysteine:0.0831157689):0.0802720335,Fbor_SELENOO.9.unaligned:0.0793666917):0.5140067862,Fbor_SELENOO.16.unaligned:1.3864791350):0.5028393378,(Fbor_SELENOO.13.unaligned:0.9061842863,Fbor_SELENOO.18.unaligned:0.9671646333):0.7798815265):0.2770344576):0.1954249933):0.4121052086):0.1028205833,Fbor_SELENOO.17.unaligned:3.5422841213):0.1491887646,(((Ricinus_communis_gi_223547341_gb_EEF48836.1:0.1310485163,Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1:0.2015653882):0.0756230224,Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001:0.1692452408):0.7023048967,(((Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1:0.4341872598,(Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020:0.4848247653,gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2:0.1907077599):0.0780281260):0.3726448474,Fbor_SELENOO.1.cysteine:0.8797271938):0.1952232720,(((Bsty_SELENOO.1.cysteine:0.0232457136,Mery_SELENOO.1.cysteine:0.0182981766):0.1912954937,Bsty_SELENOO.2.cysteine:0.1462649178):0.1908844575,Fbor_SELENOO.21.cysteine:0.3932323924):0.2497635465):0.3585834478):0.0959265156):0.2357469908,YPL222W_Scer_YPL222W_Scer:2.5846327752):1.1198935389,(Fbor_SELENOO.14.unaligned:0.2278599193,Fbor_SELENOO.19.unaligned:0.2159132402):1.1190331938);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOO.ml.hyp_tunicates_control.treefile -m "LG+I{0.0224374}+R6{0.125053,0.0630418,0.167496,0.247098,0.168607,0.507128,0.1618,0.949651,0.26189,1.6276,0.0927167,3.0773}" --length 724
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOO.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOO.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 13:54:31 2026
+Total CPU time used: 1698.34 seconds (0h:28m:18s)
+Total wall-clock time used: 228.442 seconds (0h:3m:48s)
+

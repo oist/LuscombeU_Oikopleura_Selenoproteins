@@ -1,0 +1,195 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOF.trimmed
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 50 sequences with 176 amino-acid sites
+Number of constant sites: 5 (= 2.84091% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 5 (= 2.84091% of all sites)
+Number of parsimony informative sites: 161
+Number of distinct site patterns: 176
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+SSF+F+G4
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 0.8194
+
+ Category  Relative_rate  Proportion
+  1         0.0997         0.2500
+  2         0.4148         0.2500
+  3         0.9622         0.2500
+  4         2.5233         0.2500
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -9038.4982 (s.e. 354.8484)
+Unconstrained log-likelihood (without tree): -910.0052
+Number of free parameters (#branches + #model parameters): 117
+Akaike information criterion (AIC) score: 18310.9965
+Corrected Akaike information criterion (AICc) score: 18787.0655
+Bayesian information criterion (BIC) score: 18681.9431
+
+Total tree length (sum of branch lengths): 44.5781
+Sum of internal branch lengths: 16.0163 (35.9286% of tree length)
+
+WARNING: 2 near-zero internal branches (<0.0057) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Drosophila_grimshawi_gi_195013479_ref_XP_001983851.1' is drawn at root
+
++--Drosophila_grimshawi_gi_195013479_ref_XP_001983851.1
+|
++--Drosophila_melanogaster_gi_223967873_emb_CAR93667.1
+|
+|                                       +-----Sep15_Ostreococcus_lucimarinus_Sep15_Ostreococcus_lucimarinu
+|                     +-----------------|
+|                     |                 +-----Sep15_Ostreococcus_tauri_Sep15_Ostreococcus_tauri
+|                 +---|
+|                 |   |                  +--Brassica_rapa_gi_157890966_dbj_BAF81524.1
+|                 |   |               +--|
+|                 |   |               |  +--Ricinus_communis_gi_223523340_gb_EEF27017.1
+|                 |   +---------------|
+|                 |                   +--Zea_mays_gi_195621510_gb_ACG32585.1
+|              +--|
+|              |  |           +---Bsty_SELENOF.2.selenocysteine
+|              |  |        +--|
+|              |  |        |  |  +--Olon_SELENOF.1.selenocysteine
+|              |  |        |  +--|
+|              |  |        |     +------Olon_SELENOF.3.selenocysteine
+|              |  |     +--|
+|              |  |     |  +--Mery_SELENOF.2.selenocysteine
+|              |  |  +--|
+|              |  |  |  |     +--Oalb_SELENOF.2.selenocysteine
+|              |  |  |  |  +--|
+|              |  |  |  |  |  |   +--OKI_gold_SELENOF
+|              |  |  |  |  |  +---|
+|              |  |  |  |  |      |  +**OSKA_gold_SELENOF
+|              |  |  |  |  |      +--|
+|              |  |  |  |  |         +--OdB3_gold_SELENOF
+|              |  |  |  +--|
+|              |  |  |     +--Ovan_SELENOF.1.selenocysteine
+|              |  +--|
+|              |     +---------------Fbor_SELENOF.2.selenocysteine
+|           +--|
+|           |  |   +------Caenorhabditis_briggsae_AF16_gi_157759303_ref_XP_001671995.1
+|           |  +---|
+|           |      +----Brugia_malayi_gi_170573372_ref_XP_001892444.1
+|        +--|
+|        |  |                    +--Sel15.Sus_scrofa_Sel15.Sus_scrofa
+|        |  |                 +--|
+|        |  |                 |  +--Mmus_SELENOF.3.selenocysteine
+|        |  |              +--|
+|        |  |              |  +--Bos_taurus_gi_144953871_ref_NP_001029931.2
+|        |  |           +--|
+|        |  |           |  |  +--Homo_sapiens_gi_42741650_ref_NP_976086.1
+|        |  |           |  +**|
+|        |  |           |     +**Human_SELENOF_NP_004252.2
+|        |  |        +--|
+|        |  |        |  |  +--Sel15.Gallus_gallus_Sel15.Gallus_gallus
+|        |  |        |  +--|
+|        |  |        |     |     +--Oncorhynchus_mykiss_gi_185134879_ref_NP_001117926.1
+|        |  |        |     |  +--|
+|        |  |        |     |  |  +**Sel15.Salmo_salar_Sel15.Salmo_salar
+|        |  |        |     +--|
+|        |  |        |        |  +**Drer_SELENOF.1.selenocysteine
+|        |  |        |        +--|
+|        |  |        |           +---------------------------------------------Human_SELENOM_NP_536355.1
+|        |  |     +--|
+|        |  |     |  |                   +--Bflo_SELENOF.1.selenocysteine
+|        |  |     |  +-------------------|
+|        |  |     |                      +--Blan_SELENOF.1.selenocysteine
+|        |  |  +--|
+|        |  |  |  |  +--Bflo_SELENOF.2.selenocysteine
+|        |  |  |  +--|
+|        |  |  |     +--Blan_SELENOF.2.selenocysteine
+|        |  +--|
+|        |     |                 +--Bsch_SELENOF.1.selenocysteine
+|        |     |              +--|
+|        |     |              |  +-----------Scla_SELENOF.1.selenocysteine
+|        |     |           +--|
+|        |     |           |  +------Hror_SELENOF.1.leucine
+|        |     |        +--|
+|        |     |        |  |     +**Cint_SELENOF.1.selenocysteine
+|        |     |        |  |  +--|
+|        |     |        |  |  |  +--Crob_SELENOF.1.selenocysteine
+|        |     |        |  +--|
+|        |     |        |     +--Csav_SELENOF.2.selenocysteine
+|        |     |     +--|
+|        |     |     |  |     +----Pege_SELENOF.1.selenocysteine
+|        |     |     |  |  +--|
+|        |     |     |  |  |  +--Stho_SELENOF.1.selenocysteine
+|        |     |     |  +--|
+|        |     |     |     +----Tdem_SELENOF.1.selenocysteine
+|        |     |  +--|
+|        |     |  |  +---Pmam_SELENOF.3.selenocysteine
+|        |     +**|
+|        |        +--------------------------------Pmam_SELENOF.4.uga_containing
+|     +--|
+|     |  +-------Ixodes_scapularis_gi_215506611_gb_EEC16105.1
+|  +--|
+|  |  |     +--Pediculus_humanus_corporis_gi_212507922_gb_EEB11766.1
+|  |  |  +--|
+|  |  |  |  +--Acyrthosiphon_pisum_gi_193695142_ref_XP_001947162.1
+|  |  +--|
+|  |     +--Tribolium_castaneum_gi_91078330_ref_XP_973321.1
++--|
+   |  +--Culex_quinquefasciatus_gi_170035613_ref_XP_001845663.1
+   +--|
+      +--Anopheles_gambiae_gi_18389881_gb_AAL68777.1_AF457547_1
+
+Tree in newick format:
+
+(Drosophila_grimshawi_gi_195013479_ref_XP_001983851.1:0.0497576924,Drosophila_melanogaster_gi_223967873_emb_CAR93667.1:0.1838740231,((((((((Sep15_Ostreococcus_lucimarinus_Sep15_Ostreococcus_lucimarinu:0.8409714672,Sep15_Ostreococcus_tauri_Sep15_Ostreococcus_tauri:0.8520022915):2.3693607561,((Brassica_rapa_gi_157890966_dbj_BAF81524.1:0.3304615881,Ricinus_communis_gi_223523340_gb_EEF27017.1:0.0709576269):0.0749720686,Zea_mays_gi_195621510_gb_ACG32585.1:0.4503360226):2.0501860977):0.5800166512,((((Bsty_SELENOF.2.selenocysteine:0.5311222863,(Olon_SELENOF.1.selenocysteine:0.3648985298,Olon_SELENOF.3.selenocysteine:0.8853918111):0.1060145952):0.0748637000,Mery_SELENOF.2.selenocysteine:0.4375214432):0.3497826856,((Oalb_SELENOF.2.selenocysteine:0.2243826883,(OKI_gold_SELENOF:0.0240433670,(OSKA_gold_SELENOF:0.0000023953,OdB3_gold_SELENOF:0.0533561807):0.0693580196):0.5630378252):0.1379816212,Ovan_SELENOF.1.selenocysteine:0.3019733648):0.3082845206):0.4653352968,Fbor_SELENOF.2.selenocysteine:2.0220946446):0.0125274661):0.3731905279,(Caenorhabditis_briggsae_AF16_gi_157759303_ref_XP_001671995.1:1.0015199264,Brugia_malayi_gi_170573372_ref_XP_001892444.1:0.6479952084):0.5378461540):0.2147894755,(((((((Sel15.Sus_scrofa_Sel15.Sus_scrofa:0.0521605151,Mmus_SELENOF.3.selenocysteine:0.0650430955):0.0188248884,Bos_taurus_gi_144953871_ref_NP_001029931.2:0.0573871665):0.0130798581,(Homo_sapiens_gi_42741650_ref_NP_976086.1:0.1597152687,Human_SELENOF_NP_004252.2:0.0000010000):0.0000026531):0.1077823981,(Sel15.Gallus_gallus_Sel15.Gallus_gallus:0.1452669293,((Oncorhynchus_mykiss_gi_185134879_ref_NP_001117926.1:0.0738201502,Sel15.Salmo_salar_Sel15.Salmo_salar:0.0000023953):0.1827352968,(Drer_SELENOF.1.selenocysteine:0.0000022800,Human_SELENOM_NP_536355.1:5.8304819198):0.0522830140):0.0718381541):0.0712064108):0.2359819954,(Bflo_SELENOF.1.selenocysteine:0.0343988786,Blan_SELENOF.1.selenocysteine:0.2018834339):2.5347130365):0.2345733573,(Bflo_SELENOF.2.selenocysteine:0.1009619764,Blan_SELENOF.2.selenocysteine:0.0208205367):0.4682114675):0.1582504883,((((((Bsch_SELENOF.1.selenocysteine:0.3613248150,Scla_SELENOF.1.selenocysteine:1.5838297472):0.0234652222,Hror_SELENOF.1.leucine:0.8856633380):0.4256186299,((Cint_SELENOF.1.selenocysteine:0.0000023953,Crob_SELENOF.1.selenocysteine:0.0445329174):0.1416235308,Csav_SELENOF.2.selenocysteine:0.2361253768):0.2836438701):0.1917500487,((Pege_SELENOF.1.selenocysteine:0.6791534759,Stho_SELENOF.1.selenocysteine:0.3085893201):0.1583893207,Tdem_SELENOF.1.selenocysteine:0.6887456259):0.4868805790):0.1656617557,Pmam_SELENOF.3.selenocysteine:0.5516823781):0.3155285842,Pmam_SELENOF.4.uga_containing:4.2505251778):0.0000029372):0.0422375678):0.2244806159,Ixodes_scapularis_gi_215506611_gb_EEC16105.1:1.0946104591):0.1827775487,((Pediculus_humanus_corporis_gi_212507922_gb_EEB11766.1:0.4954471532,Acyrthosiphon_pisum_gi_193695142_ref_XP_001947162.1:0.4742067984):0.0586664020,Tribolium_castaneum_gi_91078330_ref_XP_973321.1:0.4073400988):0.2173235260):0.1977536399,(Culex_quinquefasciatus_gi_170035613_ref_XP_001845663.1:0.1419072361,Anopheles_gambiae_gi_18389881_gb_AAL68777.1_AF457547_1:0.3434987552):0.1894550480):0.2739676453);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOF.pmsf.hyp_tunicates_control.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0599537,0.043629,0.0323607,0.0642877,0.0551863,0.0473852,0.082346,0.0543195,0.0125688,0.0431956,0.122219,0.0742559,0.0150247,0.0475296,0.0353945,0.0716555,0.0447848,0.00895713,0.0239816,0.060965}+G4{0.819373}" --length 176
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOF.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOF.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 13:48:38 2026
+Total CPU time used: 3437.36 seconds (0h:57m:17s)
+Total wall-clock time used: 488.037 seconds (0h:8m:8s)
+
