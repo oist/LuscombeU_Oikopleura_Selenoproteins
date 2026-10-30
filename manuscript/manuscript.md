@@ -843,7 +843,7 @@ availability).
 
 > **Provisional section (2026-10-30, step 8 of the plan in docs/plan.md; `results/tables/stage2_selenoprotein_table.md`,
 > `stage2_selenoprotein_rbh.tsv`, `stage2_selenoprotein_orthology.tsv`, `stage2_selenoprotein_lba.tsv`,
-> `results/trees/selenoproteins/`).** The AU tests of SELENOK and SELENOS are pending (`make selenoprotein-au`).
+> `results/trees/selenoproteins/`).**
 
 The family names of the gold-standard genes come from the Selenoprofiles profiles that predicted them, and a profile
 finds homologs of its family, not necessarily orthologs of a named human gene. As for the machinery, we therefore
@@ -880,9 +880,14 @@ appendicularian SELENOF clade (nine genomes, 58 to 79%) was next to plant and gr
 
 SELENOK and SELENOS had no hit in the human proteome. Their appendicularian clades, each of five genomes (100%, and
 93 to 95%), had the human SELENOK and SELENOS as nearest vertebrate genes. The SELENOS clade was next to two
-green-algal proteins (83% and 55%), at the base of the animal SELENOS, which formed a clade with it; the SELENOK clade
-was next to kinetoplastid, green-algal and chelicerate proteins (33% and 25%). <!-- AU tests pending: SELENOK and
-SELENOS with the other tunicates and inside the chordates (with controls for SELENOK). -->
+green-algal proteins (83% and 55%), at the base of the animal SELENOS, which formed a clade with it; neither its
+grouping with the SELENOS of the other tunicates (p = 0.19 and 0.51) nor a placement inside the chordate SELENOS
+(p = 0.29 and 0.51) was rejected. The SELENOK clade was next to kinetoplastid, green-algal and chelicerate proteins
+(33% and 25%). Its grouping with the SELENOK of the other tunicates and its placement inside the chordate SELENOK were
+rejected (p ≤ 0.0016 under both models), but so were the trees in which these groups form a clade without the
+appendicularians, at nearly the same cost (70.6 against 70.3 log-likelihood units for the other tunicates, 63.1
+against 62.9 for the chordates, under the selected model): in these data (181 sites), neither the SELENOK of the
+other tunicates nor those of the chordates form a clade, and the tests do not bear on the appendicularian position.
 
 Best hits did not separate the deiodinase paralogs: DIO_PAR had DIO2 as best hit (6 to 12 bits ahead of the next
 gene; reciprocal in OKI2018), and DIO_chr1 DIO3 (1 bit ahead). In the maximum-likelihood tree, both genes belonged to

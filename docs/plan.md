@@ -1375,3 +1375,17 @@ no earlier step waits for them.
   compare donor lineages: one lineage across candidates fits an ancestral symbiont, several lineages fit uptake of
   bacteria with food (appendicularians filter bacteria from the water). To consider for candidates: intron positions
   compared between species. The screen covers only the genes of the selenoprotein families.
+- AU tests of SELENOK and SELENOS (2026-10-30, commit 1d630fb). SELENOS: with the other tunicates 0.19 / 0.51,
+  inside the chordates 0.29 / 0.51 (not rejected). SELENOK: every constraint rejected (p ≤ 0.0016), controls
+  included, at nearly the same cost (deltaL 70.6 against 70.3 for the other tunicates, 63.1 against 62.9 for the
+  chordates, ML model): the SELENOK of the other tunicates and of the chordates are not clades in these data (181
+  sites); uninformative for the appendicularians. One PMSF control p-AU printed as 7.6e-61 (deltaL 69.0, as its
+  hypothesis): a numerical artefact of the AU fit, read as p < 0.001. Written into the manuscript.
+- Final run collected (2026-10-30, make stage2-collect, commit 1d630fb): census preview without contig checks
+  (make census-contigs not run yet): 246 loci in the twelve assemblies, 59 of them gold-standard genes, one left out
+  (F. borealis DIO.14, best human hit GPX1). HGT screen: no candidate with introns; 27 intronless candidates whose
+  family is confirmed by best hits, all in the three non-Oikopleura genomes: cysteine SELENOO of B. stygius,
+  F. borealis and M. erythrocephalus next to Stenotrophomonas and Xylella SelO (100 / 99), and further F. borealis
+  SELENOO next to a Pseudomonas protein; cysteine GPX of F. borealis (and two of B. stygius) next to Salmonella,
+  Cellvibrio or Delftia GPX; one F. borealis MsrA. B. stygius may be contaminated by M. erythrocephalus (Pichon et al.
+  2019), so their shared clade may come from one source. Contig checks needed before reading further.
