@@ -1424,6 +1424,6 @@ no earlier step waits for them.
   (F. borealis DIO.14, best human hit GPX1). HGT screen: the B. stygius (6) and M. erythrocephalus (3) entries,
   cysteine SELENOO, DIO-like and GPX, lie on ORF-dense contigs of 26 to 324 kb (0.88 to 0.93) and are "contamination
   likely": the SELENOO and DIO-like clades shared by B. stygius, M. erythrocephalus and F. borealis are best explained
-  by bacterial contamination of one lineage in the three samples. Left: 21 intronless F. borealis entries, 20 of them
+  by bacterial contamination of one lineage in the three samples. Left: 21 intronless F. borealis entries, 16 of them
   on contigs shorter than 3 kb, not testable with these data. No credible candidate of horizontal transfer in the
   selenoprotein families.
