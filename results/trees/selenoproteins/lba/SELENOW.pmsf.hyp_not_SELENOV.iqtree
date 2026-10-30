@@ -1,0 +1,394 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOW.trimmed
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 134 sequences with 124 amino-acid sites
+Number of constant sites: 0 (= 0% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 0 (= 0% of all sites)
+Number of parsimony informative sites: 123
+Number of distinct site patterns: 124
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+SSF+F+G4
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 1.6519
+
+ Category  Relative_rate  Proportion
+  1         0.2479         0.2500
+  2         0.6120         0.2500
+  3         1.0582         0.2500
+  4         2.0819         0.2500
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -15997.2369 (s.e. 761.2606)
+Unconstrained log-likelihood (without tree): -597.7149
+Number of free parameters (#branches + #model parameters): 285
+Akaike information criterion (AIC) score: 32564.4738
+Corrected Akaike information criterion (AICc) score: 195584.4738
+Bayesian information criterion (BIC) score: 33368.2540
+
+**************************** WARNING ****************************
+Number of parameters (K, model parameters and branch lengths): 285
+Sample size (n, alignment length): 124
+
+Given that K>=n, the parameter estimates might be inaccurate.
+Thus, phylogenetic estimates should be interpreted with caution.
+
+Ideally, it is desirable that n >> K. When selecting optimal models,
+1. use AIC or BIC if n > 40K;
+2. use AICc or BIC if 40K >= n > K;
+3. be extremely cautious if n <= K
+
+To improve the situation (3), consider the following options:
+  1. Increase the sample size (n)
+  2. Decrease the number of parameters (K) to be estimated. If
+     possible:
+     a. Remove the least important sequences from the alignment
+     b. Specify some of the parameter values for the substitution
+        model (e.g., the nucleotide or amino acid frequencies)
+     c. Specify some of the parameter values for the rates-across-
+        sites model (e.g., the shape parameter for the discrete
+        Gamma distribution, the proportion of invariable sites, or
+        the rates of change for different rate categories under
+        the FreeRate model)
+
+Reference:
+Burnham KR, Anderson DR (2002). Model Selection and Multimodel
+Inference: A Practical Information-Theoretic Approach. Springer,
+New York.
+************************ END OF WARNING ***********************
+
+Total tree length (sum of branch lengths): 107.5650
+Sum of internal branch lengths: 36.5924 (34.0188% of tree length)
+
+WARNING: 7 near-zero internal branches (<0.0081) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'SelV.Sus_scrofa_SelV.Sus_scrofa' is drawn at root
+
++--SelV.Sus_scrofa_SelV.Sus_scrofa
+|
+|                                                                             +------Cryptococcus_neoformans_var._neoformans_JEC21_ref_XP_569290.
+|                                                                          +--|
+|                                                                          |  |  +--Labrenzia_alexandrii_DFL-11_ref_YP_002609885.1
+|                                                                          |  +--|
+|                                                                          |     +--ref_NP_230628.1_ref_NP_230628.1
+|                                                                       +--|
+|                                                                       |  |     +--Aspergillus_clavatus_NRRL_1_ref_XP_001269640.1
+|                                                                       |  |  +--|
+|                                                                       |  |  |  +--Neosartorya_fischeri_NRRL_181_ref_XP_001265145.1
+|                                                                       |  +--|
+|                                                                       |     +---ref_XP_001937795.1_ref_XP_001937795.1
+|                                                                    +--|
+|                                                                    |  |  +---Cellvibrio_japonicus_Ueda107_ref_YP_001980968.1
+|                                                                    |  +--|
+|                                                                    |     |  +**ref_YP_001142509.1_ref_YP_001142509.1
+|                                                                    |     +--|
+|                                                                    |        +-------------------Fbor_SELENOW.9.unaligned
+|                                                                 +--|
+|                                                                 |  |  +--SelW_P.sojae_re_exonerate_SelW_P.sojae_re_exonerate
+|                                                                 |  +--|
+|                                                                 |     +--SelW_P.infestans_re_exonerate_on_supercont1.17_SelW_P.infest
+|                                                              +--|
+|                                                              |  |  +--Nitrococcus_mobilis_Nb-231_gi_88812308_ref_ZP_01127559.1
+|                                                              |  +--|
+|                                                              |     +--Fbor_SELENOW.1.cysteine
+|                                                           +--|
+|                                                           |  +----------------------Mery_SELENOW.8.histidine
+|                                                        +--|
+|                                                        |  +---Se_user_SelW-like_Symbiobacterium_thermophilum_IAM_14863
+|                                                     +--|
+|                                                     |  |      +--Se_user_SelW-like_Desulfotomaculum_reducens_MI-1
+|                                                     |  |  +---|
+|                                                     |  |  |   +--Se_user_SelW-like_Alkaliphilus_metalliredigens_QYMF
+|                                                     |  +--|
+|                                                     |     |  +----Se_user_SelW-like_Desulfuromonas_acetoxidans_DSM_684
+|                                                     |     +--|
+|                                                     |        +-----Se_user_SelW-like_Delta_proteobacterium
+|                                                  +--|
+|                                                  |  +----Se_user_SelW-like_Desulfotalea_psychrophila_LSv54
+|                                               +**|
+|                                               |  +------Se_user_SelW-like_Plesiocystis_pacifica
+|                                            +--|
+|                                            |  +-----------Fbor_SELENOW.5.unaligned
+|                                         +--|
+|                                         |  |           +--Se_user_SelW-like_Campylobacter_curvus_525.92
+|                                         |  |        +--|
+|                                         |  |        |  +--Se_user_SelW-like_Campylobacter_concisus_13826
+|                                         |  |     +--|
+|                                         |  |     |  +----Se_user_SelW-like_1_Campylobacter_fetus_subsp._fetus_82-40
+|                                         |  +-----|
+|                                         |        +--Se_user_SelW-like_Campylobacter_upsaliensis_RM3195
+|                                      +**|
+|                                      |  +--------Se_user_SelW-like_Myxococcus_xanthus
+|                                   +--|
+|                                   |  |     +------Se_user_SelW-like_Geobacter_sulfurreducens_PCA
+|                                   |  +-----|
+|                                   |        +---Se_user_SelW-like_Geobacter_lovleyi
+|                                +--|
+|                                |  +--------------Fbor_SELENOW.8.selenocysteine
+|                             +--|
+|                             |  +----------SelW2_Giardia_lamblia_2009-20010_SelW2_Giardia_lamblia_2009-
+|                          +--|
+|                          |  |              +-------Tribolium_castaneum_ref_XP_968954.1
+|                          |  |           +--|
+|                          |  |           |  +--Artemia_franciscana_gb_ABS19961.1
+|                          |  |        +--|
+|                          |  |        |  |         +--Bflo_SELENOW.1.selenocysteine
+|                          |  |        |  |     +---|
+|                          |  |        |  |     |   +--Blan_SELENOW.1.selenocysteine
+|                          |  |        |  |  +**|
+|                          |  |        |  |  |  +----------------------------Oalb_SELENOW.11.valine
+|                          |  |        |  +--|
+|                          |  |        |     |  +--Bsty_SELENOW.4.selenocysteine
+|                          |  |        |     +--|
+|                          |  |        |        |                 +---Bsty_SELENOW.5.lysine
+|                          |  |        |        |              +--|
+|                          |  |        |        |              |  +--Mery_SELENOW.7.selenocysteine
+|                          |  |        |        |           +--|
+|                          |  |        |        |           |  +--Mery_SELENOW.5.selenocysteine
+|                          |  |        |        |        +--|
+|                          |  |        |        |        |  |     +--Olon_SELENOW.1.selenocysteine
+|                          |  |        |        |        |  |  +--|
+|                          |  |        |        |        |  |  |  |     +--OKI_gold_SELENOW_chr2
+|                          |  |        |        |        |  |  |  |  +--|
+|                          |  |        |        |        |  |  |  |  |  +**OSKA_gold_SELENOW_chr2
+|                          |  |        |        |        |  |  |  +--|
+|                          |  |        |        |        |  |  |     +**OdB3_gold_SELENOW_chr2
+|                          |  |        |        |        |  +--|
+|                          |  |        |        |        |     +--Olon_SELENOW.3.selenocysteine
+|                          |  |        |        |     +--|
+|                          |  |        |        |     |  |  +--Oalb_SELENOW.1.selenocysteine
+|                          |  |        |        |     |  +--|
+|                          |  |        |        |     |     |      +**Ovan_SELENOW.1.selenocysteine
+|                          |  |        |        |     |     +------|
+|                          |  |        |        |     |            +--Ovan_SELENOW.2.selenocysteine
+|                          |  |        |        |  +--|
+|                          |  |        |        |  |  |        +------------Oalb_SELENOW.8.selenocysteine
+|                          |  |        |        |  |  |     +--|
+|                          |  |        |        |  |  |     |  +--Olon_SELENOW.4.selenocysteine
+|                          |  |        |        |  |  |  +--|
+|                          |  |        |        |  |  |  |  |     +--Ovan_SELENOW.3.selenocysteine
+|                          |  |        |        |  |  |  |  +-----|
+|                          |  |        |        |  |  |  |        +--Ovan_SELENOW.4.selenocysteine
+|                          |  |        |        |  |  +--|
+|                          |  |        |        |  |     |  +--Olon_SELENOW.2.selenocysteine
+|                          |  |        |        |  |     +--|
+|                          |  |        |        |  |        +-----Olon_SELENOW.5.selenocysteine
+|                          |  |        |        +--|
+|                          |  |        |           +---Fbor_SELENOW.2.selenocysteine
+|                          |  |     +--|
+|                          |  |     |  |           +**Oreochromis_mossambicus_gb_AAX61159.1
+|                          |  |     |  |        +--|
+|                          |  |     |  |        |  +----------Human_MIEN1_NP_001317135.1
+|                          |  |     |  |     +--|
+|                          |  |     |  |     |  +--Drer_SELENOW.1.selenocysteine
+|                          |  |     |  |  +--|
+|                          |  |     |  |  |  +--Drer_SELENOW.2.selenocysteine
+|                          |  |     |  +--|
+|                          |  |     |     |       +--Cint_SELENOW.3.selenocysteine
+|                          |  |     |     +-------|
+|                          |  |     |             +**Crob_SELENOW.3.selenocysteine
+|                          |  |  +--|
+|                          |  |  |  |  +--Bsch_SELENOW.1.selenocysteine
+|                          |  |  |  +--|
+|                          |  |  |     |    +--Bsch_SELENOW.3.selenocysteine
+|                          |  |  |     +----|
+|                          |  |  |          |  +--Bsch_SELENOW.4.selenocysteine
+|                          |  |  |          +--|
+|                          |  |  |             +--Bsch_SELENOW.5.selenocysteine
+|                          |  +--|
+|                          |     |     +-----Fbor_SELENOW.3.selenocysteine
+|                          |     |  +**|
+|                          |     |  |  +----Fbor_SELENOW.4.selenocysteine
+|                          |     +--|
+|                          |        |                          +**OKI_SELENOW.2.valine
+|                          |        +--------------------------|
+|                          |                                   |  +**OSKA_SELENOW.8.valine
+|                          |                                   +--|
+|                          |                                      +**OdB3_SELENOW.10.valine
+|                       +--|
+|                       |  |  +-----SelW1_Monosiga_brevicollis_2009-2010_SelW1_Monosiga_brevicol
+|                       |  +--|
+|                       |     +---------------Se_user_SelW2_Chlamydomonas_reinhardtii
+|                    +**|
+|                    |  |     +----------Bigelowiella_natans_gb_AAT09062.1
+|                    |  |  +--|
+|                    |  |  |  |  +**Oalb_SELENOW.2.tyrosine
+|                    |  |  |  +--|
+|                    |  |  |     +--Oalb_SELENOW.3.glycine
+|                    |  +--|
+|                    |     |           +-------Se_user_SelWb_Ostreococcus_lucimarinus
+|                    |     |        +--|
+|                    |     |        |  +--Ovan_SELENOW.7.selenocysteine
+|                    |     |     +--|
+|                    |     |     |  +--Oalb_SELENOW.5.selenocysteine
+|                    |     |  +--|
+|                    |     |  |  |     +---Hror_SELENOW.1.selenocysteine
+|                    |     |  |  |  +--|
+|                    |     |  |  |  |  |        +--Bsty_SELENOW.3.selenocysteine
+|                    |     |  |  |  |  |     +--|
+|                    |     |  |  |  |  |     |  +--Mery_SELENOW.1.selenocysteine
+|                    |     |  |  |  |  |  +--|
+|                    |     |  |  |  |  |  |  +**Olon_SELENOW.9.selenocysteine
+|                    |     |  |  |  |  +--|
+|                    |     |  |  |  |     +--Olon_SELENOW.6.unaligned
+|                    |     |  |  +--|
+|                    |     |  |     |     +--OKI_gold_SELENOW_chr1a
+|                    |     |  |     |  +--|
+|                    |     |  |     |  |  +**OdB3_gold_SELENOW_chr1a
+|                    |     |  |     +--|
+|                    |     |  |        +--OSKA_gold_SELENOW_chr1a
+|                    |     +--|
+|                    |        |            +--OdB3_SELENOW.4.selenocysteine
+|                    |        |         +--|
+|                    |        |         |  +**OdB3_gold_SELENOW_pair2
+|                    |        |      +--|
+|                    |        |      |  +--OKI_gold_SELENOW_pair2
+|                    |        |  +---|
+|                    |        |  |   +**OSKA_gold_SELENOW_pair2
+|                    |        +--|
+|                    |           |     +--OdB3_SELENOW.5.selenocysteine
+|                    |           |  +--|
+|                    |           |  |  +**OdB3_gold_SELENOW_pair1
+|                    |           +--|
+|                    |              |  +--OKI_gold_SELENOW_pair1
+|                    |              +**|
+|                    |                 +--OSKA_gold_SELENOW_pair1
+|                 +--|
+|                 |  |  +---------SelW_P.gondii_GT1_re_exonerate_on_gi_158533914_gb_AAQM020000
+|                 |  +--|
+|                 |     |        +--Se_user_SelW2_Paramecium_tetraurelia
+|                 |     |     +--|
+|                 |     |     |  +--Se_user_SelW1_Paramecium_tetraurelia
+|                 |     |  +--|
+|                 |     |  |  +----------Se_user_SelW_Tetrahymena_thermophila
+|                 |     +--|
+|                 |        +-------Fbor_SELENOW.10.cysteine
+|              +--|
+|              |  |               +--Se_user_SelW_1
+|              |  +---------------|
+|              |                  +**Se_user_SelW_2
+|           +--|
+|           |  |              +-------------Moneuplotes_crassus_gb_ACL81234.1
+|           |  |           +--|
+|           |  |           |  |  +--Tdem_SELENOW.1.selenocysteine
+|           |  |           |  +--|
+|           |  |           |     +--Tdem_SELENOW.2.selenocysteine
+|           |  |        +--|
+|           |  |        |  |  +--Stho_SELENOW.1.selenocysteine
+|           |  |        |  +--|
+|           |  |        |     |      +--Bsty_SELENOW.1.methionine
+|           |  |        |     +------|
+|           |  |        |            |         +-----------Bsty_SELENOW.6.selenocysteine
+|           |  |        |            |      +--|
+|           |  |        |            |      |  +--Ovan_SELENOW.9.selenocysteine
+|           |  |        |            |   +--|
+|           |  |        |            |   |  +--Oalb_SELENOW.7.selenocysteine
+|           |  |        |            +---|
+|           |  |        |                |     +--OKI_gold_SELENOW_PAR
+|           |  |        |                |  +--|
+|           |  |        |                |  |  +--OdB3_gold_SELENOW_PAR
+|           |  |        |                +--|
+|           |  |        |                   +--OSKA_gold_SELENOW_PAR
+|           |  |     +--|
+|           |  |     |  +--Pege_SELENOW.1.selenocysteine
+|           |  |  +--|
+|           |  |  |  |        +----Chlamydomonas_reinhardtii_ref_XP_001693901.1
+|           |  |  |  |     +--|
+|           |  |  |  |     |  +--Csav_SELENOW.1.cysteine
+|           |  |  |  |  +--|
+|           |  |  |  |  |  +--Csav_SELENOW.2.selenocysteine
+|           |  |  |  +--|
+|           |  |  |     |  +--Cint_SELENOW.1.selenocysteine
+|           |  |  |     +--|
+|           |  |  |        +--Crob_SELENOW.1.selenocysteine
+|           |  +--|
+|           |     |     +--------Se_user_SelW3_Paramecium_tetraurelia
+|           |     |  +--|
+|           |     |  |  |  +--Bsch_SELENOW.2.selenocysteine
+|           |     |  |  +--|
+|           |     |  |     +--Pmam_SELENOW.1.selenocysteine
+|           |     +**|
+|           |        |  +--Scla_SELENOW.1.selenocysteine
+|           |        +--|
+|           |           |  +**Scla_SELENOW.2.selenocysteine
+|           |           +--|
+|           |              +--Scla_SELENOW.3.selenocysteine
+|        +--|
+|        |  |  +--gi_172046839_sp_Q568W0.3_SELW_DANRE_gi_172046839_sp_Q568W0.3
+|        |  +--|
+|        |     +**Drer_SELENOW.5.selenocysteine
+|     +--|
+|     |  |     +**gi_190358775_sp_O19097.4_SELW_SHEEP_gi_190358775_sp_O19097.4
+|     |  |  +--|
+|     |  |  |  +---------------------------Mmus_SELENOW.2.serine
+|     |  +--|
+|     |     |  +--Mmus_SELENOW.3.selenocysteine
+|     |     +--|
+|     |        +--Human_SELENOW_NP_003000.1
+|  +--|
+|  |  +-------------Mmus_SELENOW.5.valine
++--|
+|  +--Mmus_SELENOW.4.selenocysteine
+|
++--Human_SELENOV_NP_874363.1
+
+Tree in newick format:
+
+(SelV.Sus_scrofa_SelV.Sus_scrofa:0.1421622562,((((((((((((((((((((((((((Cryptococcus_neoformans_var._neoformans_JEC21_ref_XP_569290.:1.0360793618,(Labrenzia_alexandrii_DFL-11_ref_YP_002609885.1:0.5057140225,ref_NP_230628.1_ref_NP_230628.1:0.3347599786):0.2938444608):0.0225309092,((Aspergillus_clavatus_NRRL_1_ref_XP_001269640.1:0.0432144224,Neosartorya_fischeri_NRRL_181_ref_XP_001265145.1:0.3582793381):0.1913736341,ref_XP_001937795.1_ref_XP_001937795.1:0.6610589409):0.2362412171):0.0602553024,(Cellvibrio_japonicus_Ueda107_ref_YP_001980968.1:0.5545217029,(ref_YP_001142509.1_ref_YP_001142509.1:0.0000026427,Fbor_SELENOW.9.unaligned:2.8100449828):0.2542871894):0.1219009767):0.3628895904,(SelW_P.sojae_re_exonerate_SelW_P.sojae_re_exonerate:0.1053836999,SelW_P.infestans_re_exonerate_on_supercont1.17_SelW_P.infest:0.0593174794):0.4912848881):0.0953658238,(Nitrococcus_mobilis_Nb-231_gi_88812308_ref_ZP_01127559.1:0.2171837538,Fbor_SELENOW.1.cysteine:0.2915569784):0.1744893683):0.4541748723,Mery_SELENOW.8.histidine:3.2073255577):0.4214358966,Se_user_SelW-like_Symbiobacterium_thermophilum_IAM_14863:0.5884845732):0.2521061225,((Se_user_SelW-like_Desulfotomaculum_reducens_MI-1:0.4987578728,Se_user_SelW-like_Alkaliphilus_metalliredigens_QYMF:0.3782491717):0.5926092721,(Se_user_SelW-like_Desulfuromonas_acetoxidans_DSM_684:0.7917253338,Se_user_SelW-like_Delta_proteobacterium:0.8679321843):0.1726123791):0.1148364892):0.1230192959,Se_user_SelW-like_Desulfotalea_psychrophila_LSv54:0.7345961521):0.1768006907,Se_user_SelW-like_Plesiocystis_pacifica:0.9922965480):0.0000026107,Fbor_SELENOW.5.unaligned:1.6907139634):0.1277153054,(((Se_user_SelW-like_Campylobacter_curvus_525.92:0.0731182735,Se_user_SelW-like_Campylobacter_concisus_13826:0.1334264336):0.5259908393,Se_user_SelW-like_1_Campylobacter_fetus_subsp._fetus_82-40:0.7014793771):0.0621235580,Se_user_SelW-like_Campylobacter_upsaliensis_RM3195:0.4670636627):0.9178180923):0.1606966136,Se_user_SelW-like_Myxococcus_xanthus:1.3165114477):0.0000028649,(Se_user_SelW-like_Geobacter_sulfurreducens_PCA:1.0045257916,Se_user_SelW-like_Geobacter_lovleyi:0.6680896701):0.8689101060):0.0479679726,Fbor_SELENOW.8.selenocysteine:2.1800321032):0.1481382321,SelW2_Giardia_lamblia_2009-20010_SelW2_Giardia_lamblia_2009-:1.6422161303):0.3796767383,(((((Tribolium_castaneum_ref_XP_968954.1:1.2444997142,Artemia_franciscana_gb_ABS19961.1:0.1223611969):0.3494769028,(((Bflo_SELENOW.1.selenocysteine:0.0950174393,Blan_SELENOW.1.selenocysteine:0.1132061492):0.6529512386,Oalb_SELENOW.11.valine:4.1019112712):0.0000020054,(Bsty_SELENOW.4.selenocysteine:0.3927579331,((((((Bsty_SELENOW.5.lysine:0.5600691803,Mery_SELENOW.7.selenocysteine:0.2787717383):0.0807330907,Mery_SELENOW.5.selenocysteine:0.2321344317):0.1030800648,((Olon_SELENOW.1.selenocysteine:0.2309307855,((OKI_gold_SELENOW_chr2:0.0659706144,OSKA_gold_SELENOW_chr2:0.0000010000):0.0428880484,OdB3_gold_SELENOW_chr2:0.0000022195):0.5314240852):0.2297989307,Olon_SELENOW.3.selenocysteine:0.2505359394):0.1530136295):0.1654060692,(Oalb_SELENOW.1.selenocysteine:0.1759881680,(Ovan_SELENOW.1.selenocysteine:0.0000023021,Ovan_SELENOW.2.selenocysteine:0.0525766139):1.0746979415):0.2215323582):0.2634962651,(((Oalb_SELENOW.8.selenocysteine:1.8674718092,Olon_SELENOW.4.selenocysteine:0.4578992432):0.1918867922,(Ovan_SELENOW.3.selenocysteine:0.1867860197,Ovan_SELENOW.4.selenocysteine:0.1537840132):0.9497349533):0.0128028296,(Olon_SELENOW.2.selenocysteine:0.4644305223,Olon_SELENOW.5.selenocysteine:0.9062769137):0.2644685805):0.3487414543):0.1079983892,Fbor_SELENOW.2.selenocysteine:0.6270640607):0.0750550929):0.2417396374):0.0798765375):0.3171926705,((((Oreochromis_mossambicus_gb_AAX61159.1:0.0000024903,Human_MIEN1_NP_001317135.1:1.6553711767):0.2018764661,Drer_SELENOW.1.selenocysteine:0.1515054319):0.1680507101,Drer_SELENOW.2.selenocysteine:0.4494360664):0.1262504649,(Cint_SELENOW.3.selenocysteine:0.0570946825,Crob_SELENOW.3.selenocysteine:0.0000024750):1.1623051741):0.1420218717):0.1083745779,(Bsch_SELENOW.1.selenocysteine:0.3215586419,(Bsch_SELENOW.3.selenocysteine:0.1215187113,(Bsch_SELENOW.4.selenocysteine:0.0447250466,Bsch_SELENOW.5.selenocysteine:0.1780992509):0.2041907394):0.7425378222):0.2591276494):0.2768258275,((Fbor_SELENOW.3.selenocysteine:0.9494330353,Fbor_SELENOW.4.selenocysteine:0.7998278505):0.0000023429,(OKI_SELENOW.2.valine:0.0000021627,(OSKA_SELENOW.8.valine:0.0000025779,OdB3_SELENOW.10.valine:0.0000022547):0.0993054025):3.8331492496):0.0783162183):0.1735305185):0.3361840822,(SelW1_Monosiga_brevicollis_2009-2010_SelW1_Monosiga_brevicol:0.8959480492,Se_user_SelW2_Chlamydomonas_reinhardtii:2.2387337430):0.1368094266):0.2843592067,((Bigelowiella_natans_gb_AAT09062.1:1.5742776388,(Oalb_SELENOW.2.tyrosine:0.0052235390,Oalb_SELENOW.3.glycine:0.0471643326):0.4226351765):0.1517372626,((((Se_user_SelWb_Ostreococcus_lucimarinus:1.1258894786,Ovan_SELENOW.7.selenocysteine:0.4134054933):0.0834315989,Oalb_SELENOW.5.selenocysteine:0.1756246580):0.0941877773,((Hror_SELENOW.1.selenocysteine:0.6824245991,(((Bsty_SELENOW.3.selenocysteine:0.1368738157,Mery_SELENOW.1.selenocysteine:0.3344604912):0.3788825671,Olon_SELENOW.9.selenocysteine:0.0000028106):0.1390827897,Olon_SELENOW.6.unaligned:0.1236254739):0.1428647510):0.1260959038,((OKI_gold_SELENOW_chr1a:0.0253906197,OdB3_gold_SELENOW_chr1a:0.0000010000):0.0107779532,OSKA_gold_SELENOW_chr1a:0.0145415488):0.1342036552):0.0305875402):0.0421540908,((((OdB3_SELENOW.4.selenocysteine:0.0103965687,OdB3_gold_SELENOW_pair2:0.0000010000):0.0328339827,OKI_gold_SELENOW_pair2:0.0555682362):0.0245293114,OSKA_gold_SELENOW_pair2:0.0078723705):0.5622125913,((OdB3_SELENOW.5.selenocysteine:0.0138414067,OdB3_gold_SELENOW_pair1:0.0000024170):0.0568646410,(OKI_gold_SELENOW_pair1:0.0662259080,OSKA_gold_SELENOW_pair1:0.0185690250):0.0000023779):0.3944949217):0.3787953959):0.1379361035):0.0580815365):0.0000020405,(SelW_P.gondii_GT1_re_exonerate_on_gi_158533914_gb_AAQM020000:1.5069242315,(((Se_user_SelW2_Paramecium_tetraurelia:0.1370952952,Se_user_SelW1_Paramecium_tetraurelia:0.4561213136):0.5109340650,Se_user_SelW_Tetrahymena_thermophila:1.5407896152):0.2719176176,Fbor_SELENOW.10.cysteine:1.1869626642):0.1597159181):0.3834712708):0.0379750651,(Se_user_SelW_1:0.3254474694,Se_user_SelW_2:0.0000024210):2.2446202237):0.1039218139,(((((Moneuplotes_crassus_gb_ACL81234.1:2.0375154514,(Tdem_SELENOW.1.selenocysteine:0.0436688217,Tdem_SELENOW.2.selenocysteine:0.0446912368):0.0540612422):0.4057936569,(Stho_SELENOW.1.selenocysteine:0.1264118511,(Bsty_SELENOW.1.methionine:0.2462243434,(((Bsty_SELENOW.6.selenocysteine:1.6637362958,Ovan_SELENOW.9.selenocysteine:0.2527525057):0.1039441983,Oalb_SELENOW.7.selenocysteine:0.1669946158):0.1544244897,((OKI_gold_SELENOW_PAR:0.0412473353,OdB3_gold_SELENOW_PAR:0.0388023433):0.0203267350,OSKA_gold_SELENOW_PAR:0.0407652535):0.3813237256):0.5824683200):1.0428000185):0.1239157036):0.1096018226,Pege_SELENOW.1.selenocysteine:0.1950185981):0.1386296481,(((Chlamydomonas_reinhardtii_ref_XP_001693901.1:0.7470007365,Csav_SELENOW.1.cysteine:0.3466642238):0.1055589963,Csav_SELENOW.2.selenocysteine:0.3700941976):0.0952176343,(Cint_SELENOW.1.selenocysteine:0.0544095913,Crob_SELENOW.1.selenocysteine:0.1428777553):0.3377550489):0.2131281793):0.1416746725,((Se_user_SelW3_Paramecium_tetraurelia:1.3775326087,(Bsch_SELENOW.2.selenocysteine:0.1697326769,Pmam_SELENOW.1.selenocysteine:0.5495710270):0.1177424926):0.0643995897,(Scla_SELENOW.1.selenocysteine:0.1201516419,(Scla_SELENOW.2.selenocysteine:0.0000010000,Scla_SELENOW.3.selenocysteine:0.0264543344):0.1205699293):0.3537881739):0.0000026427):0.1400286163):0.2658697778,(gi_172046839_sp_Q568W0.3_SELW_DANRE_gi_172046839_sp_Q568W0.3:0.0131714397,Drer_SELENOW.5.selenocysteine:0.0000025097):0.1440151191):0.3403510509,((gi_190358775_sp_O19097.4_SELW_SHEEP_gi_190358775_sp_O19097.4:0.0000021213,Mmus_SELENOW.2.serine:3.9671898024):0.0307799139,(Mmus_SELENOW.3.selenocysteine:0.1247820657,Human_SELENOW_NP_003000.1:0.0537898402):0.0504238556):0.2982675993):0.3697706940,Mmus_SELENOW.5.valine:2.0605181692):0.5331474922,Mmus_SELENOW.4.selenocysteine:0.1758178502):0.0946343133,Human_SELENOV_NP_874363.1:0.1914825180);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOW.pmsf.hyp_not_SELENOV.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.061416,0.0449142,0.034995,0.0535709,0.0192146,0.0371592,0.0807133,0.0876567,0.019936,0.0639409,0.069712,0.0826971,0.0192146,0.0500541,0.0345442,0.065023,0.0462668,0.00631969,0.0347245,0.0879272}+G4{1.65188}" --length 124
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOW.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOW.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 08:24:21 2026
+Total CPU time used: 20763.2 seconds (5h:46m:3s)
+Total wall-clock time used: 3192.94 seconds (0h:53m:12s)
+

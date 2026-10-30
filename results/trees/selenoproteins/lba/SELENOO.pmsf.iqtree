@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 116 sequences with 731 amino-acid sites
-Number of constant sites: 21 (= 2.87278% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 21 (= 2.87278% of all sites)
-Number of parsimony informative sites: 678
-Number of distinct site patterns: 727
+Input data: 76 sequences with 724 amino-acid sites
+Number of constant sites: 27 (= 3.72928% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 27 (= 3.72928% of all sites)
+Number of parsimony informative sites: 668
+Number of distinct site patterns: 716
 
 SUBSTITUTION PROCESS
 --------------------
@@ -46,523 +46,360 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 0.7830
+Gamma shape alpha: 0.7088
 
  Category  Relative_rate  Proportion
-  1         0.0919         0.2500
-  2         0.4002         0.2500
-  3         0.9521         0.2500
-  4         2.5557         0.2500
+  1         0.0761         0.2500
+  2         0.3677         0.2500
+  3         0.9281         0.2500
+  4         2.6282         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -67466.4081 (s.e. 1635.7062)
-Unconstrained log-likelihood (without tree): -4813.5848
-Number of free parameters (#branches + #model parameters): 249
-Akaike information criterion (AIC) score: 135430.8162
-Corrected Akaike information criterion (AICc) score: 135689.6520
-Bayesian information criterion (BIC) score: 136574.8252
+Log-likelihood of the tree: -49829.0548 (s.e. 1128.3029)
+Unconstrained log-likelihood (without tree): -4753.2734
+Number of free parameters (#branches + #model parameters): 169
+Akaike information criterion (AIC) score: 99996.1096
+Corrected Akaike information criterion (AICc) score: 100099.8280
+Bayesian information criterion (BIC) score: 100770.9394
 
-Total tree length (sum of branch lengths): 57.1154
-Sum of internal branch lengths: 19.6080 (34.3304% of tree length)
-
-WARNING: 1 near-zero internal branches (<0.0014) should be treated with caution
-         Such branches are denoted by '**' in the figure below
+Total tree length (sum of branch lengths): 59.6388
+Sum of internal branch lengths: 21.6649 (36.3269% of tree length)
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
-+---------Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_
++----------Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_
 |
-|                                                                +--ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor
-|                                                             +--| (82)
-|                                                             |  |  +--ENSONIP00000013118_Onil_ENSONIP00000013118_Onil
-|                                                             |  +--| (96)
-|                                                             |     |  +--ENSTRUP00000011907_Trub_ENSTRUP00000011907_Trub
-|                                                             |     +--| (100)
-|                                                             |        +--ENSTNIP00000011197_Tnig_ENSTNIP00000011197_Tnig
-|                                                          +--| (89)
-|                                                          |  +--ENSGACP00000017759_Gacu_ENSGACP00000017759_Gacu
-|                                                       +--| (97)
-|                                                       |  +--ENSORLP00000020415_Olat_ENSORLP00000020415_Olat
-|                                                    +--| (100)
-|                                                    |  +--ENSGMOP00000019991_Gmor_ENSGMOP00000019991_Gmor
-|                                                 +--| (100)
-|                                                 |  |  +--ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex
-|                                                 |  +--| (98)
-|                                                 |     +--Drer_SELENOO.2.selenocysteine
-|                                             +---| (100)
-|                                             |   |     +--ENSAMXP00000020239_Amex_ENSAMXP00000020239_Amex
-|                                             |   |  +--| (100)
-|                                             |   |  |  +--Drer_SELENOO.9.selenocysteine
-|                                             |   +--| (100)
-|                                             |      |  +--ENSONIP00000015220_Onil_ENSONIP00000015220_Onil
-|                                             |      +--| (100)
-|                                             |         +--ENSXMAP00000006203_Xmac_ENSXMAP00000006203_Xmac
-|                                          +--| (100)
-|                                          |  |  +--ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha
-|                                          |  +--| (100)
-|                                          |     |           +--ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom
-|                                          |     |        +--| (100)
-|                                          |     |        |  |                    +--ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau
-|                                          |     |        |  |                 +--| (100)
-|                                          |     |        |  |                 |  +--ENSSSCP00000001041_Sscr_ENSSSCP00000001041_Sscr
-|                                          |     |        |  |              +--| (57)
-|                                          |     |        |  |              |  |  +--ENSDNOP00000033271_Dnov_ENSDNOP00000033271_Dnov
-|                                          |     |        |  |              |  +--| (79)
-|                                          |     |        |  |              |     +--ENSPVAP00000004900_Pvam_ENSPVAP00000004900_Pvam
-|                                          |     |        |  |           +--| (62)
-|                                          |     |        |  |           |  +--ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur
-|                                          |     |        |  |        +--| (61)
-|                                          |     |        |  |        |  |           +--ENSCGRP00001025333_Cgch_ENSCGRP00001025333_Cgch
-|                                          |     |        |  |        |  |        +--| (100)
-|                                          |     |        |  |        |  |        |  +--Mmus_SELENOO.1.selenocysteine
-|                                          |     |        |  |        |  |     +--| (100)
-|                                          |     |        |  |        |  |     |  |  +--ENSNGAP00000008384_Ngal_ENSNGAP00000008384_Ngal
-|                                          |     |        |  |        |  |     |  +--| (92)
-|                                          |     |        |  |        |  |     |     +--ENSJJAP00000006663_Jjac_ENSJJAP00000006663_Jjac
-|                                          |     |        |  |        |  |  +--| (89)
-|                                          |     |        |  |        |  |  |  |  +--ENSCPOP00000013379_Cpor_ENSCPOP00000013379_Cpor
-|                                          |     |        |  |        |  |  |  +--| (100)
-|                                          |     |        |  |        |  |  |     +--ENSHGLP00000026665_Hgfe_ENSHGLP00000026665_Hgfe
-|                                          |     |        |  |        |  +--| (99)
-|                                          |     |        |  |        |     +--ENSDORP00000021306_Dord_ENSDORP00000021306_Dord
-|                                          |     |        |  |     +--| (77)
-|                                          |     |        |  |     |  |  +--ENSOGAP00000012672_Ogar_ENSOGAP00000012672_Ogar
-|                                          |     |        |  |     |  +--| (100)
-|                                          |     |        |  |     |     +--ENSMICP00000016199_Mmur_ENSMICP00000016199_Mmur
-|                                          |     |        |  |  +--| (79)
-|                                          |     |        |  |  |  |  +--ENSCJAP00000006132_Cjac_ENSCJAP00000006132_Cjac
-|                                          |     |        |  |  |  +--| (100)
-|                                          |     |        |  |  |     |     +--ENSPPYP00000013360_Pabe_ENSPPYP00000013360_Pabe
-|                                          |     |        |  |  |     |  +--| (99)
-|                                          |     |        |  |  |     |  |  |  +--ENSPTRP00000049590_Ptro_ENSPTRP00000049590_Ptro
-|                                          |     |        |  |  |     |  |  +--| (99)
-|                                          |     |        |  |  |     |  |     +--Human_SELENOO_NP_113642.1
-|                                          |     |        |  |  |     +--| (100)
-|                                          |     |        |  |  |        +--ENSCSAP00000001353_Csab_ENSCSAP00000001353_Csab
-|                                          |     |        |  +--| (100)
-|                                          |     |        |     |  +--ENSPCAP00000001135_Pcap_ENSPCAP00000001135_Pcap
-|                                          |     |        |     +--| (100)
-|                                          |     |        |        +--ENSETEP00000004693_Etel_ENSETEP00000004693_Etel
-|                                          |     |     +--| (98)
-|                                          |     |     |  +--ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut
-|                                          |     |  +--| (100)
-|                                          |     |  |  +--ENSACAP00000002181_Acar_ENSACAP00000002181_Acar
-|                                          |     +--| (100)
-|                                          |        +--ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro
-|                                       +--| (99)
-|                                       |  |  +--Bflo_SELENOO.12.selenocysteine
+|                                                         +--ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor
+|                                                      +--| (100)
+|                                                      |  |  +--ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex
+|                                                      |  +--| (98)
+|                                                      |     +--Drer_SELENOO.2.selenocysteine
+|                                                   +--| (100)
+|                                                   |  +---Drer_SELENOO.9.selenocysteine
+|                                                +--| (100)
+|                                                |  |  +--ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha
+|                                                |  +--| (99)
+|                                                |     |           +--ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom
+|                                                |     |        +--| (100)
+|                                                |     |        |  |        +--ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau
+|                                                |     |        |  |     +--| (99)
+|                                                |     |        |  |     |  +--ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur
+|                                                |     |        |  |  +--| (96)
+|                                                |     |        |  |  |  +--Human_SELENOO_NP_113642.1
+|                                                |     |        |  +--| (100)
+|                                                |     |        |     +--Mmus_SELENOO.1.selenocysteine
+|                                                |     |     +--| (94)
+|                                                |     |     |  +--ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut
+|                                                |     |  +--| (98)
+|                                                |     |  |  +--ENSACAP00000002181_Acar_ENSACAP00000002181_Acar
+|                                                |     +--| (100)
+|                                                |        +--ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro
+|                                             +--| (98)
+|                                             |  |  +--Bflo_SELENOO.12.selenocysteine
+|                                             |  +--| (100)
+|                                             |     +--Blan_SELENOO.12.unaligned
+|                                          +--| (93)
+|                                          |  +-------Ixodes_scapularis_gi_215498714_gb_EEC08208.1
+|                                       +--| (51)
+|                                       |  |  +---Bsch_SELENOO.1.selenocysteine
 |                                       |  +--| (100)
-|                                       |     +--Blan_SELENOO.12.unaligned
+|                                       |     |  +--Hror_SELENOO.1.selenocysteine
+|                                       |     +--| (84)
+|                                       |        +--Scla_SELENOO.1.selenocysteine
 |                                    +--| (95)
-|                                    |  +-------Ixodes_scapularis_gi_215498714_gb_EEC08208.1
-|                                 +--| (98)
-|                                 |  |                 +**ENSCINP00000005632_Cint_ENSCINP00000005632_Cint
-|                                 |  |              +--| (100)
-|                                 |  |              |  +**Crob_SELENOO.1.selenocysteine
-|                                 |  |           +--| (100)
-|                                 |  |           |  +--Cint_SELENOO.1.selenocysteine
-|                                 |  |        +--| (100)
-|                                 |  |        |  |  +--ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav
-|                                 |  |        |  +--| (100)
-|                                 |  |        |     +--Csav_SELENOO.3.pseudo
-|                                 |  |     +--| (88)
-|                                 |  |     |  |     +----Pege_SELENOO.1.unaligned
-|                                 |  |     |  |  +--| (96)
-|                                 |  |     |  |  |  +--Stho_SELENOO.8.selenocysteine
-|                                 |  |     |  +--| (100)
-|                                 |  |     |     +----Tdem_SELENOO.2.selenocysteine
-|                                 |  |  +--| (100)
-|                                 |  |  |  +---Pmam_SELENOO.8.selenocysteine
-|                                 |  +--| (89)
-|                                 |     |  +---Bsch_SELENOO.1.selenocysteine
-|                                 |     +--| (100)
-|                                 |        |  +--Hror_SELENOO.1.selenocysteine
-|                                 |        +--| (95)
-|                                 |           +--Scla_SELENOO.1.selenocysteine
-|                              +--| (97)
-|                              |  |           +--Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1
-|                              |  |  +--------| (100)
-|                              |  |  |        +--SelO_P.sojae_SelO_P.sojae
-|                              |  +--| (78)
-|                              |     |            +---Mery_SELENOO.2.unaligned
-|                              |     |         +--| (97)
-|                              |     |         |  +--Olon_SELENOO.5.pseudo
-|                              |     |      +--| (97)
-|                              |     |      |  +---Olon_SELENOO.1.unaligned
-|                              |     |   +--| (92)
-|                              |     |   |  |  +--------------Mery_SELENOO.4.unaligned
-|                              |     |   |  +--| (87)
-|                              |     |   |     |        +--OKI_SELENOO.5.unaligned
-|                              |     |   |     |     +--| (100)
-|                              |     |   |     |     |  +--OdB3_SELENOO.5.unaligned
-|                              |     |   |     |  +--| (100)
-|                              |     |   |     |  |  +--OSKA_SELENOO.5.selenocysteine
-|                              |     |   |     +--| (100)
-|                              |     |   |        |  +--Oalb_SELENOO.4.selenocysteine
-|                              |     |   |        +--| (99)
-|                              |     |   |           +--Ovan_SELENOO.7.unaligned
-|                              |     +---| (100)
-|                              |         |  +-----Mery_SELENOO.6.unaligned
-|                              |         +--| (97)
-|                              |            +---Olon_SELENOO.8.unaligned
+|                                    |  |           +**ENSCINP00000005632_Cint_ENSCINP00000005632_Cint
+|                                    |  |        +--| (100)
+|                                    |  |        |  +**Crob_SELENOO.1.selenocysteine
+|                                    |  |     +--| (100)
+|                                    |  |     |  +--Cint_SELENOO.1.selenocysteine
+|                                    |  |  +--| (100)
+|                                    |  |  |  |  +--ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav
+|                                    |  |  |  +--| (100)
+|                                    |  |  |     +--Csav_SELENOO.3.pseudo
+|                                    |  +--| (100)
+|                                    |     |        +----Pege_SELENOO.1.unaligned
+|                                    |     |     +--| (97)
+|                                    |     |     |  +--Stho_SELENOO.8.selenocysteine
+|                                    |     |  +--| (98)
+|                                    |     |  |  +----Tdem_SELENOO.2.selenocysteine
+|                                    |     +--| (49)
+|                                    |        +----Pmam_SELENOO.8.selenocysteine
+|                                 +--| (93)
+|                                 |  |            +---Mery_SELENOO.2.unaligned
+|                                 |  |         +--| (27)
+|                                 |  |         |  +---Olon_SELENOO.1.unaligned
+|                                 |  |      +--| (95)
+|                                 |  |      |  +--Olon_SELENOO.5.pseudo
+|                                 |  |   +--| (89)
+|                                 |  |   |  |     +--Oalb_SELENOO.5.selenocysteine
+|                                 |  |   |  |  +--| (100)
+|                                 |  |   |  |  |  +--Ovan_SELENOO.4.unaligned
+|                                 |  |   |  +--| (100)
+|                                 |  |   |     |     +--OdB3_SELENOO.5.unaligned
+|                                 |  |   |     |  +--| (99)
+|                                 |  |   |     |  |  +--OSKA_gold_SELENOO
+|                                 |  |   |     +--| (100)
+|                                 |  |   |        +--OKI_gold_SELENOO
+|                                 |  +---| (100)
+|                                 |      |  +-----Mery_SELENOO.6.unaligned
+|                                 |      +--| (96)
+|                                 |         +---Olon_SELENOO.8.unaligned
+|                              +--| (88)
+|                              |  |        +--Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1
+|                              |  +--------| (100)
+|                              |           +--SelO_P.sojae_SelO_P.sojae
 |                           +--| (100)
-|                           |  +--------------Fbor_SELENOO.2.cysteine
-|                        +--| (99)
-|                        |  |                  +--ENSCLAP00000007095_ENSCLAP00000007095
-|                        |  |               +--| (100)
-|                        |  |               |  +--ENSSHAP00000013816_Shar_ENSSHAP00000013816_Shar
-|                        |  |            +--| (100)
-|                        |  |            |  |  +--ENSGALP00000012216_ENSGALP00000012216
-|                        |  |            |  +--| (94)
-|                        |  |            |     +--ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin
-|                        |  |         +--| (100)
-|                        |  |         |  |     +--ENSONIP00000008078_Onil_ENSONIP00000008078_Onil
-|                        |  |         |  |  +--| (98)
-|                        |  |         |  |  |  |  +--ENSGACP00000006783_ENSGACP00000006783
-|                        |  |         |  |  |  +--| (94)
-|                        |  |         |  |  |     +--ENSTRUP00000025654_ENSTRUP00000025654
-|                        |  |         |  +--| (100)
-|                        |  |         |     +--ENSGMOP00000019532_ENSGMOP00000019532
-|                        |  |      +--| (85)
-|                        |  |      |  |        +---Bsch_SELENOO.4.cysteine
-|                        |  |      |  |     +--| (100)
-|                        |  |      |  |     |  +--Scla_SELENOO.3.cysteine
-|                        |  |      |  |  +--| (99)
-|                        |  |      |  |  |  +--Hror_SELENOO.3.cysteine
-|                        |  |      |  +--| (97)
-|                        |  |      |     +------Pmam_SELENOO.1.cysteine
-|                        |  +------| (100)
-|                        |         |  +--Bflo_SELENOO.3.cysteine
-|                        |         +--| (100)
-|                        |            +--Blan_SELENOO.4.cysteine
-|                     +--| (92)
-|                     |  |                 +---Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1
-|                     |  |              +--| (99)
-|                     |  |              |  |  +---Comamonas_testosteroni_KF-1_gi_221066306_ref_ZP_03542411.1
-|                     |  |              |  +--| (100)
-|                     |  |              |     +--Variovorax_paradoxus_S110_gi_221084826_ref_ZP_03554438.1
-|                     |  |           +--| (100)
-|                     |  |           |  |  +--gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5
-|                     |  |           |  +--| (100)
-|                     |  |           |     +--Burkholderia_graminis_C4D1M_gi_170692428_ref_ZP_02883591.1
-|                     |  |        +--| (90)
-|                     |  |        |  +------Thioalkalivibrio_sp._HL-EbGR7_gi_220934366_ref_YP_002513265.
-|                     |  |     +--| (81)
-|                     |  |     |  |  +------gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506
-|                     |  |     |  +--| (98)
-|                     |  |     |     |                    +--Fbor_SELENOO.4.cysteine
-|                     |  |     |     |                 +--| (69)
-|                     |  |     |     |                 |  +--Fbor_SELENOO.7.unaligned
-|                     |  |     |     |              +--| (40)
-|                     |  |     |     |              |  +--Fbor_SELENOO.10.unaligned
-|                     |  |     |     |           +--| (40)
-|                     |  |     |     |           |  +--Fbor_SELENOO.6.cysteine
-|                     |  |     |     |       +---| (99)
-|                     |  |     |     |       |   +--Fbor_SELENOO.9.unaligned
-|                     |  |     |     |  +----| (100)
-|                     |  |     |     |  |    +------------Fbor_SELENOO.15.unaligned
-|                     |  |     |     +--| (94)
-|                     |  |     |        |       +-------Fbor_SELENOO.12.unaligned
-|                     |  |     |        +-------| (100)
-|                     |  |     |                +--------Fbor_SELENOO.17.unaligned
-|                     |  |  +--| (99)
-|                     |  |  |  +-------Salmonella_enterica_subsp._enterica_serovar_Saintpaul_str._S
-|                     |  +--| (87)
-|                     |     +--------------------------------------Fbor_SELENOO.16.unaligned
-|                  +**| (38)
-|                  |  +-------------------------------YPL222W_Scer_YPL222W_Scer
-|               +--| (92)
-|               |  |        +--Ricinus_communis_gi_223547341_gb_EEF48836.1
-|               |  |     +--| (95)
-|               |  |     |  +--Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1
-|               |  +-----| (100)
-|               |        +--Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001
+|                           |  +---------------Fbor_SELENOO.2.cysteine
+|                        +--| (86)
+|                        |  |           +--ENSGALP00000012216_ENSGALP00000012216
+|                        |  |        +--| (100)
+|                        |  |        |  +--ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin
+|                        |  |     +--| (90)
+|                        |  |     |  |  +--Bflo_SELENOO.3.cysteine
+|                        |  |     |  +--| (100)
+|                        |  |     |     +--Blan_SELENOO.4.cysteine
+|                        |  +-----| (100)
+|                        |        |        +---Bsch_SELENOO.4.cysteine
+|                        |        |     +--| (100)
+|                        |        |     |  +--Scla_SELENOO.3.cysteine
+|                        |        |  +--| (91)
+|                        |        |  |  +--Hror_SELENOO.3.cysteine
+|                        |        +--| (94)
+|                        |           +-------Pmam_SELENOO.1.cysteine
+|                     +--| (68)
+|                     |  |       +----Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1
+|                     |  |   +---| (100)
+|                     |  |   |   +---gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5
+|                     |  +---| (100)
+|                     |      |  +------gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506
+|                     |      +--| (98)
+|                     |         |           +--Fbor_SELENOO.4.cysteine
+|                     |         |       +---| (99)
+|                     |         |       |   |        +--Fbor_SELENOO.6.cysteine
+|                     |         |       |   |     +--| (77)
+|                     |         |       |   |     |  +--Fbor_SELENOO.9.unaligned
+|                     |         |       |   |  +--| (75)
+|                     |         |       |   |  |  +--Fbor_SELENOO.11.unaligned
+|                     |         |       |   +--| (75)
+|                     |         |       |      +--Fbor_SELENOO.8.cysteine
+|                     |         |  +----| (100)
+|                     |         |  |    +--------------Fbor_SELENOO.16.unaligned
+|                     |         +--| (68)
+|                     |            |       +-------Fbor_SELENOO.13.unaligned
+|                     |            +-------| (100)
+|                     |                    +-------Fbor_SELENOO.18.unaligned
+|                  +--| (98)
+|                  |  +--------------------------------------Fbor_SELENOO.17.unaligned
+|               +--| (93)
+|               |  |  +------------------------------YPL222W_Scer_YPL222W_Scer
+|               |  +--| (94)
+|               |     |       +--Ricinus_communis_gi_223547341_gb_EEF48836.1
+|               |     |    +--| (96)
+|               |     |    |  +--Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1
+|               |     +----| (100)
+|               |          +--Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001
 +---------------| (100)
 |               |        +--Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1
 |               |     +--| (100)
 |               |     |  |  +---Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020
-|               |     |  +--| (100)
+|               |     |  +--| (99)
 |               |     |     +--gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2
 |               |  +--| (100)
-|               |  |  |  +---Tolumonas_auensis_DSM_9187_gi_223580288_ref_ZP_03620799.1
-|               |  |  +--| (100)
-|               |  |     +-----Fbor_SELENOO.1.cysteine
-|               +--| (98)
-|                  |  +-------Polaribacter_sp._MED152_gi_85821389_gb_EAQ42536.1
+|               |  |  +-------Fbor_SELENOO.1.cysteine
+|               +--| (99)
+|                  |        +--Bsty_SELENOO.1.cysteine
+|                  |     +--| (100)
+|                  |     |  +--Mery_SELENOO.1.cysteine
+|                  |  +--| (100)
+|                  |  |  +--Bsty_SELENOO.2.cysteine
 |                  +--| (100)
-|                     |     +--Bsty_SELENOO.1.cysteine
-|                     |  +--| (100)
-|                     |  |  |  +--Bsty_SELENOO.2.cysteine
-|                     |  |  +--| (100)
-|                     |  |     +--Mery_SELENOO.1.cysteine
-|                     +--| (100)
-|                        +--Fbor_SELENOO.20.unaligned
+|                     +--Fbor_SELENOO.21.cysteine
 |
-|           +--Fbor_SELENOO.13.unaligned
-+-----------| (100)
-            +--Fbor_SELENOO.18.unaligned
+|         +--Fbor_SELENOO.14.unaligned
++---------| (100)
+          +--Fbor_SELENOO.19.unaligned
 
 Tree in newick format:
 
-(Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_:1.0325590760,(((((((((((((((((ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor:0.1212610403,(ENSONIP00000013118_Onil_ENSONIP00000013118_Onil:0.0599779877,(ENSTRUP00000011907_Trub_ENSTRUP00000011907_Trub:0.0636583516,ENSTNIP00000011197_Tnig_ENSTNIP00000011197_Tnig:0.0595410507)100:0.0682549575)96:0.0087027350)82:0.0063831456,ENSGACP00000017759_Gacu_ENSGACP00000017759_Gacu:0.1032376653)89:0.0225777551,ENSORLP00000020415_Olat_ENSORLP00000020415_Olat:0.0962122118)97:0.0320980753,ENSGMOP00000019991_Gmor_ENSGMOP00000019991_Gmor:0.2078790687)100:0.0310836220,(ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex:0.1229053510,Drer_SELENOO.2.selenocysteine:0.1268877771)98:0.0470310428)100:0.0895175157,((ENSAMXP00000020239_Amex_ENSAMXP00000020239_Amex:0.1664968917,Drer_SELENOO.9.selenocysteine:0.2426335013)100:0.1019503453,(ENSONIP00000015220_Onil_ENSONIP00000015220_Onil:0.1898815535,ENSXMAP00000006203_Xmac_ENSXMAP00000006203_Xmac:0.1441517791)100:0.1937493755)100:0.1546743713)100:0.3955190661,(ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha:0.2024074627,((((ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom:0.1882420803,(((((((ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau:0.1025329652,ENSSSCP00000001041_Sscr_ENSSSCP00000001041_Sscr:0.0504720687)100:0.0312951045,(ENSDNOP00000033271_Dnov_ENSDNOP00000033271_Dnov:0.1776502985,ENSPVAP00000004900_Pvam_ENSPVAP00000004900_Pvam:0.0953821008)79:0.0178319851)57:0.0103848907,ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur:0.1256893670)62:0.0161799817,((((ENSCGRP00001025333_Cgch_ENSCGRP00001025333_Cgch:0.0392762777,Mmus_SELENOO.1.selenocysteine:0.0572251923)100:0.0333322215,(ENSNGAP00000008384_Ngal_ENSNGAP00000008384_Ngal:0.0647082808,ENSJJAP00000006663_Jjac_ENSJJAP00000006663_Jjac:0.0965279595)92:0.0135258430)100:0.0320948563,(ENSCPOP00000013379_Cpor_ENSCPOP00000013379_Cpor:0.0623834469,ENSHGLP00000026665_Hgfe_ENSHGLP00000026665_Hgfe:0.0506712328)100:0.0664050123)89:0.0143774923,ENSDORP00000021306_Dord_ENSDORP00000021306_Dord:0.1178070133)99:0.0251513970)61:0.0059677828,(ENSOGAP00000012672_Ogar_ENSOGAP00000012672_Ogar:0.0905463318,ENSMICP00000016199_Mmur_ENSMICP00000016199_Mmur:0.1583247376)100:0.0365050957)77:0.0125832546,(ENSCJAP00000006132_Cjac_ENSCJAP00000006132_Cjac:0.0523285696,((ENSPPYP00000013360_Pabe_ENSPPYP00000013360_Pabe:0.0229264399,(ENSPTRP00000049590_Ptro_ENSPTRP00000049590_Ptro:0.0118257910,Human_SELENOO_NP_113642.1:0.0020945614)99:0.0031579855)99:0.0092541350,ENSCSAP00000001353_Csab_ENSCSAP00000001353_Csab:0.0218989577)100:0.0158128527)100:0.0452871420)79:0.0263005013,(ENSPCAP00000001135_Pcap_ENSPCAP00000001135_Pcap:0.1348925580,ENSETEP00000004693_Etel_ENSETEP00000004693_Etel:0.1556275879)100:0.0699810319)100:0.1024390523)100:0.1461212538,ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut:0.0923556470)98:0.0336404398,ENSACAP00000002181_Acar_ENSACAP00000002181_Acar:0.2176060665)100:0.0549242806,ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro:0.2892059908)100:0.0798608760)100:0.1349907009)100:0.1885349506,(Bflo_SELENOO.12.selenocysteine:0.0521871031,Blan_SELENOO.12.unaligned:0.0837289910)100:0.3186573424)99:0.0899150877,Ixodes_scapularis_gi_215498714_gb_EEC08208.1:0.8117421192)95:0.0387767320,((((((ENSCINP00000005632_Cint_ENSCINP00000005632_Cint:0.0000010000,Crob_SELENOO.1.selenocysteine:0.0000010000)100:0.0481516935,Cint_SELENOO.1.selenocysteine:0.0263432453)100:0.1767529390,(ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav:0.0112473119,Csav_SELENOO.3.pseudo:0.0093049043)100:0.2678060376)100:0.2948227708,((Pege_SELENOO.1.unaligned:0.5208436432,Stho_SELENOO.8.selenocysteine:0.3481726653)96:0.0670414754,Tdem_SELENOO.2.selenocysteine:0.4913230632)100:0.1502549974)88:0.0525265364,Pmam_SELENOO.8.selenocysteine:0.4791584119)100:0.2035791403,(Bsch_SELENOO.1.selenocysteine:0.4325978092,(Hror_SELENOO.1.selenocysteine:0.3803863182,Scla_SELENOO.1.selenocysteine:0.2921915598)95:0.0954864029)100:0.1175046674)89:0.0862983667)98:0.1290359165,((Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1:0.1178519593,SelO_P.sojae_SelO_P.sojae:0.1133822010)100:0.9630415492,((((Mery_SELENOO.2.unaligned:0.4810785869,Olon_SELENOO.5.pseudo:0.2262889959)97:0.0418875673,Olon_SELENOO.1.unaligned:0.4251257445)97:0.1787988563,(Mery_SELENOO.4.unaligned:1.4608717059,(((OKI_SELENOO.5.unaligned:0.1284344148,OdB3_SELENOO.5.unaligned:0.1083680056)100:0.0618622004,OSKA_SELENOO.5.selenocysteine:0.0625844291)100:0.3557863153,(Oalb_SELENOO.4.selenocysteine:0.3050568774,Ovan_SELENOO.7.unaligned:0.2945732367)99:0.1341569624)100:0.1797437012)87:0.0193428061)92:0.0801568030,(Mery_SELENOO.6.unaligned:0.6594588841,Olon_SELENOO.8.unaligned:0.4087160045)97:0.2122954723)100:0.4000910854)78:0.1206644676)97:0.1554514865,Fbor_SELENOO.2.cysteine:1.5415322827)100:0.3362460732,(((((ENSCLAP00000007095_ENSCLAP00000007095:0.1642802587,ENSSHAP00000013816_Shar_ENSSHAP00000013816_Shar:0.1329124174)100:0.0754543162,(ENSGALP00000012216_ENSGALP00000012216:0.1794930497,ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin:0.1413633214)94:0.0408060161)100:0.1268052647,((ENSONIP00000008078_Onil_ENSONIP00000008078_Onil:0.1305696567,(ENSGACP00000006783_ENSGACP00000006783:0.1755550691,ENSTRUP00000025654_ENSTRUP00000025654:0.1875022551)94:0.0319898145)98:0.0587356550,ENSGMOP00000019532_ENSGMOP00000019532:0.2262654137)100:0.2722272082)100:0.2044220995,(((Bsch_SELENOO.4.cysteine:0.4576810917,Scla_SELENOO.3.cysteine:0.3209824332)100:0.0919906218,Hror_SELENOO.3.cysteine:0.3318701583)99:0.1712352458,Pmam_SELENOO.1.cysteine:0.7625774923)97:0.1648013903)85:0.0793499797,(Bflo_SELENOO.3.cysteine:0.0315728300,Blan_SELENOO.4.cysteine:0.0462822932)100:0.3352761362)100:0.6824913063)99:0.2552775223,((((((Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1:0.4392614930,(Comamonas_testosteroni_KF-1_gi_221066306_ref_ZP_03542411.1:0.4435495992,Variovorax_paradoxus_S110_gi_221084826_ref_ZP_03554438.1:0.2903850411)100:0.3733435336)99:0.0847542747,(gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5:0.2414310708,Burkholderia_graminis_C4D1M_gi_170692428_ref_ZP_02883591.1:0.1427558198)100:0.3180759941)100:0.3369885627,Thioalkalivibrio_sp._HL-EbGR7_gi_220934366_ref_YP_002513265.:0.7401031630)90:0.1815794926,(gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506:0.6963081935,((((((Fbor_SELENOO.4.cysteine:0.1570753830,Fbor_SELENOO.7.unaligned:0.1131423093)69:0.0364148673,Fbor_SELENOO.10.unaligned:0.2115337962)40:0.0401649148,Fbor_SELENOO.6.cysteine:0.0656245337)40:0.0542775016,Fbor_SELENOO.9.unaligned:0.0718459400)99:0.4822456983,Fbor_SELENOO.15.unaligned:1.3053840868)100:0.5426680840,(Fbor_SELENOO.12.unaligned:0.7989072300,Fbor_SELENOO.17.unaligned:0.8916081806)100:0.8479380724)94:0.1879601968)98:0.1037781519)81:0.1324053737,Salmonella_enterica_subsp._enterica_serovar_Saintpaul_str._S:0.8674949931)99:0.2559948922,Fbor_SELENOO.16.unaligned:3.7997923700)87:0.1262073977)92:0.1440512389,YPL222W_Scer_YPL222W_Scer:3.1291089569)38:0.0000023297,((Ricinus_communis_gi_223547341_gb_EEF48836.1:0.1016215749,Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1:0.1673181452)95:0.0444584414,Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001:0.1703603011)100:0.6225664568)92:0.1516331055,(((Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1:0.3591830758,(Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020:0.4116440826,gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2:0.1463324136)100:0.0661417814)100:0.3347741567,(Tolumonas_auensis_DSM_9187_gi_223580288_ref_ZP_03620799.1:0.4156639729,Fbor_SELENOO.1.cysteine:0.6634814922)100:0.1870983048)100:0.1773803342,(Polaribacter_sp._MED152_gi_85821389_gb_EAQ42536.1:0.8439982929,((Bsty_SELENOO.1.cysteine:0.1213783107,(Bsty_SELENOO.2.cysteine:0.0169611392,Mery_SELENOO.1.cysteine:0.0131639409)100:0.1401193110)100:0.1408936127,Fbor_SELENOO.20.unaligned:0.3295501488)100:0.0688011578)100:0.1939808819)98:0.1488419767)100:1.6075768020,(Fbor_SELENOO.13.unaligned:0.0811844764,Fbor_SELENOO.18.unaligned:0.2327590309)100:1.1785223430);
+(Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_:1.4750542933,(((((((((((((((ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor:0.2438208334,(ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex:0.1508112080,Drer_SELENOO.2.selenocysteine:0.1403832603)98:0.0429392472)100:0.0841973350,Drer_SELENOO.9.selenocysteine:0.5725628653)100:0.4510211590,(ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha:0.2311533739,((((ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom:0.2032714140,(((ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau:0.1492190296,ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur:0.1214803455)99:0.0324792962,Human_SELENOO_NP_113642.1:0.0829660169)96:0.0422360271,Mmus_SELENOO.1.selenocysteine:0.1427973107)100:0.1395718732)100:0.1642649152,ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut:0.1066398410)94:0.0496891596,ENSACAP00000002181_Acar_ENSACAP00000002181_Acar:0.2479585681)98:0.0547136903,ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro:0.3200759009)100:0.0952441532)99:0.1465862705)100:0.2225247360,(Bflo_SELENOO.12.selenocysteine:0.0667943501,Blan_SELENOO.12.unaligned:0.0888893889)100:0.4175534564)98:0.1126729971,Ixodes_scapularis_gi_215498714_gb_EEC08208.1:1.0212372169)93:0.0819954082,(Bsch_SELENOO.1.selenocysteine:0.5391892063,(Hror_SELENOO.1.selenocysteine:0.4688936718,Scla_SELENOO.1.selenocysteine:0.3202439132)84:0.1034840478)100:0.2151252953)51:0.1040407872,((((ENSCINP00000005632_Cint_ENSCINP00000005632_Cint:0.0000010000,Crob_SELENOO.1.selenocysteine:0.0000026815)100:0.0500550510,Cint_SELENOO.1.selenocysteine:0.0345848956)100:0.2322093422,(ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav:0.0152667057,Csav_SELENOO.3.pseudo:0.0089710509)100:0.3262302506)100:0.3549149639,(((Pege_SELENOO.1.unaligned:0.6888795276,Stho_SELENOO.8.selenocysteine:0.4010234339)97:0.1048372668,Tdem_SELENOO.2.selenocysteine:0.6358061968)98:0.1597449451,Pmam_SELENOO.8.selenocysteine:0.6300267486)49:0.0457716073)100:0.2461518503)95:0.1521570376,((((Mery_SELENOO.2.unaligned:0.6073632163,Olon_SELENOO.1.unaligned:0.5580912752)27:0.0279100708,Olon_SELENOO.5.pseudo:0.2941172897)95:0.2426581982,((Oalb_SELENOO.5.selenocysteine:0.3764409764,Ovan_SELENOO.4.unaligned:0.3383768281)100:0.1925553288,((OdB3_SELENOO.5.unaligned:0.1383408645,OSKA_gold_SELENOO:0.0287145683)99:0.0508195614,OKI_gold_SELENOO:0.0632193995)100:0.4168664397)100:0.2516572451)89:0.1630933350,(Mery_SELENOO.6.unaligned:0.7890178571,Olon_SELENOO.8.unaligned:0.5263782452)96:0.2999547439)100:0.5807936413)93:0.1643588684,(Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1:0.1340154565,SelO_P.sojae_SelO_P.sojae:0.1334727576)100:1.2438159010)88:0.1188303964,Fbor_SELENOO.2.cysteine:2.0208001539)100:0.4361597131,(((ENSGALP00000012216_ENSGALP00000012216:0.1328371890,ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin:0.2771662890)100:0.4297467111,(Bflo_SELENOO.3.cysteine:0.0326679833,Blan_SELENOO.4.cysteine:0.0598319098)100:0.4725444935)90:0.1726689833,(((Bsch_SELENOO.4.cysteine:0.5881013664,Scla_SELENOO.3.cysteine:0.3658288041)100:0.1628200338,Hror_SELENOO.3.cysteine:0.4154521066)91:0.1686988912,Pmam_SELENOO.1.cysteine:1.0065751976)94:0.1335492525)100:0.8142525073)86:0.1547591223,((Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1:0.7338970365,gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5:0.6004861509)100:0.5657193100,(gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506:0.9952384693,(((Fbor_SELENOO.4.cysteine:0.1360401676,(((Fbor_SELENOO.6.cysteine:0.0747050825,Fbor_SELENOO.9.unaligned:0.1582572207)77:0.0629949785,Fbor_SELENOO.11.unaligned:0.2346779438)75:0.0413159902,Fbor_SELENOO.8.cysteine:0.1271346450)75:0.0612936107)99:0.5806710019,Fbor_SELENOO.16.unaligned:1.9479329351)100:0.7184718963,(Fbor_SELENOO.13.unaligned:1.0494546051,Fbor_SELENOO.18.unaligned:1.1119896477)100:1.0709534840)68:0.2505940230)98:0.2111310897)100:0.5795069099)68:0.1166829648,Fbor_SELENOO.17.unaligned:4.9641852236)98:0.3085100032,(YPL222W_Scer_YPL222W_Scer:3.9487620393,((Ricinus_communis_gi_223547341_gb_EEF48836.1:0.1182812668,Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1:0.2055384016)96:0.0490007285,Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001:0.1943900575)100:0.6525122013)94:0.1899039683)93:0.1737221742,(((Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1:0.4806915872,(Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020:0.5383113367,gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2:0.1826028539)99:0.0576260428)100:0.4538530749,Fbor_SELENOO.1.cysteine:1.0472369942)100:0.2425870036,(((Bsty_SELENOO.1.cysteine:0.0228728474,Mery_SELENOO.1.cysteine:0.0167762813)100:0.1907727152,Bsty_SELENOO.2.cysteine:0.1466411871)100:0.1822844909,Fbor_SELENOO.21.cysteine:0.4492988129)100:0.2844493882)99:0.3132509561)100:2.0614225830,(Fbor_SELENOO.14.unaligned:0.2393871260,Fbor_SELENOO.19.unaligned:0.2042208681)100:1.3648475590);
 
 CONSENSUS TREE
 --------------
 
 Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -67469.319279
+Log-likelihood of consensus tree: -49829.069798
 Robinson-Foulds distance between ML tree and consensus tree: 2
 
 Branches with support >0.000000% are kept (extended consensus)
 Branch lengths are optimized by maximum likelihood on original alignment
 Numbers in parentheses are bootstrap supports (%)
 
-+---------Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_
++----------Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_
 |
-|                                                                +--ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor
-|                                                             +--| (82)
-|                                                             |  |  +--ENSONIP00000013118_Onil_ENSONIP00000013118_Onil
-|                                                             |  +--| (96)
-|                                                             |     |  +--ENSTRUP00000011907_Trub_ENSTRUP00000011907_Trub
-|                                                             |     +--| (100)
-|                                                             |        +--ENSTNIP00000011197_Tnig_ENSTNIP00000011197_Tnig
-|                                                          +--| (89)
-|                                                          |  +--ENSGACP00000017759_Gacu_ENSGACP00000017759_Gacu
-|                                                       +--| (97)
-|                                                       |  +--ENSORLP00000020415_Olat_ENSORLP00000020415_Olat
-|                                                    +--| (100)
-|                                                    |  +--ENSGMOP00000019991_Gmor_ENSGMOP00000019991_Gmor
-|                                                 +--| (100)
-|                                                 |  |  +--ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex
-|                                                 |  +--| (98)
-|                                                 |     +--Drer_SELENOO.2.selenocysteine
-|                                             +---| (100)
-|                                             |   |     +--ENSAMXP00000020239_Amex_ENSAMXP00000020239_Amex
-|                                             |   |  +--| (100)
-|                                             |   |  |  +--Drer_SELENOO.9.selenocysteine
-|                                             |   +--| (100)
-|                                             |      |  +--ENSONIP00000015220_Onil_ENSONIP00000015220_Onil
-|                                             |      +--| (100)
-|                                             |         +--ENSXMAP00000006203_Xmac_ENSXMAP00000006203_Xmac
-|                                          +--| (100)
-|                                          |  |  +--ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha
-|                                          |  +--| (100)
-|                                          |     |           +--ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom
-|                                          |     |        +--| (100)
-|                                          |     |        |  |                    +--ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau
-|                                          |     |        |  |                 +--| (100)
-|                                          |     |        |  |                 |  +--ENSSSCP00000001041_Sscr_ENSSSCP00000001041_Sscr
-|                                          |     |        |  |              +--| (57)
-|                                          |     |        |  |              |  |  +--ENSDNOP00000033271_Dnov_ENSDNOP00000033271_Dnov
-|                                          |     |        |  |              |  +--| (79)
-|                                          |     |        |  |              |     +--ENSPVAP00000004900_Pvam_ENSPVAP00000004900_Pvam
-|                                          |     |        |  |           +--| (62)
-|                                          |     |        |  |           |  +--ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur
-|                                          |     |        |  |        +--| (61)
-|                                          |     |        |  |        |  |           +--ENSCGRP00001025333_Cgch_ENSCGRP00001025333_Cgch
-|                                          |     |        |  |        |  |        +--| (100)
-|                                          |     |        |  |        |  |        |  +--Mmus_SELENOO.1.selenocysteine
-|                                          |     |        |  |        |  |     +--| (100)
-|                                          |     |        |  |        |  |     |  |  +--ENSNGAP00000008384_Ngal_ENSNGAP00000008384_Ngal
-|                                          |     |        |  |        |  |     |  +--| (92)
-|                                          |     |        |  |        |  |     |     +--ENSJJAP00000006663_Jjac_ENSJJAP00000006663_Jjac
-|                                          |     |        |  |        |  |  +--| (89)
-|                                          |     |        |  |        |  |  |  |  +--ENSCPOP00000013379_Cpor_ENSCPOP00000013379_Cpor
-|                                          |     |        |  |        |  |  |  +--| (100)
-|                                          |     |        |  |        |  |  |     +--ENSHGLP00000026665_Hgfe_ENSHGLP00000026665_Hgfe
-|                                          |     |        |  |        |  +--| (99)
-|                                          |     |        |  |        |     +--ENSDORP00000021306_Dord_ENSDORP00000021306_Dord
-|                                          |     |        |  |     +--| (77)
-|                                          |     |        |  |     |  |  +--ENSOGAP00000012672_Ogar_ENSOGAP00000012672_Ogar
-|                                          |     |        |  |     |  +--| (100)
-|                                          |     |        |  |     |     +--ENSMICP00000016199_Mmur_ENSMICP00000016199_Mmur
-|                                          |     |        |  |  +--| (79)
-|                                          |     |        |  |  |  |  +--ENSCJAP00000006132_Cjac_ENSCJAP00000006132_Cjac
-|                                          |     |        |  |  |  +--| (100)
-|                                          |     |        |  |  |     |     +--ENSPPYP00000013360_Pabe_ENSPPYP00000013360_Pabe
-|                                          |     |        |  |  |     |  +--| (99)
-|                                          |     |        |  |  |     |  |  |  +--ENSPTRP00000049590_Ptro_ENSPTRP00000049590_Ptro
-|                                          |     |        |  |  |     |  |  +--| (99)
-|                                          |     |        |  |  |     |  |     +--Human_SELENOO_NP_113642.1
-|                                          |     |        |  |  |     +--| (100)
-|                                          |     |        |  |  |        +--ENSCSAP00000001353_Csab_ENSCSAP00000001353_Csab
-|                                          |     |        |  +--| (100)
-|                                          |     |        |     |  +--ENSPCAP00000001135_Pcap_ENSPCAP00000001135_Pcap
-|                                          |     |        |     +--| (100)
-|                                          |     |        |        +--ENSETEP00000004693_Etel_ENSETEP00000004693_Etel
-|                                          |     |     +--| (98)
-|                                          |     |     |  +--ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut
-|                                          |     |  +--| (100)
-|                                          |     |  |  +--ENSACAP00000002181_Acar_ENSACAP00000002181_Acar
-|                                          |     +--| (100)
-|                                          |        +--ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro
-|                                       +--| (99)
-|                                       |  |  +--Bflo_SELENOO.12.selenocysteine
+|                                                         +--ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor
+|                                                      +--| (100)
+|                                                      |  |  +--ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex
+|                                                      |  +--| (98)
+|                                                      |     +--Drer_SELENOO.2.selenocysteine
+|                                                   +--| (100)
+|                                                   |  +---Drer_SELENOO.9.selenocysteine
+|                                                +--| (100)
+|                                                |  |  +--ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha
+|                                                |  +--| (99)
+|                                                |     |           +--ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom
+|                                                |     |        +--| (100)
+|                                                |     |        |  |        +--ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau
+|                                                |     |        |  |     +--| (99)
+|                                                |     |        |  |     |  +--ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur
+|                                                |     |        |  |  +--| (96)
+|                                                |     |        |  |  |  +--Human_SELENOO_NP_113642.1
+|                                                |     |        |  +--| (100)
+|                                                |     |        |     +--Mmus_SELENOO.1.selenocysteine
+|                                                |     |     +--| (94)
+|                                                |     |     |  +--ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut
+|                                                |     |  +--| (98)
+|                                                |     |  |  +--ENSACAP00000002181_Acar_ENSACAP00000002181_Acar
+|                                                |     +--| (100)
+|                                                |        +--ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro
+|                                             +--| (98)
+|                                             |  |  +--Bflo_SELENOO.12.selenocysteine
+|                                             |  +--| (100)
+|                                             |     +--Blan_SELENOO.12.unaligned
+|                                          +--| (93)
+|                                          |  +-------Ixodes_scapularis_gi_215498714_gb_EEC08208.1
+|                                       +--| (51)
+|                                       |  |  +---Bsch_SELENOO.1.selenocysteine
 |                                       |  +--| (100)
-|                                       |     +--Blan_SELENOO.12.unaligned
+|                                       |     |  +--Hror_SELENOO.1.selenocysteine
+|                                       |     +--| (84)
+|                                       |        +--Scla_SELENOO.1.selenocysteine
 |                                    +--| (95)
-|                                    |  +-------Ixodes_scapularis_gi_215498714_gb_EEC08208.1
-|                                 +--| (98)
-|                                 |  |                 +--ENSCINP00000005632_Cint_ENSCINP00000005632_Cint
-|                                 |  |              +--| (100)
-|                                 |  |              |  +--Crob_SELENOO.1.selenocysteine
-|                                 |  |           +--| (100)
-|                                 |  |           |  +--Cint_SELENOO.1.selenocysteine
-|                                 |  |        +--| (100)
-|                                 |  |        |  |  +--ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav
-|                                 |  |        |  +--| (100)
-|                                 |  |        |     +--Csav_SELENOO.3.pseudo
-|                                 |  |     +--| (88)
-|                                 |  |     |  |     +----Pege_SELENOO.1.unaligned
-|                                 |  |     |  |  +--| (96)
-|                                 |  |     |  |  |  +--Stho_SELENOO.8.selenocysteine
-|                                 |  |     |  +--| (100)
-|                                 |  |     |     +----Tdem_SELENOO.2.selenocysteine
-|                                 |  |  +--| (100)
-|                                 |  |  |  +---Pmam_SELENOO.8.selenocysteine
-|                                 |  +--| (89)
-|                                 |     |  +---Bsch_SELENOO.1.selenocysteine
-|                                 |     +--| (100)
-|                                 |        |  +--Hror_SELENOO.1.selenocysteine
-|                                 |        +--| (95)
-|                                 |           +--Scla_SELENOO.1.selenocysteine
-|                              +--| (97)
-|                              |  |           +--Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1
-|                              |  |  +--------| (100)
-|                              |  |  |        +--SelO_P.sojae_SelO_P.sojae
-|                              |  +--| (78)
-|                              |     |            +---Mery_SELENOO.2.unaligned
-|                              |     |         +--| (97)
-|                              |     |         |  +--Olon_SELENOO.5.pseudo
-|                              |     |      +--| (97)
-|                              |     |      |  +---Olon_SELENOO.1.unaligned
-|                              |     |   +--| (92)
-|                              |     |   |  |  +--------------Mery_SELENOO.4.unaligned
-|                              |     |   |  +--| (87)
-|                              |     |   |     |        +--OKI_SELENOO.5.unaligned
-|                              |     |   |     |     +--| (100)
-|                              |     |   |     |     |  +--OdB3_SELENOO.5.unaligned
-|                              |     |   |     |  +--| (100)
-|                              |     |   |     |  |  +--OSKA_SELENOO.5.selenocysteine
-|                              |     |   |     +--| (100)
-|                              |     |   |        |  +--Oalb_SELENOO.4.selenocysteine
-|                              |     |   |        +--| (99)
-|                              |     |   |           +--Ovan_SELENOO.7.unaligned
-|                              |     +---| (100)
-|                              |         |  +-----Mery_SELENOO.6.unaligned
-|                              |         +--| (97)
-|                              |            +---Olon_SELENOO.8.unaligned
+|                                    |  |           +--ENSCINP00000005632_Cint_ENSCINP00000005632_Cint
+|                                    |  |        +--| (100)
+|                                    |  |        |  +--Crob_SELENOO.1.selenocysteine
+|                                    |  |     +--| (100)
+|                                    |  |     |  +--Cint_SELENOO.1.selenocysteine
+|                                    |  |  +--| (100)
+|                                    |  |  |  |  +--ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav
+|                                    |  |  |  +--| (100)
+|                                    |  |  |     +--Csav_SELENOO.3.pseudo
+|                                    |  +--| (100)
+|                                    |     |        +----Pege_SELENOO.1.unaligned
+|                                    |     |     +--| (97)
+|                                    |     |     |  +--Stho_SELENOO.8.selenocysteine
+|                                    |     |  +--| (98)
+|                                    |     |  |  +----Tdem_SELENOO.2.selenocysteine
+|                                    |     +--| (49)
+|                                    |        +----Pmam_SELENOO.8.selenocysteine
+|                                 +--| (93)
+|                                 |  |            +---Mery_SELENOO.2.unaligned
+|                                 |  |         +--| (70)
+|                                 |  |         |  +--Olon_SELENOO.5.pseudo
+|                                 |  |      +--| (95)
+|                                 |  |      |  +---Olon_SELENOO.1.unaligned
+|                                 |  |   +--| (89)
+|                                 |  |   |  |     +--Oalb_SELENOO.5.selenocysteine
+|                                 |  |   |  |  +--| (100)
+|                                 |  |   |  |  |  +--Ovan_SELENOO.4.unaligned
+|                                 |  |   |  +--| (100)
+|                                 |  |   |     |     +--OdB3_SELENOO.5.unaligned
+|                                 |  |   |     |  +--| (99)
+|                                 |  |   |     |  |  +--OSKA_gold_SELENOO
+|                                 |  |   |     +--| (100)
+|                                 |  |   |        +--OKI_gold_SELENOO
+|                                 |  +---| (100)
+|                                 |      |  +-----Mery_SELENOO.6.unaligned
+|                                 |      +--| (96)
+|                                 |         +---Olon_SELENOO.8.unaligned
+|                              +--| (88)
+|                              |  |        +--Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1
+|                              |  +--------| (100)
+|                              |           +--SelO_P.sojae_SelO_P.sojae
 |                           +--| (100)
-|                           |  +--------------Fbor_SELENOO.2.cysteine
-|                        +--| (99)
-|                        |  |                  +--ENSCLAP00000007095_ENSCLAP00000007095
-|                        |  |               +--| (100)
-|                        |  |               |  +--ENSSHAP00000013816_Shar_ENSSHAP00000013816_Shar
-|                        |  |            +--| (100)
-|                        |  |            |  |  +--ENSGALP00000012216_ENSGALP00000012216
-|                        |  |            |  +--| (94)
-|                        |  |            |     +--ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin
-|                        |  |         +--| (100)
-|                        |  |         |  |     +--ENSONIP00000008078_Onil_ENSONIP00000008078_Onil
-|                        |  |         |  |  +--| (98)
-|                        |  |         |  |  |  |  +--ENSGACP00000006783_ENSGACP00000006783
-|                        |  |         |  |  |  +--| (94)
-|                        |  |         |  |  |     +--ENSTRUP00000025654_ENSTRUP00000025654
-|                        |  |         |  +--| (100)
-|                        |  |         |     +--ENSGMOP00000019532_ENSGMOP00000019532
-|                        |  |      +--| (85)
-|                        |  |      |  |        +---Bsch_SELENOO.4.cysteine
-|                        |  |      |  |     +--| (100)
-|                        |  |      |  |     |  +--Scla_SELENOO.3.cysteine
-|                        |  |      |  |  +--| (99)
-|                        |  |      |  |  |  +--Hror_SELENOO.3.cysteine
-|                        |  |      |  +--| (97)
-|                        |  |      |     +------Pmam_SELENOO.1.cysteine
-|                        |  +------| (100)
-|                        |         |  +--Bflo_SELENOO.3.cysteine
-|                        |         +--| (100)
-|                        |            +--Blan_SELENOO.4.cysteine
-|                     +--| (92)
-|                     |  |                 +---Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1
-|                     |  |              +--| (99)
-|                     |  |              |  |  +---Comamonas_testosteroni_KF-1_gi_221066306_ref_ZP_03542411.1
-|                     |  |              |  +--| (100)
-|                     |  |              |     +--Variovorax_paradoxus_S110_gi_221084826_ref_ZP_03554438.1
-|                     |  |           +--| (100)
-|                     |  |           |  |  +--gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5
-|                     |  |           |  +--| (100)
-|                     |  |           |     +--Burkholderia_graminis_C4D1M_gi_170692428_ref_ZP_02883591.1
-|                     |  |        +--| (90)
-|                     |  |        |  +------Thioalkalivibrio_sp._HL-EbGR7_gi_220934366_ref_YP_002513265.
-|                     |  |     +--| (81)
-|                     |  |     |  |  +------gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506
-|                     |  |     |  +--| (98)
-|                     |  |     |     |                  +--Fbor_SELENOO.4.cysteine
-|                     |  |     |     |               +--| (69)
-|                     |  |     |     |               |  +--Fbor_SELENOO.7.unaligned
-|                     |  |     |     |            +--| (40)
-|                     |  |     |     |            |  +--Fbor_SELENOO.10.unaligned
-|                     |  |     |     |       +----| (99)
-|                     |  |     |     |       |    |  +--Fbor_SELENOO.6.cysteine
-|                     |  |     |     |       |    +--| (60)
-|                     |  |     |     |       |       +--Fbor_SELENOO.9.unaligned
-|                     |  |     |     |  +----| (100)
-|                     |  |     |     |  |    +-------------Fbor_SELENOO.15.unaligned
-|                     |  |     |     +--| (94)
-|                     |  |     |        |       +-------Fbor_SELENOO.12.unaligned
-|                     |  |     |        +-------| (100)
-|                     |  |     |                +-------Fbor_SELENOO.17.unaligned
-|                     |  |  +--| (99)
-|                     |  |  |  +-------Salmonella_enterica_subsp._enterica_serovar_Saintpaul_str._S
-|                     |  +--| (87)
-|                     |     +--------------------------------------Fbor_SELENOO.16.unaligned
-|                  +--| (38)
-|                  |  +-------------------------------YPL222W_Scer_YPL222W_Scer
-|               +--| (92)
-|               |  |        +--Ricinus_communis_gi_223547341_gb_EEF48836.1
-|               |  |     +--| (95)
-|               |  |     |  +--Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1
-|               |  +-----| (100)
-|               |        +--Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001
+|                           |  +---------------Fbor_SELENOO.2.cysteine
+|                        +--| (86)
+|                        |  |           +--ENSGALP00000012216_ENSGALP00000012216
+|                        |  |        +--| (100)
+|                        |  |        |  +--ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin
+|                        |  |     +--| (90)
+|                        |  |     |  |  +--Bflo_SELENOO.3.cysteine
+|                        |  |     |  +--| (100)
+|                        |  |     |     +--Blan_SELENOO.4.cysteine
+|                        |  +-----| (100)
+|                        |        |        +---Bsch_SELENOO.4.cysteine
+|                        |        |     +--| (100)
+|                        |        |     |  +--Scla_SELENOO.3.cysteine
+|                        |        |  +--| (91)
+|                        |        |  |  +--Hror_SELENOO.3.cysteine
+|                        |        +--| (94)
+|                        |           +-------Pmam_SELENOO.1.cysteine
+|                     +--| (68)
+|                     |  |       +----Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1
+|                     |  |   +---| (100)
+|                     |  |   |   +---gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5
+|                     |  +---| (100)
+|                     |      |  +------gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506
+|                     |      +--| (98)
+|                     |         |           +--Fbor_SELENOO.4.cysteine
+|                     |         |       +---| (99)
+|                     |         |       |   |        +--Fbor_SELENOO.6.cysteine
+|                     |         |       |   |     +--| (77)
+|                     |         |       |   |     |  +--Fbor_SELENOO.9.unaligned
+|                     |         |       |   |  +--| (75)
+|                     |         |       |   |  |  +--Fbor_SELENOO.11.unaligned
+|                     |         |       |   +--| (75)
+|                     |         |       |      +--Fbor_SELENOO.8.cysteine
+|                     |         |  +----| (100)
+|                     |         |  |    +--------------Fbor_SELENOO.16.unaligned
+|                     |         +--| (68)
+|                     |            |       +-------Fbor_SELENOO.13.unaligned
+|                     |            +-------| (100)
+|                     |                    +-------Fbor_SELENOO.18.unaligned
+|                  +--| (98)
+|                  |  +--------------------------------------Fbor_SELENOO.17.unaligned
+|               +--| (93)
+|               |  |  +------------------------------YPL222W_Scer_YPL222W_Scer
+|               |  +--| (94)
+|               |     |       +--Ricinus_communis_gi_223547341_gb_EEF48836.1
+|               |     |    +--| (96)
+|               |     |    |  +--Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1
+|               |     +----| (100)
+|               |          +--Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001
 +---------------| (100)
 |               |        +--Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1
 |               |     +--| (100)
 |               |     |  |  +---Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020
-|               |     |  +--| (100)
+|               |     |  +--| (99)
 |               |     |     +--gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2
 |               |  +--| (100)
-|               |  |  |  +---Tolumonas_auensis_DSM_9187_gi_223580288_ref_ZP_03620799.1
-|               |  |  +--| (100)
-|               |  |     +-----Fbor_SELENOO.1.cysteine
-|               +--| (98)
-|                  |  +-------Polaribacter_sp._MED152_gi_85821389_gb_EAQ42536.1
+|               |  |  +-------Fbor_SELENOO.1.cysteine
+|               +--| (99)
+|                  |        +--Bsty_SELENOO.1.cysteine
+|                  |     +--| (100)
+|                  |     |  +--Mery_SELENOO.1.cysteine
+|                  |  +--| (100)
+|                  |  |  +--Bsty_SELENOO.2.cysteine
 |                  +--| (100)
-|                     |     +--Bsty_SELENOO.1.cysteine
-|                     |  +--| (100)
-|                     |  |  |  +--Bsty_SELENOO.2.cysteine
-|                     |  |  +--| (100)
-|                     |  |     +--Mery_SELENOO.1.cysteine
-|                     +--| (100)
-|                        +--Fbor_SELENOO.20.unaligned
+|                     +--Fbor_SELENOO.21.cysteine
 |
-|           +--Fbor_SELENOO.13.unaligned
-+-----------| (100)
-            +--Fbor_SELENOO.18.unaligned
+|         +--Fbor_SELENOO.14.unaligned
++---------| (100)
+          +--Fbor_SELENOO.19.unaligned
 
 
 Consensus tree in newick format: 
 
-(Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_:1.0290653087,(((((((((((((((((ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor:0.1211244054,(ENSONIP00000013118_Onil_ENSONIP00000013118_Onil:0.0599119430,(ENSTRUP00000011907_Trub_ENSTRUP00000011907_Trub:0.0635868772,ENSTNIP00000011197_Tnig_ENSTNIP00000011197_Tnig:0.0594692875)100:0.0681737751)96:0.0086972123)82:0.0063818038,ENSGACP00000017759_Gacu_ENSGACP00000017759_Gacu:0.1031231513)89:0.0225488922,ENSORLP00000020415_Olat_ENSORLP00000020415_Olat:0.0961000875)97:0.0320713913,ENSGMOP00000019991_Gmor_ENSGMOP00000019991_Gmor:0.2076231116)100:0.0310387211,(ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex:0.1227692880,Drer_SELENOO.2.selenocysteine:0.1267370915)98:0.0469817331)100:0.0894013216,((ENSAMXP00000020239_Amex_ENSAMXP00000020239_Amex:0.1663057736,Drer_SELENOO.9.selenocysteine:0.2422957213)100:0.1017850055,(ENSONIP00000015220_Onil_ENSONIP00000015220_Onil:0.1897180469,ENSXMAP00000006203_Xmac_ENSXMAP00000006203_Xmac:0.1439759059)100:0.1933889359)100:0.1544987736)100:0.3946029933,(ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha:0.2021140758,((((ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom:0.1880082502,(((((((ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau:0.1024103309,ENSSSCP00000001041_Sscr_ENSSSCP00000001041_Sscr:0.0504173962)100:0.0312601239,(ENSDNOP00000033271_Dnov_ENSDNOP00000033271_Dnov:0.1774368654,ENSPVAP00000004900_Pvam_ENSPVAP00000004900_Pvam:0.0952662920)79:0.0178172475)57:0.0103742229,ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur:0.1255389226)62:0.0161655236,((((ENSCGRP00001025333_Cgch_ENSCGRP00001025333_Cgch:0.0392336474,Mmus_SELENOO.1.selenocysteine:0.0571601558)100:0.0332964763,(ENSNGAP00000008384_Ngal_ENSNGAP00000008384_Ngal:0.0646372339,ENSJJAP00000006663_Jjac_ENSJJAP00000006663_Jjac:0.0964043830)92:0.0135145304)100:0.0320558037,(ENSCPOP00000013379_Cpor_ENSCPOP00000013379_Cpor:0.0623084836,ENSHGLP00000026665_Hgfe_ENSHGLP00000026665_Hgfe:0.0506135987)100:0.0663252390)89:0.0143658969,ENSDORP00000021306_Dord_ENSDORP00000021306_Dord:0.1176820837)99:0.0251244398)61:0.0059630758,(ENSOGAP00000012672_Ogar_ENSOGAP00000012672_Ogar:0.0904423390,ENSMICP00000016199_Mmur_ENSMICP00000016199_Mmur:0.1581306552)100:0.0364625817)77:0.0125724399,(ENSCJAP00000006132_Cjac_ENSCJAP00000006132_Cjac:0.0522702941,((ENSPPYP00000013360_Pabe_ENSPPYP00000013360_Pabe:0.0229019639,(ENSPTRP00000049590_Ptro_ENSPTRP00000049590_Ptro:0.0118123363,Human_SELENOO_NP_113642.1:0.0020926493)99:0.0031542388)99:0.0092426639,ENSCSAP00000001353_Csab_ENSCSAP00000001353_Csab:0.0218746601)100:0.0157965657)100:0.0452337927)79:0.0262881278,(ENSPCAP00000001135_Pcap_ENSPCAP00000001135_Pcap:0.1347090143,ENSETEP00000004693_Etel_ENSETEP00000004693_Etel:0.1554317069)100:0.0699068239)100:0.1023046629)100:0.1458628182,ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut:0.0922285414)98:0.0336262565,ENSACAP00000002181_Acar_ENSACAP00000002181_Acar:0.2172477696)100:0.0548200413,ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro:0.2887645385)100:0.0797485717)100:0.1349576432)100:0.1881942058,(Bflo_SELENOO.12.selenocysteine:0.0521512514,Blan_SELENOO.12.unaligned:0.0835852793)100:0.3182510314)99:0.0896525905,Ixodes_scapularis_gi_215498714_gb_EEC08208.1:0.8102078080)95:0.0386938544,((((((ENSCINP00000005632_Cint_ENSCINP00000005632_Cint:0.0000023372,Crob_SELENOO.1.selenocysteine:0.0000021825)100:0.0481129080,Cint_SELENOO.1.selenocysteine:0.0263290878)100:0.1764587086,(ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav:0.0112355469,Csav_SELENOO.3.pseudo:0.0093006012)100:0.2676832594)100:0.2945579013,((Pege_SELENOO.1.unaligned:0.5200508340,Stho_SELENOO.8.selenocysteine:0.3473302401)96:0.0671661051,Tdem_SELENOO.2.selenocysteine:0.4906513941)100:0.1500655784)88:0.0524923076,Pmam_SELENOO.8.selenocysteine:0.4784930938)100:0.2032387415,(Bsch_SELENOO.1.selenocysteine:0.4322511905,(Hror_SELENOO.1.selenocysteine:0.3797535291,Scla_SELENOO.1.selenocysteine:0.2918899224)95:0.0952561644)100:0.1170835035)89:0.0861821304)98:0.1294498584,((Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1:0.1179381088,SelO_P.sojae_SelO_P.sojae:0.1130774260)100:0.9608446111,((((Mery_SELENOO.2.unaligned:0.4789482140,Olon_SELENOO.5.pseudo:0.2257157584)97:0.0417407326,Olon_SELENOO.1.unaligned:0.4244730544)97:0.1782104325,(Mery_SELENOO.4.unaligned:1.4569982079,(((OKI_SELENOO.5.unaligned:0.1281563205,OdB3_SELENOO.5.unaligned:0.1081198120)100:0.0617661562,OSKA_SELENOO.5.selenocysteine:0.0625253249)100:0.3554187169,(Oalb_SELENOO.4.selenocysteine:0.3044432511,Ovan_SELENOO.7.unaligned:0.2945320562)99:0.1337533808)100:0.1789854593)87:0.0199480254)92:0.0800047316,(Mery_SELENOO.6.unaligned:0.6588089910,Olon_SELENOO.8.unaligned:0.4086686526)97:0.2120811428)100:0.3991941510)78:0.1203392720)97:0.1545228653,Fbor_SELENOO.2.cysteine:1.5377777882)100:0.3365567615,(((((ENSCLAP00000007095_ENSCLAP00000007095:0.1641099734,ENSSHAP00000013816_Shar_ENSSHAP00000013816_Shar:0.1327934439)100:0.0752021793,(ENSGALP00000012216_ENSGALP00000012216:0.1792555418,ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin:0.1411738185)94:0.0408940704)100:0.1266773525,((ENSONIP00000008078_Onil_ENSONIP00000008078_Onil:0.1303905580,(ENSGACP00000006783_ENSGACP00000006783:0.1752900790,ENSTRUP00000025654_ENSTRUP00000025654:0.1872324632)94:0.0319527220)98:0.0587262214,ENSGMOP00000019532_ENSGMOP00000019532:0.2258429979)100:0.2716691505)100:0.2040833183,(((Bsch_SELENOO.4.cysteine:0.4569924428,Scla_SELENOO.3.cysteine:0.3205119331)100:0.0918466089,Hror_SELENOO.3.cysteine:0.3314048078)99:0.1709944423,Pmam_SELENOO.1.cysteine:0.7611392776)97:0.1648149426)85:0.0793951299,(Bflo_SELENOO.3.cysteine:0.0313680186,Blan_SELENOO.4.cysteine:0.0463501869)100:0.3346698766)100:0.6809602067)99:0.2540121284,((((((Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1:0.4393062430,(Comamonas_testosteroni_KF-1_gi_221066306_ref_ZP_03542411.1:0.4425347259,Variovorax_paradoxus_S110_gi_221084826_ref_ZP_03554438.1:0.2899090732)100:0.3729298255)99:0.0853664638,(gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5:0.2410494691,Burkholderia_graminis_C4D1M_gi_170692428_ref_ZP_02883591.1:0.1426266854)100:0.3152752990)100:0.3349946021,Thioalkalivibrio_sp._HL-EbGR7_gi_220934366_ref_YP_002513265.:0.7413104702)90:0.1826704669,(gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506:0.6920478725,(((((Fbor_SELENOO.4.cysteine:0.1574235750,Fbor_SELENOO.7.unaligned:0.1121125206)69:0.0351683662,Fbor_SELENOO.10.unaligned:0.2081252839)40:0.0165088753,(Fbor_SELENOO.6.cysteine:0.0623431483,Fbor_SELENOO.9.unaligned:0.1219810245)60:0.0371950172)99:0.5366034956,Fbor_SELENOO.15.unaligned:1.3658518164)100:0.4934454453,(Fbor_SELENOO.12.unaligned:0.8100715305,Fbor_SELENOO.17.unaligned:0.8724963844)100:0.8449708086)94:0.1788404481)98:0.1035803923)81:0.1316827577,Salmonella_enterica_subsp._enterica_serovar_Saintpaul_str._S:0.8683611417)99:0.2555884825,Fbor_SELENOO.16.unaligned:3.7955401967)87:0.1250356888)92:0.1451507004,YPL222W_Scer_YPL222W_Scer:3.1264868087)38:0.0000023933,((Ricinus_communis_gi_223547341_gb_EEF48836.1:0.1015212118,Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1:0.1670843278)95:0.0444253667,Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001:0.1701864725)100:0.6215788377)92:0.1513688422,(((Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1:0.3587023271,(Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020:0.4109405781,gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2:0.1463333148)100:0.0660099252)100:0.3339980712,(Tolumonas_auensis_DSM_9187_gi_223580288_ref_ZP_03620799.1:0.4148913593,Fbor_SELENOO.1.cysteine:0.6624249867)100:0.1866585824)100:0.1768075865,(Polaribacter_sp._MED152_gi_85821389_gb_EAQ42536.1:0.8430032900,((Bsty_SELENOO.1.cysteine:0.1212127076,(Bsty_SELENOO.2.cysteine:0.0169553527,Mery_SELENOO.1.cysteine:0.0131425853)100:0.1400343302)100:0.1407896801,Fbor_SELENOO.20.unaligned:0.3292674436)100:0.0687289502)100:0.1944085231)98:0.1477727519)100:1.6053848011,(Fbor_SELENOO.13.unaligned:0.0839016893,Fbor_SELENOO.18.unaligned:0.2297951286)100:1.1744794571);
+(Micromonas_pusilla_CCMP1545_gi_303290328_ref_XP_003064451.1_:1.4740027365,(((((((((((((((ENSPFOP00000004799_Pfor_ENSPFOP00000004799_Pfor:0.2437191613,(ENSAMXP00000020593_Amex_ENSAMXP00000020593_Amex:0.1507462825,Drer_SELENOO.2.selenocysteine:0.1403282711)98:0.0429278863)100:0.0840743978,Drer_SELENOO.9.selenocysteine:0.5724079171)100:0.4508660706,(ENSLACP00000019156_Lcha_ENSLACP00000019156_Lcha:0.2310389867,((((ENSMODP00000006822_Mdom_ENSMODP00000006822_Mdom:0.2031869813,(((ENSBTAP00000000851_Btau_ENSBTAP00000000851_Btau:0.1491620958,ENSEEUP00000006218_Eeur_ENSEEUP00000006218_Eeur:0.1214377865)99:0.0324490692,Human_SELENOO_NP_113642.1:0.0829368611)96:0.0422293782,Mmus_SELENOO.1.selenocysteine:0.1427284576)100:0.1395067708)100:0.1641643466,ENSTGUP00000004096_Tgut_ENSTGUP00000004096_Tgut:0.1065903718)94:0.0496693712,ENSACAP00000002181_Acar_ENSACAP00000002181_Acar:0.2478655653)98:0.0546869155,ENSXETP00000011073_Xtro_ENSXETP00000011073_Xtro:0.3199159042)100:0.0952129126)99:0.1465582800)100:0.2223983344,(Bflo_SELENOO.12.selenocysteine:0.0667638698,Blan_SELENOO.12.unaligned:0.0888543936)100:0.4174123001)98:0.1125215741,Ixodes_scapularis_gi_215498714_gb_EEC08208.1:1.0208190328)93:0.0820228986,(Bsch_SELENOO.1.selenocysteine:0.5389870859,(Hror_SELENOO.1.selenocysteine:0.4686004590,Scla_SELENOO.1.selenocysteine:0.3201419351)84:0.1033963145)100:0.2149316374)51:0.1042093549,((((ENSCINP00000005632_Cint_ENSCINP00000005632_Cint:0.0000023503,Crob_SELENOO.1.selenocysteine:0.0000021949)100:0.0500364896,Cint_SELENOO.1.selenocysteine:0.0345692987)100:0.2320791502,(ENSCSAVP00000000432_Csav_ENSCSAVP00000000432_Csav:0.0152492177,Csav_SELENOO.3.pseudo:0.0089773108)100:0.3261179674)100:0.3548008967,(((Pege_SELENOO.1.unaligned:0.6886461107,Stho_SELENOO.8.selenocysteine:0.4008583816)97:0.1047831309,Tdem_SELENOO.2.selenocysteine:0.6355961527)98:0.1594847443,Pmam_SELENOO.8.selenocysteine:0.6298044557)49:0.0457696094)100:0.2458689361)95:0.1534973092,((((Mery_SELENOO.2.unaligned:0.6247371623,Olon_SELENOO.5.pseudo:0.2943292943)70:0.0160090287,Olon_SELENOO.1.unaligned:0.5737640099)95:0.2443336052,((Oalb_SELENOO.5.selenocysteine:0.3762330873,Ovan_SELENOO.4.unaligned:0.3383630629)100:0.1921487759,((OdB3_SELENOO.5.unaligned:0.1382868537,OSKA_gold_SELENOO:0.0286991446)99:0.0506495931,OKI_gold_SELENOO:0.0633324999)100:0.4165004161)100:0.2512371172)89:0.1631128336,(Mery_SELENOO.6.unaligned:0.7883239176,Olon_SELENOO.8.unaligned:0.5261787478)96:0.2996274832)100:0.5780724917)93:0.1632955668,(Phytophthora_infestans_T30-4_gi_301120059_ref_XP_002907757.1:0.1337825874,SelO_P.sojae_SelO_P.sojae:0.1336091637)100:1.2432207312)88:0.1187178645,Fbor_SELENOO.2.cysteine:2.0202455752)100:0.4361033462,(((ENSGALP00000012216_ENSGALP00000012216:0.1327859736,ENSPSIP00000018722_Psin_ENSPSIP00000018722_Psin:0.2770472260)100:0.4295545774,(Bflo_SELENOO.3.cysteine:0.0326579029,Blan_SELENOO.4.cysteine:0.0597900079)100:0.4723869806)90:0.1727831246,(((Bsch_SELENOO.4.cysteine:0.5878620640,Scla_SELENOO.3.cysteine:0.3656003263)100:0.1627630573,Hror_SELENOO.3.cysteine:0.4152669467)91:0.1686218066,Pmam_SELENOO.1.cysteine:1.0060230308)94:0.1333255255)100:0.8145061425)86:0.1542579072,((Ralstonia_pickettii_12J_gi_187928542_ref_YP_001899029.1:0.7336012097,gi_121957908_sp_Q39FG3_Y5209_BURS3_gi_121957908_sp_Q39FG3_Y5:0.6001331485)100:0.5652300783,(gi_33517006_sp_Q88CW2_Y5068_PSEPK_gi_33517006_sp_Q88CW2_Y506:0.9945175027,(((Fbor_SELENOO.4.cysteine:0.1360012480,(((Fbor_SELENOO.6.cysteine:0.0746611274,Fbor_SELENOO.9.unaligned:0.1582064474)77:0.0629705772,Fbor_SELENOO.11.unaligned:0.2346041321)75:0.0413036957,Fbor_SELENOO.8.cysteine:0.1270773795)75:0.0612617655)99:0.5808483553,Fbor_SELENOO.16.unaligned:1.9481180089)100:0.7180959097,(Fbor_SELENOO.13.unaligned:1.0484503596,Fbor_SELENOO.18.unaligned:1.1124566814)100:1.0714179765)68:0.2504052951)98:0.2111418225)100:0.5792442030)68:0.1177701705,Fbor_SELENOO.17.unaligned:4.9615949179)98:0.3075851515,(YPL222W_Scer_YPL222W_Scer:3.9485333831,((Ricinus_communis_gi_223547341_gb_EEF48836.1:0.1182356565,Arabidopsis_thaliana_gi_13430492_gb_AAK25868.1_AF360158_1:0.2054266564)96:0.0489725804,Oryza_sativa_japonica_cultivar-group_gi_115467830_ref_NP_001:0.1942994954)100:0.6515538311)94:0.1906979470)93:0.1735901287,(((Xylella_fastidiosa_Ann-1_gi_71899926_ref_ZP_00682073.1:0.4803595640,(Stenotrophomonas_maltophilia_R551-3_gi_194365405_ref_YP_0020:0.5380555342,gi_121957875_sp_Q3BSE3_Y2589_XANC5_gi_121957875_sp_Q3BSE3_Y2:0.1825786098)99:0.0576647199)100:0.4536287084,Fbor_SELENOO.1.cysteine:1.0468536805)100:0.2426641481,(((Bsty_SELENOO.1.cysteine:0.0228617085,Mery_SELENOO.1.cysteine:0.0167696433)100:0.1906748683,Bsty_SELENOO.2.cysteine:0.1465848642)100:0.1822094998,Fbor_SELENOO.21.cysteine:0.4490386724)100:0.2842701870)99:0.3129606233)100:2.0614301909,(Fbor_SELENOO.14.unaligned:0.2395248409,Fbor_SELENOO.19.unaligned:0.2039093592)100:1.3645350874);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOO.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0917793,0.0685924,0.0381871,0.0551709,0.0195001,0.0421557,0.0710455,0.0663737,0.0203594,0.0359996,0.105701,0.040687,0.0252187,0.0477962,0.0528429,0.0704205,0.046015,0.0133753,0.031906,0.056874}+G4{0.782996}" --length 731
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOO.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0816762,0.0638436,0.0421441,0.0581786,0.0195332,0.0413066,0.070223,0.0641885,0.0204691,0.0404199,0.103425,0.047415,0.026479,0.0484988,0.0482525,0.0728338,0.04808,0.0131785,0.034213,0.0556416}+G4{0.708801}" --length 724
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -577,7 +414,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Fri Oct 23 23:37:16 2026
-Total CPU time used: 82614.58741 seconds (22h:56m:54s)
-Total wall-clock time used: 14194.10511 seconds (3h:56m:34s)
+Date and time: Fri Oct 30 05:18:59 2026
+Total CPU time used: 1817.565491 seconds (0h:30m:17s)
+Total wall-clock time used: 240.4869298 seconds (0h:4m:0s)
 

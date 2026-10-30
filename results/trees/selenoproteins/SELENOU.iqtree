@@ -32,37 +32,31 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 146 sequences with 291 amino-acid sites
+Input data: 87 sequences with 290 amino-acid sites
 Number of constant sites: 0 (= 0% of all sites)
 Number of invariant (constant or ambiguous constant) sites: 0 (= 0% of all sites)
-Number of parsimony informative sites: 289
-Number of distinct site patterns: 291
+Number of parsimony informative sites: 283
+Number of distinct site patterns: 290
 
 ModelFinder
 -----------
 
-Best-fit model according to BIC: WAG+R5
+Best-fit model according to BIC: WAG+R4
 
 List of models sorted by BIC scores: 
 
 Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
-WAG+R5           -44137.252   88868.505 - 0.000226  265880.505 -        0   89959.482 +    0.936
-WAG+R6           -44134.268   88866.536 - 0.000606  268266.536 -        0   89964.859 +   0.0636
-WAG+F+R5         -44110.819   88853.638 +    0.383  289197.638 -        0   90014.409 - 1.11e-12
-WAG+F+R6         -44108.342   88852.685 +    0.617  291736.684 -        0   90020.801 - 4.53e-14
-LG+R5            -44170.619   88935.239 -  7.3e-19  265947.239 -        0   90026.216 - 3.02e-15
-LG+R6            -44166.340   88930.680 - 7.14e-18  268330.680 -        0   90029.003 -  7.5e-16
-LG+R4            -44182.287   88954.575 - 4.62e-23  263594.575 -        0   90038.205 - 7.53e-18
-LG+G4            -44224.513   89029.026 - 3.15e-39  257809.026 +        1   90094.290 - 4.99e-30
-LG+F+R5          -44179.092   88990.184 - 8.56e-31  289334.184 -        0   90150.954 - 2.48e-42
-LG+F+R6          -44175.692   88987.384 - 3.47e-30  291871.384 -        0   90155.501 - 2.55e-43
-LG+R3            -44256.388   89098.776 - 2.25e-54  261382.776 -        0   90175.060 - 1.44e-47
-LG+R2            -44399.548   89381.097 - 1.11e-115  259325.097 -        0   90450.034 - 2.81e-107
-JTT+R6           -44430.688   89459.375 - 1.12e-132  268859.375 -        0   90557.699 - 1.18e-130
-JTT+R5           -44436.365   89466.729 - 2.83e-134  266478.729 -        0   90557.706 - 1.17e-130
-JTT+F+R6         -44438.369   89512.739 - 2.89e-144  292396.739 -        0   90680.856 - 2.12e-157
-JTT+F+R5         -44444.228   89520.455 - 6.1e-146  289864.455 -        0   90681.226 - 1.77e-157
-LG               -45365.451   91308.903 -        0  258928.903 - 6.64e-244   92370.493 -        0
+WAG+R4           -26471.074   53296.148 - 0.000389   53858.755 +        1   53945.717 +        1
+WAG+F+R4         -26444.223   53280.445 +        1   54110.811 - 1.85e-55   53999.742 - 1.86e-12
+LG+R4            -26498.491   53350.982 - 4.82e-16   53913.589 - 1.24e-12   54000.551 - 1.24e-12
+LG+R5            -26498.175   53354.351 - 8.94e-17   53940.169 - 2.09e-18   54011.259 - 5.86e-15
+LG+G4            -26520.183   53384.367 - 2.71e-23   53893.016 - 3.63e-08   54015.586 - 6.73e-16
+LG+R3            -26524.215   53398.429 -  2.4e-26   53938.780 - 4.19e-18   54040.659 - 2.42e-21
+LG+F+R4          -26473.685   53339.369 -  1.6e-13   54169.735 - 2.96e-68   54058.666 - 2.97e-25
+LG+R2            -26598.289   53542.578 -  1.2e-57   54061.578 - 9.07e-45   54177.468 - 4.74e-51
+JTT+R4           -26600.940   53555.880 - 1.55e-60   54118.488 - 3.98e-57   54205.449 - 3.98e-57
+JTT+F+R4         -26584.689   53561.378 - 9.91e-62   54391.744 - 1.83e-116   54280.675 - 1.84e-73
+LG               -27082.110   54506.220 - 6.7e-267   55004.729 - 1.43e-249   55133.770 - 1.04e-258
 
 AIC, w-AIC   : Akaike information criterion scores and weights.
 AICc, w-AICc : Corrected AIC scores and weights.
@@ -74,679 +68,411 @@ Minus signs denote significant exclusion.
 SUBSTITUTION PROCESS
 --------------------
 
-Model of substitution: WAG+R5
+Model of substitution: WAG+R4
 
 State frequencies: (model)
 
-Model of rate heterogeneity: FreeRate with 5 categories
-Site proportion and rates:  (0.0497,0.1400) (0.1255,0.3927) (0.2156,0.6586) (0.3141,1.0730) (0.2950,1.5750)
+Model of rate heterogeneity: FreeRate with 4 categories
+Site proportion and rates:  (0.0927,0.2131) (0.1833,0.5324) (0.3417,0.8597) (0.3823,1.5405)
 
  Category  Relative_rate  Proportion
-  1         0.1400         0.0497
-  2         0.3927         0.1255
-  3         0.6586         0.2156
-  4         1.0730         0.3141
-  5         1.5750         0.2950
+  1         0.2131         0.0927
+  2         0.5324         0.1833
+  3         0.8597         0.3417
+  4         1.5405         0.3823
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -44086.0292 (s.e. 1340.9594)
-Unconstrained log-likelihood (without tree): -1650.9371
-Number of free parameters (#branches + #model parameters): 297
-Akaike information criterion (AIC) score: 88766.0584
-Corrected Akaike information criterion (AICc) score: 265778.0584
-Bayesian information criterion (BIC) score: 89857.0354
+Log-likelihood of the tree: -26456.8508 (s.e. 744.3319)
+Unconstrained log-likelihood (without tree): -1644.2655
+Number of free parameters (#branches + #model parameters): 177
+Akaike information criterion (AIC) score: 53267.7016
+Corrected Akaike information criterion (AICc) score: 53830.3088
+Bayesian information criterion (BIC) score: 53917.2706
 
-**************************** WARNING ****************************
-Number of parameters (K, model parameters and branch lengths): 297
-Sample size (n, alignment length): 291
+Total tree length (sum of branch lengths): 46.5244
+Sum of internal branch lengths: 18.4478 (39.6518% of tree length)
 
-Given that K>=n, the parameter estimates might be inaccurate.
-Thus, phylogenetic estimates should be interpreted with caution.
-
-Ideally, it is desirable that n >> K. When selecting optimal models,
-1. use AIC or BIC if n > 40K;
-2. use AICc or BIC if 40K >= n > K;
-3. be extremely cautious if n <= K
-
-To improve the situation (3), consider the following options:
-  1. Increase the sample size (n)
-  2. Decrease the number of parameters (K) to be estimated. If
-     possible:
-     a. Remove the least important sequences from the alignment
-     b. Specify some of the parameter values for the substitution
-        model (e.g., the nucleotide or amino acid frequencies)
-     c. Specify some of the parameter values for the rates-across-
-        sites model (e.g., the shape parameter for the discrete
-        Gamma distribution, the proportion of invariable sites, or
-        the rates of change for different rate categories under
-        the FreeRate model)
-
-Reference:
-Burnham KR, Anderson DR (2002). Model Selection and Multimodel
-Inference: A Practical Information-Theoretic Approach. Springer,
-New York.
-************************ END OF WARNING ***********************
-
-Total tree length (sum of branch lengths): 77.2410
-Sum of internal branch lengths: 25.9426 (33.5866% of tree length)
-
-WARNING: 2 near-zero internal branches (<0.0034) should be treated with caution
+WARNING: 1 near-zero internal branches (<0.0034) should be treated with caution
          Such branches are denoted by '**' in the figure below
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Phoenix_dactylifera_XP_008797589.1' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
-+--Phoenix_dactylifera_XP_008797589.1
++---Phoenix_dactylifera_XP_008797589.1
 |
-|           +---Physcomitrella_patens_XP_001771872.1
-|        +--| (100)
-|        |  +--Selaginella_moellendorffii_XP_002980522.1
-|     +--| (100)
-|     |  +--Physcomitrella_patens_XP_001778485.1
-|  +--| (100)
-|  |  |                                                        +--Moniliophthora_roreri_MCA_2997_XP_007852718.1
-|  |  |                                                     +--| (92)
-|  |  |                                                     |  +---Pleurotus_ostreatus_PC15_KDQ28116.1
-|  |  |                                                  +--| (63)
-|  |  |                                                  |  |           +----Coprinopsis_cinerea_okayama7_130_XP_001829670.2
-|  |  |                                                  |  |        +--| (62)
-|  |  |                                                  |  |        |  +--Termitomyces_sp._J132_KNZ80766.1
-|  |  |                                                  |  |     +--| (32)
-|  |  |                                                  |  |     |  +--Hypholoma_sublateritium_FD-334_SS-4_KJA19195.1
-|  |  |                                                  |  |  +--| (37)
-|  |  |                                                  |  |  |  |  +--Fomitopsis_pinicola_FP-58527_SS1_EPS97807.1
-|  |  |                                                  |  |  |  +--| (97)
-|  |  |                                                  |  |  |     |  +--Trametes_cinnabarina_CDO73617.1
-|  |  |                                                  |  |  |     +--| (99)
-|  |  |                                                  |  |  |        +---Postia_placenta_Mad-698-R_XP_002474312.1
-|  |  |                                                  |  +--| (57)
-|  |  |                                                  |     |           +---Sphaerobolus_stellatus_SS14_KIJ38034.1
-|  |  |                                                  |     |        +--| (85)
-|  |  |                                                  |     |        |  +-----Gymnopus_luxurians_FD-317_M1_KIK62275.1
-|  |  |                                                  |     |     +--| (29)
-|  |  |                                                  |     |     |  +---Phlebiopsis_gigantea_11061_1_CR5-6_KIP04326.1
-|  |  |                                                  |     |  +--| (27)
-|  |  |                                                  |     |  |  |     +--Hydnomerulius_pinastri_MD-312_KIJ66638.1
-|  |  |                                                  |     |  |  |  +--| (97)
-|  |  |                                                  |     |  |  |  |  +--Serpula_lacrymans_var._lacrymans_S7.9_XP_007324173.1
-|  |  |                                                  |     |  |  +--| (89)
-|  |  |                                                  |     |  |     +---Coniophora_puteana_RWD-64-598_SS2_XP_007763780.1
-|  |  |                                                  |     +--| (31)
-|  |  |                                                  |        +---Agaricus_bisporus_var._bisporus_H97_XP_006453768.1
-|  |  |                                               +--| (61)
-|  |  |                                               |  |  +---Stereum_hirsutum_FP-91666_SS1_XP_007307364.1
-|  |  |                                               |  +--| (100)
-|  |  |                                               |     +--Stereum_hirsutum_FP-91666_SS1_XP_007307367.1
-|  |  |                                            +--| (50)
-|  |  |                                            |  +---Schizopora_paradoxa_KLO15810.1
-|  |  |                                         +--| (51)
-|  |  |                                         |  |     +-----Botryobasidium_botryosum_FD-172_SS1_KDQ18161.1
-|  |  |                                         |  |  +--| (90)
-|  |  |                                         |  |  |  |  +--Botryobasidium_botryosum_FD-172_SS1_KDQ20347.1
-|  |  |                                         |  |  |  +--| (100)
-|  |  |                                         |  |  |     +---Botryobasidium_botryosum_FD-172_SS1_KDQ20346.1
-|  |  |                                         |  +--| (51)
-|  |  |                                         |     +---Fomitiporia_mediterranea_MF3_22_XP_007270910.1
-|  |  |                                      +--| (77)
-|  |  |                                      |  |      +--Serendipita_vermifera_MAFF_305830_KIM32199.1
-|  |  |                                      |  |  +---| (100)
-|  |  |                                      |  |  |   +----Serendipita_vermifera_MAFF_305830_KIM32209.1
-|  |  |                                      |  +--| (50)
-|  |  |                                      |     +----Auricularia_delicata_TFB-10046_SS5_XP_007347371.1
-|  |  |                                   +--| (80)
-|  |  |                                   |  +------Dacryopinax_sp._DJM-731_SS1_EJU02529.1
-|  |  |                               +---| (100)
-|  |  |                               |   |                        +--Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1
-|  |  |                               |   |                     +--| (91)
-|  |  |                               |   |                     |  +---Pestalotiopsis_fici_W106-1_XP_007833658.1
-|  |  |                               |   |                  +--| (83)
-|  |  |                               |   |                  |  +--Pseudogymnoascus_pannorum_VKM_F-4514_FW-929_KFY42269.1
-|  |  |                               |   |               +--| (82)
-|  |  |                               |   |               |  |  +--Trichoderma_reesei_RUT_C-30_ETR98144.1
-|  |  |                               |   |               |  +--| (88)
-|  |  |                               |   |               |     +---Claviceps_purpurea_20.1_CCE28913.1
-|  |  |                               |   |            +--| (78)
-|  |  |                               |   |            |  +----Sporothrix_brasiliensis_5110_KIH86775.1
-|  |  |                               |   |         +--| (91)
-|  |  |                               |   |         |  |     +---Penicillium_brasilianum_CEO60622.1
-|  |  |                               |   |         |  |  +--| (88)
-|  |  |                               |   |         |  |  |  +------Aspergillus_nidulans_FGSC_A4_XP_660198.1
-|  |  |                               |   |         |  +--| (88)
-|  |  |                               |   |         |     +--Aspergillus_rambellii_KKK20264.1
-|  |  |                               |   |      +--| (66)
-|  |  |                               |   |      |  +---------Acremonium_chrysogenum_ATCC_11550_KFH44302.1
-|  |  |                               |   |  +---| (100)
-|  |  |                               |   |  |   +--------Fusarium_verticillioides_7600_EWG54690.1
-|  |  |                               |   +--| (98)
-|  |  |                               |      |                   +--Melampsora_larici-populina_98AG31_XP_007416443.1
-|  |  |                               |      |     +-------------| (100)
-|  |  |                               |      |     |             +--Melampsora_larici-populina_98AG31_XP_007414227.1
-|  |  |                               |      |  +--| (91)
-|  |  |                               |      |  |  +----Mixia_osmundae_IAM_14324_GAA99433.1
-|  |  |                               |      +--| (99)
-|  |  |                               |         |  +----Rhodotorula_glutinis_ATCC_204091_EGU12287.1
-|  |  |                               |         +--| (99)
-|  |  |                               |            +-----Microbotryum_violaceum_p1A1_Lamole_KDE02986.1
-|  |  |                            +--| (93)
-|  |  |                            |  |                          +--Octodon_degus_XP_012371697.1
-|  |  |                            |  |                       +--| (77)
-|  |  |                            |  |                       |  |        +--Microcebus_murinus_XP_012638413.1
-|  |  |                            |  |                       |  |     +--| (91)
-|  |  |                            |  |                       |  |     |  |  +--Fukomys_damarensis_KFO22174.1
-|  |  |                            |  |                       |  |     |  +--| (96)
-|  |  |                            |  |                       |  |     |     +--Eptesicus_fuscus_XP_008152869.1
-|  |  |                            |  |                       |  |  +--| (78)
-|  |  |                            |  |                       |  |  |  +---Gorilla_gorilla_gorilla_XP_004048366.1
-|  |  |                            |  |                       |  +**| (67)
-|  |  |                            |  |                       |     +--Hsap_SELENOU.2.pseudo
-|  |  |                            |  |                    +--| (100)
-|  |  |                            |  |                    |  |  +--Hsap_SELENOU.4.cysteine
-|  |  |                            |  |                    |  +**| (74)
-|  |  |                            |  |                    |     +--Mmus_SELENOU.3.cysteine
-|  |  |                            |  |                 +--| (89)
-|  |  |                            |  |                 |  |  +--Chrysemys_picta_bellii_XP_005304329.1
-|  |  |                            |  |                 |  +--| (96)
-|  |  |                            |  |                 |     +--Thamnophis_sirtalis_XP_013907125.1
-|  |  |                            |  |              +--| (94)
-|  |  |                            |  |              |  +--Pseudopodoces_humilis_XP_005522793.2
-|  |  |                            |  |           +--| (67)
-|  |  |                            |  |           |  |     +--Salmo_salar_ACI70082.1
-|  |  |                            |  |           |  |  +--| (100)
-|  |  |                            |  |           |  |  |  +--Drer_SELENOU.3.cysteine
-|  |  |                            |  |           |  +--| (95)
-|  |  |                            |  |           |     |  +--Latimeria_chalumnae_XP_006001942.1
-|  |  |                            |  |           |     +--| (99)
-|  |  |                            |  |           |        +---Callorhinchus_milii_XP_007898231.1
-|  |  |                            |  |        +--| (100)
-|  |  |                            |  |        |  +--Xenopus_laevis_NP_001092155.1
-|  |  |                            |  |     +--| (98)
-|  |  |                            |  |     |  |                 +**Ciona_intestinalis_XP_002132136.1
-|  |  |                            |  |     |  |              +--| (100)
-|  |  |                            |  |     |  |              |  +**Crob_SELENOU.2.aspartic_acid
-|  |  |                            |  |     |  |           +--| (100)
-|  |  |                            |  |     |  |           |  +--Cint_SELENOU.3.aspartic_acid
-|  |  |                            |  |     |  |        +--| (100)
-|  |  |                            |  |     |  |        |  +--Csav_SELENOU.3.aspartic_acid
-|  |  |                            |  |     |  |     +--| (98)
-|  |  |                            |  |     |  |     |  +--Pmam_SELENOU.2.aspartic_acid
-|  |  |                            |  |     |  +-----| (100)
-|  |  |                            |  |     |        |     +---Bsch_SELENOU.1.aspartic_acid
-|  |  |                            |  |     |        |  +--| (100)
-|  |  |                            |  |     |        |  |  +--Scla_SELENOU.1.aspartic_acid
-|  |  |                            |  |     |        +--| (99)
-|  |  |                            |  |     |           +---Hror_SELENOU.1.aspartic_acid
-|  |  |                            |  |  +--| (98)
-|  |  |                            |  |  |  |        +--Aplysia_californica_XP_005102404.1
-|  |  |                            |  |  |  |     +--| (100)
-|  |  |                            |  |  |  |     |  +---Biomphalaria_glabrata_XP_013095424.1
-|  |  |                            |  |  |  |  +--| (90)
-|  |  |                            |  |  |  |  |  +--Crassostrea_gigas_XP_011445053.1
-|  |  |                            |  |  |  +--| (100)
-|  |  |                            |  |  |     |  +--Lingula_anatina_XP_013413222.1
-|  |  |                            |  |  |     +--| (97)
-|  |  |                            |  |  |        +------Capitella_teleta_ELT93208.1
-|  |  |                            |  +--| (98)
-|  |  |                            |     +------Trichoplax_adhaerens_XP_002114328.1
-|  |  |                         +--| (91)
-|  |  |                         |  +----------Tetrahymena_thermophila_SB210_XP_012653811.1
-|  |  |                 +-------| (100)
-|  |  |                 |       +----------------Fbor_SELENOU.1.selenocysteine
-|  |  |           +-----| (100)
-|  |  |           |     |                   +-----ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000
-|  |  |           |     |                +--| (99)
-|  |  |           |     |                |  |  +**ENST00000419916.Homo_sapiens.PRXL2B_ENST00000419916.Homo_sap
-|  |  |           |     |                |  +--| (100)
-|  |  |           |     |                |     +--Hsap_SELENOU.17.cysteine
-|  |  |           |     |             +--| (100)
-|  |  |           |     |             |  +--Mmus_SELENOU.12.cysteine
-|  |  |           |     |          +--| (100)
-|  |  |           |     |          |  |  +--ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691
-|  |  |           |     |          |  +--| (100)
-|  |  |           |     |          |     |  +**ENSDART00000147264.Danio_rerio.PRXL2B_ENSDART00000147264.Dan
-|  |  |           |     |          |     +--| (99)
-|  |  |           |     |          |        +--Drer_SELENOU.16.cysteine
-|  |  |           |     |       +--| (98)
-|  |  |           |     |       |  |  +--Bflo_SELENOU.6.cysteine
-|  |  |           |     |       |  +--| (100)
-|  |  |           |     |       |     +--Blan_SELENOU.6.cysteine
-|  |  |           |     |    +--| (88)
-|  |  |           |     |    |  |        +--Bsch_SELENOU.4.cysteine
-|  |  |           |     |    |  |     +--| (99)
-|  |  |           |     |    |  |     |  +--Scla_SELENOU.6.cysteine
-|  |  |           |     |    |  |  +--| (100)
-|  |  |           |     |    |  |  |  +--Hror_SELENOU.5.cysteine
-|  |  |           |     |    |  +--| (88)
-|  |  |           |     |    |     |           +--Cint_SELENOU.5.cysteine
-|  |  |           |     |    |     |        +--| (100)
-|  |  |           |     |    |     |        |  +--Crob_SELENOU.5.cysteine
-|  |  |           |     |    |     |     +--| (100)
-|  |  |           |     |    |     |     |  |  +--Csav_SELENOU.5.cysteine
-|  |  |           |     |    |     |     |  +--| (100)
-|  |  |           |     |    |     |     |     +--Csav_SELENOU.9.uga_containing
-|  |  |           |     |    |     |  +--| (99)
-|  |  |           |     |    |     |  |  |  +--Pmam_SELENOU.7.cysteine
-|  |  |           |     |    |     |  |  +--| (100)
-|  |  |           |     |    |     |  |     +--Pmam_SELENOU.10.cysteine
-|  |  |           |     |    |     +--| (91)
-|  |  |           |     |    |        |     +--Pege_SELENOU.2.cysteine
-|  |  |           |     |    |        |  +--| (99)
-|  |  |           |     |    |        |  |  +--Tdem_SELENOU.7.unaligned
-|  |  |           |     |    |        +--| (89)
-|  |  |           |     |    |           |        +----Stho_SELENOU.1.cysteine
-|  |  |           |     |    |           |     +--| (100)
-|  |  |           |     |    |           |     |  +--Stho_SELENOU.3.cysteine
-|  |  |           |     |    |           |  +--| (87)
-|  |  |           |     |    |           |  |  |               +--Fbor_SELENOU.2.cysteine
-|  |  |           |     |    |           |  |  +---------------| (100)
-|  |  |           |     |    |           |  |                  |  +--Fbor_SELENOU.3.cysteine
-|  |  |           |     |    |           |  |                  +--| (96)
-|  |  |           |     |    |           |  |                     +--Fbor_SELENOU.4.cysteine
-|  |  |           |     |    |           +--| (89)
-|  |  |           |     |    |              |  +--Tdem_SELENOU.5.cysteine
-|  |  |           |     |    |              +--| (100)
-|  |  |           |     |    |                 +--Tdem_SELENOU.8.cysteine
-|  |  |           |     +----| (99)
-|  |  |           |          |          +**OKI_SELENOU.2.cysteine
-|  |  |           |          |     +----| (100)
-|  |  |           |          |     |    |  +--OSKA_SELENOU.4.cysteine
-|  |  |           |          |     |    +--| (100)
-|  |  |           |          |     |       +--OdB3_SELENOU.5.cysteine
-|  |  |           |          |  +--| (100)
-|  |  |           |          |  |  +--Oalb_SELENOU.1.cysteine
-|  |  |           |          +--| (100)
-|  |  |           |             +---Olon_SELENOU.4.cysteine
-|  |  |        +--| (94)
-|  |  |        |  |                    +-----Larimichthys_crocea_XP_010744074.1
-|  |  |        |  |                 +--| (99)
-|  |  |        |  |                 |  |     +--Tupaia_chinensis_XP_006163791.1
-|  |  |        |  |                 |  |  +--| (100)
-|  |  |        |  |                 |  |  |  |        +-----Leptonychotes_weddellii_XP_006745675.1
-|  |  |        |  |                 |  |  |  |     +--| (87)
-|  |  |        |  |                 |  |  |  |     |  +--Hsap_SELENOU.12.cysteine
-|  |  |        |  |                 |  |  |  |  +--| (98)
-|  |  |        |  |                 |  |  |  |  |  |  +--Hsap_SELENOU.8.pseudo
-|  |  |        |  |                 |  |  |  |  |  +--| (92)
-|  |  |        |  |                 |  |  |  |  |     +---Hsap_SELENOU.9.pseudo
-|  |  |        |  |                 |  |  |  +--| (99)
-|  |  |        |  |                 |  |  |     +--Mmus_SELENOU.8.cysteine
-|  |  |        |  |                 |  +--| (91)
-|  |  |        |  |                 |     |              +--Esox_lucius_XP_010863834.1
-|  |  |        |  |                 |     |           +--| (34)
-|  |  |        |  |                 |     |           |  +---Drer_SELENOU.7.uga_containing
-|  |  |        |  |                 |     |        +--| (30)
-|  |  |        |  |                 |     |        |  +--Drer_SELENOU.10.selenocysteine
-|  |  |        |  |                 |     |     +--| (31)
-|  |  |        |  |                 |     |     |  +--Cynoglossus_semilaevis_XP_008319954.1
-|  |  |        |  |                 |     |  +--| (35)
-|  |  |        |  |                 |     |  |  |     +--Notothenia_coriiceps_XP_010775501.1
-|  |  |        |  |                 |     |  |  |  +--| (33)
-|  |  |        |  |                 |     |  |  |  |  +--Drer_SELENOU.5.selenocysteine
-|  |  |        |  |                 |     |  |  +--| (29)
-|  |  |        |  |                 |     |  |     +---Latimeria_chalumnae_XP_006012284.1
-|  |  |        |  |                 |     +--| (90)
-|  |  |        |  |                 |        +--Callorhinchus_milii_XP_007902813.1
-|  |  |        |  |              +--| (99)
-|  |  |        |  |              |  |  +--Aplysia_californica_XP_012937723.1
-|  |  |        |  |              |  +--| (99)
-|  |  |        |  |              |     |    +--Bflo_SELENOU.2.selenocysteine
-|  |  |        |  |              |     +----| (100)
-|  |  |        |  |              |          +**Blan_SELENOU.2.selenocysteine
-|  |  |        |  |           +--| (100)
-|  |  |        |  |           |  +----Saccoglossus_kowalevskii_XP_006811580.1
-|  |  |        |  |        +--| (95)
-|  |  |        |  |        |  +------Lepeophtheirus_salmonis_ACO12061.1
-|  |  |        |  |     +--| (97)
-|  |  |        |  |     |  +---Helobdella_robusta_XP_009011667.1
-|  |  |        |  |  +--| (100)
-|  |  |        |  |  |  |         +--Caenorhabditis_brenneri_EGT34998.1
-|  |  |        |  |  |  |      +--| (100)
-|  |  |        |  |  |  |      |  +--Necator_americanus_XP_013296382.1
-|  |  |        |  |  |  |   +--| (100)
-|  |  |        |  |  |  |   |  +---Pristionchus_pacificus_KKA70176.1
-|  |  |        |  |  |  +---| (100)
-|  |  |        |  |  |      +----Strongyloides_ratti_CEF62614.1
-|  |  |        |  +--| (84)
-|  |  |        |     |  +-------Nannochloropsis_gaditana_EWM26651.1
-|  |  |        |     +--| (97)
-|  |  |        |        +----Ectocarpus_siliculosus_CBJ25594.1
-|  |  |     +--| (91)
-|  |  |     |  |          +--Allomyces_macrogynus_ATCC_38327_KNE60458.1
-|  |  |     |  |     +----| (100)
-|  |  |     |  |     |    +-----Allomyces_macrogynus_ATCC_38327_KNE67104.1
-|  |  |     |  |  +--| (99)
-|  |  |     |  |  |  |   +--Mortierella_verticillata_NRRL_6337_KFH65303.1
-|  |  |     |  |  |  +---| (100)
-|  |  |     |  |  |      +----Mortierella_verticillata_NRRL_6337_KFH62547.1
-|  |  |     |  +--| (99)
-|  |  |     |     +------Spizellomyces_punctatus_DAOM_BR117_KNC98930.1
-|  |  +-----| (100)
-|  |        |  +-----Ostreococcus_tauri_XP_003081130.1
-|  |        +--| (89)
-|  |           +-----------Volvox_carteri_f._nagariensis_XP_002945792.1
-+--| (56)
-|  +--Amborella_trichopoda_ERN05797.1
+|  +-----Physcomitrella_patens_XP_001771872.1
++--| (100)
+|  +--Physcomitrella_patens_XP_001778485.1
 |
-+--Solanum_tuberosum_XP_006348785.1
+|                                        +---------Moniliophthora_roreri_MCA_2997_XP_007852718.1
+|                                 +------| (100)
+|                                 |      |        +----Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1
+|                                 |      +--------| (100)
+|                                 |               +--Pestalotiopsis_fici_W106-1_XP_007833658.1
+|                              +--| (81)
+|                              |  |                        +--Octodon_degus_XP_012371697.1
+|                              |  |                     +--| (92)
+|                              |  |                     |  +--Hsap_SELENOU.2.pseudo
+|                              |  |                 +---| (100)
+|                              |  |                 |   |  +--Hsap_SELENOU.4.cysteine
+|                              |  |                 |   +**| (52)
+|                              |  |                 |      +---Mmus_SELENOU.3.cysteine
+|                              |  |              +--| (84)
+|                              |  |              |  |  +--Pseudopodoces_humilis_XP_005522793.2
+|                              |  |              |  +--| (78)
+|                              |  |              |     |  +----Chrysemys_picta_bellii_XP_005304329.1
+|                              |  |              |     +--| (91)
+|                              |  |              |        +--Thamnophis_sirtalis_XP_013907125.1
+|                              |  |           +--| (83)
+|                              |  |           |  |     +--Latimeria_chalumnae_XP_006001942.1
+|                              |  |           |  |  +--| (99)
+|                              |  |           |  |  |  +----Callorhinchus_milii_XP_007898231.1
+|                              |  |           |  +--| (95)
+|                              |  |           |     +----Drer_SELENOU.3.cysteine
+|                              |  |        +--| (99)
+|                              |  |        |  +--Xenopus_laevis_NP_001092155.1
+|                              |  |     +--| (56)
+|                              |  |     |  |                    +**Ciona_intestinalis_XP_002132136.1
+|                              |  |     |  |                 +--| (100)
+|                              |  |     |  |                 |  +**Crob_SELENOU.2.aspartic_acid
+|                              |  |     |  |              +--| (100)
+|                              |  |     |  |              |  +--Cint_SELENOU.3.aspartic_acid
+|                              |  |     |  |           +--| (100)
+|                              |  |     |  |           |  +--Csav_SELENOU.3.aspartic_acid
+|                              |  |     |  |        +--| (98)
+|                              |  |     |  |        |  +--Pmam_SELENOU.2.aspartic_acid
+|                              |  |     |  +--------| (100)
+|                              |  |     |           |     +----Bsch_SELENOU.1.aspartic_acid
+|                              |  |     |           |  +--| (100)
+|                              |  |     |           |  |  +--Scla_SELENOU.1.aspartic_acid
+|                              |  |     |           +--| (95)
+|                              |  |     |              +----Hror_SELENOU.1.aspartic_acid
+|                              |  |  +--| (80)
+|                              |  |  |  |     +----Aplysia_californica_XP_005102404.1
+|                              |  |  |  |  +--| (76)
+|                              |  |  |  |  |  +---Crassostrea_gigas_XP_011445053.1
+|                              |  |  |  +--| (100)
+|                              |  |  |     |  +--Lingula_anatina_XP_013413222.1
+|                              |  |  |     +--| (97)
+|                              |  |  |        +-------Capitella_teleta_ELT93208.1
+|                              |  +--| (95)
+|                              |     +-------Trichoplax_adhaerens_XP_002114328.1
+|                           +--| (91)
+|                           |  +-------------Tetrahymena_thermophila_SB210_XP_012653811.1
+|                +----------| (100)
+|                |          +---------------------Fbor_SELENOU.1.selenocysteine
+|        +-------| (100)
+|        |       |                      +-------ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000
+|        |       |                   +--| (65)
+|        |       |                   |  +--Hsap_SELENOU.17.cysteine
+|        |       |              +----| (100)
+|        |       |              |    +--Mmus_SELENOU.12.cysteine
+|        |       |           +--| (97)
+|        |       |           |  |  +--ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691
+|        |       |           |  +--| (100)
+|        |       |           |     +--Drer_SELENOU.16.cysteine
+|        |       |        +--| (94)
+|        |       |        |  |   +--Bflo_SELENOU.6.cysteine
+|        |       |        |  +---| (100)
+|        |       |        |      +--Blan_SELENOU.6.cysteine
+|        |       |     +--| (58)
+|        |       |     |  |        +---Bsch_SELENOU.4.cysteine
+|        |       |     |  |     +--| (96)
+|        |       |     |  |     |  +--Scla_SELENOU.6.cysteine
+|        |       |     |  |  +--| (100)
+|        |       |     |  |  |  +--Hror_SELENOU.5.cysteine
+|        |       |     |  +--| (63)
+|        |       |     |     |           +--Cint_SELENOU.5.cysteine
+|        |       |     |     |        +--| (100)
+|        |       |     |     |        |  +--Crob_SELENOU.5.cysteine
+|        |       |     |     |     +--| (98)
+|        |       |     |     |     |  |  +---Csav_SELENOU.5.cysteine
+|        |       |     |     |     |  +--| (98)
+|        |       |     |     |     |     +--Csav_SELENOU.9.uga_containing
+|        |       |     |     |  +--| (100)
+|        |       |     |     |  |  |   +--Pmam_SELENOU.7.cysteine
+|        |       |     |     |  |  +---| (100)
+|        |       |     |     |  |      +--Pmam_SELENOU.10.cysteine
+|        |       |     |     +--| (64)
+|        |       |     |        |     +--Pege_SELENOU.2.cysteine
+|        |       |     |        |  +--| (98)
+|        |       |     |        |  |  +----Tdem_SELENOU.7.unaligned
+|        |       |     |        +--| (56)
+|        |       |     |           |        +-----Stho_SELENOU.1.cysteine
+|        |       |     |           |     +--| (100)
+|        |       |     |           |     |  +--Stho_SELENOU.3.cysteine
+|        |       |     |           |  +--| (51)
+|        |       |     |           |  |  |                   +--Fbor_SELENOU.2.cysteine
+|        |       |     |           |  |  +-------------------| (100)
+|        |       |     |           |  |                      |  +--Fbor_SELENOU.3.cysteine
+|        |       |     |           |  |                      +--| (87)
+|        |       |     |           |  |                         +--Fbor_SELENOU.4.cysteine
+|        |       |     |           +--| (56)
+|        |       |     |              |  +--Tdem_SELENOU.5.cysteine
+|        |       |     |              +--| (100)
+|        |       |     |                 +---Tdem_SELENOU.8.cysteine
+|        |       +-----| (96)
+|        |             |            +**OKI_SELENOU.2.cysteine
+|        |             |      +-----| (100)
+|        |             |      |     |  +--OSKA_SELENOU.4.cysteine
+|        |             |      |     +--| (100)
+|        |             |      |        +--OdB3_SELENOU.5.cysteine
+|        |             |   +--| (99)
+|        |             |   |  +--Oalb_SELENOU.1.cysteine
+|        |             +---| (100)
+|        |                 +----Olon_SELENOU.4.cysteine
+|     +--| (97)
+|     |  |                       +-------Larimichthys_crocea_XP_010744074.1
+|     |  |                    +--| (98)
+|     |  |                    |  |     +--Tupaia_chinensis_XP_006163791.1
+|     |  |                    |  |  +--| (100)
+|     |  |                    |  |  |  |        +--Hsap_SELENOU.8.pseudo
+|     |  |                    |  |  |  |     +--| (96)
+|     |  |                    |  |  |  |     |  +----Hsap_SELENOU.9.pseudo
+|     |  |                    |  |  |  |  +--| (100)
+|     |  |                    |  |  |  |  |  +--Hsap_SELENOU.12.cysteine
+|     |  |                    |  |  |  +--| (100)
+|     |  |                    |  |  |     +--Mmus_SELENOU.8.cysteine
+|     |  |                    |  +--| (88)
+|     |  |                    |     |           +----Esox_lucius_XP_010863834.1
+|     |  |                    |     |        +--| (58)
+|     |  |                    |     |        |  |  +---Drer_SELENOU.5.selenocysteine
+|     |  |                    |     |        |  +--| (92)
+|     |  |                    |     |        |     +---Drer_SELENOU.7.uga_containing
+|     |  |                    |     |     +--| (87)
+|     |  |                    |     |     |  +--Drer_SELENOU.10.selenocysteine
+|     |  |                    |     |  +--| (84)
+|     |  |                    |     |  |  +----Latimeria_chalumnae_XP_006012284.1
+|     |  |                    |     +--| (84)
+|     |  |                    |        +----Callorhinchus_milii_XP_007902813.1
+|     |  |                 +--| (97)
+|     |  |                 |  |  +----Aplysia_californica_XP_012937723.1
+|     |  |                 |  +--| (97)
+|     |  |                 |     |      +--Bflo_SELENOU.2.selenocysteine
+|     |  |                 |     +------| (100)
+|     |  |                 |            +**Blan_SELENOU.2.selenocysteine
+|     |  |              +--| (96)
+|     |  |              |  +-----Saccoglossus_kowalevskii_XP_006811580.1
+|     |  |           +--| (88)
+|     |  |           |  +--------Lepeophtheirus_salmonis_ACO12061.1
+|     |  |        +--| (82)
+|     |  |        |  |          +---Caenorhabditis_brenneri_EGT34998.1
+|     |  |        |  |     +----| (100)
+|     |  |        |  |     |    +--Necator_americanus_XP_013296382.1
+|     |  |        |  +-----| (100)
+|     |  |        |        +------Strongyloides_ratti_CEF62614.1
+|     |  |     +--| (100)
+|     |  |     |  +----Helobdella_robusta_XP_009011667.1
+|     |  |  +--| (46)
+|     |  |  |  +------------Nannochloropsis_gaditana_EWM26651.1
+|     |  +--| (97)
+|     |     +------Ectocarpus_siliculosus_CBJ25594.1
++-----| (100)
+      |  +------Ostreococcus_tauri_XP_003081130.1
+      +--| (94)
+         +----------------Volvox_carteri_f._nagariensis_XP_002945792.1
 
 Tree in newick format:
 
-(Phoenix_dactylifera_XP_008797589.1:0.1478525914,((((Physcomitrella_patens_XP_001771872.1:0.4288849885,Selaginella_moellendorffii_XP_002980522.1:0.3064495579)100:0.0723095732,Physcomitrella_patens_XP_001778485.1:0.2576760522)100:0.1358615662,(((((((((((((((Moniliophthora_roreri_MCA_2997_XP_007852718.1:0.3822727718,Pleurotus_ostreatus_PC15_KDQ28116.1:0.4293207665)92:0.1419976620,((((Coprinopsis_cinerea_okayama7_130_XP_001829670.2:0.4831216628,Termitomyces_sp._J132_KNZ80766.1:0.3623262237)62:0.0607089406,Hypholoma_sublateritium_FD-334_SS-4_KJA19195.1:0.3818822524)32:0.0219380392,(Fomitopsis_pinicola_FP-58527_SS1_EPS97807.1:0.3537054349,(Trametes_cinnabarina_CDO73617.1:0.2486809266,Postia_placenta_Mad-698-R_XP_002474312.1:0.4647381977)99:0.1995323045)97:0.1508118360)37:0.0543129358,((((Sphaerobolus_stellatus_SS14_KIJ38034.1:0.4275361482,Gymnopus_luxurians_FD-317_M1_KIK62275.1:0.6262263253)85:0.0827710315,Phlebiopsis_gigantea_11061_1_CR5-6_KIP04326.1:0.4748808487)29:0.0505192450,((Hydnomerulius_pinastri_MD-312_KIJ66638.1:0.2958334135,Serpula_lacrymans_var._lacrymans_S7.9_XP_007324173.1:0.2860198807)97:0.0990042328,Coniophora_puteana_RWD-64-598_SS2_XP_007763780.1:0.4698282749)89:0.0640541775)27:0.0286121785,Agaricus_bisporus_var._bisporus_H97_XP_006453768.1:0.4756192047)31:0.0499815394)57:0.0600027922)63:0.0522512173,(Stereum_hirsutum_FP-91666_SS1_XP_007307364.1:0.4777177447,Stereum_hirsutum_FP-91666_SS1_XP_007307367.1:0.2792785820)100:0.1570869678)61:0.0619843556,Schizopora_paradoxa_KLO15810.1:0.4774810423)50:0.0450346168,((Botryobasidium_botryosum_FD-172_SS1_KDQ18161.1:0.6595925670,(Botryobasidium_botryosum_FD-172_SS1_KDQ20347.1:0.2613927336,Botryobasidium_botryosum_FD-172_SS1_KDQ20346.1:0.4700397879)100:0.1917733011)90:0.1176451443,Fomitiporia_mediterranea_MF3_22_XP_007270910.1:0.4746908343)51:0.0770417376)51:0.0536984205,((Serendipita_vermifera_MAFF_305830_KIM32199.1:0.1343236120,Serendipita_vermifera_MAFF_305830_KIM32209.1:0.5634972242)100:0.4733562899,Auricularia_delicata_TFB-10046_SS5_XP_007347371.1:0.5662396340)50:0.0766209077)77:0.1421826556,Dacryopinax_sp._DJM-731_SS1_EJU02529.1:0.7533499909)80:0.0972434490,((((((((Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1:0.2089578422,Pestalotiopsis_fici_W106-1_XP_007833658.1:0.4279987908)91:0.0641379087,Pseudogymnoascus_pannorum_VKM_F-4514_FW-929_KFY42269.1:0.3190323779)83:0.0458734690,(Trichoderma_reesei_RUT_C-30_ETR98144.1:0.2310780814,Claviceps_purpurea_20.1_CCE28913.1:0.4386001234)88:0.0959375291)82:0.0367740679,Sporothrix_brasiliensis_5110_KIH86775.1:0.5391178496)78:0.0873111269,((Penicillium_brasilianum_CEO60622.1:0.4183020498,Aspergillus_nidulans_FGSC_A4_XP_660198.1:0.6786063160)88:0.1208079460,Aspergillus_rambellii_KKK20264.1:0.3698254847)88:0.0965077494)91:0.1425337521,Acremonium_chrysogenum_ATCC_11550_KFH44302.1:1.0058226725)66:0.0604259947,Fusarium_verticillioides_7600_EWG54690.1:0.8687098266)100:0.3903857274,(((Melampsora_larici-populina_98AG31_XP_007416443.1:0.1367474232,Melampsora_larici-populina_98AG31_XP_007414227.1:0.2923045049)100:1.4137388420,Mixia_osmundae_IAM_14324_GAA99433.1:0.4818899497)91:0.1514334513,(Rhodotorula_glutinis_ATCC_204091_EGU12287.1:0.5368584280,Microbotryum_violaceum_p1A1_Lamole_KDE02986.1:0.6476545501)99:0.2307471352)99:0.2652553033)98:0.1553269925)100:0.4754706843,(((((((((Octodon_degus_XP_012371697.1:0.1716644648,(((Microcebus_murinus_XP_012638413.1:0.1290473006,(Fukomys_damarensis_KFO22174.1:0.3517078067,Eptesicus_fuscus_XP_008152869.1:0.3178331498)96:0.0596704417)91:0.0644532672,Gorilla_gorilla_gorilla_XP_004048366.1:0.4234242493)78:0.0925371583,Hsap_SELENOU.2.pseudo:0.1943219735)67:0.0022393588)77:0.0191903876,(Hsap_SELENOU.4.cysteine:0.0075970996,Mmus_SELENOU.3.cysteine:0.2802399829)74:0.0011707478)100:0.2946262596,(Chrysemys_picta_bellii_XP_005304329.1:0.3731935039,Thamnophis_sirtalis_XP_013907125.1:0.2474756841)96:0.0818781937)89:0.0518009118,Pseudopodoces_humilis_XP_005522793.2:0.2236831431)94:0.0868325527,((Salmo_salar_ACI70082.1:0.2898093350,Drer_SELENOU.3.cysteine:0.2861132385)100:0.1846878258,(Latimeria_chalumnae_XP_006001942.1:0.1386742958,Callorhinchus_milii_XP_007898231.1:0.4402025010)99:0.0474424411)95:0.0882249458)67:0.0409872503,Xenopus_laevis_NP_001092155.1:0.2951203140)100:0.2475100940,(((((Ciona_intestinalis_XP_002132136.1:0.0000010420,Crob_SELENOU.2.aspartic_acid:0.0000010420)100:0.0204137321,Cint_SELENOU.3.aspartic_acid:0.0283050906)100:0.1344704291,Csav_SELENOU.3.aspartic_acid:0.1449974178)100:0.2128585073,Pmam_SELENOU.2.aspartic_acid:0.2544230358)98:0.0997450116,((Bsch_SELENOU.1.aspartic_acid:0.4073021371,Scla_SELENOU.1.aspartic_acid:0.2249237994)100:0.1810278507,Hror_SELENOU.1.aspartic_acid:0.4049402230)99:0.1500098519)100:0.6552275420)98:0.1369389620,(((Aplysia_californica_XP_005102404.1:0.1336744121,Biomphalaria_glabrata_XP_013095424.1:0.4218369119)100:0.2750059319,Crassostrea_gigas_XP_011445053.1:0.3604224909)90:0.1041437272,(Lingula_anatina_XP_013413222.1:0.2926736741,Capitella_teleta_ELT93208.1:0.6932827263)97:0.1511321093)100:0.1877195930)98:0.1778471915,Trichoplax_adhaerens_XP_002114328.1:0.6976812169)98:0.1291367025)93:0.2812825196,Tetrahymena_thermophila_SB210_XP_012653811.1:1.1168733455)91:0.2187228284,Fbor_SELENOU.1.selenocysteine:1.6897069300)100:0.7760161112,((((((ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000:0.5814312998,(ENST00000419916.Homo_sapiens.PRXL2B_ENST00000419916.Homo_sap:0.0000010420,Hsap_SELENOU.17.cysteine:0.0154346786)100:0.0579773451)99:0.0274744655,Mmus_SELENOU.12.cysteine:0.0793571031)100:0.3619129534,(ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691:0.1094940580,(ENSDART00000147264.Danio_rerio.PRXL2B_ENSDART00000147264.Dan:0.0000021647,Drer_SELENOU.16.cysteine:0.0277599893)99:0.0377743208)100:0.2339137744)100:0.1489187274,(Bflo_SELENOU.6.cysteine:0.0072134024,Blan_SELENOU.6.cysteine:0.1063303700)100:0.3643723146)98:0.1397667872,(((Bsch_SELENOU.4.cysteine:0.3231539642,Scla_SELENOU.6.cysteine:0.2810160514)99:0.1030369568,Hror_SELENOU.5.cysteine:0.2799797569)100:0.2496332376,((((Cint_SELENOU.5.cysteine:0.0414387432,Crob_SELENOU.5.cysteine:0.0327566739)100:0.1132465436,(Csav_SELENOU.5.cysteine:0.3667070374,Csav_SELENOU.9.uga_containing:0.1020143518)100:0.0759763662)100:0.1282395483,(Pmam_SELENOU.7.cysteine:0.0833240022,Pmam_SELENOU.10.cysteine:0.0874787043)100:0.3219722082)99:0.1814969294,((Pege_SELENOU.2.cysteine:0.2533181105,Tdem_SELENOU.7.unaligned:0.3757136168)99:0.1789526000,(((Stho_SELENOU.1.cysteine:0.5160693940,Stho_SELENOU.3.cysteine:0.0041254895)100:0.2687131230,(Fbor_SELENOU.2.cysteine:0.1152620611,(Fbor_SELENOU.3.cysteine:0.1520145862,Fbor_SELENOU.4.cysteine:0.1689654597)96:0.0245591620)100:1.5927276390)87:0.1536232636,(Tdem_SELENOU.5.cysteine:0.2049593233,Tdem_SELENOU.8.cysteine:0.2925607859)100:0.1667259170)89:0.1885025891)89:0.1811084196)91:0.1392719617)88:0.1228293457)88:0.1667967642,(((OKI_SELENOU.2.cysteine:0.0000027916,(OSKA_SELENOU.4.cysteine:0.0552370333,OdB3_SELENOU.5.cysteine:0.0732477048)100:0.0561309423)100:0.5250169987,Oalb_SELENOU.1.cysteine:0.2809611047)100:0.2753778363,Olon_SELENOU.4.cysteine:0.4395474300)100:0.3574064873)99:0.4974834229)100:0.6284601444,(((((((Larimichthys_crocea_XP_010744074.1:0.6138155706,((Tupaia_chinensis_XP_006163791.1:0.1379908486,(((Leptonychotes_weddellii_XP_006745675.1:0.6314072059,Hsap_SELENOU.12.cysteine:0.0129024655)87:0.0060365772,(Hsap_SELENOU.8.pseudo:0.0953730414,Hsap_SELENOU.9.pseudo:0.4049540838)92:0.0209004717)98:0.0275834159,Mmus_SELENOU.8.cysteine:0.1014864244)99:0.0388638633)100:0.1934543340,(((((Esox_lucius_XP_010863834.1:0.2948839056,Drer_SELENOU.7.uga_containing:0.4536560166)34:0.1588701370,Drer_SELENOU.10.selenocysteine:0.2169304054)30:0.0282023008,Cynoglossus_semilaevis_XP_008319954.1:0.3481289042)31:0.0656641805,((Notothenia_coriiceps_XP_010775501.1:0.3347766378,Drer_SELENOU.5.selenocysteine:0.3794926638)33:0.1535218922,Latimeria_chalumnae_XP_006012284.1:0.3863854022)29:0.0366461277)35:0.0375956266,Callorhinchus_milii_XP_007902813.1:0.3528003613)90:0.0465996066)91:0.0607353267)99:0.1527634925,(Aplysia_californica_XP_012937723.1:0.3663976172,(Bflo_SELENOU.2.selenocysteine:0.1031830719,Blan_SELENOU.2.selenocysteine:0.0000029690)100:0.5566040721)99:0.1323075156)99:0.1124551048,Saccoglossus_kowalevskii_XP_006811580.1:0.4858597018)100:0.1204779286,Lepeophtheirus_salmonis_ACO12061.1:0.7604327721)95:0.1023755044,Helobdella_robusta_XP_009011667.1:0.4146507987)97:0.0789751920,(((Caenorhabditis_brenneri_EGT34998.1:0.3183756330,Necator_americanus_XP_013296382.1:0.2640518298)100:0.2363815707,Pristionchus_pacificus_KKA70176.1:0.4319027526)100:0.2318895086,Strongyloides_ratti_CEF62614.1:0.5749672845)100:0.3956799690)100:0.1633595663,(Nannochloropsis_gaditana_EWM26651.1:0.8488922470,Ectocarpus_siliculosus_CBJ25594.1:0.5543236054)97:0.1497202718)84:0.0499167873)94:0.1314423988,(((Allomyces_macrogynus_ATCC_38327_KNE60458.1:0.3183835259,Allomyces_macrogynus_ATCC_38327_KNE67104.1:0.6330448470)100:0.5210038084,(Mortierella_verticillata_NRRL_6337_KFH65303.1:0.3447369038,Mortierella_verticillata_NRRL_6337_KFH62547.1:0.4964599196)100:0.4549806822)99:0.1165517405,Spizellomyces_punctatus_DAOM_BR117_KNC98930.1:0.7526546576)99:0.1689769933)91:0.2376009329,(Ostreococcus_tauri_XP_003081130.1:0.6069930614,Volvox_carteri_f._nagariensis_XP_002945792.1:1.2482524357)89:0.2540583804)100:0.5819007692)100:0.0980337404,Amborella_trichopoda_ERN05797.1:0.2470477774)56:0.0655283600,Solanum_tuberosum_XP_006348785.1:0.2224136010);
+(Phoenix_dactylifera_XP_008797589.1:0.3671245624,(Physcomitrella_patens_XP_001771872.1:0.5051728271,Physcomitrella_patens_XP_001778485.1:0.1917378530)100:0.0938146867,(((((((Moniliophthora_roreri_MCA_2997_XP_007852718.1:0.7743593649,(Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1:0.3901736898,Pestalotiopsis_fici_W106-1_XP_007833658.1:0.1493827236)100:0.7122392449)100:0.5388048188,((((((((Octodon_degus_XP_012371697.1:0.1761626126,Hsap_SELENOU.2.pseudo:0.1989264163)92:0.0200789621,(Hsap_SELENOU.4.cysteine:0.0316143499,Mmus_SELENOU.3.cysteine:0.3060527701)52:0.0000022567)100:0.3350955430,(Pseudopodoces_humilis_XP_005522793.2:0.2268791853,(Chrysemys_picta_bellii_XP_005304329.1:0.3862636388,Thamnophis_sirtalis_XP_013907125.1:0.2895875526)91:0.0936590047)78:0.0289812438)84:0.0748084242,((Latimeria_chalumnae_XP_006001942.1:0.1610511463,Callorhinchus_milii_XP_007898231.1:0.4339078580)99:0.0429873365,Drer_SELENOU.3.cysteine:0.4417420385)95:0.0894720533)83:0.0649603773,Xenopus_laevis_NP_001092155.1:0.2892128670)99:0.2530923199,(((((Ciona_intestinalis_XP_002132136.1:0.0000010042,Crob_SELENOU.2.aspartic_acid:0.0000010042)100:0.0203748989,Cint_SELENOU.3.aspartic_acid:0.0275123067)100:0.1287199099,Csav_SELENOU.3.aspartic_acid:0.1521640895)100:0.2200181813,Pmam_SELENOU.2.aspartic_acid:0.2425504011)98:0.0875606074,((Bsch_SELENOU.1.aspartic_acid:0.3954369870,Scla_SELENOU.1.aspartic_acid:0.2298856696)100:0.1715947465,Hror_SELENOU.1.aspartic_acid:0.4141880547)95:0.1473995265)100:0.6853598260)56:0.0843925369,((Aplysia_californica_XP_005102404.1:0.4133903425,Crassostrea_gigas_XP_011445053.1:0.3721254026)76:0.0835906237,(Lingula_anatina_XP_013413222.1:0.2939032833,Capitella_teleta_ELT93208.1:0.6383697470)97:0.1514360527)100:0.2966318087)80:0.1427173054,Trichoplax_adhaerens_XP_002114328.1:0.6724792619)95:0.1790469998)81:0.1680487261,Tetrahymena_thermophila_SB210_XP_012653811.1:1.1174978231)91:0.2698979354,Fbor_SELENOU.1.selenocysteine:1.7148642336)100:0.8902534331,((((((ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000:0.6447598457,Hsap_SELENOU.17.cysteine:0.0731799339)65:0.0322396833,Mmus_SELENOU.12.cysteine:0.0742875374)100:0.4012988953,(ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691:0.1120633293,Drer_SELENOU.16.cysteine:0.0531279493)100:0.2610077858)97:0.1309594990,(Bflo_SELENOU.6.cysteine:0.0282134290,Blan_SELENOU.6.cysteine:0.0947341926)100:0.3746746384)94:0.1276552970,(((Bsch_SELENOU.4.cysteine:0.3176992929,Scla_SELENOU.6.cysteine:0.2838195375)96:0.0953778149,Hror_SELENOU.5.cysteine:0.2905157907)100:0.2483119518,((((Cint_SELENOU.5.cysteine:0.0632724781,Crob_SELENOU.5.cysteine:0.0350859638)100:0.1371468881,(Csav_SELENOU.5.cysteine:0.3695538585,Csav_SELENOU.9.uga_containing:0.1080025925)98:0.0741902690)98:0.1215506833,(Pmam_SELENOU.7.cysteine:0.0809632197,Pmam_SELENOU.10.cysteine:0.0930664041)100:0.3420314786)100:0.1825849343,((Pege_SELENOU.2.cysteine:0.2640219354,Tdem_SELENOU.7.unaligned:0.3923462389)98:0.1746099173,(((Stho_SELENOU.1.cysteine:0.4975923546,Stho_SELENOU.3.cysteine:0.0093827608)100:0.2769208767,(Fbor_SELENOU.2.cysteine:0.1320963650,(Fbor_SELENOU.3.cysteine:0.1546846164,Fbor_SELENOU.4.cysteine:0.1865369743)87:0.0204089212)100:1.5591923800)51:0.1324423555,(Tdem_SELENOU.5.cysteine:0.2160317628,Tdem_SELENOU.8.cysteine:0.3037116815)100:0.1814487069)56:0.1838802984)56:0.1783829876)64:0.1273897335)63:0.1249380150)58:0.1717272343,(((OKI_SELENOU.2.cysteine:0.0000022729,(OSKA_SELENOU.4.cysteine:0.0530894844,OdB3_SELENOU.5.cysteine:0.0715215569)100:0.0552001222)100:0.5011841479,Oalb_SELENOU.1.cysteine:0.2922845702)99:0.2901185716,Olon_SELENOU.4.cysteine:0.4332987178)100:0.3666090652)96:0.4942378128)100:0.6102214750,((((((((Larimichthys_crocea_XP_010744074.1:0.6188896132,((Tupaia_chinensis_XP_006163791.1:0.1370198289,(((Hsap_SELENOU.8.pseudo:0.0960208408,Hsap_SELENOU.9.pseudo:0.4039667491)96:0.0257533292,Hsap_SELENOU.12.cysteine:0.0198323864)100:0.0290884741,Mmus_SELENOU.8.cysteine:0.1039399890)100:0.0395358145)100:0.1759548185,((((Esox_lucius_XP_010863834.1:0.3794984739,(Drer_SELENOU.5.selenocysteine:0.3535941057,Drer_SELENOU.7.uga_containing:0.3276759484)92:0.1830759220)58:0.1090880110,Drer_SELENOU.10.selenocysteine:0.2240128085)87:0.0753152781,Latimeria_chalumnae_XP_006012284.1:0.4280071084)84:0.0367387413,Callorhinchus_milii_XP_007902813.1:0.3894332409)84:0.0379713563)88:0.0852745339)98:0.1608318859,(Aplysia_californica_XP_012937723.1:0.4067657285,(Bflo_SELENOU.2.selenocysteine:0.1042245767,Blan_SELENOU.2.selenocysteine:0.0000021080)100:0.5773483461)97:0.0821097296)97:0.1112125036,Saccoglossus_kowalevskii_XP_006811580.1:0.5003904892)96:0.1375527965,Lepeophtheirus_salmonis_ACO12061.1:0.7480076299)88:0.0669040076,((Caenorhabditis_brenneri_EGT34998.1:0.3564160700,Necator_americanus_XP_013296382.1:0.2858243317)100:0.3910821489,Strongyloides_ratti_CEF62614.1:0.5473105642)100:0.4900897992)82:0.0675358052,Helobdella_robusta_XP_009011667.1:0.4233811841)100:0.2788867257,Nannochloropsis_gaditana_EWM26651.1:1.0034752803)46:0.1021410941,Ectocarpus_siliculosus_CBJ25594.1:0.6025265031)97:0.1867160854)97:0.2223270579,(Ostreococcus_tauri_XP_003081130.1:0.5765277866,Volvox_carteri_f._nagariensis_XP_002945792.1:1.2868466209)94:0.2325004742)100:0.5101183576);
 
 CONSENSUS TREE
 --------------
 
 Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -44087.901993
-Robinson-Foulds distance between ML tree and consensus tree: 22
+Log-likelihood of consensus tree: -26456.867173
+Robinson-Foulds distance between ML tree and consensus tree: 2
 
 Branches with support >0.000000% are kept (extended consensus)
 Branch lengths are optimized by maximum likelihood on original alignment
 Numbers in parentheses are bootstrap supports (%)
 
-+--Phoenix_dactylifera_XP_008797589.1
++----Phoenix_dactylifera_XP_008797589.1
 |
-|           +---Physcomitrella_patens_XP_001771872.1
-|        +--| (100)
-|        |  +--Selaginella_moellendorffii_XP_002980522.1
-|     +--| (100)
-|     |  +--Physcomitrella_patens_XP_001778485.1
-|  +--| (100)
-|  |  |                                                        +--Moniliophthora_roreri_MCA_2997_XP_007852718.1
-|  |  |                                                     +--| (92)
-|  |  |                                                     |  +---Pleurotus_ostreatus_PC15_KDQ28116.1
-|  |  |                                                  +--| (63)
-|  |  |                                                  |  |           +----Coprinopsis_cinerea_okayama7_130_XP_001829670.2
-|  |  |                                                  |  |        +--| (62)
-|  |  |                                                  |  |        |  +--Termitomyces_sp._J132_KNZ80766.1
-|  |  |                                                  |  |     +--| (22)
-|  |  |                                                  |  |     |  |  +--Fomitopsis_pinicola_FP-58527_SS1_EPS97807.1
-|  |  |                                                  |  |     |  +--| (97)
-|  |  |                                                  |  |     |     |  +--Trametes_cinnabarina_CDO73617.1
-|  |  |                                                  |  |     |     +--| (99)
-|  |  |                                                  |  |     |        +---Postia_placenta_Mad-698-R_XP_002474312.1
-|  |  |                                                  |  |  +--| (26)
-|  |  |                                                  |  |  |  |     +---Sphaerobolus_stellatus_SS14_KIJ38034.1
-|  |  |                                                  |  |  |  |  +--| (85)
-|  |  |                                                  |  |  |  |  |  +-----Gymnopus_luxurians_FD-317_M1_KIK62275.1
-|  |  |                                                  |  |  |  +--| (41)
-|  |  |                                                  |  |  |     +--Hypholoma_sublateritium_FD-334_SS-4_KJA19195.1
-|  |  |                                                  |  +--| (57)
-|  |  |                                                  |     |           +--Hydnomerulius_pinastri_MD-312_KIJ66638.1
-|  |  |                                                  |     |        +--| (97)
-|  |  |                                                  |     |        |  +--Serpula_lacrymans_var._lacrymans_S7.9_XP_007324173.1
-|  |  |                                                  |     |     +--| (89)
-|  |  |                                                  |     |     |  +----Coniophora_puteana_RWD-64-598_SS2_XP_007763780.1
-|  |  |                                                  |     |  +--| (48)
-|  |  |                                                  |     |  |  +----Phlebiopsis_gigantea_11061_1_CR5-6_KIP04326.1
-|  |  |                                                  |     +--| (56)
-|  |  |                                                  |        +---Agaricus_bisporus_var._bisporus_H97_XP_006453768.1
-|  |  |                                               +--| (61)
-|  |  |                                               |  |  +---Stereum_hirsutum_FP-91666_SS1_XP_007307364.1
-|  |  |                                               |  +--| (100)
-|  |  |                                               |     +--Stereum_hirsutum_FP-91666_SS1_XP_007307367.1
-|  |  |                                            +--| (50)
-|  |  |                                            |  +---Schizopora_paradoxa_KLO15810.1
-|  |  |                                         +--| (51)
-|  |  |                                         |  |     +-----Botryobasidium_botryosum_FD-172_SS1_KDQ18161.1
-|  |  |                                         |  |  +--| (90)
-|  |  |                                         |  |  |  |  +--Botryobasidium_botryosum_FD-172_SS1_KDQ20347.1
-|  |  |                                         |  |  |  +--| (100)
-|  |  |                                         |  |  |     +---Botryobasidium_botryosum_FD-172_SS1_KDQ20346.1
-|  |  |                                         |  +--| (51)
-|  |  |                                         |     +---Fomitiporia_mediterranea_MF3_22_XP_007270910.1
-|  |  |                                      +--| (77)
-|  |  |                                      |  |      +--Serendipita_vermifera_MAFF_305830_KIM32199.1
-|  |  |                                      |  |  +---| (100)
-|  |  |                                      |  |  |   +----Serendipita_vermifera_MAFF_305830_KIM32209.1
-|  |  |                                      |  +--| (50)
-|  |  |                                      |     +----Auricularia_delicata_TFB-10046_SS5_XP_007347371.1
-|  |  |                                   +--| (80)
-|  |  |                                   |  +------Dacryopinax_sp._DJM-731_SS1_EJU02529.1
-|  |  |                               +---| (100)
-|  |  |                               |   |                        +--Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1
-|  |  |                               |   |                     +--| (91)
-|  |  |                               |   |                     |  +---Pestalotiopsis_fici_W106-1_XP_007833658.1
-|  |  |                               |   |                  +--| (83)
-|  |  |                               |   |                  |  +--Pseudogymnoascus_pannorum_VKM_F-4514_FW-929_KFY42269.1
-|  |  |                               |   |               +--| (82)
-|  |  |                               |   |               |  |  +--Trichoderma_reesei_RUT_C-30_ETR98144.1
-|  |  |                               |   |               |  +--| (88)
-|  |  |                               |   |               |     +---Claviceps_purpurea_20.1_CCE28913.1
-|  |  |                               |   |            +--| (78)
-|  |  |                               |   |            |  +----Sporothrix_brasiliensis_5110_KIH86775.1
-|  |  |                               |   |         +--| (91)
-|  |  |                               |   |         |  |     +---Penicillium_brasilianum_CEO60622.1
-|  |  |                               |   |         |  |  +--| (88)
-|  |  |                               |   |         |  |  |  +------Aspergillus_nidulans_FGSC_A4_XP_660198.1
-|  |  |                               |   |         |  +--| (88)
-|  |  |                               |   |         |     +--Aspergillus_rambellii_KKK20264.1
-|  |  |                               |   |      +--| (66)
-|  |  |                               |   |      |  +---------Acremonium_chrysogenum_ATCC_11550_KFH44302.1
-|  |  |                               |   |  +---| (100)
-|  |  |                               |   |  |   +--------Fusarium_verticillioides_7600_EWG54690.1
-|  |  |                               |   +--| (98)
-|  |  |                               |      |                   +--Melampsora_larici-populina_98AG31_XP_007416443.1
-|  |  |                               |      |     +-------------| (100)
-|  |  |                               |      |     |             +--Melampsora_larici-populina_98AG31_XP_007414227.1
-|  |  |                               |      |  +--| (91)
-|  |  |                               |      |  |  +----Mixia_osmundae_IAM_14324_GAA99433.1
-|  |  |                               |      +--| (99)
-|  |  |                               |         |  +----Rhodotorula_glutinis_ATCC_204091_EGU12287.1
-|  |  |                               |         +--| (99)
-|  |  |                               |            +-----Microbotryum_violaceum_p1A1_Lamole_KDE02986.1
-|  |  |                            +--| (93)
-|  |  |                            |  |                          +--Octodon_degus_XP_012371697.1
-|  |  |                            |  |                       +--| (77)
-|  |  |                            |  |                       |  |        +--Microcebus_murinus_XP_012638413.1
-|  |  |                            |  |                       |  |     +--| (91)
-|  |  |                            |  |                       |  |     |  |  +--Fukomys_damarensis_KFO22174.1
-|  |  |                            |  |                       |  |     |  +--| (96)
-|  |  |                            |  |                       |  |     |     +--Eptesicus_fuscus_XP_008152869.1
-|  |  |                            |  |                       |  |  +--| (78)
-|  |  |                            |  |                       |  |  |  +---Gorilla_gorilla_gorilla_XP_004048366.1
-|  |  |                            |  |                       |  +--| (67)
-|  |  |                            |  |                       |     +--Hsap_SELENOU.2.pseudo
-|  |  |                            |  |                    +--| (100)
-|  |  |                            |  |                    |  |  +--Hsap_SELENOU.4.cysteine
-|  |  |                            |  |                    |  +--| (74)
-|  |  |                            |  |                    |     +--Mmus_SELENOU.3.cysteine
-|  |  |                            |  |                 +--| (89)
-|  |  |                            |  |                 |  |  +--Chrysemys_picta_bellii_XP_005304329.1
-|  |  |                            |  |                 |  +--| (96)
-|  |  |                            |  |                 |     +--Thamnophis_sirtalis_XP_013907125.1
-|  |  |                            |  |              +--| (94)
-|  |  |                            |  |              |  +--Pseudopodoces_humilis_XP_005522793.2
-|  |  |                            |  |           +--| (67)
-|  |  |                            |  |           |  |     +--Salmo_salar_ACI70082.1
-|  |  |                            |  |           |  |  +--| (100)
-|  |  |                            |  |           |  |  |  +--Drer_SELENOU.3.cysteine
-|  |  |                            |  |           |  +--| (95)
-|  |  |                            |  |           |     |  +--Latimeria_chalumnae_XP_006001942.1
-|  |  |                            |  |           |     +--| (99)
-|  |  |                            |  |           |        +---Callorhinchus_milii_XP_007898231.1
-|  |  |                            |  |        +--| (100)
-|  |  |                            |  |        |  +--Xenopus_laevis_NP_001092155.1
-|  |  |                            |  |     +--| (98)
-|  |  |                            |  |     |  |                 +--Ciona_intestinalis_XP_002132136.1
-|  |  |                            |  |     |  |              +--| (100)
-|  |  |                            |  |     |  |              |  +--Crob_SELENOU.2.aspartic_acid
-|  |  |                            |  |     |  |           +--| (100)
-|  |  |                            |  |     |  |           |  +--Cint_SELENOU.3.aspartic_acid
-|  |  |                            |  |     |  |        +--| (100)
-|  |  |                            |  |     |  |        |  +--Csav_SELENOU.3.aspartic_acid
-|  |  |                            |  |     |  |     +--| (98)
-|  |  |                            |  |     |  |     |  +--Pmam_SELENOU.2.aspartic_acid
-|  |  |                            |  |     |  +-----| (100)
-|  |  |                            |  |     |        |     +---Bsch_SELENOU.1.aspartic_acid
-|  |  |                            |  |     |        |  +--| (100)
-|  |  |                            |  |     |        |  |  +--Scla_SELENOU.1.aspartic_acid
-|  |  |                            |  |     |        +--| (99)
-|  |  |                            |  |     |           +---Hror_SELENOU.1.aspartic_acid
-|  |  |                            |  |  +--| (98)
-|  |  |                            |  |  |  |        +--Aplysia_californica_XP_005102404.1
-|  |  |                            |  |  |  |     +--| (100)
-|  |  |                            |  |  |  |     |  +---Biomphalaria_glabrata_XP_013095424.1
-|  |  |                            |  |  |  |  +--| (90)
-|  |  |                            |  |  |  |  |  +--Crassostrea_gigas_XP_011445053.1
-|  |  |                            |  |  |  +--| (100)
-|  |  |                            |  |  |     |  +--Lingula_anatina_XP_013413222.1
-|  |  |                            |  |  |     +--| (97)
-|  |  |                            |  |  |        +------Capitella_teleta_ELT93208.1
-|  |  |                            |  +--| (98)
-|  |  |                            |     +------Trichoplax_adhaerens_XP_002114328.1
-|  |  |                         +--| (91)
-|  |  |                         |  +----------Tetrahymena_thermophila_SB210_XP_012653811.1
-|  |  |                 +-------| (100)
-|  |  |                 |       +----------------Fbor_SELENOU.1.selenocysteine
-|  |  |           +-----| (100)
-|  |  |           |     |                   +-----ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000
-|  |  |           |     |                +--| (99)
-|  |  |           |     |                |  |  +--ENST00000419916.Homo_sapiens.PRXL2B_ENST00000419916.Homo_sap
-|  |  |           |     |                |  +--| (100)
-|  |  |           |     |                |     +--Hsap_SELENOU.17.cysteine
-|  |  |           |     |             +--| (100)
-|  |  |           |     |             |  +--Mmus_SELENOU.12.cysteine
-|  |  |           |     |          +--| (100)
-|  |  |           |     |          |  |  +--ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691
-|  |  |           |     |          |  +--| (100)
-|  |  |           |     |          |     |  +--ENSDART00000147264.Danio_rerio.PRXL2B_ENSDART00000147264.Dan
-|  |  |           |     |          |     +--| (99)
-|  |  |           |     |          |        +--Drer_SELENOU.16.cysteine
-|  |  |           |     |       +--| (98)
-|  |  |           |     |       |  |  +--Bflo_SELENOU.6.cysteine
-|  |  |           |     |       |  +--| (100)
-|  |  |           |     |       |     +--Blan_SELENOU.6.cysteine
-|  |  |           |     |    +--| (88)
-|  |  |           |     |    |  |        +--Bsch_SELENOU.4.cysteine
-|  |  |           |     |    |  |     +--| (99)
-|  |  |           |     |    |  |     |  +--Scla_SELENOU.6.cysteine
-|  |  |           |     |    |  |  +--| (100)
-|  |  |           |     |    |  |  |  +--Hror_SELENOU.5.cysteine
-|  |  |           |     |    |  +--| (88)
-|  |  |           |     |    |     |           +--Cint_SELENOU.5.cysteine
-|  |  |           |     |    |     |        +--| (100)
-|  |  |           |     |    |     |        |  +--Crob_SELENOU.5.cysteine
-|  |  |           |     |    |     |     +--| (100)
-|  |  |           |     |    |     |     |  |  +--Csav_SELENOU.5.cysteine
-|  |  |           |     |    |     |     |  +--| (100)
-|  |  |           |     |    |     |     |     +--Csav_SELENOU.9.uga_containing
-|  |  |           |     |    |     |  +--| (99)
-|  |  |           |     |    |     |  |  |  +--Pmam_SELENOU.7.cysteine
-|  |  |           |     |    |     |  |  +--| (100)
-|  |  |           |     |    |     |  |     +--Pmam_SELENOU.10.cysteine
-|  |  |           |     |    |     +--| (91)
-|  |  |           |     |    |        |     +--Pege_SELENOU.2.cysteine
-|  |  |           |     |    |        |  +--| (99)
-|  |  |           |     |    |        |  |  +--Tdem_SELENOU.7.unaligned
-|  |  |           |     |    |        +--| (89)
-|  |  |           |     |    |           |        +----Stho_SELENOU.1.cysteine
-|  |  |           |     |    |           |     +--| (100)
-|  |  |           |     |    |           |     |  +--Stho_SELENOU.3.cysteine
-|  |  |           |     |    |           |  +--| (87)
-|  |  |           |     |    |           |  |  |               +--Fbor_SELENOU.2.cysteine
-|  |  |           |     |    |           |  |  +---------------| (100)
-|  |  |           |     |    |           |  |                  |  +--Fbor_SELENOU.3.cysteine
-|  |  |           |     |    |           |  |                  +--| (96)
-|  |  |           |     |    |           |  |                     +--Fbor_SELENOU.4.cysteine
-|  |  |           |     |    |           +--| (89)
-|  |  |           |     |    |              |  +--Tdem_SELENOU.5.cysteine
-|  |  |           |     |    |              +--| (100)
-|  |  |           |     |    |                 +--Tdem_SELENOU.8.cysteine
-|  |  |           |     +----| (99)
-|  |  |           |          |          +--OKI_SELENOU.2.cysteine
-|  |  |           |          |     +----| (100)
-|  |  |           |          |     |    |  +--OSKA_SELENOU.4.cysteine
-|  |  |           |          |     |    +--| (100)
-|  |  |           |          |     |       +--OdB3_SELENOU.5.cysteine
-|  |  |           |          |  +--| (100)
-|  |  |           |          |  |  +--Oalb_SELENOU.1.cysteine
-|  |  |           |          +--| (100)
-|  |  |           |             +---Olon_SELENOU.4.cysteine
-|  |  |        +--| (94)
-|  |  |        |  |                    +-----Larimichthys_crocea_XP_010744074.1
-|  |  |        |  |                 +--| (99)
-|  |  |        |  |                 |  |     +--Tupaia_chinensis_XP_006163791.1
-|  |  |        |  |                 |  |  +--| (100)
-|  |  |        |  |                 |  |  |  |        +-----Leptonychotes_weddellii_XP_006745675.1
-|  |  |        |  |                 |  |  |  |     +--| (87)
-|  |  |        |  |                 |  |  |  |     |  +--Hsap_SELENOU.12.cysteine
-|  |  |        |  |                 |  |  |  |  +--| (98)
-|  |  |        |  |                 |  |  |  |  |  |  +--Hsap_SELENOU.8.pseudo
-|  |  |        |  |                 |  |  |  |  |  +--| (92)
-|  |  |        |  |                 |  |  |  |  |     +---Hsap_SELENOU.9.pseudo
-|  |  |        |  |                 |  |  |  +--| (99)
-|  |  |        |  |                 |  |  |     +--Mmus_SELENOU.8.cysteine
-|  |  |        |  |                 |  +--| (91)
-|  |  |        |  |                 |     |           +---Esox_lucius_XP_010863834.1
-|  |  |        |  |                 |     |        +--| (51)
-|  |  |        |  |                 |     |        |  +--Drer_SELENOU.10.selenocysteine
-|  |  |        |  |                 |     |     +--| (60)
-|  |  |        |  |                 |     |     |  |  +--Cynoglossus_semilaevis_XP_008319954.1
-|  |  |        |  |                 |     |     |  +--| (45)
-|  |  |        |  |                 |     |     |     |  +--Drer_SELENOU.5.selenocysteine
-|  |  |        |  |                 |     |     |     +--| (66)
-|  |  |        |  |                 |     |     |        +---Drer_SELENOU.7.uga_containing
-|  |  |        |  |                 |     |  +--| (55)
-|  |  |        |  |                 |     |  |  +---Latimeria_chalumnae_XP_006012284.1
-|  |  |        |  |                 |     +--| (90)
-|  |  |        |  |                 |        |  +----Notothenia_coriiceps_XP_010775501.1
-|  |  |        |  |                 |        +--| (54)
-|  |  |        |  |                 |           +--Callorhinchus_milii_XP_007902813.1
-|  |  |        |  |              +--| (99)
-|  |  |        |  |              |  |  +--Aplysia_californica_XP_012937723.1
-|  |  |        |  |              |  +--| (99)
-|  |  |        |  |              |     |    +--Bflo_SELENOU.2.selenocysteine
-|  |  |        |  |              |     +----| (100)
-|  |  |        |  |              |          +--Blan_SELENOU.2.selenocysteine
-|  |  |        |  |           +--| (100)
-|  |  |        |  |           |  +----Saccoglossus_kowalevskii_XP_006811580.1
-|  |  |        |  |        +--| (95)
-|  |  |        |  |        |  +------Lepeophtheirus_salmonis_ACO12061.1
-|  |  |        |  |     +--| (97)
-|  |  |        |  |     |  +---Helobdella_robusta_XP_009011667.1
-|  |  |        |  |  +--| (100)
-|  |  |        |  |  |  |         +--Caenorhabditis_brenneri_EGT34998.1
-|  |  |        |  |  |  |      +--| (100)
-|  |  |        |  |  |  |      |  +--Necator_americanus_XP_013296382.1
-|  |  |        |  |  |  |   +--| (100)
-|  |  |        |  |  |  |   |  +---Pristionchus_pacificus_KKA70176.1
-|  |  |        |  |  |  +---| (100)
-|  |  |        |  |  |      +----Strongyloides_ratti_CEF62614.1
-|  |  |        |  +--| (84)
-|  |  |        |     |  +-------Nannochloropsis_gaditana_EWM26651.1
-|  |  |        |     +--| (97)
-|  |  |        |        +----Ectocarpus_siliculosus_CBJ25594.1
-|  |  |     +--| (91)
-|  |  |     |  |          +--Allomyces_macrogynus_ATCC_38327_KNE60458.1
-|  |  |     |  |     +----| (100)
-|  |  |     |  |     |    +-----Allomyces_macrogynus_ATCC_38327_KNE67104.1
-|  |  |     |  |  +--| (99)
-|  |  |     |  |  |  |   +--Mortierella_verticillata_NRRL_6337_KFH65303.1
-|  |  |     |  |  |  +---| (100)
-|  |  |     |  |  |      +----Mortierella_verticillata_NRRL_6337_KFH62547.1
-|  |  |     |  +--| (99)
-|  |  |     |     +------Spizellomyces_punctatus_DAOM_BR117_KNC98930.1
-|  |  +-----| (100)
-|  |        |  +-----Ostreococcus_tauri_XP_003081130.1
-|  |        +--| (89)
-|  |           +-----------Volvox_carteri_f._nagariensis_XP_002945792.1
-+--| (56)
-|  +--Amborella_trichopoda_ERN05797.1
+|  +-----Physcomitrella_patens_XP_001771872.1
++--| (100)
+|  +--Physcomitrella_patens_XP_001778485.1
 |
-+--Solanum_tuberosum_XP_006348785.1
+|                                        +---------Moniliophthora_roreri_MCA_2997_XP_007852718.1
+|                                 +------| (100)
+|                                 |      |        +----Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1
+|                                 |      +--------| (100)
+|                                 |               +--Pestalotiopsis_fici_W106-1_XP_007833658.1
+|                              +--| (81)
+|                              |  |                        +--Octodon_degus_XP_012371697.1
+|                              |  |                     +--| (92)
+|                              |  |                     |  +--Hsap_SELENOU.2.pseudo
+|                              |  |                 +---| (100)
+|                              |  |                 |   |  +--Hsap_SELENOU.4.cysteine
+|                              |  |                 |   +--| (52)
+|                              |  |                 |      +---Mmus_SELENOU.3.cysteine
+|                              |  |              +--| (84)
+|                              |  |              |  |  +--Pseudopodoces_humilis_XP_005522793.2
+|                              |  |              |  +--| (78)
+|                              |  |              |     |  +----Chrysemys_picta_bellii_XP_005304329.1
+|                              |  |              |     +--| (91)
+|                              |  |              |        +--Thamnophis_sirtalis_XP_013907125.1
+|                              |  |           +--| (83)
+|                              |  |           |  |     +--Latimeria_chalumnae_XP_006001942.1
+|                              |  |           |  |  +--| (99)
+|                              |  |           |  |  |  +----Callorhinchus_milii_XP_007898231.1
+|                              |  |           |  +--| (95)
+|                              |  |           |     +----Drer_SELENOU.3.cysteine
+|                              |  |        +--| (99)
+|                              |  |        |  +--Xenopus_laevis_NP_001092155.1
+|                              |  |     +--| (56)
+|                              |  |     |  |                    +--Ciona_intestinalis_XP_002132136.1
+|                              |  |     |  |                 +--| (100)
+|                              |  |     |  |                 |  +--Crob_SELENOU.2.aspartic_acid
+|                              |  |     |  |              +--| (100)
+|                              |  |     |  |              |  +--Cint_SELENOU.3.aspartic_acid
+|                              |  |     |  |           +--| (100)
+|                              |  |     |  |           |  +--Csav_SELENOU.3.aspartic_acid
+|                              |  |     |  |        +--| (98)
+|                              |  |     |  |        |  +--Pmam_SELENOU.2.aspartic_acid
+|                              |  |     |  +--------| (100)
+|                              |  |     |           |     +----Bsch_SELENOU.1.aspartic_acid
+|                              |  |     |           |  +--| (100)
+|                              |  |     |           |  |  +--Scla_SELENOU.1.aspartic_acid
+|                              |  |     |           +--| (95)
+|                              |  |     |              +----Hror_SELENOU.1.aspartic_acid
+|                              |  |  +--| (80)
+|                              |  |  |  |     +----Aplysia_californica_XP_005102404.1
+|                              |  |  |  |  +--| (76)
+|                              |  |  |  |  |  +---Crassostrea_gigas_XP_011445053.1
+|                              |  |  |  +--| (100)
+|                              |  |  |     |  +--Lingula_anatina_XP_013413222.1
+|                              |  |  |     +--| (97)
+|                              |  |  |        +-------Capitella_teleta_ELT93208.1
+|                              |  +--| (95)
+|                              |     +-------Trichoplax_adhaerens_XP_002114328.1
+|                           +--| (91)
+|                           |  +-------------Tetrahymena_thermophila_SB210_XP_012653811.1
+|                +----------| (100)
+|                |          +---------------------Fbor_SELENOU.1.selenocysteine
+|        +-------| (100)
+|        |       |                      +-------ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000
+|        |       |                   +--| (65)
+|        |       |                   |  +--Hsap_SELENOU.17.cysteine
+|        |       |              +----| (100)
+|        |       |              |    +--Mmus_SELENOU.12.cysteine
+|        |       |           +--| (97)
+|        |       |           |  |  +--ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691
+|        |       |           |  +--| (100)
+|        |       |           |     +--Drer_SELENOU.16.cysteine
+|        |       |        +--| (94)
+|        |       |        |  |   +--Bflo_SELENOU.6.cysteine
+|        |       |        |  +---| (100)
+|        |       |        |      +--Blan_SELENOU.6.cysteine
+|        |       |     +--| (58)
+|        |       |     |  |        +---Bsch_SELENOU.4.cysteine
+|        |       |     |  |     +--| (96)
+|        |       |     |  |     |  +--Scla_SELENOU.6.cysteine
+|        |       |     |  |  +--| (100)
+|        |       |     |  |  |  +--Hror_SELENOU.5.cysteine
+|        |       |     |  +--| (63)
+|        |       |     |     |           +--Cint_SELENOU.5.cysteine
+|        |       |     |     |        +--| (100)
+|        |       |     |     |        |  +--Crob_SELENOU.5.cysteine
+|        |       |     |     |     +--| (98)
+|        |       |     |     |     |  |  +---Csav_SELENOU.5.cysteine
+|        |       |     |     |     |  +--| (98)
+|        |       |     |     |     |     +--Csav_SELENOU.9.uga_containing
+|        |       |     |     |  +--| (100)
+|        |       |     |     |  |  |   +--Pmam_SELENOU.7.cysteine
+|        |       |     |     |  |  +---| (100)
+|        |       |     |     |  |      +--Pmam_SELENOU.10.cysteine
+|        |       |     |     +--| (64)
+|        |       |     |        |     +--Pege_SELENOU.2.cysteine
+|        |       |     |        |  +--| (98)
+|        |       |     |        |  |  +----Tdem_SELENOU.7.unaligned
+|        |       |     |        +--| (56)
+|        |       |     |           |        +-----Stho_SELENOU.1.cysteine
+|        |       |     |           |     +--| (100)
+|        |       |     |           |     |  +--Stho_SELENOU.3.cysteine
+|        |       |     |           |  +--| (51)
+|        |       |     |           |  |  |                   +--Fbor_SELENOU.2.cysteine
+|        |       |     |           |  |  +-------------------| (100)
+|        |       |     |           |  |                      |  +--Fbor_SELENOU.3.cysteine
+|        |       |     |           |  |                      +--| (87)
+|        |       |     |           |  |                         +--Fbor_SELENOU.4.cysteine
+|        |       |     |           +--| (56)
+|        |       |     |              |  +--Tdem_SELENOU.5.cysteine
+|        |       |     |              +--| (100)
+|        |       |     |                 +---Tdem_SELENOU.8.cysteine
+|        |       +-----| (96)
+|        |             |             +--OKI_SELENOU.2.cysteine
+|        |             |       +-----| (100)
+|        |             |       |     |  +--OSKA_SELENOU.4.cysteine
+|        |             |       |     +--| (100)
+|        |             |       |        +--OdB3_SELENOU.5.cysteine
+|        |             |    +--| (99)
+|        |             |    |  +--Oalb_SELENOU.1.cysteine
+|        |             +----| (100)
+|        |                  +----Olon_SELENOU.4.cysteine
+|     +--| (97)
+|     |  |                    +-------Larimichthys_crocea_XP_010744074.1
+|     |  |                 +--| (98)
+|     |  |                 |  |     +--Tupaia_chinensis_XP_006163791.1
+|     |  |                 |  |  +--| (100)
+|     |  |                 |  |  |  |        +--Hsap_SELENOU.8.pseudo
+|     |  |                 |  |  |  |     +--| (96)
+|     |  |                 |  |  |  |     |  +----Hsap_SELENOU.9.pseudo
+|     |  |                 |  |  |  |  +--| (100)
+|     |  |                 |  |  |  |  |  +--Hsap_SELENOU.12.cysteine
+|     |  |                 |  |  |  +--| (100)
+|     |  |                 |  |  |     +--Mmus_SELENOU.8.cysteine
+|     |  |                 |  +--| (88)
+|     |  |                 |     |           +----Esox_lucius_XP_010863834.1
+|     |  |                 |     |        +--| (58)
+|     |  |                 |     |        |  |  +---Drer_SELENOU.5.selenocysteine
+|     |  |                 |     |        |  +--| (92)
+|     |  |                 |     |        |     +---Drer_SELENOU.7.uga_containing
+|     |  |                 |     |     +--| (87)
+|     |  |                 |     |     |  +--Drer_SELENOU.10.selenocysteine
+|     |  |                 |     |  +--| (84)
+|     |  |                 |     |  |  +----Latimeria_chalumnae_XP_006012284.1
+|     |  |                 |     +--| (84)
+|     |  |                 |        +----Callorhinchus_milii_XP_007902813.1
+|     |  |              +--| (97)
+|     |  |              |  |  +----Aplysia_californica_XP_012937723.1
+|     |  |              |  +--| (97)
+|     |  |              |     |      +--Bflo_SELENOU.2.selenocysteine
+|     |  |              |     +------| (100)
+|     |  |              |            +--Blan_SELENOU.2.selenocysteine
+|     |  |           +--| (96)
+|     |  |           |  +-----Saccoglossus_kowalevskii_XP_006811580.1
+|     |  |        +--| (88)
+|     |  |        |  +--------Lepeophtheirus_salmonis_ACO12061.1
+|     |  |     +--| (82)
+|     |  |     |  |          +---Caenorhabditis_brenneri_EGT34998.1
+|     |  |     |  |     +----| (100)
+|     |  |     |  |     |    +--Necator_americanus_XP_013296382.1
+|     |  |     |  +-----| (100)
+|     |  |     |        +------Strongyloides_ratti_CEF62614.1
+|     |  |  +--| (100)
+|     |  |  |  +----Helobdella_robusta_XP_009011667.1
+|     |  +--| (97)
+|     |     |  +-----------Nannochloropsis_gaditana_EWM26651.1
+|     |     +--| (54)
+|     |        +------Ectocarpus_siliculosus_CBJ25594.1
++-----| (100)
+      |  +------Ostreococcus_tauri_XP_003081130.1
+      +--| (94)
+         +----------------Volvox_carteri_f._nagariensis_XP_002945792.1
 
 
 Consensus tree in newick format: 
 
-(Phoenix_dactylifera_XP_008797589.1:0.1477930275,((((Physcomitrella_patens_XP_001771872.1:0.4285237870,Selaginella_moellendorffii_XP_002980522.1:0.3061927774)100:0.0725045890,Physcomitrella_patens_XP_001778485.1:0.2577112090)100:0.1353536196,(((((((((((((((Moniliophthora_roreri_MCA_2997_XP_007852718.1:0.3830312380,Pleurotus_ostreatus_PC15_KDQ28116.1:0.4265818444)92:0.1426668652,((((Coprinopsis_cinerea_okayama7_130_XP_001829670.2:0.4849259914,Termitomyces_sp._J132_KNZ80766.1:0.3631612254)62:0.0689769039,(Fomitopsis_pinicola_FP-58527_SS1_EPS97807.1:0.3518045460,(Trametes_cinnabarina_CDO73617.1:0.2522369178,Postia_placenta_Mad-698-R_XP_002474312.1:0.4651467360)99:0.1993853323)97:0.1456335973)22:0.0314795727,((Sphaerobolus_stellatus_SS14_KIJ38034.1:0.4183113823,Gymnopus_luxurians_FD-317_M1_KIK62275.1:0.6305678396)85:0.1047282271,Hypholoma_sublateritium_FD-334_SS-4_KJA19195.1:0.3378338275)41:0.0674141628)26:0.0374455237,((((Hydnomerulius_pinastri_MD-312_KIJ66638.1:0.2920345345,Serpula_lacrymans_var._lacrymans_S7.9_XP_007324173.1:0.2882605694)97:0.0832917556,Coniophora_puteana_RWD-64-598_SS2_XP_007763780.1:0.4817861854)89:0.0432964330,Phlebiopsis_gigantea_11061_1_CR5-6_KIP04326.1:0.5068710702)48:0.0409028190,Agaricus_bisporus_var._bisporus_H97_XP_006453768.1:0.4682274703)56:0.0629177183)57:0.0643875974)63:0.0508943380,(Stereum_hirsutum_FP-91666_SS1_XP_007307364.1:0.4770904693,Stereum_hirsutum_FP-91666_SS1_XP_007307367.1:0.2817771609)100:0.1576741507)61:0.0617599522,Schizopora_paradoxa_KLO15810.1:0.4779126380)50:0.0472447681,((Botryobasidium_botryosum_FD-172_SS1_KDQ18161.1:0.6574637217,(Botryobasidium_botryosum_FD-172_SS1_KDQ20347.1:0.2623969071,Botryobasidium_botryosum_FD-172_SS1_KDQ20346.1:0.4700226251)100:0.1922079797)90:0.1172164705,Fomitiporia_mediterranea_MF3_22_XP_007270910.1:0.4790745558)51:0.0775612817)51:0.0512969776,((Serendipita_vermifera_MAFF_305830_KIM32199.1:0.1345158544,Serendipita_vermifera_MAFF_305830_KIM32209.1:0.5641431507)100:0.4733131978,Auricularia_delicata_TFB-10046_SS5_XP_007347371.1:0.5655385935)50:0.0773247394)77:0.1406173050,Dacryopinax_sp._DJM-731_SS1_EJU02529.1:0.7530218448)80:0.0962511625,((((((((Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1:0.2090121338,Pestalotiopsis_fici_W106-1_XP_007833658.1:0.4275070313)91:0.0640392030,Pseudogymnoascus_pannorum_VKM_F-4514_FW-929_KFY42269.1:0.3189965859)83:0.0459633736,(Trichoderma_reesei_RUT_C-30_ETR98144.1:0.2309850244,Claviceps_purpurea_20.1_CCE28913.1:0.4383840151)88:0.0961785606)82:0.0368294238,Sporothrix_brasiliensis_5110_KIH86775.1:0.5387595543)78:0.0869705347,((Penicillium_brasilianum_CEO60622.1:0.4181817765,Aspergillus_nidulans_FGSC_A4_XP_660198.1:0.6791195215)88:0.1211709832,Aspergillus_rambellii_KKK20264.1:0.3700441933)88:0.0964955115)91:0.1418363165,Acremonium_chrysogenum_ATCC_11550_KFH44302.1:1.0074188484)66:0.0600941844,Fusarium_verticillioides_7600_EWG54690.1:0.8697069176)100:0.3911412668,(((Melampsora_larici-populina_98AG31_XP_007416443.1:0.1383814935,Melampsora_larici-populina_98AG31_XP_007414227.1:0.2910311311)100:1.4140074597,Mixia_osmundae_IAM_14324_GAA99433.1:0.4831351131)91:0.1528159803,(Rhodotorula_glutinis_ATCC_204091_EGU12287.1:0.5369169839,Microbotryum_violaceum_p1A1_Lamole_KDE02986.1:0.6478667866)99:0.2296688730)99:0.2656798216)98:0.1568538272)100:0.4736976380,(((((((((Octodon_degus_XP_012371697.1:0.1718179790,(((Microcebus_murinus_XP_012638413.1:0.1289571627,(Fukomys_damarensis_KFO22174.1:0.3508238361,Eptesicus_fuscus_XP_008152869.1:0.3167332396)96:0.0605679992)91:0.0648648563,Gorilla_gorilla_gorilla_XP_004048366.1:0.4237153783)78:0.0922956469,Hsap_SELENOU.2.pseudo:0.1944044668)67:0.0022170176)77:0.0192117351,(Hsap_SELENOU.4.cysteine:0.0076716971,Mmus_SELENOU.3.cysteine:0.2802900094)74:0.0010256707)100:0.2948435460,(Chrysemys_picta_bellii_XP_005304329.1:0.3740362625,Thamnophis_sirtalis_XP_013907125.1:0.2474716148)96:0.0825643154)89:0.0515480906,Pseudopodoces_humilis_XP_005522793.2:0.2239338331)94:0.0869237291,((Salmo_salar_ACI70082.1:0.2899771973,Drer_SELENOU.3.cysteine:0.2862413673)100:0.1848912493,(Latimeria_chalumnae_XP_006001942.1:0.1383671803,Callorhinchus_milii_XP_007898231.1:0.4405068386)99:0.0475477118)95:0.0883525388)67:0.0412168239,Xenopus_laevis_NP_001092155.1:0.2950808243)100:0.2476416377,(((((Ciona_intestinalis_XP_002132136.1:0.0000026836,Crob_SELENOU.2.aspartic_acid:0.0000026836)100:0.0203784282,Cint_SELENOU.3.aspartic_acid:0.0283640851)100:0.1342676364,Csav_SELENOU.3.aspartic_acid:0.1452947186)100:0.2127119602,Pmam_SELENOU.2.aspartic_acid:0.2545147636)98:0.1005922239,((Bsch_SELENOU.1.aspartic_acid:0.4078536540,Scla_SELENOU.1.aspartic_acid:0.2250827199)100:0.1812145153,Hror_SELENOU.1.aspartic_acid:0.4052472603)99:0.1501959271)100:0.6567357057)98:0.1376148308,(((Aplysia_californica_XP_005102404.1:0.1339116189,Biomphalaria_glabrata_XP_013095424.1:0.4222050316)100:0.2752951184,Crassostrea_gigas_XP_011445053.1:0.3604969464)90:0.1044122570,(Lingula_anatina_XP_013413222.1:0.2928197543,Capitella_teleta_ELT93208.1:0.6940413846)97:0.1515248152)100:0.1876630226)98:0.1766766946,Trichoplax_adhaerens_XP_002114328.1:0.7004885974)98:0.1349152043)93:0.2810441991,Tetrahymena_thermophila_SB210_XP_012653811.1:1.1161971424)91:0.2158081534,Fbor_SELENOU.1.selenocysteine:1.6948267362)100:0.7792078309,((((((ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000:0.5818879253,(ENST00000419916.Homo_sapiens.PRXL2B_ENST00000419916.Homo_sap:0.0000026836,Hsap_SELENOU.17.cysteine:0.0154539346)100:0.0579912737)99:0.0276246014,Mmus_SELENOU.12.cysteine:0.0794354201)100:0.3623230060,(ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691:0.1096382584,(ENSDART00000147264.Danio_rerio.PRXL2B_ENSDART00000147264.Dan:0.0000027749,Drer_SELENOU.16.cysteine:0.0277883120)99:0.0378118903)100:0.2338259694)100:0.1494003068,(Bflo_SELENOU.6.cysteine:0.0074637627,Blan_SELENOU.6.cysteine:0.1060762126)100:0.3637368117)98:0.1402165328,(((Bsch_SELENOU.4.cysteine:0.3236879055,Scla_SELENOU.6.cysteine:0.2809214630)99:0.1031678521,Hror_SELENOU.5.cysteine:0.2801098252)100:0.2501814686,((((Cint_SELENOU.5.cysteine:0.0415400237,Crob_SELENOU.5.cysteine:0.0327389675)100:0.1134137331,(Csav_SELENOU.5.cysteine:0.3670242495,Csav_SELENOU.9.uga_containing:0.1021156165)100:0.0759449211)100:0.1285760518,(Pmam_SELENOU.7.cysteine:0.0833687511,Pmam_SELENOU.10.cysteine:0.0875334598)100:0.3221046015)99:0.1816228532,((Pege_SELENOU.2.cysteine:0.2537297200,Tdem_SELENOU.7.unaligned:0.3771764069)99:0.1788428769,(((Stho_SELENOU.1.cysteine:0.5169191994,Stho_SELENOU.3.cysteine:0.0042427501)100:0.2677860682,(Fbor_SELENOU.2.cysteine:0.1149544160,(Fbor_SELENOU.3.cysteine:0.1523444118,Fbor_SELENOU.4.cysteine:0.1692197122)96:0.0250242590)100:1.5967111807)87:0.1542059738,(Tdem_SELENOU.5.cysteine:0.2054318356,Tdem_SELENOU.8.cysteine:0.2925134880)100:0.1669478203)89:0.1889548897)89:0.1816190756)91:0.1395246931)88:0.1226191468)88:0.1662034852,(((OKI_SELENOU.2.cysteine:0.0000025392,(OSKA_SELENOU.4.cysteine:0.0552575805,OdB3_SELENOU.5.cysteine:0.0731914271)100:0.0561144536)100:0.5249671529,Oalb_SELENOU.1.cysteine:0.2817038099)100:0.2758632801,Olon_SELENOU.4.cysteine:0.4399993777)100:0.3589006958)99:0.4998551226)100:0.6279149407,(((((((Larimichthys_crocea_XP_010744074.1:0.6121413632,((Tupaia_chinensis_XP_006163791.1:0.1369761797,(((Leptonychotes_weddellii_XP_006745675.1:0.6309673268,Hsap_SELENOU.12.cysteine:0.0129319629)87:0.0060656601,(Hsap_SELENOU.8.pseudo:0.0953567600,Hsap_SELENOU.9.pseudo:0.4043856814)92:0.0209228938)98:0.0272709107,Mmus_SELENOU.8.cysteine:0.1015552260)99:0.0402910990)100:0.1893390341,((((Esox_lucius_XP_010863834.1:0.4021442942,Drer_SELENOU.10.selenocysteine:0.1848042883)51:0.0759262599,(Cynoglossus_semilaevis_XP_008319954.1:0.3227392990,(Drer_SELENOU.5.selenocysteine:0.2895073351,Drer_SELENOU.7.uga_containing:0.3901512769)66:0.1782469119)45:0.0515079642)60:0.0495116998,Latimeria_chalumnae_XP_006012284.1:0.4064165098)55:0.0367882252,(Notothenia_coriiceps_XP_010775501.1:0.4883180343,Callorhinchus_milii_XP_007902813.1:0.3486066339)54:0.0048058912)90:0.0544819657)91:0.0653427861)99:0.1552390189,(Aplysia_californica_XP_012937723.1:0.3660752318,(Bflo_SELENOU.2.selenocysteine:0.1031069511,Blan_SELENOU.2.selenocysteine:0.0000020885)100:0.5572945743)99:0.1253464512)99:0.1205521415,Saccoglossus_kowalevskii_XP_006811580.1:0.4832570477)100:0.1196820515,Lepeophtheirus_salmonis_ACO12061.1:0.7614760683)95:0.1025660898,Helobdella_robusta_XP_009011667.1:0.4169885149)97:0.0789641870,(((Caenorhabditis_brenneri_EGT34998.1:0.3191734205,Necator_americanus_XP_013296382.1:0.2634173561)100:0.2360918713,Pristionchus_pacificus_KKA70176.1:0.4308765208)100:0.2317134878,Strongyloides_ratti_CEF62614.1:0.5740385497)100:0.3937709275)100:0.1640762193,(Nannochloropsis_gaditana_EWM26651.1:0.8499113454,Ectocarpus_siliculosus_CBJ25594.1:0.5558949181)97:0.1494392038)84:0.0498306281)94:0.1330173768,(((Allomyces_macrogynus_ATCC_38327_KNE60458.1:0.3195672266,Allomyces_macrogynus_ATCC_38327_KNE67104.1:0.6323370581)100:0.5199926395,(Mortierella_verticillata_NRRL_6337_KFH65303.1:0.3459795838,Mortierella_verticillata_NRRL_6337_KFH62547.1:0.4963053852)100:0.4551623241)99:0.1171105747,Spizellomyces_punctatus_DAOM_BR117_KNC98930.1:0.7534620836)99:0.1698933269)91:0.2370153553,(Ostreococcus_tauri_XP_003081130.1:0.6071744432,Volvox_carteri_f._nagariensis_XP_002945792.1:1.2492807353)89:0.2541001253)100:0.5831051536)100:0.0986045980,Amborella_trichopoda_ERN05797.1:0.2469486517)56:0.0655915431,Solanum_tuberosum_XP_006348785.1:0.2224357505);
+(Phoenix_dactylifera_XP_008797589.1:0.3808654681,(Physcomitrella_patens_XP_001771872.1:0.5028424940,Physcomitrella_patens_XP_001778485.1:0.1936966882)100:0.0787837395,(((((((Moniliophthora_roreri_MCA_2997_XP_007852718.1:0.7748996195,(Colletotrichum_gloeosporioides_Nara_gc5_XP_007286869.1:0.3884265988,Pestalotiopsis_fici_W106-1_XP_007833658.1:0.1502707654)100:0.7096300205)100:0.5338472640,((((((((Octodon_degus_XP_012371697.1:0.1758589677,Hsap_SELENOU.2.pseudo:0.1986513729)92:0.0200534354,(Hsap_SELENOU.4.cysteine:0.0315782397,Mmus_SELENOU.3.cysteine:0.3055908624)52:0.0000029588)100:0.3343596618,(Pseudopodoces_humilis_XP_005522793.2:0.2264363619,(Chrysemys_picta_bellii_XP_005304329.1:0.3858164019,Thamnophis_sirtalis_XP_013907125.1:0.2891229353)91:0.0935623297)78:0.0289439927)84:0.0746784998,((Latimeria_chalumnae_XP_006001942.1:0.1606456035,Callorhinchus_milii_XP_007898231.1:0.4332495648)99:0.0429800681,Drer_SELENOU.3.cysteine:0.4409899158)95:0.0893871744)83:0.0647028432,Xenopus_laevis_NP_001092155.1:0.2888272891)99:0.2530878351,(((((Ciona_intestinalis_XP_002132136.1:0.0000026894,Crob_SELENOU.2.aspartic_acid:0.0000026894)100:0.0203435397,Cint_SELENOU.3.aspartic_acid:0.0274790520)100:0.1285353714,Csav_SELENOU.3.aspartic_acid:0.1519841189)100:0.2196219877,Pmam_SELENOU.2.aspartic_acid:0.2421632162)98:0.0874893103,((Bsch_SELENOU.1.aspartic_acid:0.3946699893,Scla_SELENOU.1.aspartic_acid:0.2295866227)100:0.1711099752,Hror_SELENOU.1.aspartic_acid:0.4134027996)95:0.1471808810)100:0.6829659931)56:0.0834643135,((Aplysia_californica_XP_005102404.1:0.4125751287,Crassostrea_gigas_XP_011445053.1:0.3714288102)76:0.0834009580,(Lingula_anatina_XP_013413222.1:0.2933967550,Capitella_teleta_ELT93208.1:0.6372276899)97:0.1509599897)100:0.2968668085)80:0.1419552755,Trichoplax_adhaerens_XP_002114328.1:0.6714697187)95:0.1846975532)81:0.1711025578,Tetrahymena_thermophila_SB210_XP_012653811.1:1.1049373458)91:0.2806434561,Fbor_SELENOU.1.selenocysteine:1.7036806624)100:0.8824512203,((((((ENSCAFT00000108029.Canis_lupus_familiaris.PRXL2B_ENSCAFT0000:0.6419949513,Hsap_SELENOU.17.cysteine:0.0741754622)65:0.0316340418,Mmus_SELENOU.12.cysteine:0.0741301916)100:0.3999391015,(ENSCCRT00000035691.Cyprinus_carpio.PRXL2B_ENSCCRT00000035691:0.1118790907,Drer_SELENOU.16.cysteine:0.0530025742)100:0.2604309263)97:0.1297419699,(Bflo_SELENOU.6.cysteine:0.0283104485,Blan_SELENOU.6.cysteine:0.0943830474)100:0.3739287867)94:0.1289613087,(((Bsch_SELENOU.4.cysteine:0.3178842571,Scla_SELENOU.6.cysteine:0.2828871952)96:0.0954962285,Hror_SELENOU.5.cysteine:0.2896627327)100:0.2485667832,((((Cint_SELENOU.5.cysteine:0.0631358026,Crob_SELENOU.5.cysteine:0.0349900384)100:0.1368336391,(Csav_SELENOU.5.cysteine:0.3687083794,Csav_SELENOU.9.uga_containing:0.1077523024)98:0.0740245488)98:0.1213414503,(Pmam_SELENOU.7.cysteine:0.0808059888,Pmam_SELENOU.10.cysteine:0.0928092140)100:0.3413375956)100:0.1823339538,((Pege_SELENOU.2.cysteine:0.2629792948,Tdem_SELENOU.7.unaligned:0.3916694137)98:0.1739583609,(((Stho_SELENOU.1.cysteine:0.4968176340,Stho_SELENOU.3.cysteine:0.0093962936)100:0.2749717601,(Fbor_SELENOU.2.cysteine:0.1310036252,(Fbor_SELENOU.3.cysteine:0.1545049792,Fbor_SELENOU.4.cysteine:0.1861111557)87:0.0207934053)100:1.5583883915)51:0.1340707131,(Tdem_SELENOU.5.cysteine:0.2152167977,Tdem_SELENOU.8.cysteine:0.3030807931)100:0.1802823933)56:0.1835053917)56:0.1782524300)64:0.1269808379)63:0.1246850833)58:0.1499139489,(((OKI_SELENOU.2.cysteine:0.0000020287,(OSKA_SELENOU.4.cysteine:0.0530070242,OdB3_SELENOU.5.cysteine:0.0713184494)100:0.0550452105)100:0.4979469862,Oalb_SELENOU.1.cysteine:0.2942530264)99:0.2896610070,Olon_SELENOU.4.cysteine:0.4312696559)100:0.3862734472)96:0.5087024166)100:0.6197812142,(((((((Larimichthys_crocea_XP_010744074.1:0.6183625170,((Tupaia_chinensis_XP_006163791.1:0.1368011490,(((Hsap_SELENOU.8.pseudo:0.0958560965,Hsap_SELENOU.9.pseudo:0.4032887439)96:0.0257035680,Hsap_SELENOU.12.cysteine:0.0198158446)100:0.0290651615,Mmus_SELENOU.8.cysteine:0.1037512795)100:0.0394937589)100:0.1759450061,((((Esox_lucius_XP_010863834.1:0.3786828293,(Drer_SELENOU.5.selenocysteine:0.3528772552,Drer_SELENOU.7.uga_containing:0.3272861051)92:0.1827975113)58:0.1089631249,Drer_SELENOU.10.selenocysteine:0.2235829807)87:0.0752143093,Latimeria_chalumnae_XP_006012284.1:0.4273569980)84:0.0367045000,Callorhinchus_milii_XP_007902813.1:0.3887021642)84:0.0377309424)88:0.0849023332)98:0.1604600077,(Aplysia_californica_XP_012937723.1:0.4054474483,(Bflo_SELENOU.2.selenocysteine:0.1040088919,Blan_SELENOU.2.selenocysteine:0.0000020923)100:0.5767397293)97:0.0829749699)97:0.1122809126,Saccoglossus_kowalevskii_XP_006811580.1:0.4976932749)96:0.1355517876,Lepeophtheirus_salmonis_ACO12061.1:0.7460983932)88:0.0642434630,((Caenorhabditis_brenneri_EGT34998.1:0.3559082403,Necator_americanus_XP_013296382.1:0.2850928669)100:0.3915129193,Strongyloides_ratti_CEF62614.1:0.5454509093)100:0.4952044539)82:0.0661260064,Helobdella_robusta_XP_009011667.1:0.4279203650)100:0.2975257326,(Nannochloropsis_gaditana_EWM26651.1:0.9667651310,Ectocarpus_siliculosus_CBJ25594.1:0.5794125932)54:0.1121773594)97:0.1989087570)97:0.2279669924,(Ostreococcus_tauri_XP_003081130.1:0.5614396122,Volvox_carteri_f._nagariensis_XP_002945792.1:1.3038512417)94:0.2382855047)100:0.5136145423);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/selenoproteins/SELENOU.treefile -m "WAG+R5{0.049702,0.139966,0.125489,0.392679,0.215648,0.658638,0.314125,1.07295,0.295036,1.57503}" --length 291
+--alisim simulated_MSA -t results/trees/selenoproteins/SELENOU.treefile -m "WAG+R4{0.0927309,0.213114,0.183261,0.532416,0.341721,0.859684,0.382287,1.54045}" --length 290
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -761,7 +487,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Fri Oct 23 11:10:47 2026
-Total CPU time used: 8306.930202 seconds (2h:18m:26s)
-Total wall-clock time used: 1149.867098 seconds (0h:19m:9s)
+Date and time: Thu Oct 29 22:59:57 2026
+Total CPU time used: 5703.358135 seconds (1h:35m:3s)
+Total wall-clock time used: 844.9092252 seconds (0h:14m:4s)
 

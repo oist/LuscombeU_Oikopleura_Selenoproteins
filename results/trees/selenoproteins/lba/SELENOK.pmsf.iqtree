@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 52 sequences with 179 amino-acid sites
-Number of constant sites: 2 (= 1.11732% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 2 (= 1.11732% of all sites)
-Number of parsimony informative sites: 137
-Number of distinct site patterns: 173
+Input data: 55 sequences with 181 amino-acid sites
+Number of constant sites: 0 (= 0% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 0 (= 0% of all sites)
+Number of parsimony informative sites: 144
+Number of distinct site patterns: 180
 
 SUBSTITUTION PROCESS
 --------------------
@@ -46,29 +46,29 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 6.9828
+Gamma shape alpha: 5.4898
 
  Category  Relative_rate  Proportion
-  1         0.5681         0.2500
-  2         0.8399         0.2500
-  3         1.0790         0.2500
-  4         1.5129         0.2500
+  1         0.5212         0.2500
+  2         0.8148         0.2500
+  3         1.0824         0.2500
+  4         1.5816         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -6244.7828 (s.e. 271.3884)
-Unconstrained log-likelihood (without tree): -918.8380
-Number of free parameters (#branches + #model parameters): 121
-Akaike information criterion (AIC) score: 12731.5656
-Corrected Akaike information criterion (AICc) score: 13249.5305
-Bayesian information criterion (BIC) score: 13117.2393
+Log-likelihood of the tree: -6746.4377 (s.e. 305.3361)
+Unconstrained log-likelihood (without tree): -939.5417
+Number of free parameters (#branches + #model parameters): 127
+Akaike information criterion (AIC) score: 13746.8754
+Corrected Akaike information criterion (AICc) score: 14360.3094
+Bayesian information criterion (BIC) score: 14153.0846
 
-Total tree length (sum of branch lengths): 25.5482
-Sum of internal branch lengths: 6.0640 (23.7357% of tree length)
+Total tree length (sum of branch lengths): 28.6143
+Sum of internal branch lengths: 9.7475 (34.0652% of tree length)
 
-WARNING: 7 near-zero internal branches (<0.0056) should be treated with caution
+WARNING: 2 near-zero internal branches (<0.0055) should be treated with caution
          Such branches are denoted by '**' in the figure below
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Se_user_SelK_Leishmania_infantum_JPCM5' is drawn at root
@@ -76,118 +76,124 @@ Numbers in parentheses are  ultrafast bootstrap support (%)
 
 +-----Se_user_SelK_Leishmania_infantum_JPCM5
 |
-|                    +-----------gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2
-|                 +**| (37)
-|                 |  +---------Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1
-|              +--| (20)
-|              |  |           +---Se_user_SelK_Strongylocentrotus_purpuratus
-|              |  |        +--| (80)
-|              |  |        |  |           +--Salmo_salar_gi_213511230_ref_NP_001134373.1
-|              |  |        |  |        +--| (90)
-|              |  |        |  |        |  |  +**Danio_rerio_gi_51859039_gb_AAH81491.1
-|              |  |        |  |        |  +--| (100)
-|              |  |        |  |        |     +--Drer_SELENOK.1.selenocysteine
-|              |  |        |  |     +--| (90)
-|              |  |        |  |     |  |  +--Gallus_gallus_gi_70906483_ref_NP_001020612.1
-|              |  |        |  |     |  +--| (93)
-|              |  |        |  |     |     |     +--Xenopus_laevis_gi_207444688_ref_NP_001087951.2
-|              |  |        |  |     |     |  +--| (96)
-|              |  |        |  |     |     |  |  +--Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1
-|              |  |        |  |     |     +--| (62)
-|              |  |        |  |     |        |        +--Sus_scrofa_gi_87047634_gb_ABD18450.1
-|              |  |        |  |     |        |     +--| (100)
-|              |  |        |  |     |        |     |  +**SelK.Sus_scrofa_SelK.Sus_scrofa
-|              |  |        |  |     |        |  +**| (52)
-|              |  |        |  |     |        |  |  +--Human_SELENOK_NP_067060.2
-|              |  |        |  |     |        +--| (100)
-|              |  |        |  |     |           |           +**SelK.Mus_musculus_SelK.Mus_musculus
-|              |  |        |  |     |           |        +**| (18)
-|              |  |        |  |     |           |        |  |        +**Mmus_SELENOK.1.selenocysteine
-|              |  |        |  |     |           |        |  |     +--| (97)
-|              |  |        |  |     |           |        |  |     |  +--Mmus_SELENOK.2.uga_containing
-|              |  |        |  |     |           |        |  |  +--| (54)
-|              |  |        |  |     |           |        |  |  |  |  +**Mmus_SELENOK.8.pseudo
-|              |  |        |  |     |           |        |  |  |  +--| (89)
-|              |  |        |  |     |           |        |  |  |     |  +--Mmus_SELENOK.14.selenocysteine
-|              |  |        |  |     |           |        |  |  |     +--| (91)
-|              |  |        |  |     |           |        |  |  |        |  +--Mmus_SELENOK.16.unaligned
-|              |  |        |  |     |           |        |  |  |        +--| (85)
-|              |  |        |  |     |           |        |  |  |           +---Mmus_SELENOK.19.uga_containing
-|              |  |        |  |     |           |        |  +**| (20)
-|              |  |        |  |     |           |        |     +--Mmus_SELENOK.17.selenocysteine
-|              |  |        |  |     |           |     +**| (46)
-|              |  |        |  |     |           |     |  +--Mmus_SELENOK.11.pseudo
-|              |  |        |  |     |           |  +--| (96)
-|              |  |        |  |     |           |  |  |  +--Mmus_SELENOK.3.selenocysteine
-|              |  |        |  |     |           |  |  +--| (74)
-|              |  |        |  |     |           |  |     +--Mmus_SELENOK.6.selenocysteine
-|              |  |        |  |     |           +--| (83)
-|              |  |        |  |     |              +-----Mmus_SELENOK.13.glutamic_acid
-|              |  |        |  |  +--| (79)
-|              |  |        |  |  |  |    +**Bflo_SELENOK.1.selenocysteine
-|              |  |        |  |  |  +----| (100)
-|              |  |        |  |  |       +**Blan_SELENOK.1.selenocysteine
-|              |  |        |  +--| (78)
-|              |  |        |     |           +**Ciona_intestinalis_gi_198427212_ref_XP_002128715.1
-|              |  |        |     |        +--| (95)
-|              |  |        |     |        |  +--Crob_SELENOK.2.selenocysteine
-|              |  |        |     |     +--| (91)
-|              |  |        |     |     |  +--Cint_SELENOK.2.selenocysteine
-|              |  |        |     |  +--| (98)
-|              |  |        |     |  |  +--Csav_SELENOK.2.selenocysteine
-|              |  |        |     +--| (93)
-|              |  |        |        |     +--Bsch_SELENOK.2.selenocysteine
-|              |  |        |        |  +--| (88)
-|              |  |        |        |  |  +--Scla_SELENOK.1.selenocysteine
-|              |  |        |        +--| (96)
-|              |  |        |           +--Hror_SELENOK.1.selenocysteine
-|              |  |     +**| (30)
-|              |  |     |  |                    +--------------------Pege_SELENOK.1.pseudo
-|              |  |     |  |                 +--| (68)
-|              |  |     |  |                 |  +-------Fbor_SELENOK.1.glycine
-|              |  |     |  |           +-----| (71)
-|              |  |     |  |           |     |        +--Stho_SELENOK.2.glycine
-|              |  |     |  |           |     |     +--| (81)
-|              |  |     |  |           |     |     |  +--------------Stho_SELENOK.3.arginine
-|              |  |     |  |           |     |  +**| (47)
-|              |  |     |  |           |     |  |  +------Fbor_SELENOK.3.glycine
-|              |  |     |  |           |     +--| (67)
-|              |  |     |  |           |        +---OSKA_SELENOK.2.glycine
-|              |  |     |  |       +---| (54)
-|              |  |     |  |       |   +---------Stho_SELENOK.4.proline
-|              |  |     |  |  +----| (79)
-|              |  |     |  |  |    +--Fbor_SELENOK.2.glycine
-|              |  |     |  +--| (68)
-|              |  |     |     +----------Bsty_SELENOK.1.unaligned
-|              |  |  +--| (63)
-|              |  |  |  +--------Ixodes_scapularis_gi_215491294_gb_EEC00935.1
-|              |  +--| (35)
-|              |     +----------OSKA_SELENOK.1.tyrosine
-|           +--| (48)
-|           |  +---------------Blan_SELENOK.3.arginine
-|        +--| (67)
-|        |  +--------------------Cint_SELENOK.3.glycine
-|     +--| (75)
-|     |  +----------------OSKA_SELENOK.4.proline
-|  +--| (89)
-|  |  |        +------Se_user_SelK_Ostreococcus_tauri
-|  |  +--------| (100)
-|  |           +--Se_user_SelK_Ostreococcus_lucimarinus
-+--| (91)
-|  +---Se_user_SelK_Trypanosoma_cruzi
+|                    +----------gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2
+|                 +**| (25)
+|                 |  |        +---Se_user_SelK_Strongylocentrotus_purpuratus
+|                 |  |     +--| (39)
+|                 |  |     |  |           +--Salmo_salar_gi_213511230_ref_NP_001134373.1
+|                 |  |     |  |        +--| (98)
+|                 |  |     |  |        |  |  +**Danio_rerio_gi_51859039_gb_AAH81491.1
+|                 |  |     |  |        |  +--| (100)
+|                 |  |     |  |        |     +--Drer_SELENOK.1.selenocysteine
+|                 |  |     |  |     +--| (65)
+|                 |  |     |  |     |  |     +--Gallus_gallus_gi_70906483_ref_NP_001020612.1
+|                 |  |     |  |     |  |  +--| (55)
+|                 |  |     |  |     |  |  |  |     +--Xenopus_laevis_gi_207444688_ref_NP_001087951.2
+|                 |  |     |  |     |  |  |  |  +--| (98)
+|                 |  |     |  |     |  |  |  |  |  +--Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1
+|                 |  |     |  |     |  |  |  +--| (61)
+|                 |  |     |  |     |  |  |     +--------------------Blan_SELENOK.3.arginine
+|                 |  |     |  |     |  +--| (62)
+|                 |  |     |  |     |     |     +--Sus_scrofa_gi_87047634_gb_ABD18450.1
+|                 |  |     |  |     |     |  +--| (85)
+|                 |  |     |  |     |     |  |  |              +**Mmus_SELENOK.1.selenocysteine
+|                 |  |     |  |     |     |  |  |           +--| (95)
+|                 |  |     |  |     |     |  |  |           |  +--Mmus_SELENOK.2.uga_containing
+|                 |  |     |  |     |     |  |  |        +--| (50)
+|                 |  |     |  |     |     |  |  |        |  |  +--Mmus_SELENOK.3.selenocysteine
+|                 |  |     |  |     |     |  |  |        |  +--| (74)
+|                 |  |     |  |     |     |  |  |        |     +--Mmus_SELENOK.6.selenocysteine
+|                 |  |     |  |     |     |  |  |     +--| (64)
+|                 |  |     |  |     |     |  |  |     |  |  +--Mmus_SELENOK.11.pseudo
+|                 |  |     |  |     |     |  |  |     |  +**| (48)
+|                 |  |     |  |     |     |  |  |     |     +--Mmus_SELENOK.17.selenocysteine
+|                 |  |     |  |     |     |  |  |  +--| (95)
+|                 |  |     |  |     |     |  |  |  |  |  +--Mmus_SELENOK.8.pseudo
+|                 |  |     |  |     |     |  |  |  |  +--| (87)
+|                 |  |     |  |     |     |  |  |  |     |  +--Mmus_SELENOK.14.selenocysteine
+|                 |  |     |  |     |     |  |  |  |     +--| (95)
+|                 |  |     |  |     |     |  |  |  |        |  +---Mmus_SELENOK.16.unaligned
+|                 |  |     |  |     |     |  |  |  |        +--| (77)
+|                 |  |     |  |     |     |  |  |  |           +--Mmus_SELENOK.19.uga_containing
+|                 |  |     |  |     |     |  |  +--| (86)
+|                 |  |     |  |     |     |  |     +-------Mmus_SELENOK.13.glutamic_acid
+|                 |  |     |  |     |     +--| (99)
+|                 |  |     |  |     |        +--Human_SELENOK_NP_067060.2
+|                 |  |     |  |  +--| (56)
+|                 |  |     |  |  |  |      +**Bflo_SELENOK.1.selenocysteine
+|                 |  |     |  |  |  +------| (100)
+|                 |  |     |  |  |         +--Blan_SELENOK.1.selenocysteine
+|                 |  |     |  +--| (49)
+|                 |  |     |     |           +**Ciona_intestinalis_gi_198427212_ref_XP_002128715.1
+|                 |  |     |     |        +--| (95)
+|                 |  |     |     |        |  +--Crob_SELENOK.2.selenocysteine
+|                 |  |     |     |     +--| (86)
+|                 |  |     |     |     |  +--Cint_SELENOK.2.selenocysteine
+|                 |  |     |     |  +--| (94)
+|                 |  |     |     |  |  +--Csav_SELENOK.2.selenocysteine
+|                 |  |     |     +--| (65)
+|                 |  |     |        |        +--Bsch_SELENOK.2.selenocysteine
+|                 |  |     |        |     +--| (87)
+|                 |  |     |        |     |  +--Scla_SELENOK.1.selenocysteine
+|                 |  |     |        |  +--| (88)
+|                 |  |     |        |  |  +---Hror_SELENOK.1.selenocysteine
+|                 |  |     |        +--| (57)
+|                 |  |     |           +-------------------Cint_SELENOK.3.glycine
+|                 |  |  +--| (48)
+|                 |  |  |  +-----------Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1
+|                 |  +--| (49)
+|                 |     |                        +---------------Pege_SELENOK.1.pseudo
+|                 |     |                  +-----| (89)
+|                 |     |                  |     +----------Olon_SELENOK.2.serine
+|                 |     |              +---| (47)
+|                 |     |              |   +-----Stho_SELENOK.4.proline
+|                 |     |           +--| (48)
+|                 |     |           |  +---Fbor_SELENOK.2.glycine
+|                 |     |      +----| (78)
+|                 |     |      |    |          +--Stho_SELENOK.2.glycine
+|                 |     |      |    |     +----| (99)
+|                 |     |      |    |     |    +----------Stho_SELENOK.3.arginine
+|                 |     |      |    |  +--| (92)
+|                 |     |      |    |  |  +-------OSKA_SELENOK.3.glycine
+|                 |     |      |    +--| (89)
+|                 |     |      |       |   +---Fbor_SELENOK.1.glycine
+|                 |     |      |       +---| (95)
+|                 |     |      |           |  +--Fbor_SELENOK.3.glycine
+|                 |     |      |           +--| (96)
+|                 |     |      |              +-------Fbor_SELENOK.4.glycine
+|                 |     +------| (96)
+|                 |            +---------------OSKA_SELENOK.2.unaligned
+|              +--| (48)
+|              |  |              +-------Bsty_SELENOK.1.unaligned
+|              |  |           +--| (82)
+|              |  |           |  |          +--OKI_gold_SELENOK
+|              |  |           |  |       +--| (97)
+|              |  |           |  |       |  +--OdB3_gold_SELENOK
+|              |  |           |  +-------| (100)
+|              |  |           |          +**OSKA_gold_SELENOK
+|              |  +-----------| (100)
+|              |              +--Olon_SELENOK.1.unaligned
+|  +-----------| (100)
+|  |           +--------Ixodes_scapularis_gi_215491294_gb_EEC00935.1
++--| (78)
+|  |        +-----Se_user_SelK_Ostreococcus_tauri
+|  +--------| (100)
+|           +--Se_user_SelK_Ostreococcus_lucimarinus
 |
-+-----Se_user_SelK_Trypanosoma_brucei
+|  +-----Se_user_SelK_Trypanosoma_cruzi
++--| (51)
+   +------Se_user_SelK_Trypanosoma_brucei
 
 Tree in newick format:
 
-(Se_user_SelK_Leishmania_infantum_JPCM5:0.4918745201,(((((((gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2:0.9406307155,Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1:0.8072182449)37:0.0000023820,((((Se_user_SelK_Strongylocentrotus_purpuratus:0.3090555494,((((Salmo_salar_gi_213511230_ref_NP_001134373.1:0.1307050930,(Danio_rerio_gi_51859039_gb_AAH81491.1:0.0000010000,Drer_SELENOK.1.selenocysteine:0.0450683077)100:0.1206492358)90:0.1028832064,(Gallus_gallus_gi_70906483_ref_NP_001020612.1:0.1783617983,((Xenopus_laevis_gi_207444688_ref_NP_001087951.2:0.0768176579,Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1:0.2043936526)96:0.1124638307,(((Sus_scrofa_gi_87047634_gb_ABD18450.1:0.0109346486,SelK.Sus_scrofa_SelK.Sus_scrofa:0.0000025847)100:0.0333106961,Human_SELENOK_NP_067060.2:0.0299146436)52:0.0000026661,((((SelK.Mus_musculus_SelK.Mus_musculus:0.0000010000,(((Mmus_SELENOK.1.selenocysteine:0.0000010000,Mmus_SELENOK.2.uga_containing:0.0335998408)97:0.0213286207,(Mmus_SELENOK.8.pseudo:0.0000025552,(Mmus_SELENOK.14.selenocysteine:0.0929675826,(Mmus_SELENOK.16.unaligned:0.2743724655,Mmus_SELENOK.19.uga_containing:0.3118848545)85:0.0407358711)91:0.1139600793)89:0.0894975059)54:0.0115356624,Mmus_SELENOK.17.selenocysteine:0.0583370954)20:0.0000021406)18:0.0000022585,Mmus_SELENOK.11.pseudo:0.0782667185)46:0.0043262989,(Mmus_SELENOK.3.selenocysteine:0.0522460564,Mmus_SELENOK.6.selenocysteine:0.1437660041)74:0.0240895857)96:0.0447020648,Mmus_SELENOK.13.glutamic_acid:0.4736816263)83:0.0116428485)100:0.1800442262)62:0.0327709429)93:0.0492647869)90:0.1101672799,(Bflo_SELENOK.1.selenocysteine:0.0000010000,Blan_SELENOK.1.selenocysteine:0.0000010000)100:0.3884225350)79:0.0441678572,((((Ciona_intestinalis_gi_198427212_ref_XP_002128715.1:0.0000010000,Crob_SELENOK.2.selenocysteine:0.0430028400)95:0.0511402336,Cint_SELENOK.2.selenocysteine:0.0125422337)91:0.0526807958,Csav_SELENOK.2.selenocysteine:0.1126595101)98:0.2049139766,((Bsch_SELENOK.2.selenocysteine:0.0540202578,Scla_SELENOK.1.selenocysteine:0.1446934927)88:0.0148181305,Hror_SELENOK.1.selenocysteine:0.2486570629)96:0.2086065882)93:0.1446111998)78:0.1218185627)80:0.0872160269,(((((Pege_SELENOK.1.pseudo:1.6547419318,Fbor_SELENOK.1.glycine:0.6203842522)68:0.1907238968,(((Stho_SELENOK.2.glycine:0.2138134117,Stho_SELENOK.3.arginine:1.1510592834)81:0.2239197621,Fbor_SELENOK.3.glycine:0.5867061724)47:0.0000023372,OSKA_SELENOK.2.glycine:0.3696423420)67:0.2330262675)71:0.4806388012,Stho_SELENOK.4.proline:0.8209199497)54:0.3125640111,Fbor_SELENOK.2.glycine:0.1091772660)79:0.3907739046,Bsty_SELENOK.1.unaligned:0.8597557414)68:0.2533486305)30:0.0000022978,Ixodes_scapularis_gi_215491294_gb_EEC00935.1:0.7378795241)63:0.2741896887,OSKA_SELENOK.1.tyrosine:0.9038620229)35:0.1229271961)20:0.0082576948,Blan_SELENOK.3.arginine:1.2108333113)48:0.1736607787,Cint_SELENOK.3.glycine:1.6344908681)67:0.1237199814,OSKA_SELENOK.4.proline:1.3315530468)75:0.2140874301,(Se_user_SelK_Ostreococcus_tauri:0.5467554134,Se_user_SelK_Ostreococcus_lucimarinus:0.1383414733)100:0.7031759332)89:0.1969035369,Se_user_SelK_Trypanosoma_cruzi:0.3330074571)91:0.1287576607,Se_user_SelK_Trypanosoma_brucei:0.5131132154);
+(Se_user_SelK_Leishmania_infantum_JPCM5:0.4853280705,((((gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2:0.8361455416,(((Se_user_SelK_Strongylocentrotus_purpuratus:0.2943543989,((((Salmo_salar_gi_213511230_ref_NP_001134373.1:0.1370996512,(Danio_rerio_gi_51859039_gb_AAH81491.1:0.0000010000,Drer_SELENOK.1.selenocysteine:0.0479346279)100:0.1173545143)98:0.1001027788,((Gallus_gallus_gi_70906483_ref_NP_001020612.1:0.1977928313,((Xenopus_laevis_gi_207444688_ref_NP_001087951.2:0.0697737107,Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1:0.2176347349)98:0.0519798775,Blan_SELENOK.3.arginine:1.5297735639)61:0.0424682736)55:0.0641126752,((Sus_scrofa_gi_87047634_gb_ABD18450.1:0.0458580895,(((((Mmus_SELENOK.1.selenocysteine:0.0000010000,Mmus_SELENOK.2.uga_containing:0.0345475678)95:0.0229904278,(Mmus_SELENOK.3.selenocysteine:0.0466720901,Mmus_SELENOK.6.selenocysteine:0.1603991680)74:0.0252532267)50:0.0104674530,(Mmus_SELENOK.11.pseudo:0.0807370672,Mmus_SELENOK.17.selenocysteine:0.0608262738)48:0.0000027571)64:0.0256235740,(Mmus_SELENOK.8.pseudo:0.0169757991,(Mmus_SELENOK.14.selenocysteine:0.1079424497,(Mmus_SELENOK.16.unaligned:0.3489591943,Mmus_SELENOK.19.uga_containing:0.2781343883)77:0.0354674027)95:0.0663455968)87:0.0662241954)95:0.0135556222,Mmus_SELENOK.13.glutamic_acid:0.5812741178)86:0.0250152262)85:0.0097280433,Human_SELENOK_NP_067060.2:0.0174739836)99:0.1789641889)62:0.0695479657)65:0.1700139711,(Bflo_SELENOK.1.selenocysteine:0.0000023197,Blan_SELENOK.1.selenocysteine:0.0354317732)100:0.5628325677)56:0.0661085517,((((Ciona_intestinalis_gi_198427212_ref_XP_002128715.1:0.0000010000,Crob_SELENOK.2.selenocysteine:0.0445360071)95:0.0509129678,Cint_SELENOK.2.selenocysteine:0.0145086578)86:0.0520907930,Csav_SELENOK.2.selenocysteine:0.1170095396)94:0.1586307018,(((Bsch_SELENOK.2.selenocysteine:0.0720522983,Scla_SELENOK.1.selenocysteine:0.1394530271)87:0.0192586671,Hror_SELENOK.1.selenocysteine:0.2909025341)88:0.1619437791,Cint_SELENOK.3.glycine:1.4951464898)57:0.0987559530)65:0.2768898973)49:0.1379724941)39:0.0272991703,Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1:0.9112452983)48:0.0545046151,(((((Pege_SELENOK.1.pseudo:1.1713506177,Olon_SELENOK.2.serine:0.8044337545)89:0.4773130724,Stho_SELENOK.4.proline:0.4616923158)47:0.3582161289,Fbor_SELENOK.2.glycine:0.3615610137)48:0.2402182270,(((Stho_SELENOK.2.glycine:0.1994977233,Stho_SELENOK.3.arginine:0.8438116671)99:0.3816971678,OSKA_SELENOK.3.glycine:0.6232285968)92:0.2241987003,(Fbor_SELENOK.1.glycine:0.3350665055,(Fbor_SELENOK.3.glycine:0.2429398121,Fbor_SELENOK.4.glycine:0.6143074683)96:0.1769454438)95:0.2950995933)89:0.2764269165)78:0.3723608830,OSKA_SELENOK.2.unaligned:1.2257523859)96:0.5348949455)49:0.0505180266)25:0.0000028209,((Bsty_SELENOK.1.unaligned:0.5946371090,((OKI_gold_SELENOK:0.0810181429,OdB3_gold_SELENOK:0.0134630549)97:0.0539908421,OSKA_gold_SELENOK:0.0000021651)100:0.6436775974)82:0.0876593863,Olon_SELENOK.1.unaligned:0.2183063555)100:0.8756639974)48:0.0947476160,Ixodes_scapularis_gi_215491294_gb_EEC00935.1:0.6628791537)100:0.8709487343,(Se_user_SelK_Ostreococcus_tauri:0.5028688560,Se_user_SelK_Ostreococcus_lucimarinus:0.1728842488)100:0.7230182065)78:0.1803849764,(Se_user_SelK_Trypanosoma_cruzi:0.4932930618,Se_user_SelK_Trypanosoma_brucei:0.5278623719)51:0.0671171491);
 
 CONSENSUS TREE
 --------------
 
 Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -6244.784276
-Robinson-Foulds distance between ML tree and consensus tree: 2
+Log-likelihood of consensus tree: -6746.438490
+Robinson-Foulds distance between ML tree and consensus tree: 0
 
 Branches with support >0.000000% are kept (extended consensus)
 Branch lengths are optimized by maximum likelihood on original alignment
@@ -195,118 +201,124 @@ Numbers in parentheses are bootstrap supports (%)
 
 +-----Se_user_SelK_Leishmania_infantum_JPCM5
 |
-|                    +-----------gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2
-|                 +--| (37)
-|                 |  +---------Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1
-|              +--| (20)
-|              |  |           +---Se_user_SelK_Strongylocentrotus_purpuratus
-|              |  |        +--| (80)
-|              |  |        |  |           +--Salmo_salar_gi_213511230_ref_NP_001134373.1
-|              |  |        |  |        +--| (90)
-|              |  |        |  |        |  |  +--Danio_rerio_gi_51859039_gb_AAH81491.1
-|              |  |        |  |        |  +--| (100)
-|              |  |        |  |        |     +--Drer_SELENOK.1.selenocysteine
-|              |  |        |  |     +--| (90)
-|              |  |        |  |     |  |  +--Gallus_gallus_gi_70906483_ref_NP_001020612.1
-|              |  |        |  |     |  +--| (93)
-|              |  |        |  |     |     |     +--Xenopus_laevis_gi_207444688_ref_NP_001087951.2
-|              |  |        |  |     |     |  +--| (96)
-|              |  |        |  |     |     |  |  +--Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1
-|              |  |        |  |     |     +--| (62)
-|              |  |        |  |     |        |        +--Sus_scrofa_gi_87047634_gb_ABD18450.1
-|              |  |        |  |     |        |     +--| (100)
-|              |  |        |  |     |        |     |  +--SelK.Sus_scrofa_SelK.Sus_scrofa
-|              |  |        |  |     |        |  +--| (52)
-|              |  |        |  |     |        |  |  +--Human_SELENOK_NP_067060.2
-|              |  |        |  |     |        +--| (100)
-|              |  |        |  |     |           |           +--SelK.Mus_musculus_SelK.Mus_musculus
-|              |  |        |  |     |           |        +--| (18)
-|              |  |        |  |     |           |        |  |        +--Mmus_SELENOK.1.selenocysteine
-|              |  |        |  |     |           |        |  |     +--| (97)
-|              |  |        |  |     |           |        |  |     |  +--Mmus_SELENOK.2.uga_containing
-|              |  |        |  |     |           |        |  |  +--| (54)
-|              |  |        |  |     |           |        |  |  |  |  +--Mmus_SELENOK.8.pseudo
-|              |  |        |  |     |           |        |  |  |  +--| (89)
-|              |  |        |  |     |           |        |  |  |     |  +--Mmus_SELENOK.14.selenocysteine
-|              |  |        |  |     |           |        |  |  |     +--| (91)
-|              |  |        |  |     |           |        |  |  |        |  +--Mmus_SELENOK.16.unaligned
-|              |  |        |  |     |           |        |  |  |        +--| (85)
-|              |  |        |  |     |           |        |  |  |           +---Mmus_SELENOK.19.uga_containing
-|              |  |        |  |     |           |        |  +--| (20)
-|              |  |        |  |     |           |        |     +--Mmus_SELENOK.17.selenocysteine
-|              |  |        |  |     |           |     +--| (46)
-|              |  |        |  |     |           |     |  +--Mmus_SELENOK.11.pseudo
-|              |  |        |  |     |           |  +--| (96)
-|              |  |        |  |     |           |  |  |  +--Mmus_SELENOK.3.selenocysteine
-|              |  |        |  |     |           |  |  +--| (74)
-|              |  |        |  |     |           |  |     +--Mmus_SELENOK.6.selenocysteine
-|              |  |        |  |     |           +--| (83)
-|              |  |        |  |     |              +-----Mmus_SELENOK.13.glutamic_acid
-|              |  |        |  |  +--| (79)
-|              |  |        |  |  |  |    +--Bflo_SELENOK.1.selenocysteine
-|              |  |        |  |  |  +----| (100)
-|              |  |        |  |  |       +--Blan_SELENOK.1.selenocysteine
-|              |  |        |  +--| (78)
-|              |  |        |     |           +--Ciona_intestinalis_gi_198427212_ref_XP_002128715.1
-|              |  |        |     |        +--| (95)
-|              |  |        |     |        |  +--Crob_SELENOK.2.selenocysteine
-|              |  |        |     |     +--| (91)
-|              |  |        |     |     |  +--Cint_SELENOK.2.selenocysteine
-|              |  |        |     |  +--| (98)
-|              |  |        |     |  |  +--Csav_SELENOK.2.selenocysteine
-|              |  |        |     +--| (93)
-|              |  |        |        |     +--Bsch_SELENOK.2.selenocysteine
-|              |  |        |        |  +--| (88)
-|              |  |        |        |  |  +--Scla_SELENOK.1.selenocysteine
-|              |  |        |        +--| (96)
-|              |  |        |           +--Hror_SELENOK.1.selenocysteine
-|              |  |     +--| (41)
-|              |  |     |  +--------Ixodes_scapularis_gi_215491294_gb_EEC00935.1
-|              |  |  +--| (63)
-|              |  |  |  |                    +--------------------Pege_SELENOK.1.pseudo
-|              |  |  |  |                 +--| (68)
-|              |  |  |  |                 |  +-------Fbor_SELENOK.1.glycine
-|              |  |  |  |           +-----| (71)
-|              |  |  |  |           |     |        +--Stho_SELENOK.2.glycine
-|              |  |  |  |           |     |     +--| (81)
-|              |  |  |  |           |     |     |  +--------------Stho_SELENOK.3.arginine
-|              |  |  |  |           |     |  +--| (47)
-|              |  |  |  |           |     |  |  +------Fbor_SELENOK.3.glycine
-|              |  |  |  |           |     +--| (67)
-|              |  |  |  |           |        +---OSKA_SELENOK.2.glycine
-|              |  |  |  |       +---| (54)
-|              |  |  |  |       |   +---------Stho_SELENOK.4.proline
-|              |  |  |  |  +----| (79)
-|              |  |  |  |  |    +--Fbor_SELENOK.2.glycine
-|              |  |  |  +--| (68)
-|              |  |  |     +----------Bsty_SELENOK.1.unaligned
-|              |  +--| (35)
-|              |     +----------OSKA_SELENOK.1.tyrosine
-|           +--| (48)
-|           |  +---------------Blan_SELENOK.3.arginine
-|        +--| (67)
-|        |  +--------------------Cint_SELENOK.3.glycine
-|     +--| (75)
-|     |  +----------------OSKA_SELENOK.4.proline
-|  +--| (89)
-|  |  |        +------Se_user_SelK_Ostreococcus_tauri
-|  |  +--------| (100)
-|  |           +--Se_user_SelK_Ostreococcus_lucimarinus
-+--| (91)
-|  +---Se_user_SelK_Trypanosoma_cruzi
+|                    +----------gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2
+|                 +--| (25)
+|                 |  |        +---Se_user_SelK_Strongylocentrotus_purpuratus
+|                 |  |     +--| (39)
+|                 |  |     |  |           +--Salmo_salar_gi_213511230_ref_NP_001134373.1
+|                 |  |     |  |        +--| (98)
+|                 |  |     |  |        |  |  +--Danio_rerio_gi_51859039_gb_AAH81491.1
+|                 |  |     |  |        |  +--| (100)
+|                 |  |     |  |        |     +--Drer_SELENOK.1.selenocysteine
+|                 |  |     |  |     +--| (65)
+|                 |  |     |  |     |  |     +--Gallus_gallus_gi_70906483_ref_NP_001020612.1
+|                 |  |     |  |     |  |  +--| (55)
+|                 |  |     |  |     |  |  |  |     +--Xenopus_laevis_gi_207444688_ref_NP_001087951.2
+|                 |  |     |  |     |  |  |  |  +--| (98)
+|                 |  |     |  |     |  |  |  |  |  +--Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1
+|                 |  |     |  |     |  |  |  +--| (61)
+|                 |  |     |  |     |  |  |     +--------------------Blan_SELENOK.3.arginine
+|                 |  |     |  |     |  +--| (62)
+|                 |  |     |  |     |     |     +--Sus_scrofa_gi_87047634_gb_ABD18450.1
+|                 |  |     |  |     |     |  +--| (85)
+|                 |  |     |  |     |     |  |  |              +--Mmus_SELENOK.1.selenocysteine
+|                 |  |     |  |     |     |  |  |           +--| (95)
+|                 |  |     |  |     |     |  |  |           |  +--Mmus_SELENOK.2.uga_containing
+|                 |  |     |  |     |     |  |  |        +--| (50)
+|                 |  |     |  |     |     |  |  |        |  |  +--Mmus_SELENOK.3.selenocysteine
+|                 |  |     |  |     |     |  |  |        |  +--| (74)
+|                 |  |     |  |     |     |  |  |        |     +--Mmus_SELENOK.6.selenocysteine
+|                 |  |     |  |     |     |  |  |     +--| (64)
+|                 |  |     |  |     |     |  |  |     |  |  +--Mmus_SELENOK.11.pseudo
+|                 |  |     |  |     |     |  |  |     |  +--| (48)
+|                 |  |     |  |     |     |  |  |     |     +--Mmus_SELENOK.17.selenocysteine
+|                 |  |     |  |     |     |  |  |  +--| (95)
+|                 |  |     |  |     |     |  |  |  |  |  +--Mmus_SELENOK.8.pseudo
+|                 |  |     |  |     |     |  |  |  |  +--| (87)
+|                 |  |     |  |     |     |  |  |  |     |  +--Mmus_SELENOK.14.selenocysteine
+|                 |  |     |  |     |     |  |  |  |     +--| (95)
+|                 |  |     |  |     |     |  |  |  |        |  +---Mmus_SELENOK.16.unaligned
+|                 |  |     |  |     |     |  |  |  |        +--| (77)
+|                 |  |     |  |     |     |  |  |  |           +--Mmus_SELENOK.19.uga_containing
+|                 |  |     |  |     |     |  |  +--| (86)
+|                 |  |     |  |     |     |  |     +-------Mmus_SELENOK.13.glutamic_acid
+|                 |  |     |  |     |     +--| (99)
+|                 |  |     |  |     |        +--Human_SELENOK_NP_067060.2
+|                 |  |     |  |  +--| (56)
+|                 |  |     |  |  |  |      +--Bflo_SELENOK.1.selenocysteine
+|                 |  |     |  |  |  +------| (100)
+|                 |  |     |  |  |         +--Blan_SELENOK.1.selenocysteine
+|                 |  |     |  +--| (49)
+|                 |  |     |     |           +--Ciona_intestinalis_gi_198427212_ref_XP_002128715.1
+|                 |  |     |     |        +--| (95)
+|                 |  |     |     |        |  +--Crob_SELENOK.2.selenocysteine
+|                 |  |     |     |     +--| (86)
+|                 |  |     |     |     |  +--Cint_SELENOK.2.selenocysteine
+|                 |  |     |     |  +--| (94)
+|                 |  |     |     |  |  +--Csav_SELENOK.2.selenocysteine
+|                 |  |     |     +--| (65)
+|                 |  |     |        |        +--Bsch_SELENOK.2.selenocysteine
+|                 |  |     |        |     +--| (87)
+|                 |  |     |        |     |  +--Scla_SELENOK.1.selenocysteine
+|                 |  |     |        |  +--| (88)
+|                 |  |     |        |  |  +---Hror_SELENOK.1.selenocysteine
+|                 |  |     |        +--| (57)
+|                 |  |     |           +-------------------Cint_SELENOK.3.glycine
+|                 |  |  +--| (48)
+|                 |  |  |  +-----------Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1
+|                 |  +--| (49)
+|                 |     |                        +---------------Pege_SELENOK.1.pseudo
+|                 |     |                  +-----| (89)
+|                 |     |                  |     +----------Olon_SELENOK.2.serine
+|                 |     |              +---| (47)
+|                 |     |              |   +-----Stho_SELENOK.4.proline
+|                 |     |           +--| (48)
+|                 |     |           |  +---Fbor_SELENOK.2.glycine
+|                 |     |      +----| (78)
+|                 |     |      |    |          +--Stho_SELENOK.2.glycine
+|                 |     |      |    |     +----| (99)
+|                 |     |      |    |     |    +----------Stho_SELENOK.3.arginine
+|                 |     |      |    |  +--| (92)
+|                 |     |      |    |  |  +-------OSKA_SELENOK.3.glycine
+|                 |     |      |    +--| (89)
+|                 |     |      |       |   +---Fbor_SELENOK.1.glycine
+|                 |     |      |       +---| (95)
+|                 |     |      |           |  +--Fbor_SELENOK.3.glycine
+|                 |     |      |           +--| (96)
+|                 |     |      |              +-------Fbor_SELENOK.4.glycine
+|                 |     +------| (96)
+|                 |            +---------------OSKA_SELENOK.2.unaligned
+|              +--| (48)
+|              |  |              +-------Bsty_SELENOK.1.unaligned
+|              |  |           +--| (82)
+|              |  |           |  |          +--OKI_gold_SELENOK
+|              |  |           |  |       +--| (97)
+|              |  |           |  |       |  +--OdB3_gold_SELENOK
+|              |  |           |  +-------| (100)
+|              |  |           |          +--OSKA_gold_SELENOK
+|              |  +-----------| (100)
+|              |              +--Olon_SELENOK.1.unaligned
+|  +-----------| (100)
+|  |           +--------Ixodes_scapularis_gi_215491294_gb_EEC00935.1
++--| (78)
+|  |        +-----Se_user_SelK_Ostreococcus_tauri
+|  +--------| (100)
+|           +--Se_user_SelK_Ostreococcus_lucimarinus
 |
-+-----Se_user_SelK_Trypanosoma_brucei
+|  +-----Se_user_SelK_Trypanosoma_cruzi
++--| (51)
+   +------Se_user_SelK_Trypanosoma_brucei
 
 
 Consensus tree in newick format: 
 
-(Se_user_SelK_Leishmania_infantum_JPCM5:0.4917064397,(((((((gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2:0.9405695659,Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1:0.8073045328)37:0.0000022732,((((Se_user_SelK_Strongylocentrotus_purpuratus:0.3089231146,((((Salmo_salar_gi_213511230_ref_NP_001134373.1:0.1306914692,(Danio_rerio_gi_51859039_gb_AAH81491.1:0.0000023685,Drer_SELENOK.1.selenocysteine:0.0450663179)100:0.1206485975)90:0.1028830366,(Gallus_gallus_gi_70906483_ref_NP_001020612.1:0.1783400886,((Xenopus_laevis_gi_207444688_ref_NP_001087951.2:0.0768173974,Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1:0.2043849561)96:0.1124653455,(((Sus_scrofa_gi_87047634_gb_ABD18450.1:0.0109355950,SelK.Sus_scrofa_SelK.Sus_scrofa:0.0000023685)100:0.0333099628,Human_SELENOK_NP_067060.2:0.0299141159)52:0.0000023734,((((SelK.Mus_musculus_SelK.Mus_musculus:0.0000023685,(((Mmus_SELENOK.1.selenocysteine:0.0000023685,Mmus_SELENOK.2.uga_containing:0.0335997020)97:0.0213292651,(Mmus_SELENOK.8.pseudo:0.0000027354,(Mmus_SELENOK.14.selenocysteine:0.0929629146,(Mmus_SELENOK.16.unaligned:0.2743635003,Mmus_SELENOK.19.uga_containing:0.3118827020)85:0.0407347635)91:0.1139618885)89:0.0894966814)54:0.0115363090,Mmus_SELENOK.17.selenocysteine:0.0583364771)20:0.0000021617)18:0.0000021617,Mmus_SELENOK.11.pseudo:0.0782654383)46:0.0043267243,(Mmus_SELENOK.3.selenocysteine:0.0522441593,Mmus_SELENOK.6.selenocysteine:0.1437620128)74:0.0240890357)96:0.0447001222,Mmus_SELENOK.13.glutamic_acid:0.4736646269)83:0.0116431313)100:0.1800306591)62:0.0327762478)93:0.0492527021)90:0.1101283575,(Bflo_SELENOK.1.selenocysteine:0.0000023685,Blan_SELENOK.1.selenocysteine:0.0000023685)100:0.3884148288)79:0.0441533875,((((Ciona_intestinalis_gi_198427212_ref_XP_002128715.1:0.0000023734,Crob_SELENOK.2.selenocysteine:0.0430011168)95:0.0511387162,Cint_SELENOK.2.selenocysteine:0.0125399360)91:0.0526815015,Csav_SELENOK.2.selenocysteine:0.1126514991)98:0.2048890594,((Bsch_SELENOK.2.selenocysteine:0.0540166426,Scla_SELENOK.1.selenocysteine:0.1446854154)88:0.0148042591,Hror_SELENOK.1.selenocysteine:0.2486530962)96:0.2085922284)93:0.1446703580)78:0.1219932649)80:0.0872818667,Ixodes_scapularis_gi_215491294_gb_EEC00935.1:0.7376204206)41:0.0000023718,(((((Pege_SELENOK.1.pseudo:1.6543033569,Fbor_SELENOK.1.glycine:0.6194717593)68:0.1921513400,(((Stho_SELENOK.2.glycine:0.2138096062,Stho_SELENOK.3.arginine:1.1510456474)81:0.2239187541,Fbor_SELENOK.3.glycine:0.5866643341)47:0.0000028503,OSKA_SELENOK.2.glycine:0.3696697325)67:0.2328372404)71:0.4805624189,Stho_SELENOK.4.proline:0.8209328451)54:0.3123611975,Fbor_SELENOK.2.glycine:0.1093949509)79:0.3909848923,Bsty_SELENOK.1.unaligned:0.8598344981)68:0.2529412826)63:0.2750610180,OSKA_SELENOK.1.tyrosine:0.9031984614)35:0.1231009332)20:0.0027249967,Blan_SELENOK.3.arginine:1.2121751869)48:0.1846287722,Cint_SELENOK.3.glycine:1.6324417008)67:0.1203604495,OSKA_SELENOK.4.proline:1.3317248004)75:0.2121198546,(Se_user_SelK_Ostreococcus_tauri:0.5466418462,Se_user_SelK_Ostreococcus_lucimarinus:0.1383822253)100:0.7037138129)89:0.1966430307,Se_user_SelK_Trypanosoma_cruzi:0.3328193829)91:0.1288350961,Se_user_SelK_Trypanosoma_brucei:0.5132507482);
+(Se_user_SelK_Leishmania_infantum_JPCM5:0.4853240794,((((gi_187608840_sp_Q55EX3.2_SELK_DICDI_gi_187608840_sp_Q55EX3.2:0.8361290053,(((Se_user_SelK_Strongylocentrotus_purpuratus:0.2941285112,((((Salmo_salar_gi_213511230_ref_NP_001134373.1:0.1371444118,(Danio_rerio_gi_51859039_gb_AAH81491.1:0.0000023535,Drer_SELENOK.1.selenocysteine:0.0479409785)100:0.1173506685)98:0.1001331589,((Gallus_gallus_gi_70906483_ref_NP_001020612.1:0.1978386733,((Xenopus_laevis_gi_207444688_ref_NP_001087951.2:0.0697876469,Ornithorhynchus_anatinus_gi_149616291_ref_XP_001506545.1:0.2176573389)98:0.0519506266,Blan_SELENOK.3.arginine:1.5301270379)61:0.0424952417)55:0.0641234521,((Sus_scrofa_gi_87047634_gb_ABD18450.1:0.0458655763,(((((Mmus_SELENOK.1.selenocysteine:0.0000023535,Mmus_SELENOK.2.uga_containing:0.0345542392)95:0.0229939076,(Mmus_SELENOK.3.selenocysteine:0.0466805389,Mmus_SELENOK.6.selenocysteine:0.1604288188)74:0.0252577305)50:0.0104696520,(Mmus_SELENOK.11.pseudo:0.0807507197,Mmus_SELENOK.17.selenocysteine:0.0608365245)48:0.0000023535)64:0.0255766746,(Mmus_SELENOK.8.pseudo:0.0167998925,(Mmus_SELENOK.14.selenocysteine:0.1079657745,(Mmus_SELENOK.16.unaligned:0.3490622931,Mmus_SELENOK.19.uga_containing:0.2781124231)77:0.0354582037)95:0.0664166376)87:0.0664577490)95:0.0135556977,Mmus_SELENOK.13.glutamic_acid:0.5813725834)86:0.0250463680)85:0.0097270110,Human_SELENOK_NP_067060.2:0.0174786368)99:0.1789653863)62:0.0695676916)65:0.1698392431,(Bflo_SELENOK.1.selenocysteine:0.0000025024,Blan_SELENOK.1.selenocysteine:0.0354374352)100:0.5631424507)56:0.0663286310,((((Ciona_intestinalis_gi_198427212_ref_XP_002128715.1:0.0000023585,Crob_SELENOK.2.selenocysteine:0.0445417461)95:0.0509226417,Cint_SELENOK.2.selenocysteine:0.0145062531)86:0.0520951288,Csav_SELENOK.2.selenocysteine:0.1170282078)94:0.1584119320,(((Bsch_SELENOK.2.selenocysteine:0.0720944059,Scla_SELENOK.1.selenocysteine:0.1393620465)87:0.0193083212,Hror_SELENOK.1.selenocysteine:0.2909595358)88:0.1583437594,Cint_SELENOK.3.glycine:1.4951455590)57:0.1031538142)65:0.2767318380)49:0.1380053008)39:0.0281599015,Chlamydomonas_reinhardtii_gi_159482086_ref_XP_001699104.1:0.9113734042)48:0.0537839405,(((((Pege_SELENOK.1.pseudo:1.1714351133,Olon_SELENOK.2.serine:0.8045871203)89:0.4772481276,Stho_SELENOK.4.proline:0.4616714386)47:0.3582832459,Fbor_SELENOK.2.glycine:0.3615217514)48:0.2403460344,(((Stho_SELENOK.2.glycine:0.1994732216,Stho_SELENOK.3.arginine:0.8438965612)99:0.3817302511,OSKA_SELENOK.3.glycine:0.6232782435)92:0.2241656368,(Fbor_SELENOK.1.glycine:0.3351027233,(Fbor_SELENOK.3.glycine:0.2429642682,Fbor_SELENOK.4.glycine:0.6143697480)96:0.1769322721)95:0.2951342043)89:0.2764495644)78:0.3726703813,OSKA_SELENOK.2.unaligned:1.2257172684)96:0.5345517847)49:0.0505378845)25:0.0000023102,((Bsty_SELENOK.1.unaligned:0.5947198513,((OKI_gold_SELENOK:0.0810257933,OdB3_gold_SELENOK:0.0134655275)97:0.0539962675,OSKA_gold_SELENOK:0.0000020226)100:0.6437215527)82:0.0876426280,Olon_SELENOK.1.unaligned:0.2182854538)100:0.8757569887)48:0.0947195596,Ixodes_scapularis_gi_215491294_gb_EEC00935.1:0.6629773167)100:0.8710314090,(Se_user_SelK_Ostreococcus_tauri:0.5029103306,Se_user_SelK_Ostreococcus_lucimarinus:0.1728698010)100:0.7230248430)78:0.1804194398,(Se_user_SelK_Trypanosoma_cruzi:0.4933140389,Se_user_SelK_Trypanosoma_brucei:0.5279039431)51:0.0671335437);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOK.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0438641,0.0888184,0.0312939,0.0361941,0.00807103,0.0302286,0.0187237,0.191084,0.015741,0.0344897,0.051747,0.0244762,0.0298025,0.0577125,0.133134,0.0907359,0.0291633,0.0163801,0.0195759,0.0487643}+G4{6.98284}" --length 179
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOK.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0439315,0.0845914,0.0335632,0.0364094,0.00713425,0.0303104,0.0172992,0.191527,0.0138431,0.0341731,0.0532833,0.0231949,0.0299038,0.061212,0.129317,0.0953663,0.0331566,0.0166893,0.0179091,0.0471843}+G4{5.48978}" --length 181
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -321,7 +333,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Fri Oct 23 19:37:14 2026
-Total CPU time used: 7740.093635 seconds (2h:9m:0s)
-Total wall-clock time used: 1528.343402 seconds (0h:25m:28s)
+Date and time: Fri Oct 30 05:11:53 2026
+Total CPU time used: 632.10368 seconds (0h:10m:32s)
+Total wall-clock time used: 82.52882221 seconds (0h:1m:22s)
 

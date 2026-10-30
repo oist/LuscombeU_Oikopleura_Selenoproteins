@@ -1,0 +1,216 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOT.trimmed
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 63 sequences with 269 amino-acid sites
+Number of constant sites: 6 (= 2.23048% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 6 (= 2.23048% of all sites)
+Number of parsimony informative sites: 244
+Number of distinct site patterns: 269
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+I+G4
+
+State frequencies: (model)
+
+Model of rate heterogeneity: Invar+Gamma with 4 categories
+Proportion of invariable sites: 0.0171
+Gamma shape alpha: 1.5490
+
+ Category  Relative_rate  Proportion
+  0         0              0.0171
+  1         0.2368         0.2457
+  2         0.6069         0.2457
+  3         1.0714         0.2457
+  4         2.1543         0.2457
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -17011.5318 (s.e. 539.0902)
+Unconstrained log-likelihood (without tree): -1504.9774
+Number of free parameters (#branches + #model parameters): 125
+Akaike information criterion (AIC) score: 34273.0636
+Corrected Akaike information criterion (AICc) score: 34493.3434
+Bayesian information criterion (BIC) score: 34722.4026
+
+Total tree length (sum of branch lengths): 46.2088
+Sum of internal branch lengths: 17.3483 (37.5433% of tree length)
+
+WARNING: 1 near-zero internal branches (<0.0037) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Se_user_SelT__5_Leishmania_major' is drawn at root
+
++--Se_user_SelT__5_Leishmania_major
+|
++**Se_user_SelT__4_Leishmania_infantum
+|
+|              +-----Trypanosoma_brucei_TREU927_SelTryp_T.brucei
+|       +------|
+|       |      +---------Se_user_SelT1__1_Trypanosoma_cruzi
++-------|
+        |                             +-----Brugia_malayi_gi_170586710_ref_XP_001898122.1
+        |                          +--|
+        |                          |  |      +----Caenorhabditis_briggsae_AF16_gi_157768314_ref_XP_001675978.1
+        |                          |  +------|
+        |                          |         +-------gi_17368490_sp_Q19892_SELT2_CAEEL_gi_17368490_sp_Q19892_SELT
+        |                       +--|
+        |                       |  +--------gi_17366679_sp_Q9BN19.1_HSP6_HETGL_gi_17366679_sp_Q9BN19.1_H
+        |                +------|
+        |                |      |               +**Danio_rerio_gi_168480083_ref_NP_001091957.2
+        |                |      |        +------|
+        |                |      |        |      +**Drer_SELENOT.2.selenocysteine
+        |                |      |     +--|
+        |                |      |     |  |           +--Se_user_SelT__14_Xenopus_tropicalis
+        |                |      |     |  |        +--|
+        |                |      |     |  |        |  |        +**SelT.Mus_musculus_SelT.Mus_musculus
+        |                |      |     |  |        |  |     +**|
+        |                |      |     |  |        |  |     |  +**Mmus_SELENOT.5.selenocysteine
+        |                |      |     |  |        |  |  +--|
+        |                |      |     |  |        |  |  |  +--SelT.Sus_scrofa_SelT.Sus_scrofa
+        |                |      |     |  |        |  +--|
+        |                |      |     |  |        |     +**Human_SELENOT_NP_057359.2
+        |                |      |     |  |     +--|
+        |                |      |     |  |     |  +--Gallus_gallus_gi_143771645_ref_NP_001006557.3
+        |                |      |     |  |  +--|
+        |                |      |     |  |  |  |  +--SelT.Salmo_salar_SelT.Salmo_salar
+        |                |      |     |  |  |  +--|
+        |                |      |     |  |  |     +--Drer_SELENOT.19.selenocysteine
+        |                |      |     |  +--|
+        |                |      |     |     +--Drer_SELENOT.10.selenocysteine
+        |                |      |  +--|
+        |                |      |  |  |              +--Culex_quinquefasciatus_gi_170037660_ref_XP_001846674.1
+        |                |      |  |  |           +--|
+        |                |      |  |  |           |  +--Anopheles_gambiae_str._PEST_gi_158299972_ref_XP_319979.4
+        |                |      |  |  |        +--|
+        |                |      |  |  |        |  +-----Drosophila_mojavensis_gi_195114234_ref_XP_002001672.1
+        |                |      |  |  |  +-----|
+        |                |      |  |  |  |     |  +----Tribolium_castaneum_gi_91083003_ref_XP_974477.1
+        |                |      |  |  |  |     +--|
+        |                |      |  |  |  |        +--------Acyrthosiphon_pisum_gi_193591797_ref_XP_001951959.1
+        |                |      |  |  +--|
+        |                |      |  |     |  +**Bflo_SELENOT.1.selenocysteine
+        |                |      |  |     +--|
+        |                |      |  |        +--Blan_SELENOT.1.selenocysteine
+        |                |      +--|
+        |                |         |                    +**Se_user_SelT__1_Ciona_intestinalis
+        |                |         |                 +--|
+        |                |         |                 |  +**Crob_SELENOT.1.selenocysteine
+        |                |         |              +--|
+        |                |         |              |  +--Cint_SELENOT.2.selenocysteine
+        |                |         |           +--|
+        |                |         |           |  +--Csav_SELENOT.1.selenocysteine
+        |                |         |        +--|
+        |                |         |        |  +--Pmam_SELENOT.1.selenocysteine
+        |                |         |     +--|
+        |                |         |     |  |        +--Bsch_SELENOT.1.selenocysteine
+        |                |         |     |  |     +--|
+        |                |         |     |  |     |  +--------------Bsch_SELENOT.2.selenocysteine
+        |                |         |     |  |  +--|
+        |                |         |     |  |  |  +--Scla_SELENOT.1.selenocysteine
+        |                |         |     |  +--|
+        |                |         |     |     +--Hror_SELENOT.1.selenocysteine
+        |                |         |  +--|
+        |                |         |  |  |     +--Pege_SELENOT.1.selenocysteine
+        |                |         |  |  |  +--|
+        |                |         |  |  |  |  +---Tdem_SELENOT.4.selenocysteine
+        |                |         |  |  +--|
+        |                |         |  |     +-----Tdem_SELENOT.1.selenocysteine
+        |                |         +--|
+        |                |            |                  +---Bsty_SELENOT.2.unaligned
+        |                |            |               +--|
+        |                |            |               |  +--Mery_SELENOT.2.selenocysteine
+        |                |            |            +--|
+        |                |            |            |  +--Olon_SELENOT.1.selenocysteine
+        |                |            |         +--|
+        |                |            |         |  +--Olon_SELENOT.2.selenocysteine
+        |                |            |  +------|
+        |                |            |  |      |        +**Oalb_SELENOT.2.selenocysteine
+        |                |            |  |      |     +--|
+        |                |            |  |      |     |  +--Oalb_SELENOT.3.unaligned
+        |                |            |  |      |  +--|
+        |                |            |  |      |  |  +--Ovan_SELENOT.2.selenocysteine
+        |                |            |  |      +--|
+        |                |            |  |         |    +--OKI_gold_SELENOT
+        |                |            |  |         +----|
+        |                |            |  |              |  +--OSKA_gold_SELENOT
+        |                |            |  |              +--|
+        |                |            |  |                 +--OdB3_gold_SELENOT
+        |                |            +--|
+        |                |               +----------------Fbor_SELENOT.2.selenocysteine
+        |             +--|
+        |             |  |                  +---Ricinus_communis_gi_223528218_gb_EEF30277.1
+        |             |  |        +---------|
+        |             |  |        |         |  +--Arabidopsis_thaliana_gi_79331322_ref_NP_001032096.1
+        |             |  |        |         +--|
+        |             |  |        |            +--Arabidopsis_thaliana_gi_51970218_dbj_BAD43801.1
+        |             |  |     +--|
+        |             |  |     |  +-----------Chlamydomonas_reinhardtii_gi_159463168_ref_XP_001689814.1
+        |             |  |  +--|
+        |             |  |  |  |    +----------------------Se_user_SelT__12_Thalassiosira_pseudonana
+        |             |  |  |  +----|
+        |             |  |  |       +--------------selT_aureococcus_anophagefferens_students_08_09_selT_aureoco
+        |             |  +--|
+        |             |     |              +-----Se_user_SelT__6_Ostreococcus_lucimarinus
+        |             |     |  +-----------|
+        |             |     |  |           +--------Se_user_SelT__7_Ostreococcus
+        |             |     +--|
+        |             |        |   +---------Se_user_SelT__11_Tetrahymena_thermophila
+        |             |        +---|
+        |             |            |           +---------Se_user_SelT2_Paramecium_tetraurelia
+        |             |            +-----------|
+        |             |                        +--------Se_user_SelT1_Paramecium_tetraurelia
+        |          +--|
+        |          |  +--------------------Tetrahymena_thermophila_SB210_gi_118398008_ref_XP_001031334.
+        +----------|
+                   |         +---------------------Cryptosporidium_hominis_TU502_gi_67585275_ref_XP_665097.1
+                   +---------|
+                             +-----------------------SelT_eimeria_tenella_08_09_1163_SelT_eimeria_tenella_08_09_1
+
+Tree in newick format:
+
+(Se_user_SelT__5_Leishmania_major:0.0788673021,Se_user_SelT__4_Leishmania_infantum:0.0000020674,((Trypanosoma_brucei_TREU927_SelTryp_T.brucei:0.5732858189,Se_user_SelT1__1_Trypanosoma_cruzi:0.9366582437):0.6840912947,((((((Brugia_malayi_gi_170586710_ref_XP_001898122.1:0.5326751939,(Caenorhabditis_briggsae_AF16_gi_157768314_ref_XP_001675978.1:0.4880153882,gi_17368490_sp_Q19892_SELT2_CAEEL_gi_17368490_sp_Q19892_SELT:0.7267832863):0.6079977581):0.2028395049,gi_17366679_sp_Q9BN19.1_HSP6_HETGL_gi_17366679_sp_Q9BN19.1_H:0.8571762279):0.3107603561,((((Danio_rerio_gi_168480083_ref_NP_001091957.2:0.0000010000,Drer_SELENOT.2.selenocysteine:0.0000010000):0.6616957420,((((Se_user_SelT__14_Xenopus_tropicalis:0.1663332241,(((SelT.Mus_musculus_SelT.Mus_musculus:0.0000010000,Mmus_SELENOT.5.selenocysteine:0.0000010000):0.0000010000,SelT.Sus_scrofa_SelT.Sus_scrofa:0.0220624516):0.0057028004,Human_SELENOT_NP_057359.2:0.0000010000):0.0436528691):0.0486746563,Gallus_gallus_gi_143771645_ref_NP_001006557.3:0.1002765117):0.0711126827,(SelT.Salmo_salar_SelT.Salmo_salar:0.0551547144,Drer_SELENOT.19.selenocysteine:0.1035573366):0.1626351763):0.0676548572,Drer_SELENOT.10.selenocysteine:0.2287253092):0.2935315794):0.3418554091,((((Culex_quinquefasciatus_gi_170037660_ref_XP_001846674.1:0.1156588083,Anopheles_gambiae_str._PEST_gi_158299972_ref_XP_319979.4:0.3055775128):0.1953578953,Drosophila_mojavensis_gi_195114234_ref_XP_002001672.1:0.5269530815):0.2335303685,(Tribolium_castaneum_gi_91083003_ref_XP_974477.1:0.4507697294,Acyrthosiphon_pisum_gi_193591797_ref_XP_001951959.1:0.8294200281):0.0998138382):0.5155381908,(Bflo_SELENOT.1.selenocysteine:0.0000020000,Blan_SELENOT.1.selenocysteine:0.0349290517):0.3177594968):0.0779007984):0.1998353807,(((((((Se_user_SelT__1_Ciona_intestinalis:0.0000010000,Crob_SELENOT.1.selenocysteine:0.0000010000):0.0297452048,Cint_SELENOT.2.selenocysteine:0.0109062108):0.1639793991,Csav_SELENOT.1.selenocysteine:0.1167154437):0.0971269645,Pmam_SELENOT.1.selenocysteine:0.2359422770):0.1448206452,(((Bsch_SELENOT.1.selenocysteine:0.1799792031,Bsch_SELENOT.2.selenocysteine:1.3230073203):0.0646942294,Scla_SELENOT.1.selenocysteine:0.1013508205):0.1372745985,Hror_SELENOT.1.selenocysteine:0.2488946988):0.2479337927):0.1311889396,((Pege_SELENOT.1.selenocysteine:0.2945401889,Tdem_SELENOT.4.selenocysteine:0.4039996274):0.1302171917,Tdem_SELENOT.1.selenocysteine:0.5752656069):0.1845153748):0.2137574288,(((((Bsty_SELENOT.2.unaligned:0.3702405158,Mery_SELENOT.2.selenocysteine:0.1170778166):0.2111886903,Olon_SELENOT.1.selenocysteine:0.2227102772):0.1906095192,Olon_SELENOT.2.selenocysteine:0.1443406929):0.2327424536,(((Oalb_SELENOT.2.selenocysteine:0.0000010000,Oalb_SELENOT.3.unaligned:0.1154118019):0.1289459935,Ovan_SELENOT.2.selenocysteine:0.2807714036):0.0987568118,(OKI_gold_SELENOT:0.0296650602,(OSKA_gold_SELENOT:0.0069784106,OdB3_gold_SELENOT:0.0103057810):0.0973041644):0.4767481892):0.1758810182):0.6516429442,Fbor_SELENOT.2.selenocysteine:1.4758790265):0.1944505999):0.0493215881):0.1912456624):0.6860818367,((((Ricinus_communis_gi_223528218_gb_EEF30277.1:0.3500036891,(Arabidopsis_thaliana_gi_79331322_ref_NP_001032096.1:0.1105750922,Arabidopsis_thaliana_gi_51970218_dbj_BAD43801.1:0.1466679647):0.1303846339):0.8609728571,Chlamydomonas_reinhardtii_gi_159463168_ref_XP_001689814.1:1.0739797739):0.2430722757,(Se_user_SelT__12_Thalassiosira_pseudonana:1.9773750473,selT_aureococcus_anophagefferens_students_08_09_selT_aureoco:1.3139604629):0.5134515654):0.1518089566,((Se_user_SelT__6_Ostreococcus_lucimarinus:0.5452534757,Se_user_SelT__7_Ostreococcus:0.8065346963):1.0661028153,(Se_user_SelT__11_Tetrahymena_thermophila:0.9165828984,(Se_user_SelT2_Paramecium_tetraurelia:0.8634737258,Se_user_SelT1_Paramecium_tetraurelia:0.7742722719):1.1074580698):0.4180819656):0.1219580073):0.3043911605):0.2544539205,Tetrahymena_thermophila_SB210_gi_118398008_ref_XP_001031334.:1.8419860313):0.1055828558,(Cryptosporidium_hominis_TU502_gi_67585275_ref_XP_665097.1:1.9739561853,SelT_eimeria_tenella_08_09_1163_SelT_eimeria_tenella_08_09_1:2.0775230080):0.9412943663):1.0287891940):0.7198285285);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOT.ml.hyp_tunicates.treefile -m "LG+I{0.0170562}+G4{1.54898}" --length 269
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOT.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOT.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 06:54:06 2026
+Total CPU time used: 3457.25 seconds (0h:57m:37s)
+Total wall-clock time used: 521.856 seconds (0h:8m:41s)
+

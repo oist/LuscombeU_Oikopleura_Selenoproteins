@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 270 sequences with 243 amino-acid sites
-Number of constant sites: 1 (= 0.411523% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 1 (= 0.411523% of all sites)
+Input data: 240 sequences with 241 amino-acid sites
+Number of constant sites: 0 (= 0% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 0 (= 0% of all sites)
 Number of parsimony informative sites: 239
-Number of distinct site patterns: 243
+Number of distinct site patterns: 241
 
 SUBSTITUTION PROCESS
 --------------------
@@ -46,28 +46,28 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 1.2038
+Gamma shape alpha: 1.2705
 
  Category  Relative_rate  Proportion
-  1         0.1757         0.2500
-  2         0.5305         0.2500
-  3         1.0270         0.2500
-  4         2.2668         0.2500
+  1         0.1876         0.2500
+  2         0.5453         0.2500
+  3         1.0335         0.2500
+  4         2.2336         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -50630.1747 (s.e. 1877.5729)
-Unconstrained log-likelihood (without tree): -1334.8139
-Number of free parameters (#branches + #model parameters): 557
-Akaike information criterion (AIC) score: 102374.3494
-Corrected Akaike information criterion (AICc) score: 723986.3494
-Bayesian information criterion (BIC) score: 104319.9846
+Log-likelihood of the tree: -47335.7380 (s.e. 1654.1118)
+Unconstrained log-likelihood (without tree): -1321.8361
+Number of free parameters (#branches + #model parameters): 497
+Akaike information criterion (AIC) score: 95665.4760
+Corrected Akaike information criterion (AICc) score: 590677.4760
+Bayesian information criterion (BIC) score: 97397.4201
 
 **************************** WARNING ****************************
-Number of parameters (K, model parameters and branch lengths): 557
-Sample size (n, alignment length): 243
+Number of parameters (K, model parameters and branch lengths): 497
+Sample size (n, alignment length): 241
 
 Given that K>=n, the parameter estimates might be inaccurate.
 Thus, phylogenetic estimates should be interpreted with caution.
@@ -96,8 +96,8 @@ Inference: A Practical Information-Theoretic Approach. Springer,
 New York.
 ************************ END OF WARNING ***********************
 
-Total tree length (sum of branch lengths): 153.0379
-Sum of internal branch lengths: 56.1535 (36.6925% of tree length)
+Total tree length (sum of branch lengths): 139.1366
+Sum of internal branch lengths: 51.7923 (37.2241% of tree length)
 
 WARNING: 5 near-zero internal branches (<0.0041) should be treated with caution
          Such branches are denoted by '**' in the figure below
@@ -105,9 +105,504 @@ WARNING: 5 near-zero internal branches (<0.0041) should be treated with caution
 NOTE: Tree is UNROOTED although outgroup taxon 'Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
-+---------------Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1
++----------------Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1
 |
-|                                  +---Globodera_rostochiensis_gi_21739125_emb_CAD38523.1
+|                               +--Globodera_rostochiensis_gi_21739125_emb_CAD38523.1
+|                            +--| (100)
+|                            |  +--Haemonchus_contortus_gi_47499102_gb_AAT28332.1
+|                         +--| (99)
+|                         |  +--Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1
+|                    +----| (100)
+|                    |    |  +--gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_
+|                    |    +--| (100)
+|                    |       +--gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX
+|                 +--| (96)
+|                 |  |                     +--Ciona_intestinalis_gi_198424199_ref_XP_002121558.1
+|                 |  |                  +--| (100)
+|                 |  |                  |  +**Crob_GPX.5.selenocysteine
+|                 |  |               +--| (97)
+|                 |  |               |  +--Cint_GPX.9.selenocysteine
+|                 |  |           +---| (99)
+|                 |  |           |   +--Cint_GPX.12.selenocysteine
+|                 |  |       +---| (100)
+|                 |  |       |   +--Csav_GPX.7.selenocysteine
+|                 |  |  +----| (100)
+|                 |  |  |    |           +--Cint_GPX.14.selenocysteine
+|                 |  |  |    |        +--| (97)
+|                 |  |  |    |        |  |  +--Crob_GPX.7.selenocysteine
+|                 |  |  |    |        |  +**| (88)
+|                 |  |  |    |        |     +--Csav_GPX.11.selenocysteine
+|                 |  |  |    |     +--| (99)
+|                 |  |  |    |     |  +-------Csav_GPX.10.unaligned
+|                 |  |  |    |  +--| (99)
+|                 |  |  |    |  |  +--Pmam_GPX.10.selenocysteine
+|                 |  |  |    +--| (99)
+|                 |  |  |       +------Pmam_GPX.7.selenocysteine
+|                 |  +--| (97)
+|                 |     |  +--------------Bsch_GPX.7.selenocysteine
+|                 |     +--| (99)
+|                 |        |     +-------Bsch_GPX.9.selenocysteine
+|                 |        |  +--| (74)
+|                 |        |  |  |        +-----------Bsch_GPX.10.unaligned
+|                 |        |  |  |     +--| (71)
+|                 |        |  |  |     |  |  +---Scla_GPX.16.selenocysteine
+|                 |        |  |  |     |  +--| (100)
+|                 |        |  |  |     |     +-----Scla_GPX.17.selenocysteine
+|                 |        |  |  |  +--| (99)
+|                 |        |  |  |  |  |  +-------Bsch_GPX.13.selenocysteine
+|                 |        |  |  |  |  +--| (70)
+|                 |        |  |  |  |     |  +--Hror_GPX.4.unaligned
+|                 |        |  |  |  |     +--| (100)
+|                 |        |  |  |  |        +---Scla_GPX.18.unaligned
+|                 |        |  |  +--| (89)
+|                 |        |  |     +------------Hror_GPX.7.selenocysteine
+|                 |        +--| (93)
+|                 |           |            +--Scla_GPX.8.selenocysteine
+|                 |           +------------| (100)
+|                 |                        +--Scla_GPX.9.selenocysteine
+|              +--| (84)
+|              |  +-----------------Crassostrea_gigas_gi_152002384_gb_ABS19600.1
+|           +--| (76)
+|           |  |      +------Dreissena_polymorpha_gi_145559053_gb_ABP73388.1
+|           |  +------| (100)
+|           |         +-----Unio_tumidus_gi_111572533_gb_ABH10623.1
+|        +--| (81)
+|        |  |                        +--Mus_musculus_gi_148700720_gb_EDL32667.1
+|        |  |                     +--| (100)
+|        |  |                     |  +**Mmus_GPX.26.cysteine
+|        |  |                  +--| (100)
+|        |  |                  |  +--Human_GPX6_NP_874360.1
+|        |  |               +--| (100)
+|        |  |               |  |  +--Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1
+|        |  |               |  +--| (100)
+|        |  |               |     |     +--gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_
+|        |  |               |     |  +--| (100)
+|        |  |               |     |  |  +--Mmus_GPX.20.cysteine
+|        |  |               |     +--| (100)
+|        |  |               |        |  +--gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A
+|        |  |               |        +--| (100)
+|        |  |               |           +**Human_GPX5_NP_001500.1
+|        |  |            +--| (100)
+|        |  |            |  |     +**GPX3.Homo_sapiens_GPX3.Homo_sapiens
+|        |  |            |  |  +--| (100)
+|        |  |            |  |  |  +**Human_GPX3_NP_001316719.1
+|        |  |            |  +--| (100)
+|        |  |            |     +--Mmus_GPX.14.selenocysteine
+|        |  |         +--| (99)
+|        |  |         |  +--Xenopus_tropicalis_gi_38174689_gb_AAH61262.1
+|        |  |      +--| (98)
+|        |  |      |  +--Drer_GPX.16.selenocysteine
+|        |  |  +---| (100)
+|        |  |  |   +--GPX3.Salmo_salar_GPX3.Salmo_salar
+|        |  +--| (99)
+|        |     |          +--Bflo_GPX.9.selenocysteine
+|        |     |       +--| (100)
+|        |     |       |  |  +----Bflo_GPX.22.serine
+|        |     |       |  +--| (100)
+|        |     |       |     +--Blan_GPX.8.selenocysteine
+|        |     +-------| (100)
+|        |             |  +--Bflo_GPX.13.selenocysteine
+|        |             +--| (100)
+|        |                +--Blan_GPX.13.selenocysteine
+|     +--| (88)
+|     |  |  +-----------------gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1
+|     |  +--| (89)
+|     |     |        +----Bsch_GPX.3.selenocysteine
+|     |     |     +--| (100)
+|     |     |     |  +--Scla_GPX.13.selenocysteine
+|     |     |  +--| (100)
+|     |     |  |  +----Hror_GPX.2.selenocysteine
+|     |     +--| (99)
+|     |        |               +--Cint_GPX.3.selenocysteine
+|     |        |            +--| (100)
+|     |        |            |  +**Crob_GPX.11.selenocysteine
+|     |        |         +--| (100)
+|     |        |         |  +--Csav_GPX.3.selenocysteine
+|     |        |      +--| (100)
+|     |        |      |  +---Pmam_GPX.4.selenocysteine
+|     |        |   +--| (100)
+|     |        |   |  +--Pege_GPX.6.selenocysteine
+|     |        +---| (100)
+|     |            +---Tdem_GPX.5.selenocysteine
+|  +--| (88)
+|  |  |  +---------Metapenaeus_ensis_gi_171189511_gb_ACB42236.1
+|  |  +--| (71)
+|  |     +----------Drer_GPX.22.selenocysteine
++--| (91)
+|  |  +------------Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1
+|  +--| (97)
+|     +-------Ixodes_scapularis_gi_215502580_gb_EEC12074.1
+|
+|                       +--Rheum_australe_gi_197312911_gb_ACH63236.1
+|                    +--| (99)
+|                    |  +-------Fbor_GPX.15.unaligned
+|                 +--| (98)
+|                 |  +---Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1
+|              +--| (86)
+|              |  |                                +**Bflo_GPX.3.cysteine
+|              |  |                        +-------| (100)
+|              |  |                        |       +---Blan_GPX.3.cysteine
+|              |  |                     +--| (97)
+|              |  |                     |  |     +--Drer_GPX.9.cysteine
+|              |  |                     |  +-----| (100)
+|              |  |                     |        |          +--Drer_GPX.11.serine
+|              |  |                     |        |  +-------| (100)
+|              |  |                     |        |  |       |  +----Mmus_GPX.19.cysteine
+|              |  |                     |        |  |       +--| (100)
+|              |  |                     |        |  |          +--Human_GPX8_NP_001008398.2
+|              |  |                     |        +--| (99)
+|              |  |                     |           |  +--Mmus_GPX.11.cysteine
+|              |  |                     |           +--| (100)
+|              |  |                     |              +--Human_GPX7_NP_056511.2
+|              |  |                  +--| (95)
+|              |  |                  |  |     +------Bsch_GPX.1.cysteine
+|              |  |                  |  |  +--| (98)
+|              |  |                  |  |  |  +-----Scla_GPX.1.cysteine
+|              |  |                  |  +--| (99)
+|              |  |                  |     +----Hror_GPX.8.cysteine
+|              |  |               +--| (83)
+|              |  |               |  |                +--Cint_GPX.8.cysteine
+|              |  |               |  |  +-------------| (100)
+|              |  |               |  |  |             +--Crob_GPX.8.cysteine
+|              |  |               |  +--| (85)
+|              |  |               |     +----Pmam_GPX.12.cysteine
+|              |  |        +------| (100)
+|              |  |        |      |     +------Pege_GPX.8.cysteine
+|              |  |        |      |  +--| (98)
+|              |  |        |      |  |  +-----------Tdem_GPX.10.cysteine
+|              |  |        |      +--| (100)
+|              |  |        |         +--Stho_GPX.17.cysteine
+|              |  |     +--| (79)
+|              |  |     |  +------Olon_GPX.29.cysteine
+|              |  |  +--| (91)
+|              |  |  |  |     +--------------------------OKI_GPX.4.unaligned
+|              |  |  |  |  +--| (94)
+|              |  |  |  |  |  +-------------Olon_GPX.27.unaligned
+|              |  |  |  +--| (93)
+|              |  |  |     +---------Ovan_GPX.32.cysteine
+|              |  +--| (89)
+|              |     +------------------Fbor_GPX.13.cysteine
+|           +**| (41)
+|           |  +----------------------------Olon_GPX.22.cysteine
+|        +--| (90)
+|        |  |                    +--GPX4.Gallus_gallus_GPX4.Gallus_gallus
+|        |  |                 +--| (100)
+|        |  |                 |  |        +**Mmus_GPX.1.selenocysteine
+|        |  |                 |  |     +**| (89)
+|        |  |                 |  |     |  +**Mmus_GPX.3.selenocysteine
+|        |  |                 |  |  +--| (99)
+|        |  |                 |  |  |  +--Mmus_GPX.4.selenocysteine
+|        |  |                 |  +--| (100)
+|        |  |                 |     +--Human_GPX4_NP_001034937.1
+|        |  |              +--| (99)
+|        |  |              |  |  +--Drer_GPX.18.selenocysteine
+|        |  |              |  +--| (96)
+|        |  |              |     +--Drer_GPX.19.selenocysteine
+|        |  |           +--| (96)
+|        |  |           |  |              +--Bflo_GPX.20.cysteine
+|        |  |           |  |  +-----------| (100)
+|        |  |           |  |  |           +--Blan_GPX.16.cysteine
+|        |  |           |  +--| (76)
+|        |  |           |     |    +**Bflo_GPX.25.selenocysteine
+|        |  |           |     +----| (100)
+|        |  |           |          +--Blan_GPX.22.selenocysteine
+|        |  |        +--| (15)
+|        |  |        |  |        +--Bsch_GPX.14.selenocysteine
+|        |  |        |  |     +--| (100)
+|        |  |        |  |     |  |     +--Bsch_GPX.17.selenocysteine
+|        |  |        |  |     |  |  +--| (98)
+|        |  |        |  |     |  |  |  +--Bsch_GPX.20.selenocysteine
+|        |  |        |  |     |  +--| (100)
+|        |  |        |  |     |     +--Bsch_GPX.19.selenocysteine
+|        |  |        |  |  +--| (100)
+|        |  |        |  |  |  +--Scla_GPX.21.selenocysteine
+|        |  |        |  +--| (99)
+|        |  |        |     +---Hror_GPX.10.selenocysteine
+|        |  |     +--| (8)
+|        |  |     |  +------------Tdem_GPX.2.selenocysteine
+|        |  |  +--| (16)
+|        |  |  |  |                 +---------Clonorchis_sinensis_gi_117956208_gb_ABK58680.1
+|        |  |  |  |              +--| (59)
+|        |  |  |  |              |  |     +--Cint_GPX.5.selenocysteine
+|        |  |  |  |              |  |  +--| (100)
+|        |  |  |  |              |  |  |  +--Crob_GPX.2.selenocysteine
+|        |  |  |  |              |  +--| (100)
+|        |  |  |  |              |     +--Csav_GPX.5.selenocysteine
+|        |  |  |  |           +--| (60)
+|        |  |  |  |           |  |          +--Pege_GPX.1.selenocysteine
+|        |  |  |  |           |  |     +----| (100)
+|        |  |  |  |           |  |     |    +--Pege_GPX.2.selenocysteine
+|        |  |  |  |           |  |  +--| (98)
+|        |  |  |  |           |  |  |  +---------Tdem_GPX.3.selenocysteine
+|        |  |  |  |           |  +--| (51)
+|        |  |  |  |           |     |     +---Pege_GPX.3.selenocysteine
+|        |  |  |  |           |     |  +--| (94)
+|        |  |  |  |           |     |  |  +-------------------Tdem_GPX.8.selenocysteine
+|        |  |  |  |           |     +--| (87)
+|        |  |  |  |           |        +---------Stho_GPX.7.selenocysteine
+|        |  |  |  |        +--| (80)
+|        |  |  |  |        |  |               +**Cint_GPX.1.selenocysteine
+|        |  |  |  |        |  |            +--| (100)
+|        |  |  |  |        |  |            |  +--Crob_GPX.1.selenocysteine
+|        |  |  |  |        |  |        +---| (100)
+|        |  |  |  |        |  |        |   +--Csav_GPX.1.selenocysteine
+|        |  |  |  |        |  |     +--| (92)
+|        |  |  |  |        |  |     |  |  +--Pmam_GPX.1.selenocysteine
+|        |  |  |  |        |  |     |  +--| (100)
+|        |  |  |  |        |  |     |     +----Pmam_GPX.2.selenocysteine
+|        |  |  |  |        |  |  +**| (26)
+|        |  |  |  |        |  |  |  |  +-----Pege_GPX.4.selenocysteine
+|        |  |  |  |        |  |  |  +--| (67)
+|        |  |  |  |        |  |  |     |     +--Stho_GPX.1.selenocysteine
+|        |  |  |  |        |  |  |     |  +--| (100)
+|        |  |  |  |        |  |  |     |  |  |  +---Tdem_GPX.1.selenocysteine
+|        |  |  |  |        |  |  |     |  |  +--| (99)
+|        |  |  |  |        |  |  |     |  |     +----Tdem_GPX.11.selenocysteine
+|        |  |  |  |        |  |  |     +--| (97)
+|        |  |  |  |        |  |  |        |    +-----Stho_GPX.2.selenocysteine
+|        |  |  |  |        |  |  |        +----| (100)
+|        |  |  |  |        |  |  |             +---Stho_GPX.8.cysteine
+|        |  |  |  |        |  +--| (49)
+|        |  |  |  |        |     +--------------Tdem_GPX.7.selenocysteine
+|        |  |  |  |     +--| (55)
+|        |  |  |  |     |  +--------Pmam_GPX.6.selenocysteine
+|        |  |  |  |  +--| (53)
+|        |  |  |  |  |  |                                   +----Bsty_GPX.3.selenocysteine
+|        |  |  |  |  |  |                                +--| (100)
+|        |  |  |  |  |  |                                |  +---Mery_GPX.2.selenocysteine
+|        |  |  |  |  |  |                             +--| (100)
+|        |  |  |  |  |  |                             |  +--Olon_GPX.14.unaligned
+|        |  |  |  |  |  |                          +--| (99)
+|        |  |  |  |  |  |                          |  |   +**Olon_GPX.4.selenocysteine
+|        |  |  |  |  |  |                          |  +---| (100)
+|        |  |  |  |  |  |                          |      +**Olon_GPX.23.unaligned
+|        |  |  |  |  |  |                       +--| (96)
+|        |  |  |  |  |  |                       |  |         +--OdB3_GPX.2.selenocysteine
+|        |  |  |  |  |  |                       |  |      +--| (100)
+|        |  |  |  |  |  |                       |  |      |  +**OdB3_gold_GPX_chr1a
+|        |  |  |  |  |  |                       |  |   +--| (100)
+|        |  |  |  |  |  |                       |  |   |  +**OSKA_gold_GPX_chr1a
+|        |  |  |  |  |  |                       |  +---| (100)
+|        |  |  |  |  |  |                       |      +--OKI_gold_GPX_chr1a
+|        |  |  |  |  |  |                    +--| (76)
+|        |  |  |  |  |  |                    |  |      +--Oalb_GPX.3.selenocysteine
+|        |  |  |  |  |  |                    |  |  +---| (100)
+|        |  |  |  |  |  |                    |  |  |   +**Oalb_GPX.4.selenocysteine
+|        |  |  |  |  |  |                    |  +--| (100)
+|        |  |  |  |  |  |                    |     |  +--Ovan_GPX.2.selenocysteine
+|        |  |  |  |  |  |                    |     +--| (100)
+|        |  |  |  |  |  |                    |        +--Ovan_GPX.5.selenocysteine
+|        |  |  |  |  |  |                 +--| (100)
+|        |  |  |  |  |  |                 |  +---------Oalb_GPX.6.unaligned
+|        |  |  |  |  |  |              +--| (96)
+|        |  |  |  |  |  |              |  +----Ovan_GPX.9.selenocysteine
+|        |  |  |  |  |  |           +--| (94)
+|        |  |  |  |  |  |           |  |      +--OKI_gold_GPX_chr1b
+|        |  |  |  |  |  |           |  +------| (100)
+|        |  |  |  |  |  |           |         |  +--OSKA_gold_GPX_chr1b
+|        |  |  |  |  |  |           |         +--| (100)
+|        |  |  |  |  |  |           |            +--OdB3_gold_GPX_chr1b
+|        |  |  |  |  |  |        +--| (91)
+|        |  |  |  |  |  |        |  |        +----Ovan_GPX.8.selenocysteine
+|        |  |  |  |  |  |        |  |     +--| (99)
+|        |  |  |  |  |  |        |  |     |  +--Ovan_GPX.19.unaligned
+|        |  |  |  |  |  |        |  |  +--| (99)
+|        |  |  |  |  |  |        |  |  |  +--Ovan_GPX.10.unaligned
+|        |  |  |  |  |  |        |  +--| (100)
+|        |  |  |  |  |  |        |     +---Ovan_GPX.20.unaligned
+|        |  |  |  |  |  +--------| (100)
+|        |  |  |  |  |           +----Oalb_GPX.2.selenocysteine
+|        |  |  |  +--| (49)
+|        |  |  |     |                 +--Bsty_GPX.2.selenocysteine
+|        |  |  |     |         +-------| (100)
+|        |  |  |     |         |       +----Mery_GPX.1.selenocysteine
+|        |  |  |     |      +--| (89)
+|        |  |  |     |      |  +--Olon_GPX.11.selenocysteine
+|        |  |  |     |  +---| (100)
+|        |  |  |     |  |   +--Olon_GPX.2.selenocysteine
+|        |  |  |     +--| (61)
+|        |  |  |        |              +--Bsty_GPX.6.selenocysteine
+|        |  |  |        |           +--| (100)
+|        |  |  |        |           |  |  +--Mery_GPX.4.unaligned
+|        |  |  |        |           |  +--| (99)
+|        |  |  |        |           |     +-------Mery_GPX.6.unaligned
+|        |  |  |        |        +--| (49)
+|        |  |  |        |        |  |  +--Olon_GPX.1.selenocysteine
+|        |  |  |        |        |  +--| (99)
+|        |  |  |        |        |     |        +---Olon_GPX.3.selenocysteine
+|        |  |  |        |        |     |     +--| (66)
+|        |  |  |        |        |     |     |  |  +---Olon_GPX.7.selenocysteine
+|        |  |  |        |        |     |     |  +--| (85)
+|        |  |  |        |        |     |     |     +--Olon_GPX.18.selenocysteine
+|        |  |  |        |        |     |  +--| (45)
+|        |  |  |        |        |     |  |  +-----Olon_GPX.10.selenocysteine
+|        |  |  |        |        |     +--| (5)
+|        |  |  |        |        |        |  +**Olon_GPX.13.unaligned
+|        |  |  |        |        |        +--| (96)
+|        |  |  |        |        |           +--Olon_GPX.16.unaligned
+|        |  |  |        |     +--| (100)
+|        |  |  |        |     |  |  +---Olon_GPX.5.serine
+|        |  |  |        |     |  +--| (98)
+|        |  |  |        |     |     |         +**Olon_GPX.6.selenocysteine
+|        |  |  |        |     |     |      +--| (100)
+|        |  |  |        |     |     |      |  +--Olon_GPX.17.unaligned
+|        |  |  |        |     |     +------| (100)
+|        |  |  |        |     |            +**Olon_GPX.20.selenocysteine
+|        |  |  |        |  +--| (99)
+|        |  |  |        |  |  |              +--OSKA_GPX.4.selenocysteine
+|        |  |  |        |  |  |           +**| (61)
+|        |  |  |        |  |  |           |  +--OSKA_gold_GPX_PAR
+|        |  |  |        |  |  |        +--| (97)
+|        |  |  |        |  |  |        |  +--OdB3_gold_GPX_PAR
+|        |  |  |        |  |  |     +--| (100)
+|        |  |  |        |  |  |     |  +--OKI_gold_GPX_PAR
+|        |  |  |        |  |  |  +--| (99)
+|        |  |  |        |  |  |  |  |  +----Ovan_GPX.22.unaligned
+|        |  |  |        |  |  |  |  +--| (100)
+|        |  |  |        |  |  |  |     |  +**Ovan_GPX.25.selenocysteine
+|        |  |  |        |  |  |  |     +--| (99)
+|        |  |  |        |  |  |  |        +-------------------Ovan_GPX.26.selenocysteine
+|        |  |  |        |  |  +--| (99)
+|        |  |  |        |  |     |           +**Oalb_GPX.7.unaligned
+|        |  |  |        |  |     |     +-----| (100)
+|        |  |  |        |  |     |     |     +--Oalb_GPX.9.unaligned
+|        |  |  |        |  |     |  +--| (100)
+|        |  |  |        |  |     |  |  +--Oalb_GPX.19.selenocysteine
+|        |  |  |        |  |     +--| (100)
+|        |  |  |        |  |        +--Oalb_GPX.13.selenocysteine
+|        |  |  |        +--| (98)
+|        |  |  |           |     +-----Oalb_GPX.15.selenocysteine
+|        |  |  |           |  +--| (100)
+|        |  |  |           |  |  |  +--Ovan_GPX.16.selenocysteine
+|        |  |  |           |  |  +--| (100)
+|        |  |  |           |  |     |   +---Ovan_GPX.17.selenocysteine
+|        |  |  |           |  |     +---| (100)
+|        |  |  |           |  |         +--Ovan_GPX.28.selenocysteine
+|        |  |  |           +--| (99)
+|        |  |  |              |    +--OKI_gold_GPX_chr2
+|        |  |  |              +----| (100)
+|        |  |  |                   |  +--OSKA_gold_GPX_chr2
+|        |  |  |                   +--| (100)
+|        |  |  |                      +--OdB3_gold_GPX_chr2
+|        |  +--| (90)
+|        |     |                         +-------Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2
+|        |     |                    +----| (99)
+|        |     |                    |    +------Fbor_GPX.14.cysteine
+|        |     |                 +--| (97)
+|        |     |                 |  +--Fbor_GPX.1.cysteine
+|        |     |              +--| (97)
+|        |     |              |  |                +--Fbor_GPX.11.cysteine
+|        |     |              |  |           +----| (100)
+|        |     |              |  |           |    +----Fbor_GPX.23.unaligned
+|        |     |              |  |        +--| (93)
+|        |     |              |  |        |  +-----Fbor_GPX.31.cysteine
+|        |     |              |  +--------| (100)
+|        |     |              |           |                           +--Fbor_GPX.18.cysteine
+|        |     |              |           |   +-----------------------| (100)
+|        |     |              |           |   |                       +**Fbor_GPX.20.cysteine
+|        |     |              |           +---| (98)
+|        |     |              |               |      +-------Fbor_GPX.19.cysteine
+|        |     |              |               +------| (100)
+|        |     |              |                      +---Fbor_GPX.24.unaligned
+|        |     |           +--| (93)
+|        |     |           |  +----Fbor_GPX.3.unaligned
+|        |     |        +--| (44)
+|        |     |        |  +------Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1
+|        |     |     +--| (95)
+|        |     |     |  |  +-----Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1
+|        |     |     |  +--| (49)
+|        |     |     |     |     +---Bsty_GPX.1.cysteine
+|        |     |     |     |  +--| (100)
+|        |     |     |     |  |  +--Fbor_GPX.2.cysteine
+|        |     |     |     +--| (52)
+|        |     |     |        +----------Fbor_GPX.16.cysteine
+|        |     |  +--| (98)
+|        |     |  |  |  +-------Isaria_tenuipes_gi_210063459_gb_ACJ06531.1
+|        |     |  |  +--| (89)
+|        |     |  |     |     +--------Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1
+|        |     |  |     |  +--| (97)
+|        |     |  |     |  |  +-----Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1
+|        |     |  |     +--| (97)
+|        |     |  |        +------Fbor_GPX.7.cysteine
+|        |     +--| (14)
+|        |        +---------------------------Fbor_GPX.21.selenocysteine
+|  +-----| (100)
+|  |     |         +-----Fbor_GPX.4.selenocysteine
+|  |     |      +--| (59)
+|  |     |      |  |    +--------Fbor_GPX.5.selenocysteine
+|  |     |      |  +----| (100)
+|  |     |      |       +-----Fbor_GPX.6.selenocysteine
+|  |     |   +--| (56)
+|  |     |   |  |            +---Fbor_GPX.8.selenocysteine
+|  |     |   |  |  +---------| (100)
+|  |     |   |  |  |         +----Fbor_GPX.12.selenocysteine
+|  |     |   |  +--| (96)
+|  |     |   |     +--------Fbor_GPX.10.selenocysteine
+|  |     +---| (99)
+|  |         +---------------Fbor_GPX.17.cysteine
++--| (46)
+   |                 +--Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2
+   |              +--| (100)
+   |              |  |  +--gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2
+   |              |  +--| (100)
+   |              |     +**Human_GPX1_NP_000572.2
+   |           +--| (100)
+   |           |  +--Mmus_GPX.6.selenocysteine
+   |        +--| (100)
+   |        |  +---Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1
+   |     +--| (67)
+   |     |  |        +--GPX2.Gallus_gallus_GPX2.Gallus_gallus
+   |     |  |     +--| (85)
+   |     |  |     |  |  +--Xenopus_tropicalis_gi_166796161_gb_AAI59037.1
+   |     |  |     |  +--| (100)
+   |     |  |     |     +--Drer_GPX.8.selenocysteine
+   |     |  |  +--| (100)
+   |     |  |  |  |     +**gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3
+   |     |  |  |  |  +--| (100)
+   |     |  |  |  |  |  +--Mmus_GPX.8.selenocysteine
+   |     |  |  |  +--| (100)
+   |     |  |  |     +--Human_GPX2_NP_002074.2
+   |     |  +--| (62)
+   |     |     |        +---Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1
+   |     |     |     +--| (100)
+   |     |     |     |  |  +**Bflo_GPX.2.selenocysteine
+   |     |     |     |  +--| (100)
+   |     |     |     |     +--Blan_GPX.1.selenocysteine
+   |     |     |  +--| (88)
+   |     |     |  |  |  +--Drer_GPX.2.selenocysteine
+   |     |     |  |  +--| (100)
+   |     |     |  |     +--Drer_GPX.6.selenocysteine
+   |     |     +--| (56)
+   |     |        |            +--Bflo_GPX.6.serine
+   |     |        |      +-----| (100)
+   |     |        |      |     +--Blan_GPX.6.serine
+   |     |        +------| (100)
+   |     |               |      +**Bflo_GPX.16.cysteine
+   |     |               +------| (100)
+   |     |                      +--Blan_GPX.18.cysteine
+   |  +--| (72)
+   |  |  +---Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2
+   +--| (95)
+      +----------Ostreococcus_tauri_gi_116059366_emb_CAL55073.1
+
+Tree in newick format:
+
+(Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1:1.4581452323,((((((((((Globodera_rostochiensis_gi_21739125_emb_CAD38523.1:0.3044413553,Haemonchus_contortus_gi_47499102_gb_AAT28332.1:0.0809654572)100:0.1148763747,Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1:0.2106607372)99:0.1985208920,(gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_:0.2740281054,gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX:0.1284054059)100:0.3181219808)100:0.4810706924,((((((Ciona_intestinalis_gi_198424199_ref_XP_002121558.1:0.2287837765,Crob_GPX.5.selenocysteine:0.0000028604)100:0.0477220142,Cint_GPX.9.selenocysteine:0.1143923425)97:0.0086044477,Cint_GPX.12.selenocysteine:0.0135218701)99:0.3624517682,Csav_GPX.7.selenocysteine:0.2978382394)100:0.3772708191,((((Cint_GPX.14.selenocysteine:0.0211940713,(Crob_GPX.7.selenocysteine:0.0056955854,Csav_GPX.11.selenocysteine:0.2336954772)88:0.0000023683)97:0.1054204772,Csav_GPX.10.unaligned:0.7227533925)99:0.2288907383,Pmam_GPX.10.selenocysteine:0.2675097092)99:0.2996697526,Pmam_GPX.7.selenocysteine:0.6341338935)99:0.0897198639)100:0.4174508448,(Bsch_GPX.7.selenocysteine:1.2467466461,((Bsch_GPX.9.selenocysteine:0.6742615958,(((Bsch_GPX.10.unaligned:1.0236682439,(Scla_GPX.16.selenocysteine:0.3290794096,Scla_GPX.17.selenocysteine:0.5293738098)100:0.1735995471)71:0.1457049566,(Bsch_GPX.13.selenocysteine:0.6695816751,(Hror_GPX.4.unaligned:0.3081000088,Scla_GPX.18.unaligned:0.3712216513)100:0.0970783693)70:0.0941927291)99:0.2271414028,Hror_GPX.7.selenocysteine:1.0886777386)89:0.1901395000)74:0.0419576687,(Scla_GPX.8.selenocysteine:0.1226100055,Scla_GPX.9.selenocysteine:0.1309277250)100:1.1271452260)93:0.1559837809)99:0.2461844476)97:0.1133478031)96:0.0760488349,Crassostrea_gigas_gi_152002384_gb_ABS19600.1:1.4932400816)84:0.1489229763,(Dreissena_polymorpha_gi_145559053_gb_ABP73388.1:0.6308053569,Unio_tumidus_gi_111572533_gb_ABH10623.1:0.5125371587)100:0.6410648985)76:0.0265832381,((((((((Mus_musculus_gi_148700720_gb_EDL32667.1:0.0092031862,Mmus_GPX.26.cysteine:0.0000020983)100:0.2517642640,Human_GPX6_NP_874360.1:0.1583499165)100:0.0684940090,(Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1:0.1491103406,((gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_:0.0130059317,Mmus_GPX.20.cysteine:0.0062615708)100:0.1997007791,(gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A:0.0691475046,Human_GPX5_NP_001500.1:0.0000028323)100:0.1261351037)100:0.0496203248)100:0.1550952418)100:0.1032341539,((GPX3.Homo_sapiens_GPX3.Homo_sapiens:0.0000029192,Human_GPX3_NP_001316719.1:0.0000010000)100:0.0306516535,Mmus_GPX.14.selenocysteine:0.0866177784)100:0.1285087753)100:0.2978357571,Xenopus_tropicalis_gi_38174689_gb_AAH61262.1:0.3217583995)99:0.2437655027,Drer_GPX.16.selenocysteine:0.2638827925)98:0.1193902927,GPX3.Salmo_salar_GPX3.Salmo_salar:0.2280698234)100:0.3801476075,((Bflo_GPX.9.selenocysteine:0.0816309127,(Bflo_GPX.22.serine:0.4895765042,Blan_GPX.8.selenocysteine:0.0537993001)100:0.0475954591)100:0.0837804938,(Bflo_GPX.13.selenocysteine:0.1050321597,Blan_GPX.13.selenocysteine:0.0867196565)100:0.1838087676)100:0.6733036246)99:0.2864272717)81:0.0350357102,(gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1:1.4805356086,(((Bsch_GPX.3.selenocysteine:0.4818163814,Scla_GPX.13.selenocysteine:0.1951637946)100:0.1637129855,Hror_GPX.2.selenocysteine:0.4446505981)100:0.1962288180,(((((Cint_GPX.3.selenocysteine:0.0486386564,Crob_GPX.11.selenocysteine:0.0000010000)100:0.0855383039,Csav_GPX.3.selenocysteine:0.2167887630)100:0.2494637075,Pmam_GPX.4.selenocysteine:0.3899277616)100:0.3086813991,Pege_GPX.6.selenocysteine:0.1936704602)100:0.1165879200,Tdem_GPX.5.selenocysteine:0.3783648435)100:0.3871411807)99:0.2406099690)89:0.2317175693)88:0.0720919930,(Metapenaeus_ensis_gi_171189511_gb_ACB42236.1:0.8919247503,Drer_GPX.22.selenocysteine:0.9474886057)71:0.0424382794)88:0.1262791953,(Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1:1.1350721064,Ixodes_scapularis_gi_215502580_gb_EEC12074.1:0.7189248974)97:0.3159090754)91:0.0610046727,(((((((Rheum_australe_gi_197312911_gb_ACH63236.1:0.1174519701,Fbor_GPX.15.unaligned:0.6953534794)99:0.2562813048,Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1:0.3629545551)98:0.2024424192,((((((((Bflo_GPX.3.cysteine:0.0000029718,Blan_GPX.3.cysteine:0.3609174444)100:0.6657874582,(Drer_GPX.9.cysteine:0.2574592037,((Drer_GPX.11.serine:0.2714173678,(Mmus_GPX.19.cysteine:0.4816262911,Human_GPX8_NP_001008398.2:0.1377718957)100:0.1688778386)100:0.6646348832,(Mmus_GPX.11.cysteine:0.0955459021,Human_GPX7_NP_056511.2:0.0328172904)100:0.1430888813)99:0.1208976813)100:0.5074651245)97:0.2219088286,((Bsch_GPX.1.cysteine:0.5913579498,Scla_GPX.1.cysteine:0.5524219065)98:0.2560354190,Hror_GPX.8.cysteine:0.4461388557)99:0.2157145465)95:0.0695824693,((Cint_GPX.8.cysteine:0.2079520148,Crob_GPX.8.cysteine:0.0402280457)100:1.1498853350,Pmam_GPX.12.cysteine:0.4504625757)85:0.1338919022)83:0.0517195189,((Pege_GPX.8.cysteine:0.5844695978,Tdem_GPX.10.cysteine:1.0338367709)98:0.1488144717,Stho_GPX.17.cysteine:0.3109941025)100:0.3181565351)100:0.6238472983,Olon_GPX.29.cysteine:0.6136256782)79:0.0465259231,((OKI_GPX.4.unaligned:2.2539261973,Olon_GPX.27.unaligned:1.1883327969)94:0.2190485386,Ovan_GPX.32.cysteine:0.8711435881)93:0.2004006916)91:0.1246950192,Fbor_GPX.13.cysteine:1.6335890086)89:0.1952475928)86:0.0844112089,Olon_GPX.22.cysteine:2.3775434533)41:0.0000022293,(((((((GPX4.Gallus_gallus_GPX4.Gallus_gallus:0.1605089200,(((Mmus_GPX.1.selenocysteine:0.0000010000,Mmus_GPX.3.selenocysteine:0.0000020168)89:0.0000026767,Mmus_GPX.4.selenocysteine:0.1078654269)99:0.0396432596,Human_GPX4_NP_001034937.1:0.1763903782)100:0.2582029925)100:0.0718958667,(Drer_GPX.18.selenocysteine:0.1174647058,Drer_GPX.19.selenocysteine:0.2590536090)96:0.0996979081)99:0.2664117684,((Bflo_GPX.20.cysteine:0.0857827534,Blan_GPX.16.cysteine:0.1450115463)100:0.9924108366,(Bflo_GPX.25.selenocysteine:0.0000021180,Blan_GPX.22.selenocysteine:0.0517626066)100:0.4591308020)76:0.1175423469)96:0.1764951740,(((Bsch_GPX.14.selenocysteine:0.0601693774,((Bsch_GPX.17.selenocysteine:0.0498304394,Bsch_GPX.20.selenocysteine:0.0711404100)98:0.0165526166,Bsch_GPX.19.selenocysteine:0.2701835086)100:0.0910066999)100:0.2628320580,Scla_GPX.21.selenocysteine:0.2403360705)100:0.1761281739,Hror_GPX.10.selenocysteine:0.3821630724)99:0.2280256358)15:0.0936049428,Tdem_GPX.2.selenocysteine:1.1288391462)8:0.0403098973,((((((Clonorchis_sinensis_gi_117956208_gb_ABK58680.1:0.8415153898,((Cint_GPX.5.selenocysteine:0.0122940116,Crob_GPX.2.selenocysteine:0.0115260153)100:0.2184972973,Csav_GPX.5.selenocysteine:0.2632169397)100:0.2515031481)59:0.0379151729,(((Pege_GPX.1.selenocysteine:0.0875527951,Pege_GPX.2.selenocysteine:0.1975327839)100:0.4486170632,Tdem_GPX.3.selenocysteine:0.8388213602)98:0.1671902759,((Pege_GPX.3.selenocysteine:0.4035197150,Tdem_GPX.8.selenocysteine:1.6724158853)94:0.1472594222,Stho_GPX.7.selenocysteine:0.8497997302)87:0.1202509966)51:0.1305164684)60:0.0548354980,(((((Cint_GPX.1.selenocysteine:0.0041153230,Crob_GPX.1.selenocysteine:0.0104104790)100:0.2189027143,Csav_GPX.1.selenocysteine:0.2371224371)100:0.3866407280,(Pmam_GPX.1.selenocysteine:0.1713423863,Pmam_GPX.2.selenocysteine:0.4733068251)100:0.1933125893)92:0.1180950292,(Pege_GPX.4.selenocysteine:0.5247915653,((Stho_GPX.1.selenocysteine:0.2946287911,(Tdem_GPX.1.selenocysteine:0.3911400531,Tdem_GPX.11.selenocysteine:0.4375590887)99:0.0749985380)100:0.1933804744,(Stho_GPX.2.selenocysteine:0.5034050089,Stho_GPX.8.cysteine:0.3911618316)100:0.4600910231)97:0.1126224234)67:0.1657225730)26:0.0000026157,Tdem_GPX.7.selenocysteine:1.2545336072)49:0.0432926501)80:0.0928502289,Pmam_GPX.6.selenocysteine:0.7652051607)55:0.0068051013,((((((((((Bsty_GPX.3.selenocysteine:0.4881914312,Mery_GPX.2.selenocysteine:0.3500041535)100:0.1709192267,Olon_GPX.14.unaligned:0.1421091568)100:0.1586831552,(Olon_GPX.4.selenocysteine:0.0000020103,Olon_GPX.23.unaligned:0.0000020313)100:0.3504182951)99:0.1024205685,(((OdB3_GPX.2.selenocysteine:0.1076622800,OdB3_gold_GPX_chr1a:0.0000028074)100:0.0264656190,OSKA_gold_GPX_chr1a:0.0000027817)100:0.0570323486,OKI_gold_GPX_chr1a:0.0375749852)100:0.3978296644)96:0.0827904053,((Oalb_GPX.3.selenocysteine:0.0964001377,Oalb_GPX.4.selenocysteine:0.0000023975)100:0.3798144755,(Ovan_GPX.2.selenocysteine:0.2513193540,Ovan_GPX.5.selenocysteine:0.1426127069)100:0.2206645332)100:0.2917737943)76:0.0914507737,Oalb_GPX.6.unaligned:0.8873927440)100:0.1271646519,Ovan_GPX.9.selenocysteine:0.4842725953)96:0.0863146439,(OKI_gold_GPX_chr1b:0.0167104971,(OSKA_gold_GPX_chr1b:0.0260477532,OdB3_gold_GPX_chr1b:0.0638454401)100:0.1194340693)100:0.6497750093)94:0.0604869854,(((Ovan_GPX.8.selenocysteine:0.4211230831,Ovan_GPX.19.unaligned:0.0303759442)99:0.0136676751,Ovan_GPX.10.unaligned:0.0128222601)99:0.1311524228,Ovan_GPX.20.unaligned:0.3287840345)100:0.2541182169)91:0.1347269598,Oalb_GPX.2.selenocysteine:0.4356367987)100:0.7704991744)53:0.0204360884,((((Bsty_GPX.2.selenocysteine:0.2668048629,Mery_GPX.1.selenocysteine:0.4805932530)100:0.7110961153,Olon_GPX.11.selenocysteine:0.3203571351)89:0.0957802599,Olon_GPX.2.selenocysteine:0.2434345851)100:0.4026708852,(((((Bsty_GPX.6.selenocysteine:0.1356334538,(Mery_GPX.4.unaligned:0.0143126564,Mery_GPX.6.unaligned:0.6827152959)99:0.1408317814)100:0.0884686760,(Olon_GPX.1.selenocysteine:0.0933564289,(((Olon_GPX.3.selenocysteine:0.4079892872,(Olon_GPX.7.selenocysteine:0.3796864110,Olon_GPX.18.selenocysteine:0.1771909557)85:0.0609990972)66:0.0418000139,Olon_GPX.10.selenocysteine:0.5547753667)45:0.0764503446,(Olon_GPX.13.unaligned:0.0000027724,Olon_GPX.16.unaligned:0.0307437031)96:0.1867330626)5:0.0264363368)99:0.1475444202)49:0.0606134573,(Olon_GPX.5.serine:0.3592475430,((Olon_GPX.6.selenocysteine:0.0000027407,Olon_GPX.17.unaligned:0.0262734730)100:0.0327820686,Olon_GPX.20.selenocysteine:0.0000024914)100:0.6159335503)98:0.0411539372)100:0.2001243164,(((((OSKA_GPX.4.selenocysteine:0.0596163237,OSKA_gold_GPX_PAR:0.0123545348)61:0.0000022072,OdB3_gold_GPX_PAR:0.0071515283)97:0.0159518210,OKI_gold_GPX_PAR:0.1072121160)100:0.2591378327,(Ovan_GPX.22.unaligned:0.4705556180,(Ovan_GPX.25.selenocysteine:0.0000021788,Ovan_GPX.26.selenocysteine:1.7023720483)99:0.0567310792)100:0.2855815912)99:0.0952284705,(((Oalb_GPX.7.unaligned:0.0000026642,Oalb_GPX.9.unaligned:0.0252194915)100:0.5490035605,Oalb_GPX.19.selenocysteine:0.2447787512)100:0.1315829556,Oalb_GPX.13.selenocysteine:0.1042059506)100:0.2114567076)99:0.2716496971)99:0.2939635601,((Oalb_GPX.15.selenocysteine:0.5243901746,(Ovan_GPX.16.selenocysteine:0.0683350333,(Ovan_GPX.17.selenocysteine:0.3437957659,Ovan_GPX.28.selenocysteine:0.1467655945)100:0.3443010739)100:0.3177198201)100:0.2756204012,(OKI_gold_GPX_chr2:0.0562416568,(OSKA_gold_GPX_chr2:0.0404543476,OdB3_gold_GPX_chr2:0.0350097254)100:0.0575559208)100:0.4363571569)99:0.2167778461)98:0.2942951027)61:0.1358921192)49:0.0244644615)16:0.1228203065,((((((((Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2:0.7026490062,Fbor_GPX.14.cysteine:0.6359385089)99:0.4669827114,Fbor_GPX.1.cysteine:0.3132610665)97:0.0833462859,(((Fbor_GPX.11.cysteine:0.2781078214,Fbor_GPX.23.unaligned:0.4387566616)100:0.4573835294,Fbor_GPX.31.cysteine:0.5043199275)93:0.0935861453,((Fbor_GPX.18.cysteine:0.0951886771,Fbor_GPX.20.cysteine:0.0000023461)100:1.9836203330,(Fbor_GPX.19.cysteine:0.6587985863,Fbor_GPX.24.unaligned:0.4081762004)100:0.5905690624)98:0.3385896677)100:0.8154173059)97:0.0284131033,Fbor_GPX.3.unaligned:0.4473710879)93:0.1226498922,Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1:0.6164028261)44:0.1195410335,(Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1:0.5422626474,((Bsty_GPX.1.cysteine:0.3857205402,Fbor_GPX.2.cysteine:0.3093095959)100:0.2601347495,Fbor_GPX.16.cysteine:0.9265227234)52:0.1746113136)49:0.1569045976)95:0.1378931230,(Isaria_tenuipes_gi_210063459_gb_ACJ06531.1:0.6874466421,((Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1:0.7498827376,Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1:0.5533748199)97:0.0253428489,Fbor_GPX.7.cysteine:0.6496830063)97:0.1360425973)89:0.1619523342)98:0.2622706598,Fbor_GPX.21.selenocysteine:2.3366188058)14:0.0549406582)90:0.2177290944)90:0.1513335614,(((Fbor_GPX.4.selenocysteine:0.5528936185,(Fbor_GPX.5.selenocysteine:0.7655207957,Fbor_GPX.6.selenocysteine:0.5363381335)100:0.4444022169)59:0.2198900158,((Fbor_GPX.8.selenocysteine:0.3878800020,Fbor_GPX.12.selenocysteine:0.4253626058)100:0.8551529625,Fbor_GPX.10.selenocysteine:0.7443379903)96:0.2323397031)56:0.0855875112,Fbor_GPX.17.cysteine:1.3750362234)99:0.3453662829)100:0.5033848657,((((((Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2:0.2942887328,(gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2:0.0661074214,Human_GPX1_NP_000572.2:0.0000010000)100:0.0297578377)100:0.0841370462,Mmus_GPX.6.selenocysteine:0.1013119136)100:0.1471754496,Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1:0.3823079070)100:0.0973342822,(((GPX2.Gallus_gallus_GPX2.Gallus_gallus:0.2713268983,(Xenopus_tropicalis_gi_166796161_gb_AAI59037.1:0.1488318317,Drer_GPX.8.selenocysteine:0.2016222918)100:0.0936885096)85:0.0287906804,((gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3:0.0000025256,Mmus_GPX.8.selenocysteine:0.0066539212)100:0.0470617950,Human_GPX2_NP_002074.2:0.0287538265)100:0.1838752366)100:0.2258326106,(((Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1:0.3400061723,(Bflo_GPX.2.selenocysteine:0.0031614953,Blan_GPX.1.selenocysteine:0.0655333295)100:0.1991538108)100:0.2040498148,(Drer_GPX.2.selenocysteine:0.1763991267,Drer_GPX.6.selenocysteine:0.2646382271)100:0.1347771706)88:0.0563620287,((Bflo_GPX.6.serine:0.0241756564,Blan_GPX.6.serine:0.0538526873)100:0.5652173412,(Bflo_GPX.16.cysteine:0.0000029432,Blan_GPX.18.cysteine:0.0145641056)100:0.6429074723)100:0.6036163836)56:0.0379975246)62:0.1105844328)67:0.1195798514,Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2:0.3829893905)72:0.2031494116,Ostreococcus_tauri_gi_116059366_emb_CAL55073.1:0.9800989799)95:0.2859187581)46:0.0843459921);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -47336.060566
+Robinson-Foulds distance between ML tree and consensus tree: 14
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++----------------Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1
+|
+|                                  +--Globodera_rostochiensis_gi_21739125_emb_CAD38523.1
 |                               +--| (100)
 |                               |  +--Haemonchus_contortus_gi_47499102_gb_AAT28332.1
 |                            +--| (99)
@@ -116,1100 +611,485 @@ Numbers in parentheses are  ultrafast bootstrap support (%)
 |                       |    |  +--gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_
 |                       |    +--| (100)
 |                       |       +--gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX
-|                    +--| (68)
-|                    |  +---------------Crassostrea_gigas_gi_152002384_gb_ABS19600.1
-|                 +--| (87)
-|                 |  |                    +--Ciona_intestinalis_gi_198424199_ref_XP_002121558.1
-|                 |  |                 +--| (100)
-|                 |  |                 |  +**Crob_GPX.5.selenocysteine
-|                 |  |              +--| (75)
-|                 |  |              |  +--Cint_GPX.9.selenocysteine
-|                 |  |          +---| (100)
-|                 |  |          |   +--Cint_GPX.12.selenocysteine
-|                 |  |      +---| (100)
-|                 |  |      |   +--Csav_GPX.7.selenocysteine
-|                 |  |  +---| (100)
-|                 |  |  |   |           +--Cint_GPX.14.selenocysteine
-|                 |  |  |   |        +--| (95)
-|                 |  |  |   |        |  |  +--Crob_GPX.7.selenocysteine
-|                 |  |  |   |        |  +**| (91)
-|                 |  |  |   |        |     +--Csav_GPX.11.selenocysteine
-|                 |  |  |   |     +--| (99)
-|                 |  |  |   |     |  +-------Csav_GPX.10.unaligned
-|                 |  |  |   |  +--| (99)
-|                 |  |  |   |  |  +--Pmam_GPX.10.selenocysteine
-|                 |  |  |   +--| (99)
-|                 |  |  |      +------Pmam_GPX.7.selenocysteine
-|                 |  +--| (96)
-|                 |     |  +-------------Bsch_GPX.7.selenocysteine
-|                 |     +--| (100)
-|                 |        |     +------Bsch_GPX.9.selenocysteine
-|                 |        |  +--| (84)
-|                 |        |  |  |            +--Scla_GPX.8.selenocysteine
-|                 |        |  |  +------------| (100)
-|                 |        |  |               +--Scla_GPX.9.selenocysteine
-|                 |        +--| (96)
-|                 |           |        +-----------Bsch_GPX.10.unaligned
-|                 |           |     +--| (70)
-|                 |           |     |  |  +---Scla_GPX.16.selenocysteine
-|                 |           |     |  +--| (100)
-|                 |           |     |     +-----Scla_GPX.17.selenocysteine
-|                 |           |  +--| (98)
-|                 |           |  |  |  +-------Bsch_GPX.13.selenocysteine
-|                 |           |  |  +--| (70)
-|                 |           |  |     |  +--Hror_GPX.4.unaligned
-|                 |           |  |     +--| (100)
-|                 |           |  |        +---Scla_GPX.18.unaligned
-|                 |           +--| (96)
-|                 |              +------------Hror_GPX.7.selenocysteine
-|              +--| (54)
-|              |  |  +-----------------gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1
-|              |  +--| (83)
-|              |     |     +---Bsch_GPX.3.selenocysteine
-|              |     |  +--| (100)
-|              |     |  |  |  +-----Hror_GPX.2.selenocysteine
-|              |     |  |  +--| (45)
-|              |     |  |     +--Scla_GPX.13.selenocysteine
-|              |     +--| (96)
-|              |        |                   +--Cint_GPX.3.selenocysteine
-|              |        |                +--| (100)
-|              |        |                |  +**Crob_GPX.11.selenocysteine
-|              |        |             +--| (100)
-|              |        |             |  +--Csav_GPX.3.selenocysteine
-|              |        |          +--| (100)
-|              |        |          |  +---Pmam_GPX.4.selenocysteine
-|              |        |       +--| (99)
-|              |        |       |  +--Pege_GPX.6.selenocysteine
-|              |        |    +--| (80)
-|              |        |    |  +------------------------------Olon_GPX.26.unaligned
-|              |        +----| (95)
-|              |             +---Tdem_GPX.5.selenocysteine
-|           +--| (83)
-|           |  |         +---Dreissena_polymorpha_gi_145559053_gb_ABP73388.1
-|           |  |      +--| (100)
-|           |  |      |  +-----Corbicula_fluminea_gi_146395067_gb_ABQ24217.1
-|           |  +------| (100)
-|           |         +----Unio_tumidus_gi_111572533_gb_ABH10623.1
-|        +--| (93)
-|        |  |                            +--Mus_musculus_gi_148700720_gb_EDL32667.1
-|        |  |                         +--| (100)
-|        |  |                         |  +**Mmus_GPX.26.cysteine
-|        |  |                      +--| (68)
-|        |  |                      |  +--Human_GPX6_NP_874360.1
-|        |  |                   +--| (98)
-|        |  |                   |  +--Sus_scrofa_gi_212549567_ref_NP_001131079.1
-|        |  |                +--| (98)
-|        |  |                |  |        +--Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1
-|        |  |                |  |     +--| (68)
-|        |  |                |  |     |  +--Sus_scrofa_gi_47523090_ref_NP_999051.1
-|        |  |                |  |  +--| (37)
-|        |  |                |  |  |  |  +--gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A
-|        |  |                |  |  |  +--| (100)
-|        |  |                |  |  |     +**Human_GPX5_NP_001500.1
-|        |  |                |  +--| (100)
-|        |  |                |     |  +--gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_
-|        |  |                |     +--| (100)
-|        |  |                |        +--Mmus_GPX.20.cysteine
-|        |  |             +--| (100)
-|        |  |             |  |     +**GPX3.Homo_sapiens_GPX3.Homo_sapiens
-|        |  |             |  |  +--| (100)
-|        |  |             |  |  |  +**Human_GPX3_NP_001316719.1
-|        |  |             |  +--| (100)
-|        |  |             |     |  +--GPX3.Mus_musculus_GPX3.Mus_musculus
-|        |  |             |     +--| (100)
-|        |  |             |        +**Mmus_GPX.14.selenocysteine
-|        |  |          +--| (100)
-|        |  |          |  +--Xenopus_tropicalis_gi_38174689_gb_AAH61262.1
-|        |  |       +--| (98)
-|        |  |       |  +--Drer_GPX.16.selenocysteine
-|        |  |  +----| (100)
-|        |  |  |    +--GPX3.Salmo_salar_GPX3.Salmo_salar
-|        |  +--| (98)
-|        |     |         +--Bflo_GPX.9.selenocysteine
-|        |     |      +--| (100)
-|        |     |      |  |  +----Bflo_GPX.22.serine
-|        |     |      |  +--| (100)
-|        |     |      |     +--Blan_GPX.8.selenocysteine
-|        |     +------| (100)
-|        |            |  +--Bflo_GPX.13.selenocysteine
-|        |            +--| (100)
-|        |               +--Blan_GPX.13.selenocysteine
-|     +--| (27)
-|     |  |                     +---Rheum_australe_gi_197312911_gb_ACH63236.1
-|     |  |                  +--| (98)
-|     |  |                  |  +--Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1
-|     |  |               +--| (90)
-|     |  |               |  |                         +--Bflo_GPX.3.cysteine
-|     |  |               |  |                +--------| (100)
-|     |  |               |  |                |        +--Blan_GPX.3.cysteine
-|     |  |               |  |            +---| (100)
-|     |  |               |  |            |   |      +--Cint_GPX.8.cysteine
-|     |  |               |  |            |   +------| (100)
-|     |  |               |  |            |          +--Crob_GPX.8.cysteine
-|     |  |               |  |     +------| (100)
-|     |  |               |  |     |      |           +------Bsch_GPX.1.cysteine
-|     |  |               |  |     |      |        +--| (100)
-|     |  |               |  |     |      |        |  +----Scla_GPX.1.cysteine
-|     |  |               |  |     |      |     +--| (98)
-|     |  |               |  |     |      |     |  +---Hror_GPX.8.cysteine
-|     |  |               |  |     |      |  +--| (99)
-|     |  |               |  |     |      |  |  |          +--Drer_GPX.9.cysteine
-|     |  |               |  |     |      |  |  |  +-------| (100)
-|     |  |               |  |     |      |  |  |  |       |         +--Drer_GPX.11.serine
-|     |  |               |  |     |      |  |  |  |       |  +------| (100)
-|     |  |               |  |     |      |  |  |  |       |  |      |  +----Mmus_GPX.19.cysteine
-|     |  |               |  |     |      |  |  |  |       |  |      +--| (100)
-|     |  |               |  |     |      |  |  |  |       |  |         +--Human_GPX8_NP_001008398.2
-|     |  |               |  |     |      |  |  |  |       +--| (100)
-|     |  |               |  |     |      |  |  |  |          |  +--Mmus_GPX.11.cysteine
-|     |  |               |  |     |      |  |  |  |          +--| (100)
-|     |  |               |  |     |      |  |  |  |             +--Human_GPX7_NP_056511.2
-|     |  |               |  |     |      |  |  +--| (99)
-|     |  |               |  |     |      |  |     +---Pmam_GPX.12.cysteine
-|     |  |               |  |     |      +--| (98)
-|     |  |               |  |     |         |     +-----Pege_GPX.8.cysteine
-|     |  |               |  |     |         |  +--| (100)
-|     |  |               |  |     |         |  |  +----------Tdem_GPX.10.cysteine
-|     |  |               |  |     |         +--| (100)
-|     |  |               |  |     |            +---Stho_GPX.17.cysteine
-|     |  |               |  |  +--| (97)
-|     |  |               |  |  |  |  +------Olon_GPX.24.cysteine
-|     |  |               |  |  |  +--| (97)
-|     |  |               |  |  |     +--------Ovan_GPX.28.cysteine
-|     |  |               |  +--| (97)
-|     |  |               |     +-------------------Fbor_GPX.13.cysteine
-|     |  |            +--| (95)
-|     |  |            |  +---------------------------Olon_GPX.20.cysteine
-|     |  |         +--| (54)
-|     |  |         |  |                                 +--GPX4d.Salmo_salar_GPX4d.Salmo_salar
-|     |  |         |  |                              +--| (100)
-|     |  |         |  |                              |  +--Drer_GPX.19.selenocysteine
-|     |  |         |  |                           +--| (98)
-|     |  |         |  |                           |  |  +--GPX4.Salmo_salar_GPX4.Salmo_salar
-|     |  |         |  |                           |  +--| (97)
-|     |  |         |  |                           |     +--Drer_GPX.18.selenocysteine
-|     |  |         |  |                       +---| (100)
-|     |  |         |  |                       |   |           +**GPX4.Homo_sapiens_GPX4.Homo_sapiens
-|     |  |         |  |                       |   |        +--| (100)
-|     |  |         |  |                       |   |        |  +--Human_GPX4_NP_001034937.1
-|     |  |         |  |                       |   |     +--| (92)
-|     |  |         |  |                       |   |     |  |     +**Mmus_GPX.1.selenocysteine
-|     |  |         |  |                       |   |     |  |  +**| (66)
-|     |  |         |  |                       |   |     |  |  |  +**Mmus_GPX.3.selenocysteine
-|     |  |         |  |                       |   |     |  +--| (99)
-|     |  |         |  |                       |   |     |     +--Mmus_GPX.4.selenocysteine
-|     |  |         |  |                       |   |  +--| (100)
-|     |  |         |  |                       |   |  |  +--GPX4.Sus_scrofa_GPX4.Sus_scrofa
-|     |  |         |  |                       |   +--| (98)
-|     |  |         |  |                       |      +--GPX4.Gallus_gallus_GPX4.Gallus_gallus
-|     |  |         |  |                    +--| (82)
-|     |  |         |  |                    |  |               +--Bflo_GPX.20.cysteine
-|     |  |         |  |                    |  |  +------------| (100)
-|     |  |         |  |                    |  |  |            +--Blan_GPX.16.cysteine
-|     |  |         |  |                    |  +--| (91)
-|     |  |         |  |                    |     |   +**Bflo_GPX.25.selenocysteine
-|     |  |         |  |                    |     +---| (100)
-|     |  |         |  |                    |         +--Blan_GPX.22.selenocysteine
-|     |  |         |  |                 +--| (65)
-|     |  |         |  |                 |  +-----------------------------Fbor_GPX.22.selenocysteine
-|     |  |         |  |              +--| (74)
-|     |  |         |  |              |  |        +--Bsch_GPX.14.selenocysteine
-|     |  |         |  |              |  |     +--| (100)
-|     |  |         |  |              |  |     |  |     +--Bsch_GPX.17.selenocysteine
-|     |  |         |  |              |  |     |  |  +--| (99)
-|     |  |         |  |              |  |     |  |  |  +--Bsch_GPX.20.selenocysteine
-|     |  |         |  |              |  |     |  +--| (100)
-|     |  |         |  |              |  |     |     +--Bsch_GPX.19.selenocysteine
-|     |  |         |  |              |  |  +--| (100)
-|     |  |         |  |              |  |  |  +--Scla_GPX.21.selenocysteine
-|     |  |         |  |              |  +--| (98)
-|     |  |         |  |              |     +---Hror_GPX.10.selenocysteine
-|     |  |         |  |           +--| (35)
-|     |  |         |  |           |  |  +-----------Tdem_GPX.2.selenocysteine
-|     |  |         |  |           |  +--| (78)
-|     |  |         |  |           |     |                        +-----Bsty_GPX.3.selenocysteine
-|     |  |         |  |           |     |                     +--| (96)
-|     |  |         |  |           |     |                     |  +---Mery_GPX.2.selenocysteine
-|     |  |         |  |           |     |                  +--| (97)
-|     |  |         |  |           |     |                  |  +--Olon_GPX.12.unaligned
-|     |  |         |  |           |     |               +--| (82)
-|     |  |         |  |           |     |               |  |    +**Olon_GPX.3.selenocysteine
-|     |  |         |  |           |     |               |  +----| (100)
-|     |  |         |  |           |     |               |       +**Olon_GPX.30.unaligned
-|     |  |         |  |           |     |            +--| (71)
-|     |  |         |  |           |     |            |  |    +--OKI_GPX.1.selenocysteine
-|     |  |         |  |           |     |            |  +----| (100)
-|     |  |         |  |           |     |            |       |  +**OSKA_GPX.9.selenocysteine
-|     |  |         |  |           |     |            |       +--| (100)
-|     |  |         |  |           |     |            |          |  +**OdB3_GPX.1.selenocysteine
-|     |  |         |  |           |     |            |          +--| (100)
-|     |  |         |  |           |     |            |             +--OdB3_GPX.2.selenocysteine
-|     |  |         |  |           |     |         +--| (47)
-|     |  |         |  |           |     |         |  |           +--OKI_GPX.3.selenocysteine
-|     |  |         |  |           |     |         |  |  +--------| (100)
-|     |  |         |  |           |     |         |  |  |        |  +--OSKA_GPX.6.selenocysteine
-|     |  |         |  |           |     |         |  |  |        +--| (100)
-|     |  |         |  |           |     |         |  |  |           +--OdB3_GPX.5.selenocysteine
-|     |  |         |  |           |     |         |  +--| (74)
-|     |  |         |  |           |     |         |     |  +------Oalb_GPX.2.selenocysteine
-|     |  |         |  |           |     |         |     +--| (57)
-|     |  |         |  |           |     |         |        |  +--------Ovan_GPX.3.selenocysteine
-|     |  |         |  |           |     |         |        +--| (83)
-|     |  |         |  |           |     |         |           |     +----Ovan_GPX.4.selenocysteine
-|     |  |         |  |           |     |         |           |  +--| (100)
-|     |  |         |  |           |     |         |           |  |  |  +**Ovan_GPX.8.unaligned
-|     |  |         |  |           |     |         |           |  |  +**| (74)
-|     |  |         |  |           |     |         |           |  |     +**Ovan_GPX.17.unaligned
-|     |  |         |  |           |     |         |           +--| (98)
-|     |  |         |  |           |     |         |              +--Ovan_GPX.24.unaligned
-|     |  |         |  |           |     |      +--| (66)
-|     |  |         |  |           |     |      |  |      +--Oalb_GPX.3.selenocysteine
-|     |  |         |  |           |     |      |  |  +---| (100)
-|     |  |         |  |           |     |      |  |  |   +**Oalb_GPX.4.selenocysteine
-|     |  |         |  |           |     |      |  +--| (100)
-|     |  |         |  |           |     |      |     |  +--Ovan_GPX.1.selenocysteine
-|     |  |         |  |           |     |      |     +--| (100)
-|     |  |         |  |           |     |      |        +--Ovan_GPX.5.selenocysteine
-|     |  |         |  |           |     +------| (100)
-|     |  |         |  |           |            |  +------Oalb_GPX.6.unaligned
-|     |  |         |  |           |            +--| (89)
-|     |  |         |  |           |               +-------------------Oalb_GPX.26.selenocysteine
-|     |  |         |  |        +--| (75)
-|     |  |         |  |        |  |                +--Bsty_GPX.2.selenocysteine
-|     |  |         |  |        |  |         +------| (99)
-|     |  |         |  |        |  |         |      +----Mery_GPX.3.selenocysteine
-|     |  |         |  |        |  |      +--| (86)
-|     |  |         |  |        |  |      |  +---Olon_GPX.14.selenocysteine
-|     |  |         |  |        |  |  +---| (100)
-|     |  |         |  |        |  |  |   +--Olon_GPX.1.selenocysteine
-|     |  |         |  |        |  +--| (98)
-|     |  |         |  |        |     |                  +--Bsty_GPX.5.selenocysteine
-|     |  |         |  |        |     |               +--| (97)
-|     |  |         |  |        |     |               |  +----Mery_GPX.10.selenocysteine
-|     |  |         |  |        |     |            +--| (100)
-|     |  |         |  |        |     |            |  |  +--Mery_GPX.4.unaligned
-|     |  |         |  |        |     |            |  +--| (100)
-|     |  |         |  |        |     |            |     +------Mery_GPX.6.unaligned
-|     |  |         |  |        |     |         +--| (72)
-|     |  |         |  |        |     |         |  |  +--Olon_GPX.2.selenocysteine
-|     |  |         |  |        |     |         |  +--| (100)
-|     |  |         |  |        |     |         |     |        +---Olon_GPX.4.selenocysteine
-|     |  |         |  |        |     |         |     |     +--| (81)
-|     |  |         |  |        |     |         |     |     |  |  +---Olon_GPX.7.selenocysteine
-|     |  |         |  |        |     |         |     |     |  +--| (97)
-|     |  |         |  |        |     |         |     |     |     +--Olon_GPX.18.selenocysteine
-|     |  |         |  |        |     |         |     |  +--| (75)
-|     |  |         |  |        |     |         |     |  |  +----Olon_GPX.11.selenocysteine
-|     |  |         |  |        |     |         |     +--| (80)
-|     |  |         |  |        |     |         |        |  +**Olon_GPX.16.unaligned
-|     |  |         |  |        |     |         |        +--| (100)
-|     |  |         |  |        |     |         |           +--Olon_GPX.17.unaligned
-|     |  |         |  |        |     |      +--| (100)
-|     |  |         |  |        |     |      |  |  +--Olon_GPX.5.selenocysteine
-|     |  |         |  |        |     |      |  +--| (99)
-|     |  |         |  |        |     |      |     |          +**Olon_GPX.9.selenocysteine
-|     |  |         |  |        |     |      |     |       +--| (100)
-|     |  |         |  |        |     |      |     |       |  +--Olon_GPX.23.unaligned
-|     |  |         |  |        |     |      |     +-------| (100)
-|     |  |         |  |        |     |      |             +**Olon_GPX.22.selenocysteine
-|     |  |         |  |        |     |  +---| (100)
-|     |  |         |  |        |     |  |   |           +--OKI_GPX.9.selenocysteine
-|     |  |         |  |        |     |  |   |        +--| (97)
-|     |  |         |  |        |     |  |   |        |  +**OSKA_GPX.12.selenocysteine
-|     |  |         |  |        |     |  |   |     +--| (100)
-|     |  |         |  |        |     |  |   |     |  +--OSKA_GPX.4.unaligned
-|     |  |         |  |        |     |  |   |  +--| (93)
-|     |  |         |  |        |     |  |   |  |  +--Ovan_GPX.22.selenocysteine
-|     |  |         |  |        |     |  |   +--| (92)
-|     |  |         |  |        |     |  |      |     +--Oalb_GPX.10.selenocysteine
-|     |  |         |  |        |     |  |      |  +--| (100)
-|     |  |         |  |        |     |  |      |  |  +----Oalb_GPX.19.selenocysteine
-|     |  |         |  |        |     |  |      +--| (99)
-|     |  |         |  |        |     |  |         +------Oalb_GPX.12.unaligned
-|     |  |         |  |        |     +--| (98)
-|     |  |         |  |        |        |       +--OKI_GPX.7.selenocysteine
-|     |  |         |  |        |        |  +----| (100)
-|     |  |         |  |        |        |  |    |  +--OSKA_GPX.3.selenocysteine
-|     |  |         |  |        |        |  |    +--| (100)
-|     |  |         |  |        |        |  |       +--OdB3_GPX.7.selenocysteine
-|     |  |         |  |        |        +--| (71)
-|     |  |         |  |        |           |  +----Oalb_GPX.15.selenocysteine
-|     |  |         |  |        |           +--| (99)
-|     |  |         |  |        |              |  +--Ovan_GPX.9.selenocysteine
-|     |  |         |  |        |              +--| (100)
-|     |  |         |  |        |                 |    +**Ovan_GPX.15.selenocysteine
-|     |  |         |  |        |                 +----| (100)
-|     |  |         |  |        |                      +**Ovan_GPX.26.selenocysteine
-|     |  |         |  |     +--| (70)
-|     |  |         |  |     |  |              +----------Clonorchis_sinensis_gi_117956208_gb_ABK58680.1
-|     |  |         |  |     |  |           +--| (25)
-|     |  |         |  |     |  |           |  |     +--Cint_GPX.5.selenocysteine
-|     |  |         |  |     |  |           |  |  +--| (100)
-|     |  |         |  |     |  |           |  |  |  +--Crob_GPX.2.selenocysteine
-|     |  |         |  |     |  |           |  +--| (100)
-|     |  |         |  |     |  |           |     +--Csav_GPX.5.selenocysteine
-|     |  |         |  |     |  |        +--| (64)
-|     |  |         |  |     |  |        |  |            +--Pege_GPX.1.selenocysteine
-|     |  |         |  |     |  |        |  |        +---| (100)
-|     |  |         |  |     |  |        |  |        |   +--Pege_GPX.2.selenocysteine
-|     |  |         |  |     |  |        |  |     +--| (96)
-|     |  |         |  |     |  |        |  |     |  +----------Tdem_GPX.3.selenocysteine
-|     |  |         |  |     |  |        |  |  +--| (89)
-|     |  |         |  |     |  |        |  |  |  +-----Pege_GPX.4.selenocysteine
-|     |  |         |  |     |  |        |  +--| (15)
-|     |  |         |  |     |  |        |     |        +---Pege_GPX.3.selenocysteine
-|     |  |         |  |     |  |        |     |     +--| (46)
-|     |  |         |  |     |  |        |     |     |  +-------------------Tdem_GPX.8.selenocysteine
-|     |  |         |  |     |  |        |     |  +--| (26)
-|     |  |         |  |     |  |        |     |  |  +---------Stho_GPX.7.selenocysteine
-|     |  |         |  |     |  |        |     +--| (24)
-|     |  |         |  |     |  |        |        +-----Pmam_GPX.6.selenocysteine
-|     |  |         |  |     |  |     +**| (29)
-|     |  |         |  |     |  |     |  |  +--Pmam_GPX.1.selenocysteine
-|     |  |         |  |     |  |     |  +--| (100)
-|     |  |         |  |     |  |     |     +-----Pmam_GPX.2.selenocysteine
-|     |  |         |  |     |  |  +--| (56)
-|     |  |         |  |     |  |  |  +-------------Tdem_GPX.7.selenocysteine
-|     |  |         |  |     |  +--| (71)
-|     |  |         |  |     |     |      +**Cint_GPX.1.selenocysteine
-|     |  |         |  |     |     |   +--| (100)
-|     |  |         |  |     |     |   |  +--Crob_GPX.1.selenocysteine
-|     |  |         |  |     |     +---| (100)
-|     |  |         |  |     |         +--Csav_GPX.1.selenocysteine
-|     |  |         |  |  +--| (75)
-|     |  |         |  |  |  |        +--Stho_GPX.1.selenocysteine
-|     |  |         |  |  |  |     +--| (99)
-|     |  |         |  |  |  |     |  +----Tdem_GPX.11.selenocysteine
-|     |  |         |  |  |  |  +--| (99)
-|     |  |         |  |  |  |  |  +---Tdem_GPX.1.selenocysteine
-|     |  |         |  |  |  +--| (92)
-|     |  |         |  |  |     |      +----Stho_GPX.2.selenocysteine
-|     |  |         |  |  |     +------| (100)
-|     |  |         |  |  |            +---Stho_GPX.8.cysteine
-|     |  |         |  +--| (54)
-|     |  |         |     |         +----Fbor_GPX.4.selenocysteine
-|     |  |         |     |      +--| (50)
-|     |  |         |     |      |  |    +--------Fbor_GPX.5.selenocysteine
-|     |  |         |     |      |  +----| (100)
-|     |  |         |     |      |       +-----Fbor_GPX.7.selenocysteine
-|     |  |         |     |   +--| (97)
-|     |  |         |     |   |  +-------------Fbor_GPX.17.cysteine
-|     |  |         |     +---| (100)
-|     |  |         |         |  +--------Fbor_GPX.10.selenocysteine
-|     |  |         |         +--| (91)
-|     |  |         |            |          +----Fbor_GPX.11.selenocysteine
-|     |  |         |            +----------| (100)
-|     |  |         |                       +---Fbor_GPX.12.selenocysteine
-|     |  |  +------| (97)
-|     |  |  |      |                          +------Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2
-|     |  |  |      |                    +-----| (100)
-|     |  |  |      |                    |     +--------Fbor_GPX.14.cysteine
-|     |  |  |      |                 +--| (99)
-|     |  |  |      |                 |  +---Fbor_GPX.1.cysteine
-|     |  |  |      |              +--| (66)
-|     |  |  |      |              |  +---Fbor_GPX.3.unaligned
-|     |  |  |      |           +--| (54)
-|     |  |  |      |           |  |     +--Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1
-|     |  |  |      |           |  |  +--| (100)
-|     |  |  |      |           |  |  |  |  +--Acidovorax_avenae_subsp._citrulli_AAC00-1_gi_120608953_ref_Y
-|     |  |  |      |           |  |  |  +--| (98)
-|     |  |  |      |           |  |  |     +--Diaphorobacter_sp._TPSY_gi_222109412_ref_YP_002551676.1
-|     |  |  |      |           |  +--| (98)
-|     |  |  |      |           |     |  +----Bordetella_parapertussis_12822_gi_33597467_ref_NP_885110.1
-|     |  |  |      |           |     +--| (100)
-|     |  |  |      |           |        +--Bordetella_avium_197N_gi_187478327_ref_YP_786351.1
-|     |  |  |      |        +--| (47)
-|     |  |  |      |        |  |  +----Sphingomonas_wittichii_RW1_gi_148556976_ref_YP_001264558.1
-|     |  |  |      |        |  +--| (95)
-|     |  |  |      |        |     |     +--Bradyrhizobium_sp._BTAi1_gi_148257534_ref_YP_001242119.1
-|     |  |  |      |        |     |  +--| (43)
-|     |  |  |      |        |     |  |  +--Rhodopseudomonas_palustris_BisB5_gi_91977935_ref_YP_570594.1
-|     |  |  |      |        |     +--| (100)
-|     |  |  |      |        |        +---Bradyrhizobium_japonicum_USDA_110_gi_27381843_ref_NP_773372.
-|     |  |  |      |     +--| (68)
-|     |  |  |      |     |  |           +------Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1
-|     |  |  |      |     |  |        +--| (89)
-|     |  |  |      |     |  |        |  |  +---Alteromonadales_bacterium_TW-7_gi_119471461_ref_ZP_01613902.
-|     |  |  |      |     |  |        |  +--| (98)
-|     |  |  |      |     |  |        |     |  +---Bsty_GPX.1.cysteine
-|     |  |  |      |     |  |        |     +--| (100)
-|     |  |  |      |     |  |        |        +---Fbor_GPX.2.cysteine
-|     |  |  |      |     |  |     +--| (100)
-|     |  |  |      |     |  |     |  +---Enterobacter_sp._638_gi_146312342_ref_YP_001177416.1
-|     |  |  |      |     |  |  +--| (99)
-|     |  |  |      |     |  |  |  +---gamma_proteobacterium_HTCC5015_gi_198262109_gb_EDY86392.1
-|     |  |  |      |     |  +--| (39)
-|     |  |  |      |     |     |              +---Shewanella_amazonensis_SB2B_gi_119774217_ref_YP_926957.1
-|     |  |  |      |     |     |           +--| (97)
-|     |  |  |      |     |     |           |  +----Bacillus_cereus_ATCC_14579_gi_30020250_ref_NP_831881.1
-|     |  |  |      |     |     |        +--| (44)
-|     |  |  |      |     |     |        |  +---Alcanivorax_borkumensis_SK2_gi_110835499_ref_YP_694358.1
-|     |  |  |      |     |     |     +--| (43)
-|     |  |  |      |     |     |     |  +-------Clostridium_beijerinckii_NCIMB_8052_gi_150015663_ref_YP_0013
-|     |  |  |      |     |     |  +--| (47)
-|     |  |  |      |     |     |  |  |   +--gamma_proteobacterium_NOR51-B_gi_219680407_gb_EED36756.1
-|     |  |  |      |     |     |  |  +---| (90)
-|     |  |  |      |     |     |  |      +--------Fbor_GPX.16.cysteine
-|     |  |  |      |     |     +--| (34)
-|     |  |  |      |     |        |                +--Fbor_GPX.8.cysteine
-|     |  |  |      |     |        |            +---| (100)
-|     |  |  |      |     |        |            |   +-----Fbor_GPX.24.unaligned
-|     |  |  |      |     |        |         +--| (98)
-|     |  |  |      |     |        |         |  +----Fbor_GPX.28.cysteine
-|     |  |  |      |     |        +---------| (99)
-|     |  |  |      |     |                  |          +-----Fbor_GPX.18.cysteine
-|     |  |  |      |     |                  |   +------| (100)
-|     |  |  |      |     |                  |   |      +-----Fbor_GPX.25.unaligned
-|     |  |  |      |     |                  +---| (99)
-|     |  |  |      |     |                      |                        +--Fbor_GPX.19.cysteine
-|     |  |  |      |     |                      +------------------------| (100)
-|     |  |  |      |     |                                               +**Fbor_GPX.20.cysteine
-|     |  |  |      |  +--| (68)
-|     |  |  |      |  |  |  +--Shewanella_sediminis_HAW-EB3_gi_157376430_ref_YP_001475030.1
-|     |  |  |      |  |  +--| (99)
-|     |  |  |      |  |     +----Fbor_GPX.15.unaligned
-|     |  |  |      +--| (88)
-|     |  |  |         |     +------Isaria_tenuipes_gi_210063459_gb_ACJ06531.1
-|     |  |  |         |  +--| (95)
-|     |  |  |         |  |  |     +--------Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1
-|     |  |  |         |  |  |  +--| (99)
-|     |  |  |         |  |  |  |  +------Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1
-|     |  |  |         |  |  +--| (98)
-|     |  |  |         |  |     +------Fbor_GPX.6.cysteine
-|     |  |  |         +**| (29)
-|     |  |  |            +---------------Fbor_GPX.21.cysteine
-|     |  +--| (32)
-|     |     |  +-----------Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1
-|     |     +--| (92)
-|     |        +-------Ixodes_scapularis_gi_215502580_gb_EEC12074.1
-|  +--| (13)
-|  |  +----------Metapenaeus_ensis_gi_171189511_gb_ACB42236.1
-+--| (74)
-|  +----------Drer_GPX.22.selenocysteine
-|
-|                          +---Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2
-|                       +--| (100)
-|                       |  |  +--gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2
-|                       |  +--| (100)
-|                       |     +**Human_GPX1_NP_000572.2
-|                    +--| (100)
-|                    |  +--GPX1.Sus_scrofa_GPX1.Sus_scrofa
-|                 +--| (100)
-|                 |  |  +--Rattus_norvegicus_gi_9247190_gb_AAB95647.2
-|                 |  +--| (100)
-|                 |     +--Mmus_GPX.6.selenocysteine
-|              +--| (100)
-|              |  +---Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1
-|           +--| (60)
-|           |  |     +--GPX2.Gallus_gallus_GPX2.Gallus_gallus
-|           |  |  +--| (83)
-|           |  |  |  |        +**gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3
-|           |  |  |  |     +--| (100)
-|           |  |  |  |     |  +--Mmus_GPX.8.selenocysteine
-|           |  |  |  |  +--| (85)
-|           |  |  |  |  |  +--Human_GPX2_NP_002074.2
-|           |  |  |  +--| (100)
-|           |  |  |     +**GPX2.Sus_scrofa_GPX2.Sus_scrofa
-|           |  +--| (100)
-|           |     |  +--Xenopus_tropicalis_gi_166796161_gb_AAI59037.1
-|           |     +--| (99)
-|           |        +--Drer_GPX.8.selenocysteine
-|        +--| (53)
-|        |  |           +**GPX1.Danio_rerio_GPX1.Danio_rerio
-|        |  |        +--| (100)
-|        |  |        |  +**Drer_GPX.2.selenocysteine
-|        |  |     +--| (100)
-|        |  |     |  +--Hypophthalmichthys_molitrix_gi_156571766_gb_ABU84810.1
-|        |  |  +--| (99)
-|        |  |  |  |  +--Thunnus_maccoyii_gi_133779723_gb_ABO38817.1
-|        |  |  |  +--| (100)
-|        |  |  |     +--Drer_GPX.6.selenocysteine
-|        |  +--| (100)
-|        |     +--Oncorhynchus_mykiss_gi_11095769_gb_AAG30013.1_AF281338_1
-|     +--| (83)
-|     |  |  +--Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1
-|     |  +--| (99)
-|     |     |  +--Bflo_GPX.2.selenocysteine
-|     |     +--| (100)
-|     |        +--Blan_GPX.1.selenocysteine
-|  +--| (75)
-|  |  |  +------------Ostreococcus_tauri_gi_116059366_emb_CAL55073.1
-|  |  +--| (35)
-|  |     +---Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2
-+--| (97)
-   |         +--Bflo_GPX.6.serine
-   |   +-----| (100)
-   |   |     +--Blan_GPX.6.serine
-   +---| (100)
-       |      +**Bflo_GPX.16.cysteine
-       +------| (100)
-              +--Blan_GPX.18.cysteine
-
-Tree in newick format:
-
-(Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1:1.4383017147,(((((((((((Globodera_rostochiensis_gi_21739125_emb_CAD38523.1:0.3500335079,Haemonchus_contortus_gi_47499102_gb_AAT28332.1:0.0805464368)100:0.1527236106,Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1:0.2049981733)99:0.2160057849,(gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_:0.2814994942,gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX:0.1423594213)100:0.3237100771)100:0.4253889913,Crassostrea_gigas_gi_152002384_gb_ABS19600.1:1.3947993152)68:0.1247713754,((((((Ciona_intestinalis_gi_198424199_ref_XP_002121558.1:0.2266263004,Crob_GPX.5.selenocysteine:0.0000020025)100:0.0477060102,Cint_GPX.9.selenocysteine:0.1152469352)75:0.0086065965,Cint_GPX.12.selenocysteine:0.0136378528)100:0.3464544025,Csav_GPX.7.selenocysteine:0.3285998668)100:0.3869794481,((((Cint_GPX.14.selenocysteine:0.0219495388,(Crob_GPX.7.selenocysteine:0.0048409142,Csav_GPX.11.selenocysteine:0.2366049105)91:0.0000029985)95:0.1133087898,Csav_GPX.10.unaligned:0.7000514637)99:0.2333620566,Pmam_GPX.10.selenocysteine:0.2633674327)99:0.3010238911,Pmam_GPX.7.selenocysteine:0.6347874580)99:0.1012376409)100:0.4092935467,(Bsch_GPX.7.selenocysteine:1.2036785150,((Bsch_GPX.9.selenocysteine:0.6764108049,(Scla_GPX.8.selenocysteine:0.1108995405,Scla_GPX.9.selenocysteine:0.1889274183)100:1.1175064900)84:0.0089794934,(((Bsch_GPX.10.unaligned:1.0254078821,(Scla_GPX.16.selenocysteine:0.3512113010,Scla_GPX.17.selenocysteine:0.5374760763)100:0.1652227653)70:0.1611597413,(Bsch_GPX.13.selenocysteine:0.7056051180,(Hror_GPX.4.unaligned:0.3123791249,Scla_GPX.18.unaligned:0.3785417677)100:0.0987589866)70:0.0976263849)98:0.1831253322,Hror_GPX.7.selenocysteine:1.1109907838)96:0.2036578115)96:0.1900304435)100:0.2168789945)96:0.0805751897)87:0.1624519869,(gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1:1.5730504077,((Bsch_GPX.3.selenocysteine:0.4227887333,(Hror_GPX.2.selenocysteine:0.5592958824,Scla_GPX.13.selenocysteine:0.2003686720)45:0.1136009995)100:0.2569035423,((((((Cint_GPX.3.selenocysteine:0.0484658326,Crob_GPX.11.selenocysteine:0.0000010000)100:0.0962675096,Csav_GPX.3.selenocysteine:0.2148404112)100:0.2490654775,Pmam_GPX.4.selenocysteine:0.4118775147)100:0.3166695704,Pege_GPX.6.selenocysteine:0.1956961772)99:0.0400593687,Olon_GPX.26.unaligned:2.6926104173)80:0.0608924047,Tdem_GPX.5.selenocysteine:0.4180404558)95:0.4726023605)96:0.1930141478)83:0.2284312555)54:0.0497419651,((Dreissena_polymorpha_gi_145559053_gb_ABP73388.1:0.4137053513,Corbicula_fluminea_gi_146395067_gb_ABQ24217.1:0.5105259547)100:0.2736352137,Unio_tumidus_gi_111572533_gb_ABH10623.1:0.4923613580)100:0.6218152420)83:0.0279485965,(((((((((Mus_musculus_gi_148700720_gb_EDL32667.1:0.0094210367,Mmus_GPX.26.cysteine:0.0000024035)100:0.2888401513,Human_GPX6_NP_874360.1:0.1250019144)68:0.0357155806,Sus_scrofa_gi_212549567_ref_NP_001131079.1:0.0582580829)98:0.0648058760,(((Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1:0.1446963172,Sus_scrofa_gi_47523090_ref_NP_999051.1:0.1257679550)68:0.0517454386,(gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A:0.0655327406,Human_GPX5_NP_001500.1:0.0000021722)100:0.1698714763)37:0.0157084462,(gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_:0.0144629599,Mmus_GPX.20.cysteine:0.0054302824)100:0.1852821029)100:0.1329751544)98:0.1179537659,((GPX3.Homo_sapiens_GPX3.Homo_sapiens:0.0000021965,Human_GPX3_NP_001316719.1:0.0000020751)100:0.0356990217,(GPX3.Mus_musculus_GPX3.Mus_musculus:0.0066118741,Mmus_GPX.14.selenocysteine:0.0000027327)100:0.0910112551)100:0.1592444238)100:0.2711313926,Xenopus_tropicalis_gi_38174689_gb_AAH61262.1:0.3287194863)100:0.2064243072,Drer_GPX.16.selenocysteine:0.3032749142)98:0.1567566383,GPX3.Salmo_salar_GPX3.Salmo_salar:0.2571489131)100:0.4354341172,((Bflo_GPX.9.selenocysteine:0.0829393120,(Bflo_GPX.22.serine:0.5067090756,Blan_GPX.8.selenocysteine:0.0627851351)100:0.0561239275)100:0.0878983564,(Bflo_GPX.13.selenocysteine:0.1052495827,Blan_GPX.13.selenocysteine:0.0963192784)100:0.1956284588)100:0.6117101763)98:0.2698773353)93:0.0616159006,((((((Rheum_australe_gi_197312911_gb_ACH63236.1:0.3937149355,Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1:0.3179203091)98:0.1421339597,(((((Bflo_GPX.3.cysteine:0.1007395189,Blan_GPX.3.cysteine:0.1932370197)100:0.7719501036,(Cint_GPX.8.cysteine:0.1058681427,Crob_GPX.8.cysteine:0.0752267636)100:0.6661376110)100:0.3545496639,((((Bsch_GPX.1.cysteine:0.6560713075,Scla_GPX.1.cysteine:0.4618258472)100:0.2167176869,Hror_GPX.8.cysteine:0.4097438398)98:0.1910362083,((Drer_GPX.9.cysteine:0.2960328055,((Drer_GPX.11.serine:0.3041462014,(Mmus_GPX.19.cysteine:0.4953711104,Human_GPX8_NP_001008398.2:0.1773460296)100:0.2167718250)100:0.6618868314,(Mmus_GPX.11.cysteine:0.1304713621,Human_GPX7_NP_056511.2:0.0178636143)100:0.2118419564)100:0.1272280178)100:0.6957731061,Pmam_GPX.12.cysteine:0.3993804263)99:0.2070121768)99:0.1329253914,((Pege_GPX.8.cysteine:0.5390083972,Tdem_GPX.10.cysteine:0.9376126880)100:0.1610904815,Stho_GPX.17.cysteine:0.3478855656)100:0.3067575456)98:0.1661819114)100:0.6615190571,(Olon_GPX.24.cysteine:0.5948989704,Ovan_GPX.28.cysteine:0.7779524095)97:0.1995506591)97:0.1371990337,Fbor_GPX.13.cysteine:1.7584647785)97:0.1502862758)90:0.0690787374,Olon_GPX.20.cysteine:2.4088733072)95:0.1264974371,(((((((((((GPX4d.Salmo_salar_GPX4d.Salmo_salar:0.1313263590,Drer_GPX.19.selenocysteine:0.1095116134)100:0.1926286206,(GPX4.Salmo_salar_GPX4.Salmo_salar:0.2469588313,Drer_GPX.18.selenocysteine:0.0783110891)97:0.0422134694)98:0.0910212560,((((GPX4.Homo_sapiens_GPX4.Homo_sapiens:0.0008603094,Human_GPX4_NP_001034937.1:0.1098601076)100:0.0732524853,((Mmus_GPX.1.selenocysteine:0.0000010000,Mmus_GPX.3.selenocysteine:0.0000020085)66:0.0000029308,Mmus_GPX.4.selenocysteine:0.1295261426)99:0.0250407256)92:0.0144900599,GPX4.Sus_scrofa_GPX4.Sus_scrofa:0.0226473655)100:0.3091463284,GPX4.Gallus_gallus_GPX4.Gallus_gallus:0.1681499175)98:0.0489546392)100:0.3800130529,((Bflo_GPX.20.cysteine:0.0899796898,Blan_GPX.16.cysteine:0.1434136752)100:1.1866287070,(Bflo_GPX.25.selenocysteine:0.0000024668,Blan_GPX.22.selenocysteine:0.0498952588)100:0.3774944288)91:0.1424697062)82:0.0722869475,Fbor_GPX.22.selenocysteine:2.5529638565)65:0.0650203401,(((Bsch_GPX.14.selenocysteine:0.0619434570,((Bsch_GPX.17.selenocysteine:0.0581314246,Bsch_GPX.20.selenocysteine:0.0720307335)99:0.0168192469,Bsch_GPX.19.selenocysteine:0.2720411576)100:0.0884613397)100:0.2853986116,Scla_GPX.21.selenocysteine:0.2318003777)100:0.1937514352,Hror_GPX.10.selenocysteine:0.3753297726)98:0.2513507598)74:0.1030632907,(Tdem_GPX.2.selenocysteine:1.0530772531,(((((((Bsty_GPX.3.selenocysteine:0.5344235569,Mery_GPX.2.selenocysteine:0.4169095395)96:0.1096838221,Olon_GPX.12.unaligned:0.2548587106)97:0.1519962752,(Olon_GPX.3.selenocysteine:0.0000024233,Olon_GPX.30.unaligned:0.0000020987)100:0.4316398138)82:0.1079809990,(OKI_GPX.1.selenocysteine:0.0564551547,(OSKA_GPX.9.selenocysteine:0.0000020423,(OdB3_GPX.1.selenocysteine:0.0000027345,OdB3_GPX.2.selenocysteine:0.0594987071)100:0.0833184840)100:0.0408799923)100:0.4441333771)71:0.0633796528,((OKI_GPX.3.selenocysteine:0.0509077938,(OSKA_GPX.6.selenocysteine:0.0221510345,OdB3_GPX.5.selenocysteine:0.0681849242)100:0.1091459996)100:0.7860946994,(Oalb_GPX.2.selenocysteine:0.6157623018,(Ovan_GPX.3.selenocysteine:0.7927201798,((Ovan_GPX.4.selenocysteine:0.4521439444,(Ovan_GPX.8.unaligned:0.0000020127,Ovan_GPX.17.unaligned:0.0000010000)74:0.0000025236)100:0.1319412909,Ovan_GPX.24.unaligned:0.3319236529)98:0.1696110944)83:0.1396859272)57:0.0735657170)74:0.1901058586)47:0.1361797576,((Oalb_GPX.3.selenocysteine:0.1093352481,Oalb_GPX.4.selenocysteine:0.0000022364)100:0.3565006082,(Ovan_GPX.1.selenocysteine:0.2496686133,Ovan_GPX.5.selenocysteine:0.1823000456)100:0.2554238034)100:0.2305211260)66:0.1609482337,(Oalb_GPX.6.unaligned:0.5997064813,Oalb_GPX.26.selenocysteine:1.6976606079)89:0.1917913099)100:0.6063053009)78:0.2155000140)35:0.0150052708,((((Bsty_GPX.2.selenocysteine:0.3155988377,Mery_GPX.3.selenocysteine:0.5048086405)99:0.6662391474,Olon_GPX.14.selenocysteine:0.3601032275)86:0.0191970281,Olon_GPX.1.selenocysteine:0.2805777304)100:0.4230454236,((((((Bsty_GPX.5.selenocysteine:0.1270109946,Mery_GPX.10.selenocysteine:0.4432093735)97:0.0562499243,(Mery_GPX.4.unaligned:0.0155175782,Mery_GPX.6.unaligned:0.6262953044)100:0.1479789617)100:0.0571230569,(Olon_GPX.2.selenocysteine:0.0607820027,(((Olon_GPX.4.selenocysteine:0.4122889810,(Olon_GPX.7.selenocysteine:0.3905853953,Olon_GPX.18.selenocysteine:0.1358725096)97:0.1076180281)81:0.0391794935,Olon_GPX.11.selenocysteine:0.5043985870)75:0.1160165246,(Olon_GPX.16.unaligned:0.0000021293,Olon_GPX.17.unaligned:0.0334697481)100:0.1781722821)80:0.0653861902)100:0.1821717033)72:0.1360456912,(Olon_GPX.5.selenocysteine:0.0590721855,((Olon_GPX.9.selenocysteine:0.0000027208,Olon_GPX.23.unaligned:0.0274063792)100:0.0430393133,Olon_GPX.22.selenocysteine:0.0000022230)100:0.7165127040)99:0.1133560993)100:0.1894841684,((((OKI_GPX.9.selenocysteine:0.1170225963,OSKA_GPX.12.selenocysteine:0.0000020438)97:0.0141658583,OSKA_GPX.4.unaligned:0.0483928402)100:0.3238800145,Ovan_GPX.22.selenocysteine:0.3309980710)93:0.0977136010,((Oalb_GPX.10.selenocysteine:0.0768203560,Oalb_GPX.19.selenocysteine:0.4727114567)100:0.1915731615,Oalb_GPX.12.unaligned:0.6749772084)99:0.1323368916)92:0.1924740477)100:0.4048330785,((OKI_GPX.7.selenocysteine:0.0777686438,(OSKA_GPX.3.selenocysteine:0.0557080483,OdB3_GPX.7.selenocysteine:0.0602208022)100:0.0525975282)100:0.4606947425,(Oalb_GPX.15.selenocysteine:0.5029411246,(Ovan_GPX.9.selenocysteine:0.1166070265,(Ovan_GPX.15.selenocysteine:0.0000023184,Ovan_GPX.26.selenocysteine:0.0000024335)100:0.4998849694)100:0.3393922363)99:0.2961559725)71:0.1541275502)98:0.3196682350)98:0.2094773973)75:0.0833784103,(((((Clonorchis_sinensis_gi_117956208_gb_ABK58680.1:1.0050561909,((Cint_GPX.5.selenocysteine:0.0225994080,Crob_GPX.2.selenocysteine:0.0121520697)100:0.2159995285,Csav_GPX.5.selenocysteine:0.2643531505)100:0.2645072335)25:0.1108606001,((((Pege_GPX.1.selenocysteine:0.1106278395,Pege_GPX.2.selenocysteine:0.1801064607)100:0.4083724398,Tdem_GPX.3.selenocysteine:0.9715677724)96:0.1570451464,Pege_GPX.4.selenocysteine:0.5361760180)89:0.1018697112,(((Pege_GPX.3.selenocysteine:0.3403631461,Tdem_GPX.8.selenocysteine:1.7204284863)46:0.2717144820,Stho_GPX.7.selenocysteine:0.8635632369)26:0.1146286959,Pmam_GPX.6.selenocysteine:0.5739539971)24:0.1205448030)15:0.1074329308)64:0.0851344598,(Pmam_GPX.1.selenocysteine:0.1494576291,Pmam_GPX.2.selenocysteine:0.5229676354)100:0.2556513773)29:0.0000020220,Tdem_GPX.7.selenocysteine:1.2037561788)56:0.0268427445,((Cint_GPX.1.selenocysteine:0.0000029058,Crob_GPX.1.selenocysteine:0.0109508395)100:0.1908846154,Csav_GPX.1.selenocysteine:0.2819407083)100:0.3501486468)71:0.0525762288)70:0.0928517617,(((Stho_GPX.1.selenocysteine:0.3040041908,Tdem_GPX.11.selenocysteine:0.4419009177)99:0.1018035739,Tdem_GPX.1.selenocysteine:0.4164039795)99:0.1452418207,(Stho_GPX.2.selenocysteine:0.4624496779,Stho_GPX.8.cysteine:0.4024566825)100:0.6310767438)92:0.1211669858)75:0.1207625622,(((Fbor_GPX.4.selenocysteine:0.5009527288,(Fbor_GPX.5.selenocysteine:0.7900707884,Fbor_GPX.7.selenocysteine:0.5588783518)100:0.4436460661)50:0.0966135500,Fbor_GPX.17.cysteine:1.1985091496)97:0.1626935706,(Fbor_GPX.10.selenocysteine:0.7668845110,(Fbor_GPX.11.selenocysteine:0.4362892159,Fbor_GPX.12.selenocysteine:0.4204025958)100:0.9574388624)91:0.1777874422)100:0.3940350046)54:0.0949732774)54:0.1864566310,((((((((Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2:0.6210150116,Fbor_GPX.14.cysteine:0.8191664154)100:0.5234291945,Fbor_GPX.1.cysteine:0.3492654475)99:0.1710338170,Fbor_GPX.3.unaligned:0.3422415590)66:0.0930478071,((Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1:0.2645666789,(Acidovorax_avenae_subsp._citrulli_AAC00-1_gi_120608953_ref_Y:0.3036927174,Diaphorobacter_sp._TPSY_gi_222109412_ref_YP_002551676.1:0.1785207366)98:0.0580302698)100:0.1896899206,(Bordetella_parapertussis_12822_gi_33597467_ref_NP_885110.1:0.4743074362,Bordetella_avium_197N_gi_187478327_ref_YP_786351.1:0.2957749028)100:0.2006402855)98:0.1013547617)54:0.1211863993,(Sphingomonas_wittichii_RW1_gi_148556976_ref_YP_001264558.1:0.4585814157,((Bradyrhizobium_sp._BTAi1_gi_148257534_ref_YP_001242119.1:0.2112985824,Rhodopseudomonas_palustris_BisB5_gi_91977935_ref_YP_570594.1:0.2160241615)43:0.0757951372,Bradyrhizobium_japonicum_USDA_110_gi_27381843_ref_NP_773372.:0.4010834206)100:0.3356493795)95:0.1716576102)47:0.1233448050,((((Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1:0.6477577720,(Alteromonadales_bacterium_TW-7_gi_119471461_ref_ZP_01613902.:0.3937370054,(Bsty_GPX.1.cysteine:0.3562835947,Fbor_GPX.2.cysteine:0.3950324094)100:0.2695687750)98:0.1805461960)89:0.0178117593,Enterobacter_sp._638_gi_146312342_ref_YP_001177416.1:0.3760096521)100:0.1568081614,gamma_proteobacterium_HTCC5015_gi_198262109_gb_EDY86392.1:0.3460744087)99:0.2432748866,(((((Shewanella_amazonensis_SB2B_gi_119774217_ref_YP_926957.1:0.3690183697,Bacillus_cereus_ATCC_14579_gi_30020250_ref_NP_831881.1:0.4600835626)97:0.1995771736,Alcanivorax_borkumensis_SK2_gi_110835499_ref_YP_694358.1:0.3970240594)44:0.0496028516,Clostridium_beijerinckii_NCIMB_8052_gi_150015663_ref_YP_0013:0.7167217735)43:0.0217150718,(gamma_proteobacterium_NOR51-B_gi_219680407_gb_EED36756.1:0.1618857696,Fbor_GPX.16.cysteine:0.8150727284)90:0.3709694643)47:0.0828865128,(((Fbor_GPX.8.cysteine:0.2407197551,Fbor_GPX.24.unaligned:0.5540824006)100:0.3921808447,Fbor_GPX.28.cysteine:0.4291107208)98:0.3051812227,((Fbor_GPX.18.cysteine:0.5210879819,Fbor_GPX.25.unaligned:0.5510088122)100:0.6209409499,(Fbor_GPX.19.cysteine:0.0912019679,Fbor_GPX.20.cysteine:0.0000022854)100:2.1708989300)99:0.3527681010)99:0.9080240574)34:0.0180382468)39:0.0215097474)68:0.0970143122,(Shewanella_sediminis_HAW-EB3_gi_157376430_ref_YP_001475030.1:0.1920097523,Fbor_GPX.15.unaligned:0.4811707402)99:0.2352763143)68:0.0765891820,((Isaria_tenuipes_gi_210063459_gb_ACJ06531.1:0.6717090468,((Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1:0.7696386775,Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1:0.6530739093)99:0.0404262685,Fbor_GPX.6.cysteine:0.6242099817)98:0.0937335464)95:0.2002898871,Fbor_GPX.21.cysteine:1.4183537021)29:0.0000020478)88:0.1603164642)97:0.6001985100,(Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1:1.1032631644,Ixodes_scapularis_gi_215502580_gb_EEC12074.1:0.7437647604)92:0.2909587459)32:0.0587851794)27:0.0861868875,Metapenaeus_ensis_gi_171189511_gb_ACB42236.1:0.9512117531)13:0.0731894152,Drer_GPX.22.selenocysteine:1.0002904442)74:0.2403775898,(((((((((Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2:0.3512803827,(gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2:0.0669476070,Human_GPX1_NP_000572.2:0.0000010000)100:0.0175570235)100:0.0260443556,GPX1.Sus_scrofa_GPX1.Sus_scrofa:0.0516960834)100:0.0697743934,(Rattus_norvegicus_gi_9247190_gb_AAB95647.2:0.0529529258,Mmus_GPX.6.selenocysteine:0.0264841710)100:0.0992632523)100:0.1530604081,Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1:0.4056416039)100:0.1761865246,((GPX2.Gallus_gallus_GPX2.Gallus_gallus:0.2911289387,(((gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3:0.0000010000,Mmus_GPX.8.selenocysteine:0.0067084416)100:0.0558931633,Human_GPX2_NP_002074.2:0.0235048081)85:0.0172721954,GPX2.Sus_scrofa_GPX2.Sus_scrofa:0.0000029348)100:0.1935825265)83:0.0478478025,(Xenopus_tropicalis_gi_166796161_gb_AAI59037.1:0.1453620233,Drer_GPX.8.selenocysteine:0.2127385329)99:0.0788971761)100:0.2413762682)60:0.0526186775,((((GPX1.Danio_rerio_GPX1.Danio_rerio:0.0000010000,Drer_GPX.2.selenocysteine:0.0000010000)100:0.0435981431,Hypophthalmichthys_molitrix_gi_156571766_gb_ABU84810.1:0.1001400877)100:0.1315222808,(Thunnus_maccoyii_gi_133779723_gb_ABO38817.1:0.1925986105,Drer_GPX.6.selenocysteine:0.1572483845)100:0.1136439749)99:0.0298410055,Oncorhynchus_mykiss_gi_11095769_gb_AAG30013.1_AF281338_1:0.2424831454)100:0.1444695374)53:0.0744491354,(Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1:0.3225765977,(Bflo_GPX.2.selenocysteine:0.0093607706,Blan_GPX.1.selenocysteine:0.0581518409)100:0.2735222557)99:0.2228319955)83:0.1186192540,(Ostreococcus_tauri_gi_116059366_emb_CAL55073.1:1.1546532785,Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2:0.4128906486)35:0.0120522300)75:0.1467152826,((Bflo_GPX.6.serine:0.0072877917,Blan_GPX.6.serine:0.0503117889)100:0.5389225001,(Bflo_GPX.16.cysteine:0.0005458597,Blan_GPX.18.cysteine:0.0205697233)100:0.6548237473)100:0.4064265535)97:0.3194132648);
-
-CONSENSUS TREE
---------------
-
-Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -50631.077222
-Robinson-Foulds distance between ML tree and consensus tree: 26
-
-Branches with support >0.000000% are kept (extended consensus)
-Branch lengths are optimized by maximum likelihood on original alignment
-Numbers in parentheses are bootstrap supports (%)
-
-+-----------------Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1
-|
-|                                  +---Globodera_rostochiensis_gi_21739125_emb_CAD38523.1
-|                               +--| (100)
-|                               |  +--Haemonchus_contortus_gi_47499102_gb_AAT28332.1
-|                            +--| (99)
-|                            |  +--Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1
-|                       +----| (100)
-|                       |    |   +--gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_
-|                       |    +---| (100)
-|                       |        +--gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX
-|                    +--| (68)
-|                    |  +----------------Crassostrea_gigas_gi_152002384_gb_ABS19600.1
-|                 +--| (87)
-|                 |  |                     +--Ciona_intestinalis_gi_198424199_ref_XP_002121558.1
-|                 |  |                  +--| (100)
-|                 |  |                  |  +--Crob_GPX.5.selenocysteine
-|                 |  |               +--| (75)
-|                 |  |               |  +--Cint_GPX.9.selenocysteine
-|                 |  |           +---| (100)
-|                 |  |           |   +--Cint_GPX.12.selenocysteine
-|                 |  |       +---| (100)
-|                 |  |       |   +---Csav_GPX.7.selenocysteine
-|                 |  |  +----| (100)
-|                 |  |  |    |           +--Cint_GPX.14.selenocysteine
-|                 |  |  |    |        +--| (95)
-|                 |  |  |    |        |  |  +--Crob_GPX.7.selenocysteine
-|                 |  |  |    |        |  +--| (91)
-|                 |  |  |    |        |     +--Csav_GPX.11.selenocysteine
-|                 |  |  |    |     +--| (99)
-|                 |  |  |    |     |  +-------Csav_GPX.10.unaligned
-|                 |  |  |    |  +--| (99)
-|                 |  |  |    |  |  +--Pmam_GPX.10.selenocysteine
-|                 |  |  |    +--| (99)
-|                 |  |  |       +------Pmam_GPX.7.selenocysteine
-|                 |  +--| (96)
-|                 |     |  +--------------Bsch_GPX.7.selenocysteine
-|                 |     +--| (100)
-|                 |        |     +-------Bsch_GPX.9.selenocysteine
-|                 |        |  +--| (84)
-|                 |        |  |  |             +--Scla_GPX.8.selenocysteine
-|                 |        |  |  +-------------| (100)
-|                 |        |  |                +--Scla_GPX.9.selenocysteine
-|                 |        +--| (96)
-|                 |           |        +-----------Bsch_GPX.10.unaligned
-|                 |           |     +--| (70)
-|                 |           |     |  |  +---Scla_GPX.16.selenocysteine
-|                 |           |     |  +--| (100)
-|                 |           |     |     +-----Scla_GPX.17.selenocysteine
-|                 |           |  +--| (98)
-|                 |           |  |  |  +-------Bsch_GPX.13.selenocysteine
-|                 |           |  |  +--| (70)
-|                 |           |  |     |  +--Hror_GPX.4.unaligned
-|                 |           |  |     +--| (100)
-|                 |           |  |        +---Scla_GPX.18.unaligned
-|                 |           +--| (96)
-|                 |              +------------Hror_GPX.7.selenocysteine
-|              +--| (54)
-|              |  |  +------------------gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1
-|              |  +--| (83)
-|              |     |        +----Bsch_GPX.3.selenocysteine
-|              |     |     +--| (55)
-|              |     |     |  +--Scla_GPX.13.selenocysteine
-|              |     |  +--| (100)
-|              |     |  |  +-----Hror_GPX.2.selenocysteine
-|              |     +--| (96)
-|              |        |                   +--Cint_GPX.3.selenocysteine
-|              |        |                +--| (100)
-|              |        |                |  +--Crob_GPX.11.selenocysteine
-|              |        |             +--| (100)
-|              |        |             |  +--Csav_GPX.3.selenocysteine
-|              |        |          +--| (100)
-|              |        |          |  +----Pmam_GPX.4.selenocysteine
-|              |        |       +--| (99)
-|              |        |       |  +--Pege_GPX.6.selenocysteine
-|              |        |    +--| (80)
-|              |        |    |  +--------------------------------Olon_GPX.26.unaligned
-|              |        +----| (95)
-|              |             +----Tdem_GPX.5.selenocysteine
-|           +--| (83)
-|           |  |         +----Dreissena_polymorpha_gi_145559053_gb_ABP73388.1
-|           |  |      +--| (100)
-|           |  |      |  +-----Corbicula_fluminea_gi_146395067_gb_ABQ24217.1
-|           |  +------| (100)
-|           |         +-----Unio_tumidus_gi_111572533_gb_ABH10623.1
-|        +--| (93)
-|        |  |                            +--Mus_musculus_gi_148700720_gb_EDL32667.1
-|        |  |                         +--| (100)
-|        |  |                         |  +--Mmus_GPX.26.cysteine
-|        |  |                      +--| (68)
-|        |  |                      |  +--Human_GPX6_NP_874360.1
-|        |  |                   +--| (98)
-|        |  |                   |  +--Sus_scrofa_gi_212549567_ref_NP_001131079.1
-|        |  |                +--| (98)
-|        |  |                |  |     +--Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1
-|        |  |                |  |  +--| (68)
-|        |  |                |  |  |  +--Sus_scrofa_gi_47523090_ref_NP_999051.1
-|        |  |                |  +--| (100)
-|        |  |                |     |     +--gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_
-|        |  |                |     |  +--| (100)
-|        |  |                |     |  |  +--Mmus_GPX.20.cysteine
-|        |  |                |     +--| (63)
-|        |  |                |        |  +--gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A
-|        |  |                |        +--| (100)
-|        |  |                |           +--Human_GPX5_NP_001500.1
-|        |  |             +--| (100)
-|        |  |             |  |     +--GPX3.Homo_sapiens_GPX3.Homo_sapiens
-|        |  |             |  |  +--| (100)
-|        |  |             |  |  |  +--Human_GPX3_NP_001316719.1
-|        |  |             |  +--| (100)
-|        |  |             |     |  +--GPX3.Mus_musculus_GPX3.Mus_musculus
-|        |  |             |     +--| (100)
-|        |  |             |        +--Mmus_GPX.14.selenocysteine
-|        |  |          +--| (100)
-|        |  |          |  +---Xenopus_tropicalis_gi_38174689_gb_AAH61262.1
-|        |  |       +--| (98)
-|        |  |       |  +--Drer_GPX.16.selenocysteine
-|        |  |  +----| (100)
-|        |  |  |    +--GPX3.Salmo_salar_GPX3.Salmo_salar
-|        |  +--| (98)
-|        |     |         +--Bflo_GPX.9.selenocysteine
-|        |     |      +--| (100)
-|        |     |      |  |  +-----Bflo_GPX.22.serine
-|        |     |      |  +--| (100)
-|        |     |      |     +--Blan_GPX.8.selenocysteine
-|        |     +------| (100)
-|        |            |  +--Bflo_GPX.13.selenocysteine
-|        |            +--| (100)
-|        |               +--Blan_GPX.13.selenocysteine
-|     +--| (64)
-|     |  |  +----------Metapenaeus_ensis_gi_171189511_gb_ACB42236.1
-|     |  +--| (79)
-|     |     +-----------Drer_GPX.22.selenocysteine
-|  +--| (61)
+|                    +--| (96)
+|                    |  |                     +--Ciona_intestinalis_gi_198424199_ref_XP_002121558.1
+|                    |  |                  +--| (100)
+|                    |  |                  |  +--Crob_GPX.5.selenocysteine
+|                    |  |               +--| (97)
+|                    |  |               |  +--Cint_GPX.9.selenocysteine
+|                    |  |           +---| (99)
+|                    |  |           |   +--Cint_GPX.12.selenocysteine
+|                    |  |       +---| (100)
+|                    |  |       |   +--Csav_GPX.7.selenocysteine
+|                    |  |  +----| (100)
+|                    |  |  |    |           +--Cint_GPX.14.selenocysteine
+|                    |  |  |    |        +--| (97)
+|                    |  |  |    |        |  |  +--Crob_GPX.7.selenocysteine
+|                    |  |  |    |        |  +--| (88)
+|                    |  |  |    |        |     +--Csav_GPX.11.selenocysteine
+|                    |  |  |    |     +--| (99)
+|                    |  |  |    |     |  +-------Csav_GPX.10.unaligned
+|                    |  |  |    |  +--| (99)
+|                    |  |  |    |  |  +--Pmam_GPX.10.selenocysteine
+|                    |  |  |    +--| (99)
+|                    |  |  |       +------Pmam_GPX.7.selenocysteine
+|                    |  +--| (97)
+|                    |     |  +--------------Bsch_GPX.7.selenocysteine
+|                    |     +--| (99)
+|                    |        |     +-------Bsch_GPX.9.selenocysteine
+|                    |        |  +--| (74)
+|                    |        |  |  |        +-----------Bsch_GPX.10.unaligned
+|                    |        |  |  |     +--| (71)
+|                    |        |  |  |     |  |  +--Scla_GPX.16.selenocysteine
+|                    |        |  |  |     |  +--| (100)
+|                    |        |  |  |     |     +-----Scla_GPX.17.selenocysteine
+|                    |        |  |  |  +--| (99)
+|                    |        |  |  |  |  |  +-------Bsch_GPX.13.selenocysteine
+|                    |        |  |  |  |  +--| (70)
+|                    |        |  |  |  |     |  +--Hror_GPX.4.unaligned
+|                    |        |  |  |  |     +--| (100)
+|                    |        |  |  |  |        +---Scla_GPX.18.unaligned
+|                    |        |  |  +--| (89)
+|                    |        |  |     +------------Hror_GPX.7.selenocysteine
+|                    |        +--| (93)
+|                    |           |            +--Scla_GPX.8.selenocysteine
+|                    |           +------------| (100)
+|                    |                        +--Scla_GPX.9.selenocysteine
+|                 +--| (84)
+|                 |  +-----------------Crassostrea_gigas_gi_152002384_gb_ABS19600.1
+|              +--| (76)
+|              |  |      +------Dreissena_polymorpha_gi_145559053_gb_ABP73388.1
+|              |  +------| (100)
+|              |         +-----Unio_tumidus_gi_111572533_gb_ABH10623.1
+|           +--| (81)
+|           |  |                        +--Mus_musculus_gi_148700720_gb_EDL32667.1
+|           |  |                     +--| (100)
+|           |  |                     |  +--Mmus_GPX.26.cysteine
+|           |  |                  +--| (100)
+|           |  |                  |  +--Human_GPX6_NP_874360.1
+|           |  |               +--| (100)
+|           |  |               |  |  +--Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1
+|           |  |               |  +--| (100)
+|           |  |               |     |     +--gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_
+|           |  |               |     |  +--| (100)
+|           |  |               |     |  |  +--Mmus_GPX.20.cysteine
+|           |  |               |     +--| (100)
+|           |  |               |        |  +--gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A
+|           |  |               |        +--| (100)
+|           |  |               |           +--Human_GPX5_NP_001500.1
+|           |  |            +--| (100)
+|           |  |            |  |     +--GPX3.Homo_sapiens_GPX3.Homo_sapiens
+|           |  |            |  |  +--| (100)
+|           |  |            |  |  |  +--Human_GPX3_NP_001316719.1
+|           |  |            |  +--| (100)
+|           |  |            |     +--Mmus_GPX.14.selenocysteine
+|           |  |         +--| (99)
+|           |  |         |  +--Xenopus_tropicalis_gi_38174689_gb_AAH61262.1
+|           |  |      +--| (98)
+|           |  |      |  +--Drer_GPX.16.selenocysteine
+|           |  |  +---| (100)
+|           |  |  |   +--GPX3.Salmo_salar_GPX3.Salmo_salar
+|           |  +--| (99)
+|           |     |          +--Bflo_GPX.9.selenocysteine
+|           |     |       +--| (100)
+|           |     |       |  |  +----Bflo_GPX.22.serine
+|           |     |       |  +--| (100)
+|           |     |       |     +--Blan_GPX.8.selenocysteine
+|           |     +-------| (100)
+|           |             |  +--Bflo_GPX.13.selenocysteine
+|           |             +--| (100)
+|           |                +--Blan_GPX.13.selenocysteine
+|        +--| (88)
+|        |  |  +-----------------gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1
+|        |  +--| (89)
+|        |     |        +----Bsch_GPX.3.selenocysteine
+|        |     |     +--| (100)
+|        |     |     |  +--Scla_GPX.13.selenocysteine
+|        |     |  +--| (100)
+|        |     |  |  +----Hror_GPX.2.selenocysteine
+|        |     +--| (99)
+|        |        |               +--Cint_GPX.3.selenocysteine
+|        |        |            +--| (100)
+|        |        |            |  +--Crob_GPX.11.selenocysteine
+|        |        |         +--| (100)
+|        |        |         |  +--Csav_GPX.3.selenocysteine
+|        |        |      +--| (100)
+|        |        |      |  +---Pmam_GPX.4.selenocysteine
+|        |        |   +--| (100)
+|        |        |   |  +--Pege_GPX.6.selenocysteine
+|        |        +---| (100)
+|        |            +---Tdem_GPX.5.selenocysteine
+|     +--| (88)
+|     |  |  +---------Metapenaeus_ensis_gi_171189511_gb_ACB42236.1
+|     |  +--| (71)
+|     |     +----------Drer_GPX.22.selenocysteine
+|  +--| (91)
 |  |  |  +------------Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1
-|  |  +--| (92)
-|  |     +--------Ixodes_scapularis_gi_215502580_gb_EEC12074.1
-+--| (74)
-|  |                  +---Rheum_australe_gi_197312911_gb_ACH63236.1
-|  |               +--| (98)
-|  |               |  +---Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1
-|  |            +--| (90)
-|  |            |  |                          +--Bflo_GPX.3.cysteine
-|  |            |  |                 +--------| (100)
-|  |            |  |                 |        +--Blan_GPX.3.cysteine
-|  |            |  |             +---| (100)
-|  |            |  |             |   |       +--Cint_GPX.8.cysteine
-|  |            |  |             |   +-------| (100)
-|  |            |  |             |           +--Crob_GPX.8.cysteine
-|  |            |  |     +-------| (100)
-|  |            |  |     |       |           +-------Bsch_GPX.1.cysteine
-|  |            |  |     |       |        +--| (100)
-|  |            |  |     |       |        |  +----Scla_GPX.1.cysteine
-|  |            |  |     |       |     +--| (98)
-|  |            |  |     |       |     |  +----Hror_GPX.8.cysteine
-|  |            |  |     |       |  +--| (99)
-|  |            |  |     |       |  |  |          +--Drer_GPX.9.cysteine
-|  |            |  |     |       |  |  |  +-------| (100)
-|  |            |  |     |       |  |  |  |       |          +--Drer_GPX.11.serine
-|  |            |  |     |       |  |  |  |       |  +-------| (100)
-|  |            |  |     |       |  |  |  |       |  |       |  +-----Mmus_GPX.19.cysteine
-|  |            |  |     |       |  |  |  |       |  |       +--| (100)
-|  |            |  |     |       |  |  |  |       |  |          +--Human_GPX8_NP_001008398.2
-|  |            |  |     |       |  |  |  |       +--| (100)
-|  |            |  |     |       |  |  |  |          |  +--Mmus_GPX.11.cysteine
-|  |            |  |     |       |  |  |  |          +--| (100)
-|  |            |  |     |       |  |  |  |             +--Human_GPX7_NP_056511.2
-|  |            |  |     |       |  |  +--| (99)
-|  |            |  |     |       |  |     +----Pmam_GPX.12.cysteine
-|  |            |  |     |       +--| (98)
-|  |            |  |     |          |     +-----Pege_GPX.8.cysteine
-|  |            |  |     |          |  +--| (100)
-|  |            |  |     |          |  |  +----------Tdem_GPX.10.cysteine
-|  |            |  |     |          +--| (100)
-|  |            |  |     |             +---Stho_GPX.17.cysteine
-|  |            |  |  +--| (97)
-|  |            |  |  |  |  +------Olon_GPX.24.cysteine
-|  |            |  |  |  +--| (97)
-|  |            |  |  |     +--------Ovan_GPX.28.cysteine
-|  |            |  +--| (97)
-|  |            |     +---------------------Fbor_GPX.13.cysteine
-|  |         +--| (95)
-|  |         |  +-----------------------------Olon_GPX.20.cysteine
-|  |      +--| (54)
-|  |      |  |                                 +--GPX4d.Salmo_salar_GPX4d.Salmo_salar
-|  |      |  |                              +--| (100)
-|  |      |  |                              |  +--Drer_GPX.19.selenocysteine
-|  |      |  |                           +--| (98)
-|  |      |  |                           |  |  +--GPX4.Salmo_salar_GPX4.Salmo_salar
-|  |      |  |                           |  +--| (97)
-|  |      |  |                           |     +--Drer_GPX.18.selenocysteine
-|  |      |  |                       +---| (100)
-|  |      |  |                       |   |           +--GPX4.Homo_sapiens_GPX4.Homo_sapiens
-|  |      |  |                       |   |        +--| (100)
-|  |      |  |                       |   |        |  +--Human_GPX4_NP_001034937.1
-|  |      |  |                       |   |     +--| (92)
-|  |      |  |                       |   |     |  |     +--Mmus_GPX.1.selenocysteine
-|  |      |  |                       |   |     |  |  +--| (66)
-|  |      |  |                       |   |     |  |  |  +--Mmus_GPX.3.selenocysteine
-|  |      |  |                       |   |     |  +--| (99)
-|  |      |  |                       |   |     |     +--Mmus_GPX.4.selenocysteine
-|  |      |  |                       |   |  +--| (100)
-|  |      |  |                       |   |  |  +--GPX4.Sus_scrofa_GPX4.Sus_scrofa
-|  |      |  |                       |   +--| (98)
-|  |      |  |                       |      +--GPX4.Gallus_gallus_GPX4.Gallus_gallus
-|  |      |  |                    +--| (82)
-|  |      |  |                    |  |                +--Bflo_GPX.20.cysteine
-|  |      |  |                    |  |  +-------------| (100)
-|  |      |  |                    |  |  |             +--Blan_GPX.16.cysteine
-|  |      |  |                    |  +--| (91)
-|  |      |  |                    |     |   +--Bflo_GPX.25.selenocysteine
-|  |      |  |                    |     +---| (100)
-|  |      |  |                    |         +--Blan_GPX.22.selenocysteine
-|  |      |  |                 +--| (65)
-|  |      |  |                 |  +-------------------------------Fbor_GPX.22.selenocysteine
-|  |      |  |              +--| (74)
-|  |      |  |              |  |        +--Bsch_GPX.14.selenocysteine
-|  |      |  |              |  |     +--| (100)
-|  |      |  |              |  |     |  |     +--Bsch_GPX.17.selenocysteine
-|  |      |  |              |  |     |  |  +--| (99)
-|  |      |  |              |  |     |  |  |  +--Bsch_GPX.20.selenocysteine
-|  |      |  |              |  |     |  +--| (100)
-|  |      |  |              |  |     |     +--Bsch_GPX.19.selenocysteine
-|  |      |  |              |  |  +--| (100)
-|  |      |  |              |  |  |  +--Scla_GPX.21.selenocysteine
-|  |      |  |              |  +--| (98)
-|  |      |  |              |     +---Hror_GPX.10.selenocysteine
-|  |      |  |           +--| (35)
-|  |      |  |           |  |  +------------Tdem_GPX.2.selenocysteine
-|  |      |  |           |  +--| (78)
-|  |      |  |           |     |                        +-----Bsty_GPX.3.selenocysteine
-|  |      |  |           |     |                     +--| (96)
-|  |      |  |           |     |                     |  +----Mery_GPX.2.selenocysteine
-|  |      |  |           |     |                  +--| (97)
-|  |      |  |           |     |                  |  +--Olon_GPX.12.unaligned
-|  |      |  |           |     |               +--| (82)
-|  |      |  |           |     |               |  |    +--Olon_GPX.3.selenocysteine
-|  |      |  |           |     |               |  +----| (100)
-|  |      |  |           |     |               |       +--Olon_GPX.30.unaligned
-|  |      |  |           |     |            +--| (71)
-|  |      |  |           |     |            |  |    +--OKI_GPX.1.selenocysteine
-|  |      |  |           |     |            |  +----| (100)
-|  |      |  |           |     |            |       |  +--OSKA_GPX.9.selenocysteine
-|  |      |  |           |     |            |       +--| (100)
-|  |      |  |           |     |            |          |  +--OdB3_GPX.1.selenocysteine
-|  |      |  |           |     |            |          +--| (100)
-|  |      |  |           |     |            |             +--OdB3_GPX.2.selenocysteine
-|  |      |  |           |     |         +--| (47)
-|  |      |  |           |     |         |  |           +--OKI_GPX.3.selenocysteine
-|  |      |  |           |     |         |  |  +--------| (100)
-|  |      |  |           |     |         |  |  |        |  +--OSKA_GPX.6.selenocysteine
-|  |      |  |           |     |         |  |  |        +--| (100)
-|  |      |  |           |     |         |  |  |           +--OdB3_GPX.5.selenocysteine
-|  |      |  |           |     |         |  +--| (74)
-|  |      |  |           |     |         |     |  +------Oalb_GPX.2.selenocysteine
-|  |      |  |           |     |         |     +--| (57)
-|  |      |  |           |     |         |        |  +--------Ovan_GPX.3.selenocysteine
-|  |      |  |           |     |         |        +--| (83)
-|  |      |  |           |     |         |           |     +----Ovan_GPX.4.selenocysteine
-|  |      |  |           |     |         |           |  +--| (100)
-|  |      |  |           |     |         |           |  |  |  +--Ovan_GPX.8.unaligned
-|  |      |  |           |     |         |           |  |  +--| (74)
-|  |      |  |           |     |         |           |  |     +--Ovan_GPX.17.unaligned
-|  |      |  |           |     |         |           +--| (98)
-|  |      |  |           |     |         |              +---Ovan_GPX.24.unaligned
-|  |      |  |           |     |      +--| (66)
-|  |      |  |           |     |      |  |      +--Oalb_GPX.3.selenocysteine
-|  |      |  |           |     |      |  |  +---| (100)
-|  |      |  |           |     |      |  |  |   +--Oalb_GPX.4.selenocysteine
-|  |      |  |           |     |      |  +--| (100)
-|  |      |  |           |     |      |     |  +--Ovan_GPX.1.selenocysteine
-|  |      |  |           |     |      |     +--| (100)
-|  |      |  |           |     |      |        +--Ovan_GPX.5.selenocysteine
-|  |      |  |           |     +------| (100)
-|  |      |  |           |            |  +------Oalb_GPX.6.unaligned
-|  |      |  |           |            +--| (89)
-|  |      |  |           |               +--------------------Oalb_GPX.26.selenocysteine
-|  |      |  |        +--| (75)
-|  |      |  |        |  |                  +--Bsty_GPX.2.selenocysteine
-|  |      |  |        |  |          +-------| (99)
-|  |      |  |        |  |          |       +-----Mery_GPX.3.selenocysteine
-|  |      |  |        |  |       +--| (86)
-|  |      |  |        |  |       |  +---Olon_GPX.14.selenocysteine
-|  |      |  |        |  |  +----| (100)
-|  |      |  |        |  |  |    +--Olon_GPX.1.selenocysteine
-|  |      |  |        |  +--| (98)
-|  |      |  |        |     |                    +--Bsty_GPX.5.selenocysteine
-|  |      |  |        |     |                 +--| (97)
-|  |      |  |        |     |                 |  +----Mery_GPX.10.selenocysteine
-|  |      |  |        |     |              +--| (100)
-|  |      |  |        |     |              |  |  +--Mery_GPX.4.unaligned
-|  |      |  |        |     |              |  +--| (100)
-|  |      |  |        |     |              |     +------Mery_GPX.6.unaligned
-|  |      |  |        |     |           +--| (72)
-|  |      |  |        |     |           |  |  +--Olon_GPX.2.selenocysteine
-|  |      |  |        |     |           |  +--| (100)
-|  |      |  |        |     |           |     |        +----Olon_GPX.4.selenocysteine
-|  |      |  |        |     |           |     |     +--| (81)
-|  |      |  |        |     |           |     |     |  |  +---Olon_GPX.7.selenocysteine
-|  |      |  |        |     |           |     |     |  +--| (97)
-|  |      |  |        |     |           |     |     |     +--Olon_GPX.18.selenocysteine
-|  |      |  |        |     |           |     |  +--| (75)
-|  |      |  |        |     |           |     |  |  +-----Olon_GPX.11.selenocysteine
-|  |      |  |        |     |           |     +--| (80)
-|  |      |  |        |     |           |        |  +--Olon_GPX.16.unaligned
-|  |      |  |        |     |           |        +--| (100)
-|  |      |  |        |     |           |           +--Olon_GPX.17.unaligned
-|  |      |  |        |     |        +--| (100)
-|  |      |  |        |     |        |  |  +--Olon_GPX.5.selenocysteine
-|  |      |  |        |     |        |  +--| (99)
-|  |      |  |        |     |        |     |           +--Olon_GPX.9.selenocysteine
-|  |      |  |        |     |        |     |        +--| (100)
-|  |      |  |        |     |        |     |        |  +--Olon_GPX.23.unaligned
-|  |      |  |        |     |        |     +--------| (100)
-|  |      |  |        |     |        |              +--Olon_GPX.22.selenocysteine
-|  |      |  |        |     |   +----| (100)
-|  |      |  |        |     |   |    |            +--OKI_GPX.9.selenocysteine
-|  |      |  |        |     |   |    |         +--| (97)
-|  |      |  |        |     |   |    |         |  +--OSKA_GPX.12.selenocysteine
-|  |      |  |        |     |   |    |     +---| (100)
-|  |      |  |        |     |   |    |     |   +--OSKA_GPX.4.unaligned
-|  |      |  |        |     |   |    |  +--| (93)
-|  |      |  |        |     |   |    |  |  +---Ovan_GPX.22.selenocysteine
-|  |      |  |        |     |   |    +--| (92)
-|  |      |  |        |     |   |       |     +--Oalb_GPX.10.selenocysteine
-|  |      |  |        |     |   |       |  +--| (100)
-|  |      |  |        |     |   |       |  |  +----Oalb_GPX.19.selenocysteine
-|  |      |  |        |     |   |       +--| (99)
-|  |      |  |        |     |   |          +-------Oalb_GPX.12.unaligned
-|  |      |  |        |     +---| (98)
-|  |      |  |        |         |       +--OKI_GPX.7.selenocysteine
-|  |      |  |        |         |  +----| (100)
-|  |      |  |        |         |  |    |  +--OSKA_GPX.3.selenocysteine
-|  |      |  |        |         |  |    +--| (100)
-|  |      |  |        |         |  |       +--OdB3_GPX.7.selenocysteine
-|  |      |  |        |         +--| (71)
-|  |      |  |        |            |  +-----Oalb_GPX.15.selenocysteine
-|  |      |  |        |            +--| (99)
-|  |      |  |        |               |   +--Ovan_GPX.9.selenocysteine
-|  |      |  |        |               +---| (100)
-|  |      |  |        |                   |     +--Ovan_GPX.15.selenocysteine
-|  |      |  |        |                   +-----| (100)
-|  |      |  |        |                         +--Ovan_GPX.26.selenocysteine
-|  |      |  |     +--| (70)
-|  |      |  |     |  |                 +--------Clonorchis_sinensis_gi_117956208_gb_ABK58680.1
-|  |      |  |     |  |              +--| (51)
-|  |      |  |     |  |              |  +--------------------Tdem_GPX.8.selenocysteine
-|  |      |  |     |  |           +--| (49)
-|  |      |  |     |  |           |  |     +--Cint_GPX.5.selenocysteine
-|  |      |  |     |  |           |  |  +--| (100)
-|  |      |  |     |  |           |  |  |  +--Crob_GPX.2.selenocysteine
-|  |      |  |     |  |           |  +--| (100)
-|  |      |  |     |  |           |     +--Csav_GPX.5.selenocysteine
-|  |      |  |     |  |        +--| (64)
-|  |      |  |     |  |        |  |             +--Pege_GPX.1.selenocysteine
-|  |      |  |     |  |        |  |        +----| (100)
-|  |      |  |     |  |        |  |        |    +--Pege_GPX.2.selenocysteine
-|  |      |  |     |  |        |  |     +--| (96)
-|  |      |  |     |  |        |  |     |  +-----------Tdem_GPX.3.selenocysteine
-|  |      |  |     |  |        |  |  +--| (89)
-|  |      |  |     |  |        |  |  |  +-----Pege_GPX.4.selenocysteine
-|  |      |  |     |  |        |  +--| (45)
-|  |      |  |     |  |        |     |     +------Pege_GPX.3.selenocysteine
-|  |      |  |     |  |        |     |  +--| (51)
-|  |      |  |     |  |        |     |  |  +---------Stho_GPX.7.selenocysteine
-|  |      |  |     |  |        |     +--| (49)
-|  |      |  |     |  |        |        +------Pmam_GPX.6.selenocysteine
-|  |      |  |     |  |     +--| (29)
-|  |      |  |     |  |     |  |  +--Pmam_GPX.1.selenocysteine
-|  |      |  |     |  |     |  +--| (100)
-|  |      |  |     |  |     |     +-----Pmam_GPX.2.selenocysteine
-|  |      |  |     |  |  +--| (56)
-|  |      |  |     |  |  |  +--------------Tdem_GPX.7.selenocysteine
-|  |      |  |     |  +--| (71)
-|  |      |  |     |     |      +--Cint_GPX.1.selenocysteine
-|  |      |  |     |     |   +--| (100)
-|  |      |  |     |     |   |  +--Crob_GPX.1.selenocysteine
-|  |      |  |     |     +---| (100)
-|  |      |  |     |         +--Csav_GPX.1.selenocysteine
-|  |      |  |  +--| (75)
-|  |      |  |  |  |        +--Stho_GPX.1.selenocysteine
-|  |      |  |  |  |     +--| (99)
-|  |      |  |  |  |     |  +----Tdem_GPX.11.selenocysteine
-|  |      |  |  |  |  +--| (99)
-|  |      |  |  |  |  |  +----Tdem_GPX.1.selenocysteine
-|  |      |  |  |  +--| (92)
-|  |      |  |  |     |      +----Stho_GPX.2.selenocysteine
-|  |      |  |  |     +------| (100)
-|  |      |  |  |            +----Stho_GPX.8.cysteine
-|  |      |  +--| (54)
-|  |      |     |         +-----Fbor_GPX.4.selenocysteine
-|  |      |     |      +--| (50)
-|  |      |     |      |  |    +--------Fbor_GPX.5.selenocysteine
-|  |      |     |      |  +----| (100)
-|  |      |     |      |       +------Fbor_GPX.7.selenocysteine
-|  |      |     |   +--| (97)
-|  |      |     |   |  +--------------Fbor_GPX.17.cysteine
-|  |      |     +---| (100)
-|  |      |         |  +--------Fbor_GPX.10.selenocysteine
-|  |      |         +--| (91)
-|  |      |            |           +----Fbor_GPX.11.selenocysteine
-|  |      |            +-----------| (100)
-|  |      |                        +----Fbor_GPX.12.selenocysteine
-|  +------| (97)
-|         |                             +------Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2
-|         |                       +-----| (100)
-|         |                       |     +---------Fbor_GPX.14.cysteine
-|         |                    +--| (99)
-|         |                    |  +---Fbor_GPX.1.cysteine
-|         |                 +--| (66)
-|         |                 |  +---Fbor_GPX.3.unaligned
-|         |              +--| (54)
-|         |              |  |     +--Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1
-|         |              |  |  +--| (100)
-|         |              |  |  |  |  +--Acidovorax_avenae_subsp._citrulli_AAC00-1_gi_120608953_ref_Y
-|         |              |  |  |  +--| (98)
-|         |              |  |  |     +--Diaphorobacter_sp._TPSY_gi_222109412_ref_YP_002551676.1
-|         |              |  +--| (98)
-|         |              |     |  +----Bordetella_parapertussis_12822_gi_33597467_ref_NP_885110.1
-|         |              |     +--| (100)
-|         |              |        +--Bordetella_avium_197N_gi_187478327_ref_YP_786351.1
-|         |           +--| (47)
-|         |           |  |  +-----Sphingomonas_wittichii_RW1_gi_148556976_ref_YP_001264558.1
-|         |           |  +--| (95)
-|         |           |     |      +--Bradyrhizobium_sp._BTAi1_gi_148257534_ref_YP_001242119.1
-|         |           |     |   +--| (57)
-|         |           |     |   |  +----Bradyrhizobium_japonicum_USDA_110_gi_27381843_ref_NP_773372.
-|         |           |     +---| (100)
-|         |           |         +--Rhodopseudomonas_palustris_BisB5_gi_91977935_ref_YP_570594.1
-|         |        +--| (68)
-|         |        |  |           +-------Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1
-|         |        |  |        +--| (89)
-|         |        |  |        |  |  +---Alteromonadales_bacterium_TW-7_gi_119471461_ref_ZP_01613902.
-|         |        |  |        |  +--| (98)
-|         |        |  |        |     |  +---Bsty_GPX.1.cysteine
-|         |        |  |        |     +--| (100)
-|         |        |  |        |        +---Fbor_GPX.2.cysteine
-|         |        |  |     +--| (100)
-|         |        |  |     |  +---Enterobacter_sp._638_gi_146312342_ref_YP_001177416.1
-|         |        |  |  +--| (99)
-|         |        |  |  |  +---gamma_proteobacterium_HTCC5015_gi_198262109_gb_EDY86392.1
-|         |        |  +--| (39)
-|         |        |     |              +---Shewanella_amazonensis_SB2B_gi_119774217_ref_YP_926957.1
-|         |        |     |           +--| (97)
-|         |        |     |           |  +----Bacillus_cereus_ATCC_14579_gi_30020250_ref_NP_831881.1
-|         |        |     |        +--| (44)
-|         |        |     |        |  +----Alcanivorax_borkumensis_SK2_gi_110835499_ref_YP_694358.1
-|         |        |     |     +--| (43)
-|         |        |     |     |  +--------Clostridium_beijerinckii_NCIMB_8052_gi_150015663_ref_YP_0013
-|         |        |     |  +--| (47)
-|         |        |     |  |  |   +--gamma_proteobacterium_NOR51-B_gi_219680407_gb_EED36756.1
-|         |        |     |  |  +---| (90)
-|         |        |     |  |      +---------Fbor_GPX.16.cysteine
-|         |        |     +--| (34)
-|         |        |        |                 +--Fbor_GPX.8.cysteine
-|         |        |        |             +---| (100)
-|         |        |        |             |   +-----Fbor_GPX.24.unaligned
-|         |        |        |          +--| (98)
-|         |        |        |          |  +----Fbor_GPX.28.cysteine
-|         |        |        +----------| (99)
-|         |        |                   |          +-----Fbor_GPX.18.cysteine
-|         |        |                   |   +------| (100)
-|         |        |                   |   |      +-----Fbor_GPX.25.unaligned
-|         |        |                   +---| (99)
-|         |        |                       |                          +--Fbor_GPX.19.cysteine
-|         |        |                       +--------------------------| (100)
-|         |        |                                                  +--Fbor_GPX.20.cysteine
-|         |     +--| (68)
-|         |     |  |  +--Shewanella_sediminis_HAW-EB3_gi_157376430_ref_YP_001475030.1
-|         |     |  +--| (99)
-|         |     |     +-----Fbor_GPX.15.unaligned
-|         |  +--| (32)
-|         |  |  |  +-------Isaria_tenuipes_gi_210063459_gb_ACJ06531.1
-|         |  |  +--| (95)
-|         |  |     |     +--------Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1
-|         |  |     |  +--| (99)
-|         |  |     |  |  +-------Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1
-|         |  |     +--| (98)
-|         |  |        +------Fbor_GPX.6.cysteine
-|         +--| (88)
-|            +----------------Fbor_GPX.21.cysteine
+|  |  +--| (97)
+|  |     +-------Ixodes_scapularis_gi_215502580_gb_EEC12074.1
++--| (51)
+|  |                    +--Rheum_australe_gi_197312911_gb_ACH63236.1
+|  |                 +--| (99)
+|  |                 |  +-------Fbor_GPX.15.unaligned
+|  |              +--| (98)
+|  |              |  +---Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1
+|  |           +--| (86)
+|  |           |  |                                +--Bflo_GPX.3.cysteine
+|  |           |  |                        +-------| (100)
+|  |           |  |                        |       +---Blan_GPX.3.cysteine
+|  |           |  |                     +--| (97)
+|  |           |  |                     |  |     +--Drer_GPX.9.cysteine
+|  |           |  |                     |  +-----| (100)
+|  |           |  |                     |        |          +--Drer_GPX.11.serine
+|  |           |  |                     |        |  +-------| (100)
+|  |           |  |                     |        |  |       |  +----Mmus_GPX.19.cysteine
+|  |           |  |                     |        |  |       +--| (100)
+|  |           |  |                     |        |  |          +--Human_GPX8_NP_001008398.2
+|  |           |  |                     |        +--| (99)
+|  |           |  |                     |           |  +--Mmus_GPX.11.cysteine
+|  |           |  |                     |           +--| (100)
+|  |           |  |                     |              +--Human_GPX7_NP_056511.2
+|  |           |  |                  +--| (95)
+|  |           |  |                  |  |     +------Bsch_GPX.1.cysteine
+|  |           |  |                  |  |  +--| (98)
+|  |           |  |                  |  |  |  +-----Scla_GPX.1.cysteine
+|  |           |  |                  |  +--| (99)
+|  |           |  |                  |     +----Hror_GPX.8.cysteine
+|  |           |  |               +--| (83)
+|  |           |  |               |  |               +--Cint_GPX.8.cysteine
+|  |           |  |               |  |  +------------| (100)
+|  |           |  |               |  |  |            +--Crob_GPX.8.cysteine
+|  |           |  |               |  +--| (85)
+|  |           |  |               |     +----Pmam_GPX.12.cysteine
+|  |           |  |        +------| (100)
+|  |           |  |        |      |     +------Pege_GPX.8.cysteine
+|  |           |  |        |      |  +--| (98)
+|  |           |  |        |      |  |  +-----------Tdem_GPX.10.cysteine
+|  |           |  |        |      +--| (100)
+|  |           |  |        |         +--Stho_GPX.17.cysteine
+|  |           |  |     +--| (79)
+|  |           |  |     |  +------Olon_GPX.29.cysteine
+|  |           |  |  +--| (91)
+|  |           |  |  |  |     +--------------------------OKI_GPX.4.unaligned
+|  |           |  |  |  |  +--| (94)
+|  |           |  |  |  |  |  +-------------Olon_GPX.27.unaligned
+|  |           |  |  |  +--| (93)
+|  |           |  |  |     +---------Ovan_GPX.32.cysteine
+|  |           |  +--| (89)
+|  |           |     +------------------Fbor_GPX.13.cysteine
+|  |        +--| (43)
+|  |        |  |                       +--GPX4.Gallus_gallus_GPX4.Gallus_gallus
+|  |        |  |                    +--| (100)
+|  |        |  |                    |  |        +--Mmus_GPX.1.selenocysteine
+|  |        |  |                    |  |     +--| (89)
+|  |        |  |                    |  |     |  +--Mmus_GPX.3.selenocysteine
+|  |        |  |                    |  |  +--| (99)
+|  |        |  |                    |  |  |  +--Mmus_GPX.4.selenocysteine
+|  |        |  |                    |  +--| (100)
+|  |        |  |                    |     +--Human_GPX4_NP_001034937.1
+|  |        |  |                 +--| (99)
+|  |        |  |                 |  |  +--Drer_GPX.18.selenocysteine
+|  |        |  |                 |  +--| (96)
+|  |        |  |                 |     +--Drer_GPX.19.selenocysteine
+|  |        |  |              +--| (96)
+|  |        |  |              |  |              +--Bflo_GPX.20.cysteine
+|  |        |  |              |  |  +-----------| (100)
+|  |        |  |              |  |  |           +--Blan_GPX.16.cysteine
+|  |        |  |              |  +--| (76)
+|  |        |  |              |     |    +--Bflo_GPX.25.selenocysteine
+|  |        |  |              |     +----| (100)
+|  |        |  |              |          +--Blan_GPX.22.selenocysteine
+|  |        |  |           +--| (60)
+|  |        |  |           |  +---------------------------Fbor_GPX.21.selenocysteine
+|  |        |  |        +--| (75)
+|  |        |  |        |  |        +--Bsch_GPX.14.selenocysteine
+|  |        |  |        |  |     +--| (100)
+|  |        |  |        |  |     |  |     +--Bsch_GPX.17.selenocysteine
+|  |        |  |        |  |     |  |  +--| (98)
+|  |        |  |        |  |     |  |  |  +--Bsch_GPX.20.selenocysteine
+|  |        |  |        |  |     |  +--| (100)
+|  |        |  |        |  |     |     +--Bsch_GPX.19.selenocysteine
+|  |        |  |        |  |  +--| (100)
+|  |        |  |        |  |  |  +--Scla_GPX.21.selenocysteine
+|  |        |  |        |  +--| (99)
+|  |        |  |        |     +---Hror_GPX.10.selenocysteine
+|  |        |  |     +--| (40)
+|  |        |  |     |  +------------Tdem_GPX.2.selenocysteine
+|  |        |  |  +--| (65)
+|  |        |  |  |  |                 +---------Clonorchis_sinensis_gi_117956208_gb_ABK58680.1
+|  |        |  |  |  |              +--| (59)
+|  |        |  |  |  |              |  |     +--Cint_GPX.5.selenocysteine
+|  |        |  |  |  |              |  |  +--| (100)
+|  |        |  |  |  |              |  |  |  +--Crob_GPX.2.selenocysteine
+|  |        |  |  |  |              |  +--| (100)
+|  |        |  |  |  |              |     +--Csav_GPX.5.selenocysteine
+|  |        |  |  |  |           +--| (60)
+|  |        |  |  |  |           |  |          +--Pege_GPX.1.selenocysteine
+|  |        |  |  |  |           |  |     +----| (100)
+|  |        |  |  |  |           |  |     |    +--Pege_GPX.2.selenocysteine
+|  |        |  |  |  |           |  |  +--| (98)
+|  |        |  |  |  |           |  |  |  +---------Tdem_GPX.3.selenocysteine
+|  |        |  |  |  |           |  +--| (51)
+|  |        |  |  |  |           |     |     +---Pege_GPX.3.selenocysteine
+|  |        |  |  |  |           |     |  +--| (94)
+|  |        |  |  |  |           |     |  |  +-------------------Tdem_GPX.8.selenocysteine
+|  |        |  |  |  |           |     +--| (87)
+|  |        |  |  |  |           |        +---------Stho_GPX.7.selenocysteine
+|  |        |  |  |  |        +--| (80)
+|  |        |  |  |  |        |  |               +--Cint_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |            +--| (100)
+|  |        |  |  |  |        |  |            |  +--Crob_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |        +---| (100)
+|  |        |  |  |  |        |  |        |   +--Csav_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |     +--| (92)
+|  |        |  |  |  |        |  |     |  |  +--Pmam_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |     |  +--| (100)
+|  |        |  |  |  |        |  |     |     +----Pmam_GPX.2.selenocysteine
+|  |        |  |  |  |        |  |  +--| (26)
+|  |        |  |  |  |        |  |  |  |  +-----Pege_GPX.4.selenocysteine
+|  |        |  |  |  |        |  |  |  +--| (67)
+|  |        |  |  |  |        |  |  |     |     +--Stho_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |  |     |  +--| (100)
+|  |        |  |  |  |        |  |  |     |  |  |  +---Tdem_GPX.1.selenocysteine
+|  |        |  |  |  |        |  |  |     |  |  +--| (99)
+|  |        |  |  |  |        |  |  |     |  |     +----Tdem_GPX.11.selenocysteine
+|  |        |  |  |  |        |  |  |     +--| (97)
+|  |        |  |  |  |        |  |  |        |    +-----Stho_GPX.2.selenocysteine
+|  |        |  |  |  |        |  |  |        +----| (100)
+|  |        |  |  |  |        |  |  |             +---Stho_GPX.8.cysteine
+|  |        |  |  |  |        |  +--| (49)
+|  |        |  |  |  |        |     +--------------Tdem_GPX.7.selenocysteine
+|  |        |  |  |  |     +--| (55)
+|  |        |  |  |  |     |  +--------Pmam_GPX.6.selenocysteine
+|  |        |  |  |  |  +--| (53)
+|  |        |  |  |  |  |  |                                   +----Bsty_GPX.3.selenocysteine
+|  |        |  |  |  |  |  |                                +--| (100)
+|  |        |  |  |  |  |  |                                |  +---Mery_GPX.2.selenocysteine
+|  |        |  |  |  |  |  |                             +--| (100)
+|  |        |  |  |  |  |  |                             |  +--Olon_GPX.14.unaligned
+|  |        |  |  |  |  |  |                          +--| (99)
+|  |        |  |  |  |  |  |                          |  |   +--Olon_GPX.4.selenocysteine
+|  |        |  |  |  |  |  |                          |  +---| (100)
+|  |        |  |  |  |  |  |                          |      +--Olon_GPX.23.unaligned
+|  |        |  |  |  |  |  |                       +--| (96)
+|  |        |  |  |  |  |  |                       |  |         +--OdB3_GPX.2.selenocysteine
+|  |        |  |  |  |  |  |                       |  |      +--| (100)
+|  |        |  |  |  |  |  |                       |  |      |  +--OdB3_gold_GPX_chr1a
+|  |        |  |  |  |  |  |                       |  |   +--| (100)
+|  |        |  |  |  |  |  |                       |  |   |  +--OSKA_gold_GPX_chr1a
+|  |        |  |  |  |  |  |                       |  +---| (100)
+|  |        |  |  |  |  |  |                       |      +--OKI_gold_GPX_chr1a
+|  |        |  |  |  |  |  |                    +--| (76)
+|  |        |  |  |  |  |  |                    |  |      +--Oalb_GPX.3.selenocysteine
+|  |        |  |  |  |  |  |                    |  |  +---| (100)
+|  |        |  |  |  |  |  |                    |  |  |   +--Oalb_GPX.4.selenocysteine
+|  |        |  |  |  |  |  |                    |  +--| (100)
+|  |        |  |  |  |  |  |                    |     |  +--Ovan_GPX.2.selenocysteine
+|  |        |  |  |  |  |  |                    |     +--| (100)
+|  |        |  |  |  |  |  |                    |        +--Ovan_GPX.5.selenocysteine
+|  |        |  |  |  |  |  |                 +--| (100)
+|  |        |  |  |  |  |  |                 |  +---------Oalb_GPX.6.unaligned
+|  |        |  |  |  |  |  |              +--| (96)
+|  |        |  |  |  |  |  |              |  +----Ovan_GPX.9.selenocysteine
+|  |        |  |  |  |  |  |           +--| (94)
+|  |        |  |  |  |  |  |           |  |      +--OKI_gold_GPX_chr1b
+|  |        |  |  |  |  |  |           |  +------| (100)
+|  |        |  |  |  |  |  |           |         |  +--OSKA_gold_GPX_chr1b
+|  |        |  |  |  |  |  |           |         +--| (100)
+|  |        |  |  |  |  |  |           |            +--OdB3_gold_GPX_chr1b
+|  |        |  |  |  |  |  |        +--| (91)
+|  |        |  |  |  |  |  |        |  |        +----Ovan_GPX.8.selenocysteine
+|  |        |  |  |  |  |  |        |  |     +--| (99)
+|  |        |  |  |  |  |  |        |  |     |  +--Ovan_GPX.19.unaligned
+|  |        |  |  |  |  |  |        |  |  +--| (99)
+|  |        |  |  |  |  |  |        |  |  |  +--Ovan_GPX.10.unaligned
+|  |        |  |  |  |  |  |        |  +--| (100)
+|  |        |  |  |  |  |  |        |     +--Ovan_GPX.20.unaligned
+|  |        |  |  |  |  |  +--------| (100)
+|  |        |  |  |  |  |           +----Oalb_GPX.2.selenocysteine
+|  |        |  |  |  +--| (49)
+|  |        |  |  |     |                 +--Bsty_GPX.2.selenocysteine
+|  |        |  |  |     |         +-------| (100)
+|  |        |  |  |     |         |       +----Mery_GPX.1.selenocysteine
+|  |        |  |  |     |      +--| (89)
+|  |        |  |  |     |      |  +--Olon_GPX.11.selenocysteine
+|  |        |  |  |     |  +---| (100)
+|  |        |  |  |     |  |   +--Olon_GPX.2.selenocysteine
+|  |        |  |  |     +--| (61)
+|  |        |  |  |        |              +--Bsty_GPX.6.selenocysteine
+|  |        |  |  |        |           +--| (100)
+|  |        |  |  |        |           |  |  +--Mery_GPX.4.unaligned
+|  |        |  |  |        |           |  +--| (99)
+|  |        |  |  |        |           |     +-------Mery_GPX.6.unaligned
+|  |        |  |  |        |        +--| (49)
+|  |        |  |  |        |        |  |     +--Olon_GPX.1.selenocysteine
+|  |        |  |  |        |        |  |  +--| (39)
+|  |        |  |  |        |        |  |  |  |  +--Olon_GPX.13.unaligned
+|  |        |  |  |        |        |  |  |  +--| (96)
+|  |        |  |  |        |        |  |  |     +--Olon_GPX.16.unaligned
+|  |        |  |  |        |        |  +--| (99)
+|  |        |  |  |        |        |     |     +----Olon_GPX.3.selenocysteine
+|  |        |  |  |        |        |     |  +--| (66)
+|  |        |  |  |        |        |     |  |  |  +---Olon_GPX.7.selenocysteine
+|  |        |  |  |        |        |     |  |  +--| (85)
+|  |        |  |  |        |        |     |  |     +--Olon_GPX.18.selenocysteine
+|  |        |  |  |        |        |     +--| (45)
+|  |        |  |  |        |        |        +-----Olon_GPX.10.selenocysteine
+|  |        |  |  |        |     +--| (100)
+|  |        |  |  |        |     |  |  +---Olon_GPX.5.serine
+|  |        |  |  |        |     |  +--| (98)
+|  |        |  |  |        |     |     |         +--Olon_GPX.6.selenocysteine
+|  |        |  |  |        |     |     |      +--| (100)
+|  |        |  |  |        |     |     |      |  +--Olon_GPX.17.unaligned
+|  |        |  |  |        |     |     +------| (100)
+|  |        |  |  |        |     |            +--Olon_GPX.20.selenocysteine
+|  |        |  |  |        |  +--| (99)
+|  |        |  |  |        |  |  |              +--OSKA_GPX.4.selenocysteine
+|  |        |  |  |        |  |  |           +--| (61)
+|  |        |  |  |        |  |  |           |  +--OSKA_gold_GPX_PAR
+|  |        |  |  |        |  |  |        +--| (97)
+|  |        |  |  |        |  |  |        |  +--OdB3_gold_GPX_PAR
+|  |        |  |  |        |  |  |     +--| (100)
+|  |        |  |  |        |  |  |     |  +--OKI_gold_GPX_PAR
+|  |        |  |  |        |  |  |  +--| (99)
+|  |        |  |  |        |  |  |  |  |  +----Ovan_GPX.22.unaligned
+|  |        |  |  |        |  |  |  |  +--| (100)
+|  |        |  |  |        |  |  |  |     |  +--Ovan_GPX.25.selenocysteine
+|  |        |  |  |        |  |  |  |     +--| (99)
+|  |        |  |  |        |  |  |  |        +-------------------Ovan_GPX.26.selenocysteine
+|  |        |  |  |        |  |  +--| (99)
+|  |        |  |  |        |  |     |           +--Oalb_GPX.7.unaligned
+|  |        |  |  |        |  |     |     +-----| (100)
+|  |        |  |  |        |  |     |     |     +--Oalb_GPX.9.unaligned
+|  |        |  |  |        |  |     |  +--| (100)
+|  |        |  |  |        |  |     |  |  +--Oalb_GPX.19.selenocysteine
+|  |        |  |  |        |  |     +--| (100)
+|  |        |  |  |        |  |        +--Oalb_GPX.13.selenocysteine
+|  |        |  |  |        +--| (98)
+|  |        |  |  |           |     +-----Oalb_GPX.15.selenocysteine
+|  |        |  |  |           |  +--| (100)
+|  |        |  |  |           |  |  |  +--Ovan_GPX.16.selenocysteine
+|  |        |  |  |           |  |  +--| (100)
+|  |        |  |  |           |  |     |   +---Ovan_GPX.17.selenocysteine
+|  |        |  |  |           |  |     +---| (100)
+|  |        |  |  |           |  |         +--Ovan_GPX.28.selenocysteine
+|  |        |  |  |           +--| (99)
+|  |        |  |  |              |    +--OKI_gold_GPX_chr2
+|  |        |  |  |              +----| (100)
+|  |        |  |  |                   |  +--OSKA_gold_GPX_chr2
+|  |        |  |  |                   +--| (100)
+|  |        |  |  |                      +--OdB3_gold_GPX_chr2
+|  |        |  +--| (90)
+|  |        |     |                      +-------Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2
+|  |        |     |                 +----| (99)
+|  |        |     |                 |    +------Fbor_GPX.14.cysteine
+|  |        |     |              +--| (97)
+|  |        |     |              |  +--Fbor_GPX.1.cysteine
+|  |        |     |           +--| (97)
+|  |        |     |           |  |                +--Fbor_GPX.11.cysteine
+|  |        |     |           |  |           +----| (100)
+|  |        |     |           |  |           |    +----Fbor_GPX.23.unaligned
+|  |        |     |           |  |        +--| (93)
+|  |        |     |           |  |        |  +-----Fbor_GPX.31.cysteine
+|  |        |     |           |  +--------| (100)
+|  |        |     |           |           |                           +--Fbor_GPX.18.cysteine
+|  |        |     |           |           |   +-----------------------| (100)
+|  |        |     |           |           |   |                       +--Fbor_GPX.20.cysteine
+|  |        |     |           |           +---| (98)
+|  |        |     |           |               |      +------Fbor_GPX.19.cysteine
+|  |        |     |           |               +------| (100)
+|  |        |     |           |                      +---Fbor_GPX.24.unaligned
+|  |        |     |        +--| (93)
+|  |        |     |        |  +----Fbor_GPX.3.unaligned
+|  |        |     |     +--| (44)
+|  |        |     |     |  +------Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1
+|  |        |     |  +--| (95)
+|  |        |     |  |  |  +-----Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1
+|  |        |     |  |  +--| (49)
+|  |        |     |  |     |     +---Bsty_GPX.1.cysteine
+|  |        |     |  |     |  +--| (100)
+|  |        |     |  |     |  |  +--Fbor_GPX.2.cysteine
+|  |        |     |  |     +--| (52)
+|  |        |     |  |        +----------Fbor_GPX.16.cysteine
+|  |        |     +--| (98)
+|  |        |        |  +-------Isaria_tenuipes_gi_210063459_gb_ACJ06531.1
+|  |        |        +--| (89)
+|  |        |           |     +--------Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1
+|  |        |           |  +--| (97)
+|  |        |           |  |  +-----Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1
+|  |        |           +--| (97)
+|  |        |              +------Fbor_GPX.7.cysteine
+|  |     +--| (90)
+|  |     |  +---------------------------Olon_GPX.22.cysteine
+|  +-----| (100)
+|        |         +-----Fbor_GPX.4.selenocysteine
+|        |      +--| (59)
+|        |      |  |    +--------Fbor_GPX.5.selenocysteine
+|        |      |  +----| (100)
+|        |      |       +-----Fbor_GPX.6.selenocysteine
+|        |   +--| (56)
+|        |   |  |            +---Fbor_GPX.8.selenocysteine
+|        |   |  |  +---------| (100)
+|        |   |  |  |         +----Fbor_GPX.12.selenocysteine
+|        |   |  +--| (96)
+|        |   |     +--------Fbor_GPX.10.selenocysteine
+|        +---| (99)
+|            +---------------Fbor_GPX.17.cysteine
 |
-|                              +---Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2
-|                           +--| (100)
-|                           |  |  +--gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2
-|                           |  +--| (100)
-|                           |     +--Human_GPX1_NP_000572.2
-|                        +--| (100)
-|                        |  +--GPX1.Sus_scrofa_GPX1.Sus_scrofa
-|                     +--| (100)
-|                     |  |  +--Rattus_norvegicus_gi_9247190_gb_AAB95647.2
-|                     |  +--| (100)
-|                     |     +--Mmus_GPX.6.selenocysteine
-|                  +--| (100)
-|                  |  +----Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1
-|               +--| (60)
-|               |  |     +--GPX2.Gallus_gallus_GPX2.Gallus_gallus
-|               |  |  +--| (83)
-|               |  |  |  |        +--gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3
-|               |  |  |  |     +--| (100)
-|               |  |  |  |     |  +--Mmus_GPX.8.selenocysteine
-|               |  |  |  |  +--| (85)
-|               |  |  |  |  |  +--Human_GPX2_NP_002074.2
-|               |  |  |  +--| (100)
-|               |  |  |     +--GPX2.Sus_scrofa_GPX2.Sus_scrofa
-|               |  +--| (100)
-|               |     |  +--Xenopus_tropicalis_gi_166796161_gb_AAI59037.1
-|               |     +--| (99)
-|               |        +--Drer_GPX.8.selenocysteine
-|            +--| (53)
-|            |  |           +--GPX1.Danio_rerio_GPX1.Danio_rerio
-|            |  |        +--| (100)
-|            |  |        |  +--Drer_GPX.2.selenocysteine
-|            |  |     +--| (100)
-|            |  |     |  +--Hypophthalmichthys_molitrix_gi_156571766_gb_ABU84810.1
-|            |  |  +--| (99)
-|            |  |  |  |  +--Thunnus_maccoyii_gi_133779723_gb_ABO38817.1
-|            |  |  |  +--| (100)
-|            |  |  |     +--Drer_GPX.6.selenocysteine
-|            |  +--| (100)
-|            |     +--Oncorhynchus_mykiss_gi_11095769_gb_AAG30013.1_AF281338_1
-|         +--| (83)
-|         |  |  +---Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1
-|         |  +--| (99)
-|         |     |  +--Bflo_GPX.2.selenocysteine
-|         |     +--| (100)
-|         |        +--Blan_GPX.1.selenocysteine
-|      +--| (46)
-|      |  +----Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2
-|   +--| (75)
-|   |  +-------------Ostreococcus_tauri_gi_116059366_emb_CAL55073.1
-+---| (97)
-    |          +--Bflo_GPX.6.serine
-    |    +-----| (100)
-    |    |     +--Blan_GPX.6.serine
-    +----| (100)
-         |       +--Bflo_GPX.16.cysteine
-         +-------| (100)
-                 +--Blan_GPX.18.cysteine
+|                 +--Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2
+|              +--| (100)
+|              |  |  +--gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2
+|              |  +--| (100)
+|              |     +--Human_GPX1_NP_000572.2
+|           +--| (100)
+|           |  +--Mmus_GPX.6.selenocysteine
+|        +--| (100)
+|        |  +---Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1
+|     +--| (67)
+|     |  |        +--GPX2.Gallus_gallus_GPX2.Gallus_gallus
+|     |  |     +--| (85)
+|     |  |     |  |  +--Xenopus_tropicalis_gi_166796161_gb_AAI59037.1
+|     |  |     |  +--| (100)
+|     |  |     |     +--Drer_GPX.8.selenocysteine
+|     |  |  +--| (100)
+|     |  |  |  |     +--gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3
+|     |  |  |  |  +--| (100)
+|     |  |  |  |  |  +--Mmus_GPX.8.selenocysteine
+|     |  |  |  +--| (100)
+|     |  |  |     +--Human_GPX2_NP_002074.2
+|     |  +--| (62)
+|     |     |        +---Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1
+|     |     |     +--| (100)
+|     |     |     |  |  +--Bflo_GPX.2.selenocysteine
+|     |     |     |  +--| (100)
+|     |     |     |     +--Blan_GPX.1.selenocysteine
+|     |     |  +--| (88)
+|     |     |  |  |  +--Drer_GPX.2.selenocysteine
+|     |     |  |  +--| (100)
+|     |     |  |     +--Drer_GPX.6.selenocysteine
+|     |     +--| (56)
+|     |        |            +--Bflo_GPX.6.serine
+|     |        |      +-----| (100)
+|     |        |      |     +--Blan_GPX.6.serine
+|     |        +------| (100)
+|     |               |      +--Bflo_GPX.16.cysteine
+|     |               +------| (100)
+|     |                      +--Blan_GPX.18.cysteine
+|  +--| (72)
+|  |  +---Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2
++--| (95)
+   +----------Ostreococcus_tauri_gi_116059366_emb_CAL55073.1
 
 
 Consensus tree in newick format: 
 
-(Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1:1.4510218426,(((((((((((Globodera_rostochiensis_gi_21739125_emb_CAD38523.1:0.3504899661,Haemonchus_contortus_gi_47499102_gb_AAT28332.1:0.0810865604)100:0.1491992533,Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1:0.2081330352)99:0.2190683338,(gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_:0.2824203028,gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX:0.1423268476)100:0.3251768197)100:0.4258967986,Crassostrea_gigas_gi_152002384_gb_ABS19600.1:1.3970823796)68:0.1193133251,((((((Ciona_intestinalis_gi_198424199_ref_XP_002121558.1:0.2273808754,Crob_GPX.5.selenocysteine:0.0000025252)100:0.0478322471,Cint_GPX.9.selenocysteine:0.1155650380)75:0.0086480760,Cint_GPX.12.selenocysteine:0.0136551795)100:0.3475330609,Csav_GPX.7.selenocysteine:0.3298432480)100:0.3818618158,((((Cint_GPX.14.selenocysteine:0.0219082192,(Crob_GPX.7.selenocysteine:0.0049448692,Csav_GPX.11.selenocysteine:0.2372305662)91:0.0000025252)95:0.1107641606,Csav_GPX.10.unaligned:0.7085771009)99:0.2330482292,Pmam_GPX.10.selenocysteine:0.2672692701)99:0.3061290590,Pmam_GPX.7.selenocysteine:0.6343804464)99:0.1034687412)100:0.4050736272,(Bsch_GPX.7.selenocysteine:1.2182413815,((Bsch_GPX.9.selenocysteine:0.6830334785,(Scla_GPX.8.selenocysteine:0.1102411275,Scla_GPX.9.selenocysteine:0.1903565250)100:1.1201892697)84:0.0091882769,(((Bsch_GPX.10.unaligned:1.0305707832,(Scla_GPX.16.selenocysteine:0.3517631217,Scla_GPX.17.selenocysteine:0.5397590127)100:0.1644925196)70:0.1628833590,(Bsch_GPX.13.selenocysteine:0.7073658298,(Hror_GPX.4.unaligned:0.3149635399,Scla_GPX.18.unaligned:0.3792994934)100:0.0994039059)70:0.0977268501)98:0.1842995149,Hror_GPX.7.selenocysteine:1.1101584146)96:0.1998572226)96:0.1838553491)100:0.2200070420)96:0.0929686274)87:0.1695560234,(gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1:1.5712129285,(((Bsch_GPX.3.selenocysteine:0.4734137763,Scla_GPX.13.selenocysteine:0.2114868306)55:0.1175799311,Hror_GPX.2.selenocysteine:0.5011721288)100:0.2270413308,((((((Cint_GPX.3.selenocysteine:0.0487279570,Crob_GPX.11.selenocysteine:0.0000020127)100:0.0968919274,Csav_GPX.3.selenocysteine:0.2164475997)100:0.2503868575,Pmam_GPX.4.selenocysteine:0.4137696827)100:0.3041891779,Pege_GPX.6.selenocysteine:0.2069759666)99:0.0373469814,Olon_GPX.26.unaligned:2.6911829178)80:0.0553748343,Tdem_GPX.5.selenocysteine:0.4265417802)95:0.4383307265)96:0.2173889811)83:0.2176937405)54:0.0450365024,((Dreissena_polymorpha_gi_145559053_gb_ABP73388.1:0.4157417515,Corbicula_fluminea_gi_146395067_gb_ABQ24217.1:0.5097947559)100:0.2659259883,Unio_tumidus_gi_111572533_gb_ABH10623.1:0.4997762106)100:0.6225428602)83:0.0294596532,(((((((((Mus_musculus_gi_148700720_gb_EDL32667.1:0.0094504466,Mmus_GPX.26.cysteine:0.0000020085)100:0.2889885526,Human_GPX6_NP_874360.1:0.1257728271)68:0.0347665955,Sus_scrofa_gi_212549567_ref_NP_001131079.1:0.0612885406)98:0.0662074991,((Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1:0.1446479421,Sus_scrofa_gi_47523090_ref_NP_999051.1:0.1255538219)68:0.0454762949,((gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_:0.0130599723,Mmus_GPX.20.cysteine:0.0068896372)100:0.1875590497,(gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A:0.0658155526,Human_GPX5_NP_001500.1:0.0000025441)100:0.1584940511)63:0.0292072587)100:0.1394513448)98:0.1134625092,((GPX3.Homo_sapiens_GPX3.Homo_sapiens:0.0000020085,Human_GPX3_NP_001316719.1:0.0000025441)100:0.0355262203,(GPX3.Mus_musculus_GPX3.Mus_musculus:0.0066380084,Mmus_GPX.14.selenocysteine:0.0000022814)100:0.0916210042)100:0.1610137294)100:0.2719565111,Xenopus_tropicalis_gi_38174689_gb_AAH61262.1:0.3326509356)100:0.2044976221,Drer_GPX.16.selenocysteine:0.3050713869)98:0.1530764714,GPX3.Salmo_salar_GPX3.Salmo_salar:0.2623102905)100:0.4251934455,((Bflo_GPX.9.selenocysteine:0.0830394763,(Bflo_GPX.22.serine:0.5075240179,Blan_GPX.8.selenocysteine:0.0631201930)100:0.0562879193)100:0.0875254113,(Bflo_GPX.13.selenocysteine:0.1056905368,Blan_GPX.13.selenocysteine:0.0963140782)100:0.1965262432)100:0.6247476435)98:0.2712930799)93:0.0782334439,(Metapenaeus_ensis_gi_171189511_gb_ACB42236.1:0.9098108794,Drer_GPX.22.selenocysteine:1.0156908839)79:0.0952541174)64:0.1057123567,(Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1:1.1051324447,Ixodes_scapularis_gi_215502580_gb_EEC12074.1:0.7493316145)92:0.3070592648)61:0.0481285874,(((((Rheum_australe_gi_197312911_gb_ACH63236.1:0.3953683762,Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1:0.3188437482)98:0.1455144389,(((((Bflo_GPX.3.cysteine:0.0995666221,Blan_GPX.3.cysteine:0.1945890774)100:0.7713787148,(Cint_GPX.8.cysteine:0.1062321859,Crob_GPX.8.cysteine:0.0753156761)100:0.6709964261)100:0.3539303946,((((Bsch_GPX.1.cysteine:0.6565578888,Scla_GPX.1.cysteine:0.4641982594)100:0.2160312852,Hror_GPX.8.cysteine:0.4116014913)98:0.1898551132,((Drer_GPX.9.cysteine:0.2969565296,((Drer_GPX.11.serine:0.3064403663,(Mmus_GPX.19.cysteine:0.4941127318,Human_GPX8_NP_001008398.2:0.1789982044)100:0.2160150838)100:0.6640034709,(Mmus_GPX.11.cysteine:0.1312597170,Human_GPX7_NP_056511.2:0.0176657544)100:0.2128002805)100:0.1270470020)100:0.6965118000,Pmam_GPX.12.cysteine:0.4010292784)99:0.2094745413)99:0.1322083657,((Pege_GPX.8.cysteine:0.5393500766,Tdem_GPX.10.cysteine:0.9352947728)100:0.1620947619,Stho_GPX.17.cysteine:0.3486388924)100:0.3067769100)98:0.1670393369)100:0.6600417405,(Olon_GPX.24.cysteine:0.5959090611,Ovan_GPX.28.cysteine:0.7789285491)97:0.2007589899)97:0.1372994367,Fbor_GPX.13.cysteine:1.7572238450)97:0.1487104142)90:0.0748630487,Olon_GPX.20.cysteine:2.3926087321)95:0.1242735484,(((((((((((GPX4d.Salmo_salar_GPX4d.Salmo_salar:0.1318246540,Drer_GPX.19.selenocysteine:0.1099338031)100:0.1937104346,(GPX4.Salmo_salar_GPX4.Salmo_salar:0.2479885135,Drer_GPX.18.selenocysteine:0.0786287056)97:0.0423969786)98:0.0907551130,((((GPX4.Homo_sapiens_GPX4.Homo_sapiens:0.0008036387,Human_GPX4_NP_001034937.1:0.1103642367)100:0.0735615502,((Mmus_GPX.1.selenocysteine:0.0000020085,Mmus_GPX.3.selenocysteine:0.0000020127)66:0.0000025252,Mmus_GPX.4.selenocysteine:0.1300971946)99:0.0251757129)92:0.0145402334,GPX4.Sus_scrofa_GPX4.Sus_scrofa:0.0227494724)100:0.3103390426,GPX4.Gallus_gallus_GPX4.Gallus_gallus:0.1691755470)98:0.0492881447)100:0.3810201153,((Bflo_GPX.20.cysteine:0.0908561124,Blan_GPX.16.cysteine:0.1435726037)100:1.1908755674,(Bflo_GPX.25.selenocysteine:0.0000020379,Blan_GPX.22.selenocysteine:0.0500197066)100:0.3782489341)91:0.1428226601)82:0.0710043721,Fbor_GPX.22.selenocysteine:2.5556789729)65:0.0641957458,(((Bsch_GPX.14.selenocysteine:0.0617142173,((Bsch_GPX.17.selenocysteine:0.0585180316,Bsch_GPX.20.selenocysteine:0.0719896409)99:0.0168401914,Bsch_GPX.19.selenocysteine:0.2723507062)100:0.0893077086)100:0.2861956228,Scla_GPX.21.selenocysteine:0.2320319831)100:0.1942710656,Hror_GPX.10.selenocysteine:0.3750386030)98:0.2555194472)74:0.1053970886,(Tdem_GPX.2.selenocysteine:1.0524475535,(((((((Bsty_GPX.3.selenocysteine:0.5353688477,Mery_GPX.2.selenocysteine:0.4183244684)96:0.1108872494,Olon_GPX.12.unaligned:0.2550073158)97:0.1521506379,(Olon_GPX.3.selenocysteine:0.0000021944,Olon_GPX.30.unaligned:0.0000020085)100:0.4326988882)82:0.1083497366,(OKI_GPX.1.selenocysteine:0.0566144236,(OSKA_GPX.9.selenocysteine:0.0000020127,(OdB3_GPX.1.selenocysteine:0.0000020085,OdB3_GPX.2.selenocysteine:0.0597374424)100:0.0836285223)100:0.0410564049)100:0.4447592518)71:0.0638013190,((OKI_GPX.3.selenocysteine:0.0507648645,(OSKA_GPX.6.selenocysteine:0.0222186549,OdB3_GPX.5.selenocysteine:0.0683820134)100:0.1098143514)100:0.7872811714,(Oalb_GPX.2.selenocysteine:0.6173477749,(Ovan_GPX.3.selenocysteine:0.7916674174,((Ovan_GPX.4.selenocysteine:0.4531602523,(Ovan_GPX.8.unaligned:0.0000020127,Ovan_GPX.17.unaligned:0.0000020085)74:0.0000020735)100:0.1321875111,Ovan_GPX.24.unaligned:0.3327717522)98:0.1705665993)83:0.1405411130)57:0.0741969075)74:0.1900407524)47:0.1363855090,((Oalb_GPX.3.selenocysteine:0.1096910259,Oalb_GPX.4.selenocysteine:0.0000023082)100:0.3574884927,(Ovan_GPX.1.selenocysteine:0.2507014030,Ovan_GPX.5.selenocysteine:0.1826840327)100:0.2563055805)100:0.2314203894)66:0.1633232156,(Oalb_GPX.6.unaligned:0.6001792093,Oalb_GPX.26.selenocysteine:1.7059353898)89:0.1913823603)100:0.6048788425)78:0.2166423483)35:0.0168382038,((((Bsty_GPX.2.selenocysteine:0.3155352963,Mery_GPX.3.selenocysteine:0.5050885270)99:0.6659548335,Olon_GPX.14.selenocysteine:0.3615287158)86:0.0188681790,Olon_GPX.1.selenocysteine:0.2804063222)100:0.4218746207,((((((Bsty_GPX.5.selenocysteine:0.1273726386,Mery_GPX.10.selenocysteine:0.4445906431)97:0.0564510967,(Mery_GPX.4.unaligned:0.0152620219,Mery_GPX.6.unaligned:0.6283790757)100:0.1490363148)100:0.0568360520,(Olon_GPX.2.selenocysteine:0.0603195489,(((Olon_GPX.4.selenocysteine:0.4129991775,(Olon_GPX.7.selenocysteine:0.3909428916,Olon_GPX.18.selenocysteine:0.1370136742)97:0.1085325437)81:0.0392339789,Olon_GPX.11.selenocysteine:0.5062434256)75:0.1168381955,(Olon_GPX.16.unaligned:0.0000020127,Olon_GPX.17.unaligned:0.0335431512)100:0.1792201048)80:0.0657815252)100:0.1830003045)72:0.1375288666,(Olon_GPX.5.selenocysteine:0.0594598124,((Olon_GPX.9.selenocysteine:0.0000020127,Olon_GPX.23.unaligned:0.0274646307)100:0.0434075524,Olon_GPX.22.selenocysteine:0.0000020085)100:0.7183763278)99:0.1130354713)100:0.1893875125,((((OKI_GPX.9.selenocysteine:0.1174084716,OSKA_GPX.12.selenocysteine:0.0000020886)97:0.0141422643,OSKA_GPX.4.unaligned:0.0486547621)100:0.3247934902,Ovan_GPX.22.selenocysteine:0.3324636412)93:0.0977369352,((Oalb_GPX.10.selenocysteine:0.0770735798,Oalb_GPX.19.selenocysteine:0.4742240873)100:0.1929444017,Oalb_GPX.12.unaligned:0.6771620913)99:0.1327144584)92:0.1932023418)100:0.4077146956,((OKI_GPX.7.selenocysteine:0.0780465134,(OSKA_GPX.3.selenocysteine:0.0558382406,OdB3_GPX.7.selenocysteine:0.0605698792)100:0.0527949301)100:0.4616897400,(Oalb_GPX.15.selenocysteine:0.5041963588,(Ovan_GPX.9.selenocysteine:0.1168806561,(Ovan_GPX.15.selenocysteine:0.0000025441,Ovan_GPX.26.selenocysteine:0.0000023653)100:0.5009830729)100:0.3408836509)99:0.2968606798)71:0.1537068992)98:0.3190618578)98:0.2075007249)75:0.0837190072,((((((Clonorchis_sinensis_gi_117956208_gb_ABK58680.1:0.7617890576,Tdem_GPX.8.selenocysteine:1.7022717259)51:0.2528310777,((Cint_GPX.5.selenocysteine:0.0220508115,Crob_GPX.2.selenocysteine:0.0128217384)100:0.2213789979,Csav_GPX.5.selenocysteine:0.2603688852)100:0.2675073513)49:0.1063189356,((((Pege_GPX.1.selenocysteine:0.1124052255,Pege_GPX.2.selenocysteine:0.1794165703)100:0.4118518521,Tdem_GPX.3.selenocysteine:0.9701269232)96:0.1556177829,Pege_GPX.4.selenocysteine:0.5388002965)89:0.1032344181,((Pege_GPX.3.selenocysteine:0.5679425233,Stho_GPX.7.selenocysteine:0.8259651506)51:0.1624431669,Pmam_GPX.6.selenocysteine:0.5600516900)49:0.1386181302)45:0.0977996041)64:0.0904417323,(Pmam_GPX.1.selenocysteine:0.1500674582,Pmam_GPX.2.selenocysteine:0.5247786398)100:0.2561674008)29:0.0000025657,Tdem_GPX.7.selenocysteine:1.2091442033)56:0.0272677791,((Cint_GPX.1.selenocysteine:0.0000020085,Crob_GPX.1.selenocysteine:0.0109949012)100:0.1923849417,Csav_GPX.1.selenocysteine:0.2824621951)100:0.3514682714)71:0.0505690928)70:0.0920521132,(((Stho_GPX.1.selenocysteine:0.3045979308,Tdem_GPX.11.selenocysteine:0.4436049485)99:0.1023660767,Tdem_GPX.1.selenocysteine:0.4169119281)99:0.1510056534,(Stho_GPX.2.selenocysteine:0.4615478627,Stho_GPX.8.cysteine:0.4063357853)100:0.6316601084)92:0.1187558719)75:0.1239135081,(((Fbor_GPX.4.selenocysteine:0.5067487965,(Fbor_GPX.5.selenocysteine:0.7929640862,Fbor_GPX.7.selenocysteine:0.5588017560)100:0.4414028810)50:0.0940937875,Fbor_GPX.17.cysteine:1.1986288110)97:0.1664578417,(Fbor_GPX.10.selenocysteine:0.7677446562,(Fbor_GPX.11.selenocysteine:0.4384571457,Fbor_GPX.12.selenocysteine:0.4201514004)100:0.9634024266)91:0.1791440184)100:0.3923277447)54:0.0942220836)54:0.1374164699,(((((((((Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2:0.6191215015,Fbor_GPX.14.cysteine:0.8146395161)100:0.5200531573,Fbor_GPX.1.cysteine:0.3534642194)99:0.1746631372,Fbor_GPX.3.unaligned:0.3386707075)66:0.1005367826,((Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1:0.2666226802,(Acidovorax_avenae_subsp._citrulli_AAC00-1_gi_120608953_ref_Y:0.3037733043,Diaphorobacter_sp._TPSY_gi_222109412_ref_YP_002551676.1:0.1797760841)98:0.0573891448)100:0.1893267315,(Bordetella_parapertussis_12822_gi_33597467_ref_NP_885110.1:0.4738334214,Bordetella_avium_197N_gi_187478327_ref_YP_786351.1:0.2978901375)100:0.2037670683)98:0.0891027097)54:0.1196990043,(Sphingomonas_wittichii_RW1_gi_148556976_ref_YP_001264558.1:0.4839506469,((Bradyrhizobium_sp._BTAi1_gi_148257534_ref_YP_001242119.1:0.1858019941,Bradyrhizobium_japonicum_USDA_110_gi_27381843_ref_NP_773372.:0.4468416712)57:0.0816768242,Rhodopseudomonas_palustris_BisB5_gi_91977935_ref_YP_570594.1:0.1725363069)100:0.3697383678)95:0.1442703136)47:0.1383155904,((((Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1:0.6492484261,(Alteromonadales_bacterium_TW-7_gi_119471461_ref_ZP_01613902.:0.3942306648,(Bsty_GPX.1.cysteine:0.3588055503,Fbor_GPX.2.cysteine:0.3957707354)100:0.2715114155)98:0.1798654582)89:0.0196312315,Enterobacter_sp._638_gi_146312342_ref_YP_001177416.1:0.3759973064)100:0.1569950446,gamma_proteobacterium_HTCC5015_gi_198262109_gb_EDY86392.1:0.3486439124)99:0.2431588283,(((((Shewanella_amazonensis_SB2B_gi_119774217_ref_YP_926957.1:0.3715994722,Bacillus_cereus_ATCC_14579_gi_30020250_ref_NP_831881.1:0.4597835517)97:0.1985504670,Alcanivorax_borkumensis_SK2_gi_110835499_ref_YP_694358.1:0.3980732421)44:0.0481410213,Clostridium_beijerinckii_NCIMB_8052_gi_150015663_ref_YP_0013:0.7184536938)43:0.0154242874,(gamma_proteobacterium_NOR51-B_gi_219680407_gb_EED36756.1:0.1581345432,Fbor_GPX.16.cysteine:0.8201798604)90:0.3849836806)47:0.0798267172,(((Fbor_GPX.8.cysteine:0.2425505989,Fbor_GPX.24.unaligned:0.5539496379)100:0.3960372841,Fbor_GPX.28.cysteine:0.4270742706)98:0.3077174928,((Fbor_GPX.18.cysteine:0.5254773215,Fbor_GPX.25.unaligned:0.5461248083)100:0.6126437540,(Fbor_GPX.19.cysteine:0.0915521932,Fbor_GPX.20.cysteine:0.0000023338)100:2.1698928122)99:0.3552582410)99:0.8976954464)34:0.0293945687)39:0.0214351878)68:0.0935686840,(Shewanella_sediminis_HAW-EB3_gi_157376430_ref_YP_001475030.1:0.1922496103,Fbor_GPX.15.unaligned:0.4801022517)99:0.2331384195)68:0.0807836952,(Isaria_tenuipes_gi_210063459_gb_ACJ06531.1:0.6790535413,((Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1:0.7698770080,Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1:0.6576784916)99:0.0404453582,Fbor_GPX.6.cysteine:0.6088783987)98:0.0941579122)95:0.1980735236)32:0.0000020834,Fbor_GPX.21.cysteine:1.4192541238)88:0.2101956644)97:0.5992767842)74:0.1863359898,((((((((((Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2:0.3533205646,(gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2:0.0671191433,Human_GPX1_NP_000572.2:0.0000025252)100:0.0175893859)100:0.0261911218,GPX1.Sus_scrofa_GPX1.Sus_scrofa:0.0519804783)100:0.0704572155,(Rattus_norvegicus_gi_9247190_gb_AAB95647.2:0.0531563145,Mmus_GPX.6.selenocysteine:0.0266318390)100:0.0995523884)100:0.1534119711,Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1:0.4082221506)100:0.1783946396,((GPX2.Gallus_gallus_GPX2.Gallus_gallus:0.2923565764,(((gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3:0.0000020085,Mmus_GPX.8.selenocysteine:0.0067409217)100:0.0561815568,Human_GPX2_NP_002074.2:0.0236254791)85:0.0173580418,GPX2.Sus_scrofa_GPX2.Sus_scrofa:0.0000025252)100:0.1947597236)83:0.0480922356,(Xenopus_tropicalis_gi_166796161_gb_AAI59037.1:0.1458340189,Drer_GPX.8.selenocysteine:0.2133273019)99:0.0790308485)100:0.2416330364)60:0.0535234129,((((GPX1.Danio_rerio_GPX1.Danio_rerio:0.0000020085,Drer_GPX.2.selenocysteine:0.0000020085)100:0.0437005116,Hypophthalmichthys_molitrix_gi_156571766_gb_ABU84810.1:0.1005350532)100:0.1323810002,(Thunnus_maccoyii_gi_133779723_gb_ABO38817.1:0.1935540090,Drer_GPX.6.selenocysteine:0.1579020649)100:0.1138192423)99:0.0303224132,Oncorhynchus_mykiss_gi_11095769_gb_AAG30013.1_AF281338_1:0.2438079931)100:0.1447082243)53:0.0681351085,(Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1:0.3244238776,(Bflo_GPX.2.selenocysteine:0.0095118604,Blan_GPX.1.selenocysteine:0.0582861298)100:0.2737968266)99:0.2302034154)83:0.1248249978,Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2:0.4209859468)46:0.0064502412,Ostreococcus_tauri_gi_116059366_emb_CAL55073.1:1.1524883138)75:0.1481450711,((Bflo_GPX.6.serine:0.0073192568,Blan_GPX.6.serine:0.0504709004)100:0.5522798830,(Bflo_GPX.16.cysteine:0.0002593507,Blan_GPX.18.cysteine:0.0209387095)100:0.6480070583)100:0.4194451751)97:0.3297385409);
+(Hydra_magnipapillata_gi_221131943_ref_XP_002164274.1:1.4078692913,(((((((((((Globodera_rostochiensis_gi_21739125_emb_CAD38523.1:0.3031227575,Haemonchus_contortus_gi_47499102_gb_AAT28332.1:0.0805672569)100:0.1149165128,Caenorhabditis_briggsae_AF16_gi_157767532_ref_XP_001667246.1:0.2089483949)99:0.1966236535,(gi_544436_sp_P35666.1_GPXC_WUCBA_gi_544436_sp_P35666.1_GPXC_:0.2726994353,gi_1708061_sp_P52033.1_GPXC_DIRIM_gi_1708061_sp_P52033.1_GPX:0.1280441387)100:0.3176598759)100:0.4771892063,((((((Ciona_intestinalis_gi_198424199_ref_XP_002121558.1:0.2275517835,Crob_GPX.5.selenocysteine:0.0000025376)100:0.0475159911,Cint_GPX.9.selenocysteine:0.1138818192)97:0.0086058568,Cint_GPX.12.selenocysteine:0.0134365078)99:0.3605132693,Csav_GPX.7.selenocysteine:0.2964144430)100:0.3742029878,((((Cint_GPX.14.selenocysteine:0.0210583787,(Crob_GPX.7.selenocysteine:0.0057306215,Csav_GPX.11.selenocysteine:0.2331895998)88:0.0000025376)97:0.1051711357,Csav_GPX.10.unaligned:0.7142529777)99:0.2276573442,Pmam_GPX.10.selenocysteine:0.2660489218)99:0.2982998543,Pmam_GPX.7.selenocysteine:0.6307420324)99:0.0897016436)100:0.4134696453,(Bsch_GPX.7.selenocysteine:1.2382388059,((Bsch_GPX.9.selenocysteine:0.6699724616,(((Bsch_GPX.10.unaligned:1.0178236806,(Scla_GPX.16.selenocysteine:0.3278937413,Scla_GPX.17.selenocysteine:0.5264792525)100:0.1719034420)71:0.1449283348,(Bsch_GPX.13.selenocysteine:0.6677900012,(Hror_GPX.4.unaligned:0.3066426219,Scla_GPX.18.unaligned:0.3691980095)100:0.0964963836)70:0.0943423959)99:0.2252652725,Hror_GPX.7.selenocysteine:1.0839051548)89:0.1895012437)74:0.0439548204,(Scla_GPX.8.selenocysteine:0.1220068011,Scla_GPX.9.selenocysteine:0.1304399689)100:1.1204601091)93:0.1554713038)99:0.2461346564)97:0.1120167316)96:0.0755144939,Crassostrea_gigas_gi_152002384_gb_ABS19600.1:1.4839726179)84:0.1458704256,(Dreissena_polymorpha_gi_145559053_gb_ABP73388.1:0.6296429165,Unio_tumidus_gi_111572533_gb_ABH10623.1:0.5089606966)100:0.6415837602)76:0.0265385708,((((((((Mus_musculus_gi_148700720_gb_EDL32667.1:0.0091696326,Mmus_GPX.26.cysteine:0.0000020168)100:0.2508541415,Human_GPX6_NP_874360.1:0.1576961953)100:0.0681745620,(Canis_lupus_familiaris_gi_50978980_ref_NP_001003213.1:0.1484207662,((gi_121671_sp_P21765.2_GPX5_MOUSE_gi_121671_sp_P21765.2_GPX5_:0.0129558009,Mmus_GPX.20.cysteine:0.0062362710)100:0.1987549828,(gi_116667974_pdb_2I3Y_A_gi_116667974_pdb_2I3Y_A:0.0688059422,Human_GPX5_NP_001500.1:0.0000022917)100:0.1255792950)100:0.0494558730)100:0.1543102780)100:0.1026914300,((GPX3.Homo_sapiens_GPX3.Homo_sapiens:0.0000020168,Human_GPX3_NP_001316719.1:0.0000028230)100:0.0306190336,Mmus_GPX.14.selenocysteine:0.0861856429)100:0.1280453881)100:0.2963341777,Xenopus_tropicalis_gi_38174689_gb_AAH61262.1:0.3199712596)99:0.2424553186,Drer_GPX.16.selenocysteine:0.2628401199)98:0.1186019801,GPX3.Salmo_salar_GPX3.Salmo_salar:0.2269732461)100:0.3752166055,((Bflo_GPX.9.selenocysteine:0.0811824114,(Bflo_GPX.22.serine:0.4865900771,Blan_GPX.8.selenocysteine:0.0536870606)100:0.0474275392)100:0.0837711738,(Bflo_GPX.13.selenocysteine:0.1045322835,Blan_GPX.13.selenocysteine:0.0864231572)100:0.1826970366)100:0.6738661935)99:0.2871583415)81:0.0343984575,(gi_72163529_ref_XP_792563.1_gi_72163529_ref_XP_792563.1:1.4795720522,(((Bsch_GPX.3.selenocysteine:0.4795788912,Scla_GPX.13.selenocysteine:0.1945683983)100:0.1631861122,Hror_GPX.2.selenocysteine:0.4438443914)100:0.1869085460,(((((Cint_GPX.3.selenocysteine:0.0484566185,Crob_GPX.11.selenocysteine:0.0000020209)100:0.0856724827,Csav_GPX.3.selenocysteine:0.2156641249)100:0.2488306734,Pmam_GPX.4.selenocysteine:0.3876279766)100:0.3072495267,Pege_GPX.6.selenocysteine:0.1921282312)100:0.1145179140,Tdem_GPX.5.selenocysteine:0.3777109957)100:0.3903490872)99:0.2380270567)89:0.2317580783)88:0.0695691066,(Metapenaeus_ensis_gi_171189511_gb_ACB42236.1:0.8786112740,Drer_GPX.22.selenocysteine:0.9526667219)71:0.0437920489)88:0.1197782359,(Pediculus_humanus_corporis_gi_212511626_gb_EEB14547.1:1.1127802766,Ixodes_scapularis_gi_215502580_gb_EEC12074.1:0.7273032780)97:0.3192785074)91:0.0731031961,((((((Rheum_australe_gi_197312911_gb_ACH63236.1:0.1233187194,Fbor_GPX.15.unaligned:0.6859930832)99:0.2490513884,Arabidopsis_thaliana_gi_15225103_ref_NP_180715.1:0.3644929696)98:0.1906572107,((((((((Bflo_GPX.3.cysteine:0.0000028443,Blan_GPX.3.cysteine:0.3599255660)100:0.6582801734,(Drer_GPX.9.cysteine:0.2555627875,((Drer_GPX.11.serine:0.2706498086,(Mmus_GPX.19.cysteine:0.4801263093,Human_GPX8_NP_001008398.2:0.1373055803)100:0.1679540593)100:0.6603494400,(Mmus_GPX.11.cysteine:0.0958426747,Human_GPX7_NP_056511.2:0.0320888079)100:0.1431741424)99:0.1211781863)100:0.5107154033)97:0.2239112787,((Bsch_GPX.1.cysteine:0.5895735734,Scla_GPX.1.cysteine:0.5496657802)98:0.2540025080,Hror_GPX.8.cysteine:0.4430807569)99:0.2097163204)95:0.0695885166,((Cint_GPX.8.cysteine:0.2077097887,Crob_GPX.8.cysteine:0.0397793456)100:1.1387855199,Pmam_GPX.12.cysteine:0.4519078217)85:0.1322361504)83:0.0522539337,((Pege_GPX.8.cysteine:0.5807890421,Tdem_GPX.10.cysteine:1.0314469366)98:0.1478831704,Stho_GPX.17.cysteine:0.3119417857)100:0.3158708055)100:0.6236665188,Olon_GPX.29.cysteine:0.6054307345)79:0.0444675441,((OKI_GPX.4.unaligned:2.2459442065,Olon_GPX.27.unaligned:1.1942739816)94:0.2258123865,Ovan_GPX.32.cysteine:0.8470975052)93:0.1987980852)91:0.1252354636,Fbor_GPX.13.cysteine:1.6286762927)89:0.1933628180)86:0.0759195927,((((((((GPX4.Gallus_gallus_GPX4.Gallus_gallus:0.1605065723,(((Mmus_GPX.1.selenocysteine:0.0000020168,Mmus_GPX.3.selenocysteine:0.0000020168)89:0.0000025376,Mmus_GPX.4.selenocysteine:0.1074288942)99:0.0398043518,Human_GPX4_NP_001034937.1:0.1752834440)100:0.2564831634)100:0.0739727418,(Drer_GPX.18.selenocysteine:0.1175588238,Drer_GPX.19.selenocysteine:0.2566243496)96:0.0970123653)99:0.2595939359,((Bflo_GPX.20.cysteine:0.0842520944,Blan_GPX.16.cysteine:0.1458929200)100:0.9967346799,(Bflo_GPX.25.selenocysteine:0.0000025950,Blan_GPX.22.selenocysteine:0.0515798129)100:0.4467917525)76:0.1310202174)96:0.1208305630,Fbor_GPX.21.selenocysteine:2.3122548663)60:0.0459925025,(((Bsch_GPX.14.selenocysteine:0.0597445469,((Bsch_GPX.17.selenocysteine:0.0496185306,Bsch_GPX.20.selenocysteine:0.0707244598)98:0.0164749248,Bsch_GPX.19.selenocysteine:0.2694350348)100:0.0906660413)100:0.2633417823,Scla_GPX.21.selenocysteine:0.2357440912)100:0.1908075484,Hror_GPX.10.selenocysteine:0.3668721343)99:0.2238554013)75:0.1055742231,Tdem_GPX.2.selenocysteine:1.1306972405)40:0.0285585457,((((((Clonorchis_sinensis_gi_117956208_gb_ABK58680.1:0.8421312457,((Cint_GPX.5.selenocysteine:0.0122029093,Crob_GPX.2.selenocysteine:0.0115066664)100:0.2195296763,Csav_GPX.5.selenocysteine:0.2606770696)100:0.2512066821)59:0.0390584185,(((Pege_GPX.1.selenocysteine:0.0871758686,Pege_GPX.2.selenocysteine:0.1967566067)100:0.4436555950,Tdem_GPX.3.selenocysteine:0.8375432435)98:0.1676760093,((Pege_GPX.3.selenocysteine:0.3999272356,Tdem_GPX.8.selenocysteine:1.6686393002)94:0.1477875788,Stho_GPX.7.selenocysteine:0.8455388331)87:0.1176535738)51:0.1302626833)60:0.0556514259,(((((Cint_GPX.1.selenocysteine:0.0041097823,Crob_GPX.1.selenocysteine:0.0103685813)100:0.2183216915,Csav_GPX.1.selenocysteine:0.2359622045)100:0.3846611413,(Pmam_GPX.1.selenocysteine:0.1677143698,Pmam_GPX.2.selenocysteine:0.4742472997)100:0.1937515575)92:0.1169657110,(Pege_GPX.4.selenocysteine:0.5194214344,((Stho_GPX.1.selenocysteine:0.2910229148,(Tdem_GPX.1.selenocysteine:0.3894802304,Tdem_GPX.11.selenocysteine:0.4359816659)99:0.0768789868)100:0.1923750110,(Stho_GPX.2.selenocysteine:0.5014786723,Stho_GPX.8.cysteine:0.3893894374)100:0.4561715051)97:0.1148868194)67:0.1646422018)26:0.0000026410,Tdem_GPX.7.selenocysteine:1.2553509486)49:0.0422636375)80:0.0933919682,Pmam_GPX.6.selenocysteine:0.7580064083)55:0.0064347628,((((((((((Bsty_GPX.3.selenocysteine:0.4862032541,Mery_GPX.2.selenocysteine:0.3486412273)100:0.1702468067,Olon_GPX.14.unaligned:0.1410820026)100:0.1579567535,(Olon_GPX.4.selenocysteine:0.0000020775,Olon_GPX.23.unaligned:0.0000020168)100:0.3486227459)99:0.1019001097,(((OdB3_GPX.2.selenocysteine:0.1072359916,OdB3_gold_GPX_chr1a:0.0000020168)100:0.0263521268,OSKA_gold_GPX_chr1a:0.0000020062)100:0.0567272993,OKI_gold_GPX_chr1a:0.0374526161)100:0.3960568491)96:0.0827261978,((Oalb_GPX.3.selenocysteine:0.0961144479,Oalb_GPX.4.selenocysteine:0.0000022917)100:0.3785163865,(Ovan_GPX.2.selenocysteine:0.2502789617,Ovan_GPX.5.selenocysteine:0.1420835110)100:0.2198808111)100:0.2900715103)76:0.0915140050,Oalb_GPX.6.unaligned:0.8832137942)100:0.1266803146,Ovan_GPX.9.selenocysteine:0.4832709423)96:0.0859172926,(OKI_gold_GPX_chr1b:0.0164889255,(OSKA_gold_GPX_chr1b:0.0259539807,OdB3_gold_GPX_chr1b:0.0635941754)100:0.1191085987)100:0.6461912719)94:0.0603595980,(((Ovan_GPX.8.selenocysteine:0.4184298303,Ovan_GPX.19.unaligned:0.0302270119)99:0.0135998534,Ovan_GPX.10.unaligned:0.0127539238)99:0.1316258813,Ovan_GPX.20.unaligned:0.3256216140)100:0.2521072677)91:0.1335711924,Oalb_GPX.2.selenocysteine:0.4333910211)100:0.7726459777)53:0.0206190598,((((Bsty_GPX.2.selenocysteine:0.2656397500,Mery_GPX.1.selenocysteine:0.4786061648)100:0.7086689723,Olon_GPX.11.selenocysteine:0.3191751318)89:0.0961202504,Olon_GPX.2.selenocysteine:0.2411434102)100:0.4049624276,(((((Bsty_GPX.6.selenocysteine:0.1366789535,(Mery_GPX.4.unaligned:0.0140652497,Mery_GPX.6.unaligned:0.6782415583)99:0.1405469565)100:0.0949224443,((Olon_GPX.1.selenocysteine:0.0858298213,(Olon_GPX.13.unaligned:0.0000020209,Olon_GPX.16.unaligned:0.0305914256)96:0.2173818529)39:0.0284978779,((Olon_GPX.3.selenocysteine:0.4146534500,(Olon_GPX.7.selenocysteine:0.3710904180,Olon_GPX.18.selenocysteine:0.1795945018)85:0.0549792148)66:0.0425601738,Olon_GPX.10.selenocysteine:0.5513360181)45:0.0697939692)99:0.1344476807)49:0.0516772396,(Olon_GPX.5.serine:0.3589019996,((Olon_GPX.6.selenocysteine:0.0000022489,Olon_GPX.17.unaligned:0.0261251506)100:0.0327171206,Olon_GPX.20.selenocysteine:0.0000020168)100:0.6096253273)98:0.0399152005)100:0.2027846399,(((((OSKA_GPX.4.selenocysteine:0.0593552887,OSKA_gold_GPX_PAR:0.0123143579)61:0.0000020168,OdB3_gold_GPX_PAR:0.0071216840)97:0.0161343592,OKI_gold_GPX_PAR:0.1064748994)100:0.2586720013,(Ovan_GPX.22.unaligned:0.4674834089,(Ovan_GPX.25.selenocysteine:0.0000025570,Ovan_GPX.26.selenocysteine:1.6954131567)99:0.0563519659)100:0.2842444178)99:0.0958541150,(((Oalb_GPX.7.unaligned:0.0000028979,Oalb_GPX.9.unaligned:0.0251002248)100:0.5462060545,Oalb_GPX.19.selenocysteine:0.2434924744)100:0.1312134006,Oalb_GPX.13.selenocysteine:0.1032708007)100:0.2094750596)99:0.2696667989)99:0.2913355449,((Oalb_GPX.15.selenocysteine:0.5224634786,(Ovan_GPX.16.selenocysteine:0.0682887594,(Ovan_GPX.17.selenocysteine:0.3422661714,Ovan_GPX.28.selenocysteine:0.1463430495)100:0.3427318105)100:0.3153076647)100:0.2741044672,(OKI_gold_GPX_chr2:0.0560639154,(OSKA_gold_GPX_chr2:0.0403004458,OdB3_gold_GPX_chr2:0.0349153528)100:0.0573234881)100:0.4356342765)99:0.2154574995)98:0.2931484903)61:0.1376965911)49:0.0245113462)65:0.1472467931,(((((((Salmonella_enterica_subsp._enterica_serovar_Newport_str._SL2:0.7036319837,Fbor_GPX.14.cysteine:0.6293652302)99:0.4582798528,Fbor_GPX.1.cysteine:0.3144555669)97:0.0843647172,(((Fbor_GPX.11.cysteine:0.2774676069,Fbor_GPX.23.unaligned:0.4363933761)100:0.4583328732,Fbor_GPX.31.cysteine:0.4999755536)93:0.0974167510,((Fbor_GPX.18.cysteine:0.0947754560,Fbor_GPX.20.cysteine:0.0000020887)100:1.9737573794,(Fbor_GPX.19.cysteine:0.6541492307,Fbor_GPX.24.unaligned:0.4038486933)100:0.5853951777)98:0.3347158913)100:0.8105090912)97:0.0317171189,Fbor_GPX.3.unaligned:0.4376810829)93:0.1203983377,Delftia_acidovorans_SPH-1_gi_160896338_ref_YP_001561920.1:0.6138365403)44:0.1211148971,(Cellvibrio_japonicus_Ueda107_gi_192362439_ref_YP_001981439.1:0.5407637381,((Bsty_GPX.1.cysteine:0.3864532886,Fbor_GPX.2.cysteine:0.3057947498)100:0.2599428567,Fbor_GPX.16.cysteine:0.9247119887)52:0.1713404477)49:0.1539051927)95:0.1346716544,(Isaria_tenuipes_gi_210063459_gb_ACJ06531.1:0.6813762138,((Candida_albicans_SC5314_gi_68483467_ref_XP_714294.1:0.7463666522,Taiwanofungus_camphoratus_gi_68165856_gb_AAY87888.1:0.5461828011)97:0.0252610044,Fbor_GPX.7.cysteine:0.6496573959)97:0.1364595224)89:0.1600755724)98:0.3141337398)90:0.2005434496)43:0.0000020080,Olon_GPX.22.cysteine:2.3359551926)90:0.1595326934,(((Fbor_GPX.4.selenocysteine:0.5476065446,(Fbor_GPX.5.selenocysteine:0.7615396804,Fbor_GPX.6.selenocysteine:0.5362082548)100:0.4479402860)59:0.2215027065,((Fbor_GPX.8.selenocysteine:0.3882999997,Fbor_GPX.12.selenocysteine:0.4213694002)100:0.8484282321,Fbor_GPX.10.selenocysteine:0.7391815499)96:0.2252106843)56:0.0846592779,Fbor_GPX.17.cysteine:1.3732333449)99:0.3310151336)100:0.5531591762)51:0.0771283534,((((((Molluscum_contagiosum_virus_gi_19744909_ref_NP_044017.2:0.2923958835,(gi_190359363_sp_Q0EF99.2_GPX1_CALJA_gi_190359363_sp_Q0EF99.2:0.0658086773,Human_GPX1_NP_000572.2:0.0000020168)100:0.0297944188)100:0.0831602494,Mmus_GPX.6.selenocysteine:0.1011568749)100:0.1449090448,Taeniopygia_guttata_gi_211971089_ref_NP_001130041.1:0.3818689603)100:0.0953627245,(((GPX2.Gallus_gallus_GPX2.Gallus_gallus:0.2704846112,(Xenopus_tropicalis_gi_166796161_gb_AAI59037.1:0.1482726432,Drer_GPX.8.selenocysteine:0.2005484273)100:0.0933828092)85:0.0290972635,((gi_172046601_sp_Q9JHC0.3_GPX2_MOUSE_gi_172046601_sp_Q9JHC0.3:0.0000020168,Mmus_GPX.8.selenocysteine:0.0066294152)100:0.0469977598,Human_GPX2_NP_002074.2:0.0285363421)100:0.1825823125)100:0.2232987789,(((Macrobrachium_rosenbergii_gi_222875570_gb_ACM68948.1:0.3382503139,(Bflo_GPX.2.selenocysteine:0.0031992721,Blan_GPX.1.selenocysteine:0.0652680436)100:0.1987012349)100:0.2038167700,(Drer_GPX.2.selenocysteine:0.1752405096,Drer_GPX.6.selenocysteine:0.2639826453)100:0.1341180010)88:0.0562501695,((Bflo_GPX.6.serine:0.0240400129,Blan_GPX.6.serine:0.0537522986)100:0.5626308133,(Bflo_GPX.16.cysteine:0.0000020168,Blan_GPX.18.cysteine:0.0145023865)100:0.6386921164)100:0.6011415969)56:0.0385448405)62:0.1118416968)67:0.1212342129,Xenopus_Silurana_tropicalis_gi_221307511_ref_NP_001015740.2:0.3779381915)72:0.2184025319,Ostreococcus_tauri_gi_116059366_emb_CAL55073.1:0.9535248895)95:0.2824073164);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/selenoproteins/lba/GPX.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0559872,0.0364008,0.0625005,0.0489175,0.0183442,0.0461592,0.061921,0.0734411,0.0210098,0.0503315,0.0887393,0.0750405,0.0185065,0.0638913,0.0521858,0.0556395,0.050401,0.0146819,0.0387187,0.0671827}+G4{1.20378}" --length 243
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/GPX.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0552147,0.0362851,0.0645499,0.0481615,0.018289,0.0460092,0.0616715,0.0711882,0.0221527,0.0504434,0.0877581,0.0757521,0.0193781,0.0634349,0.0506249,0.0565891,0.0507546,0.0154366,0.0389301,0.0673764}+G4{1.27047}" --length 241
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -1224,7 +1104,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Fri Oct 23 13:49:11 2026
-Total CPU time used: 21840.76323 seconds (6h:4m:0s)
-Total wall-clock time used: 3627.773061 seconds (1h:0m:27s)
+Date and time: Fri Oct 30 05:02:06 2026
+Total CPU time used: 8513.124033 seconds (2h:21m:53s)
+Total wall-clock time used: 1098.176645 seconds (0h:18m:18s)
 

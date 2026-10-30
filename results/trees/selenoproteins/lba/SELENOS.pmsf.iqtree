@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 21 sequences with 206 amino-acid sites
-Number of constant sites: 3 (= 1.45631% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 3 (= 1.45631% of all sites)
-Number of parsimony informative sites: 180
-Number of distinct site patterns: 203
+Input data: 23 sequences with 218 amino-acid sites
+Number of constant sites: 8 (= 3.66972% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 8 (= 3.66972% of all sites)
+Number of parsimony informative sites: 193
+Number of distinct site patterns: 215
 
 SUBSTITUTION PROCESS
 --------------------
@@ -46,82 +46,86 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 1.3106
+Gamma shape alpha: 1.5602
 
  Category  Relative_rate  Proportion
-  1         0.1945         0.2500
-  2         0.5537         0.2500
-  3         1.0371         0.2500
-  4         2.2148         0.2500
+  1         0.2345         0.2500
+  2         0.5983         0.2500
+  3         1.0538         0.2500
+  4         2.1135         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -5221.5489 (s.e. 146.4395)
-Unconstrained log-likelihood (without tree): -1092.8604
-Number of free parameters (#branches + #model parameters): 59
-Akaike information criterion (AIC) score: 10561.0979
-Corrected Akaike information criterion (AICc) score: 10609.5910
-Bayesian information criterion (BIC) score: 10757.4426
+Log-likelihood of the tree: -5930.6758 (s.e. 173.1694)
+Unconstrained log-likelihood (without tree): -1169.1378
+Number of free parameters (#branches + #model parameters): 63
+Akaike information criterion (AIC) score: 11987.3515
+Corrected Akaike information criterion (AICc) score: 12039.7152
+Bayesian information criterion (BIC) score: 12200.5747
 
-Total tree length (sum of branch lengths): 20.3214
-Sum of internal branch lengths: 10.2907 (50.6400% of tree length)
+Total tree length (sum of branch lengths): 21.4772
+Sum of internal branch lengths: 11.5992 (54.0071% of tree length)
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Equus_caballus_gi_149691084_ref_XP_001490943.1' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
 +--Equus_caballus_gi_149691084_ref_XP_001490943.1
 |
-|           +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
-|        +--| (97)
-|        |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
-|        |  |     +--| (92)
-|        |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
-|        |  |  +--| (67)
-|        |  |  |  +----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
-|        |  +--| (51)
-|        |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
-|        |     |  +--| (86)
-|        |     |  |  +--Drer_SELENOS.4.selenocysteine
-|        |     +--| (48)
-|        |        |     +------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
-|        |        |  +--| (68)
-|        |        |  |  +--------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
-|        |        +--| (50)
-|        |           |                                             +-------Se_user_SelS_Ostreococcus_lucimarinus
-|        |           |             +-------------------------------| (100)
-|        |           |             |                               +**Se_user_SelS_Ostreococcus_tauri
-|        |           |     +-------| (85)
-|        |           |     |       +-------OSKA_SELENOS.1.selenocysteine
-|        |           |  +--| (45)
-|        |           |  |  |           +--Cint_SELENOS.1.selenocysteine
-|        |           |  |  |        +--| (99)
-|        |           |  |  |        |  +--Crob_SELENOS.1.selenocysteine
-|        |           |  |  |     +--| (99)
-|        |           |  |  |     |  +--Csav_SELENOS.4.selenocysteine
-|        |           |  |  +-----| (98)
-|        |           |  |        +---Pmam_SELENOS.2.selenocysteine
-|        |           +--| (30)
-|        |              +-------Blan_SELENOS.1.unaligned
-|     +--| (67)
-|     |  +--Mmus_SELENOS.2.selenocysteine
-|  +--| (83)
-|  |  +--SelS.Sus_scrofa_SelS.Sus_scrofa
-+--| (92)
-|  +**Human_SELENOS_NP_060915.2
+|     +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
+|  +--| (100)
+|  |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
+|  |  |     +--| (89)
+|  |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
+|  |  |  +--| (76)
+|  |  |  |  +-----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
+|  |  +--| (84)
+|  |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
+|  |     |  +--| (91)
+|  |     |  |  +--Drer_SELENOS.4.selenocysteine
+|  |     +--| (84)
+|  |        |     +--------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
+|  |        |  +--| (43)
+|  |        |  |  |  +------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
+|  |        |  |  +--| (45)
+|  |        |  |     |                                      +-----Se_user_SelS_Ostreococcus_lucimarinus
+|  |        |  |     |     +--------------------------------| (100)
+|  |        |  |     |     |                                +--Se_user_SelS_Ostreococcus_tauri
+|  |        |  |     +-----| (55)
+|  |        |  |           |           +----Oalb_SELENOS.2.selenocysteine
+|  |        |  |           |        +--| (88)
+|  |        |  |           |        |  |   +--OKI_gold_SELENOS
+|  |        |  |           |        |  +---| (97)
+|  |        |  |           |        |      |  +**OSKA_gold_SELENOS
+|  |        |  |           |        |      +--| (90)
+|  |        |  |           |        |         +--OdB3_gold_SELENOS
+|  |        |  |           +--------| (93)
+|  |        |  |                    +---Olon_SELENOS.7.selenocysteine
+|  |        +--| (69)
+|  |           |  +--------Blan_SELENOS.1.unaligned
+|  |           +--| (32)
+|  |              |              +--Cint_SELENOS.1.selenocysteine
+|  |              |           +--| (97)
+|  |              |           |  +--Crob_SELENOS.1.selenocysteine
+|  |              |        +--| (97)
+|  |              |        |  +--Csav_SELENOS.4.selenocysteine
+|  |              +--------| (100)
+|  |                       +----Pmam_SELENOS.2.selenocysteine
++--| (90)
+|  +--Mmus_SELENOS.2.selenocysteine
 |
-+**SelS.Homo_sapiens_SelS.Homo_sapiens
++**Human_SELENOS_NP_060915.2
 
 Tree in newick format:
 
-(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2473514756,((((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3553647314,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.0801031510,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2144199874)92:0.0913686142,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8040155211)67:0.1036685673,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.2982599076,Drer_SELENOS.4.selenocysteine:0.2344243436)86:0.2519460663,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.1955478147,Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:1.4158650210)68:0.4965138498,((((Se_user_SelS_Ostreococcus_lucimarinus:1.2883650732,Se_user_SelS_Ostreococcus_tauri:0.0000029901)100:4.9343265990,OSKA_SELENOS.1.selenocysteine:1.2590116765)85:1.3612420070,(((Cint_SELENOS.1.selenocysteine:0.0214702894,Crob_SELENOS.1.selenocysteine:0.0215599882)99:0.1120174821,Csav_SELENOS.4.selenocysteine:0.3698108418)99:0.4007476966,Pmam_SELENOS.2.selenocysteine:0.6932987911)98:0.9814515700)45:0.5288513923,Blan_SELENOS.1.unaligned:1.3223824496)30:0.1410502671)50:0.2034027467)48:0.2336940186)51:0.0819488050)97:0.2664442407,Mmus_SELENOS.2.selenocysteine:0.1219239490)67:0.0371878182,SelS.Sus_scrofa_SelS.Sus_scrofa:0.0874642630)83:0.0399619300,Human_SELENOS_NP_060915.2:0.0000022554)92:0.0249243785,SelS.Homo_sapiens_SelS.Homo_sapiens:0.0000020404);
+(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2670700069,((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3655000053,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.1122815611,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2144783220)89:0.0859889974,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8105746085)76:0.0916570571,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.3182395920,Drer_SELENOS.4.selenocysteine:0.2518195585)91:0.2250080331,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.2027537275,(Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:0.9395187461,((Se_user_SelS_Ostreococcus_lucimarinus:0.8355866906,Se_user_SelS_Ostreococcus_tauri:0.4258079371)100:4.4573914400,((Oalb_SELENOS.2.selenocysteine:0.7765236613,(OKI_gold_SELENOS:0.1779947159,(OSKA_gold_SELENOS:0.0000021203,OdB3_gold_SELENOS:0.0428365264)90:0.0418743889)97:0.5905997066)88:0.2526934331,Olon_SELENOS.7.selenocysteine:0.6368944460)93:1.3202493120)55:0.8436545488)45:0.4108056250)43:0.3962424899,(Blan_SELENOS.1.unaligned:1.2052853213,(((Cint_SELENOS.1.selenocysteine:0.0209328475,Crob_SELENOS.1.selenocysteine:0.0230875827)97:0.1028543175,Csav_SELENOS.4.selenocysteine:0.3780703468)97:0.3628421098,Pmam_SELENOS.2.selenocysteine:0.7170097042)100:1.2930484780)32:0.1171544899)69:0.3156917041)84:0.2758673900)84:0.0962835830)100:0.2706714896,Mmus_SELENOS.2.selenocysteine:0.1557004834)90:0.0486342562,Human_SELENOS_NP_060915.2:0.0000026994);
 
 CONSENSUS TREE
 --------------
 
 Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -5221.549091
+Log-likelihood of consensus tree: -5930.676447
 Robinson-Foulds distance between ML tree and consensus tree: 0
 
 Branches with support >0.000000% are kept (extended consensus)
@@ -130,56 +134,60 @@ Numbers in parentheses are bootstrap supports (%)
 
 +--Equus_caballus_gi_149691084_ref_XP_001490943.1
 |
-|           +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
-|        +--| (97)
-|        |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
-|        |  |     +--| (92)
-|        |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
-|        |  |  +--| (67)
-|        |  |  |  +----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
-|        |  +--| (51)
-|        |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
-|        |     |  +--| (86)
-|        |     |  |  +--Drer_SELENOS.4.selenocysteine
-|        |     +--| (48)
-|        |        |     +------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
-|        |        |  +--| (68)
-|        |        |  |  +--------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
-|        |        +--| (50)
-|        |           |                                             +-------Se_user_SelS_Ostreococcus_lucimarinus
-|        |           |             +-------------------------------| (100)
-|        |           |             |                               +--Se_user_SelS_Ostreococcus_tauri
-|        |           |     +-------| (85)
-|        |           |     |       +-------OSKA_SELENOS.1.selenocysteine
-|        |           |  +--| (45)
-|        |           |  |  |           +--Cint_SELENOS.1.selenocysteine
-|        |           |  |  |        +--| (99)
-|        |           |  |  |        |  +--Crob_SELENOS.1.selenocysteine
-|        |           |  |  |     +--| (99)
-|        |           |  |  |     |  +--Csav_SELENOS.4.selenocysteine
-|        |           |  |  +-----| (98)
-|        |           |  |        +---Pmam_SELENOS.2.selenocysteine
-|        |           +--| (30)
-|        |              +-------Blan_SELENOS.1.unaligned
-|     +--| (67)
-|     |  +--Mmus_SELENOS.2.selenocysteine
-|  +--| (83)
-|  |  +--SelS.Sus_scrofa_SelS.Sus_scrofa
-+--| (92)
-|  +--Human_SELENOS_NP_060915.2
+|     +--Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1
+|  +--| (100)
+|  |  |        +--Gallus_gallus_gi_67191194_ref_NP_001019905.1
+|  |  |     +--| (89)
+|  |  |     |  +--Taeniopygia_guttata_gi_197127963_gb_ACH44461.1
+|  |  |  +--| (76)
+|  |  |  |  +-----Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2
+|  |  +--| (84)
+|  |     |     +--Salmo_salar_gi_213511514_ref_NP_001134403.1
+|  |     |  +--| (91)
+|  |     |  |  +--Drer_SELENOS.4.selenocysteine
+|  |     +--| (84)
+|  |        |     +--------Ixodes_scapularis_gi_215500567_gb_EEC10061.1
+|  |        |  +--| (43)
+|  |        |  |  |  +------Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1
+|  |        |  |  +--| (45)
+|  |        |  |     |                                      +-----Se_user_SelS_Ostreococcus_lucimarinus
+|  |        |  |     |     +--------------------------------| (100)
+|  |        |  |     |     |                                +--Se_user_SelS_Ostreococcus_tauri
+|  |        |  |     +-----| (55)
+|  |        |  |           |           +----Oalb_SELENOS.2.selenocysteine
+|  |        |  |           |        +--| (88)
+|  |        |  |           |        |  |   +--OKI_gold_SELENOS
+|  |        |  |           |        |  +---| (97)
+|  |        |  |           |        |      |  +--OSKA_gold_SELENOS
+|  |        |  |           |        |      +--| (90)
+|  |        |  |           |        |         +--OdB3_gold_SELENOS
+|  |        |  |           +--------| (93)
+|  |        |  |                    +---Olon_SELENOS.7.selenocysteine
+|  |        +--| (69)
+|  |           |  +--------Blan_SELENOS.1.unaligned
+|  |           +--| (32)
+|  |              |              +--Cint_SELENOS.1.selenocysteine
+|  |              |           +--| (97)
+|  |              |           |  +--Crob_SELENOS.1.selenocysteine
+|  |              |        +--| (97)
+|  |              |        |  +--Csav_SELENOS.4.selenocysteine
+|  |              +--------| (100)
+|  |                       +----Pmam_SELENOS.2.selenocysteine
++--| (90)
+|  +--Mmus_SELENOS.2.selenocysteine
 |
-+--SelS.Homo_sapiens_SelS.Homo_sapiens
++--Human_SELENOS_NP_060915.2
 
 
 Consensus tree in newick format: 
 
-(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2472690206,((((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3552393110,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.0801018630,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2143267304)92:0.0913253036,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8036569271)67:0.1036763391,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.2981727903,Drer_SELENOS.4.selenocysteine:0.2343064247)86:0.2519353800,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.1950280530,Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:1.4151040363)68:0.4960778883,((((Se_user_SelS_Ostreococcus_lucimarinus:1.2876872153,Se_user_SelS_Ostreococcus_tauri:0.0000020967)100:4.9300423482,OSKA_SELENOS.1.selenocysteine:1.2625932772)85:1.3533987028,(((Cint_SELENOS.1.selenocysteine:0.0214754651,Crob_SELENOS.1.selenocysteine:0.0215385334)99:0.1120956184,Csav_SELENOS.4.selenocysteine:0.3694989756)99:0.4009205957,Pmam_SELENOS.2.selenocysteine:0.6926187070)98:0.9802415398)45:0.5291503390,Blan_SELENOS.1.unaligned:1.3219031736)30:0.1409595889)50:0.2032441298)48:0.2335174014)51:0.0819352929)97:0.2663452669,Mmus_SELENOS.2.selenocysteine:0.1218980691)67:0.0371757002,SelS.Sus_scrofa_SelS.Sus_scrofa:0.0874469605)83:0.0399478364,Human_SELENOS_NP_060915.2:0.0000020714)92:0.0249296919,SelS.Homo_sapiens_SelS.Homo_sapiens:0.0000025162);
+(Equus_caballus_gi_149691084_ref_XP_001490943.1:0.2671447903,((Ornithorhynchus_anatinus_gi_149410802_ref_XP_001507741.1:0.3656043514,(((Gallus_gallus_gi_67191194_ref_NP_001019905.1:0.1123030814,Taeniopygia_guttata_gi_197127963_gb_ACH44461.1:0.2145464815)89:0.0860363149,Xenopus_Silurana_tropicalis_gi_144922660_ref_NP_001011476.2:0.8108192102)76:0.0916523953,((Salmo_salar_gi_213511514_ref_NP_001134403.1:0.3183362589,Drer_SELENOS.4.selenocysteine:0.2518975674)91:0.2250321592,((Ixodes_scapularis_gi_215500567_gb_EEC10061.1:1.2031140175,(Hydra_magnipapillata_gi_221128897_ref_XP_002155399.1:0.9393215037,((Se_user_SelS_Ostreococcus_lucimarinus:0.8451221468,Se_user_SelS_Ostreococcus_tauri:0.4185219318)100:4.4616860385,((Oalb_SELENOS.2.selenocysteine:0.7771230369,(OKI_gold_SELENOS:0.1771926469,(OSKA_gold_SELENOS:0.0000021242,OdB3_gold_SELENOS:0.0428516379)90:0.0428319398)97:0.5906578788)88:0.2523267760,Olon_SELENOS.7.selenocysteine:0.6375127003)93:1.3221181824)55:0.8430202467)45:0.4114021457)43:0.3965604774,(Blan_SELENOS.1.unaligned:1.2058006861,(((Cint_SELENOS.1.selenocysteine:0.0209356991,Crob_SELENOS.1.selenocysteine:0.0230963057)97:0.1028724357,Csav_SELENOS.4.selenocysteine:0.3781929764)97:0.3629358392,Pmam_SELENOS.2.selenocysteine:0.7172863653)100:1.2937211448)32:0.1170987555)69:0.3157407922)84:0.2759920602)84:0.0963068694)100:0.2707534062,Mmus_SELENOS.2.selenocysteine:0.1557370987)90:0.0486504572,Human_SELENOS_NP_060915.2:0.0000022425);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOS.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0850838,0.0933262,0.0316405,0.0353629,0.00850838,0.0630152,0.0896038,0.0973145,0.00983781,0.0255251,0.0829567,0.0765754,0.0249934,0.0236639,0.051582,0.0792342,0.0335017,0.0151555,0.0287158,0.0444031}+G4{1.31062}" --length 206
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOS.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0917253,0.0924532,0.0339724,0.0366416,0.00655185,0.0613929,0.0922106,0.0982771,0.00849313,0.0296045,0.0744965,0.0778937,0.0237807,0.0274206,0.0536278,0.0754671,0.0344577,0.0145596,0.0269352,0.0400388}+G4{1.56019}" --length 218
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -194,7 +202,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Fri Oct 23 23:45:42 2026
-Total CPU time used: 2504.718007 seconds (0h:41m:44s)
-Total wall-clock time used: 495.6313809 seconds (0h:8m:15s)
+Date and time: Fri Oct 30 05:19:52 2026
+Total CPU time used: 299.950187 seconds (0h:4m:59s)
+Total wall-clock time used: 41.5649601 seconds (0h:0m:41s)
 

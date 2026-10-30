@@ -1,0 +1,245 @@
+IQ-TREE 2.3.6 built Dec 11 2024
+
+Input file name: results/trees/selenoproteins/SELENOT.trimmed
+User tree file name: results/trees/selenoproteins/lba/SELENOT.pmsf.treefile
+Type of analysis: tree reconstruction
+Random seed number: 1
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used site-specific frequency model please also cite: 
+
+Huai-Chun Wang, Edward Susko, Bui Quang Minh, and Andrew J. Roger (2018)
+Modeling site heterogeneity with posterior mean site frequency profiles
+accelerates accurate phylogenomic estimation. Syst. Biol., 67:216–235.
+https://doi.org/10.1093/sysbio/syx068
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 63 sequences with 269 amino-acid sites
+Number of constant sites: 6 (= 2.23048% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 6 (= 2.23048% of all sites)
+Number of parsimony informative sites: 244
+Number of distinct site patterns: 269
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+SSF+F+G4
+
+State frequencies: (site specific frequencies)
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 1.2356
+
+ Category  Relative_rate  Proportion
+  1         0.1815         0.2500
+  2         0.5377         0.2500
+  3         1.0302         0.2500
+  4         2.2506         0.2500
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+USER TREE
+---------
+
+Log-likelihood of the tree: -16249.9904 (s.e. 525.1984)
+Unconstrained log-likelihood (without tree): -1504.9774
+Number of free parameters (#branches + #model parameters): 143
+Akaike information criterion (AIC) score: 32785.9809
+Corrected Akaike information criterion (AICc) score: 33115.4529
+Bayesian information criterion (BIC) score: 33300.0246
+
+Total tree length (sum of branch lengths): 62.6185
+Sum of internal branch lengths: 24.3661 (38.9120% of tree length)
+
+WARNING: 1 near-zero internal branches (<0.0037) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'Se_user_SelT__5_Leishmania_major' is drawn at root
+
++--Se_user_SelT__5_Leishmania_major
+|
++**Se_user_SelT__4_Leishmania_infantum
+|
+|           +----Trypanosoma_brucei_TREU927_SelTryp_T.brucei
+|     +-----| (98)
+|     |     +-------Se_user_SelT1__1_Trypanosoma_cruzi
++-----| (99)
+      |                                +--Brugia_malayi_gi_170586710_ref_XP_001898122.1
+      |                             +--| (98)
+      |                             |  |     +---Caenorhabditis_briggsae_AF16_gi_157768314_ref_XP_001675978.1
+      |                             |  +-----| (100)
+      |                             |        +-----gi_17368490_sp_Q19892_SELT2_CAEEL_gi_17368490_sp_Q19892_SELT
+      |                         +---| (100)
+      |                         |   +-------gi_17366679_sp_Q9BN19.1_HSP6_HETGL_gi_17366679_sp_Q9BN19.1_H
+      |                 +-------| (100)
+      |                 |       |                   +**Danio_rerio_gi_168480083_ref_NP_001091957.2
+      |                 |       |              +----| (100)
+      |                 |       |              |    +**Drer_SELENOT.2.selenocysteine
+      |                 |       |           +--| (99)
+      |                 |       |           |  |           +--Se_user_SelT__14_Xenopus_tropicalis
+      |                 |       |           |  |        +--| (99)
+      |                 |       |           |  |        |  |        +**SelT.Mus_musculus_SelT.Mus_musculus
+      |                 |       |           |  |        |  |     +**| (55)
+      |                 |       |           |  |        |  |     |  +**Mmus_SELENOT.5.selenocysteine
+      |                 |       |           |  |        |  |  +--| (93)
+      |                 |       |           |  |        |  |  |  +--SelT.Sus_scrofa_SelT.Sus_scrofa
+      |                 |       |           |  |        |  +--| (96)
+      |                 |       |           |  |        |     +**Human_SELENOT_NP_057359.2
+      |                 |       |           |  |     +--| (98)
+      |                 |       |           |  |     |  +--Gallus_gallus_gi_143771645_ref_NP_001006557.3
+      |                 |       |           |  |  +--| (90)
+      |                 |       |           |  |  |  |  +--SelT.Salmo_salar_SelT.Salmo_salar
+      |                 |       |           |  |  |  +--| (100)
+      |                 |       |           |  |  |     +--Drer_SELENOT.19.selenocysteine
+      |                 |       |           |  +--| (100)
+      |                 |       |           |     +--Drer_SELENOT.10.selenocysteine
+      |                 |       |        +--| (69)
+      |                 |       |        |  |          +--Culex_quinquefasciatus_gi_170037660_ref_XP_001846674.1
+      |                 |       |        |  |       +--| (96)
+      |                 |       |        |  |       |  +--Anopheles_gambiae_str._PEST_gi_158299972_ref_XP_319979.4
+      |                 |       |        |  |    +--| (98)
+      |                 |       |        |  |    |  +---Drosophila_mojavensis_gi_195114234_ref_XP_002001672.1
+      |                 |       |        |  +----| (100)
+      |                 |       |        |       |  +--Tribolium_castaneum_gi_91083003_ref_XP_974477.1
+      |                 |       |        |       +--| (99)
+      |                 |       |        |          +-------Acyrthosiphon_pisum_gi_193591797_ref_XP_001951959.1
+      |                 |       |     +--| (91)
+      |                 |       |     |  |  +**Bflo_SELENOT.1.selenocysteine
+      |                 |       |     |  +--| (100)
+      |                 |       |     |     +--Blan_SELENOT.1.selenocysteine
+      |                 |       |  +--| (86)
+      |                 |       |  |  |                 +**Se_user_SelT__1_Ciona_intestinalis
+      |                 |       |  |  |              +--| (100)
+      |                 |       |  |  |              |  +**Crob_SELENOT.1.selenocysteine
+      |                 |       |  |  |           +--| (100)
+      |                 |       |  |  |           |  +--Cint_SELENOT.2.selenocysteine
+      |                 |       |  |  |        +--| (100)
+      |                 |       |  |  |        |  +--Csav_SELENOT.1.selenocysteine
+      |                 |       |  |  |     +--| (98)
+      |                 |       |  |  |     |  +--Pmam_SELENOT.1.selenocysteine
+      |                 |       |  |  |  +--| (93)
+      |                 |       |  |  |  |  |        +--Bsch_SELENOT.1.selenocysteine
+      |                 |       |  |  |  |  |     +--| (95)
+      |                 |       |  |  |  |  |     |  +------------Bsch_SELENOT.2.selenocysteine
+      |                 |       |  |  |  |  |  +--| (99)
+      |                 |       |  |  |  |  |  |  +--Scla_SELENOT.1.selenocysteine
+      |                 |       |  |  |  |  +--| (100)
+      |                 |       |  |  |  |     +--Hror_SELENOT.1.selenocysteine
+      |                 |       |  |  +--| (84)
+      |                 |       |  |     |     +--Pege_SELENOT.1.selenocysteine
+      |                 |       |  |     |  +--| (78)
+      |                 |       |  |     |  |  +--Tdem_SELENOT.4.selenocysteine
+      |                 |       |  |     +--| (91)
+      |                 |       |  |        +----Tdem_SELENOT.1.selenocysteine
+      |                 |       +--| (69)
+      |                 |          |                  +--Bsty_SELENOT.2.unaligned
+      |                 |          |               +--| (92)
+      |                 |          |               |  +--Mery_SELENOT.2.selenocysteine
+      |                 |          |            +--| (92)
+      |                 |          |            |  +--Olon_SELENOT.1.selenocysteine
+      |                 |          |         +--| (91)
+      |                 |          |         |  +--Olon_SELENOT.2.selenocysteine
+      |                 |          |  +------| (100)
+      |                 |          |  |      |     +**Oalb_SELENOT.2.selenocysteine
+      |                 |          |  |      |  +--| (100)
+      |                 |          |  |      |  |  +--Oalb_SELENOT.3.unaligned
+      |                 |          |  |      +--| (72)
+      |                 |          |  |         |  +--Ovan_SELENOT.2.selenocysteine
+      |                 |          |  |         +--| (49)
+      |                 |          |  |            |   +--OKI_gold_SELENOT
+      |                 |          |  |            +---| (99)
+      |                 |          |  |                |  +--OSKA_gold_SELENOT
+      |                 |          |  |                +--| (98)
+      |                 |          |  |                   +--OdB3_gold_SELENOT
+      |                 |          +--| (66)
+      |                 |             +--------------Fbor_SELENOT.2.selenocysteine
+      |              +--| (66)
+      |              |  |                 +--Ricinus_communis_gi_223528218_gb_EEF30277.1
+      |              |  |        +--------| (100)
+      |              |  |        |        |  +--Arabidopsis_thaliana_gi_79331322_ref_NP_001032096.1
+      |              |  |        |        +--| (100)
+      |              |  |        |           +--Arabidopsis_thaliana_gi_51970218_dbj_BAD43801.1
+      |              |  |     +--| (74)
+      |              |  |     |  +----------Chlamydomonas_reinhardtii_gi_159463168_ref_XP_001689814.1
+      |              |  |  +--| (73)
+      |              |  |  |  |    +-----------------------Se_user_SelT__12_Thalassiosira_pseudonana
+      |              |  |  |  +----| (83)
+      |              |  |  |       +--------------selT_aureococcus_anophagefferens_students_08_09_selT_aureoco
+      |              |  +--| (80)
+      |              |     |               +----Se_user_SelT__6_Ostreococcus_lucimarinus
+      |              |     |  +------------| (100)
+      |              |     |  |            +------Se_user_SelT__7_Ostreococcus
+      |              |     +--| (79)
+      |              |        |   +-------Se_user_SelT__11_Tetrahymena_thermophila
+      |              |        +---| (93)
+      |              |            |             +-----Se_user_SelT2_Paramecium_tetraurelia
+      |              |            +-------------| (100)
+      |              |                          +--------Se_user_SelT1_Paramecium_tetraurelia
+      |           +--| (35)
+      |           |  +--------------------Tetrahymena_thermophila_SB210_gi_118398008_ref_XP_001031334.
+      +-----------| (100)
+                  |            +----------------------Cryptosporidium_hominis_TU502_gi_67585275_ref_XP_665097.1
+                  +------------| (97)
+                               +-------------------------SelT_eimeria_tenella_08_09_1163_SelT_eimeria_tenella_08_09_1
+
+Tree in newick format:
+
+(Se_user_SelT__5_Leishmania_major:0.0815600125,Se_user_SelT__4_Leishmania_infantum:0.0000026526,((Trypanosoma_brucei_TREU927_SelTryp_T.brucei:0.6530932401,Se_user_SelT1__1_Trypanosoma_cruzi:1.1364416018)98:0.8351024889,((((((Brugia_malayi_gi_170586710_ref_XP_001898122.1:0.5112937477,(Caenorhabditis_briggsae_AF16_gi_157768314_ref_XP_001675978.1:0.5390924811,gi_17368490_sp_Q19892_SELT2_CAEEL_gi_17368490_sp_Q19892_SELT:0.9086789755)100:0.8931975274)98:0.3150359758,gi_17366679_sp_Q9BN19.1_HSP6_HETGL_gi_17366679_sp_Q9BN19.1_H:1.0708868957)100:0.5565577315,((((((Danio_rerio_gi_168480083_ref_NP_001091957.2:0.0000010000,Drer_SELENOT.2.selenocysteine:0.0000010000)100:0.7397767651,((((Se_user_SelT__14_Xenopus_tropicalis:0.1780252533,(((SelT.Mus_musculus_SelT.Mus_musculus:0.0000010000,Mmus_SELENOT.5.selenocysteine:0.0000010000)55:0.0000010000,SelT.Sus_scrofa_SelT.Sus_scrofa:0.0225916323)93:0.0058065009,Human_SELENOT_NP_057359.2:0.0000024016)96:0.0428929370)99:0.0520704238,Gallus_gallus_gi_143771645_ref_NP_001006557.3:0.1027334600)98:0.0728377806,(SelT.Salmo_salar_SelT.Salmo_salar:0.0556676230,Drer_SELENOT.19.selenocysteine:0.1101927569)100:0.1795880902)90:0.0565418772,Drer_SELENOT.10.selenocysteine:0.2638018130)100:0.3632989071)99:0.4071944683,(((Culex_quinquefasciatus_gi_170037660_ref_XP_001846674.1:0.1123706392,Anopheles_gambiae_str._PEST_gi_158299972_ref_XP_319979.4:0.3347664111)96:0.2361934594,Drosophila_mojavensis_gi_195114234_ref_XP_002001672.1:0.5892445605)98:0.2701953241,(Tribolium_castaneum_gi_91083003_ref_XP_974477.1:0.5123243394,Acyrthosiphon_pisum_gi_193591797_ref_XP_001951959.1:1.0509591740)99:0.1457283035)100:0.7654291339)69:0.0387252801,(Bflo_SELENOT.1.selenocysteine:0.0000028212,Blan_SELENOT.1.selenocysteine:0.0369205517)100:0.3815704181)91:0.2399435322,((((((Se_user_SelT__1_Ciona_intestinalis:0.0000010000,Crob_SELENOT.1.selenocysteine:0.0000010000)100:0.0318587132,Cint_SELENOT.2.selenocysteine:0.0093816681)100:0.1660016967,Csav_SELENOT.1.selenocysteine:0.1310855649)100:0.1211553082,Pmam_SELENOT.1.selenocysteine:0.2467602348)98:0.1224719574,(((Bsch_SELENOT.1.selenocysteine:0.2131981107,Bsch_SELENOT.2.selenocysteine:1.7026012973)95:0.0703972039,Scla_SELENOT.1.selenocysteine:0.0886889876)99:0.1615786730,Hror_SELENOT.1.selenocysteine:0.2707795725)100:0.3291016052)93:0.1345240142,((Pege_SELENOT.1.selenocysteine:0.3132729784,Tdem_SELENOT.4.selenocysteine:0.4656794490)78:0.1150663800,Tdem_SELENOT.1.selenocysteine:0.6788730010)91:0.2179947251)84:0.2258657178)86:0.2131000223,(((((Bsty_SELENOT.2.unaligned:0.4074074797,Mery_SELENOT.2.selenocysteine:0.1302671172)92:0.2408844630,Olon_SELENOT.1.selenocysteine:0.2608785777)92:0.2130493070,Olon_SELENOT.2.selenocysteine:0.1566994578)91:0.2371753686,((Oalb_SELENOT.2.selenocysteine:0.0000025628,Oalb_SELENOT.3.unaligned:0.1259467033)100:0.1279861057,(Ovan_SELENOT.2.selenocysteine:0.2590000303,(OKI_gold_SELENOT:0.0445190560,(OSKA_gold_SELENOT:0.0065427422,OdB3_gold_SELENOT:0.0110184423)98:0.0887938887)99:0.6431665712)49:0.0765912248)72:0.2989426072)100:0.9470735392,Fbor_SELENOT.2.selenocysteine:2.0774581799)66:0.1952809566)69:0.1131772032)100:1.1614979107,((((Ricinus_communis_gi_223528218_gb_EEF30277.1:0.4331135888,(Arabidopsis_thaliana_gi_79331322_ref_NP_001032096.1:0.1163644256,Arabidopsis_thaliana_gi_51970218_dbj_BAD43801.1:0.1540966656)100:0.1305341633)100:1.2622152476,Chlamydomonas_reinhardtii_gi_159463168_ref_XP_001689814.1:1.5273509338)74:0.3484699193,(Se_user_SelT__12_Thalassiosira_pseudonana:3.2120901281,selT_aureococcus_anophagefferens_students_08_09_selT_aureoco:2.0259092509)83:0.6888155806)73:0.2785127903,((Se_user_SelT__6_Ostreococcus_lucimarinus:0.7091690741,Se_user_SelT__7_Ostreococcus:0.9687767789)100:1.7728482820,(Se_user_SelT__11_Tetrahymena_thermophila:1.1299925812,(Se_user_SelT2_Paramecium_tetraurelia:0.8552372183,Se_user_SelT1_Paramecium_tetraurelia:1.2242233171)100:1.8476701030)93:0.5596458085)79:0.1980343729)80:0.3956900745)66:0.3369912057,Tetrahymena_thermophila_SB210_gi_118398008_ref_XP_001031334.:2.7525555684)35:0.1452624127,(Cryptosporidium_hominis_TU502_gi_67585275_ref_XP_665097.1:3.0200737504,SelT_eimeria_tenella_08_09_1163_SelT_eimeria_tenella_08_09_1:3.4810890161)97:1.7364094743)100:1.6870302794)99:0.8992325774);
+
+
+USER TREES
+----------
+
+See results/trees/selenoproteins/lba/SELENOT.pmsf.hypotheses_au.trees for trees with branch lengths.
+
+Tree      logL    deltaL  bp-RELL    p-KH     p-SH       c-ELW       p-AU
+-------------------------------------------------------------------------
+  1 -16249.98966       0   0.811 +  0.826 +      1 +     0.802 +    0.858 + 
+  2 -16255.20751  5.2178   0.184 +  0.174 +  0.453 +     0.193 +    0.183 + 
+  3 -16280.86845  30.879  0.0044 - 0.0124 - 0.0147 -   0.00516 -  0.00688 - 
+
+deltaL  : logL difference from the maximal logl in the set.
+bp-RELL : bootstrap proportion using RELL method (Kishino et al. 1990).
+p-KH    : p-value of one sided Kishino-Hasegawa test (1989).
+p-SH    : p-value of Shimodaira-Hasegawa test (2000).
+c-ELW   : Expected Likelihood Weight (Strimmer & Rambaut 2002).
+p-AU    : p-value of approximately unbiased (AU) test (Shimodaira, 2002).
+
+Plus signs denote the 95% confidence sets.
+Minus signs denote significant exclusion.
+All tests performed 10000 resamplings using the RELL method.
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t results/trees/selenoproteins/lba/SELENOT.pmsf.hypotheses_au.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0769088,0.0347399,0.0484343,0.0324018,0.0157013,0.0505219,0.0516909,0.068642,0.0135302,0.0752387,0.0992875,0.0474323,0.0381635,0.0617948,0.0497704,0.0724831,0.0448437,0.0142817,0.037412,0.0667214}+G4{1.23564}" --length 269
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s results/trees/selenoproteins/SELENOT.trimmed --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s results/trees/selenoproteins/SELENOT.trimmed --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Fri Oct 30 07:02:24 2026
+Total CPU time used: 326 seconds (0h:5m:26s)
+Total wall-clock time used: 61.1 seconds (0h:1m:1s)
+
