@@ -508,4 +508,8 @@ foreign-looking sequences; one HGT screen, with no false positive allowed).
    expected to match its genome in composition; its evidence is its presence at the same place of the tree in
    several species and assemblies; the column of foreign sequences shows the donor lineage, to compare between
    candidates (an ancestral symbiont predicts one donor lineage; bacteria taken up with food predict several). Outputs
-   `results/tables/stage2_census_loci.tsv`, `stage2_census.{tsv,md}`, `stage2_hgt_screen.tsv`.
+   `results/tables/stage2_census_loci.tsv`, `stage2_census.{tsv,md}`, `stage2_hgt_screen.tsv`. Each locus is also
+   assigned to the O. dioica gene of its clade (gold-standard gene, lifted model in KUM, AOM and Bar2, or the
+   gold-standard genes of the smallest appendicularian clade holding it in the round 2 tree), and the loci of the
+   step 4 screens that the final run did not predict are added without gene model (SELENOK of O. longicauda,
+   O. albicans, O. vanhoeffeni and M. erythrocephalus, for example): `stage2_census_genes.{tsv,md}` (Table CENSUS).

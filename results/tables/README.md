@@ -25,6 +25,7 @@ in `work/`.
 | `stage2_census_contigs.tsv`, `stage2_census_genomes.tsv` | `make census-contigs` | composition (GC, tetranucleotides) and Tiara classes of the contigs with predictions; genome summaries |
 | `stage2_census_loci.tsv` | `make census` | selenocysteine loci of the appendicularian genomes, with the decision of the census and its flags |
 | `stage2_census.{tsv,md}` | `make census` | selenoprotein genes per family and genome: appendicularians (census) and other genomes (stage 1) |
+| `stage2_census_genes.{tsv,md}` | `make census` | Table CENSUS: loci per O. dioica gene of their clade and appendicularian genome, with the loci found only by the step 4 screens |
 | `stage2_hgt_screen.tsv` | `make census` | appendicularian sequences with bacterial, archaeal or fungal nearest relatives, with contig checks and status |
 | `stage2_selenoprotein_table.{tsv,md}` | `make selenoprotein-table` | Table SELENO-ORTHOLOGY: best hits, clade, sister group and nearest vertebrate genes of each gold-standard gene |
 | `stage2_selenoprotein_orthology.{tsv,md}` | `make selenoprotein-orthology` | orthology summary of each appendicularian selenoprotein clade (first pass: stage 1 predictions; round 2: stage 2 final run and gold-standard proteins) |
