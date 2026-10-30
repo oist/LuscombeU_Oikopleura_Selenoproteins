@@ -1549,3 +1549,21 @@ no earlier step waits for them.
     -1.72 kcal/mol, no conserved stem-loop.
   Reading (inference): no SECIS; the TGA most likely ends a truncated protein (...KTD) of the intron-retaining
   transcripts; SELENOI stays "candidate, not counted". To run on Deigo for the tables: make selenoi-secis.
+- .gitignore (2026-10-31, Charles: "pay attention again to .gitignore for FASTA files"): the exceptions for
+  results/sequences/ came before the global *.fa, *.sto patterns, which therefore won; moved after them (FASTA,
+  protein FASTA, Stockholm and TSV files of results/sequences are tracked).
+- SELENOK models (2026-10-31). make selenok-regions (commit d5ea80b). exonerate protein2genome found two exons in
+  O. albicans and O. longicauda and nothing in O. vanhoeffeni and M. erythrocephalus; tblastn of the O. dioica
+  protein finds only short pieces (the C-terminal half is Gly-rich). region_gene_models.py now uses genewise (best of
+  the three gold-standard queries), joins the last exon to the exon of the screen codon (donor GT/GC/GA near the end
+  of the model, acceptor AG within 400 nt upstream of the TGA, codon in frame, best global alignment score) and takes
+  the start codon at most 10 codons upstream (or among the first 2 codons). Run here on the regions (O. longicauda
+  offset corrected to the codon): O. longicauda 97 aa, three exons (introns of 94 and 48 nt), TGA at SCLD01109698.1
+  5753-5755 (-), the codon given by the comparative screen as partner of M. erythrocephalus cand788, 76 nt before
+  the SECIS of the scan (39.0 bits); O. albicans 98 aa, three exons, TGA at the screen codon; O. vanhoeffeni 66 aa,
+  N-terminus incomplete (first exon not found), TGA at the screen codon; M. erythrocephalus 21-aa C-terminal fragment
+  (held out). Identity to the O. dioica protein 51-55%. curation/selenok_loci.tsv: O. longicauda position now the
+  codon (5753). New target stage2-release-profiles: the final profiles plus these models (M. erythrocephalus left
+  out by the held-out rule of build_profiles.py), as a separate build ("release") for the deposit, so that the final
+  run stays tied to the final profiles; test: make selenok-diagnose SELENOK_DIAG_BUILDS="final release" (held-out
+  M. erythrocephalus, B. stygius and F. borealis are the real test).

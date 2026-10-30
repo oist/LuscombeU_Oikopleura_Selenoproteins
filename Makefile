@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models selenoi-secis stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -372,12 +372,22 @@ selenok-regions:
 	@mkdir -p results/sequences
 	python3 stage2/extract_regions.py --loci curation/selenok_loci.tsv --out results/sequences/selenok_regions.fa
 
-# Gene models of these SELENOK genes: exonerate protein2genome of the O. dioica gold-standard SELENOK proteins, frame
-# extended through TGA (reads results/sequences/selenok_regions.fa; seconds)
+# Gene models of these SELENOK genes: genewise of the O. dioica gold-standard SELENOK proteins, joined to the exon of
+# the screen codon or extended through TGA (reads results/sequences/selenok_regions.fa; seconds)
 selenok-models:
 	python3 stage2/region_gene_models.py --regions results/sequences/selenok_regions.fa --family SELENOK \
 	  --queries curation/gold_standard/OKI.proteins.faa curation/gold_standard/OSKA.proteins.faa curation/gold_standard/OdB3.proteins.faa \
 	  --faa results/sequences/selenok_models.faa --table results/tables/stage2_selenok_models.tsv
+
+# Release profiles for the deposit: the final profiles plus the SELENOK models of O. longicauda, O. albicans and
+# O. vanhoeffeni (make selenok-models; the M. erythrocephalus model is left out, held-out genome), built as the final
+# ones (Selenoprofiles in the image; minutes); test with make selenok-diagnose SELENOK_DIAG_BUILDS="final release"
+stage2-release-profiles:
+	python3 stage2/build_profiles.py --stage1-genomes OKI OSKA OdB3 Olon Oalb Ovan --validated-genomes Olon Oalb Ovan \
+	    --candidates curation/candidates.faa --curated curation/machinery_proteins.faa results/sequences/selenok_models.faa \
+	    --out $(STAGE2_PROFILES)/release --archive work/stage2/appendicularia_selenoprofiles_release.tar.gz
+	awk 'NR == 1 {print "build\t" $$0} NR > 1 {print "release\t" $$0}' $(STAGE2_PROFILES)/release/members.tsv \
+	    > results/tables/stage2_profile_members_release.tsv
 
 # SELENOI regions for a wider SECIS search (genome regions around the gene in the O. dioica assemblies, the other
 # appendicularians, tunicates, amphioxus and vertebrates, and the O. dioica transcripts; a few minutes, reads the
