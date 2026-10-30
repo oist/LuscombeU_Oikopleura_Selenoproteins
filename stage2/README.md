@@ -499,6 +499,11 @@ foreign-looking sequences; one HGT screen, with no false positive allowed).
    relatives in the round 2 ML and PMSF trees, no SECIS hit, codon near the contig end, miniprot only). The counts
    are compared with the other tunicates, the cephalochordates and the vertebrates (stage 1 codons, same locus
    definition, no screen). The strict HGT screen lists every appendicularian leaf of the round 2 trees whose nearest
-   relatives are all bacterial, archaeal or fungal, with its contig checks and a status (contamination, not testable
-   without intron, placement not stable under PMSF, or candidate for the tests). Outputs
+   relatives outside the appendicularians, or outside the tunicates (a transfer before the split of the tunicate
+   lineages, like that of cellulose synthase), are all bacterial, archaeal or fungal, with its contig checks and a
+   status: contamination (Tiara, composition), other family (best human hit elsewhere: the tree lacks the animal
+   members of its family, as for the thioredoxins found by the DIO profile), family not confirmed (no human hit),
+   placement not stable under PMSF, candidate without intron, or candidate for the tests. An old transfer is
+   expected to match its genome in composition; its evidence is its presence at the same place of the tree in
+   several species and assemblies. Outputs
    `results/tables/stage2_census_loci.tsv`, `stage2_census.{tsv,md}`, `stage2_hgt_screen.tsv`.

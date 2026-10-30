@@ -1350,3 +1350,16 @@ no earlier step waits for them.
   without intron, placement not stable under PMSF, or candidate). Tested on synthetic loci built from the round 2
   trees: the DIO cysteine clade of B. stygius, F. borealis and M. erythrocephalus (nearest relatives two bacterial
   DIO, 88%) and the cysteine SELENOO near bacteria appear in the screen as expected.
+- Step 9, HGT screen revised (2026-10-30, question of Charles: what if a transfer is 500 My old, like that of
+  cellulose synthase?). An old transfer would match its genome in composition (amelioration) and lie on a contig that
+  Tiara calls eukaryotic, so the contig checks do not exclude it; but the first screen looked only at the nearest
+  relatives outside the appendicularians, and missed a transfer older than the split from the other tunicates (other
+  tunicates in between). The screen now also reads the nearest relatives outside the tunicates (two levels), and
+  records the genomes of the appendicularian clade; an intronless candidate needs presence in other assemblies or
+  species instead of being "not testable". First case found by the tunicate level, in the round 2 DIO tree: a clade
+  of 41 appendicularian and 4 other tunicate (Pegea, Styela, Salpa, Thalia) sequences next to two flavobacterial
+  sequences of the DIO profile (88 ML, 99 PMSF). These are thioredoxins (WCGPC/WCPPC; best human hit TXN, 63 to 100
+  bits, and TXNL1, NHLRC2, DNAJC10): the DIO tree holds no animal thioredoxin, so their nearest relatives are the
+  bacterial thioredoxin-like sequences of the profile. Status added: "other family" (best human hit outside the
+  family of the tree) and "family not confirmed" (no human hit although the family has human members); a test of an
+  old transfer needs a tree of the right family with broad eukaryotic and bacterial sampling.
