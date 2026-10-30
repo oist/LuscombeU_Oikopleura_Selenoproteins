@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Is a machinery gene absent from a genome, or only too divergent for its profile?
+"""Is a machinery gene (or a selenoprotein gene) absent from a genome, or only too divergent for its profile?
 
 References: the sequences of the gene's Selenoprofiles profile and the stage 1 predictions of the gene (labels
 "homologue" or "selenocysteine") in all genomes. Outgroups: proteins of related families that a search can confuse
@@ -16,6 +16,10 @@ gene themselves, scored the same way against the references of the other genomes
 A candidate is "supported" when its margin reaches --min-margin bits, "ambiguous" (to be resolved by phylogeny) when it
 reaches --ambiguous-margin bits, and a "related protein" otherwise. Divergent but genuine genes can fall in the
 ambiguous range: for PSTK, the stage 1 prediction of O. vanhoeffeni scores a margin of about 11 bits.
+Options for selenoprotein families (make selenoprotein-absence): --labels selects the predictions used as references
+and queries (for example only "selenocysteine", the selenoprotein form); --no-profile leaves out the profile sequences
+(a profile can mix paralogs, such as MSRB1 with MSRB2 and MSRB3); --outgroup-human adds the human RefSeq proteins of
+named genes (data/genomes/Hsap, protein_id -> gene from the RefSeq annotation) as outgroups.
 Outputs in --out: <gene>.candidates.tsv (one row per candidate), <gene>.controls.tsv, <gene>.summary.tsv (per target).
 """
 import argparse, collections, glob, gzip, os, re, shutil, subprocess, tempfile
@@ -62,6 +66,11 @@ def main():
     ap.add_argument("--outgroup-pattern", default="", help="regular expression on UniRef50 descriptions")
     ap.add_argument("--outgroup-exclude", default="", help="regular expression of descriptions to exclude")
     ap.add_argument("--outgroup-faa", default="")
+    ap.add_argument("--outgroup-human", default="", help="comma-separated human genes whose RefSeq proteins are outgroups")
+    ap.add_argument("--human", default="data/genomes/Hsap")
+    ap.add_argument("--labels", nargs="+", default=["homologue", "selenocysteine"],
+                    help="labels of the predictions used as references and queries")
+    ap.add_argument("--no-profile", action="store_true", help="leave the profile sequences out of the references")
     ap.add_argument("--targets", nargs="+", default=APPENDICULARIANS)
     ap.add_argument("--data", default="data")
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
@@ -76,19 +85,30 @@ def main():
     sp = f"{a.data}/references/selenoprofiles_data"
     # references and stage 1 predictions of the gene
     refs, preds = [], []
-    for n, s in read_fasta(f"{sp}/selenoprotein_profiles/{a.gene}.fa"):
+    profile = f"{sp}/selenoprotein_profiles/{a.gene}.fa"
+    if not a.no_profile and not os.path.exists(profile): print(f"WARNING: {profile} not found; no profile references")
+    for n, s in ([] if a.no_profile or not os.path.exists(profile) else read_fasta(profile)):
         refs.append((f"REF|profile|{n.split()[0]}", s.replace("-", "")))
     for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
         g = os.path.basename(faa).split(".")[0]
         for n, s in read_fasta(faa):
             pid = n.split()[0]
-            if pid.split(".")[0] == a.gene and pid.rsplit(".", 1)[1] in ("homologue", "selenocysteine"):
+            if pid.split(".")[0] == a.gene and pid.rsplit(".", 1)[1] in a.labels:
                 refs.append((f"REF|{g}|{pid}", s.replace("*", ""))); preds.append((f"CTRL|{g}|{pid}", s.replace("*", "")))
+    if not preds: raise SystemExit(f"{a.gene}: no stage 1 prediction labelled {' or '.join(a.labels)} in {a.stage1}")
     outgroups = []
     if a.outgroup_pattern:
         for n, s in read_fasta(f"{sp}/uniref50_seleno_sim.fasta"):
             if re.search(a.outgroup_pattern, n) and not (a.outgroup_exclude and re.search(a.outgroup_exclude, n)):
                 outgroups.append((f"OUT|uniref|{n.split()[0]}", s))
+    if a.outgroup_human:
+        wanted, gene_of = set(a.outgroup_human.split(",")), {}
+        with gzip.open(f"{a.human}/annotation.gff3.gz", "rt") as fh:
+            for l in fh:
+                m, g = re.search(r"protein_id=([^;\n]+)", l), re.search(r"gene=([^;\n]+)", l)
+                if m and g and g.group(1) in wanted: gene_of[m.group(1)] = g.group(1)
+        for n, s in read_fasta(f"{a.human}/protein.faa.gz"):
+            if n.split()[0] in gene_of: outgroups.append((f"OUT|human|{gene_of[n.split()[0]]}_{n.split()[0]}", s))
     if a.outgroup_faa:
         for n, s in read_fasta(a.outgroup_faa):
             f = n.split("|")

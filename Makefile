@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -281,6 +281,23 @@ selenoprotein-au:
 # First-pass orthology of each appendicularian clade, from the trees and best hits (seconds; reads results/ only)
 selenoprotein-orthology:
 	python3 stage2/selenoprotein_orthology.py $(if $(GOLD),,--annotation results/tables/stage1_annotation.tsv)
+
+# Absence tests of the selenoprotein families found in other tunicates but in no appendicularian (step 9; census):
+# the selenocysteine forms predicted in stage 1 (other tunicates, cephalochordates, vertebrates; and F. borealis for
+# SELENOL) searched in the appendicularian genomes and transcriptomes (tblastn), each candidate compared with them and
+# with human proteins of related families (outgroups). MSRB: MSRB1-type references only (selenocysteine forms, no
+# profile), against MSRB2 and MSRB3, since every appendicularian has cysteine MSRB of the MSRB2/MSRB3 type.
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=1-00:00:00 scripts/run_in_container.sh make selenoprotein-absence
+SELENO_ABSENT = SELENON SELENOH MSRB FrnE SELENOL SELENOI
+selenoprotein-absence:
+	python3 stage2/machinery_absence.py --gene SELENON --labels selenocysteine --outgroup-human CALM1 --out work/stage2/selenoprotein_absence
+	python3 stage2/machinery_absence.py --gene SELENOH --labels selenocysteine --outgroup-human SELENOW,SELENOV,SELENOT --out work/stage2/selenoprotein_absence
+	python3 stage2/machinery_absence.py --gene MSRB --labels selenocysteine --no-profile --outgroup-human MSRB2,MSRB3 --out work/stage2/selenoprotein_absence
+	python3 stage2/machinery_absence.py --gene FrnE --labels selenocysteine --outgroup-human GSTK1 --out work/stage2/selenoprotein_absence
+	python3 stage2/machinery_absence.py --gene SELENOL --labels selenocysteine --outgroup-human TXN --out work/stage2/selenoprotein_absence
+	python3 stage2/machinery_absence.py --gene SELENOI --labels selenocysteine --outgroup-human CEPT1,CHPT1 --out work/stage2/selenoprotein_absence
+	for g in $(SELENO_ABSENT); do for f in summary candidates controls; do \
+	  cp work/stage2/selenoprotein_absence/$$g.$$f.tsv results/tables/stage2_absence_$$g.$$f.tsv; done; done
 
 # Table SELENO-ORTHOLOGY of the manuscript (round 2: gold-standard genes), after selenoprotein-orthology (seconds)
 selenoprotein-table:

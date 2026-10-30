@@ -1442,3 +1442,11 @@ no earlier step waits for them.
   as for the machinery). Results and Methods written into the manuscript (section "The selenoproteomes of
   appendicularians", Tables CENSUS and CENSUS-FAMILIES; Methods "Census of the selenoprotein genes"). Next: absence
   tests for SELENON, SELENOH, MSRB, FrnE, SELENOL and SELENOI if wanted; step 10 (SECIS and operons).
+- Step 9 follow-up 1, absence tests (2026-10-30, Charles: "one by one"). Families found in other tunicates but in no
+  appendicularian: SELENON, SELENOH, MSRB, FrnE, SELENOL, SELENOI. In the final run: MSRB cysteine forms in every
+  appendicularian, best human hit MSRB3 (or MSRB2), never MSRB1; SELENON only a cysteine form in F. borealis; FrnE
+  fragments ("unaligned") in O. dioica, B. stygius, M. erythrocephalus and cysteine forms in F. borealis; SELENOL only
+  F. borealis; SELENOH and SELENOI nothing. machinery_absence.py generalised (--labels, --no-profile,
+  --outgroup-human); make selenoprotein-absence: selenocysteine forms of stage 1 as queries and references,
+  outgroups CALM1 (SELENON EF-hand), SELENOW/SELENOV/SELENOT (SELENOH), MSRB2/MSRB3 (MSRB, references MSRB1-type only),
+  GSTK1 (FrnE), TXN (SELENOL), CEPT1/CHPT1 (SELENOI). To run on Deigo.

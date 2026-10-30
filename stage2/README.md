@@ -366,6 +366,12 @@ not in the trees.
 6. `make selenoprotein-table`: `selenoprotein_table.py`, Table SELENO-ORTHOLOGY of the manuscript (one row per
    gold-standard gene: best human hits of the predictions it replaced, its appendicularian clade, sister group and
    nearest vertebrate genes). Outputs `results/tables/stage2_selenoprotein_table.{tsv,md}`.
+7. `make selenoprotein-absence` (Deigo): `machinery_absence.py` for the families found in other tunicates but in no
+   appendicularian (SELENON, SELENOH, MSRB, FrnE, SELENOL, SELENOI): the selenocysteine forms of stage 1 (other
+   genomes) searched in each appendicularian genome and transcriptome by tblastn, each candidate scored against them
+   and against human proteins of related families (CALM1 for the EF-hand of SELENON; SELENOW, SELENOV, SELENOT for
+   SELENOH; MSRB2 and MSRB3 for MSRB, whose references are the MSRB1-type selenocysteine forms only; GSTK1 for FrnE;
+   TXN for SELENOL; CEPT1 and CHPT1 for SELENOI). Outputs `results/tables/stage2_absence_<family>.{summary,candidates,controls}.tsv`.
 
 SELENOK, missed by the stage 1 settings in every appendicularian genome, is in the round 2 trees (stage 2 final run
 and gold-standard proteins).
