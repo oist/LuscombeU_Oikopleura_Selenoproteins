@@ -5,9 +5,10 @@ A. Schematic of an operon (after Ganot et al. 2004): a polycistronic pre-mRNA re
    (SL) trans-splicing at the 5' end of each downstream mRNA and by cleavage and polyadenylation of the upstream one,
    23 to 30 nt before the next trans-splice site; a selenoprotein mRNA must hold its SECIS element in that 3' UTR.
 B. Each selenoprotein gene followed by another gene on the same strand within --max-distance nt, in each assembly
-   (results/tables/stage2_operons.tsv): from its stop codon, its SECIS element (box), the trans-splice sites of the
-   next gene found in transcripts (triangles) and the start of the next coding sequence (bar); sorted by that
-   distance.
+   (results/tables/stage2_operons.tsv), aligned on its stop codon: the end of its coding sequence, its 3' UTR in its
+   transcripts, its SECIS element (stem-loop), the window where its mRNA should end (23-30 nt before the first
+   trans-splice site of the next gene), the trans-splice sites of the next gene (SL flags) and the next coding
+   sequence; sorted by the distance to the next coding sequence.
 C. Fraction of the loci in operons and, among them, fraction first in their operon: selenoprotein genes against all
    annotated loci (results/tables/stage2_operons_summary.tsv), with Fisher's exact test.
 Outputs: <out>.pdf, <out>.svg and <out>.png.
@@ -63,7 +64,26 @@ def panel_a(ax):
             fontsize=FS - 1, ha="left")
 
 
+def secis_glyph(ax, s0, s1, y, color, h=0.42):
+    """SECIS element as a stem-loop drawn over [s0, s1]: two stems joined by a loop."""
+    m, w = (s0 + s1) / 2, (s1 - s0)
+    xs = [s0, s0 + 0.3 * w, s0 + 0.3 * w, m, s1 - 0.3 * w, s1 - 0.3 * w, s1]
+    ys = [y, y, y + 0.55 * h, y + h, y + 0.55 * h, y, y]
+    ax.plot(xs, ys, color=color, lw=1.4, solid_capstyle="round", solid_joinstyle="round")
+
+
+def gene_arrow(ax, x0, x1, y, fc, ec="black", h=0.30):
+    """A coding sequence drawn as an arrow from x0 to x1 (pointing right)."""
+    tip = min(14, (x1 - x0) * 0.5)
+    ax.add_patch(Polygon([[x0, y - h], [x1 - tip, y - h], [x1, y], [x1 - tip, y + h], [x0, y + h]], closed=True,
+                         fc=fc, ec=ec, lw=0.5))
+
+
 def panel_b(ax, rows, max_d):
+    """One row per selenoprotein gene followed by a gene on the same strand: end of its coding sequence (arrow, left of
+    0), the 3' UTR of its gold-standard model (black line; transcripts can run beyond the end of the mRNA), its SECIS element (stem-loop), the window where its mRNA
+    should end (23-30 nt before the first trans-splice site of the next gene, shaded), the trans-splice sites of the
+    next gene (SL flags: its mRNA starts there) and the next coding sequence (grey arrow)."""
     sel = []
     for r in rows:
         if r["next_gene_same_strand_after_stop"] == "" or not r["secis_after_stop"]: continue
@@ -71,30 +91,47 @@ def panel_b(ax, rows, max_d):
         if d > max_d: continue
         s0, s1 = map(int, r["secis_after_stop"].split("-"))
         sl = [int(x.rstrip("*")) for x in r["next_gene_sl_sites_after_stop"].split(",") if x]
-        sel.append((d, r["gene"], r["genome"], s0, s1, sorted(set(sl)), r["secis_note"]))
+        utr = int(r["utr3_length"]) if r["utr3_length"] not in ("", "0") else None
+        sel.append((d, r["gene"], r["genome"], s0, s1, sorted(set(sl)), utr))
     sel.sort(key=lambda x: (x[0], x[1]))
-    for i, (d, gene, g, s0, s1, sl, note) in enumerate(sel):
+    right = max_d * 1.08
+    for i, (d, gene, g, s0, s1, sl, utr) in enumerate(sel):
         y = len(sel) - i
-        ax.plot([0, d], [y, y], color=GREY, lw=0.8)
-        ax.add_patch(Rectangle((d, y - 0.32), max_d * 0.025, 0.64, fc="black"))
-        if s1 <= d:
-            ax.add_patch(Rectangle((s0, y - 0.28), s1 - s0, 0.56, fc=COL[g], ec="none"))
-        for x in sl:
-            ax.add_patch(Polygon([[x, y + 0.05], [x - 9, y + 0.45], [x + 9, y + 0.45]], closed=True, fc="black"))
+        gene_arrow(ax, -70, 0, y, COL[g], h=0.26)                     # end of the selenoprotein coding sequence
+        ax.plot([0, d], [y, y], color="#cfcfcf", lw=0.8)              # genome between the two coding sequences
+        if utr: ax.plot([0, min(utr, d)], [y, y], color="black", lw=1.6, solid_capstyle="butt")
+        if sl:
+            f = min(sl)
+            ax.add_patch(Rectangle((f - 30, y - 0.33), 7, 0.66, fc="#fde0b0", ec="none"))
+            for x in sl:                                               # SL flags of the next mRNA
+                ax.plot([x, x], [y, y + 0.45], color="black", lw=0.8)
+                ax.add_patch(Rectangle((x, y + 0.30), 14, 0.15, fc="black"))
+        if s1 <= d: secis_glyph(ax, s0, s1, y, COL[g])
+        gene_arrow(ax, d, min(d + 60, right), y, "#d0d0d0")           # next coding sequence
         label = f"{gene} ({NAME[g]})" + (" *" if s1 > d else "")
-        ax.text(-12, y, label, ha="right", va="center", fontsize=FS - 1)
+        ax.text(-80, y, label, ha="right", va="center", fontsize=FS - 1)
     # key
-    yk = len(sel) + 1.6
-    ax.add_patch(Rectangle((430, yk - 0.28), 60, 0.56, fc=COL["OKI"], ec="none"))
-    ax.text(500, yk, "SECIS element (colour: assembly)", fontsize=FS - 1, va="center")
-    ax.add_patch(Polygon([[440, yk - 1.15], [431, yk - 0.75], [449, yk - 0.75]], closed=True, fc="black"))
-    ax.text(500, yk - 1.0, "trans-splice site of the next gene (SL transcripts)", fontsize=FS - 1, va="center")
-    ax.add_patch(Rectangle((440, yk - 2.32), max_d * 0.025, 0.64, fc="black"))
-    ax.text(500, yk - 2.0, "start of the next coding sequence", fontsize=FS - 1, va="center")
-    ax.text(500, yk - 3.0, "* SECIS only beyond the next coding sequence", fontsize=FS - 1, va="center")
-    ax.set_xlim(0, max_d * 1.05); ax.set_ylim(0.3, len(sel) + 2.4)
+    yk, xk, xt = len(sel) + 3.6, 360, 435
+    gene_arrow(ax, xk, xk + 55, yk, COL["OKI"], h=0.26)
+    ax.text(xt, yk, "selenoprotein coding sequence (colour: assembly)", fontsize=FS - 1, va="center")
+    ax.plot([xk, xk + 55], [yk - 1, yk - 1], color="black", lw=1.6)
+    ax.text(xt, yk - 1, "3' UTR of the gold-standard model", fontsize=FS - 1, va="center")
+    secis_glyph(ax, xk + 5, xk + 55, yk - 2.2, COL["OKI"])
+    ax.text(xt, yk - 2, "SECIS element", fontsize=FS - 1, va="center")
+    ax.add_patch(Rectangle((xk + 20, yk - 3.33), 7, 0.66, fc="#fde0b0", ec="none"))
+    ax.text(xt, yk - 3, "expected end of its mRNA (23-30 nt before the next SL)", fontsize=FS - 1,
+            va="center")
+    ax.plot([xk + 20, xk + 20], [yk - 4.2, yk - 3.75], color="black", lw=0.8)
+    ax.add_patch(Rectangle((xk + 20, yk - 3.9), 14, 0.15, fc="black"))
+    ax.text(xt, yk - 4, "trans-splice site of the next gene", fontsize=FS - 1, va="center")
+    gene_arrow(ax, xk, xk + 55, yk - 5, "#d0d0d0")
+    ax.text(xt, yk - 5, "next coding sequence, same strand", fontsize=FS - 1, va="center")
+    ax.text(xk, yk - 6, "* SECIS only beyond the next coding sequence", fontsize=FS - 1, va="center")
+    ax.set_xlim(-75, right); ax.set_ylim(0.3, len(sel) + 4.4)
     ax.set_yticks([]); ax.spines[["left", "top", "right"]].set_visible(False)
-    ax.set_xlabel("nucleotides after the stop codon", fontsize=FS)
+    ax.spines["bottom"].set_bounds(0, max_d)
+    ax.set_xticks(range(0, max_d + 1, 100))
+    ax.set_xlabel("nucleotides after the stop codon of the selenoprotein gene", fontsize=FS)
     ax.tick_params(labelsize=FS - 1)
     return len(sel)
 
@@ -138,7 +175,7 @@ def main():
     fig = plt.figure(figsize=(7.2, 7.4))
     axa = fig.add_axes([0.02, 0.70, 0.60, 0.28])
     axc = fig.add_axes([0.70, 0.74, 0.28, 0.22])
-    axb = fig.add_axes([0.30, 0.06, 0.66, 0.58])
+    axb = fig.add_axes([0.25, 0.06, 0.72, 0.60])
     panel_a(axa); panel_c(axc, summary); n = panel_b(axb, rows, a.max_distance)
     for ax, lab, (x, y) in ((axa, "A", (0.0, 0.985)), (axc, "C", (0.64, 0.985)), (axb, "B", (0.0, 0.66))):
         fig.text(x, y, lab, fontsize=FS + 3, fontweight="bold", va="top")
