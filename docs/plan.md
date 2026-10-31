@@ -1681,3 +1681,23 @@ no earlier step waits for them.
   No named partner has a known role in selenium metabolism. For the paper: human best hits of all partners in the
   three assemblies, compared with the functions of all operon genes (GO terms), as a table or a sentence in
   "Selenoprotein genes in operons". Shown on a slide of the presentation deck of 2026-10-31.
+- Three checks prepared (2026-10-31, Charles: operon partners "send me pull and sbatch commands"; "also send me sbatch
+  commands for the small check").
+  - make human-uniprot (login node) and make operon-partners (stage2/operon_partners.py): best human hits (UniProt
+    Swiss-Prot, legacy blastp) of all annotated loci of the three assemblies; redox and selenium flags from UniProt
+    keywords and direct GO terms; partners and immediate neighbours of the selenoprotein genes against the other loci
+    in operons (Fisher). Tested on a synthetic contig. Deigo run pending.
+  - make miniprot-junctions (stage2/miniprot_junctions.py): the gold-standard proteins (U, and U -> C) aligned by
+    miniprot -I --gff to each assembly; the pipeline's codon call (copied from its bin/sec_check.py), codon in a CDS
+    feature and frame, shift of the alignment intron nearest to the codon; tests the manuscript's "not tested"
+    explanation for SELENOT and SEPHS2. Container miniprot 0.18 (pipeline module 0.11). Tested on a synthetic gene
+    (both strands, mock miniprot output). Deigo run pending.
+  - make selenoi-junction (stage2/selenoi_junction.py), run here (inputs in results/sequences/): the junction that
+    removes the TGA segment is placed at -8..+100 (OKI2018, 108 nt), -8..+98 (OSKA2016, 106 nt) and -8..+95 (OdB3,
+    103 nt, three ESTs) relative to the TGA, AG-AG in each case; no other placement gives the same transcript, and no
+    GT-AG, GC-AG, GA-AG or GG-AG placement exists within 15 nt even with 1 or 2 mismatches. The bases before the two
+    ends of the removed segment repeat a motif: ...TTCC(A/G)ACAA|AG and ...TTTCC(A/G)(A/AT)TAG| (conserved in the
+    three species). Possible readings, not separated by these data: a non-canonical splice event, or a deletion between
+    near-direct repeats during reverse transcription (cDNA libraries of all three sets). Side finding: in OKI2018 the
+    transcripts skip 42 nt of the genome at -102..-60 (AG-TG, no canonical placement), where OSKA2016 and OdB3 have a
+    GT-AG intron at -189/-196..-63: an indel in the OKI2018 assembly or a different exon structure (not examined).

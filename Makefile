@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-partners miniprot-junctions selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -423,6 +423,36 @@ operons:
 # Figure OPERONS from the tables of make operons (seconds; matplotlib only)
 operons-figure:
 	python3 figures/operons_figure.py
+
+# Reviewed human proteome of UniProt (Swiss-Prot, UP000005640) with keywords and GO terms, for operon-partners; a
+# download of about 10 MB, to run on a node with internet access (at OIST, the login node), not in a job
+HUMAN_UNIPROT_QUERY = %28proteome%3AUP000005640%29%20AND%20%28reviewed%3Atrue%29
+human-uniprot:
+	mkdir -p data/references
+	curl -sSfL -D data/references/uniprot_human_sp.headers.txt -o data/references/uniprot_human_sp.fasta.gz \
+	  "https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=fasta&query=$(HUMAN_UNIPROT_QUERY)"
+	curl -sSfL -o data/references/uniprot_human_sp.tsv.gz \
+	  "https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=tsv&fields=accession%2Cid%2Cgene_primary%2Cprotein_name%2Ckeyword%2Cgo_id&query=$(HUMAN_UNIPROT_QUERY)"
+	md5sum data/references/uniprot_human_sp.fasta.gz data/references/uniprot_human_sp.tsv.gz | tee data/references/uniprot_human_sp.md5
+	date -u +%Y-%m-%dT%H:%MZ > data/references/uniprot_human_sp.date
+	grep -i "x-uniprot-release" data/references/uniprot_human_sp.headers.txt || true
+
+# Genes sharing an operon with a selenoprotein gene: best human hits (blastp) and redox/selenium flags, against the
+# other genes in operons (after make human-uniprot; an hour or two), for example
+#   sbatch -p compute --cpus-per-task=16 --mem=16G --time=6:00:00 scripts/run_in_container.sh make operon-partners
+operon-partners:
+	python3 stage2/operon_partners.py
+
+# miniprot on the gold-standard proteins (selenocysteine as U, and as C), compared with the gold-standard junctions near
+# the selenocysteine codon; why miniprot misses SELENOT and SEPHS2 (minutes), for example
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2:00:00 scripts/run_in_container.sh make miniprot-junctions
+miniprot-junctions:
+	python3 stage2/miniprot_junctions.py
+
+# SELENOI: placement and splice sites of the junction that removes the TGA segment (minimap2 on the sequences of
+# make selenoi-regions, which are in the repository; seconds)
+selenoi-junction:
+	python3 stage2/selenoi_junction.py
 
 # Step 9: census of the appendicularian selenoproteins from the stage 2 final run (stage2/README.md, "Census").
 # 1. stage2-collect (minutes): tables of the final run (results/tables/stage2_final_*.tsv) and its machinery census

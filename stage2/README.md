@@ -278,6 +278,37 @@ the upstream neighbour into the gene, and whether the neighbours are homologous 
 three loci, annotated model replaced by the gold-standard gene, SL read in both transcript orientations).
 Outputs: `results/tables/stage2_operons.tsv`, `stage2_operons_summary.tsv`.
 
+## Operon partners (`operon_partners.py`, `make human-uniprot`, `make operon-partners`)
+
+Do the genes that share an operon with a selenoprotein gene have to do with redox or selenium? Loci and operons as in
+`operons.py`; the protein of each annotated locus (longest coding sequence, translated from the genome) is searched in
+the reviewed human proteome of UniProt (`make human-uniprot`, on a node with internet access) by legacy blastp
+(E <= 1e-5); the best hit's UniProt keywords (Oxidoreductase, Redox-active center, Antioxidant, Selenium,
+Selenocysteine) and directly annotated GO terms (cell redox homeostasis, response to oxidative stress, cellular oxidant
+detoxification, antioxidant and peroxidase activity, selenium compound and selenocysteine metabolism) give the flags.
+Partners and immediate neighbours of the selenoprotein genes are compared with the other loci in operons (Fisher's
+exact test), per assembly. Tested on a synthetic contig (operon of four loci with a gold-standard gene, a second
+operon, two single loci; four human proteins). Outputs: `results/tables/stage2_operon_partners.tsv`,
+`stage2_operon_partners_summary.tsv`; best hits of all loci in `work/stage2/operon_partners/<genome>.loci.tsv`.
+
+## miniprot at the selenocysteine codon (`miniprot_junctions.py`, `make miniprot-junctions`)
+
+The manuscript suggests that miniprot misses SELENOT and SEPHS2 because their codons lie 2 and 1 nt from an intron.
+The gold-standard proteins of the three assemblies (selenocysteine as U, and as C) are aligned by miniprot to each
+assembly as in the pipeline (`-I --gff` on the indexed genome); for each gene and query, the best alignment over the
+gene is compared with the gold-standard model: the pipeline's rule for calling the codon (U aligned to TGA, or U next
+after the alignment end with TGA as next codon; code copied from the pipeline's `bin/sec_check.py`), whether the codon
+lies in one CDS feature and in frame, and the shift of the alignment's intron that overlaps the gold-standard intron
+nearest to the codon. The container has miniprot 0.18; the pipeline's module pins 0.11. Tested on a synthetic gene on
+both strands with a mock miniprot output. Output: `results/tables/stage2_miniprot_junctions.tsv`.
+
+## SELENOI junction (`selenoi_junction.py`, `make selenoi-junction`)
+
+The transcripts of the three *O. dioica* assemblies (from `make selenoi-regions`, in `results/sequences/`) are aligned
+to the codon regions with minimap2 (`-x splice:hq -un`); for each junction, all placements giving the same transcript,
+their splice sites, canonical placements within 15 nt with 1 or 2 mismatches, and the bases before each end of the
+removed segment. Output: `results/tables/stage2_selenoi_junction.tsv`.
+
 ## SELENOK of the other Oikopleura species and release profiles (`extract_regions.py`, `region_gene_models.py`)
 
 The final SELENOK profile does not find the SELENOK genes that the UGA/SECIS screens found in *O. longicauda*,
