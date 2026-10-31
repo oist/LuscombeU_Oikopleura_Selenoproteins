@@ -1598,3 +1598,18 @@ no earlier step waits for them.
   less than 300 bp between coding sequences (Fig. 7). operons.py: the published SL cited (search with its 3' 13 nt,
   since transcript assemblies can lack its 5' part), acceptor AG checked at each SL transcript start; gaps reported so
   that the 300-bp definition can be applied.
+- make operons, first run (2026-10-31, commit cc53285). Background (coding spans <= 500 nt, same strand): 47% of the
+  loci in operons in OKI2018 (15,364 loci), 40% in OSKA2016 (18,743), 49% in OdB3 (17,208). Selenoprotein genes in
+  operons: 10 of 20, 13 of 20 (Fisher p = 0.037), 13 of 19; first position: 1, 5, 3 (not depleted; p = 0.10, 1,
+  0.56). Every SECIS lies before the coding sequence of the next gene on the same strand, with at least 63 nt to
+  spare (SELENOW_PAR, internal in operons of 7 and 11 genes in OKI2018 and OdB3: SECIS at 45-118 nt after the stop,
+  next gene 182-183 nt after it), except SELENOW_pair2: in the three assemblies the only SECIS within 2 kb after its
+  stop codon is that of SELENOW_pair1 (same score), beyond the start of SELENOW_pair1 (OKI2018: pair1 starts 197 nt
+  after the pair2 stop, the SECIS at 584-648); transcripts run from pair2 into pair1 (6 in OKI2018, 1 in OSKA2016,
+  2 in OdB3), so pair2 may depend on the pair1 SECIS in a bicistronic mRNA (to examine). Conserved neighbours: for
+  example SELENOS internal in all three with neighbours on both sides homologous between the assemblies; SELENOK,
+  SELENOW_chr2 and DIO_PAR last in all three with a conserved upstream neighbour. Bug: the acceptor check read the
+  genome before the start of the alignment, but minimap2 aligns the AG at the end of the SL to the genomic AG, so no
+  acceptor was found; fixed (the trans-splice site is placed from the end of the SL in the transcript). Added: the SL
+  trans-splice sites of the next gene between the two coding sequences, and the space between the SECIS and the
+  first of them. Tested on a synthetic contig (alignment starting inside the SL, antisense transcript). To rerun.

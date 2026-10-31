@@ -38,7 +38,11 @@ For each gold-standard gene:
     coding sequences; the gaps are reported so that this stricter definition can be applied;
   - neighbours conserved between assemblies: the proteins of the neighbours (translated from the representative
     coding sequence of each annotated locus) compared by blastp (E <= 1e-10) with the neighbours of the same gene in
-    the other two assemblies.
+    the other two assemblies;
+  - for the next gene on the same strand: the trans-splice sites of its SL transcripts that lie between the two coding
+    sequences (positions after the stop codon of the selenoprotein gene; * when the acceptor is not AG), and the
+    space between the end of the SECIS element and the first of them: the polyadenylation site of the selenoprotein
+    mRNA, and hence the end of its 3' UTR, lies before that site (23 to 30 nt before it in Ganot et al. 2004).
 Background: the same operon definition for all loci of each assembly; selenoprotein genes against the others,
 Fisher's exact test (operon or not; first position or not).
 Outputs: --table (one row per gene and assembly), --summary (one row per assembly).
@@ -217,23 +221,38 @@ def main():
             cs, ce = x["span"]
             start = cs if plus else ce          # first base of the coding sequence (gene strand)
             up_end = (up["span"][1] if plus else up["span"][0]) if up is not None and up["strand"] == x["strand"] else None
-            sl_sites, through = [], []
-            for al in alns.get(x["contig"], []):
-                if not (al["ts"] <= ce and al["te"] >= cs) or al["q"] not in txseq: continue
-                t = txseq[al["q"]]
-                # sense orientation of the transcript relative to the gene
-                sense = (al["strand"] == "+") == plus
-                tsense = t if sense else rc(t)
-                p = sl_match(tsense, a.sl, a.sl_window)
-                if p is not None:
-                    g5 = al["ts"] if plus else al["te"]     # 5' end of the aligned part (the SL is not aligned)
-                    dist = (start - g5) if plus else (g5 - start)
-                    between = up_end is None or (g5 > up_end if plus else g5 < up_end)
+            def junctions(lo_, hi_):
+                """SL transcripts overlapping [lo_, hi_] on the gene strand: (transcript, trans-splice site: first
+                genome base after the SL, 0-based, acceptor is AG)."""
+                out = []
+                for al in alns.get(x["contig"], []):
+                    if not (al["ts"] <= hi_ and al["te"] >= lo_) or al["q"] not in txseq: continue
+                    t = txseq[al["q"]]
+                    sense = (al["strand"] == "+") == plus     # stored orientation is the sense of the gene
+                    pos = sl_match(t if sense else rc(t), a.sl, a.sl_window)
+                    if pos is None: continue
+                    qs_sense = al["qs"] if sense else al["qlen"] - al["qe"]
+                    g5 = al["ts"] if plus else al["te"]
+                    j = g5 + (pos - qs_sense) if plus else g5 - (pos - qs_sense)
                     cs_ = contigs.get(x["contig"], "")
-                    acc = (cs_[g5 - 2:g5] if plus else rc(cs_[g5 + 1:g5 + 3])) if cs_ else ""
-                    sl_sites.append((al["q"], dist, between, acc == "AG"))
-                if up_end is not None and ((plus and al["ts"] <= up_end) or (not plus and al["te"] >= up_end)):
-                    through.append(al["q"])
+                    acc = (cs_[j - 2:j] if plus else rc(cs_[j + 1:j + 3])) if cs_ else ""
+                    out.append((al["q"], j, acc == "AG"))
+                return out
+            sl_sites = []
+            for q, j, ag in junctions(cs, ce):
+                dist = (start - j) if plus else (j - start)
+                between = up_end is None or (j > up_end if plus else j < up_end)
+                sl_sites.append((q, dist, between, ag))
+            through = [al["q"] for al in alns.get(x["contig"], []) if al["ts"] <= ce and al["te"] >= cs and up_end is not None
+                       and ((plus and al["ts"] <= up_end) or (not plus and al["te"] >= up_end))]
+            # trans-splice sites of the next gene on the same strand, between the two coding sequences
+            next_sl = []
+            if down_same is not None:
+                dlo, dhi = down_same["span"]
+                for q, j, ag in junctions(dlo, dhi):
+                    off = (j - ce) if plus else (cs - j)        # 1-based position after the stop codon
+                    if 0 < off <= gap(down_same) + 1: next_sl.append((off, ag))
+            first_next = min((o for o, _ in next_sl), default=None)
             rows.append({
                 "genome": g, "gene": name, "contig": x["contig"], "strand": x["strand"],
                 "coding_span": f"{cs + 1}-{ce + 1}", "annotated_as": me.get("annotated_as", "") or "not annotated",
@@ -243,6 +262,8 @@ def main():
                 "secis_bits": f"{sec[0]:.1f}" if sec else "none",
                 "secis_after_stop": f"{sec[1]}-{sec[2]}" if sec else "",
                 "next_gene_same_strand_after_stop": gap(down_same) if down_same is not None else "",
+                "next_gene_sl_sites_after_stop": ",".join(f"{o}{'' if ag else '*'}" for o, ag in sorted(next_sl)),
+                "space_secis_to_next_sl_site": (first_next - sec[2] - 1) if (sec and first_next is not None) else "",
                 "space_after_secis": (gap(down_same) - sec[2]) if (sec and down_same is not None) else "",
                 "utr3_length": gt.get("utr3_length", ""), "polyA_signal": gt.get("polyA_signal", ""),
                 "sl_transcripts": len(sl_sites),
