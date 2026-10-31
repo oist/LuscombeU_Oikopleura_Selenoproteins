@@ -6,9 +6,10 @@ A. Schematic of an operon (after Ganot et al. 2004): a polycistronic pre-mRNA re
    23 to 30 nt before the next trans-splice site; a selenoprotein mRNA must hold its SECIS element in that 3' UTR.
 B. Each selenoprotein gene followed by another gene on the same strand within --max-distance nt, in each assembly
    (results/tables/stage2_operons.tsv), aligned on its stop codon: the end of its coding sequence, its 3' UTR in its
-   transcripts, its SECIS element (stem-loop), the window where its mRNA should end (23-30 nt before the first
-   trans-splice site of the next gene), the trans-splice sites of the next gene (SL flags) and the next coding
-   sequence; sorted by the distance to the next coding sequence.
+   transcripts, its SECIS element (stem-loop), its polyadenylation sites seen in transcripts with a poly(A) tail
+   (triangles; darker when several transcripts end there), the window 23-30 nt before the first trans-splice site of
+   the next gene where Ganot et al. (2004) found polyadenylation sites (outlined), the trans-splice sites of the next
+   gene (SL flags) and the next coding sequence; sorted by the distance to the next coding sequence.
 C. Fraction of the loci in operons and, among them, fraction first in their operon: selenoprotein genes against all
    annotated loci (results/tables/stage2_operons_summary.tsv), with Fisher's exact test.
 Outputs: <out>.pdf, <out>.svg and <out>.png.
@@ -92,17 +93,23 @@ def panel_b(ax, rows, max_d):
         s0, s1 = map(int, r["secis_after_stop"].split("-"))
         sl = [int(x.rstrip("*")) for x in r["next_gene_sl_sites_after_stop"].split(",") if x]
         utr = int(r["utr3_length"]) if r["utr3_length"] not in ("", "0") else None
-        sel.append((d, r["gene"], r["genome"], s0, s1, sorted(set(sl)), utr))
+        pa = {}
+        for x in r.get("polya_sites_after_stop", "").split(","):
+            if x: o, _, n = x.partition("x"); pa[int(o)] = int(n or 1)
+        sel.append((d, r["gene"], r["genome"], s0, s1, sorted(set(sl)), utr, pa))
     sel.sort(key=lambda x: (x[0], x[1]))
     right = max_d * 1.08
-    for i, (d, gene, g, s0, s1, sl, utr) in enumerate(sel):
+    for i, (d, gene, g, s0, s1, sl, utr, pa) in enumerate(sel):
         y = len(sel) - i
         gene_arrow(ax, -70, 0, y, COL[g], h=0.26)                     # end of the selenoprotein coding sequence
         ax.plot([0, d], [y, y], color="#cfcfcf", lw=0.8)              # genome between the two coding sequences
         if utr: ax.plot([0, min(utr, d)], [y, y], color="black", lw=1.6, solid_capstyle="butt")
         if sl:
             f = min(sl)
-            ax.add_patch(Rectangle((f - 30, y - 0.33), 7, 0.66, fc="#fde0b0", ec="none"))
+            ax.add_patch(Rectangle((f - 30, y - 0.33), 7, 0.66, fc="none", ec="#e08214", lw=0.6))
+        for x, n in pa.items():                                        # observed polyadenylation sites
+            ax.add_patch(Polygon([[x, y - 0.02], [x - 7, y - 0.42], [x + 7, y - 0.42]], closed=True,
+                                 fc="#e08214", ec="none", alpha=min(1.0, 0.45 + 0.15 * n)))
             for x in sl:                                               # SL flags of the next mRNA
                 ax.plot([x, x], [y, y + 0.45], color="black", lw=0.8)
                 ax.add_patch(Rectangle((x, y + 0.30), 14, 0.15, fc="black"))
@@ -118,9 +125,11 @@ def panel_b(ax, rows, max_d):
     ax.text(xt, yk - 1, "3' UTR of the gold-standard model", fontsize=FS - 1, va="center")
     secis_glyph(ax, xk + 5, xk + 55, yk - 2.2, COL["OKI"])
     ax.text(xt, yk - 2, "SECIS element", fontsize=FS - 1, va="center")
-    ax.add_patch(Rectangle((xk + 20, yk - 3.33), 7, 0.66, fc="#fde0b0", ec="none"))
-    ax.text(xt, yk - 3, "expected end of its mRNA (23-30 nt before the next SL)", fontsize=FS - 1,
-            va="center")
+    ax.add_patch(Polygon([[xk + 12, yk - 2.85], [xk + 5, yk - 3.25], [xk + 19, yk - 3.25]], closed=True,
+                         fc="#e08214", ec="none"))
+    ax.add_patch(Rectangle((xk + 32, yk - 3.33), 7, 0.66, fc="none", ec="#e08214", lw=0.6))
+    ax.text(xt, yk - 3, "polyadenylation site (poly(A) transcripts); box: 23-30 nt before the next SL",
+            fontsize=FS - 1, va="center")
     ax.plot([xk + 20, xk + 20], [yk - 4.2, yk - 3.75], color="black", lw=0.8)
     ax.add_patch(Rectangle((xk + 20, yk - 3.9), 14, 0.15, fc="black"))
     ax.text(xt, yk - 4, "trans-splice site of the next gene", fontsize=FS - 1, va="center")

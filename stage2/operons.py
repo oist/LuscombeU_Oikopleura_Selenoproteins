@@ -53,9 +53,16 @@ of the next gene (SL transcripts of the whole transcript set, placed as above), 
 from transcripts): selenoprotein genes against the others (Mann-Whitney U test; medians and quartiles), with the
 distributions of the others in bins for the figure. The OdB3 annotation has no UTRs and its ESTs have masked 5' ends:
 only the distance to the next coding sequence is available there.
+Polyadenylation sites: transcripts whose 3' end (read as the mRNA) ends with at least --min-polya A, the alignment
+reaching the tail; the site is the last genome base before the tail (when the tail runs over genomic A, the site
+cannot be placed more precisely). For each gene, the sites after its stop codon (before the next coding sequence on
+the same strand, or within 2,000 nt) and the most supported one: distance from the end of the SECIS element to it and
+from it to the first trans-splice site of the next gene; for all loci, the distance from the stop codon to the most
+supported site and, for the loci followed by another gene of their operon, from that site to the first trans-splice
+site of the next gene (the intercistronic region, 23 to 30 nt in Ganot et al. 2004).
 Outputs: --table (one row per gene and assembly), --summary (one row per assembly), --utr-table, --utr-bins.
 """
-import argparse, collections, csv, os, shutil, subprocess, sys, tempfile
+import argparse, collections, csv, os, re, shutil, subprocess, sys, tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "curation"))
 from gold_standard import attributes, read_annotation, read_fasta, rc   # noqa: E402
@@ -132,27 +139,36 @@ def utr3_of(r):
     return sum(max(0, min(e, start) - s) for s, e in r["exons"])
 
 
-def sl_junctions_all(alns, path, sl, window):
-    """Trans-splice sites of all SL transcripts of an assembly: (contig, strand) -> sorted genome positions (0-based
-    first base of the mRNA body); the strand is that of the mRNA."""
+def transcript_ends_all(alns, path, sl, window, min_a):
+    """Ends of the mRNAs read in all transcripts of an assembly, as (contig, strand of the mRNA) -> sorted genome
+    positions (0-based): trans-splice sites (first base after the SL, for transcripts that start with the SL) and
+    polyadenylation sites (last genome base before a poly(A) tail of at least min_a A at the 3' end, the tail not
+    aligned to the genome, or aligned to genomic A that the tail cannot be told from)."""
     names = {al["q"] for v in alns.values() for al in v}
     by_q = collections.defaultdict(list)
     for c, v in alns.items():
         for al in v: by_q[al["q"]].append((c, al))
-    out = collections.defaultdict(list)
+    junc, polya = collections.defaultdict(list), collections.defaultdict(list)
+    tail = re.compile(f"A{{{min_a},}}$")
     for k, t in read_fasta(path, names):
         t = t.upper()
-        p, same = sl_match(t, sl, window), True
-        if p is None:
-            p, same = sl_match(rc(t), sl, window), False
-        if p is None: continue
-        for c, al in by_q[k]:
-            strand = al["strand"] if same else ("-" if al["strand"] == "+" else "+")
-            qs_sense = al["qs"] if same else al["qlen"] - al["qe"]
-            j = al["ts"] + (p - qs_sense) if strand == "+" else al["te"] - (p - qs_sense)
-            out[(c, strand)].append(j)
-    for k in out: out[k].sort()
-    return out
+        for same in (True, False):
+            u = t if same else rc(t)               # u: the transcript read as the mRNA
+            p = sl_match(u, sl, window)
+            m = tail.search(u.rstrip("N"))
+            if p is None and m is None: continue
+            for c, al in by_q[k]:
+                strand = al["strand"] if same else ("-" if al["strand"] == "+" else "+")
+                qs_sense = al["qs"] if same else al["qlen"] - al["qe"]
+                qe_sense = al["qe"] if same else al["qlen"] - al["qs"]
+                if p is not None:
+                    junc[(c, strand)].append(al["ts"] + (p - qs_sense) if strand == "+" else al["te"] - (p - qs_sense))
+                if m is not None and qe_sense >= m.start() - 5:   # the alignment reaches the tail
+                    back = max(0, qe_sense - m.start())
+                    polya[(c, strand)].append(al["te"] - back if strand == "+" else al["ts"] + back)
+    for d in (junc, polya):
+        for key in d: d[key].sort()
+    return junc, polya
 
 
 def quartiles(v):
@@ -174,6 +190,7 @@ def main():
     ap.add_argument("--max-gap", type=int, default=500)
     ap.add_argument("--sl", default="GATTGTCTAACAG")
     ap.add_argument("--sl-window", type=int, default=80)
+    ap.add_argument("--min-polya", type=int, default=10, help="A at the 3' end of a transcript that mark a poly(A) tail")
     ap.add_argument("--genomes", nargs="+", default=DIOICA)
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--table", default="results/tables/stage2_operons.tsv")
@@ -247,6 +264,8 @@ def main():
             for al in alns.get(x["contig"], []):
                 if al["ts"] <= hi + 2000 and al["te"] >= lo - 2000: want.add(al["q"])
         txseq = {k: v.upper() for k, v in read_fasta(sheet[g]["transcripts"], want)} if want and sheet[g].get("transcripts") else {}
+        junc, polya = transcript_ends_all(alns, sheet[g]["transcripts"], a.sl, a.sl_window, a.min_polya) \
+            if alns and sheet[g].get("transcripts") else ({}, {})
         for name, x in sorted(genes.items()):
             L = loci[x["contig"]]
             me = next(l for l in L if l["gold"] == name)
@@ -312,6 +331,12 @@ def main():
                     off = (j - ce) if plus else (cs - j)        # 1-based position after the stop codon
                     if 0 < off <= gap(down_same) + 1: next_sl.append((off, ag))
             first_next = min((o for o, _ in next_sl), default=None)
+            # polyadenylation sites after the stop codon, before the next coding sequence on the same strand
+            lim = gap(down_same) if down_same is not None else 2000
+            pa = [((j - ce) if plus else (cs - j)) for j in polya.get((x["contig"], x["strand"]), [])
+                  if ((plus and ce < j <= ce + lim) or (not plus and cs - lim <= j < cs))]
+            pa_count = collections.Counter(pa)
+            pa_main = min(pa_count, key=lambda o: (-pa_count[o], o)) if pa else None
             rows.append({
                 "genome": g, "gene": name, "contig": x["contig"], "strand": x["strand"],
                 "coding_span": f"{cs + 1}-{ce + 1}", "annotated_as": me.get("annotated_as", "") or "not annotated",
@@ -325,6 +350,10 @@ def main():
                 "next_gene_same_strand_after_stop": gap(down_same) if down_same is not None else "",
                 "next_gene_sl_sites_after_stop": ",".join(f"{o}{'' if ag else '*'}" for o, ag in sorted(next_sl)),
                 "space_secis_to_next_sl_site": (first_next - sec[2] - 1) if (sec and first_next is not None) else "",
+                "polya_sites_after_stop": ",".join(f"{o}x{n}" if n > 1 else str(o) for o, n in sorted(pa_count.items())),
+                "polya_main_after_stop": pa_main if pa_main is not None else "",
+                "secis_end_to_polya": (pa_main - sec[2]) if (sec and pa_main is not None) else "",
+                "polya_to_next_sl_site": (first_next - pa_main) if (pa_main is not None and first_next is not None) else "",
                 "space_after_secis": (gap(down_same) - sec[2]) if (sec and down_same is not None) else "",
                 "utr3_length": gt.get("utr3_length", ""), "polyA_signal": gt.get("polyA_signal", ""),
                 "sl_transcripts": len(sl_sites),
@@ -349,9 +378,10 @@ def main():
                         "selenoprotein_first": first_sel,
                         "fisher_p_operon": f"{p_op:.3g}", "fisher_p_first_among_operonic": f"{p_first:.3g}" if p_first != "" else ""})
         print(f"{g}: {n_all} loci, {op_all} in operons; selenoprotein genes {op_sel} of {len(sel)} in operons", flush=True)
+        summary[-1]["sl_sites"] = sum(len(v) for v in junc.values())
+        summary[-1]["polya_sites"] = sum(len(v) for v in polya.values())
         # 3' UTR and intercistronic space of the genes followed by another gene of their operon (first or internal),
         # and 3' UTR of the last genes and of the genes outside operons: selenoprotein genes against the others
-        junc = sl_junctions_all(alns, sheet[g]["transcripts"], a.sl, a.sl_window) if alns and sheet[g].get("transcripts") else {}
         vals = collections.defaultdict(list)     # (measure, context, group) -> values
         for c, L in loci.items():
             for l in L:
@@ -361,6 +391,21 @@ def main():
                     else (None if l["gold"] else utr3_of(l["rep"]))
                 ctx = "followed in operon" if pos in ("first", "internal") else "last or single"
                 if u is not None and u > 0: vals[("3' UTR", ctx, grp)].append(u)
+                # polyadenylation site: the most supported one after the stop codon, before the next coding sequence
+                # on the same strand (or within 2,000 nt)
+                k_ = L.index(l)
+                plus_ = l["strand"] == "+"
+                nxt_l = next((L[t] for t in (range(k_ + 1, len(L)) if plus_ else range(k_ - 1, -1, -1))
+                              if L[t]["strand"] == l["strand"]), None)
+                stop_ = l["span"][1] if plus_ else l["span"][0]
+                lim_ = min(2000, ((nxt_l["span"][0] - stop_ - 1) if plus_ else (stop_ - nxt_l["span"][1] - 1))
+                           if nxt_l else 2000)
+                pas = [((j - stop_) if plus_ else (stop_ - j)) for j in polya.get((c, l["strand"]), [])
+                       if ((plus_ and stop_ < j <= stop_ + lim_) or (not plus_ and stop_ - lim_ <= j < stop_))]
+                pa_main_ = None
+                if pas:
+                    cnt = collections.Counter(pas); pa_main_ = min(cnt, key=lambda o: (-cnt[o], o))
+                    vals[("stop to polyadenylation site", ctx, grp)].append(pa_main_)
                 if pos not in ("first", "internal"): continue
                 m = members[l["operon"]]
                 order = m if l["strand"] == "+" else m[::-1]
@@ -377,6 +422,8 @@ def main():
                     first_sl = (stop - max(js)) if js else None
                 vals[("stop to next coding sequence", ctx, grp)].append(gap_)
                 if first_sl is not None: vals[("stop to next trans-splice site", ctx, grp)].append(first_sl)
+                if first_sl is not None and pa_main_ is not None and first_sl > pa_main_:
+                    vals[("polyadenylation site to next trans-splice site", ctx, grp)].append(first_sl - pa_main_)
         from scipy.stats import mannwhitneyu
         for (meas, ctx) in sorted({(k[0], k[1]) for k in vals}):
             o, sp = vals.get((meas, ctx, "other"), []), vals.get((meas, ctx, "selenoprotein"), [])

@@ -1639,3 +1639,12 @@ no earlier step waits for them.
   UTRs): selenoprotein genes against the others, Mann-Whitney U test; distributions of the others in 25-nt bins
   (results/tables/stage2_operons_utr.tsv, stage2_operons_utr_bins.tsv) for a panel of Figure OPERONS. Tested on the
   synthetic contig. To rerun: make operons.
+- Polyadenylation sites (2026-10-31, Charles: "Why do the RNA stop before the trans-splicing sites? Because of poly-A
+  sites? If yes please show them explicitly."). In O. dioica operons the upstream pre-mRNA is cleaved and
+  polyadenylated 23-30 nt before the trans-splice site of the next gene (Ganot 2004). operons.py now reads the
+  polyadenylation sites in the transcripts themselves: transcripts whose 3' end (as mRNA) has at least 10 A, the
+  alignment reaching the tail; site = last genome base before the tail (ambiguous when the tail runs over genomic A).
+  Per gene: sites after the stop codon, the most supported one, distance SECIS end -> site and site -> next
+  trans-splice site; for all loci: stop -> most supported site, and for operon genes followed by another gene, site ->
+  next trans-splice site (the intercistronic region measured genome-wide). Figure OPERONS panel B draws the observed
+  sites (triangles) and outlines the 23-30 nt window. Tested on the synthetic contig. To rerun: make operons.
