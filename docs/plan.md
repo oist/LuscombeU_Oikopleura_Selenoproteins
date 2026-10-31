@@ -1842,3 +1842,10 @@ no earlier step waits for them.
   SELENOK profile (coverage 0.88 against 0.67), and "many of them on contigs shorter than 3 kb". Also removed as a
   duplicate of the orphan-hit paragraph: the sentence on the three OKI2018 genome-scan hits after the TXNL1.b screen
   result (NC_137291.1, 28.1 bits, is no longer cited).
+- 2026-10-31, RefSeq update plan: `docs/refseq_update_plan.md` (after the preprint; nothing started). Counts from the
+  `annotation_fix` column of `results/tables/gold_standard.tsv` for OKI2018 (GCF_907165135.1): 2 models without
+  change, 1 selenocysteine to declare, 2 introns to move, 7 coding sequences to change on the annotated exon chain,
+  2 new exon chains, 6 new gene models; 3 genes (DIO_chr1, SELENOO, SELENOS) need bases absent from the assembly.
+  Evidence package (script to write, `stage2/refseq_package.py`), Zenodo deposit, Gene and RefSeq Feedback form,
+  offer of the profiles and SECIS model for the next annotation run (Ticó et al. 2026), check of the next release.
+  Open questions in the plan. Slide "refseq" added after "massspec".
