@@ -311,16 +311,22 @@ nearest to the codon. The container has miniprot 0.18; the pipeline's module pin
 both strands with a mock miniprot output. Output: `results/tables/stage2_miniprot_junctions.tsv`. The frame in
 `codon_in_cds` is counted from the CDS lengths and is not reliable when the alignment has frameshifts.
 
-First run (2026-10-31, miniprot 0.18): SEPHS2 is called in the three assemblies with every gold-standard protein, the
-intron 1 nt from the codon placed exactly; SELENOT is called in OdB3 (the 42-nt intron 2 nt after the codon placed
-exactly) but not in OKI2018 or OSKA2016, where no alignment intron overlaps the corresponding 44-nt intron and every
-alignment has one frameshift and no in-frame stop codon. Two follow-ups separate the miniprot version from the queries:
-- `make miniprot-junctions-pipeline`: the same table from the alignments of the stage 2 final run itself
-  (`<outdir>/miniprot/<genome>.gff`, miniprot 0.11, the Sec-containing profile sequences of
-  `<outdir>/summary/selenoprotein_queries.faa`), one row per query whose best alignment overlaps a gold-standard gene; output
-  `results/tables/stage2_miniprot_junctions_pipeline.tsv`;
-- `scripts/miniprot_v011.sh` (sbatch): the gold-standard queries aligned with miniprot 0.11 (image of the pipeline's
-  module, run outside the analysis container); output `results/tables/stage2_miniprot_junctions_v0.11.tsv`.
+Results (2026-10-31). The introns next to the codons are short (SEPHS2 41-46 nt, 1 nt after the TGA; SELENOT 42-44
+nt, 2 nt after it). With miniprot 0.11 (the pipeline's version), every gold-standard protein of both genes is aligned
+without that intron, with a frameshift, and with the selenocysteine against another codon (OSKA2016: 2-nt frameshift
+and 13 or 14 deleted residues over the TGA and most of the intron), so that the alignment holds no stop codon; the
+pipeline's own alignments (profile proteins) do the same. With miniprot 0.18, the SEPHS2 intron is placed exactly and
+the codon called in the three assemblies; SELENOT is called in OdB3 only. Over all gold-standard genes, 0.18 calls 155
+and 0.11 144 of the 175 protein-gene pairs with U. Commands:
+- `make miniprot-junctions`: miniprot 0.18 (container), gold-standard proteins;
+- `make miniprot-junctions-pipeline`: the alignments of the stage 2 final run (`<outdir>/miniprot/<genome>.gff`,
+  miniprot 0.11, the Sec-containing profile sequences of `<outdir>/summary/selenoprotein_queries.faa`), one row per
+  query whose best alignment overlaps a gold-standard gene; output `results/tables/stage2_miniprot_junctions_pipeline.tsv`;
+- `scripts/miniprot_v011.sh` (sbatch): the gold-standard proteins aligned with miniprot 0.11 (image of the pipeline's
+  module, outside the analysis container), then `make miniprot-junctions-v011-table`; output
+  `results/tables/stage2_miniprot_junctions_v0.11.tsv`.
+miniprot 0.11 writes no `fs` and `st` tags; frameshifts are then counted from the `cg` tag and in-frame stop codons from
+the `cs` tag. Column `sec_aligned_to`: the genome codon against the query's selenocysteine.
 
 ## SELENOI junction (`selenoi_junction.py`, `make selenoi-junction`)
 

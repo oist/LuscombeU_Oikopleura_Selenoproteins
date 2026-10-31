@@ -785,15 +785,22 @@ without each gold-standard assembly, and tested it on that assembly and on the n
 
 With these settings, the pipeline found every reference selenocysteine codon in the six assemblies, also when the
 profiles did not contain the species tested, against 11 to 14 with the default settings (Table STAGE2). TXNL1.b was
-found in all six assemblies, and KKSU also in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, although its
-profile held only *O. dioica* proteins. In the six assemblies, every codon found by Selenoprofiles had a SECIS hit of
-at least 20 bits after its gene (24.0 bits or more). The two methods of the pipeline complemented each other:
-Selenoprofiles found 17 to 19 codons per assembly and miniprot 15 to 18. SELENOT and SEPHS2 were found by
-Selenoprofiles only, in every assembly; their selenocysteine codons lie 2 and 1 nucleotides from an intron, where
-miniprot may move the junction to avoid an in-frame stop codon (not tested). Zero to two genes per assembly were found by miniprot only. The gene models of
-Selenoprofiles were close to the reference models without reproducing them: in the median gene they covered 98 to
-100% of the coding bases of the reference, with 99 to 100% of their own coding bases inside it, but their introns were
-identical to those of the reference in 5 to 10 of the 15 to 19 genes compared.
+found in all six assemblies, and KKSU also in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, although its profile
+held only *O. dioica* proteins. In the six assemblies, every codon found by Selenoprofiles had a SECIS hit of at least
+20 bits after its gene (24.0 bits or more). The two methods of the pipeline complemented each other: Selenoprofiles
+found 17 to 19 codons per assembly and miniprot 15 to 18. SELENOT and SEPHS2 were found by Selenoprofiles only, in every
+assembly. In the gold-standard models, their selenocysteine codons lie 2 and 1 nucleotides before short introns (42 to 44 nucleotides in SELENOT, 41
+to 46 in SEPHS2). In these three assemblies, none of the profile proteins that the pipeline aligned to these
+genes with miniprot 0.11 (3 for SELENOT and 26 to 32 for SEPHS2 per assembly) placed the intron next to the codon or
+aligned its selenocysteine to the TGA codon. Aligned with the same version, the gold-standard proteins of the three *O.
+dioica* assemblies did the same in every assembly: each alignment had a frameshift and no intron at that position, and
+placed the selenocysteine against another codon (in OSKA2016, a 2-nucleotide frameshift and a deletion of 13 residues in
+SEPHS2, 14 in SELENOT, covering the TGA codon and most of the intron), so that the alignment contained no stop codon.
+With miniprot 0.18 and the same proteins, the SEPHS2 intron was placed exactly and the codon found in the three
+assemblies; the SELENOT codon was found in OdB3 only. Zero to two genes per assembly were found by miniprot only. The
+gene models of Selenoprofiles were close to the reference models without reproducing them: in the median gene they
+covered 98 to 100% of the coding bases of the reference, with 99 to 100% of their own coding bases inside it, but their
+introns were identical to those of the reference in 5 to 10 of the 15 to 19 genes compared.
 
 | Assembly | Same species as | Reference genes | Default settings | Stage 2 | Stage 2, profiles without the species |
 |---|---|---|---|---|---|
@@ -1880,7 +1887,15 @@ same contig, strand and position, called by Selenoprofiles with the label "selen
 complete reference models, the Selenoprofiles prediction holding the codon was compared with the reference: identical
 introns, and the fractions of reference coding bases it covers and of its coding bases inside the reference, stop
 codons excluded. To find which filter removed a prediction, Selenoprofiles was run with one profile and an action
-that records, before filtering, the measures and the value of each clause of the profile's filters.
+that records, before filtering, the measures and the value of each clause of the profile's filters. To find why
+miniprot missed codons, the gold-standard proteins of the three *O. dioica* assemblies, with selenocysteine as U and,
+as a control, as cysteine, were aligned to each of these assemblies with the pipeline's options (`-I --gff`), with
+miniprot 0.18 and with 0.11, the version of the pipeline (`stage2/miniprot_junctions.py`, `scripts/miniprot_v011.sh`);
+the alignments of the final pipeline run were read in the same way. For the best alignment of each protein over each
+gold-standard gene, the codon was called with the pipeline's rule (selenocysteine aligned to a TGA codon, or
+immediately after the end of the alignment with TGA as next codon), and the alignment was compared with the
+gold-standard model: the codon against the selenocysteine, the intron overlapping the gold-standard intron nearest to
+the codon, and frameshifts (counted from the alignment for miniprot 0.11, which does not report them).
 
 ## Data and code availability
 

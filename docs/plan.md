@@ -1768,3 +1768,13 @@ no earlier step waits for them.
   reads it through with another frameshift. Tables to regenerate on Deigo (no realignment).
   Pipeline's own alignments (job 52125978, miniprot 0.11, profile queries): SELENOT 3 and SEPHS2 26-32 U alignments
   per assembly, none calls the codon, none has an intron at the gold-standard position.
+- miniprot tables regenerated (2026-10-31, Charles, job 52126105, commit 440ab26). Gold-standard proteins, U queries:
+  0.11 calls neither SELENOT nor SEPHS2 in any assembly, every alignment with a frameshift and the selenocysteine
+  against another codon (SELENOT ttc, tac, ttt; SEPHS2 ata, tca, tta in OKI2018, OSKA2016, OdB3), no stop codon; 0.18
+  calls SEPHS2 in all three (U against tga, intron exact) and SELENOT in OdB3 only (OKI2018 ttc, OSKA2016 tac, with a
+  frameshift). Pipeline alignments: same as 0.11 for all queries at these loci (SELENOT and SEPHS2 profile proteins,
+  plus 1-4 bacterial SelD). The pipeline-alignment table reproduces the final run's miniprot calls at the gold-standard
+  genes (missed by miniprot: SELENOT and SEPHS2 everywhere, SELENOS in OSKA2016 and OdB3; stage2_final_sec_sites.tsv).
+  0.18 against 0.11 over all genes: 155 and 144 of 175 calls; differences SEPHS2 (9 pairs) and SELENOT in OdB3 (3) for
+  0.18, GPX_PAR in OSKA2016 with the OKI2018 protein (1) for 0.11. Manuscript: the sentence on SELENOT and SEPHS2 in
+  "Settings for appendicularian genomes ..." rewritten and a Methods paragraph added (Stage 2 runs and benchmark).
