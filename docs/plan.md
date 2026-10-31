@@ -1821,3 +1821,10 @@ no earlier step waits for them.
   supplementation on selenoprotein levels in cells (supplementation not planned: Charles, "unlikely to happen").
   Added on request: optional embryo pools (the other project uses mostly adults of both sexes and may add embryo
   pools); transcriptome profiling with the unit's developmental time course, later, not short term.
+- Manuscript (2026-10-31, Charles: "add to the discussion or limitations or both sections of the manuscript the issue
+  of mass spec validation, make it a question mark if we do it or not following the release of this preprint ... give
+  general directions ... and caveats"; "without disclosing private details"): Discussion "Selenocysteine at the
+  protein level" (three paragraphs: evidence so far and the three levels; what the experiment would need, from the in
+  silico digestion, SELENOI included; caveats from the literature: enrichment from 2 mg protein, peptide length, cryptic
+  species, selenium supply, stage and sex), a short "Limitations" section, a Methods paragraph "In silico digestion",
+  and references Guo2018, Bak2018, Si2025. No facility, culture or collaboration details.

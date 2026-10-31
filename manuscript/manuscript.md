@@ -1252,6 +1252,50 @@ models are needed, could be decided by work centred on the SECIS element itself 
 evaluations that hold out whole lineages and with experimental evidence of selenocysteine insertion; until then, we
 present the model as a description of *Oikopleura* SECIS elements that reproduces our searches on related genomes.
 
+## Selenocysteine at the protein level
+
+> **Provisional paragraphs (2026-10-31).**
+
+The selenoproteome described here rests on genomic and transcript evidence: in-frame TGA codons shared by the cryptic
+species, SECIS elements after the coding sequences, transcripts that read through the codon, and orthology. None of it
+shows that the TGA codons are translated as selenocysteine in *O. dioica*. Mass spectrometry of *O. dioica* proteins
+could show it at three levels of increasing strength: a peptide of the protein shows that the gene is translated; a
+peptide encoded after the TGA codon shows that the codon is read through; and the peptide that holds the selenocysteine,
+with fragment ions on both sides of it and the isotope envelope that selenium gives to its precursor, shows
+selenocysteine at that position [@Guo2018]. Whether such a validation will follow the release of this preprint is an
+open question.
+
+The selenoproteome itself indicates what such an experiment would need (Methods). In the gold-standard proteins of
+OKI2018, trypsin gives a peptide of 7 to 30 residues that holds the selenocysteine for 17 of the 20 genes, and
+chymotrypsin for the other three (GPX_chr1b, TXNL1.b and KKSU). In 14 genes, at least two tryptic peptides lie after the
+selenocysteine. In the other six (SELENOK, SELENOO, SELENOS, TXNRD, TXNL1.b and KKSU), the selenocysteine is one of the
+last three residues, so that only the selenocysteine peptide can show read-through; for TXNL1.b and KKSU, the two genes
+outside the known families, this needs a protease other than trypsin. SELENOI, whose TGA codon was left undecided, is in
+the same situation: its tryptic selenocysteine peptide would have 5 residues in OKI2018, 12 in OSKA2016 and 20 in OdB3,
+given the codons that follow the TGA. The protein database would need the selenoproteins with selenocysteine at the TGA
+position, and the same proteins with cysteine there, so that a cysteine-containing paralog or a wrong gene model is not
+taken for a selenoprotein; the search would allow the conversion of selenocysteine to dehydroalanine, and the shift of
+the monoisotopic peak that the six stable isotopes of selenium cause [@Guo2018].
+
+What is known already brings caveats. Selenoproteins are few and often of low abundance, and their peptides are
+outnumbered by cysteine peptides; the methods that enrich them, by alkylating selenocysteine selectively at low pH
+[@Bak2018; @Guo2018], started from 2 mg of protein per sample [@Guo2018; @Si2025], which for animals a few millimetres
+long means pools of many individuals. Selenocysteine peptides that are long or short escape detection: in mouse, the
+44-residue peptide of GPX3 was not detected [@Guo2018], and in human, the tryptic peptide of TXNRD3, GCUG, is too short
+[@Si2025]; in *O. dioica*, the tryptic peptides of SELENOS, TXNRD and SELENOO need a missed cleavage to reach seven
+residues. The proteins differ between the cryptic species, so that the database has to match the species of the animals,
+whose species-specific peptides would in turn confirm it. Finally, selenoprotein levels can depend on selenium supply,
+as shown in cultured cells [@Guo2018], and may depend on stage and sex, so that the choice of material matters as much
+as the depth of the analysis.
+
+## Limitations
+
+> **Provisional paragraph (2026-10-31).**
+
+This study uses public genomes, annotations and transcripts, and no protein data. Selenocysteine insertion is therefore
+inferred from the genes, their SECIS elements and their transcripts, not observed; how a mass-spectrometry validation
+could be done, and what limits it, is discussed above.
+
 # Methods
 
 ## Genome assemblies, annotations and transcripts
@@ -1896,6 +1940,15 @@ gold-standard gene, the codon was called with the pipeline's rule (selenocystein
 immediately after the end of the alignment with TGA as next codon), and the alignment was compared with the
 gold-standard model: the codon against the selenocysteine, the intron overlapping the gold-standard intron nearest to
 the codon, and frameshifts (counted from the alignment for miniprot 0.11, which does not report them).
+
+## In silico digestion
+
+The gold-standard proteins of the three *O. dioica* assemblies were digested in silico (`stage2/ms_peptides.py`) with
+trypsin (after K or R, not before P), Arg-C (after R, not before P), Glu-C (after E), chymotrypsin (after F, Y or W, not
+before P) and Asp-N (before D), with up to one missed cleavage. For each protein and protease, the shortest peptide of 7
+to 30 residues that holds the selenocysteine was recorded (peptides of 26 to 30 residues only when no shorter one
+exists), with the number of tryptic peptides of 7 to 30 residues, without missed cleavage, that lie entirely after the
+selenocysteine.
 
 ## Data and code availability
 
