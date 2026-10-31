@@ -1730,7 +1730,7 @@ no earlier step waits for them.
   15,344 OKI2018, 7,769 of 18,722 OSKA2016 and 8,525 of 17,189 OdB3 proteins, of which 96% matched the UniProt 2026_03
   table (the others: non-human accessions of merged entries, for example P14131 RS16 of mouse, Q148I3 kish-A, named
   from the title only). Redox or selenium flags: partners 1 of 26 (OKI2018), 1 of 19 (OSKA2016), 2 of 37 (OdB3);
-  other loci in operons 321 of 7,216, 273 of 7,448, 349 of 8,329 (3.7-4.4%); Fisher P 0.51-1 (partners) and 0.39-1
+  other loci in operons 321 of 7,216, 273 of 7,448, 349 of 8,329 (3.7-4.4%); Fisher P 0.509-1 (partners) and 0.39-1
   (immediate neighbours). The flagged partners are oxidoreductases by name and keyword only: retinol dehydrogenase
   (RDH14 in OKI2018, RDH12 in OdB3) in the SEPHS2 operon, NDUFS1 (complex I subunit) after SELENOF (OSKA2016, OdB3); no
   partner has a selenium or selenoprotein annotation. Several partner sets recur in the three assemblies (SELENOS with
