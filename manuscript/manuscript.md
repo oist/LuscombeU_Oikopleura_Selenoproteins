@@ -1538,7 +1538,7 @@ OSKA2016, GenBank for OdB3) were grouped into loci when their coding spans overl
 overlapped a gold-standard selenoprotein gene on its strand were replaced by it, and annotated mRNAs that hold such a
 gene only in their 3′ UTR were kept as loci of their own. Consecutive loci on the same strand whose coding spans were
 at most 500 nucleotides apart formed an operon: the intergenic distance of @Plessy2024, applied to coding spans
-because the OdB3 annotation has no UTRs (@Ganot2004 used less than 300 bp between coding sequences for candidate
+because the OSKA2016 annotation has no UTRs (@Ganot2004 used less than 300 bp between coding sequences for candidate
 operons; the distances are in the table). The SECIS element of each gene was the best hit of the *Oikopleura* model
 (at least 20 bits) in the 2,000 nucleotides after its stop codon that ends before the coding sequence of the next gene
 on the same strand (the best hit of the window can be the SECIS of that gene). Trans-spliced transcripts were the

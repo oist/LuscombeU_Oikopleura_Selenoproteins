@@ -1648,3 +1648,16 @@ no earlier step waits for them.
   trans-splice site; for all loci: stop -> most supported site, and for operon genes followed by another gene, site ->
   next trans-splice site (the intercistronic region measured genome-wide). Figure OPERONS panel B draws the observed
   sites (triangles) and outlines the 23-30 nt window. Tested on the synthetic contig. To rerun: make operons.
+- make operons with polyadenylation sites (2026-10-31, commit f6256d4). Poly(A)-tailed transcripts: OKI2018 733
+  sites, OSKA2016 143 (the Trinity and OSKA assemblies mostly lack the tails), OdB3 39,497 (ESTs). Intercistronic
+  regions measured genome-wide (polyadenylation site to the next trans-splice site, genes followed by another gene of
+  their operon): median 31 nt (OKI2018, n = 76, IQR 29-34), 31 (OSKA2016, n = 9), 33 (OdB3, n = 292, IQR 29-42), close
+  to the 23-30 nt of Ganot 2004. 3' UTR from polyadenylation sites (OdB3): selenoprotein genes followed by a gene of
+  their operon 250.5 nt against 103 for the others (n = 6 and 2,516; Mann-Whitney P = 0.0025); last or outside
+  operons 252 against 128.5 (n = 9 and 4,924; P = 0.076). Per gene (OdB3): SECIS end to polyadenylation site 8 nt
+  (DIO_chr1) to 343 (TXNRD), 32 for SELENOW_PAR; SELENOS has sites at 220-269 nt, overlapping the trans-splice sites
+  of the next gene (266, 272); SELENOT one site at 120 nt, before its SECIS, and two after it (single ESTs).
+  Corrections: the OdB3 annotation does have 3' UTRs; the OSKA2016 one has none (docstring, manuscript Methods);
+  ties between polyadenylation sites now resolved to the 3'-most (priming on genomic A gives spurious upstream
+  sites); 2-nt bins for the intercistronic region. Figure OPERONS: panel D (3' UTR from poly(A) sites, stop to next
+  trans-splice site, intercistronic regions). To rerun: make operons.

@@ -13,7 +13,7 @@ GenBank for OdB3): transcripts with a coding sequence, grouped into loci when th
 strand. Annotated loci whose coding span overlaps that of a gold-standard selenoprotein gene on its strand are
 replaced by the gold-standard gene (curation/gold_standard/<genome>.gff3); an annotated mRNA that only holds the gene
 in its 3' UTR stays a locus of its own (its own coding sequence). Coding spans are used because the three annotations
-do not all have UTRs.
+do not all have UTRs (the OSKA2016 annotation has none).
 Operons: consecutive loci (in contig order) on the same strand whose coding spans are at most --max-gap nt apart
 (the 500-nt intergenic distance of Plessy et al. 2024, applied here to coding spans, which makes it more inclusive);
 position in transcription order: first, internal, last, or single (not in an operon).
@@ -51,12 +51,13 @@ Fisher's exact test (operon or not; first position or not).
 of the next gene (SL transcripts of the whole transcript set, placed as above), and, for all loci, the 3' UTR length
 (annotated exons beyond the coding sequence; for the gold-standard genes, the 3' UTR of the gold-standard model,
 from transcripts): selenoprotein genes against the others (Mann-Whitney U test; medians and quartiles), with the
-distributions of the others in bins for the figure. The OdB3 annotation has no UTRs and its ESTs have masked 5' ends:
-only the distance to the next coding sequence is available there.
+distributions of the others in bins for the figure (--bin nt; 2-nt bins up to 200 nt for the intercistronic
+region). The OSKA2016 annotation has no UTRs; the OdB3 ESTs have masked 5' ends but keep their poly(A) tails.
 Polyadenylation sites: transcripts whose 3' end (read as the mRNA) ends with at least --min-polya A, the alignment
 reaching the tail; the site is the last genome base before the tail (when the tail runs over genomic A, the site
 cannot be placed more precisely). For each gene, the sites after its stop codon (before the next coding sequence on
-the same strand, or within 2,000 nt) and the most supported one: distance from the end of the SECIS element to it and
+the same strand, or within 2,000 nt) and the most supported one (ties: the 3'-most, since priming on
+genomic A-rich stretches gives spurious upstream sites): distance from the end of the SECIS element to it and
 from it to the first trans-splice site of the next gene; for all loci, the distance from the stop codon to the most
 supported site and, for the loci followed by another gene of their operon, from that site to the first trans-splice
 site of the next gene (the intercistronic region, 23 to 30 nt in Ganot et al. 2004).
@@ -336,7 +337,7 @@ def main():
             pa = [((j - ce) if plus else (cs - j)) for j in polya.get((x["contig"], x["strand"]), [])
                   if ((plus and ce < j <= ce + lim) or (not plus and cs - lim <= j < cs))]
             pa_count = collections.Counter(pa)
-            pa_main = min(pa_count, key=lambda o: (-pa_count[o], o)) if pa else None
+            pa_main = min(pa_count, key=lambda o: (-pa_count[o], -o)) if pa else None   # ties: the 3'-most
             rows.append({
                 "genome": g, "gene": name, "contig": x["contig"], "strand": x["strand"],
                 "coding_span": f"{cs + 1}-{ce + 1}", "annotated_as": me.get("annotated_as", "") or "not annotated",
@@ -404,7 +405,7 @@ def main():
                        if ((plus_ and stop_ < j <= stop_ + lim_) or (not plus_ and stop_ - lim_ <= j < stop_))]
                 pa_main_ = None
                 if pas:
-                    cnt = collections.Counter(pas); pa_main_ = min(cnt, key=lambda o: (-cnt[o], o))
+                    cnt = collections.Counter(pas); pa_main_ = min(cnt, key=lambda o: (-cnt[o], -o))
                     vals[("stop to polyadenylation site", ctx, grp)].append(pa_main_)
                 if pos not in ("first", "internal"): continue
                 m = members[l["operon"]]
@@ -433,11 +434,12 @@ def main():
                 utr_rows.append({"genome": g, "measure": meas, "context": ctx, "group": grp, "n": len(v),
                                  "median": med, "q1": q1, "q3": q3,
                                  "mann_whitney_p": (f"{pval:.3g}" if pval != "" else "") if grp == "selenoprotein" else ""})
-            nb = a.bin_max // a.bin
+            bw, bmax = (2, 200) if meas == "polyadenylation site to next trans-splice site" else (a.bin, a.bin_max)
+            nb = bmax // bw
             counts = [0] * (nb + 1)
-            for x in o: counts[min(max(x, 0) // a.bin, nb)] += 1
+            for x in o: counts[min(max(x, 0) // bw, nb)] += 1
             for b, n_ in enumerate(counts):
-                utr_bins.append({"genome": g, "measure": meas, "context": ctx, "bin_start": b * a.bin, "count": n_})
+                utr_bins.append({"genome": g, "measure": meas, "context": ctx, "bin_start": b * bw, "count": n_})
     # neighbours conserved between assemblies
     if neighbour_prot:
         fa = f"{work}/nb.faa"
