@@ -11,7 +11,7 @@ Proteins: each annotated locus is represented by the protein of its longest codi
 genome (internal stop codons read as X); the gold-standard genes are not searched. --proteins-only writes them
 (<work>/<genome>.proteins.faa) and stops.
 Search, either of:
-  - DIAMOND against the Swiss-Prot database of the OIST Bioinformatics User Group (module DB/diamondDB/sprot/2020_06,
+  - DIAMOND against the Swiss-Prot database of the OIST Bioinformatics User Group (module DB/diamondDB/sprot/2022-07, or another release,
     https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human entries only (--taxonlist 9606), outside the
     container (make operon-search), giving <work>/<genome>.diamond.tsv (qseqid sseqid pident evalue bitscore stitle);
   - or, when that file is absent, legacy blastp against --human-fasta (formatdb), giving <work>/<genome>.blastp.tsv.
@@ -84,8 +84,9 @@ def order_of(m):
 
 
 def accession(sid):
-    """UniProt accession from a sequence identifier (sp|P12345|NAME_HUMAN or P12345)."""
-    return sid.split("|")[1] if sid.count("|") >= 2 else sid
+    """UniProt accession from a sequence identifier (sp|P12345|NAME_HUMAN, sp|P12345.3|..., P12345.3 or P12345)."""
+    acc = sid.split("|")[1] if sid.count("|") >= 2 else sid
+    return acc.split(".")[0]
 
 
 def read_human_table(path):
@@ -203,9 +204,9 @@ def main():
             best = best_hits(bl, "blast")
         else:
             sys.exit(f"{g}: no search results ({dmd}): run make operon-search first (or give --human-fasta)")
-        for q, b in best.items():      # names from the UniProt table when the search title has none
+        for q, b in best.items():      # names from the UniProt table when available, else from the search title
             h = info.get(b["acc"])
-            if h and not b["protein"]: b["gene"], b["protein"] = h["gene"], h["protein"]
+            if h: b["gene"], b["protein"] = h["gene"] or b["gene"], h["protein"] or b["protein"]
             b["flags"] = flags_of(b["acc"], b["protein"], info)
         print(f"{g}: {sum(len(L) for L in loci.values())} loci, {len(prot)} proteins, {len(best)} with a human hit",
               flush=True)

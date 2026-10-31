@@ -283,7 +283,7 @@ Outputs: `results/tables/stage2_operons.tsv`, `stage2_operons_summary.tsv`.
 Do the genes that share an operon with a selenoprotein gene have to do with redox or selenium? Loci and operons as in
 `operons.py`; the protein of each annotated locus (longest coding sequence, translated from the genome; `make
 operon-proteins`) is searched by DIAMOND (`--more-sensitive`, E <= 1e-5) in the Swiss-Prot database of the OIST
-Bioinformatics User Group (release 2020_06, https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human
+Bioinformatics User Group (module DB/diamondDB/sprot/2022-07, https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human
 entries only (`--taxonlist 9606`; `scripts/operon_search.sh`, outside the container). Flags of the best hit: from its
 protein name (oxidoreductase-type names; seleno-), and, with the UniProt table of `make human-uniprot` (optional, on a
 node with internet access), its UniProt keywords (Oxidoreductase, Redox-active center, Antioxidant, Selenium,

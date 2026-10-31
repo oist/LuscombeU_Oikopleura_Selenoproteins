@@ -1712,3 +1712,8 @@ no earlier step waits for them.
   entries with keywords and GO IDs; data/references/uniprot_human_sp.tsv.gz, md5 5953b7eb9c05c0cd40c81c2dac8684c2
   (first attempt: HTTP 500 on the compressed stream; the uncompressed stream worked). Searches use Swiss-Prot 2020_06
   (BioinfoUgrp DIAMOND database); the annotation table is matched by accession.
+- Deigo modules checked (2026-10-31, ml avail): DB/diamondDB/sprot/2020_06, 2021-11-28 and 2022-07 (default), with
+  Other/DIAMOND/2.0.4.142 and 2.0.15.153 (default); the 2020_06 directory holds swissprot.dmnd with the NCBI taxonomy
+  files it was built with (nodes.dmp, prot.accession2taxid), so --taxonlist should work. scripts/operon_search.sh now
+  loads sprot/2022-07 with DIAMOND 2.0.15.153 (overridable: SPROT_MODULE, DIAMOND_MODULE); accessions are read with or
+  without version, and the names of the human proteins come from the UniProt table when present.

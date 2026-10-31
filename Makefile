@@ -429,7 +429,7 @@ operons-figure:
 #   1. make operon-proteins (container): proteins of all annotated loci of the three assemblies
 #   2. make operon-search, outside the container, with the Swiss-Prot DIAMOND database of the OIST Bioinformatics
 #      User Group (https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md; scripts/operon_search.sh loads
-#      Other/DIAMOND/2.0.4.142 and DB/diamondDB/sprot/2020_06), human entries only
+#      Other/DIAMOND/2.0.15.153 and DB/diamondDB/sprot/2022-07), human entries only
 #   3. make operon-partners (container): tables
 # Optional, before step 3: make human-uniprot (a node with internet access, at OIST the login node; about 2 MB) for the
 # UniProt keywords and GO terms of the human proteins; without it, the flags come from the protein names only.
@@ -449,7 +449,7 @@ operon-proteins:
 	python3 stage2/operon_partners.py --proteins-only
 
 operon-search:
-	@test -n "$${DIAMONDDB:-}" || { echo "DIAMONDDB is not set: load DB/diamondDB/sprot/2020_06 (scripts/operon_search.sh)" >&2; exit 1; }
+	@test -n "$${DIAMONDDB:-}" || { echo "DIAMONDDB is not set: load a DB/diamondDB/sprot module (scripts/operon_search.sh)" >&2; exit 1; }
 	ls -l $${DIAMONDDB}
 	db=$$(ls $${DIAMONDDB}/*.dmnd | head -n 1); echo "database: $$db"; diamond --version; \
 	for g in OKI OSKA OdB3; do \
