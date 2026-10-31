@@ -1,8 +1,9 @@
 # Mass-spectrometry validation of the selenoproteome: lean plan
 
-Draft of 2026-10-31; nothing started. One pool of whole animals from the Okinawa culture, collected and extracted
-together with another *Oikopleura* project, is analysed by shotgun proteomics on the OIST instruments by a trained
-user; a targeted run follows only if the first one requires it.
+Draft of 2026-10-31; nothing started. One pool of adults from the Okinawa culture (embryo pools optional), collected
+and extracted together with another *Oikopleura* project, is analysed by shotgun proteomics on the OIST instruments by
+a trained user; a targeted run follows only if the first one requires it. Transcriptome profiling of the developmental
+time course can come later.
 
 ## Goal and evidence
 
@@ -69,18 +70,19 @@ was not seen by Guo et al. (2018).
 
 The culture can provide at most a few hundred individuals per week.
 
-1. Take mature adults of both sexes from the routine culture in batches; rinse in filtered seawater, remove the
-   water, snap-freeze in liquid nitrogen, keep at −80 °C; record the number of animals per tube.
+1. Take mature adults of both sexes from the routine culture in batches, as the other project does; rinse in
+   filtered seawater, remove the water, snap-freeze in liquid nitrogen, keep at −80 °C; record the number of animals
+   per tube.
 2. Optional, to agree with the other project: one to two hours in food-free seawater before freezing, so that gut
    algae contribute fewer proteins.
 3. Measure protein per animal on a first batch of about 20 animals; this sets the pool size. Target about 50 µg of
    protein per pool, enough for two digests and a repeat.
 4. Make two pools from different weeks: pool A is analysed, pool B is kept as a replicate.
+5. Optional: embryo pools, shared with the other project, at a stage chosen from the developmental time course (see
+   Transcriptome profiling). Each embryo holds little protein, so a pool may need the embryos of many females; the
+   number follows from the protein measured on a first pool.
 
-Optional, to discuss before step 1: selenium supplementation. In cultured cells, 10 µM selenocysteine for 24 h raised
-the levels of several selenoproteins, some more than 30-fold, and some were detected only after supplementation (Guo et
-al. 2018). A supplemented pool would be a third pool, not mixed with A and B. The tolerated dose for *Oikopleura*, and
-whether to add selenium to the seawater or to the food algae, are unknown and need a small pilot.
+Selenium supplementation, which raised selenoprotein levels in cultured cells (Guo et al. 2018), is not planned.
 
 ## Joint design with the other project
 
@@ -93,6 +95,22 @@ Animals are collected once for both projects; one extraction yields their coenzy
 - If the other project needs native proteins, or coenzymes bound to them, the frozen pool is split before extraction.
 - One proteomics dataset serves both projects: their protein family is searched in the same raw files, with one
   combined protein database.
+
+## Transcriptome profiling (later, not short term)
+
+The unit's developmental RNA-seq time course gives, at no cost in animals, the expression of each selenoprotein and
+machinery gene by stage. It would help to choose the embryo stage for the embryo pools, to rank the genes by their
+chance of detection, and to test transcript-level claims of the paper with independent libraries:
+
+- expression (transcripts per million) of the 20 gold-standard selenoprotein genes, of SEPHS2, PSTK, SEPSECS, EEFSEC
+  and SECISBP2, and of the other project's genes, by stage, in the Okinawa samples mapped to OKI2018 with the
+  gold-standard models added to the annotation;
+- SELENOI: the share of reads with and without the segment that removes the TGA codon, by stage (an artefact of one
+  cDNA library would not recur across stages and libraries);
+- coverage of the 3′ UTRs up to the SECIS elements and the poly(A) sites of the operon genes.
+
+The stages and runs of the time course are to confirm (the unit's data catalogue lists six stages of Okinawa and Osaka
+animals: eggs, 32 cells, tailbud, hatchling, heartbeat, tailshift).
 
 ## Workflow on the OIST instruments
 
@@ -133,10 +151,9 @@ We search the raw files with Free software.
 
 ## Decision points
 
-1. Protein per animal: sets the pool size and whether a 1 to 2 mg pool (step 4 above) is within reach.
+1. Protein per animal: sets the pool size and whether a 1 to 2 mg pool for enrichment (workflow step 4) is within reach.
 2. After the shotgun runs: selenocysteine peptides seen → report per gene; proteins seen without them → targeted run;
    proteins not seen → high-pH fractionation, or pool B with more animals, or stop.
-3. Optional selenium pilot: only if the first round leaves genes at level 1 or none.
 
 ## Questions to settle
 
@@ -149,8 +166,8 @@ At the first consultation with IAS:
 
 With the culture:
 
-- [ ] Protein per animal, measured on about 20 animals.
-- [ ] Stage and sex ratio of the collected animals.
+- [ ] Protein per animal, measured on about 20 animals, and per embryo.
+- [ ] Embryo stage for the embryo pools, after the transcriptome profiling.
 
 With the other project:
 

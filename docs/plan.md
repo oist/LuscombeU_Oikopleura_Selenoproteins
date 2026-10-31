@@ -1818,4 +1818,6 @@ no earlier step waits for them.
   C-terminus in SELENOK, SELENOO, SELENOS, TXNRD, TXNL1.b, KKSU; 17 of 20 proteins below 30 kDa. Guo et al. 2018 (PDF
   with STAR Methods and supplement, attached by Charles) gave the level-3 criteria, the selenium isotope abundances, a
   Q-Exactive HF method, the Mascot settings (dehydroalanine on U, isotope error) and the effect of Sec
-  supplementation on selenoprotein levels in cells (optional pilot in the plan).
+  supplementation on selenoprotein levels in cells (supplementation not planned: Charles, "unlikely to happen").
+  Added on request: optional embryo pools (the other project uses mostly adults of both sexes and may add embryo
+  pools); transcriptome profiling with the unit's developmental time course, later, not short term.
