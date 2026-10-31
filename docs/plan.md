@@ -1701,3 +1701,10 @@ no earlier step waits for them.
     near-direct repeats during reverse transcription (cDNA libraries of all three sets). Side finding: in OKI2018 the
     transcripts skip 42 nt of the genome at -102..-60 (AG-TG, no canonical placement), where OSKA2016 and OdB3 have a
     GT-AG intron at -189/-196..-63: an indel in the OKI2018 assembly or a different exon structure (not examined).
+- Operon partners, search changed (2026-10-31, Charles: "If possible I would like to reuse
+  https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md"): DIAMOND against the Swiss-Prot 2020_06 database of
+  the OIST Bioinformatics User Group (modules Other/DIAMOND/2.0.4.142, DB/diamondDB/sprot/2020_06; --taxonlist 9606),
+  outside the container (scripts/operon_search.sh, make operon-search), between make operon-proteins and make
+  operon-partners. Names of the human proteins from the Swiss-Prot titles; flags from the names, and from UniProt
+  keywords and GO terms when the small table of make human-uniprot is present (it no longer downloads the FASTA).
+  Fisher's test computed without scipy (checked against it).

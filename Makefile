@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-partners miniprot-junctions selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -424,22 +424,39 @@ operons:
 operons-figure:
 	python3 figures/operons_figure.py
 
-# Reviewed human proteome of UniProt (Swiss-Prot, UP000005640) with keywords and GO terms, for operon-partners; a
-# download of about 10 MB, to run on a node with internet access (at OIST, the login node), not in a job
+# Genes sharing an operon with a selenoprotein gene (stage2/operon_partners.py): best human hits and redox/selenium
+# flags, against the other genes in operons. Three steps:
+#   1. make operon-proteins (container): proteins of all annotated loci of the three assemblies
+#   2. make operon-search, outside the container, with the Swiss-Prot DIAMOND database of the OIST Bioinformatics
+#      User Group (https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md; scripts/operon_search.sh loads
+#      Other/DIAMOND/2.0.4.142 and DB/diamondDB/sprot/2020_06), human entries only
+#   3. make operon-partners (container): tables
+# Optional, before step 3: make human-uniprot (a node with internet access, at OIST the login node; about 2 MB) for the
+# UniProt keywords and GO terms of the human proteins; without it, the flags come from the protein names only.
+OPERON_WORK = work/stage2/operon_partners
 HUMAN_UNIPROT_QUERY = %28proteome%3AUP000005640%29%20AND%20%28reviewed%3Atrue%29
 human-uniprot:
 	mkdir -p data/references
-	curl -sSfL -D data/references/uniprot_human_sp.headers.txt -o data/references/uniprot_human_sp.fasta.gz \
-	  "https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=fasta&query=$(HUMAN_UNIPROT_QUERY)"
-	curl -sSfL -o data/references/uniprot_human_sp.tsv.gz \
+	curl -sSfL -D data/references/uniprot_human_sp.headers.txt -o data/references/uniprot_human_sp.tsv.gz \
 	  "https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=tsv&fields=accession%2Cid%2Cgene_primary%2Cprotein_name%2Ckeyword%2Cgo_id&query=$(HUMAN_UNIPROT_QUERY)"
-	md5sum data/references/uniprot_human_sp.fasta.gz data/references/uniprot_human_sp.tsv.gz | tee data/references/uniprot_human_sp.md5
+	md5sum data/references/uniprot_human_sp.tsv.gz | tee data/references/uniprot_human_sp.md5
 	date -u +%Y-%m-%dT%H:%MZ > data/references/uniprot_human_sp.date
 	grep -i "x-uniprot-release" data/references/uniprot_human_sp.headers.txt || true
 
-# Genes sharing an operon with a selenoprotein gene: best human hits (blastp) and redox/selenium flags, against the
-# other genes in operons (after make human-uniprot; an hour or two), for example
-#   sbatch -p compute --cpus-per-task=16 --mem=16G --time=6:00:00 scripts/run_in_container.sh make operon-partners
+operon-proteins:
+	python3 stage2/operon_partners.py --proteins-only
+
+operon-search:
+	@test -n "$${DIAMONDDB:-}" || { echo "DIAMONDDB is not set: load DB/diamondDB/sprot/2020_06 (scripts/operon_search.sh)" >&2; exit 1; }
+	ls -l $${DIAMONDDB}
+	db=$$(ls $${DIAMONDDB}/*.dmnd | head -n 1); echo "database: $$db"; diamond --version; \
+	for g in OKI OSKA OdB3; do \
+	  diamond blastp --db $$db --query $(OPERON_WORK)/$$g.proteins.faa --taxonlist 9606 --more-sensitive \
+	    --evalue 1e-5 --max-target-seqs 5 --threads $${SLURM_CPUS_PER_TASK:-1} \
+	    --outfmt 6 qseqid sseqid pident evalue bitscore stitle --out $(OPERON_WORK)/$$g.diamond.tsv.part \
+	  && mv $(OPERON_WORK)/$$g.diamond.tsv.part $(OPERON_WORK)/$$g.diamond.tsv || exit 1; \
+	done
+
 operon-partners:
 	python3 stage2/operon_partners.py
 

@@ -278,17 +278,21 @@ the upstream neighbour into the gene, and whether the neighbours are homologous 
 three loci, annotated model replaced by the gold-standard gene, SL read in both transcript orientations).
 Outputs: `results/tables/stage2_operons.tsv`, `stage2_operons_summary.tsv`.
 
-## Operon partners (`operon_partners.py`, `make human-uniprot`, `make operon-partners`)
+## Operon partners (`operon_partners.py`, `make operon-proteins`, `make operon-search`, `make operon-partners`)
 
 Do the genes that share an operon with a selenoprotein gene have to do with redox or selenium? Loci and operons as in
-`operons.py`; the protein of each annotated locus (longest coding sequence, translated from the genome) is searched in
-the reviewed human proteome of UniProt (`make human-uniprot`, on a node with internet access) by legacy blastp
-(E <= 1e-5); the best hit's UniProt keywords (Oxidoreductase, Redox-active center, Antioxidant, Selenium,
+`operons.py`; the protein of each annotated locus (longest coding sequence, translated from the genome; `make
+operon-proteins`) is searched by DIAMOND (`--more-sensitive`, E <= 1e-5) in the Swiss-Prot database of the OIST
+Bioinformatics User Group (release 2020_06, https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human
+entries only (`--taxonlist 9606`; `scripts/operon_search.sh`, outside the container). Flags of the best hit: from its
+protein name (oxidoreductase-type names; seleno-), and, with the UniProt table of `make human-uniprot` (optional, on a
+node with internet access), its UniProt keywords (Oxidoreductase, Redox-active center, Antioxidant, Selenium,
 Selenocysteine) and directly annotated GO terms (cell redox homeostasis, response to oxidative stress, cellular oxidant
-detoxification, antioxidant and peroxidase activity, selenium compound and selenocysteine metabolism) give the flags.
-Partners and immediate neighbours of the selenoprotein genes are compared with the other loci in operons (Fisher's
-exact test), per assembly. Tested on a synthetic contig (operon of four loci with a gold-standard gene, a second
-operon, two single loci; four human proteins). Outputs: `results/tables/stage2_operon_partners.tsv`,
+detoxification, antioxidant and peroxidase activity, selenium compound and selenocysteine metabolism). Partners and
+immediate neighbours of the selenoprotein genes are compared with the other loci in operons (Fisher's exact test), per
+assembly. A legacy blastp fallback (`--human-fasta`) exists for use without the database. Tested on a synthetic contig
+(operon of four loci with a gold-standard gene, a second operon, two single loci; four human proteins; mock DIAMOND
+output; Fisher's test checked against scipy). Outputs: `results/tables/stage2_operon_partners.tsv`,
 `stage2_operon_partners_summary.tsv`; best hits of all loci in `work/stage2/operon_partners/<genome>.loci.tsv`.
 
 ## miniprot at the selenocysteine codon (`miniprot_junctions.py`, `make miniprot-junctions`)
