@@ -133,7 +133,7 @@ def panel_b(ax, rows, max_d):
     ax.add_patch(Polygon([[xk + 12, yk - 2.85], [xk + 5, yk - 3.25], [xk + 19, yk - 3.25]], closed=True,
                          fc="#e08214", ec="none"))
     ax.add_patch(Rectangle((xk + 32, yk - 3.33), 7, 0.66, fc="none", ec="#e08214", lw=0.6))
-    ax.text(xt, yk - 3, "polyadenylation site; box: 23-30 nt before next SL",
+    ax.text(xt, yk - 3, "poly(A) site; box: 23-30 nt before next SL",
             fontsize=FS - 1, va="center")
     ax.plot([xk + 20, xk + 20], [yk - 4.2, yk - 3.75], color="black", lw=0.8)
     ax.add_patch(Rectangle((xk + 20, yk - 3.9), 14, 0.15, fc="black"))
@@ -206,7 +206,7 @@ def panel_d(axes, rows, bins, utr):
     # D1
     for ctx, ls in (("followed in operon", "-"), ("last or single", "--")):
         k = ("OdB3", "stop to polyadenylation site", ctx)
-        if k in bins: ecdf(d1, *bins[k], COL["OdB3"], ls=ls, label=f"other genes, {ctx}")
+        if k in bins: ecdf(d1, *bins[k], COL["OdB3"], ls=ls, label=f"others, {ctx}")
     for r in rows:
         if r["genome"] == "OdB3" and r["polya_main_after_stop"]:
             x = int(r["polya_main_after_stop"]); fol = r["operon_position"] in ("first", "internal")
@@ -214,9 +214,15 @@ def panel_d(axes, rows, bins, utr):
                     clip_on=False)
     p = [stat.get(("OdB3", "stop to polyadenylation site", c, "selenoprotein"), {}).get("mann_whitney_p", "")
          for c in ("followed in operon", "last or single")]
-    d1.set_title("3' UTR (OdB3 poly(A) sites)" + (f"\nP = {p[0]}; {p[1]}" if p[0] else ""), fontsize=FS - 1)
-    d1.set_ylim(0, 1.0); d1.set_xlim(0, 800); d1.set_xlabel("stop codon to polyadenylation site (nt)", fontsize=FS - 1)
-    d1.legend(fontsize=FS - 2.5, frameon=False, loc="lower right")
+    d1.set_title("3' UTR (OdB3 poly(A) sites)" + (f"\nP = {float(p[0]):.2g}; {float(p[1]):.2g}" if p[0] else ""),
+                 fontsize=FS - 1, pad=26)
+    d1.set_ylim(0, 1.0); d1.set_xlim(0, 800); d1.set_xlabel("stop codon to poly(A) site (nt)", fontsize=FS - 1)
+    from matplotlib.lines import Line2D
+    h, l = d1.get_legend_handles_labels()
+    h += [Line2D([], [], marker="|", ls="none", ms=7, color=COL["OdB3"]),
+          Line2D([], [], marker="|", ls="none", ms=7, color=COL["OdB3"], alpha=0.5)]
+    l += ["selenoprotein (ticks), followed", "selenoprotein (ticks), last or single"]
+    d1.legend(h, l, fontsize=FS - 2.5, frameon=False, loc="lower right")
     # D2
     for g in COL:
         k = (g, "stop to next trans-splice site", "followed in operon")
@@ -226,9 +232,12 @@ def panel_d(axes, rows, bins, utr):
             x = min(int(v.rstrip("*")) for v in r["next_gene_sl_sites_after_stop"].split(","))
             d2.plot([x], [1.06 + 0.05 * list(COL).index(r["genome"])], marker="|", ms=6, color=COL[r["genome"]],
                     clip_on=False)
-    d2.set_title("genes followed by a gene of their operon", fontsize=FS - 1)
+    d2.set_title("genes followed by a gene of their operon", fontsize=FS - 1, pad=26)
     d2.set_ylim(0, 1.0); d2.set_xlim(0, 800); d2.set_xlabel("stop codon to next trans-splice site (nt)", fontsize=FS - 1)
-    d2.legend(fontsize=FS - 2.5, frameon=False, loc="lower right")
+    h, l = d2.get_legend_handles_labels()
+    h += [Line2D([], [], marker="|", ls="none", ms=6, color="black")]
+    l += ["selenoprotein genes (ticks)"]
+    d2.legend(h, l, fontsize=FS - 2.5, frameon=False, loc="lower right")
     # D3
     for g in COL:
         k = (g, "polyadenylation site to next trans-splice site", "followed in operon")
@@ -238,9 +247,9 @@ def panel_d(axes, rows, bins, utr):
                 d3.step(xs, [c / tot for c in cs], where="post", color=COL[g], lw=0.9,
                         label=f"{NAME[g]} (n = {tot})")
     d3.axvspan(23, 30, color="#fde0b0", zorder=0)
-    d3.text(26.5, d3.get_ylim()[1] * 0.95 if d3.get_ylim()[1] else 0.2, "Ganot\n2004", fontsize=FS - 2.5, ha="center",
+    d3.text(22, d3.get_ylim()[1] * 0.95 if d3.get_ylim()[1] else 0.2, "Ganot\n2004", fontsize=FS - 2.5, ha="right",
             va="top")
-    d3.set_xlim(0, 100); d3.set_xlabel("polyadenylation site to next trans-splice site (nt)", fontsize=FS - 1)
+    d3.set_xlim(0, 100); d3.set_xlabel("poly(A) site to next trans-splice site (nt)", fontsize=FS - 1)
     d3.set_title("intercistronic regions", fontsize=FS - 1)
     d3.legend(fontsize=FS - 2.5, frameon=False, loc="upper right")
     for ax in axes:
