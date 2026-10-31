@@ -1613,3 +1613,12 @@ no earlier step waits for them.
   acceptor was found; fixed (the trans-splice site is placed from the end of the SL in the transcript). Added: the SL
   trans-splice sites of the next gene between the two coding sequences, and the space between the SECIS and the
   first of them. Tested on a synthetic contig (alignment starting inside the SL, antisense transcript). To rerun.
+- make operons, second run (2026-10-31, commit 805135c): trans-splice sites now AG in nearly every case (for example
+  OKI2018 SEPHS2 10 of 10, GPX_PAR 16 of 16); 5' UTRs of the SL-spliced selenoprotein mRNAs mostly 0-34 nt. SL found
+  for 12 of 20 genes in OKI2018 and 15 of 20 in OSKA2016, 4 in OdB3 (ESTs with masked 5' ends). Space between the
+  SECIS and the first trans-splice site of the next gene: 66 nt (OKI2018 SELENOW_PAR), 75 (OSKA2016 SEPHS2), 93
+  (OSKA2016 TXNL1.b), 114-149 (SELENOF, SELENOS), more for the others. Correction of the first-run note on
+  SELENOW_pair2: it has its own SECIS 23-92 nt after its stop codon in the three assemblies (42.7, 35.8, 36.6 bits),
+  before SELENOW_pair1; operons.py took the best hit of the 2-kb window, which was the pair1 SECIS. Fixed: the SECIS
+  of a gene is the best hit that ends before the next gene on the same strand (all hits listed). No bicistronic
+  dependence. To rerun.

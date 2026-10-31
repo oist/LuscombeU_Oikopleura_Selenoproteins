@@ -20,10 +20,11 @@ position in transcription order: first, internal, last, or single (not in an ope
 For each gold-standard gene:
   - its neighbours on each side (any strand), their strand and distance (coding span to coding span), and the
     operon it belongs to (members, position);
-  - the SECIS element: best hit of the Oikopleura model (results/models/oikopleura_secis.cm, cmsearch, sense strand,
-    at least --secis-bits) in the 2,000 nt after the stop codon (curation/gold_standard/<genome>.after_stop.fa), its
-    distance from the stop codon, and the space left before the coding sequence of the next gene downstream on the
-    same strand;
+  - the SECIS element: hits of the Oikopleura model (results/models/oikopleura_secis.cm, cmsearch, sense strand, at
+    least --secis-bits) in the 2,000 nt after the stop codon (curation/gold_standard/<genome>.after_stop.fa); the
+    SECIS of the gene is the best hit that ends before the coding sequence of the next gene on the same strand (the
+    best hit of the window can be the SECIS of that gene), or else the best hit (noted); its distance from the stop
+    codon, and the space left before the coding sequence of the next gene downstream on the same strand;
   - 3' UTR length and polyadenylation signal of the gold-standard model (results/tables/gold_standard.tsv);
   - SL: transcripts of the assembly (alignments of make gold-standard, work/stage2/gold_standard/<genome>.transcripts.paf;
     sequences from the samplesheet) that overlap the gene and start with the 3' end (--sl) of the 40-nt O. dioica SL
@@ -168,7 +169,7 @@ def main():
             k = order.index(l)
             return "first" if k == 0 else "last" if k == len(order) - 1 else "internal"
         # SECIS after the stop codon
-        hits = {}
+        hits = collections.defaultdict(list)
         tbl = f"{work}/{g}.tbl"
         run(["cmsearch", "--toponly", "-T", str(a.secis_bits), "--cpu", str(a.cpus), "--tblout", tbl, "-o", os.devnull,
              a.model, f"{a.gold}/{g}.after_stop.fa"])
@@ -176,7 +177,7 @@ def main():
             if l.startswith("#"): continue
             f = l.split()
             name = f[0].split("|")[0]
-            if name not in hits or float(f[14]) > hits[name][0]: hits[name] = (float(f[14]), int(f[7]), int(f[8]))
+            hits[name].append((float(f[14]), int(f[7]), int(f[8])))
         # genome sequence for neighbour proteins
         contigs = {k: v.upper() for k, v in read_fasta(sheet[g]["fasta"], {x["contig"] for x in genes.values()})}
         # transcripts for the SL
@@ -213,8 +214,14 @@ def main():
                     cds = "".join(contigs[r["contig"]][s:e + 1] for s, e in sorted(r["cds"]))
                     neighbour_prot[f"{g}|{name}|{side}"] = tr(cds if r["strand"] == "+" else rc(cds)).rstrip("*")
             m = members[me["operon"]]
-            sec = hits.get(name)
             down_same = down if down is not None and down["strand"] == x["strand"] else None
+            # SECIS: the best hit that ends before the coding sequence of the next gene on the same strand (the best
+            # hit in the 2,000 nt can be the SECIS of that gene: SELENOW_pair2 and SELENOW_pair1), else the best hit
+            hs = hits.get(name, [])
+            limit = gap(down_same) if down_same is not None else None
+            before = [h for h in hs if limit is None or h[2] <= limit]
+            sec = max(before) if before else (max(hs) if hs else None)
+            sec_note = "" if before or not hs else "only beyond the next gene"
             gt = gtab.get((g, name), {})
             # SL transcripts
             lo, hi = x["mrna"]
@@ -261,6 +268,8 @@ def main():
                 "operon_members": ",".join(l["ids"][0] for l in (m if plus else m[::-1])),
                 "secis_bits": f"{sec[0]:.1f}" if sec else "none",
                 "secis_after_stop": f"{sec[1]}-{sec[2]}" if sec else "",
+                "secis_note": sec_note,
+                "secis_hits_after_stop": ";".join(f"{h[1]}-{h[2]}:{h[0]:.1f}" for h in sorted(hs, key=lambda h: h[1])),
                 "next_gene_same_strand_after_stop": gap(down_same) if down_same is not None else "",
                 "next_gene_sl_sites_after_stop": ",".join(f"{o}{'' if ag else '*'}" for o, ag in sorted(next_sl)),
                 "space_secis_to_next_sl_site": (first_next - sec[2] - 1) if (sec and first_next is not None) else "",
