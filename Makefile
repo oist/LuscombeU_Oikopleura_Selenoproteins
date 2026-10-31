@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -472,6 +472,16 @@ operon-partners:
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2:00:00 scripts/run_in_container.sh make miniprot-junctions
 miniprot-junctions:
 	python3 stage2/miniprot_junctions.py
+
+# The same comparison on the alignments of the stage 2 final pipeline run itself (miniprot 0.11, profile queries;
+# seconds); with miniprot 0.11 on the gold-standard proteins: sbatch -p compute scripts/miniprot_v011.sh
+PIPELINE_FINAL ?= work/stage2/pipeline/final
+miniprot-junctions-pipeline:
+	@test -d $(PIPELINE_FINAL)/miniprot || { echo "no $(PIPELINE_FINAL)/miniprot: set PIPELINE_FINAL to the outdir of the stage 2 final run" >&2; exit 1; }
+	@q=$$(ls $(PIPELINE_FINAL)/profile/*.faa 2>/dev/null | head -n 1); test -n "$$q" || { echo "no query FASTA in $(PIPELINE_FINAL)/profile" >&2; exit 1; }; \
+	echo "queries: $$q"; ls $(PIPELINE_FINAL)/miniprot; \
+	python3 stage2/miniprot_junctions.py --from-gff $(PIPELINE_FINAL)/miniprot --queries $$q \
+	  --work work/stage2/miniprot_junctions_pipeline --table results/tables/stage2_miniprot_junctions_pipeline.tsv
 
 # SELENOI: placement and splice sites of the junction that removes the TGA segment (minimap2 on the sequences of
 # make selenoi-regions, which are in the repository; seconds)

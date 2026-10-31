@@ -1725,3 +1725,25 @@ no earlier step waits for them.
   hit to the UniProt table by accession without version, else by entry-name prefix (THIO_PANTR -> THIO_HUMAN), takes
   names from the first title, and reports how many best hits matched; make operon-search falls back to a search
   without --taxonlist (200 targets, rows with _HUMAN kept) if the taxonomy filter fails.
+- Deigo runs of 2026-10-31 (Charles, commit 2fcf85a; jobs 52125656-52125659).
+  Operon partners: DIAMOND 2.0.15 on sprot/2022-07 with --taxonlist 9606 (no fallback needed); human hits for 8,464 of
+  15,344 OKI2018, 7,769 of 18,722 OSKA2016 and 8,525 of 17,189 OdB3 proteins, of which 96% matched the UniProt 2026_03
+  table (the others: non-human accessions of merged entries, for example P14131 RS16 of mouse, Q148I3 kish-A, named
+  from the title only). Redox or selenium flags: partners 1 of 26 (OKI2018), 1 of 19 (OSKA2016), 2 of 37 (OdB3);
+  other loci in operons 321 of 7,216, 273 of 7,448, 349 of 8,329 (3.7-4.4%); Fisher P 0.51-1 (partners) and 0.39-1
+  (immediate neighbours). The flagged partners are oxidoreductases by name and keyword only: retinol dehydrogenase
+  (RDH14 in OKI2018, RDH12 in OdB3) in the SEPHS2 operon, NDUFS1 (complex I subunit) after SELENOF (OSKA2016, OdB3); no
+  partner has a selenium or selenoprotein annotation. Several partner sets recur in the three assemblies (SELENOS with
+  SON, STK11 and WDR82; SELENOW_PAR with EEF2K, kish-A, ZCCHC8 and SLC35A2; SELENOK with CPLANE2; SELENOW_chr2 with
+  TDRD9; SELENOW_pair with IWS1 and CDC37; SEPHS2 with GRAMD1B/C, REXO2 and RDH in OKI2018 and OdB3), conservation of
+  operon composition not compared with other operons. Reading: no sign that selenoprotein genes share operons with
+  redox or selenium genes more than other genes; low power: P < 0.05 would need 4 of 26 (OKI2018), 3 of 19
+  (OSKA2016) and 5 of 37 (OdB3) flagged partners (computed with the same test).
+  miniprot junctions (miniprot 0.18, gold-standard proteins): SEPHS2 called in all three assemblies by all queries,
+  the intron 1 nt from the codon placed exactly, so the manuscript's explanation ("miniprot may move the junction to
+  avoid an in-frame stop codon") does not hold for SEPHS2 with these queries and this version. SELENOT: called in OdB3
+  (42-nt intron 2 nt after the codon placed exactly; one in-frame stop reported, the TGA), not in OKI2018 or OSKA2016
+  (no alignment intron at the 44-nt intron, one frameshift, no in-frame stop): consistent with the explanation there.
+  The pipeline (miniprot 0.11, profile queries) called neither gene in any assembly, so the difference lies in the
+  version or the queries: make miniprot-junctions-pipeline (the final run's own alignments) and scripts/miniprot_v011.sh
+  (gold-standard proteins with miniprot 0.11) separate the two. Manuscript sentence to revise after them.

@@ -308,7 +308,19 @@ gene is compared with the gold-standard model: the pipeline's rule for calling t
 after the alignment end with TGA as next codon; code copied from the pipeline's `bin/sec_check.py`), whether the codon
 lies in one CDS feature and in frame, and the shift of the alignment's intron that overlaps the gold-standard intron
 nearest to the codon. The container has miniprot 0.18; the pipeline's module pins 0.11. Tested on a synthetic gene on
-both strands with a mock miniprot output. Output: `results/tables/stage2_miniprot_junctions.tsv`.
+both strands with a mock miniprot output. Output: `results/tables/stage2_miniprot_junctions.tsv`. The frame in
+`codon_in_cds` is counted from the CDS lengths and is not reliable when the alignment has frameshifts.
+
+First run (2026-10-31, miniprot 0.18): SEPHS2 is called in the three assemblies with every gold-standard protein, the
+intron 1 nt from the codon placed exactly; SELENOT is called in OdB3 (the 42-nt intron 2 nt after the codon placed
+exactly) but not in OKI2018 or OSKA2016, where no alignment intron overlaps the corresponding 44-nt intron and every
+alignment has one frameshift and no in-frame stop codon. Two follow-ups separate the miniprot version from the queries:
+- `make miniprot-junctions-pipeline`: the same table from the alignments of the stage 2 final run itself
+  (`<outdir>/miniprot/<genome>.gff`, miniprot 0.11, the Sec-containing profile sequences of
+  `<outdir>/profile/*.faa`), one row per query whose best alignment overlaps a gold-standard gene; output
+  `results/tables/stage2_miniprot_junctions_pipeline.tsv`;
+- `scripts/miniprot_v011.sh` (sbatch): the gold-standard queries aligned with miniprot 0.11 (image of the pipeline's
+  module, run outside the analysis container); output `results/tables/stage2_miniprot_junctions_v0.11.tsv`.
 
 ## SELENOI junction (`selenoi_junction.py`, `make selenoi-junction`)
 

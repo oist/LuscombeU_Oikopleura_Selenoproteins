@@ -19,6 +19,14 @@ gold-standard model:
   - frameshifts and stop codons reported by miniprot (fs, st tags).
 Default genes: all gold-standard genes, so that SELENOT and SEPHS2 can be compared with the genes miniprot finds.
 Output: --table; miniprot outputs in --work.
+
+Other uses (both read existing miniprot GFF files instead of aligning):
+  - --from-gff DIR: the alignments in DIR/<genome>.gff, for example made with another miniprot version from
+    <work>/queries.faa (--queries-only writes it and stops; scripts/miniprot_v011.sh does this with miniprot 0.11,
+    the version of the pipeline);
+  - --from-gff DIR --queries FASTA: the pipeline's own alignments (DIR = <outdir>/miniprot of a pipeline run, FASTA =
+    its <outdir>/profile/selenoprotein_queries.faa): one row per query whose best alignment overlaps a gold-standard
+    gene on its strand, residue U.
 """
 import argparse, collections, csv, os, re, subprocess, sys
 
@@ -105,6 +113,9 @@ def main():
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--work", default="work/stage2/miniprot_junctions")
     ap.add_argument("--table", default="results/tables/stage2_miniprot_junctions.tsv")
+    ap.add_argument("--queries-only", action="store_true", help="write <work>/queries.faa and stop")
+    ap.add_argument("--from-gff", help="read DIR/<genome>.gff instead of running miniprot")
+    ap.add_argument("--queries", help="with --from-gff: the query proteins of those alignments (pipeline queries)")
     a = ap.parse_args()
     os.makedirs(a.work, exist_ok=True)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
@@ -118,36 +129,56 @@ def main():
             if a.genes and gene not in a.genes: continue
             if "U" not in s: continue
             prots[(gene, g)] = s.rstrip("*")
-    qfa = os.path.join(a.work, "queries.faa")
+    # queries: name -> {seq, gene (None: any gold-standard gene), label, residue, uidx}
     queries = {}
-    with open(qfa, "w") as o:
+    if a.queries:
+        for name, s in read_fasta(a.queries):
+            s = s.upper().rstrip("*")
+            if "U" in s:
+                queries[name.split()[0]] = {"seq": s, "gene": None, "label": name.split()[0], "residue": "U",
+                                            "uidx": s.index("U")}
+    else:
+        text = []
         for (gene, src), s in sorted(prots.items()):
             for var, seq in (("U", s), ("C", s.replace("U", "C"))):
-                q = f"{gene}|{src}|{var}"; queries[q] = seq; o.write(f">{q}\n{seq}\n")
+                q = f"{gene}|{src}|{var}"; text.append(f">{q}\n{seq}\n")
+                queries[q] = {"seq": seq, "gene": gene, "label": f"{src} protein, U as {var}", "residue": var,
+                              "uidx": s.index("U")}
+        qfa = os.path.join(a.work, "queries.faa")
+        text = "".join(text)
+        if not os.path.exists(qfa) or open(qfa).read() != text:   # unchanged file: alignments made from it stay valid
+            with open(qfa, "w") as o: o.write(text)
+        if a.queries_only:
+            print(f"wrote {qfa}: {len(queries)} queries", flush=True); return
     rows = []
     for g in a.genomes:
         golds = gold_models(f"{a.gold}/{g}.gff3")
-        idx, gff = os.path.join(a.work, f"{g}.mpi"), os.path.join(a.work, f"{g}.gff")
-        if not os.path.exists(idx):
-            subprocess.run([a.miniprot, "-t", str(a.cpus), "-d", idx, sheet[g]["fasta"]], check=True)
-        if not os.path.exists(gff) or os.path.getmtime(gff) < os.path.getmtime(qfa):
-            with open(gff + ".part", "w") as o:
-                subprocess.run([a.miniprot, "-t", str(a.cpus), "-I", "--gff", idx, qfa], check=True, stdout=o)
-            os.replace(gff + ".part", gff)
+        if a.from_gff:
+            gff = os.path.join(a.from_gff, f"{g}.gff")
+        else:
+            idx, gff = os.path.join(a.work, f"{g}.mpi"), os.path.join(a.work, f"{g}.gff")
+            if not os.path.exists(idx):
+                subprocess.run([a.miniprot, "-t", str(a.cpus), "-d", idx, sheet[g]["fasta"]], check=True)
+            if not os.path.exists(gff) or os.path.getmtime(gff) < os.path.getmtime(qfa):
+                with open(gff + ".part", "w") as o:
+                    subprocess.run([a.miniprot, "-t", str(a.cpus), "-I", "--gff", idx, qfa], check=True, stdout=o)
+                os.replace(gff + ".part", gff)
         alns = read_miniprot_gff(gff)
         contigs = {k: v.upper() for k, v in read_fasta(sheet[g]["fasta"], {m["contig"] for m in golds.values()})}
         by_q = collections.defaultdict(list)
         for al in alns: by_q[al["query"]].append(al)
-        for q, qseq in sorted(queries.items()):
-            gene, src, var = q.split("|")
+        for gene, q in sorted((gn, q) for gn in golds for q in queries if queries[q]["gene"] in (None, gn)):
+            if a.genes and gene not in a.genes: continue
+            Q = queries[q]
             m = golds.get(gene)
             if m is None or (g, gene) not in sec: continue
             plus = m["strand"] == "+"
             c0 = sec[(g, gene)]                       # first base (lowest coordinate) of the TGA
-            uidx = prots[(gene, src)].index("U")
+            qseq, var, uidx = Q["seq"], Q["residue"], Q["uidx"]
             hits = [al for al in by_q.get(q, []) if al["contig"] == m["contig"] and al["strand"] == m["strand"]
                     and al["tstart"] <= m["span"][1] and m["span"][0] <= al["tend"] - 1]
-            row = {"genome": g, "gene": gene, "query": f"{src} protein, U as {var}", "alignment": "none"}
+            if Q["gene"] is None and not hits: continue
+            row = {"genome": g, "gene": gene, "query": Q["label"], "alignment": "none"}
             gi = introns(m["cds"])
             near = min(gi, key=lambda iv: min(abs(iv[0] - c0), abs(iv[1] - c0))) if gi else None
             if near:
@@ -201,11 +232,19 @@ def main():
         o.write("\t".join(cols) + "\n")
         for r in rows: o.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
     print(f"wrote {a.table}: {len(rows)} rows", flush=True)
-    for gene in ("SELENOT", "SEPHS2"):
-        for r in rows:
-            if r["gene"] == gene and r["query"].endswith("U as U"):
-                print(gene, r["genome"], r["query"], r.get("sec_support", ""), r.get("codon_in_cds", ""),
-                      r.get("intron_donor_shift", ""), r.get("intron_acceptor_shift", ""), flush=True)
+    # summary: per assembly and gene, alignments with U at the selenocysteine position, with the codon called, and
+    # with the gold-standard intron nearest to the codon (no shift), without it, or with frameshifts
+    for gene in sorted({r["gene"] for r in rows}):
+        for g in a.genomes:
+            rs = [r for r in rows if r["gene"] == gene and r["genome"] == g and r["alignment"] != "none"
+                  and (a.queries or r["query"].endswith("U as U"))]
+            if not rs: continue
+            called = sum(r.get("sec_support") in ("aligned", "next_codon") for r in rs)
+            exact = sum(r.get("intron_donor_shift") == 0 and r.get("intron_acceptor_shift") == 0 for r in rs)
+            nointr = sum(r.get("alignment_intron_sites") == "no intron there" for r in rs)
+            fs = sum(int(r.get("frameshifts") or 0) > 0 for r in rs)
+            print(f"{gene} {g}: {len(rs)} U alignments, codon called {called}, nearest intron exact {exact}, "
+                  f"absent {nointr}, with frameshifts {fs}", flush=True)
 
 
 if __name__ == "__main__":
