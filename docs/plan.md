@@ -1708,3 +1708,7 @@ no earlier step waits for them.
   operon-partners. Names of the human proteins from the Swiss-Prot titles; flags from the names, and from UniProt
   keywords and GO terms when the small table of make human-uniprot is present (it no longer downloads the FASTA).
   Fisher's test computed without scipy (checked against it).
+- make human-uniprot run on Deigo (2026-10-31): UniProt release 2026_03 (2 September 2026), 20,416 reviewed human
+  entries with keywords and GO IDs; data/references/uniprot_human_sp.tsv.gz, md5 5953b7eb9c05c0cd40c81c2dac8684c2
+  (first attempt: HTTP 500 on the compressed stream; the uncompressed stream worked). Searches use Swiss-Prot 2020_06
+  (BioinfoUgrp DIAMOND database); the annotation table is matched by accession.
