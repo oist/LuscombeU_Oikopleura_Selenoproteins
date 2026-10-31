@@ -1828,3 +1828,17 @@ no earlier step waits for them.
   silico digestion, SELENOI included; caveats from the literature: enrichment from 2 mg protein, peptide length, cryptic
   species, selenium supply, stage and sex), a short "Limitations" section, a Methods paragraph "In silico digestion",
   and references Guo2018, Bak2018, Si2025. No facility, culture or collaboration details.
+- Manuscript comments of 2026-10-31 (Charles) applied: SEPHS2 named as a selenoprotein in the first paragraph
+  (Mariotti 2015); tool references in the first Results paragraph; the pipeline test paragraph moved to the Methods
+  (Selenoprotein gene pipeline); all "(Methods)" pointers removed (27; each topic checked as present in the Methods,
+  and the SECIS training-window details moved there); Results paragraphs rewritten so that the first sentence says
+  what is done and the last what is concluded (closing sentences added, some sentences reordered, the machinery
+  paragraph split into O. dioica, other genomes, PSTK and SECp43; the stage 2 paragraph split, miniprot apart; the
+  census paragraph on B. stygius/M. erythrocephalus/SELENOK split). Fragmented assemblies kept in the text only where
+  they matter (PSTK fragments, copy numbers, KKSU, contamination); removed from the text, still in the tables or
+  figures: the B. stygius/M. erythrocephalus eEFSec best-hit detail (Table MACHINERY), "11 in O. longicauda" of the
+  contig-end loci, the held-out orphan SECIS hits (5 of 9), the held-out repeated TGA element of the comparative
+  screen, the held-out stage 2 counts (7, 9, 21 against 6, 7, 21; Table CENSUS), the held-out details of the release
+  SELENOK profile (coverage 0.88 against 0.67), and "many of them on contigs shorter than 3 kb". Also removed as a
+  duplicate of the orphan-hit paragraph: the sentence on the three OKI2018 genome-scan hits after the TXNL1.b screen
+  result (NC_137291.1, 28.1 bits, is no longer cited).

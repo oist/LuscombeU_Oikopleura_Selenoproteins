@@ -9,17 +9,20 @@ bibliography: references.bib
 
 <!-- Revised after the comments of 2026-10-16. [REF: …] marks references still to add. -->
 
-Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenium is
-an essential trace element, with a narrow range between deficiency and toxicity [@Rayman2012]. Selenocysteine is a more reactive analogue of cysteine, and most selenoproteins are oxidoreductases in
-which it forms the catalytic site: glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox
-homeostasis, and iodothyronine deiodinases (DIO) activate and inactivate thyroid hormones [@Labunskyy2014]. Selenoprotein sets differ between lineages, which have lost selenoprotein genes or replaced
-their selenocysteine by cysteine [@Mariotti2012; @Jiang2012; @Tico2026review; @Tico2026vertebrates]. Selenocysteine is inserted by a dedicated machinery. In
-eukaryotes, a stem–loop structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion
-sequence (SECIS) element, is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific
-elongation factor eEFSec (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by
-O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS,
-encoded by SEPSECS), using selenophosphate made by selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. This machinery
-(Figure SCHEME) is expected in any genome that encodes selenoproteins.
+Selenoproteins carry selenocysteine (Sec), an amino acid encoded by UGA, which is otherwise a stop codon. Selenium is an
+essential trace element, with a narrow range between deficiency and toxicity [@Rayman2012]. Selenocysteine is a more
+reactive analogue of cysteine, and most selenoproteins are oxidoreductases in which it forms the catalytic site:
+glutathione peroxidases (GPX) and thioredoxin reductases (TXNRD) maintain redox homeostasis, and iodothyronine
+deiodinases (DIO) activate and inactivate thyroid hormones [@Labunskyy2014]. Selenoprotein sets differ between lineages,
+which have lost selenoprotein genes or replaced their selenocysteine by cysteine [@Mariotti2012; @Jiang2012;
+@Tico2026review; @Tico2026vertebrates]. Selenocysteine is inserted by a dedicated machinery. In eukaryotes, a stem–loop
+structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS) element,
+is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific elongation factor eEFSec
+(EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is
+synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to
+selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS), using selenophosphate made by
+selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. SEPHS2 is itself a selenoprotein in vertebrates and many other animals
+[@Mariotti2015]. This machinery (Figure SCHEME) is expected in any genome that encodes selenoproteins.
 
 ![Schematic of the selenocysteine machinery](../figures/machinery_scheme.svg)
 
@@ -99,15 +102,17 @@ We hope that these data will help build defaults that apply to more lineages.
 
 ## A pipeline for selenoprotein genes, their machinery and SECIS elements
 
-We wrote a Nextflow pipeline that brings together, for each genome, the evidence needed to annotate selenoprotein
-genes (Figure PIPELINE, tube map). It predicts selenoprotein genes and the genes of the selenocysteine machinery with
-Selenoprofiles; aligns independently the selenocysteine-containing sequences of the same profiles with miniprot and
-calls the selenocysteine codons that they align to; searches SECIS elements downstream of each prediction; and
-searches tRNA-Sec genes with two methods. When a gene annotation is given, it classifies each predicted
-selenocysteine codon according to the annotated coding sequence that overlaps it, and when transcripts are given, it
-counts those that support the codon. A MultiQC report summarises the results of all genomes. By default, the pipeline
-uses the settings of the underlying tools: the eukaryotic and machinery profile sets of Selenoprofiles for eukaryotes,
-the Rfam SECIS model at its gathering threshold, and the Rfam tRNA-Sec model together with Secmarker.
+We wrote a Nextflow pipeline [@DiTommaso2017], based on the nf-core template [@Ewels2020], that brings together, for
+each genome, the evidence needed to annotate selenoprotein genes (Figure PIPELINE, tube map). It predicts selenoprotein
+genes and the genes of the selenocysteine machinery with Selenoprofiles [@Mariotti2010; @Tico2026]; aligns independently
+the selenocysteine-containing sequences of the same profiles with miniprot [@Li2023] and calls the selenocysteine codons
+that they align to; searches SECIS elements downstream of each prediction with Infernal [@Nawrocki2013]; and searches
+tRNA-Sec genes with two methods, Secmarker [@Santesmasses2017] and Infernal. When a gene annotation is given, it
+classifies each predicted selenocysteine codon according to the annotated coding sequence that overlaps it, and when
+transcripts are given, it aligns them with minimap2 [@Li2018] and counts those that support the codon. A MultiQC report
+[@Ewels2016] summarises the results of all genomes. By default, the pipeline uses the settings of the underlying tools:
+the eukaryotic and machinery profile sets of Selenoprofiles for eukaryotes, the Rfam SECIS model [@Kalvari2020] at its
+gathering threshold, and the Rfam tRNA-Sec model together with Secmarker.
 
 ![Figure PIPELINE](../figures/pipeline_metro.svg)
 
@@ -117,67 +122,73 @@ SECIS search); tRNA-Sec genes (Secmarker, cmsearch, optionally tRNAscan-SE); ann
 is given, with the optional transcript screen; reporting (assembly statistics, selenocysteine summary, optional
 expectation check, MultiQC). Dashed lines, optional routes.
 
-The pipeline's test runs every process on three small genomes. On human chromosome 22, it predicted selenoprotein O
-(SELENOO) with its selenocysteine codon, found by both Selenoprofiles and miniprot, supported by a transcript and
-correctly annotated in a test annotation; in the yeast genome, which has no selenoprotein, it predicted none.
-Chromosome 22 carries no tRNA-Sec gene. The SECIS element of human SELENOO scored only 16 bits with the Rfam model,
-below its gathering threshold of 35 bits; the test therefore lowers the threshold to 15 bits so that the SECIS search
-is exercised.
-
 ## Default settings miss part of the selenoproteome of *O. dioica*
 
 We ran the pipeline with its default settings on the three *O. dioica* assemblies and the genomes of six other
-appendicularians, and compared its predictions with a baseline of 18 selenoprotein genes curated in each
-*O. dioica* assembly (Methods). The pipeline found 13 of the 18 selenocysteine codons in OKI2018, 14 in OSKA2016 and 13
-in OdB3, nearly all through Selenoprofiles; miniprot found 6, 6 and 3. Transcripts supported almost all the codons
-found (13 of 13, 14 of 14 and 12 of 13). Two genes were missed in all three assemblies: selenoprotein K (SELENOK), and
-SEPHS2, which Selenoprofiles predicted but without calling its selenocysteine codon. Other genes were missed in one or
-two assemblies, for reasons that include assembly gaps. No SECIS element reached the gathering threshold in any of the
-nine genomes (see below), whereas tRNA-Sec was found, by both methods, in every genome.
+appendicularians, and compared its predictions with a baseline of 18 selenoprotein genes curated in each *O. dioica*
+assembly. The pipeline found 13 of the 18 selenocysteine codons in OKI2018, 14 in OSKA2016 and 13 in OdB3, nearly all
+through Selenoprofiles; miniprot found 6, 6 and 3. Transcripts supported almost all the codons found (13 of 13, 14 of 14
+and 12 of 13). Two genes were missed in all three assemblies: selenoprotein K (SELENOK), and SEPHS2, which
+Selenoprofiles predicted but without calling its selenocysteine codon. Other genes were missed in one or two assemblies,
+for reasons that include assembly gaps. No SECIS element reached the gathering threshold in any of the nine genomes (see
+below), whereas tRNA-Sec was found, by both methods, in every genome. Two releases of the pipeline (0.1.2 and 0.2.0)
+gave identical results on the appendicularians. With its default settings, the pipeline thus finds about three quarters
+of the curated selenocysteine codons of *O. dioica*, and none of their SECIS elements.
 
 The public annotations represent these genes poorly. Of the selenocysteine codons predicted by Selenoprofiles, 5 of 12
-fall in a correctly annotated coding sequence in the RefSeq annotation of OKI2018, none of 14 in the OSKA2016
-annotation and none of 21 in the OdB3 annotation; in the other cases, the annotated coding sequence ends at the codon,
-skips it, lies on one side of it or is absent.
+fall in a correctly annotated coding sequence in the RefSeq annotation of OKI2018, none of 14 in the OSKA2016 annotation
+and none of 21 in the OdB3 annotation; in the other cases, the annotated coding sequence ends at the codon, skips it,
+lies on one side of it or is absent. Analyses that start from these annotations would therefore miss or truncate most
+selenoproteins of *O. dioica*.
 
 With the same settings, the pipeline performed as expected on vertebrates, from which its tools were mostly built. It
-predicted 30 selenoprotein genes in human and in mouse and 47 in zebrafish, found the complete machinery in all
-three, and 27 of 34, 24 of 36 and 47 of 50 of the selenocysteine codons that it checked fell in correctly annotated
-coding sequences of their RefSeq annotations. In other tunicates, it predicted 16 to 25 selenoprotein genes per
-genome, including 19 in *Ciona robusta*, the number reported for this genome [@Jiang2010], and the machinery genes,
-including PSTK and SECp43. In the three *Ciona* species, SEPHS2 was predicted with a residue other than
-selenocysteine, consistent with its alternative isoform that does not carry selenocysteine [@Mariotti2015]. The Rfam
-SECIS model was strict even in vertebrates: it supported 12 of the 30 predictions in human and in mouse and 10 of 47
-in zebrafish, against 0 to 2 per genome in the other tunicates and none in appendicularians. Results on the
-appendicularians were identical between two releases of the pipeline (0.1.2 and 0.2.0).
+predicted 30 selenoprotein genes in human and in mouse and 47 in zebrafish, found the complete machinery in all three,
+and 27 of 34, 24 of 36 and 47 of 50 of the selenocysteine codons that it checked fell in correctly annotated coding
+sequences of their RefSeq annotations. In other tunicates, it predicted 16 to 25 selenoprotein genes per genome,
+including 19 in *Ciona robusta*, the number reported for this genome [@Jiang2010], and the machinery genes, including
+PSTK and SECp43. In the three *Ciona* species, SEPHS2 was predicted with a residue other than selenocysteine, consistent
+with its alternative isoform that does not carry selenocysteine [@Mariotti2015]. The Rfam SECIS model was strict even in
+vertebrates: it supported 12 of the 30 predictions in human and in mouse and 10 of 47 in zebrafish, against 0 to 2 per
+genome in the other tunicates and none in appendicularians. The tools therefore work as designed on the genomes they
+were built from. On appendicularians, their predictions are incomplete, but they give the seeds from which we built
+appendicularian profiles and a SECIS model, and then took the census of the appendicularian selenoproteomes.
 
 ## Appendicularian profiles recover the selenocysteine machinery
 
 With the standard profiles, Selenoprofiles did not find PSTK in any of the three *O. dioica* assemblies, although its
 transcripts are expressed, and did not call the selenocysteine codon of SEPHS2. We therefore extended each profile of
 the machinery set with appendicularian proteins: the predictions of the standard profiles in the appendicularian
-genomes, and the PSTK and SEPHS2 proteins reconstructed from *O. dioica* transcripts (Methods). The OdB3 assembly
-contributed no sequence and served as a test. With these profiles, the machinery was found in every *O. dioica*
-assembly, including PSTK, whose predicted gene models in OKI2018 and OdB3 match the curated ones, and SEPHS2 with its
-selenocysteine codon (Table MACHINERY). In the fragmented assemblies of *O. longicauda*, *B. stygius* and *M.
-erythrocephalus*, PSTK was predicted only as fragments, which Selenoprofiles discards but which match the PSTK of
-other appendicularians more closely than its relative KTI12. A search of each genome with the PSTK proteins of the
-other genomes (tblastn), followed by a comparison with KTI12, supported the loci of *O. longicauda* and *M.
-erythrocephalus* (38 and 50 bits closer to PSTK than to KTI12) and the PSTK transcripts of the three *O. dioica*
-transcriptomes (66 to 84 bits), and left that of *B. stygius* ambiguous (24 bits), like the divergent PSTK of *O.
-vanhoeffeni* (13 bits); in *F. borealis* it found no PSTK-like sequence at all, so that the gene may be missing from
-that assembly. SEPHS2 was predicted with its selenocysteine codon in seven of the nine genomes; it was not found in
-*B. stygius* and only partially in *M. erythrocephalus*. SecS (SEPSECS), eEFSec (EEFSEC), a SECIS-binding protein
-and tRNA-Sec were found in every genome; the SECIS-binding protein is a co-ortholog of vertebrate SECISBP2 and
-SECIS-binding protein 2-like (SECISBP2L), as shown below. Selenoprofiles also searches for SECp43 (TRNAU1AP), which binds
-tRNA-Sec in complexes with SecS and SEPHS2 [@SmallHoward2006] but is an associated factor whose role is debated:
-selenoprotein synthesis did not depend on it in mouse liver and neurons [@Mahdi2015], whereas it enhanced the
-translation of several selenoproteins in glioblastoma stem cells [@Zhang2026]. We therefore report it separately.
-SECp43 was found only in *F. borealis*, whereas the standard profile found it in all other tunicates and in the
-vertebrates. The same search, applied to the eight oikopleurid genomes and the three *O. dioica* transcriptomes,
-found only proteins at most 6 bits closer to SECp43 than to TIA1-like RNA-binding proteins, whereas the SECp43
-proteins of the other genomes were 65 to 434 bits closer, and it recovered the SECp43 of *F. borealis* (Methods).
-SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously lost in their ancestor.
+genomes, and the PSTK and SEPHS2 proteins reconstructed from *O. dioica* transcripts. The OdB3 assembly contributed no
+sequence and served as a test. With these profiles, Selenoprofiles found in every *O. dioica* assembly PSTK, whose
+predicted gene models in OKI2018 and OdB3 match the curated ones, SEPHS2 with its selenocysteine codon, SecS (SEPSECS),
+eEFSec (EEFSEC), a SECIS-binding protein and tRNA-Sec (Table MACHINERY). The appendicularian profiles thus recover the
+complete machinery of *O. dioica*, in the test assembly OdB3 as well.
+
+In the other appendicularian genomes, SecS, eEFSec, a SECIS-binding protein and tRNA-Sec were found in every genome, and
+SEPHS2 with its selenocysteine codon in seven of the nine genomes, missing or partial only in two fragmented assemblies
+(Table MACHINERY). The SECIS-binding protein is a co-ortholog of vertebrate SECISBP2 and SECIS-binding protein 2-like
+(SECISBP2L), as shown below. Apart from PSTK, the machinery is thus found throughout the appendicularians wherever the
+assembly allows.
+
+PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
+fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
+discards but which match the PSTK of other appendicularians more closely than its relative KTI12. To test these
+fragments, we searched each genome with the PSTK proteins of the other genomes (tblastn) and compared each hit with
+KTI12. This supported the loci of *O. longicauda* and *M. erythrocephalus* (38 and 50 bits closer to PSTK than to KTI12)
+and the PSTK transcripts of the three *O. dioica* transcriptomes (66 to 84 bits), and left that of *B. stygius*
+ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the trees below place in the PSTK
+family; in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine genomes,
+ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly.
+
+Selenoprofiles also searches for SECp43 (TRNAU1AP), which binds tRNA-Sec in complexes with SecS and SEPHS2
+[@SmallHoward2006] but is an associated factor whose role is debated: selenoprotein synthesis did not depend on it in
+mouse liver and neurons [@Mahdi2015], whereas it enhanced the translation of several selenoproteins in glioblastoma stem
+cells [@Zhang2026]. We therefore report it separately. SECp43 was found only in *F. borealis*, whereas the standard
+profile found it in all other tunicates and in the vertebrates. The same search, applied to the eight oikopleurid
+genomes and the three *O. dioica* transcriptomes, found only proteins at most 6 bits closer to SECp43 than to TIA1-like
+RNA-binding proteins, whereas the SECp43 proteins of the other genomes were 65 to 434 bits closer, and it recovered the
+SECp43 of *F. borealis*. SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously lost in their
+ancestor.
 
 ## Orthology of the machinery genes
 
@@ -188,27 +199,25 @@ SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously l
 > Numbers, figure and table numbers, and wording are to be checked before submission.
 
 Selenoprofiles predicts homologs of its profile families, not necessarily orthologs of the named human genes. We
-therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Methods;
-Table MACHINERY).
-SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes, and eEFSec proteins of human EEFSEC in
-seven; in the fragmented assemblies of *B. stygius* and *M. erythrocephalus*, the human protein matched another locus
-better. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. Best hits did not assign the three other
-genes. The PSTK proteins of *O. dioica* and *O. albicans* had no hit in the human proteome, and that of
-*O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in each of the ten other
-tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The SECIS-binding proteins of all nine genomes
-were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits, as were those of nine of the ten other tunicates and
-of the two amphioxus species; the *Halocynthia roretzi* protein was closer to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2
-within 9 bits of each other; best hits do not separate these paralogs outside mammals [@Mariotti2015].
+therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Table
+MACHINERY). SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes, and eEFSec proteins of human
+EEFSEC in seven. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. The PSTK proteins of *O. dioica* and
+*O. albicans* had no hit in the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted
+with the standard profile in each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits).
+The SECIS-binding proteins of all nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits, as were
+those of nine of the ten other tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was closer
+to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 9 bits of each other; best hits do not
+separate these paralogs outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not PSTK, the
+SECIS-binding protein or SEPHS2.
 
-For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from:
-the related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS,
-and human SECISBP2 and SECISBP2L for the SECIS-binding proteins (Methods). To place the appendicularians among
-tunicates, the trees include ten other tunicates, seven ascidians and three salps, and two amphioxus species.
-Appendicularian proteins evolve fast, those of *O. dioica* about twice as fast as those of *Ciona* [@Berna2012],
-which exposes their position in trees to long-branch attraction [@Bergsten2005]. We therefore reanalysed each tree
-under a site-heterogeneous model (LG+C60 with posterior mean site frequencies, PMSF) [@Wang2017], after removing the
-fastest-evolving sites, and with approximately unbiased (AU) tests of alternative positions (Table LBA). Figure TREES
-shows the PMSF trees.
+For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from: the
+related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS, and human
+SECISBP2 and SECISBP2L for the SECIS-binding proteins. To place the appendicularians among tunicates, the trees include
+ten other tunicates, seven ascidians and three salps, and two amphioxus species. Appendicularian proteins evolve fast,
+those of *O. dioica* about twice as fast as those of *Ciona* [@Berna2012], which exposes their position in trees to
+long-branch attraction [@Bergsten2005]. We therefore reanalysed each tree under a site-heterogeneous model (LG+C60 with
+posterior mean site frequencies, PMSF) [@Wang2017], after removing the fastest-evolving sites, and with approximately
+unbiased (AU) tests of alternative positions (Table LBA; Figure TREES, PMSF trees).
 
 ![Figure TREES, SEPHS](../figures/phylogeny_SEPHS2_collapsed_pmsf.png)
 ![Figure TREES, PSTK](../figures/phylogeny_pstk_collapsed_pmsf.png)
@@ -216,7 +225,7 @@ shows the PMSF trees.
 
 Figure TREES (`figures/phylogeny_<family>_collapsed_pmsf.pdf`). Trees of SEPHS, PSTK and the SECIS-binding proteins
 under LG+C60+F+G with posterior mean site frequencies, with 1,000 ultrafast bootstrap replicates; clades collapsed by
-taxonomic group (Methods).
+taxonomic group.
 
 The appendicularian PSTK are PSTK and not KTI12: the two families separated with 100% support in every analysis.
 The appendicularian proteins (*O. dioica*, *O. albicans* and *O. vanhoeffeni*; the fragments of the other genomes were
@@ -228,19 +237,19 @@ together is the pattern expected from long-branch attraction. A tree grouping th
 tunicates was not rejected (AU test, p = 0.27). The position of the appendicularian PSTK within the family is
 therefore unresolved.
 
-The SECIS-binding proteins of the eight oikopleurid genomes formed a clade in every analysis (99 to 100%), which the
-*F. borealis* protein joined in all but one (47 to 77%). This appendicularian clade grouped with the SECIS-binding
-proteins of the other tunicates in the maximum-likelihood tree (70%) and under PMSF (93%), and when 10 to 30% of the
-fastest sites were removed (53 to 68%); with 40% removed, the oikopleurid proteins still grouped with the other
-tunicates (76%), and the *F. borealis* protein moved next to a nematode protein. In every tree, vertebrate SECISBP2
-and SECISBP2L formed one clade (79 to 98%) that excluded the tunicate and amphioxus proteins. This agrees with the
-origin of the two vertebrate paralogs by a duplication in early vertebrates, SECISBP2L-type proteins being the only
-SECIS-binding proteins of invertebrate deuterostomes [@Donovan2009]. The appendicularian protein is thus the
-ortholog of the single tunicate SECIS-binding protein, a co-ortholog of vertebrate SECISBP2 and SECISBP2L, which
-explains its best hits to SECISBP2L. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish embryos
-without Sbp2 still make a subset of selenoproteins, and only the loss of both genes abolishes their synthesis
-[@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for oligodendrocyte
-differentiation [@Dai2022].
+The trees identify the appendicularian SECIS-binding protein as the ortholog of the single tunicate protein. The
+SECIS-binding proteins of the eight oikopleurid genomes formed a clade in every analysis (99 to 100%), which the *F.
+borealis* protein joined in all but one (47 to 77%). This appendicularian clade grouped with the SECIS-binding proteins
+of the other tunicates in the maximum-likelihood tree (70%) and under PMSF (93%), and when 10 to 30% of the fastest
+sites were removed (53 to 68%); with 40% removed, the oikopleurid proteins still grouped with the other tunicates (76%),
+and the *F. borealis* protein moved next to a nematode protein. In every tree, vertebrate SECISBP2 and SECISBP2L formed
+one clade (79 to 98%) that excluded the tunicate and amphioxus proteins. This agrees with the origin of the two
+vertebrate paralogs by a duplication in early vertebrates, SECISBP2L-type proteins being the only SECIS-binding proteins
+of invertebrate deuterostomes [@Donovan2009]. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish
+embryos without Sbp2 still make a subset of selenoproteins, and only the loss of both genes abolishes their synthesis
+[@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for oligodendrocyte differentiation
+[@Dai2022]. The appendicularian protein is thus a co-ortholog of vertebrate SECISBP2 and SECISBP2L, which explains its
+best hits to SECISBP2L.
 
 Appendicularians have two SEPHS genes. The second copy, found in OKI2018, *O. longicauda*, *O. albicans* and
 *O. vanhoeffeni*, carries a residue other than selenocysteine (alanine or serine where aligned). In every analysis it
@@ -262,39 +271,38 @@ selenocysteine copy whose signal these models do not recover, or a separate SEPH
 selenocysteine SEPHS2, by the residue at its catalytic site [@Mariotti2015].
 
 To test whether these positions are supported along the whole protein, we split each alignment in two at a domain
-boundary of the human protein and analysed each part on the same sequences (Methods; Table DOMAINS). In each family,
-the data of each part rejected the tree of the other part (AU test, p ≤ 0.0023), but the differences lay in weakly
-supported nodes: no clade with 95% support or more in one tree was incompatible with a clade so supported in the
-other, except for arrangements within appendicularians, other tunicates, amniotes, cephalochordates or nematodes, and
-among the prokaryotic and alveolate SEPHS near the root (Table DOMAINS). For PSTK, the appendicularian clade was recovered from the
-kinase domain (100%) and from the C-terminal region (97%), without the insect-gut fungi, and its position remained
+boundary of the human protein and analysed each part on the same sequences (Table DOMAINS). In each family, the data of
+each part rejected the tree of the other part (AU test, p ≤ 0.0023), but the differences lay in weakly supported nodes:
+no clade with 95% support or more in one tree was incompatible with a clade so supported in the other, except for
+arrangements within appendicularians, other tunicates, amniotes, cephalochordates or nematodes, and among the
+prokaryotic and alveolate SEPHS near the root (Table DOMAINS). For PSTK, the appendicularian clade was recovered from
+the kinase domain (100%) and from the C-terminal region (97%), without the insect-gut fungi, and its position remained
 unresolved: sister to all other PSTK in the kinase tree (57%), next to dipteran PSTK in the C-terminal tree (54%).
-Neither part rejected a grouping with the other tunicates (p = 0.44 and 0.32). Under PMSF, the clade fell next to
-the insect-gut fungi in the kinase tree (42%) and next to fly, *Trichinella* and *Aphanomyces* proteins in the
-C-terminal tree (70%), and the grouping with the other tunicates was still not rejected (p = 0.64 and
-0.30). For the SECIS-binding proteins, the
-L7Ae domain reproduced the full-length result: oikopleurid proteins with those of the other tunicates (81%), and
-vertebrate SECISBP2 and SECISBP2L in one clade that excluded them (95%). The region upstream of the L7Ae domain
-placed the oikopleurid proteins next to vertebrate SECISBP2, in a group with the other tunicate proteins (67% and
-67%). Neither part rejected the grouping of appendicularians with the other tunicates (p = 0.38 and 0.49); the short
-*F. borealis* protein (315 residues) fell elsewhere in both trees. Under PMSF, the L7Ae domain grouped the
-oikopleurid proteins with those of the other tunicates more strongly (91%; vertebrate clade 96%), and neither part
-rejected the grouping (p = 0.38 and 0.51). For SEPHS, under the selected model, the N-terminal half rejected none of
-the tested positions of the appendicularian selenocysteine clade (with the tunicate selenocysteine copies, p = 0.45;
-inside the clade of all tunicate SEPHS, p = 0.33; at the position of an ortholog, p = 0.19), whereas the C-terminal
-half rejected the position of an ortholog (p = 0.0034; p = 0.08 for the other two). The N-terminal tree, however,
-grouped both appendicularian copies with the SPS2 of dipterans and of the louse *Pediculus humanus* (84%; the second
-copy with these insect proteins, 94%), whereas in the C-terminal tree the second copy fell inside the tunicate
-glycine forms (77 and 83%) and the insect proteins grouped with *Rhodnius prolixus* SPS2 (100%). This was the only
-conflict supported by 90% or more that involved the position of an appendicularian protein under that model. Under
-PMSF, this grouping disappeared: the second copy fell next to the tunicate glycine forms in both halves (39 to 65%),
-and both halves rejected the position of an ortholog for the selenocysteine clade (p = 0.016 and 0.011), but not its
-placement inside the clade of all tunicate SEPHS (p = 0.22 and 0.071). The only strongly supported conflict between
-the PMSF trees concerned the other tunicates: the C-terminal half grouped all tunicate SEPHS, with the second
-appendicularian copy, with the vertebrate proteins (95%), whereas the N-terminal half grouped the vertebrate
-proteins with those of amphioxus and protostomes (95%). The non-rejection of orthology by the N-terminal half under
-the selected model thus came with a grouping that the site-heterogeneous model does not support, and under that
-model both halves reject the position of an ortholog, as the full-length alignment does.
+Neither part rejected a grouping with the other tunicates (p = 0.44 and 0.32). Under PMSF, the clade fell next to the
+insect-gut fungi in the kinase tree (42%) and next to fly, *Trichinella* and *Aphanomyces* proteins in the C-terminal
+tree (70%), and the grouping with the other tunicates was still not rejected (p = 0.64 and 0.30). For the SECIS-binding
+proteins, the L7Ae domain reproduced the full-length result: oikopleurid proteins with those of the other tunicates
+(81%), and vertebrate SECISBP2 and SECISBP2L in one clade that excluded them (95%). The region upstream of the L7Ae
+domain placed the oikopleurid proteins next to vertebrate SECISBP2, in a group with the other tunicate proteins (67% and
+67%). Neither part rejected the grouping of appendicularians with the other tunicates (p = 0.38 and 0.49); the short *F.
+borealis* protein (315 residues) fell elsewhere in both trees. Under PMSF, the L7Ae domain grouped the oikopleurid
+proteins with those of the other tunicates more strongly (91%; vertebrate clade 96%), and neither part rejected the
+grouping (p = 0.38 and 0.51). For SEPHS, under the selected model, the N-terminal half rejected none of the tested
+positions of the appendicularian selenocysteine clade (with the tunicate selenocysteine copies, p = 0.45; inside the
+clade of all tunicate SEPHS, p = 0.33; at the position of an ortholog, p = 0.19), whereas the C-terminal half rejected
+the position of an ortholog (p = 0.0034; p = 0.08 for the other two). The N-terminal tree, however, grouped both
+appendicularian copies with the SPS2 of dipterans and of the louse *Pediculus humanus* (84%; the second copy with these
+insect proteins, 94%), whereas in the C-terminal tree the second copy fell inside the tunicate glycine forms (77 and
+83%) and the insect proteins grouped with *Rhodnius prolixus* SPS2 (100%). This was the only conflict supported by 90%
+or more that involved the position of an appendicularian protein under that model. Under PMSF, this grouping
+disappeared: the second copy fell next to the tunicate glycine forms in both halves (39 to 65%), and both halves
+rejected the position of an ortholog for the selenocysteine clade (p = 0.016 and 0.011), but not its placement inside
+the clade of all tunicate SEPHS (p = 0.22 and 0.071). The only strongly supported conflict between the PMSF trees
+concerned the other tunicates: the C-terminal half grouped all tunicate SEPHS, with the second appendicularian copy,
+with the vertebrate proteins (95%), whereas the N-terminal half grouped the vertebrate proteins with those of amphioxus
+and protostomes (95%). The non-rejection of orthology by the N-terminal half under the selected model thus came with a
+grouping that the site-heterogeneous model does not support. The two halves of each alignment therefore lead to the
+conclusions of the full-length trees.
 
 | Gene | Orthology | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -313,7 +321,7 @@ from the census, the reciprocal best hits and the long-branch analyses; the orth
 Table MACHINERY. Selenocysteine machinery, and the associated factor SECp43, found with the appendicularian profiles,
 with the evidence for their orthology. "Selenocysteine": SEPHS2 predicted with its selenocysteine codon; "found":
 predicted; "partial": predicted only with an in-frame stop codon or frameshift, or without alignment at the
-selenocysteine position; "fragment": discarded by Selenoprofiles but supported by similarity (Methods); "not found":
+selenocysteine position; "fragment": discarded by Selenoprofiles but supported by similarity; "not found":
 no prediction; for tRNA-Sec, loci found by both methods. The second SEPHS copy carries a residue other than
 selenocysteine. Orthology: reciprocal best hits against the human proteome, or the maximum-likelihood trees and their
 long-branch analyses, with bootstrap supports or AU tests (see text); this column is provisional. Several copies in
@@ -344,13 +352,10 @@ an assembly may reflect duplicated haplotypes or contamination [@Pichon2019].
 ## The Rfam SECIS model does not separate appendicularian SECIS elements from genomic background
 
 In stage 1, no SECIS element reached the Rfam gathering threshold (35 bits) downstream of any selenoprotein gene
-predicted in the nine genomes. To see whether the threshold alone was too strict, we scored with the same model,
-without threshold, the 3′ sequences of all Selenoprofiles predictions and, as background, 200 random genomic windows
-of the same length per genome (Figure SECIS-1). Predictions fall into two groups: 143 with a selenocysteine codon (below, selenocysteine
-predictions), and 578 others. The others are mostly homologs with cysteine at the selenocysteine position (375, of which 235 in the EhSEP2 family),
-predictions whose alignment does not cover the selenocysteine position of their profile (122, labelled "unaligned"), homologs of
-selenocysteine machinery proteins that are not selenoproteins (40, such as eEFSec and SECIS-binding proteins), and predictions
-with another amino acid or a stop codon at the selenocysteine position (41).
+predicted in the nine genomes. To see whether the threshold alone was too strict, we scored with the same model, without
+threshold, the 3′ sequences of all Selenoprofiles predictions, 143 with a selenocysteine codon (below, selenocysteine
+predictions) and 578 others, and, as background, 200 random genomic windows of the same length per genome (Figure
+SECIS-1).
 
 Of the 143 3′ sequences that follow predictions with a selenocysteine codon, 96 (67%) had no hit at all, even when every hit
 of at least 0 bits was reported. This was not caused by fragmented assemblies separating coding sequences from their UTRs: in the
@@ -365,22 +370,26 @@ model does not recognise most appendicularian SECIS elements, rather than recogn
 Figure SECIS-1 (`figures/stage1_secis_scores.pdf`). RF00031 scores of the 3′ sequences that Selenoprofiles writes after
 each prediction, for the selenocysteine predictions and the other predictions, and of 200 random genomic windows of
 the same length per genome, in the nine appendicularian genomes (best score per sequence; grey band, no hit of 0 bits
-or more). Dashed line, gathering threshold (35 bits); dotted line, 20 bits; numbers, sequences of at least 20 bits.
+or more). Dashed line, gathering threshold (35 bits); dotted line, 20 bits; numbers, sequences of at least 20 bits. The
+other predictions are mostly homologs with cysteine at the selenocysteine position (375, of which 235 in the EhSEP2
+family), predictions whose alignment does not cover the selenocysteine position of their profile (122, labelled
+"unaligned"), homologs of selenocysteine machinery proteins that are not selenoproteins (40, such as eEFSec and
+SECIS-binding proteins), and predictions with another amino acid or a stop codon at the selenocysteine position (41).
 
 > **Provisional paragraph (2026-10-24, step 1 of the plan in docs/plan.md; `results/tables/stage2_secis_hits*.tsv`,
 > `make secis-hits`).** Restricted to the validated hits of the six *Oikopleura* assemblies; it is to replace the two
 > paragraphs above, which count all predictions of the nine genomes (decision of 2026-10-24 on the genome sets).
 
-Restricted to the hits that the orthology analysis supports, the result is the same. In the six *Oikopleura*
-assemblies, the first round of hit validation gave no evidence against any of the 111 predictions with a
-selenocysteine codon: each has its best human hit in its family or in a related gene (MIEN1 for the chr2-type
-SELENOW, SEPHS1 for SEPHS2), or no hit, and none has bacterial or fungal nearest relatives in the tree of its family
-(Methods). Fourteen of them lie less than 500 nucleotides from the end of their contig (11 in *O. longicauda*),
-which leaves no room for a SECIS element. With RF00031, 41 of the 111 3′ sequences had a hit, 15 reached 20 bits and
-4 reached 25 bits, whereas the best random window of each genome scored 13.2 to 22.6 bits and no cysteine homolog of
-these genomes reached 20 bits. Hits of 20 bits or more followed SELENOW (5 of 30 predictions), GPX (4 of 39), DIO
-(2 of 22), SEPHS2 (2 of 3), SELENOF (1 of 7) and TXNRD (1 of 5) predictions, and none of the SELENOO (2), SELENOS (1),
-SELENOT (1) and MsrA (1) predictions.
+Restricted to the hits that the orthology analysis supports, the result is the same. In the six *Oikopleura* assemblies,
+the first round of hit validation gave no evidence against any of the 111 predictions with a selenocysteine codon: each
+has its best human hit in its family or in a related gene (MIEN1 for the chr2-type SELENOW, SEPHS1 for SEPHS2), or no
+hit, and none has bacterial or fungal nearest relatives in the tree of its family. Fourteen of them lie less than 500
+nucleotides from the end of their contig, which leaves no room for a SECIS element. With RF00031, 41 of the 111 3′
+sequences had a hit, 15 reached 20 bits and 4 reached 25 bits, whereas the best random window of each genome scored 13.2
+to 22.6 bits and no cysteine homolog of these genomes reached 20 bits. Hits of 20 bits or more followed SELENOW (5 of 30
+predictions), GPX (4 of 39), DIO (2 of 22), SEPHS2 (2 of 3), SELENOF (1 of 7) and TXNRD (1 of 5) predictions, and none
+of the SELENOO (2), SELENOS (1), SELENOT (1) and MsrA (1) predictions. The Rfam model thus misses most appendicularian
+SECIS elements also among the validated predictions.
 
 ## Gold-standard gene models in three *O. dioica* assemblies
 
@@ -388,15 +397,15 @@ SELENOT (1) and MsrA (1) predictions.
 > `curation/gold_standard/`, `make gold-standard`; 20 genes since 2026-10-26).**
 
 To train SECIS models and appendicularian profiles on reliable sequences, we built a gene model for each curated
-selenocysteine codon of the three *O. dioica* assemblies, from their transcripts, their public annotations and the
-stage 1 predictions (Methods; Figure REANNOTATION). The genes are the 18 genes of known selenoprotein families and
-two genes found by the screens described below, TXNL1.b and KKSU (Figure CANDIDATES). Of the 60 codons (20 genes in
-each assembly), 59 received a model; the exception is OdB3 SELENOO, whose exon with the selenocysteine codon is not
-in the assembly. All 59 models are
-complete, from an ATG to a stop codon, through the selenocysteine. All but one are supported by transcripts; OdB3
-GPX_chr1a, without transcript, joins the two GenBank models that split the gene at the selenocysteine codon, and its
-protein then aligns to the other assemblies along its whole length. Fifty-seven models have a 3′ UTR from transcripts
-(median 303 nucleotides, from 4 to 695).
+selenocysteine codon of the three *O. dioica* assemblies, from their transcripts, their public annotations and the stage
+1 predictions (Figure REANNOTATION). The genes are the 18 genes of known selenoprotein families and two genes found by
+the screens described below, TXNL1.b and KKSU (Figure CANDIDATES). Of the 60 codons (20 genes in each assembly), 59
+received a model; the exception is OdB3 SELENOO, whose exon with the selenocysteine codon is not in the assembly. All 59
+models are complete, from an ATG to a stop codon, through the selenocysteine. All but one are supported by transcripts;
+OdB3 GPX_chr1a, without transcript, joins the two GenBank models that split the gene at the selenocysteine codon, and
+its protein then aligns to the other assemblies along its whole length. Fifty-seven models have a 3′ UTR from
+transcripts (median 303 nucleotides, from 4 to 695). The gold standard thus gives complete, transcript-supported models
+for 59 of the 60 codons.
 
 In six genes the assembly does not encode the protein of the transcripts, because it lacks or adds bases in the
 coding sequence: SELENOS (13 nucleotides absent from the assembly), SELENOO (5 nucleotides) and DIO_chr1 (a
@@ -407,12 +416,14 @@ gives only the last 70 residues); in OKI2018 DIO_chr1, for example, the assembly
 unrelated to the other assemblies, whereas the transcript protein ends, as they do, in the sequence VEYVGGPGPFGYDL.
 For these genes, the gold standard gives the transcript protein and a model mapped from the transcript.
 
-The 184 introns of the models include 19 GA-AG, 7 GC-AG and 1 GG-AG introns (14.7%), against 12.4% of non-GT-AG
-introns in the *O. dioica* reference annotation [@Denoeud2010; @Frey2020]. DIO_PAR, SELENOT, SELENOW_chr2 and TXNRD
-have a GA-AG intron in each of the three assemblies. The nine splice sites of other types lie in five models: OKI2018
-SELENOO (4 sites) and DIO_chr1 (1 site), mapped from transcripts onto an assembly that lacks bases, where they mark
-the alignment around the missing bases (RefSeq places GT-AG or GA-AG introns a few nucleotides away in SELENOO),
-OSKA2016 SELENOO (2 sites), and OKI2018 GPX_chr1a and OSKA2016 GPX_chr1b (1 site each).
+The 184 introns of the models include 19 GA-AG, 7 GC-AG and 1 GG-AG introns (14.7%), against 12.4% of non-GT-AG introns
+in the *O. dioica* reference annotation [@Denoeud2010; @Frey2020]. DIO_PAR, SELENOT, SELENOW_chr2 and TXNRD have a GA-AG
+intron in each of the three assemblies. The nine splice sites of other types lie in five models: OKI2018 SELENOO (4
+sites) and DIO_chr1 (1 site), mapped from transcripts onto an assembly that lacks bases, where they mark the alignment
+around the missing bases (RefSeq places GT-AG or GA-AG introns a few nucleotides away in SELENOO), OSKA2016 SELENOO (2
+sites), and OKI2018 GPX_chr1a and OSKA2016 GPX_chr1b (1 site each). About one intron in seven of these genes is thus
+non-canonical, close to the fraction in the reference annotation, and four genes keep a GA-AG intron in the three
+species.
 
 The public annotations rarely give the selenoproteins (Figures REANNOTATION and CANDIDATES). Of the 59 models, three have the
 selenocysteine declared by the public annotation, all in RefSeq (OKI2018 DIO_PAR, GPX_PAR and SELENOF), and in DIO_PAR one intron lies 11
@@ -427,11 +438,12 @@ Eleven have no annotated coding sequence at all (SELENOK, SELENOW_PAR, SELENOW_c
 chr1 pair and KKSU in OKI2018; SELENOK and SELENOW_PAR in OSKA2016; SELENOW_PAR, SELENOW_chr1a and SELENOW_pair2 in
 OdB3). SELENOW_PAR in OKI2018 and OdB3, and the SELENOW pair and KKSU in OKI2018, lie in the 3′ UTR of the annotated mRNA of
 another protein, as expected from genes of an operon whose mRNAs are separated by trans-splicing (in OKI2018,
-one transcript also holds both genes of the pair; Methods); OSKA2016
-SELENOW_chr2 is also known from a transcript that reads through into the next gene. The annotations also join or
-split genes at the selenocysteine codon: the OdB3 annotation splits five genes there into two or three models
-(DIO_PAR, DIO_chr1, GPX_chr1a, GPX_chr1b and SELENOS), and the OSKA2016 annotation joins SEPHS2 to the upstream gene
-and the two genes of the SELENOW pair into one model, and splits SELENOO into three models.
+one transcript also holds both genes of the pair); OSKA2016
+SELENOW_chr2 is also known from a transcript that reads through into the next gene. The annotations also join or split
+genes at the selenocysteine codon: the OdB3 annotation splits five genes there into two or three models (DIO_PAR,
+DIO_chr1, GPX_chr1a, GPX_chr1b and SELENOS), and the OSKA2016 annotation joins SEPHS2 to the upstream gene and the two
+genes of the SELENOW pair into one model, and splits SELENOO into three models. Most selenoprotein genes of *O. dioica*
+are therefore absent, truncated, split or merged in the public annotations.
 
 ![Figure REANNOTATION, page 1](../figures/reannotation_page.png)
 ![Figure REANNOTATION, page 2](../figures/reannotation_page2.png)
@@ -459,51 +471,45 @@ gold standard, notes on the gold-standard models, and the accessions of the refe
 ## An *Oikopleura* SECIS model trained on the gold-standard genes
 
 A first appendicularian model, built by bootstrap from RF00031 on the 3′ sequences of stage 1 predictions in seven
-oikopleurid genomes (Methods), gave at least 25 bits to 42 of the 53 gold-standard *O. dioica* models of the 18
-known genes. Its
+oikopleurid genomes, gave at least 25 bits to 42 of the 53 gold-standard *O. dioica* models of the 18 known genes. Its
 evaluation was not independent: its training sequences included those of OKI2018 and OdB3, whose SECIS elements are
-near-identical to those of OSKA2016, and it scored the 6,000 nucleotides after the selenocysteine codon rather than
-the 3′ region of each gene. We therefore trained a second model in the same way on the gene models of the previous
-section and evaluated it on families and species left out of training (Methods).
+near-identical to those of OSKA2016, and it scored the 6,000 nucleotides after the selenocysteine codon rather than the
+3′ region of each gene. We therefore trained a second model in the same way on the 2,000 nucleotides after the stop
+codon of 111 genes, the 53 gold-standard models of the 18 known genes (TXNL1.b and KKSU joined the gold standard after
+the screens below) and 58 selenocysteine predictions of *O. longicauda* (22), *O. albicans* (20) and *O. vanhoeffeni*
+(16), against random genomic windows, shuffled windows and the windows after the stop codons of 180 cysteine homologs,
+and evaluated it on families and species left out of training.
 
-The positive windows were the 2,000 nucleotides after the stop codon of the 53 gold-standard models of the 18 known
-genes (TXNL1.b and KKSU joined the gold standard after the screens below) and of 58
-selenocysteine predictions of *O. longicauda* (22), *O. albicans* (20) and *O. vanhoeffeni* (16), shortened at the
-next selenoprotein coding sequence on the same strand (SELENOW_pair2, before SELENOW_pair1, in the three *O. dioica*
-assemblies) or at a contig end (20 windows of the three other species). The negative windows were random windows of
-the six assemblies and of four non-target tunicates (*Ciona intestinalis*, *Ciona savignyi*, *Styela clava* and
-*Thalia democratica*), drawn away from the positive windows; the positive windows shuffled with their dinucleotide
-composition preserved; and the windows after the stop codons of 180 cysteine homologs.
+In the four species folds, where the windows of one species were left out of training (the three *O. dioica* assemblies
+together), the model detected 84 of the 111 left-out windows above its training threshold (the best score of the
+training random windows, 19.6 to 21.6 bits), all of them also above the best evaluation negative of their fold. Three
+evaluation negatives passed the training threshold (0.32 per Mb), all random windows of non-target tunicates (21.6 to
+23.1 bits). Of the 53 *O. dioica* windows, 49 were detected, and no negative passed the threshold (19.7 bits); the four
+below it are SELENOO in OKI2018 and OSKA2016, and GPX_PAR and SELENOF in OSKA2016. Sixty-four left-out windows scored at
+least 25 bits and 43 at least 30 bits. Of the 27 windows not detected, 19 had no hit with any of the four models
+compared below, and 9 of these 19 are shortened by a contig end. In the twelve family folds, the model detected 81 of
+the 111 windows, with 0.72 negatives per Mb above the training thresholds. On the same windows and thresholds, RF00031
+detected 27 windows in the species folds and 26 in the family folds, and a model built from the RF00031 seed sequences
+and the appendicularian seeds of each fold detected 66 and 65 (0.32 and 0.25 negatives per Mb). The first
+appendicularian model detected 82 in both (0.64 and 0.50 negatives per Mb), but it had been trained on most of the
+left-out windows. On windows left out of training, the new model thus detects about three quarters of the
+appendicularian SECIS windows, three times as many as RF00031, with fewer than one background hit per megabase.
 
-In the four species folds, where the windows of one species were left out of training (the three *O. dioica*
-assemblies together), the model detected 84 of the 111 left-out windows above its training threshold (the best score
-of the training random windows, 19.6 to 21.6 bits), all of them also above the best evaluation negative of their
-fold. Three evaluation negatives passed the training threshold (0.32 per Mb), all random windows of non-target
-tunicates (21.6 to 23.1 bits). Of the 53 *O. dioica* windows, 49 were detected, and no negative passed the
-threshold (19.7 bits); the four below it are SELENOO in OKI2018 and OSKA2016, and GPX_PAR and SELENOF in OSKA2016.
-Sixty-four left-out windows scored at least 25 bits and 43 at least 30 bits. Of the 27 windows not detected, 19 had
-no hit with any of the four models compared below, and 9 of these 19 are shortened by a contig end. In the twelve
-family folds, the model detected 81 of the 111 windows, with 0.72 negatives per Mb above the training thresholds.
-On the same windows and thresholds, RF00031 detected 27 windows in the species folds and 26 in the family folds, and
-a model built from the RF00031 seed sequences and the appendicularian seeds of each fold detected 66 and 65 (0.32
-and 0.25 negatives per Mb). The first appendicularian model detected 82 in both (0.64 and 0.50 negatives per Mb),
-but it had been trained on most of the left-out windows.
-
-The final model, trained on the 111 windows, converged in seven rounds on 76 seeds (18 in OKI2018, 12 in OSKA2016, 9
-in OdB3, 20 in *O. longicauda*, 9 in *O. albicans* and 8 in *O. vanhoeffeni*); the best score of the training random
+The final model, trained on the 111 windows, converged in seven rounds on 76 seeds (18 in OKI2018, 12 in OSKA2016, 9 in
+OdB3, 20 in *O. longicauda*, 9 in *O. albicans* and 8 in *O. vanhoeffeni*); the best score of the training random
 windows was 17.8 bits in the last round, and the consensus is 66 nucleotides long. The seeds start a median of 127
 nucleotides after the stop codon (quartiles 67 and 238). The 53 *O. dioica* windows, which are training data for this
 model, score 25.6 to 59.1 bits (median 40.4; Figure REANNOTATION). We use this model with a threshold of 20 bits for
-SECIS elements in the 3′ windows of genes: at that score, about one evaluation negative window of 2,000 nucleotides
-in 1,500 passed in the species folds (3 of 4,691). Scans of whole genomes call for a threshold set on genome-wide background
-(Stage 2).
+SECIS elements in the 3′ windows of genes, a score at which about one evaluation negative window of 2,000 nucleotides in
+1,500 passed in the species folds (3 of 4,691); scans of whole genomes need thresholds set on genome-wide background, as
+in the next section.
 
 The 76 seeds come from ten families (GPX 23, SELENOW 19, DIO 12, SEPHS2 6, SELENOF 4, TXNRD 4, and 2 each of
 SELENOK, SELENOO, SELENOS and SELENOT) and are diverse (Figure SECIS-MODEL B): over the consensus positions, the
 median identity between two seeds is 0.45 (quartiles 0.40 and 0.49), and only 25 of the 2,850 pairs reach 0.7, 23 of
 them the same gene in two *O. dioica* assemblies (0.72 to 0.91) and two pairs of GPX copies of *O. albicans* and
 *O. vanhoeffeni*. Clustered at 0.7, the seeds form 54 groups, the largest of three (the same gene in the three
-*O. dioica* assemblies). Training dropped seeds at least 90% identical to another (Methods), so that the absence of
+*O. dioica* assemblies). Training dropped seeds at least 90% identical to another, so that the absence of
 near-identical groups is partly by construction. The model has 66 consensus positions and 18 base pairs in three
 helices (Figure SECIS-MODEL A), as RF00031 has 64 and 18. Between helices 1 and 2, all seeds have UGA on the 5′
 strand and GA on the 3′ strand of the internal loop, the conserved bases of the non-Watson–Crick pairs that form the
@@ -527,7 +533,7 @@ the seeds in the motifs: 70, 56 and 21 of the 76 decoys have the UGA, the GA and
 [@Rivas2017] are meant for homologous sequences aligned independently of the structure; the seeds belong
 to different genes and were aligned to the model, as in structure-based alignments of SECIS elements from many
 species [@Chapple2009]. The orthologous SECIS elements of the three *O. dioica* assemblies,
-aligned by sequence, offer such a test (Methods). In 19 genes, 18 of the 27 single-base changes from a canonical pair
+aligned by sequence, offer such a test. In 19 genes, 18 of the 27 single-base changes from a canonical pair
 kept a canonical pair, against 29% expected if the new base were random (with the fraction of transitions, 0.39,
 observed at the other unpaired positions; binomial p = 5.5 × 10^-5^), and 10 of the 11 changes at both bases of a
 canonical pair kept one (expected 43%; p = 0.0015). The motifs did not change in any of the 152 comparisons of their
@@ -560,46 +566,41 @@ Figure SECIS-SCORES. -->
 > the 20 gold-standard genes).**
 
 To look for selenoproteins outside the families known from other organisms, we searched genomes and transcripts for
-SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them (Methods), the
+SECIS elements with the *Oikopleura* model, then for reading frames through a TGA upstream of them, the
 approach that found new selenoproteins in mammals and in *Drosophila* [@Kryukov1999; @Lescure1999; @Castellano2001].
 
-Thresholds for whole genomes were set from shuffled copies of the six *Oikopleura* assemblies, at one expected false
-hit per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
-*Oikopleura* species (618 to 1,287 Mb). At these thresholds, the scans found 23, 22 and 29 hits in OKI2018, OSKA2016
-and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding sequence of one
-of the 18 known genes, and two more in each assembly after TXNL1.b and KKSU, described below. In the four non-target tunicates, hits were about as frequent as in their shuffled copies at
-each score up to 30 bits (in *C. intestinalis*, 267 against 344 at 15 bits; Figure SECIS-SCORES A), but 9 of their 12
-hits at the genome threshold follow a stage 1 selenoprotein prediction: the model recognises some of their SECIS
-elements, at scores that background also reaches.
+Thresholds for whole genomes were set from shuffled copies of the six *Oikopleura* assemblies, at one expected false hit
+per genome: 28 to 29 bits in the *O. dioica* assemblies (113 to 141 Mb, both strands) and 33 bits in the other
+*Oikopleura* species (618 to 1,287 Mb). In the four non-target tunicates, hits were about as frequent as in their
+shuffled copies at each score up to 30 bits (in *C. intestinalis*, 267 against 344 at 15 bits; Figure SECIS-SCORES A),
+but 9 of their 12 hits at the genome threshold follow a stage 1 selenoprotein prediction: the model recognises some of
+their SECIS elements, at scores that background also reaches. At these thresholds, the scans found 23, 22 and 29 hits in
+OKI2018, OSKA2016 and OdB3 (0.7 to 0.9 expected false hits), of which 18, 16 and 16 lie at most 3 kb after the coding
+sequence of one of the 18 known genes, and two more in each assembly after TXNL1.b and KKSU, described below. In *O.
+dioica*, most hits at the genome thresholds thus follow selenoprotein genes; the others are examined next.
 
-At the genome thresholds, 10 of the 74 hits of the three *O. dioica* assemblies (28.1 to 36.9 bits, where the hits
-after selenoprotein genes score 29.0 to 59.1, median 40.4), against 2.4 expected false hits, and 26 of the 64 hits of
-the other *Oikopleura* species (33.0 to 49.9 bits; 21 without a gene upstream and 5 after stage 1 predictions without
-selenocysteine), against 1.8 expected, follow no selenoprotein gene found by the screens. Searches around them
-(Methods; Figure SECIS-SCORES B) explain part of them. Two *O. dioica* hits are copies of the DIO_chr1 SECIS on
-additional OdB3 contigs, one of them after the end of a coding sequence identical to OdB3 DIO_chr1, and two lie in
-repeated sequences (25 and 53 copies in their assembly). Four belong to one element found in the three assemblies (91
-to 96% identity), between the gene of a methionyl-tRNA synthetase (best human hit MARS1) and the TXNL1.b coding
-sequence, 0.8 to 1.4 kb upstream of the TXNL1.b codon; one of the hits lies in the 5′ untranslated part of the TXNL1.b
-transcript in OSKA2016, and another in an intron of a RefSeq transcript in OKI2018, and no frame through a TGA is
-known there. Of the last two, one (OSKA2016 contig S54) is found in the other two assemblies, where it scores 26.5 and
-27.0 bits, with no gene within 4 kb upstream, and one (OKI2018 NC_137295.1) has no counterpart in them. In the other
-*Oikopleura* species, 8 hits follow, 38 to 1,077 nucleotides before them, a region similar to a gold-standard
-selenoprotein (DIO, GPX, SELENOK, SELENOT or SELENOW), including the five after stage 1 predictions without
-selenocysteine: copies of known families that stage 1 and the comparative screen missed. One of them, in
-*O. longicauda*, lies 69 nucleotides after a region similar to SELENOK whose TGA aligns with the selenocysteine, and
-that region follows one similar to CPLANE2, as SELENOK follows a CPLANE2-like gene in *O. dioica*; stage 1 had found
-SELENOK in no appendicularian, and the comparative screen in *O. albicans* and *O. vanhoeffeni* only. One more hit lies
-in a repeated sequence (19 copies). The four *O. albicans* hits, in two pairs 391 and 411 nucleotides apart, follow a
-region similar to the DNA glycosylase OGG1, on two contigs that are probably the two haplotypes of one locus; the 13
-others have no protein hit in the 5 kb upstream. In the held-out appendicularians, 5 of the 9 hits without a
-selenoprotein gene follow regions similar to GPX, SELENOT or SELENOW (two of them with a stop codon in the aligned
-frame). In human and *C. intestinalis*
-RefSeq mRNAs, the hits of the *Oikopleura* model above which a frame through a TGA was found score up to 31.5 and
-37.3 bits for selenoprotein mRNAs and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C). With RF00031,
-the three human mRNAs classed as others above 38 bits are transcripts of GPX1 and DIO1 in which the frame found does
-not end at an annotated selenocysteine codon; their hit is the SECIS element of the gene, with the score it has in the
-other transcripts of these genes.
+At the genome thresholds, 10 of the 74 hits of the three *O. dioica* assemblies (28.1 to 36.9 bits, where the hits after
+selenoprotein genes score 29.0 to 59.1, median 40.4), against 2.4 expected false hits, and 26 of the 64 hits of the
+other *Oikopleura* species (33.0 to 49.9 bits; 21 without a gene upstream and 5 after stage 1 predictions without
+selenocysteine), against 1.8 expected, follow no selenoprotein gene found by the screens. Searches around them (Figure
+SECIS-SCORES B) explain part of them. Two *O. dioica* hits are copies of the DIO_chr1 SECIS on additional OdB3 contigs,
+one of them after the end of a coding sequence identical to OdB3 DIO_chr1, and two lie in repeated sequences (25 and 53
+copies in their assembly). Four belong to one element found in the three assemblies (91 to 96% identity), between the
+gene of a methionyl-tRNA synthetase (best human hit MARS1) and the TXNL1.b coding sequence, 0.8 to 1.4 kb upstream of
+the TXNL1.b codon; one of the hits lies in the 5′ untranslated part of the TXNL1.b transcript in OSKA2016, and another
+in an intron of a RefSeq transcript in OKI2018, and no frame through a TGA is known there. Of the last two, one
+(OSKA2016 contig S54) is found in the other two assemblies, where it scores 26.5 and 27.0 bits, with no gene within 4 kb
+upstream, and one (OKI2018 NC_137295.1) has no counterpart in them. In the other *Oikopleura* species, 8 hits follow, 38
+to 1,077 nucleotides before them, a region similar to a gold-standard selenoprotein (DIO, GPX, SELENOK, SELENOT or
+SELENOW), including the five after stage 1 predictions without selenocysteine: copies of known families that stage 1 and
+the comparative screen missed. One of them, in *O. longicauda*, lies 69 nucleotides after a region similar to SELENOK
+whose TGA aligns with the selenocysteine, and that region follows one similar to CPLANE2, as SELENOK follows a
+CPLANE2-like gene in *O. dioica*; stage 1 had found SELENOK in no appendicularian, and the comparative screen in *O.
+albicans* and *O. vanhoeffeni* only. One more hit lies in a repeated sequence (19 copies). The four *O. albicans* hits,
+in two pairs 391 and 411 nucleotides apart, follow a region similar to the DNA glycosylase OGG1, on two contigs that are
+probably the two haplotypes of one locus; the 13 others have no protein hit in the 5 kb upstream. The hits without a
+selenoprotein gene are thus copies of known families, repeats, and conserved elements without a known reading frame
+through a TGA.
 
 <!-- Tables: results/tables/stage2_secis_scan_classes.tsv (classes; evidence) and stage2_secis_orphan_hits.tsv. To
 consider: the conserved element between MARS1 and TXNL1.b, and the OSKA2016 S54 element (structure, transcripts). -->
@@ -618,22 +619,27 @@ the hit in the genome), or nothing found by these searches; small symbols, hits 
 down to the comparative threshold (light grey tick), orange when they follow a selenoprotein gene. C, controls: best score per RefSeq mRNA among the transcripts with a frame through a TGA upstream of a hit
 of 20 bits or more, for human and *C. intestinalis* mRNAs, with the *Oikopleura* model and RF00031.
 
-The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of
-all 18 known genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in the OdB3
-ESTs. With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no
-model that holds the codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. It found TXNL1.b and KKSU in all six
-transcript sets. In the positive controls, it found
-16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3 with the *Oikopleura* model; in
-*C. intestinalis* RefSeq mRNAs, 11 and 6 of 17.
+The transcript screen, on transcript strands with a SECIS hit of 20 bits or more, found the selenocysteine codon of all
+18 known genes in the OKI2018 Trinity transcripts, of 15 in the OSKA2016 transcripts and of 15 of 17 in the OdB3 ESTs.
+With the public annotations it found 15 (RefSeq), 9 (ANISEED) and 12 (GenBank); the others have no model that holds the
+codon in frame, such as SELENOK and SELENOW_chr1a in RefSeq. It found TXNL1.b and KKSU in all six transcript sets. In
+the positive controls, it found 16 of the 25 annotated selenoprotein genes in human RefSeq mRNAs with RF00031, and 3
+with the *Oikopleura* model; in *C. intestinalis* RefSeq mRNAs, 11 and 6 of 17. In these mRNAs, the hits of the
+*Oikopleura* model above which a frame through a TGA was found score up to 31.5 and 37.3 bits for selenoprotein mRNAs
+and up to 22.8 and 28.3 bits for the others (Figure SECIS-SCORES C). With RF00031, the three human mRNAs classed as
+others above 38 bits are transcripts of GPX1 and DIO1 in which the frame found does not end at an annotated
+selenocysteine codon; their hit is the SECIS element of the gene, with the score it has in the other transcripts of
+these genes. In *O. dioica* transcripts, the screen thus finds nearly all the known selenoprotein genes, and two genes
+outside the known families, TXNL1.b and KKSU.
 
-The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both (as
-in comparative gene prediction, where conservation around an in-frame TGA indicates a selenocysteine codon
-[@Parra2003; @Castellano2004]), found 14 to 15 of the known genes in each *O. dioica* assembly, and KKSU, and 20 of 28, 11 of 20 and 9 of 16 stage 1
-selenocysteine predictions in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. Ten more alignments were copies of
-known selenoproteins absent from stage 1: SELENOK in *O. albicans* and *O. vanhoeffeni*, whose C-terminus
+The comparative screen, which requires a TGA aligned to a TGA in another species upstream of a SECIS hit in both (as in
+comparative gene prediction, where conservation around an in-frame TGA indicates a selenocysteine codon [@Parra2003;
+@Castellano2004]), found 14 to 15 of the known genes in each *O. dioica* assembly, and KKSU, and 20 of 28, 11 of 20 and
+9 of 16 stage 1 selenocysteine predictions in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*. Ten more alignments
+were copies of known selenoproteins absent from stage 1: SELENOK in *O. albicans* and *O. vanhoeffeni*, whose C-terminus
 ...GGUGR aligns with that of *O. dioica* SELENOK (stage 1 found SELENOK in no appendicularian), and copies of TXNRD,
-GPX, DIO and SELENOW. In the held-out genomes, six short TGA-containing stretches (five *M. erythrocephalus* contigs
-and one *B. stygius* contig) aligned with one another: a repeated element, not a gene.
+GPX, DIO and SELENOW. The comparative screen thus confirms most known genes and adds copies of known families that stage
+1 missed, SELENOK among them.
 
 One gene of no known selenoprotein family was found by both screens in the three *O. dioica* assemblies and by the
 comparative screen in *O. albicans*. In *O. dioica* its frame encodes 68 to 70 residues: an N-terminal part rich in
@@ -650,11 +656,9 @@ this the last residue, as in other C-terminal selenoproteins whose selenocystein
 were among those that earlier searches missed [@Haft2025].
 
 The transcript screen also found, in the three assemblies, a frame of 168 codons whose best human hit is
-thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to
-31.8 bits in the annotated transcripts and ESTs (23.6 in the OSKA2016 transcript assembly), 67 to 95 nucleotides after
-the stop codon: the TXNL1 candidate noted earlier (TXNL1.b, examined below). In OKI2018, three genome-scan hits at the genome
-threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the TXNL1.b codon (similar hits lie 0.8 to
-1.3 kb upstream of it in OSKA2016 and OdB3), one on NC_137295.1 (30.1 bits) and one on NC_137291.1 (28.1 bits).
+thioredoxin-like protein 1 (TXNL1; 40 to 41 % identity), ending ...KKVGUG and a stop codon, with a SECIS of 29.0 to 31.8
+bits in the annotated transcripts and ESTs (23.6 in the OSKA2016 transcript assembly), 67 to 95 nucleotides after the
+stop codon: the TXNL1 candidate noted earlier, TXNL1.b, examined below.
 
 <!-- Table and figure for the screens to add. -->
 
@@ -664,41 +668,40 @@ threshold follow none of the 20 gold-standard genes: one 1.4 kb upstream of the 
 > `stage2/txnl1_homologs.py`, `stage2/txnl1_paralogs.py`, `make candidate-genes`, `make txnl1-homologs`,
 > `make txnl1-paralogs`; `results/tables/stage2_candidates_*.tsv`, `stage2_txnl1_*.tsv`).**
 
-For the TXNL1 candidate (TXNL1.b below), we had fixed a rule before the screens: the codon at the curated position
-must be TGA, and a SECIS hit of at least 20 bits must lie in the 2,000 nucleotides after the next stop codon of its
-frame, in each of the three *O. dioica* assemblies (Methods). TXNL1.b and the new family, which we call KKSU after its
-C-terminus, both meet it. The SECIS hits score 31.0, 30.7 and 29.0 bits in OKI2018, OSKA2016 and OdB3 for TXNL1.b, 67
-to 95 nucleotides after the stop codon, and 36.6, 31.3 and 30.8 bits for KKSU, 222 to 262 nucleotides after it; all
-six are also at or above the genome thresholds of the screens (28 to 29 bits). We therefore added both genes to the
-baseline and built their gold-standard models (Figure CANDIDATES), keeping them in a figure of their own because their
-selenocysteine rests on the TGA and the SECIS hits alone, without a selenoprotein homolog in other organisms. Their
-SECIS elements, which were not among the training sequences, have the motifs of the seeds (UGA and GA in the internal
-loop, AAA below helix 3, three canonical pairs in helix 3) and differ from the seeds as much as seeds of different
-genes differ from each other (identity to the nearest seed 0.61 to 0.68; between a seed and the nearest seed that is
-not its ortholog, median 0.62, quartiles 0.59 and 0.66); in helix 3 of KKSU, OSKA2016 and OdB3 have a C·G pair where
-OKI2018 has U·A. TXNL1.b encodes 168 residues in the three assemblies (four coding exons) and KKSU 68 to 70 (three
-coding exons). The public models with the same exon chains end at the TGA, read as a stop codon, except in OKI2018,
-where KKSU lies in the 3′ UTR of the RefSeq mRNA of a 173-residue protein whose best human hit is RING finger protein
-11 (XM_081776455.1), as SELENOW_PAR and the SELENOW pair lie in the mRNAs of upstream genes.
+For the TXNL1 candidate (TXNL1.b below), we had fixed a rule before the screens: the codon at the curated position must
+be TGA, and a SECIS hit of at least 20 bits must lie in the 2,000 nucleotides after the next stop codon of its frame, in
+each of the three *O. dioica* assemblies. TXNL1.b and the new family, which we call KKSU after its C-terminus, both meet
+it. The SECIS hits score 31.0, 30.7 and 29.0 bits in OKI2018, OSKA2016 and OdB3 for TXNL1.b, 67 to 95 nucleotides after
+the stop codon, and 36.6, 31.3 and 30.8 bits for KKSU, 222 to 262 nucleotides after it; all six are also at or above the
+genome thresholds of the screens (28 to 29 bits). Their SECIS elements, which were not among the training sequences,
+have the motifs of the seeds (UGA and GA in the internal loop, AAA below helix 3, three canonical pairs in helix 3) and
+differ from the seeds as much as seeds of different genes differ from each other (identity to the nearest seed 0.61 to
+0.68; between a seed and the nearest seed that is not its ortholog, median 0.62, quartiles 0.59 and 0.66); in helix 3 of
+KKSU, OSKA2016 and OdB3 have a C·G pair where OKI2018 has U·A. TXNL1.b encodes 168 residues in the three assemblies
+(four coding exons) and KKSU 68 to 70 (three coding exons). The public models with the same exon chains end at the TGA,
+read as a stop codon, except in OKI2018, where KKSU lies in the 3′ UTR of the RefSeq mRNA of a 173-residue protein whose
+best human hit is RING finger protein 11 (XM_081776455.1), as SELENOW_PAR and the SELENOW pair lie in the mRNAs of
+upstream genes. We therefore added both genes to the baseline and built their gold-standard models (Figure CANDIDATES),
+keeping them in a figure of their own because their selenocysteine rests on the TGA and the SECIS hits alone, without a
+selenoprotein homolog in other organisms.
 
-TXNL1.b is a paralog of TXNL1 that has lost the thioredoxin domain. Its best hit in the human proteome is TXNL1 (132
-to 134 bits, 40 to 42% identity over residues 123 to 281 of the human protein; PITHD1 next, 79 to 82 bits lower), but
-each *O. dioica* assembly also encodes a full-length TXNL1, with the thioredoxin and PITH domains (285 residues in
-OKI2018, XP_081633344.1, and OdB3), which we call TXNL1.a after the nomenclature guidelines for tunicate genes, where
-paralogs that share one human ortholog take the suffixes .a, .b [@Stolfi2015]. Human TXNL1 and TXNL1.a are reciprocal
-best hits (205 to 206 bits, 39 to 40% identity over residues 9 to 287 or 289 of the human protein; back to TXNL1 at
-205 to 206 bits, thioredoxin TXN 91), and TXNL1.a is the best hit of TXNL1.b in its own assembly (64 to 68% identity over 95% of
+TXNL1.b is a paralog of TXNL1 that has lost the thioredoxin domain. Its best hit in the human proteome is TXNL1 (132 to
+134 bits, 40 to 42% identity over residues 123 to 281 of the human protein; PITHD1 next, 79 to 82 bits lower), but each
+*O. dioica* assembly also encodes a full-length TXNL1, with the thioredoxin and PITH domains (285 residues in OKI2018,
+XP_081633344.1, and OdB3), which we call TXNL1.a after the nomenclature guidelines for tunicate genes, where paralogs
+that share one human ortholog take the suffixes .a, .b [@Stolfi2015]. Human TXNL1 and TXNL1.a are reciprocal best hits
+(205 to 206 bits, 39 to 40% identity over residues 9 to 287 or 289 of the human protein; back to TXNL1 at 205 to 206
+bits, thioredoxin TXN 91), and TXNL1.a is the best hit of TXNL1.b in its own assembly (64 to 68% identity over 95% of
 TXNL1.b), ahead of a PITHD1 homolog (33 to 34%). The two genes lie on opposite strands of OKI2018 chromosome 2, 2.3 Mb
-apart, and of the OdB3 contig FN653019.1, 1.0 Mb apart. In the three assemblies, the three coding introns of TXNL1.b
-lie at the positions and phases of three of the five coding introns of TXNL1.a (phase 0, after residues 128, 190 and
-245 of TXNL1.a in OKI2018 and OdB3); TXNL1.a has one more intron in the region aligned with TXNL1.b (phase 1, in codon
-157) and one in its thioredoxin part (Figure CANDIDATES). The shared introns point to a duplication of genomic
-DNA rather than to a retrotransposed copy. In a tree of the PITH regions of the TXNL1 and PITHD1 proteins
-and loci of tunicates, *Branchiostoma* and vertebrates, rooted on PITHD1 (Figure TXNL1-TREE), TXNL1.b is the sister of
-TXNL1.a (ultrafast bootstrap 92), and the pair is the sister of the TXNL1 of the other Oikopleuridae examined (95),
-with *F. borealis* outside them (appendicularian clade, 100): the duplication took place in the *O. dioica* lineage,
-after its divergence from these species. The PITHD1 proteins, including the *O. dioica* homolog, form a separate
-clade.
+apart, and of the OdB3 contig FN653019.1, 1.0 Mb apart. In the three assemblies, the three coding introns of TXNL1.b lie
+at the positions and phases of three of the five coding introns of TXNL1.a (phase 0, after residues 128, 190 and 245 of
+TXNL1.a in OKI2018 and OdB3); TXNL1.a has one more intron in the region aligned with TXNL1.b (phase 1, in codon 157) and
+one in its thioredoxin part (Figure CANDIDATES). The shared introns point to a duplication of genomic DNA rather than to
+a retrotransposed copy. In a tree of the PITH regions of the TXNL1 and PITHD1 proteins and loci of tunicates,
+*Branchiostoma* and vertebrates, rooted on the PITHD1 clade, which holds the *O. dioica* PITHD1 homolog (Figure
+TXNL1-TREE), TXNL1.b is the sister of TXNL1.a (ultrafast bootstrap 92), and the pair is the sister of the TXNL1 of the
+other Oikopleuridae examined (95), with *F. borealis* outside them (appendicularian clade, 100): the duplication took
+place in the *O. dioica* lineage, after its divergence from these species.
 
 TXNL1.b aligns with the PITH domain of human TXNL1 (residues 120 to 283 of 289), and its selenocysteine is aligned with
 Gly283; it is followed by one residue (...KKVGUG). At that position, TXNL1.a has a glycine followed by six residues
@@ -730,14 +733,13 @@ encoded upstream on the same strand; OKI2018 and OdB3 annotate the two genes sep
 tblastn hits), and no transcript of the three assemblies aligns to both: a merged model, possibly at an operon (to
 check with the spliced leader). -->
 
-KKSU was found by tblastn, with the OKI2018 protein or the *O. albicans* frame, in the six *Oikopleura* assemblies (two
-loci in *O. longicauda*) and in the held-out *B. stygius* and *M. erythrocephalus*. In all of them the TGA aligned to
-the selenocysteine is followed directly by a stop codon, and a SECIS hit follows in the six *Oikopleura* species (21.0
-to 36.6 bits; 21.6 bits in *O. vanhoeffeni*, below its genome threshold), but not in the *B. stygius* and
-*M. erythrocephalus* contigs. KKSU was not found in *F. borealis*, the other tunicates or *Branchiostoma*, and has no
-blastp hit in the RefSeq proteomes of human, mouse, zebrafish, tunicates and *Branchiostoma* (for *S. clava*,
-*B. schlosseri*, *P. mammillata* and *B. floridae*, only the proteomes inform): among the genomes examined, it is a
-family of the Oikopleuridae.
+KKSU was found by tblastn, with the OKI2018 protein or the *O. albicans* frame, in all eight oikopleurid genomes (two
+loci in *O. longicauda*). In all of them the TGA aligned to the selenocysteine is followed directly by a stop codon, and
+a SECIS hit follows in the six *Oikopleura* species (21.0 to 36.6 bits; 21.6 bits in *O. vanhoeffeni*, below its genome
+threshold), but not in the two other oikopleurid genomes. KKSU was not found in *F. borealis*, the other tunicates or
+*Branchiostoma*, and has no blastp hit in the RefSeq proteomes of human, mouse, zebrafish, tunicates and *Branchiostoma*
+(for *S. clava*, *B. schlosseri*, *P. mammillata* and *B. floridae*, only the proteomes inform): among the genomes
+examined, it is a family of the Oikopleuridae.
 
 <!-- tblastn without any hit in Scla, Bsch, Pmam and Bflo: databases checked complete (2026-10-27; 380, 220, 311 and
 432 sequences, 377, 496, 240 and 513 Mb). Possible reason, not tested: TXNL1 split into short exons, each below the
@@ -773,7 +775,7 @@ We then turned the results above into settings for appendicularian genomes, and 
 not contributed to them. Each standard Selenoprofiles profile of a family of the gold standard was extended with the
 gold-standard proteins of the three *O. dioica* assemblies, and each profile of the machinery with the stage 1
 machinery predictions of these assemblies; KKSU and TXNL1.b, which have no standard profile, received new profiles made
-of their gold-standard proteins (Methods). With these profiles, the pipeline used the *Oikopleura* SECIS model at
+of their gold-standard proteins. With these profiles, the pipeline used the *Oikopleura* SECIS model at
 20 bits, searched in the 2,000 nucleotides after each prediction, the window length on which that threshold was set.
 As test assemblies, we used assemblies of the three cryptic species from other individuals: KUM-M3-7f (Okinawa),
 AOM-5-5f (Osaka) and Bar2_p4 (Barcelona) [@Plessy2024]. Their reference genes are the gold-standard models of the same
@@ -788,19 +790,25 @@ profiles did not contain the species tested, against 11 to 14 with the default s
 found in all six assemblies, and KKSU also in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, although its profile
 held only *O. dioica* proteins. In the six assemblies, every codon found by Selenoprofiles had a SECIS hit of at least
 20 bits after its gene (24.0 bits or more). The two methods of the pipeline complemented each other: Selenoprofiles
-found 17 to 19 codons per assembly and miniprot 15 to 18. SELENOT and SEPHS2 were found by Selenoprofiles only, in every
-assembly. In the gold-standard models, their selenocysteine codons lie 2 and 1 nucleotides before short introns (42 to 44 nucleotides in SELENOT, 41
-to 46 in SEPHS2). In these three assemblies, none of the profile proteins that the pipeline aligned to these
-genes with miniprot 0.11 (3 for SELENOT and 26 to 32 for SEPHS2 per assembly) placed the intron next to the codon or
-aligned its selenocysteine to the TGA codon. Aligned with the same version, the gold-standard proteins of the three *O.
-dioica* assemblies did the same in every assembly: each alignment had a frameshift and no intron at that position, and
-placed the selenocysteine against another codon (in OSKA2016, a 2-nucleotide frameshift and a deletion of 13 residues in
+found 17 to 19 codons per assembly and miniprot 15 to 18, and zero to two genes per assembly were found by miniprot
+only. The gene models of Selenoprofiles were close to the reference models without reproducing them: in the median gene
+they covered 98 to 100% of the coding bases of the reference, with 99 to 100% of their own coding bases inside it, but
+their introns were identical to those of the reference in 5 to 10 of the 15 to 19 genes compared. The appendicularian
+settings thus find the complete selenoproteome of *O. dioica* in new assemblies, with gene models close to, but not
+identical with, the curated ones.
+
+SELENOT and SEPHS2 were found by Selenoprofiles only, in every assembly. In the gold-standard models, their
+selenocysteine codons lie 2 and 1 nucleotides before short introns (42 to 44 nucleotides in SELENOT, 41 to 46 in
+SEPHS2). In these three assemblies, none of the profile proteins that the pipeline aligned to these genes with miniprot
+0.11 (3 for SELENOT and 26 to 32 for SEPHS2 per assembly) placed the intron next to the codon or aligned its
+selenocysteine to the TGA codon. Aligned with the same version, the gold-standard proteins of the three *O. dioica*
+assemblies did the same in every assembly: each alignment had a frameshift and no intron at that position, and placed
+the selenocysteine against another codon (in OSKA2016, a 2-nucleotide frameshift and a deletion of 13 residues in
 SEPHS2, 14 in SELENOT, covering the TGA codon and most of the intron), so that the alignment contained no stop codon.
 With miniprot 0.18 and the same proteins, the SEPHS2 intron was placed exactly and the codon found in the three
-assemblies; the SELENOT codon was found in OdB3 only. Zero to two genes per assembly were found by miniprot only. The
-gene models of Selenoprofiles were close to the reference models without reproducing them: in the median gene they
-covered 98 to 100% of the coding bases of the reference, with 99 to 100% of their own coding bases inside it, but their
-introns were identical to those of the reference in 5 to 10 of the 15 to 19 genes compared.
+assemblies; the SELENOT codon was found in OdB3 only. The two misses of miniprot thus come from alignments that cross
+the short intron next to the codon instead of splicing it, which a newer version of miniprot avoids for SEPHS2 but not
+for SELENOT.
 
 | Assembly | Same species as | Reference genes | Default settings | Stage 2 | Stage 2, profiles without the species |
 |---|---|---|---|---|---|
@@ -826,7 +834,7 @@ Selenoprofiles had predicted it, with its selenocysteine codon aligned to the se
 98 to 99% of the profile query, but the standard filter of this family also requires 5 of 9 residues conserved in
 vertebrates, and the *O. dioica* SELENOS proteins have 3 or 4 of them; no other SELENOS candidate of the six
 assemblies was labelled selenocysteine. We therefore kept this requirement only for predictions not labelled
-selenocysteine (Methods). Lowering the weight of splice signals in miniprot, to favour exons at GA–AG introns,
+selenocysteine. Lowering the weight of splice signals in miniprot, to favour exons at GA–AG introns,
 recovered SELENOS by miniprot in three assemblies before this change, but changed no count of codons found after it,
 and was not kept.
 
@@ -836,15 +844,13 @@ KUM-M3-7f, and SELENOO in Bar2_p4, which has no OdB3 model to carry over); other
 second SELENOK 10 kb from the first in KUM-M3-7f, DIO copies in Bar2_p4, the GPX_PAR copy of OSKA2016 found by the
 screens, and the haplotype contigs of OdB3); and miniprot calls 3 nucleotides from a codon found in the same gene.
 
-In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, whose references are the stage 1 predictions kept in step 1
-and the KKSU genes, the stage 2 settings found all the reference codons except two fragments of 49 and 55 residues in
-*O. albicans*, which Selenoprofiles' length filter removes; they also predicted selenocysteine forms of SELENOS in
-*O. longicauda* and *O. albicans*, to be examined with the census. In the three held-out genomes, *B. stygius*,
-*M. erythrocephalus* and *F. borealis*, they called 7, 9 and 21 selenocysteine codons, against 6, 7 and 21 with the
-default settings, including KKSU in the first two. For the census and for other appendicularian assemblies, we built
-final profiles that also contain the validated predictions of the three other *Oikopleura* species, and we deposit
-them with the SECIS model, the pipeline configuration and the expected selenoproteome of *O. dioica* (Data and code
-availability).
+In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, whose references are the stage 1 predictions kept in step 1 and
+the KKSU genes, the stage 2 settings found all the reference codons except two fragments of 49 and 55 residues in *O.
+albicans*, which Selenoprofiles' length filter removes; they also predicted selenocysteine forms of SELENOS in *O.
+longicauda* and *O. albicans*, to be examined with the census. For the census and for other appendicularian assemblies,
+we built final profiles that also contain the validated predictions of the three other *Oikopleura* species, and we
+deposit them with the SECIS model, the pipeline configuration and the expected selenoproteome of *O. dioica* (Data and
+code availability).
 
 ## Orthology of the selenoprotein genes
 
@@ -855,46 +861,49 @@ availability).
 The family names of the gold-standard genes come from the Selenoprofiles profiles that predicted them, and a profile
 finds homologs of its family, not necessarily orthologs of a named human gene. As for the machinery, we therefore
 compared the proteins with the human proteome and placed them in trees of their families, under the selected model
-and under LG+C60 with PMSF, with AU tests of alternative positions (Methods). The trees cover the 12 families in which
+and under LG+C60 with PMSF, with AU tests of alternative positions. The trees cover the 12 families in which
 the final run predicted appendicularian genes; in the three *O. dioica* assemblies, the gold-standard proteins
 replaced the predictions they overlap. Table SELENO-ORTHOLOGY summarises the evidence for the 17 gold-standard genes
 of these families; SEPHS2 is treated with the machinery, and TXNL1.b and KKSU above.
 
 The thioredoxin reductase and the glutathione peroxidases were placed with or next to the proteins of the other
-tunicates. The *O. dioica*
-TXNRD was a reciprocal best hit of human TXNRD1 in the three assemblies (1 to 18 bits ahead of the next human gene),
-and the appendicularian TXNRD clade (eight genomes, 100%) was sister to the TXNRD of the other tunicates (92% in the
-maximum-likelihood tree, 98% under PMSF). The four *O. dioica* GPX genes had GPX4 as best hit (10 to 58 bits ahead).
-In the maximum-likelihood tree they formed one appendicularian clade of eight genomes (48%), sister to a group of
-tunicate, amphioxus and vertebrate GPX (78%) whose vertebrate members are GPX4; under PMSF they formed two clades,
-GPX_PAR with GPX_chr2 (61%) and GPX_chr1a with GPX_chr1b (100%), the second next to the GPX of the other tunicates
-(53%) and the first next to both (49%).
+tunicates. The *O. dioica* TXNRD was a reciprocal best hit of human TXNRD1 in the three assemblies (1 to 18 bits ahead
+of the next human gene), and the appendicularian TXNRD clade (eight genomes, 100%) was sister to the TXNRD of the other
+tunicates (92% in the maximum-likelihood tree, 98% under PMSF). The four *O. dioica* GPX genes had GPX4 as best hit (10
+to 58 bits ahead). In the maximum-likelihood tree they formed one appendicularian clade of eight genomes (48%), sister
+to a group of tunicate, amphioxus and vertebrate GPX (78%) whose vertebrate members are GPX4; under PMSF they formed two
+clades, GPX_PAR with GPX_chr2 (61%) and GPX_chr1a with GPX_chr1b (100%), the second next to the GPX of the other
+tunicates (53%) and the first next to both (49%). The *O. dioica* TXNRD is thus the tunicate TXNRD, and the four GPX
+genes have GPX4 as best hit and as nearest vertebrate gene.
 
 SELENOO, SELENOT and SELENOF were reciprocal best hits of the human gene of their name in each assembly that has a
-model, far ahead of any other human gene (469 to 501, 114 to 118 and 95 to 101 bits), but their appendicularian clades were not placed
-with the other tunicates. The oikopleurid SELENOO clade (seven genomes, 99 to 100%) was sister to a clade of the
-selenocysteine SELENOO of tunicates, a tick, amphioxus and vertebrates (44%, 93% under PMSF), apart from a cysteine
-SELENOO paralog of tunicates, amphioxus, turtle and chicken, and its grouping with the selenocysteine SELENOO of the other tunicates was rejected (AU test, p = 0.034
-under the selected model and 0.045 under PMSF), whereas a tree in which these tunicate proteins form a clade without
-the appendicularians was not (p = 0.47 and 0.59). The appendicularian SELENOT clade (nine genomes, 66 to 75%) branched
-between a group of mostly protist, plant and nematode SELENOT proteins and the other animal SELENOT (90 and 86%); its grouping
-with the SELENOT of the other tunicates was not rejected (p = 0.13 and 0.20). A placement inside the chordate SELENOT
-was rejected under PMSF (p = 0.009), but so was every tree in which the chordate SELENOT form a clade (p = 0.042 and
-0.012), because nematode and insect proteins fall among them, so this test does not bear on the appendicularians. The
-appendicularian SELENOF clade (nine genomes, 58 to 79%) was next to plant and green-algal SELENOF (Sep15; 33% and
-81%); neither its grouping with the other tunicates (p = 0.26 and 0.091) nor a placement inside the chordate SELENOF
-(p = 0.41 and 0.13) was rejected.
+model, far ahead of any other human gene (469 to 501, 114 to 118 and 95 to 101 bits), but their appendicularian clades
+were not placed with the other tunicates. The oikopleurid SELENOO clade (seven genomes, 99 to 100%) was sister to a
+clade of the selenocysteine SELENOO of tunicates, a tick, amphioxus and vertebrates (44%, 93% under PMSF), apart from a
+cysteine SELENOO paralog of tunicates, amphioxus, turtle and chicken, and its grouping with the selenocysteine SELENOO
+of the other tunicates was rejected (AU test, p = 0.034 under the selected model and 0.045 under PMSF), whereas a tree
+in which these tunicate proteins form a clade without the appendicularians was not (p = 0.47 and 0.59). The
+appendicularian SELENOT clade (nine genomes, 66 to 75%) branched between a group of mostly protist, plant and nematode
+SELENOT proteins and the other animal SELENOT (90 and 86%); its grouping with the SELENOT of the other tunicates was not
+rejected (p = 0.13 and 0.20). A placement inside the chordate SELENOT was rejected under PMSF (p = 0.009), but so was
+every tree in which the chordate SELENOT form a clade (p = 0.042 and 0.012), because nematode and insect proteins fall
+among them, so this test does not bear on the appendicularians. The appendicularian SELENOF clade (nine genomes, 58 to
+79%) was next to plant and green-algal SELENOF (Sep15; 33% and 81%); neither its grouping with the other tunicates (p =
+0.26 and 0.091) nor a placement inside the chordate SELENOF (p = 0.41 and 0.13) was rejected. The names of these three
+genes are thus secure, and their positions relative to the other tunicates are rejected for SELENOO and unresolved for
+SELENOT and SELENOF.
 
-SELENOK and SELENOS had no hit in the human proteome. Their appendicularian clades, each of five genomes (100%, and
-93 to 95%), had the human SELENOK and SELENOS as nearest vertebrate genes. The SELENOS clade was next to two
-green-algal proteins (83% and 55%), at the base of the animal SELENOS, which formed a clade with it; neither its
-grouping with the SELENOS of the other tunicates (p = 0.19 and 0.51) nor a placement inside the chordate SELENOS
-(p = 0.29 and 0.51) was rejected. The SELENOK clade was next to kinetoplastid, green-algal and chelicerate proteins
-(33% and 25%). Its grouping with the SELENOK of the other tunicates and its placement inside the chordate SELENOK were
-rejected (p ≤ 0.0016 under both models), but so were the trees in which these groups form a clade without the
-appendicularians, at nearly the same cost (70.6 against 70.3 log-likelihood units for the other tunicates, 63.1
-against 62.9 for the chordates, under the selected model): in these data (181 sites), neither the SELENOK of the
-other tunicates nor those of the chordates form a clade, and the tests do not bear on the appendicularian position.
+SELENOK and SELENOS had no hit in the human proteome, and were identified by their trees. Their appendicularian clades,
+each of five genomes (100%, and 93 to 95%), had the human SELENOK and SELENOS as nearest vertebrate genes. The SELENOS
+clade was next to two green-algal proteins (83% and 55%), at the base of the animal SELENOS, which formed a clade with
+it; neither its grouping with the SELENOS of the other tunicates (p = 0.19 and 0.51) nor a placement inside the chordate
+SELENOS (p = 0.29 and 0.51) was rejected. The SELENOK clade was next to kinetoplastid, green-algal and chelicerate
+proteins (33% and 25%). Its grouping with the SELENOK of the other tunicates and its placement inside the chordate
+SELENOK were rejected (p ≤ 0.0016 under both models), but so were the trees in which these groups form a clade without
+the appendicularians, at nearly the same cost (70.6 against 70.3 log-likelihood units for the other tunicates, 63.1
+against 62.9 for the chordates, under the selected model): in these data (181 sites), neither the SELENOK of the other
+tunicates nor those of the chordates form a clade, and the tests do not bear on the appendicularian position. Both genes
+thus have the human genes of their names as nearest vertebrate genes, at unresolved positions within their families.
 
 Best hits did not separate the deiodinase paralogs: DIO_PAR had DIO2 as best hit (6 to 12 bits ahead of the next
 gene; reciprocal in OKI2018), and DIO_chr1 DIO3 (1 bit ahead). In the maximum-likelihood tree, both genes belonged to
@@ -964,13 +973,12 @@ side that holds vertebrate sequences with a known human gene (number of sequence
 > `stage2_candidates_rule.tsv`; `make stage2-collect`, `census-contigs`, `census`, `selenoprotein-absence`,
 > `candidate-genes`).** Operons: next section.
 
-We then took the census of the selenoprotein genes in the nine appendicularian genomes, from the final stage 2 run
-(Methods). Each selenocysteine codon found by Selenoprofiles or miniprot was counted once per locus, and each locus
+We then took the census of the selenoprotein genes in the nine appendicularian genomes, from the final stage 2 run. Each selenocysteine codon found by Selenoprofiles or miniprot was counted once per locus, and each locus
 was assigned to the *O. dioica* gene of the smallest appendicularian clade that holds it and a gold-standard protein
 in the trees of the previous section. The UGA/SECIS screens had found a few genes that the final run did not predict;
 they were added, without gene model. Before counting, each contig carrying a prediction was compared with the rest of
 its genome (GC content, tetranucleotide composition and open reading frame density), and a locus was left out only
-on evidence against it (Methods). Table CENSUS gives the result.
+on evidence against it. Table CENSUS gives the result.
 
 The three *O. dioica* assemblies have the 20 genes of the gold standard, except the SELENOO of OdB3, whose
 selenocysteine exon is missing from the assembly. The three new assemblies have the same genes: the reference genes
@@ -980,31 +988,32 @@ second GPX_PAR of OSKA2016, a second SELENOK 10 kb from the first in KUM-M3-7f, 
 OdB3, six of them copies of DIO_chr1, probably haplotypes kept in the assembly. The selenoproteome of *O. dioica* is
 therefore of 20 genes in each of its three cryptic species.
 
-The other *Oikopleura* species share most of these genes: loci of 11 of the 20 were found in *O. longicauda*, 17 in
-*O. albicans* and 15 in *O. vanhoeffeni*, some only by the screens (SELENOK in the three species; DIO_chr1 and TXNRD in
-*O. vanhoeffeni*). TXNL1.b was found in none of them, as expected from its origin by duplication in the *O. dioica*
-lineage, and the SELENOW pair only in *O. dioica* (and one *O. albicans* screen locus that matches SELENOW_pair1).
-Several genes have more copies in these assemblies than in *O. dioica*: DIO_PAR has six loci in *O. longicauda* and
-five in *O. albicans*, GPX_PAR eight in *O. longicauda*, and SELENOW_chr2 five in *O. longicauda* and four in
-*O. vanhoeffeni*. These assemblies are fragmented (N50 of 2.4 kb for *O. longicauda*) and may keep both haplotypes,
-as OdB3 does, so these numbers are upper bounds. Selenoprofiles also predicted selenocysteine forms of SELENOS in
-*O. longicauda* and *O. albicans*, which fall in the appendicularian SELENOS clade with the *O. dioica* genes; no SECIS
-element was found in the 2,000 nucleotides after them, although the *O. albicans* gene lies on a contig of 547 kb.
+The other *Oikopleura* species share most of these genes: loci of 11 of the 20 were found in *O. longicauda*, 17 in *O.
+albicans* and 15 in *O. vanhoeffeni*, some only by the screens (SELENOK in the three species; DIO_chr1 and TXNRD in *O.
+vanhoeffeni*). TXNL1.b was found in none of them, as expected from its origin by duplication in the *O. dioica* lineage,
+and the SELENOW pair only in *O. dioica* (and one *O. albicans* screen locus that matches SELENOW_pair1). Selenoprofiles
+also predicted selenocysteine forms of SELENOS in *O. longicauda* and *O. albicans*, which fall in the appendicularian
+SELENOS clade with the *O. dioica* genes; no SECIS element was found in the 2,000 nucleotides after them, although the
+*O. albicans* gene lies on a contig of 547 kb. Several genes have more copies in these assemblies than in *O. dioica*:
+DIO_PAR has six loci in *O. longicauda* and five in *O. albicans*, GPX_PAR eight in *O. longicauda*, and SELENOW_chr2
+five in *O. longicauda* and four in *O. vanhoeffeni*. These assemblies are fragmented (N50 of 2.4 kb for *O.
+longicauda*) and may keep both haplotypes, as OdB3 does, so these numbers are upper bounds. The other *Oikopleura*
+species thus share most of the selenoproteome of *O. dioica*, without TXNL1.b, with copy numbers that their assemblies
+leave uncertain.
 
-In *B. stygius* and *M. erythrocephalus*, whose assemblies have N50 values of 1.3 and 1.9 kb, loci of 8 and 7 of the
-20 genes were found, many of them on contigs shorter than 3 kb; genes missing from these assemblies may be present in
-the genomes.
-The final SELENOK profile gave no candidate prediction at all, before its filters, in *O. albicans*,
-*O. vanhoeffeni* and *M. erythrocephalus*, and only a fragment in *O. longicauda*: in these genomes the gene is missed
-by the search, not removed by the filters. For the deposited profiles, we built gene models at the screen loci of
-*O. longicauda*, *O. albicans* and *O. vanhoeffeni* (97, 98 and 66 residues, the last without its first exon; 51 to
-55% identical to the *O. dioica* protein) and added them to the SELENOK profile (Methods). With this profile,
-Selenoprofiles predicted the three genes with their selenocysteine. In the held-out genomes, it predicted the
-N-terminal part of SELENOK in *M. erythrocephalus*, which the final profile did not find, and a longer part in
-*B. stygius* (coverage of the profile 0.88 against 0.67), in both without the exon of the selenocysteine; in
-*M. erythrocephalus*, the screen had found that exon on another contig. The release profile also predicts a few more
-glycine- and proline-rich fragments without selenocysteine (two in OKI2018, two in *O. longicauda*, one in
-*O. albicans*), of the kind that the final profile already predicts in OSKA2016, AOM-5-5f and *F. borealis*.
+In *B. stygius* and *M. erythrocephalus*, whose assemblies have N50 values of 1.3 and 1.9 kb, loci of 8 and 7 of the 20
+genes were found; genes missing from these assemblies may be present in the genomes.
+
+The final SELENOK profile missed the gene outside *O. dioica*: it gave no candidate prediction at all, before its
+filters, in *O. albicans*, *O. vanhoeffeni* and *M. erythrocephalus*, and only a fragment in *O. longicauda*, so that in
+these genomes the gene is missed by the search, not removed by the filters. For the deposited profiles, we built gene
+models at the screen loci of *O. longicauda*, *O. albicans* and *O. vanhoeffeni* (97, 98 and 66 residues, the last
+without its first exon; 51 to 55% identical to the *O. dioica* protein) and added them to the SELENOK profile. With this
+profile, Selenoprofiles predicted the three genes with their selenocysteine; it also predicts a few more glycine- and
+proline-rich fragments without selenocysteine (two in OKI2018, two in *O. longicauda*, one in *O. albicans*), of the
+kind that the final profile already predicts in OSKA2016, AOM-5-5f and *F. borealis*. The deposited SELENOK profile thus
+finds the gene in the four *Oikopleura* species.
+
 In *F. borealis*, the only appendicularian outside the Oikopleuridae, 5 of the 20 genes were found (SELENOF, SELENOT,
 SELENOW_chr2, SEPHS2 and TXNRD), with seven GPX loci outside the clades of the *O. dioica* GPX genes, and two families
 absent from the Oikopleuridae: SELENOL (two loci) and SELENOU (one locus, with a SECIS element of 23.6 bits). KKSU,
@@ -1020,7 +1029,7 @@ seven loci in each *Oikopleura* assembly, against one to five in the other tunic
 To tell absent genes from genes missed by the profiles, these six families were given absence tests, as the
 machinery genes were: the selenocysteine forms predicted in the other genomes were searched in the appendicularian
 genomes and the *O. dioica* transcriptomes, and each candidate was compared with them and with human proteins of
-related families (Methods). The positive controls, the predictions of each family scored in the same way, had
+related families. The positive controls, the predictions of each family scored in the same way, had
 margins of 45 to 1,125 bits. No candidate was found for SELENOH. For SELENON, the only candidate was a 36-residue
 fragment of an OSKA2016 transcript, nearly identical to human SELENON, which we attribute to contamination of that
 transcriptome. FrnE and SELENOL were found only in *F. borealis* (margins of 177 and 46 bits). MSRB candidates were
@@ -1032,22 +1041,22 @@ SELENON, SELENOH and MSRB1 are thus absent from the appendicularians, and FrnE a
 SELENOI, in contrast, was found in every appendicularian genome (margins of 42 to 175 bits against human CEPT1 and
 CHPT1). SELENOI is the ethanolamine phosphotransferase EPT1, whose vertebrate form carries a selenocysteine about ten
 residues before its C-terminus. In each *O. dioica* transcriptome, some transcripts of the gene end with an exon that
-has an in-frame TGA at the position aligned to the selenocysteine of human, mouse and zebrafish SELENOI, in the
-motif KIIPTKTDU (OKI2018: two of the six isoforms of one Trinity gene; OSKA2016: one of two; OdB3: one of four ESTs
-that reach the C-terminus), while the others end with another sequence, VFKIIPTS(I/M)SS(L/I), apparently from an
-alternative last exon. Placed on the assemblies, these transcripts give a TGA at the same position of the last exon
-in the three cryptic species, but the codons after it differ: a second TGA after two codons in OKI2018, a TAA after
-nine codons in OSKA2016 and after 17 in OdB3. No SECIS element was found after the stop codon, by the *Oikopleura*
-model or by RF00031, either in the transcripts (255 to 544 nucleotides) or in the 2,000 nucleotides of genome
-(Methods). SELENOI therefore does not meet the rule set for the candidate genes and was not counted; whether its TGA
-encodes selenocysteine in *O. dioica* is not known. In the other appendicularians, the tblastn alignments did not
-reach the codon, except in *F. borealis*, where the codon read in frame just beyond the alignment is ATT
-(isoleucine); the ascidian and amphioxus EPT1 proteins of RefSeq end before that position.
+has an in-frame TGA at the position aligned to the selenocysteine of human, mouse and zebrafish SELENOI, in the motif
+KIIPTKTDU (OKI2018: two of the six isoforms of one Trinity gene; OSKA2016: one of two; OdB3: one of four ESTs that reach
+the C-terminus), while the others end with another sequence, VFKIIPTS(I/M)SS(L/I), apparently from an alternative last
+exon. Placed on the assemblies, these transcripts give a TGA at the same position of the last exon in the three cryptic
+species, but the codons after it differ: a second TGA after two codons in OKI2018, a TAA after nine codons in OSKA2016
+and after 17 in OdB3. No SECIS element was found after the stop codon, by the *Oikopleura* model or by RF00031, either
+in the transcripts (255 to 544 nucleotides) or in the 2,000 nucleotides of genome. In the other appendicularians, the
+tblastn alignments did not reach the codon, except in *F. borealis*, where the codon read in frame just beyond the
+alignment is ATT (isoleucine); the ascidian and amphioxus EPT1 proteins of RefSeq end before that position. SELENOI
+therefore does not meet the rule set for the candidate genes and was not counted; whether its TGA encodes selenocysteine
+in *O. dioica* is not known.
 
 The contig checks left out one locus, a *F. borealis* DIO-like prediction whose best human hit is GPX1. No
 selenoprotein of the census lies on a contig that looks foreign to its genome together with a non-animal placement.
 The checks also bear on the 72 appendicularian sequences, of any label, that the trees place next to bacteria or
-fungi, candidates for horizontal gene transfer (Methods). Thirty-five belong to other families (thioredoxins and other
+fungi, candidates for horizontal gene transfer. Thirty-five belong to other families (thioredoxins and other
 proteins found by the DIO profile, whose animal relatives are not in its tree) or have no hit in the human proteome
 although their family has human members. Sixteen lie on contigs that look foreign to their genome: those of
 *B. stygius* and *M. erythrocephalus*, cysteine SELENOO, DIO-like proteins and GPX, on contigs of 26 to 324 kb that
@@ -1146,54 +1155,55 @@ regions are short, 23 to 30 nucleotides between the polyadenylation site of a ge
 next in the cyclin D3 cluster [@Ganot2004]. Since a SECIS element must lie in the 3′ UTR of its mRNA, a selenoprotein
 gene followed closely by another gene of its operon must fit its SECIS element in that short space. We placed the
 gold-standard genes among the annotated genes of the three *O. dioica* assemblies, with operons defined as consecutive
-genes on the same strand whose coding sequences are at most 500 nucleotides apart (Methods; Figure OPERONS A).
+genes on the same strand whose coding sequences are at most 500 nucleotides apart (Figure OPERONS A).
 
-Selenoprotein genes are as often in operons as the other genes: 10 of 20 in OKI2018, 13 of 20 in OSKA2016 and 13 of
-19 in OdB3, against 47%, 40% and 49% of all annotated loci (Fisher's exact test, P = 0.83, 0.037 and 0.11), and they
-are not less often the first gene of their operon (1 of 10, 5 of 13 and 3 of 13, against 37%, 40% and 35% of the
-genes in operons; P = 0.10, 1 and 0.56; Figure OPERONS C). Their mRNAs are trans-spliced: transcripts that start with the SL were found
-for 12 genes in OKI2018 and 15 in OSKA2016, and for 4 in OdB3, whose ESTs have masked 5′ ends; 74 of the 75
+Selenoprotein genes are as often in operons as the other genes: 10 of 20 in OKI2018, 13 of 20 in OSKA2016 and 13 of 19
+in OdB3, against 47%, 40% and 49% of all annotated loci (Fisher's exact test, P = 0.83, 0.037 and 0.11), and they are
+not less often the first gene of their operon (1 of 10, 5 of 13 and 3 of 13, against 37%, 40% and 35% of the genes in
+operons; P = 0.10, 1 and 0.56; Figure OPERONS C). Their mRNAs are trans-spliced: transcripts that start with the SL were
+found for 12 genes in OKI2018 and 15 in OSKA2016, and for 4 in OdB3, whose ESTs have masked 5′ ends; 74 of the 75
 trans-splice sites have an AG acceptor, and most lie within 40 nucleotides of the start codon (55 of 75; median 2 to 6
-nucleotides).
+nucleotides). Selenoprotein genes thus take part in operons and trans-splicing like the other genes of *O. dioica*.
 
-In every gene, the SECIS element lies before the next gene on the same strand. It ends 82 to 341 nucleotides after
-the stop codon, and the next coding sequence starts at least 63 nucleotides after its end; where the next gene has
+In every gene, the SECIS element lies before the next gene on the same strand. It ends 82 to 341 nucleotides after the
+stop codon, and the next coding sequence starts at least 63 nucleotides after its end; where the next gene has
 trans-spliced transcripts, its first trans-splice site lies 66 to 516 nucleotides after the end of the SECIS (Figure
 OPERONS B). The tightest case is SELENOW_PAR, internal in operons of seven and eleven genes in OKI2018 and OdB3: its
-SECIS element lies 45 to 119 nucleotides after the stop codon in the three assemblies; in OdB3, its ESTs end 151 to
-153 nucleotides after the stop codon, 32 nucleotides after the SECIS element and about 30 before the next coding
-sequence, and in OKI2018, where the next gene is trans-spliced 179 nucleotides after the stop codon, a
-polyadenylation site at the median intercistronic distance (31 nucleotides, below) would lie 36 nucleotides after
-the SECIS element. The two genes of the SELENOW pair lie 197 and 169
-nucleotides apart in OKI2018 and OSKA2016, with transcripts that run from the first into the second; each has its own
-SECIS element, that of the first gene (SELENOW_pair2) 23 to 92 nucleotides after its stop codon. In OdB3, the two
-genes are 869 nucleotides apart, and an annotated coding sequence (CBY21828.1) without homologous neighbour in the
-other assemblies starts 47 nucleotides after the stop codon of SELENOW_pair2, inside its SECIS element.
+SECIS element lies 45 to 119 nucleotides after the stop codon in the three assemblies; in OdB3, its ESTs end 151 to 153
+nucleotides after the stop codon, 32 nucleotides after the SECIS element and about 30 before the next coding sequence,
+and in OKI2018, where the next gene is trans-spliced 179 nucleotides after the stop codon, a polyadenylation site at the
+median intercistronic distance (31 nucleotides, below) would lie 36 nucleotides after the SECIS element. The two genes
+of the SELENOW pair lie 197 and 169 nucleotides apart in OKI2018 and OSKA2016, with transcripts that run from the first
+into the second; each has its own SECIS element, that of the first gene (SELENOW_pair2) 23 to 92 nucleotides after its
+stop codon. In OdB3, the two genes are 869 nucleotides apart, and an annotated coding sequence (CBY21828.1) without
+homologous neighbour in the other assemblies starts 47 nucleotides after the stop codon of SELENOW_pair2, inside its
+SECIS element. SECIS elements thus fit between selenoprotein genes and the next gene of their operon, in the tightest
+cases with a few tens of nucleotides to spare.
 
-The 3′ ends of the mRNAs were read in the transcripts that end with a poly(A) tail: 733 polyadenylation sites in
-OKI2018 and 143 in OSKA2016, whose transcripts are Trinity assemblies, and 39,497 in the OdB3 cDNA reads. Between
-two genes of an operon, the polyadenylation site of the first lies a median 31 nucleotides before the first
-trans-splice site of the second in OKI2018 (n = 76; interquartile range 29 to 34) and OSKA2016 (n = 9), and 32
-nucleotides in OdB3 (n = 292; 29 to 39); 75% (OKI2018) and 65% (OdB3) of these distances are between 26 and 35
-nucleotides (Figure OPERONS D), a few nucleotides above the 23 to 30 nucleotides of the cyclin D3 cluster
-[@Ganot2004]. Polyadenylation sites were found after 16 selenoprotein genes (1 in OKI2018, 15 in
-OdB3). The most supported site of each gene lies 8 to 343 nucleotides after the end of its SECIS element (median 84
-in OdB3); a single EST, of SELENOT in OdB3, ends before the SECIS element (120 nucleotides after the stop codon, with
-the SECIS at 258 to 323).
+The 3′ ends of the mRNAs were read in the transcripts that end with a poly(A) tail: 733 polyadenylation sites in OKI2018
+and 143 in OSKA2016, whose transcripts are Trinity assemblies, and 39,497 in the OdB3 cDNA reads. Between two genes of
+an operon, the polyadenylation site of the first lies a median 31 nucleotides before the first trans-splice site of the
+second in OKI2018 (n = 76; interquartile range 29 to 34) and OSKA2016 (n = 9), and 32 nucleotides in OdB3 (n = 292; 29
+to 39); 75% (OKI2018) and 65% (OdB3) of these distances are between 26 and 35 nucleotides (Figure OPERONS D), a few
+nucleotides above the 23 to 30 nucleotides of the cyclin D3 cluster [@Ganot2004]. Polyadenylation sites were found after
+16 selenoprotein genes (1 in OKI2018, 15 in OdB3). The most supported site of each gene lies 8 to 343 nucleotides after
+the end of its SECIS element (median 84 in OdB3); a single EST, of SELENOT in OdB3, ends before the SECIS element (120
+nucleotides after the stop codon, with the SECIS at 258 to 323). Selenoprotein mRNAs thus end after their SECIS element.
 
-Selenoprotein mRNAs have longer 3′ UTRs than the mRNAs of the other genes. In OdB3, the most supported
-polyadenylation site lies a median 250.5 nucleotides after the stop codon of the selenoprotein genes followed by
-another gene of their operon, against 105 nucleotides for the other such genes (n = 6 and 2,516; Mann-Whitney U test,
-P = 0.0033), and 300 against 136 nucleotides for the genes last in their operon or outside operons (n = 9 and 4,924;
-P = 0.035). Likewise, the first trans-splice site of the next gene of the operon lies further from the stop codon of
-a selenoprotein gene (median 281, 302.5 and 365 nucleotides in OKI2018, OSKA2016 and OdB3; n = 3, 4 and 2) than from
-that of the other genes (160, 169.5 and 166 nucleotides; P = 0.10, 0.030 and 0.081). These differences, 120 to 200
-nucleotides, exceed the length of a SECIS element (about 65 nucleotides between the ends of the hits). Two OdB3 genes
-depart from the short intercistronic spacing. SELENOS has polyadenylation sites 220 to 269 nucleotides after its stop
-codon, and the next gene has trans-splice sites at 266 and 272 nucleotides, so that some SELENOS mRNAs end after the
-first trans-splice site of the next gene; cleavage at such a site and trans-splicing at 266 nucleotides cannot both
-take place on the same pre-mRNA molecule. The ESTs of SELENOW_pair1 end 231 nucleotides after its stop codon, and the
-next gene is trans-spliced 464 nucleotides after it, 233 nucleotides further.
+Selenoprotein mRNAs have longer 3′ UTRs than the mRNAs of the other genes. In OdB3, the most supported polyadenylation
+site lies a median 250.5 nucleotides after the stop codon of the selenoprotein genes followed by another gene of their
+operon, against 105 nucleotides for the other such genes (n = 6 and 2,516; Mann-Whitney U test, P = 0.0033), and 300
+against 136 nucleotides for the genes last in their operon or outside operons (n = 9 and 4,924; P = 0.035). Likewise,
+the first trans-splice site of the next gene of the operon lies further from the stop codon of a selenoprotein gene
+(median 281, 302.5 and 365 nucleotides in OKI2018, OSKA2016 and OdB3; n = 3, 4 and 2) than from that of the other genes
+(160, 169.5 and 166 nucleotides; P = 0.10, 0.030 and 0.081). Two OdB3 genes depart from the short intercistronic
+spacing. SELENOS has polyadenylation sites 220 to 269 nucleotides after its stop codon, and the next gene has
+trans-splice sites at 266 and 272 nucleotides, so that some SELENOS mRNAs end after the first trans-splice site of the
+next gene; cleavage at such a site and trans-splicing at 266 nucleotides cannot both take place on the same pre-mRNA
+molecule. The ESTs of SELENOW_pair1 end 231 nucleotides after its stop codon, and the next gene is trans-spliced 464
+nucleotides after it, 233 nucleotides further. The differences in 3′ UTR length, 120 to 200 nucleotides, exceed the
+length of a SECIS element (about 65 nucleotides between the ends of the hits): selenoprotein genes thus come with a
+longer spacing to the next gene of their operon.
 
 The operon context of the selenoprotein genes is partly conserved between the cryptic species, although operons in
 general are not [@Plessy2024]: of the 19 genes present in the three assemblies, 13 are in an operon in all three or
@@ -1265,7 +1275,7 @@ with fragment ions on both sides of it and the isotope envelope that selenium gi
 selenocysteine at that position [@Guo2018]. Whether such a validation will follow the release of this preprint is an
 open question.
 
-The selenoproteome itself indicates what such an experiment would need (Methods). In the gold-standard proteins of
+The selenoproteome itself indicates what such an experiment would need. In the gold-standard proteins of
 OKI2018, trypsin gives a peptide of 7 to 30 residues that holds the selenocysteine for 17 of the 20 genes, and
 chymotrypsin for the other three (GPX_chr1b, TXNL1.b and KKSU). In 14 genes, at least two tryptic peptides lie after the
 selenocysteine. In the other six (SELENOK, SELENOO, SELENOS, TXNRD, TXNL1.b and KKSU), the selenocysteine is one of the
@@ -1364,10 +1374,14 @@ out of frame, spliced (CDS boundary inside the codon) or absent. The same predic
 exon of its primary alignment; for each codon we recorded the number of supporting transcripts and the extension of
 the longest one 3′ of the codon.
 
-Results of all genomes were summarised with MultiQC [@Ewels2016]. The pipeline's test profile runs every process
-on human chromosome 22 (with an annotation of SELENOO and a transcript covering its selenocysteine codon), the yeast
-genome and a fragment of the *Escherichia coli* genome, with the SECIS threshold lowered to 15 bits; modules and
-pipeline are also tested with nf-test [@Forer2025].
+Results of all genomes were summarised with MultiQC [@Ewels2016]. The pipeline's test profile runs every process on
+human chromosome 22 (with an annotation of SELENOO and a transcript covering its selenocysteine codon), the yeast genome
+and a fragment of the *Escherichia coli* genome. On chromosome 22, it predicts selenoprotein O (SELENOO) with its
+selenocysteine codon, found by both Selenoprofiles and miniprot, supported by the transcript and classified as correctly
+annotated; in the yeast genome, which has no selenoprotein, it predicts none. Chromosome 22 carries no tRNA-Sec gene.
+The SECIS element of human SELENOO scores only 16 bits with the Rfam model, below its gathering threshold of 35 bits;
+the test therefore lowers the threshold to 15 bits so that the SECIS search is exercised. Modules and pipeline are also
+tested with nf-test [@Forer2025].
 
 ## Baseline curation
 
@@ -1705,7 +1719,8 @@ Positive windows were the 2,000 nucleotides that follow the stop codon of each s
 gold-standard models of OKI2018, OSKA2016 and OdB3, and, in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, the
 selenocysteine predictions kept by the first round of hit validation, whose frame was extended on the genome to the
 next stop codon (at most 600 nucleotides). Windows were shortened at the next selenoprotein coding sequence
-downstream on the same strand and at contig ends, and left out when shorter than 100 nucleotides. Negative windows
+downstream on the same strand (SELENOW_pair2, before SELENOW_pair1, in the three *O. dioica* assemblies) and at contig
+ends (20 windows of the three other species), and left out when shorter than 100 nucleotides. Negative windows
 were 200 random windows of 2,000 nucleotides per genome, in the six assemblies and in four non-target tunicates
 (*C. intestinalis*, *C. savignyi*, *S. clava* and *T. democratica*), drawn uniformly over the contigs at least that
 long, on a random strand, and drawn again when they overlapped a positive window; one random seed gave the windows
