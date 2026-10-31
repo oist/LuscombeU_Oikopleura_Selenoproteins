@@ -1622,3 +1622,12 @@ no earlier step waits for them.
   before SELENOW_pair1; operons.py took the best hit of the 2-kb window, which was the pair1 SECIS. Fixed: the SECIS
   of a gene is the best hit that ends before the next gene on the same strand (all hits listed). No bicistronic
   dependence. To rerun.
+- make operons, third run (2026-10-31, commit dbefde6), written into the manuscript (Results "Selenoprotein genes in
+  operons", Methods "Operons"). Numbers: selenoprotein genes in operons 10/20, 13/20, 13/19 (background 47%, 40%, 49%;
+  P = 0.83, 0.037, 0.11); first position 1/10, 5/13, 3/13 (background 37%, 40%, 35% of operonic loci; P = 0.10, 1,
+  0.56); SL transcripts for 12, 15 and 4 genes, 74 of 75 trans-splice sites AG, 55 of 75 within 40 nt of the start
+  codon (median 2-6 nt); SECIS ends 82-341 nt after the stop codon; next coding sequence at least 63 nt after the
+  SECIS (OdB3 SELENOW_PAR), next trans-splice site 66-516 nt after it (OKI2018 SELENOW_PAR 66); SELENOW_pair2 has its
+  own SECIS (23-92 nt after the stop); in OdB3 an annotated CDS (CBY21828.1, neighbour not conserved) starts 47 nt
+  after the pair2 stop, inside its SECIS. 19 genes in the three assemblies: 13 same operon status, 9 same position.
+  Step 10 done. Next: step 11 (Discussion, Zenodo deposits), diary update.
