@@ -1810,18 +1810,12 @@ no earlier step waits for them.
   added to a trained last-train --codon matrix (with its probability columns) and new-style frameshifts.
 - Mass-spectrometry validation, lean plan (2026-10-31, Charles: "plan a mass-spec validation experiment as lean as
   possible ... another Oikopleura project is planning mass spec on a different protein family and their coenzymes";
-  OIST IAS pages attached by Charles: Mass Spectrometry, sample submission form, Kyoto University outsourcing page and
-  flow chart). Plan in the Claude doc "Selenoprotein mass-spec validation plan" and slide "massspec" of the deck.
-  Outline: animals collected once for both projects, frozen in batches, pooled (protein per animal to measure first;
-  about 50 ug per pool); methanol-chloroform-water extraction (coenzymes for the other project, protein pellet for
-  both); scenario A = IAS outsourcing to Kyoto University (Laemmli sample, SDS-PAGE lane cut into slices, in-gel
-  trypsin, Q Exactive Plus, Mascot with our FASTA; fee covered by IAS through the flow chart; ask for raw files),
-  scenario B = a trained OIST user (trypsin + chymotrypsin digests; PRM with synthetic Cys analogue peptides if
-  proteins are seen without Sec peptides; low-pH Sec labelling only with 1-2 mg protein: SecMS used 2 mg per sample,
-  Si et al. 2025 doi:10.1002/advs.202504109). Evidence per gene: 1 any peptide, 2 a peptide after the UGA, 3 the Sec
-  peptide with a selenium isotope envelope. Search: Comet with U (add_U_user_amino_acid = 150.95364), Percolator.
-  In silico (make ms-peptides, results/tables/stage2_ms_peptides.tsv): trypsin gives a Sec peptide (7-30 aa, <= 1
-  missed cleavage) for 17 of 20 OKI2018 genes (not GPX_chr1b, TXNL1.b, KKSU), chymotrypsin for those three; 14 genes
-  with >= 2 tryptic peptides after the Sec; Sec within two residues of the C-terminus in SELENOK, SELENOO, SELENOS,
-  TXNRD, TXNL1.b, KKSU; 17 of 20 proteins below 30 kDa. Unanswered: animals per week, culture species, the other
-  project's material; Charles: IAS proteomics "looks like" outsourced, plan for both scenarios.
+  then: plan in markdown in the repository, no personal information or prices, only the route with a trained OIST
+  user; the culture is the Okinawa species; at most a few hundred individuals per week). Plan: docs/mass_spec_plan.md;
+  slide "massspec" of the deck. In silico (make ms-peptides, results/tables/stage2_ms_peptides.tsv): trypsin gives a
+  Sec peptide (7-30 aa, <= 1 missed cleavage) for 17 of 20 OKI2018 genes (not GPX_chr1b, TXNL1.b, KKSU),
+  chymotrypsin for those three; 14 genes with >= 2 tryptic peptides after the Sec; Sec within two residues of the
+  C-terminus in SELENOK, SELENOO, SELENOS, TXNRD, TXNL1.b, KKSU; 17 of 20 proteins below 30 kDa. Guo et al. 2018 (PDF
+  with STAR Methods and supplement, attached by Charles) gave the level-3 criteria, the selenium isotope abundances, a
+  Q-Exactive HF method, the Mascot settings (dehydroalanine on U, isotope error) and the effect of Sec
+  supplementation on selenoprotein levels in cells (optional pilot in the plan).
