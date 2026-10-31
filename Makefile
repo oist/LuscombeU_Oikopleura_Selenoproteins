@@ -478,7 +478,8 @@ miniprot-junctions:
 PIPELINE_FINAL ?= work/stage2/pipeline/final
 miniprot-junctions-pipeline:
 	@test -d $(PIPELINE_FINAL)/miniprot || { echo "no $(PIPELINE_FINAL)/miniprot: set PIPELINE_FINAL to the outdir of the stage 2 final run" >&2; exit 1; }
-	@q=$$(ls $(PIPELINE_FINAL)/profile/*.faa 2>/dev/null | head -n 1); test -n "$$q" || { echo "no query FASTA in $(PIPELINE_FINAL)/profile" >&2; exit 1; }; \
+	@q=$$(ls $(PIPELINE_FINAL)/summary/selenoprotein_queries.faa $(PIPELINE_FINAL)/profile/*.faa 2>/dev/null | head -n 1); \
+	test -n "$$q" || { echo "no query FASTA (selenoprotein_queries.faa) in $(PIPELINE_FINAL)/summary" >&2; exit 1; }; \
 	echo "queries: $$q"; ls $(PIPELINE_FINAL)/miniprot; \
 	python3 stage2/miniprot_junctions.py --from-gff $(PIPELINE_FINAL)/miniprot --queries $$q \
 	  --work work/stage2/miniprot_junctions_pipeline --table results/tables/stage2_miniprot_junctions_pipeline.tsv

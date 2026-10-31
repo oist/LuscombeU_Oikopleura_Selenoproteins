@@ -1747,3 +1747,10 @@ no earlier step waits for them.
   The pipeline (miniprot 0.11, profile queries) called neither gene in any assembly, so the difference lies in the
   version or the queries: make miniprot-junctions-pipeline (the final run's own alignments) and scripts/miniprot_v011.sh
   (gold-standard proteins with miniprot 0.11) separate the two. Manuscript sentence to revise after them.
+- miniprot 0.11 on the gold-standard proteins (2026-10-31, Charles, job 52125946, scripts/miniprot_v011.sh; miniprot
+  0.11-r234, image of the pipeline's module): SELENOT and SEPHS2 called in no assembly by any of the three U queries;
+  no alignment intron overlaps the gold-standard intron next to the codon, and no frameshift (log summary; table to be
+  pushed). With the same queries and options, 0.18 calls SEPHS2 in all three assemblies and SELENOT in OdB3: the
+  pipeline's misses depend at least on the miniprot version (0.11 pinned by the nf-core module). Pipeline-release
+  item: test a newer miniprot in the module (benchmark rerun needed). The first make miniprot-junctions-pipeline
+  failed: PROFILE_QUERIES publishes to <outdir>/summary/, not profile/ (Makefile fixed).

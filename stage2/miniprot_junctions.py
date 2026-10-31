@@ -25,7 +25,7 @@ Other uses (both read existing miniprot GFF files instead of aligning):
     <work>/queries.faa (--queries-only writes it and stops; scripts/miniprot_v011.sh does this with miniprot 0.11,
     the version of the pipeline);
   - --from-gff DIR --queries FASTA: the pipeline's own alignments (DIR = <outdir>/miniprot of a pipeline run, FASTA =
-    its <outdir>/profile/selenoprotein_queries.faa): one row per query whose best alignment overlaps a gold-standard
+    its <outdir>/summary/selenoprotein_queries.faa): one row per query whose best alignment overlaps a gold-standard
     gene on its strand, residue U.
 """
 import argparse, collections, csv, os, re, subprocess, sys

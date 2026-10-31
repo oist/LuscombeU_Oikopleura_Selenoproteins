@@ -317,7 +317,7 @@ exactly) but not in OKI2018 or OSKA2016, where no alignment intron overlaps the 
 alignment has one frameshift and no in-frame stop codon. Two follow-ups separate the miniprot version from the queries:
 - `make miniprot-junctions-pipeline`: the same table from the alignments of the stage 2 final run itself
   (`<outdir>/miniprot/<genome>.gff`, miniprot 0.11, the Sec-containing profile sequences of
-  `<outdir>/profile/*.faa`), one row per query whose best alignment overlaps a gold-standard gene; output
+  `<outdir>/summary/selenoprotein_queries.faa`), one row per query whose best alignment overlaps a gold-standard gene; output
   `results/tables/stage2_miniprot_junctions_pipeline.tsv`;
 - `scripts/miniprot_v011.sh` (sbatch): the gold-standard queries aligned with miniprot 0.11 (image of the pipeline's
   module, run outside the analysis container); output `results/tables/stage2_miniprot_junctions_v0.11.tsv`.
