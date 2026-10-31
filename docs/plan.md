@@ -1670,3 +1670,14 @@ no earlier step waits for them.
   0.030, 0.081). SELENOW_pair1 (OdB3): ESTs end at 231 nt, next gene trans-spliced at 464 (233 nt apart). Figure
   OPERONS (figures/operons.*, make operons-figure, commit 96db647) and manuscript Results "Selenoprotein genes in
   operons" (poly(A) paragraphs, legend) and Methods "Operons" (polyadenylation sites, intercistronic distance, tests).
+- Possible addition to the paper: operon partners of the selenoprotein genes (2026-10-31, Charles: "do the genes in
+  the same operon as selenoproteins have anything to do with redox, selenium, selenoproteins etc?"). First look,
+  OKI2018 only, RefSeq product names of the other members of the nine operons with selenoprotein genes
+  (results/tables/stage2_operons.tsv, operon_members; names from the uploaded GCF_907165135.1 GBFF): DIO_PAR with a
+  phospholipid scramblase 2-like gene; SELENOK after CPLANE2-like; SELENOS with SON-, WDR82- and STK11-like genes;
+  SELENOW_PAR with EEF2K-, kish-A-, ZCCHC8- and UDP-GlcNAc transporter-like genes; SELENOW_chr2 after TDRD9-like;
+  the SELENOW pair together with a Cdc37-like gene; SEPHS2 after retinol dehydrogenase 14-like (an NAD(P)H
+  oxidoreductase), Aster-B-like and oligoribonuclease genes; TXNRD after PLCG2-like; 11 uncharacterized proteins.
+  No named partner has a known role in selenium metabolism. For the paper: human best hits of all partners in the
+  three assemblies, compared with the functions of all operon genes (GO terms), as a table or a sentence in
+  "Selenoprotein genes in operons". Shown on a slide of the presentation deck of 2026-10-31.
