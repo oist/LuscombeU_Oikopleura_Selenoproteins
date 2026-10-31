@@ -7,12 +7,13 @@ The deposit archive (`make stage2-bundle`) holds this file and:
 | File | Use |
 |---|---|
 | `appendicularia_selenoprofiles.tar.gz` | `--selenoprofiles_overrides`: Selenoprofiles profiles of the selenoproteins and of the machinery, extended with appendicularian proteins (standard names, replacing the standard profiles), and two new profiles, `KKSU` and `TXNL1b` |
+| `appendicularia_selenoprofiles_final.tar.gz` | the same profiles without the SELENOK proteins of *O. longicauda*, *O. albicans* and *O. vanhoeffeni* (added after the census, from gene models built at the loci found by the UGA/SECIS screens): the profiles used for the census of the manuscript |
 | `oikopleura_secis.cm` | `--secis_cm`: SECIS covariance model trained on *Oikopleura* genes, with a gathering threshold of 20 bits (used by the pipeline's `--cut_ga`) |
 | `appendicularia.config` | Nextflow configuration (`-c`): Selenoprofiles writes 2,000 nt of 3′ sequence after each prediction, the window length on which the 20-bit threshold was set |
 | `params.yaml` | parameters file (`-params-file`) to edit |
 | `samplesheet.csv` | example samplesheet: the profiles column must name the new profiles, in quotes |
 | `expectation_oikopleura_dioica.csv` | expected selenoproteome of *O. dioica* (20 genes), for `--expectation` |
-| `profile_members.tsv` | the proteins added to each profile |
+| `profile_members.tsv`, `profile_members_final.tsv` | the proteins added to each profile |
 
 ## Run
 

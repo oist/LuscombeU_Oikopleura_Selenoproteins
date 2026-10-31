@@ -437,14 +437,21 @@ census:
 
 # Deposit archive of the recommended settings and data files (stage2/recommended/README.md), after stage2-inputs
 STAGE2_BUNDLE = work/stage2/appendicularia_selenoprotein_annotation
+# The bundle carries the release profiles (final profiles plus SELENOK of three Oikopleura species; make
+# stage2-release-profiles) under the name the recommended settings use, and the final profiles of the census
+# (appendicularia_selenoprofiles_final.tar.gz) for reproducibility.
 stage2-bundle:
 	@test -s work/stage2/appendicularia_selenoprofiles.tar.gz || { echo "run make stage2-inputs first"; exit 1; }
+	@test -s work/stage2/appendicularia_selenoprofiles_release.tar.gz || { echo "run make stage2-release-profiles first"; exit 1; }
 	rm -rf $(STAGE2_BUNDLE) && mkdir -p $(STAGE2_BUNDLE)
 	cp stage2/recommended/README.md stage2/recommended/params.yaml stage2/recommended/samplesheet.csv $(STAGE2_BUNDLE)/
 	cp stage2/run/stage2.config $(STAGE2_BUNDLE)/appendicularia.config
-	cp stage2/run/expectation_oikopleura_dioica.csv work/stage2/appendicularia_selenoprofiles.tar.gz $(STAGE2_BUNDLE)/
+	cp stage2/run/expectation_oikopleura_dioica.csv $(STAGE2_BUNDLE)/
+	cp work/stage2/appendicularia_selenoprofiles_release.tar.gz $(STAGE2_BUNDLE)/appendicularia_selenoprofiles.tar.gz
+	cp work/stage2/appendicularia_selenoprofiles.tar.gz $(STAGE2_BUNDLE)/appendicularia_selenoprofiles_final.tar.gz
 	cp work/stage2/models/oikopleura_secis.cm $(STAGE2_BUNDLE)/oikopleura_secis.cm
-	cp work/stage2/profiles/final/members.tsv $(STAGE2_BUNDLE)/profile_members.tsv
+	cp work/stage2/profiles/release/members.tsv $(STAGE2_BUNDLE)/profile_members.tsv
+	cp work/stage2/profiles/final/members.tsv $(STAGE2_BUNDLE)/profile_members_final.tsv
 	tar -czf $(STAGE2_BUNDLE).tar.gz -C work/stage2 appendicularia_selenoprotein_annotation
 	@echo "$(STAGE2_BUNDLE).tar.gz"
 

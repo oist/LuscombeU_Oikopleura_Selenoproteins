@@ -265,6 +265,19 @@ transcript length after it and SECIS hits there; `stage2_candidate_transcripts_p
 the rule). Without such a position, the codon aligned by tblastn is used. Tested on a synthetic gene (five exons,
 minus strand, transcript stored in both orientations, SECIS seed in the 3' UTR): codon position and exon reproduced.
 
+## SELENOK of the other Oikopleura species and release profiles (`extract_regions.py`, `region_gene_models.py`)
+
+The final SELENOK profile does not find the SELENOK genes that the UGA/SECIS screens found in *O. longicauda*,
+*O. albicans*, *O. vanhoeffeni* and *M. erythrocephalus* (`make selenok-diagnose`: no candidate prediction before the
+filters, or a fragment). `make selenok-regions` extracts 9 kb around the screen codons (`curation/selenok_loci.tsv`)
+to `results/sequences/selenok_regions.fa`; `make selenok-models` (`region_gene_models.py`) builds gene models there:
+GeneWise with each gold-standard SELENOK protein, the last exon joined to the exon of the screen codon (donor
+GT/GC/GA, acceptor AG, TGA in frame, best global alignment to the query), start codon at most 10 codons upstream
+(`results/sequences/selenok_models.faa`, `results/tables/stage2_selenok_models.tsv`). `make stage2-release-profiles`
+builds the final profiles plus these proteins (the *M. erythrocephalus* model is held out), the profiles of the
+deposit (`make stage2-bundle`, which also carries the final profiles); `make selenok-diagnose
+SELENOK_DIAG_BUILDS="final release"` compares the two SELENOK profiles.
+
 ## SECIS element of SELENOI (`selenoi_regions.py`, `selenoi_secis_search.py`, `secis_stemloop_screen.py`)
 
 `make selenoi-regions` writes the regions around SELENOI (the three *O. dioica* assemblies, the tblastn loci of the

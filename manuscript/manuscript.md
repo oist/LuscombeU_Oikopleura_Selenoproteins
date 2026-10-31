@@ -987,6 +987,17 @@ element was found in the 2,000 nucleotides after them, although the *O. albicans
 In *B. stygius* and *M. erythrocephalus*, whose assemblies have N50 values of 1.3 and 1.9 kb, loci of 8 and 7 of the
 20 genes were found, many of them on contigs shorter than 3 kb; genes missing from these assemblies may be present in
 the genomes.
+The final SELENOK profile gave no candidate prediction at all, before its filters, in *O. albicans*,
+*O. vanhoeffeni* and *M. erythrocephalus*, and only a fragment in *O. longicauda*: in these genomes the gene is missed
+by the search, not removed by the filters. For the deposited profiles, we built gene models at the screen loci of
+*O. longicauda*, *O. albicans* and *O. vanhoeffeni* (97, 98 and 66 residues, the last without its first exon; 51 to
+55% identical to the *O. dioica* protein) and added them to the SELENOK profile (Methods). With this profile,
+Selenoprofiles predicted the three genes with their selenocysteine. In the held-out genomes, it predicted the
+N-terminal part of SELENOK in *M. erythrocephalus*, which the final profile did not find, and a longer part in
+*B. stygius* (coverage of the profile 0.88 against 0.67), in both without the exon of the selenocysteine; in
+*M. erythrocephalus*, the screen had found that exon on another contig. The release profile also predicts a few more
+glycine- and proline-rich fragments without selenocysteine (two in OKI2018, two in *O. longicauda*, one in
+*O. albicans*), of the kind that the final profile already predicts in OSKA2016, AOM-5-5f and *F. borealis*.
 In *F. borealis*, the only appendicularian outside the Oikopleuridae, 5 of the 20 genes were found (SELENOF, SELENOT,
 SELENOW_chr2, SEPHS2 and TXNRD), with seven GPX loci outside the clades of the *O. dioica* GPX genes, and two families
 absent from the Oikopleuridae: SELENOL (two loci) and SELENOU (one locus, with a SECIS element of 23.6 bits). KKSU,
@@ -1702,6 +1713,21 @@ profiles from the three *O. dioica* assemblies (E0), three sets each without one
 the final profiles; the proteins of each build are listed in `results/tables/stage2_profile_members.tsv`. A copy of
 the *Oikopleura* SECIS model was given gathering, trusted and noise cutoffs of 20 bits, so that the pipeline, which
 searches with `--cut_ga`, reports and includes hits from 20 bits.
+
+After the census, the SELENOK genes that the UGA/SECIS screens found in *O. longicauda*, *O. albicans* and
+*O. vanhoeffeni* (UGA/SECIS screens; The selenoproteomes of appendicularians) were added to the profiles for the
+deposit (release profiles). Regions of 9 kb around the screen codons were aligned with each gold-standard SELENOK
+protein by GeneWise [@Birney2004] (selenocysteine read as cysteine, sense strand), and the model of best score was
+kept. Its last exon was joined to the exon of the screen codon through a donor (GT, GC or GA, the *O. dioica* intron
+classes) within 40 nucleotides of its end and an acceptor (AG) within 400 nucleotides upstream of the TGA, with the
+TGA in frame and no TAA or TAG before it, choosing the joint whose protein had the best global alignment score to
+the query (BLOSUM62, end gaps free); the start codon was taken up to 10 codons upstream of the model, in frame and
+without stop codon, or among its first two codons. The three proteins were added to the final profiles as curated
+members (the *M. erythrocephalus* model, from a held-out genome, was not). The final and release SELENOK profiles were
+compared by running Selenoprofiles with that profile alone on OKI2018 and the six other appendicularian genomes, and
+listing its candidate predictions before filtering (`stage2/diagnose_refiltering.py`). The procedures are
+`stage2/extract_regions.py`, `stage2/region_gene_models.py` and `stage2/build_profiles.py` of the analysis repository
+(`make selenok-regions`, `selenok-models`, `stage2-release-profiles`, `selenok-diagnose`).
 
 ## Test assemblies and reference genes
 

@@ -1567,3 +1567,17 @@ no earlier step waits for them.
   out by the held-out rule of build_profiles.py), as a separate build ("release") for the deposit, so that the final
   run stays tied to the final profiles; test: make selenok-diagnose SELENOK_DIAG_BUILDS="final release" (held-out
   M. erythrocephalus, B. stygius and F. borealis are the real test).
+- SELENOK release profiles (2026-10-31, commit 7e292d9). Models (Deigo): O. longicauda 97 aa (3 exons, complete),
+  O. albicans 98 aa (3 exons, complete), O. vanhoeffeni 66 aa (2 exons, first exon missing), all with the TGA at the
+  screen codon, 51-55% identical to the O. dioica protein; M. erythrocephalus 21-aa fragment, held out (not a member).
+  Release SELENOK profile: 27 sequences (24 + 3). selenok-diagnose, final vs release: OKI2018 found by both; the three
+  species of the models now predicted with their selenocysteine (coverage 0.99, 0.99, 0.68; expected, since they are
+  members); held out: M. erythrocephalus none -> an "unaligned" N-terminal fragment on SCLF01722808.1
+  (VDFVTGLFWGAVNFVTIFFSSMLNLDPP...; the screen codon is on SCLF01573378.1); B. stygius "unaligned" coverage 0.67 ->
+  0.88 (N-terminus now complete), no selenocysteine exon; F. borealis only Gly/Pro-rich fragments with both. Side
+  effect: more Gly/Pro-rich fragments without selenocysteine pass the SELENOK filters (OKI2018 2, O. longicauda 2,
+  O. albicans 1), as the final profile already does in OSKA2016, AOM-5-5f and F. borealis. Decision: the deposit
+  bundle carries the release profiles under the recommended name and the final profiles of the census
+  (appendicularia_selenoprofiles_final.tar.gz). Written into the manuscript (census section, Methods "Stage 2
+  profiles"; GeneWise cited, Birney et al. 2004, doi:10.1101/gr.1865504, via PubMed). Step 9 follow-up 2 closed.
+  Next: step 10 (SECIS and operons).
