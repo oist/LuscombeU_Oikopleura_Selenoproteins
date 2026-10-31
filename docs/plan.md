@@ -1789,3 +1789,15 @@ no earlier step waits for them.
   lastdb -q (21 letters, * = stop), lastal -F (frameshift costs) or last-train --codon (64x21 codon rates and four
   frameshift probabilities), -G custom genetic code file; last-split does not support DNA-versus-protein, so no intron
   model (exons as separate local alignments). Assessment in the conversation; not added.
+- LAST and U (2026-10-31, Charles: "Would patching LAST to handle U in protein sequences be useful?"). LAST 1654
+  (source archive attached by Charles, built in the session) already handles U without a patch: Alphabet::init
+  encodes every letter A-Z, so U is a non-alphabet protein letter (not used in seeds); ScoreMatrix::init takes scores
+  for any letter present in a user matrix file; lastal -G reads a genetic code file. Test on a synthetic SEPHS2 gene
+  (OSKA2016 gold protein back-translated, TGA at the U, the real 41-nt OSKA2016 intron 1 nt after it, random flanks),
+  queries the OSKA2016 and OKI2018 gold proteins, lastal -F15: with BL62.mat, U gets the matrix minimum and the
+  alignment takes a frameshift through the intron with U against S (as miniprot does); with BL62 plus a U row and
+  column (U as C; U-U, U-C, U-* = 9), U is aligned to the TGA (as *); with that matrix and a genetic code file
+  reading TGA as U, U is aligned to U. In both cases the intron follows as a frameshift and a 15-residue deletion (no
+  intron model). Each run spent about 48 s before aligning (E-value parameters for the custom matrix, presumably).
+  Untested: a U column in a last-train --codon matrix with new-style frameshifts; real genomes; distant queries.
+  Files: scratchpad only (not in the repository).
