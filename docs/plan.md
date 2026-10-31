@@ -1581,3 +1581,13 @@ no earlier step waits for them.
   (appendicularia_selenoprofiles_final.tar.gz). Written into the manuscript (census section, Methods "Stage 2
   profiles"; GeneWise cited, Birney et al. 2004, doi:10.1101/gr.1865504, via PubMed). Step 9 follow-up 2 closed.
   Next: step 10 (SECIS and operons).
+- Step 10, SECIS and operons (2026-10-31, Charles: "let's do it"). Questions: which selenoprotein genes of the three
+  O. dioica assemblies lie in operons and at which position; where their SECIS lies relative to the next gene (the
+  first gene of an operon has a short 3' UTR); whether their mRNAs carry the spliced leader (SL); whether their
+  neighbours are conserved between the cryptic species (Plessy 2024: operons mostly not conserved between Okinawa,
+  Osaka and Barcelona); background of all genes. Operon definition: consecutive loci on the same strand with coding
+  spans at most 500 nt apart (Plessy 2024: 500 bp intergenic; coding spans here because the GenBank OdB3 annotation
+  has no UTRs). SL 3' end read in the transcripts of this study (TRINITY_DN1283_c0_g1_i2 and others start with
+  CTCCTCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG; OSKA2016 transcripts with TTTCGATTGTCTAACAG); the Ganot 2004 full text was
+  not available through PubMed for the published sequence. stage2/operons.py (make operons), tested on a synthetic
+  contig. Side finding: SELENOI mRNAs are SL trans-spliced (DN1283 isoforms start with the SL).

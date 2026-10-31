@@ -265,6 +265,19 @@ transcript length after it and SECIS hits there; `stage2_candidate_transcripts_p
 the rule). Without such a position, the codon aligned by tblastn is used. Tested on a synthetic gene (five exons,
 minus strand, transcript stored in both orientations, SECIS seed in the 3' UTR): codon position and exon reproduced.
 
+## Operons and SECIS elements (`operons.py`, `make operons`)
+
+Step 10. In each *O. dioica* assembly, the loci of the public annotation (coding spans; transcripts with overlapping
+coding spans merged; loci overlapping a gold-standard selenoprotein gene replaced by it) are chained into operons
+(consecutive loci on the same strand, coding spans at most 500 nt apart; Plessy et al. 2024 used 500 nt between genes).
+For each gold-standard gene: neighbours, operon members and position, the SECIS element of the Oikopleura model after
+the stop codon and the space left before the next gene on the same strand, transcripts starting with the spliced
+leader (3' end GATTGTCTAACAG, read in the transcripts of this study) and where they start, transcripts that run from
+the upstream neighbour into the gene, and whether the neighbours are homologous between the three assemblies
+(blastp). Background: the same definition for all loci (Fisher's exact test). Tested on a synthetic contig (operon of
+three loci, annotated model replaced by the gold-standard gene, SL read in both transcript orientations).
+Outputs: `results/tables/stage2_operons.tsv`, `stage2_operons_summary.tsv`.
+
 ## SELENOK of the other Oikopleura species and release profiles (`extract_regions.py`, `region_gene_models.py`)
 
 The final SELENOK profile does not find the SELENOK genes that the UGA/SECIS screens found in *O. longicauda*,
