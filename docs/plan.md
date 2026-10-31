@@ -1801,3 +1801,10 @@ no earlier step waits for them.
   intron model). Each run spent about 48 s before aligning (E-value parameters for the custom matrix, presumably).
   Untested: a U column in a last-train --codon matrix with new-style frameshifts; real genomes; distant queries.
   Files: scratchpad only (not in the repository).
+- last-train and U (2026-10-31, Charles: "Will last-train produce a matrix with U?"): no. bin/last-train of LAST 1654
+  hard-codes its alphabets: guessAlphabet accepts 4 (DNA) or 20 letters ("can't handle unusual alphabets"), and
+  --codon writes rows for proteinAlphabet21 (20 amino acids and *) against 64 codons; U is outside the lastdb alphabet,
+  so aligned U positions are not counted in training. A U row added by hand to a codon matrix is accepted by lastal and
+  used (synthetic SEPHS2 test, untrained matrix: U-TGA 9 gave a score 11 higher than without the U row, where U gets
+  the matrix minimum -2; my untrained matrix needed -e, lastal could not compute E-values for it). Untested: a U row
+  added to a trained last-train --codon matrix (with its probability columns) and new-style frameshifts.
