@@ -328,6 +328,17 @@ and 0.11 144 of the 175 protein-gene pairs with U. Commands:
 miniprot 0.11 writes no `fs` and `st` tags; frameshifts are then counted from the `cg` tag and in-frame stop codons from
 the `cs` tag. Column `sec_aligned_to`: the genome codon against the query's selenocysteine.
 
+## Peptides for a mass-spectrometry validation (`ms_peptides.py`, `make ms-peptides`)
+
+Planning aid, no MS data. The gold-standard proteins are digested in silico (trypsin, Arg-C, Glu-C, chymotrypsin,
+Asp-N; up to one missed cleavage): shortest peptide of 7-30 residues holding the selenocysteine for each protease,
+number of tryptic peptides entirely after the selenocysteine (their detection shows read-through of the UGA codon),
+average protein mass (gel position), and monoisotopic mass of the tryptic selenocysteine peptide with carbamidomethyl
+on C and U. Result (2026-10-31): 17 of 20 OKI2018 genes have a tryptic selenocysteine peptide (not GPX_chr1b,
+TXNL1.b, KKSU), all 20 with one of the five proteases; 14 have at least two tryptic peptides after the
+selenocysteine; in SELENOK, SELENOO, SELENOS, TXNRD, TXNL1.b and KKSU the selenocysteine is within two residues of the
+C-terminus, so only the selenocysteine peptide can show read-through. Output: `results/tables/stage2_ms_peptides.tsv`.
+
 ## SELENOI junction (`selenoi_junction.py`, `make selenoi-junction`)
 
 The transcripts of the three *O. dioica* assemblies (from `make selenoi-regions`, in `results/sequences/`) are aligned
