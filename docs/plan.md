@@ -1591,3 +1591,10 @@ no earlier step waits for them.
   CTCCTCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG; OSKA2016 transcripts with TTTCGATTGTCTAACAG); the Ganot 2004 full text was
   not available through PubMed for the published sequence. stage2/operons.py (make operons), tested on a synthetic
   contig. Side finding: SELENOI mRNAs are SL trans-spliced (DN1283 isoforms start with the SL).
+- SL sequence (2026-10-31, Charles, with the Ganot et al. 2004 PDF): ACTCATCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG (40 nt,
+  Fig. 1A). Ganot 2004 also: trans-splice acceptor consensus TTT(C/T/A)AG, most trans-spliced exons start with A
+  (133 of 145); intercistronic regions of 23-30 nt (polyadenylation site of the upstream gene to the trans-splice site
+  of the next) in the cyclin D3 cluster; only the last gene (cycD) had an AAUAAA signal; candidate operons defined by
+  less than 300 bp between coding sequences (Fig. 7). operons.py: the published SL cited (search with its 3' 13 nt,
+  since transcript assemblies can lack its 5' part), acceptor AG checked at each SL transcript start; gaps reported so
+  that the 300-bp definition can be applied.

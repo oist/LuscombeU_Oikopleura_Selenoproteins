@@ -26,12 +26,16 @@ For each gold-standard gene:
     same strand;
   - 3' UTR length and polyadenylation signal of the gold-standard model (results/tables/gold_standard.tsv);
   - SL: transcripts of the assembly (alignments of make gold-standard, work/stage2/gold_standard/<genome>.transcripts.paf;
-    sequences from the samplesheet) that overlap the gene and start with the 3' end of the O. dioica SL
-    (--sl, read in the transcripts of this study, for example TRINITY_DN1283_c0_g1_i2:
-    CTCCTCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG; at most one mismatch, within the first --sl-window nt, or its reverse
-    complement at the end); the genome position where each such transcript starts, its distance upstream of the
-    start codon, and whether it lies between the coding sequences of the upstream neighbour and the gene; and the
-    transcripts that run from the coding sequence of the upstream neighbour into the gene (polycistronic);
+    sequences from the samplesheet) that overlap the gene and start with the 3' end (--sl) of the 40-nt O. dioica SL
+    ACTCATCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG (Ganot et al. 2004, Fig. 1A; transcript assemblies can lack its 5'
+    part, for example OSKA2016 transcripts starting with TTTCGATTGTCTAACAG), at most one mismatch, within the first
+    --sl-window nt, or its reverse complement at the end; the genome position where each such transcript starts, its
+    distance upstream of the start codon, whether the two genome bases before it are AG (the trans-splice acceptor;
+    Ganot et al. 2004: consensus TTT(C/T/A)AG), and whether it lies between the coding sequences of the upstream
+    neighbour and the gene; and the transcripts that run from the coding sequence of the upstream neighbour into the
+    gene (polycistronic). Ganot et al. 2004 found intercistronic regions of 23 to 30 nt between the polyadenylation
+    site of a gene and the trans-splice site of the next, and defined candidate operons by less than 300 bp between
+    coding sequences; the gaps are reported so that this stricter definition can be applied;
   - neighbours conserved between assemblies: the proteins of the neighbours (translated from the representative
     coding sequence of each annotated locus) compared by blastp (E <= 1e-10) with the neighbours of the same gene in
     the other two assemblies.
@@ -225,7 +229,9 @@ def main():
                     g5 = al["ts"] if plus else al["te"]     # 5' end of the aligned part (the SL is not aligned)
                     dist = (start - g5) if plus else (g5 - start)
                     between = up_end is None or (g5 > up_end if plus else g5 < up_end)
-                    sl_sites.append((al["q"], dist, between))
+                    cs_ = contigs.get(x["contig"], "")
+                    acc = (cs_[g5 - 2:g5] if plus else rc(cs_[g5 + 1:g5 + 3])) if cs_ else ""
+                    sl_sites.append((al["q"], dist, between, acc == "AG"))
                 if up_end is not None and ((plus and al["ts"] <= up_end) or (not plus and al["te"] >= up_end)):
                     through.append(al["q"])
             rows.append({
@@ -240,8 +246,9 @@ def main():
                 "space_after_secis": (gap(down_same) - sec[2]) if (sec and down_same is not None) else "",
                 "utr3_length": gt.get("utr3_length", ""), "polyA_signal": gt.get("polyA_signal", ""),
                 "sl_transcripts": len(sl_sites),
-                "sl_start_upstream_of_cds": ",".join(str(d) for _, d, _ in sorted(sl_sites, key=lambda s: s[1]))[:200],
-                "sl_between_neighbour_and_gene": sum(1 for *_, b in sl_sites if b),
+                "sl_start_upstream_of_cds": ",".join(str(d) for _, d, *_ in sorted(sl_sites, key=lambda s: s[1]))[:200],
+                "sl_acceptor_AG": sum(1 for *_, ag in sl_sites if ag),
+                "sl_between_neighbour_and_gene": sum(1 for _, _, b, _ in sl_sites if b),
                 "transcripts_from_upstream_neighbour": len(through),
             })
         n_all = sum(len(L) for L in loci.values())
