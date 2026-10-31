@@ -1754,3 +1754,17 @@ no earlier step waits for them.
   pipeline's misses depend at least on the miniprot version (0.11 pinned by the nf-core module). Pipeline-release
   item: test a newer miniprot in the module (benchmark rerun needed). The first make miniprot-junctions-pipeline
   failed: PROFILE_QUERIES publishes to <outdir>/summary/, not profile/ (Makefile fixed).
+- miniprot at SELENOT and SEPHS2, alignments read (2026-10-31, Charles: OSKA2016 PAF lines of both versions, gold
+  OSKA2016 proteins). The introns next to the codons are short: SEPHS2 41 (OSKA2016) and 46 nt (OKI2018, OdB3), 1 nt
+  after the TGA; SELENOT 44 (OKI2018, OSKA2016) and 42 nt (OdB3), 2 nt after it (gold-standard models).
+  SEPHS2, 0.18: U against the TGA, intron placed exactly (cs ":29*tgaU*gG~gt41ag..."). SEPHS2, 0.11: no intron; the
+  alignment deletes 2 nt (frameshift) and 39 nt (13 residues) and puts U against "tca" at the end of the intron
+  (cs ":29-tg-aggtaggttg...aatcaac*tcaU:97", cg 29M2F13D98M): the TGA, the base after it and the intron are read as a
+  frameshift and a deletion, and the in-frame stop codon is avoided. SELENOT, both versions: the same with a 2-nt
+  frameshift and 14 deleted residues, U against "tac" near the end of the 44-nt intron. 0.11 writes no fs and st tags,
+  so the first 0.11 and pipeline tables report 0 frameshifts wrongly; miniprot_junctions.py now counts them from cg
+  (F, G operations) and stop codons from cs when the tags are absent, and adds sec_aligned_to (the genome codon
+  against the query's selenocysteine). Side observation: 0.18 aligns the last SELENOT intron as GA-AG (~ga89ag), 0.11
+  reads it through with another frameshift. Tables to regenerate on Deigo (no realignment).
+  Pipeline's own alignments (job 52125978, miniprot 0.11, profile queries): SELENOT 3 and SEPHS2 26-32 U alignments
+  per assembly, none calls the codon, none has an intron at the gold-standard position.

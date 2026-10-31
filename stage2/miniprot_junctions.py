@@ -16,7 +16,9 @@ gold-standard model:
   - the gold-standard intron nearest to the codon (distance in nt from the codon), the alignment's intron that
     overlaps it, the shift of its donor and acceptor (nt, transcript orientation, alignment minus gold standard) and
     the splice sites of both;
-  - frameshifts and stop codons reported by miniprot (fs, st tags).
+  - the genome codon the alignment puts against the query's selenocysteine (sec_aligned_to);
+  - frameshifts and stop codons reported by miniprot (fs, st tags; for miniprot 0.11, which does not write them,
+    counted from the cg and cs tags).
 Default genes: all gold-standard genes, so that SELENOT and SEPHS2 can be compared with the genes miniprot finds.
 Output: --table; miniprot outputs in --work.
 
@@ -57,9 +59,14 @@ def read_miniprot_gff(path):
         if l.startswith("##PAF\t"):
             f = l.rstrip("\n").split("\t")[1:]
             tags = {x.split(":", 2)[0]: x.split(":", 2)[2] for x in f[12:] if x.count(":") >= 2}
+            cs = tags.get("cs", "")
+            # miniprot 0.11 writes no fs and st tags: count frameshifts from the cg tag (F and G operations) and
+            # in-frame stop codons from the cs tag (stop codons aligned to a residue)
+            fs = int(tags["fs"]) if "fs" in tags else len(re.findall(r"\d+[FG]", tags.get("cg", "")))
+            st = int(tags["st"]) if "st" in tags else len(re.findall(r"\*(?:taa|tag|tga)[A-Z]", cs))
             cur = {"query": f[0], "qlen": int(f[1]), "qstart": int(f[2]), "qend": int(f[3]), "strand": f[4],
                    "contig": f[5], "tstart": int(f[7]), "tend": int(f[8]), "AS": int(tags.get("AS", 0)),
-                   "fs": int(tags.get("fs", 0)), "st": int(tags.get("st", 0)), "cs": tags.get("cs", ""), "cds": []}
+                   "fs": fs, "st": st, "cs": cs, "cds": []}
             alns.append(cur)
         elif not l.startswith("#") and cur is not None:
             f = l.rstrip("\n").split("\t")
@@ -68,10 +75,11 @@ def read_miniprot_gff(path):
     return alns
 
 
-def aligned_codons(rec, query_seq, residue):
+def aligned_codons(rec, query_seq, residue, uidx=None):
     """Genomic intervals (0-based half-open) of TGA codons aligned to `residue` at the query's selenocysteine position
-    (pipeline bin/sec_check.py: aligned_sec_codons), and the query position after the alignment."""
-    sites, qpos = [], rec["qstart"]
+    (pipeline bin/sec_check.py: aligned_sec_codons), the query position after the alignment and, if uidx is given,
+    what the alignment puts against query position uidx (a codon, 'gap' for an insertion, '' if outside)."""
+    sites, qpos, at = [], rec["qstart"], ""
     fwd = rec["strand"] == "+"
     gpos = rec["tstart"] if fwd else rec["tend"]
 
@@ -83,18 +91,22 @@ def aligned_codons(rec, query_seq, residue):
     for m in CS_TOKEN.finditer(rec["cs"]):
         t = m.group(0)
         if t[0] == ":":
-            n = int(t[1:]); consume(3 * n); qpos += n
+            n = int(t[1:])
+            if uidx is not None and qpos <= uidx < qpos + n: at = "identical"
+            consume(3 * n); qpos += n
         elif t[0] == "*":
             codon = t[1:-1]; iv = consume(len(codon))
             if codon == "tga" and qpos < len(query_seq) and query_seq[qpos] == residue: sites.append(iv)
+            if qpos == uidx: at = codon
             qpos += 1
         elif t[0] == "+":
+            if uidx is not None and qpos <= uidx < qpos + len(t) - 1: at = "gap"
             qpos += len(t) - 1
         elif t[0] == "-":
             consume(len(t) - 1)
         else:
             consume(int(t[3:-2]))
-    return sites, qpos
+    return (sites, qpos, at) if uidx is not None else (sites, qpos)
 
 
 def introns(cds):
@@ -189,7 +201,7 @@ def main():
                     (rc(contigs[m["contig"]][near[1] - 1:near[1] + 1]) + "-" + rc(contigs[m["contig"]][near[0]:near[0] + 2]))
             if hits:
                 al = max(hits, key=lambda x: x["AS"])
-                sites, qpos = aligned_codons(al, qseq, var)
+                sites, qpos, at = aligned_codons(al, qseq, var, uidx)
                 support = "aligned" if any(s == c0 for s, _ in sites) else "none"
                 if support == "none" and var == "U" and qpos == al["qend"] and qpos < len(qseq) and qseq[qpos] == "U":
                     ctg = contigs[al["contig"]]
@@ -210,7 +222,7 @@ def main():
                 over = [iv for iv in mi if near and iv[0] <= near[1] and near[0] <= iv[1]]
                 row.update({"alignment": f"{al['contig']}:{al['tstart'] + 1}-{al['tend']}", "score": al["AS"],
                             "query_covered": f"{al['qstart'] + 1}-{al['qend']} of {al['qlen']}",
-                            "sec_position": uidx + 1, "sec_support": support,
+                            "sec_position": uidx + 1, "sec_aligned_to": at, "sec_support": support,
                             "codon_in_cds": ("yes, frame " + str(frame)) if inside else "no",
                             "frameshifts": al["fs"], "stop_codons": al["st"]})
                 if near and over:
@@ -225,7 +237,8 @@ def main():
                 elif near:
                     row["alignment_intron_sites"] = "no intron there"
             rows.append(row)
-    cols = ["genome", "gene", "query", "alignment", "score", "query_covered", "sec_position", "sec_support",
+    cols = ["genome", "gene", "query", "alignment", "score", "query_covered", "sec_position", "sec_aligned_to",
+            "sec_support",
             "codon_in_cds", "gold_intron_distance", "gold_intron_sites", "intron_donor_shift", "intron_acceptor_shift",
             "alignment_intron_sites", "frameshifts", "stop_codons"]
     with open(a.table, "w") as o:
@@ -243,8 +256,10 @@ def main():
             exact = sum(r.get("intron_donor_shift") == 0 and r.get("intron_acceptor_shift") == 0 for r in rs)
             nointr = sum(r.get("alignment_intron_sites") == "no intron there" for r in rs)
             fs = sum(int(r.get("frameshifts") or 0) > 0 for r in rs)
+            at = collections.Counter(r.get("sec_aligned_to") or "outside" for r in rs)
             print(f"{gene} {g}: {len(rs)} U alignments, codon called {called}, nearest intron exact {exact}, "
-                  f"absent {nointr}, with frameshifts {fs}", flush=True)
+                  f"absent {nointr}, with frameshifts {fs}; U against " +
+                  ", ".join(f"{k} {v}" for k, v in at.most_common()), flush=True)
 
 
 if __name__ == "__main__":

@@ -25,5 +25,4 @@ for g in OKI OSKA OdB3; do
   singularity exec "$MP_SIF" miniprot -t "$N" -I --gff "$W/$g.mpi" "$W/queries.faa" > "$W/$g.gff.part"
   mv "$W/$g.gff.part" "$W/$g.gff"
 done
-scripts/run_in_container.sh python3 stage2/miniprot_junctions.py --from-gff "$W" --work "$W" \
-  --table results/tables/stage2_miniprot_junctions_v0.11.tsv
+scripts/run_in_container.sh make miniprot-junctions-v011-table
