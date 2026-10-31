@@ -1130,7 +1130,8 @@ multiple selenocysteine codons of SELENOP more than 30 nucleotides apart and pro
 ## Selenoprotein genes in operons
 
 > **Provisional section (2026-10-31, step 10 of the plan in docs/plan.md; `results/tables/stage2_operons.tsv`,
-> `stage2_operons_summary.tsv`; `make operons`).**
+> `stage2_operons_summary.tsv`, `stage2_operons_utr.tsv`, `stage2_operons_utr_bins.tsv`; `make operons`;
+> figure: `make operons-figure`).**
 
 Many *O. dioica* genes are transcribed as operons, whose polycistronic transcripts are resolved into mRNAs by
 trans-splicing of a 40-nucleotide spliced leader (SL) to the 5′ end of each downstream mRNA; the intercistronic
@@ -1138,33 +1139,84 @@ regions are short, 23 to 30 nucleotides between the polyadenylation site of a ge
 next in the cyclin D3 cluster [@Ganot2004]. Since a SECIS element must lie in the 3′ UTR of its mRNA, a selenoprotein
 gene followed closely by another gene of its operon must fit its SECIS element in that short space. We placed the
 gold-standard genes among the annotated genes of the three *O. dioica* assemblies, with operons defined as consecutive
-genes on the same strand whose coding sequences are at most 500 nucleotides apart (Methods).
+genes on the same strand whose coding sequences are at most 500 nucleotides apart (Methods; Figure OPERONS A).
 
 Selenoprotein genes are as often in operons as the other genes: 10 of 20 in OKI2018, 13 of 20 in OSKA2016 and 13 of
 19 in OdB3, against 47%, 40% and 49% of all annotated loci (Fisher's exact test, P = 0.83, 0.037 and 0.11), and they
 are not less often the first gene of their operon (1 of 10, 5 of 13 and 3 of 13, against 37%, 40% and 35% of the
-genes in operons; P = 0.10, 1 and 0.56). Their mRNAs are trans-spliced: transcripts that start with the SL were found
+genes in operons; P = 0.10, 1 and 0.56; Figure OPERONS C). Their mRNAs are trans-spliced: transcripts that start with the SL were found
 for 12 genes in OKI2018 and 15 in OSKA2016, and for 4 in OdB3, whose ESTs have masked 5′ ends; 74 of the 75
 trans-splice sites have an AG acceptor, and most lie within 40 nucleotides of the start codon (55 of 75; median 2 to 6
 nucleotides).
 
 In every gene, the SECIS element lies before the next gene on the same strand. It ends 82 to 341 nucleotides after
 the stop codon, and the next coding sequence starts at least 63 nucleotides after its end; where the next gene has
-trans-spliced transcripts, its first trans-splice site lies 66 to 516 nucleotides after the end of the SECIS. The
-tightest case is SELENOW_PAR, internal in operons of seven and eleven genes in OKI2018 and OdB3: its SECIS element
-lies 45 to 119 nucleotides after the stop codon in the three assemblies, and in OKI2018 the next gene is trans-spliced
-179 nucleotides after the stop codon, so that with an intercistronic region of 23 to 30 nucleotides the SELENOW_PAR
-mRNA would end about 40 nucleotides after its SECIS element. The two genes of the SELENOW pair lie 197 and 169
+trans-spliced transcripts, its first trans-splice site lies 66 to 516 nucleotides after the end of the SECIS (Figure
+OPERONS B). The tightest case is SELENOW_PAR, internal in operons of seven and eleven genes in OKI2018 and OdB3: its
+SECIS element lies 45 to 119 nucleotides after the stop codon in the three assemblies; in OdB3, its ESTs end 151 to
+153 nucleotides after the stop codon, 32 nucleotides after the SECIS element and about 30 before the next coding
+sequence, and in OKI2018, where the next gene is trans-spliced 179 nucleotides after the stop codon, a
+polyadenylation site at the median intercistronic distance (31 nucleotides, below) would lie 36 nucleotides after
+the SECIS element. The two genes of the SELENOW pair lie 197 and 169
 nucleotides apart in OKI2018 and OSKA2016, with transcripts that run from the first into the second; each has its own
 SECIS element, that of the first gene (SELENOW_pair2) 23 to 92 nucleotides after its stop codon. In OdB3, the two
 genes are 869 nucleotides apart, and an annotated coding sequence (CBY21828.1) without homologous neighbour in the
 other assemblies starts 47 nucleotides after the stop codon of SELENOW_pair2, inside its SECIS element.
+
+The 3′ ends of the mRNAs were read in the transcripts that end with a poly(A) tail: 733 polyadenylation sites in
+OKI2018 and 143 in OSKA2016, whose transcripts are Trinity assemblies, and 39,497 in the OdB3 cDNA reads. Between
+two genes of an operon, the polyadenylation site of the first lies a median 31 nucleotides before the first
+trans-splice site of the second in OKI2018 (n = 76; interquartile range 29 to 34) and OSKA2016 (n = 9), and 32
+nucleotides in OdB3 (n = 292; 29 to 39); 75% (OKI2018) and 65% (OdB3) of these distances are between 26 and 35
+nucleotides (Figure OPERONS D), a few nucleotides above the 23 to 30 nucleotides of the cyclin D3 cluster
+[@Ganot2004]. Polyadenylation sites were found after 16 selenoprotein genes (1 in OKI2018, 15 in
+OdB3). The most supported site of each gene lies 8 to 343 nucleotides after the end of its SECIS element (median 84
+in OdB3); a single EST, of SELENOT in OdB3, ends before the SECIS element (120 nucleotides after the stop codon, with
+the SECIS at 258 to 323).
+
+Selenoprotein mRNAs have longer 3′ UTRs than the mRNAs of the other genes. In OdB3, the most supported
+polyadenylation site lies a median 250.5 nucleotides after the stop codon of the selenoprotein genes followed by
+another gene of their operon, against 105 nucleotides for the other such genes (n = 6 and 2,516; Mann-Whitney U test,
+P = 0.0033), and 300 against 136 nucleotides for the genes last in their operon or outside operons (n = 9 and 4,924;
+P = 0.035). Likewise, the first trans-splice site of the next gene of the operon lies further from the stop codon of
+a selenoprotein gene (median 281, 302.5 and 365 nucleotides in OKI2018, OSKA2016 and OdB3; n = 3, 4 and 2) than from
+that of the other genes (160, 169.5 and 166 nucleotides; P = 0.10, 0.030 and 0.081). These differences, 120 to 200
+nucleotides, exceed the length of a SECIS element (about 65 nucleotides between the ends of the hits). Two OdB3 genes
+depart from the short intercistronic spacing. SELENOS has polyadenylation sites 220 to 269 nucleotides after its stop
+codon, and the next gene has trans-splice sites at 266 and 272 nucleotides, so that some SELENOS mRNAs end after the
+first trans-splice site of the next gene; cleavage at such a site and trans-splicing at 266 nucleotides cannot both
+take place on the same pre-mRNA molecule. The ESTs of SELENOW_pair1 end 231 nucleotides after its stop codon, and the
+next gene is trans-spliced 464 nucleotides after it, 233 nucleotides further.
 
 The operon context of the selenoprotein genes is partly conserved between the cryptic species, although operons in
 general are not [@Plessy2024]: of the 19 genes present in the three assemblies, 13 are in an operon in all three or
 in none, and 9 have the same position in the three (SELENOS internal, with homologous neighbours on both sides;
 DIO_PAR, SELENOK and SELENOW_chr2 last, each after a homologous gene; GPX_chr1a, GPX_chr1b, KKSU, SELENOT and
 SELENOW_chr1a outside operons).
+
+![Figure OPERONS](../figures/operons.png)
+
+Figure OPERONS (`figures/operons.pdf`). Selenoprotein genes in the operons of the three *O. dioica* assemblies. A, an
+operon and the processing of its pre-mRNA, after @Ganot2004: trans-splicing of the spliced leader (SL, black square)
+to the 5′ end of each downstream mRNA and cleavage and polyadenylation of the upstream mRNA, 23 to 30 nucleotides
+before the next trans-splice site; the SECIS element (stem-loop) of a selenoprotein gene must lie in the 3′ UTR of its
+mRNA. B, each selenoprotein gene followed by another gene on the same strand within 800 nucleotides, in each assembly,
+aligned on its stop codon and sorted by the distance to the next coding sequence: end of the coding sequence (arrow,
+coloured by assembly), 3′ UTR of the gold-standard model (black line), SECIS element (best hit of the *Oikopleura*
+model before the next coding sequence), polyadenylation sites in transcripts with a poly(A) tail (triangles; darker
+where several transcripts end), the window 23 to 30 nucleotides before the first trans-splice site of the next gene
+(outlined box), trans-splice sites of the next gene (flags) and next coding sequence on the same strand (grey arrow);
+asterisk, SECIS element only beyond the next coding sequence (SELENOW_pair2 in OdB3, where the annotated coding
+sequence CBY21828.1 starts inside it). C, fraction of the loci in operons (all annotated loci, grey; selenoprotein
+genes, coloured) and, among the loci in operons, fraction first in their operon (hatched), with the P values of
+Fisher's exact tests (in operons; first). D, from top: cumulative distributions of the distance from the stop codon
+to the most supported polyadenylation site in OdB3, for the other genes followed by a gene of their operon (solid)
+and for those last in their operon or outside operons (dashed), with the selenoprotein genes as ticks (dark, followed
+in operon; light, last or single) and the P values of Mann-Whitney U tests; of the distance from the stop codon to the
+first trans-splice site of the next gene, for the genes followed by a gene of their operon in the three assemblies,
+with the selenoprotein genes as ticks; histogram of the distance from the polyadenylation site to the first
+trans-splice site of the next gene (intercistronic region; 2-nucleotide bins) in OKI2018 and OdB3, against the 23 to
+30 nucleotides of @Ganot2004 (shaded); OSKA2016, 9 distances, not drawn.
 
 # Discussion
 
@@ -1545,7 +1597,18 @@ on the same strand (the best hit of the window can be the SECIS of that gene). T
 transcripts aligned for the gold-standard models (Gold-standard gene models) whose 5′ end carries the 3′ end
 (GATTGTCTAACAG, at most one mismatch, within the first 80 nucleotides) of the *O. dioica* SL,
 ACTCATCCCATTTTTGAGTCCGATTTCGATTGTCTAACAG [@Ganot2004]; the trans-splice site is the genome base after the SL in the
-alignment, and its two preceding bases were checked for the AG acceptor. The proteins of the neighbours of each gene
+alignment, and its two preceding bases were checked for the AG acceptor. Polyadenylation sites were read in all the
+transcripts of each assembly (Trinity assemblies for OKI2018 and OSKA2016, cDNA reads and clone contigs for OdB3;
+genome alignments of Gold-standard gene models) that end with at least 10 A: the site is the last genome base aligned before the tail (genomic A that the
+alignment extends into cannot be told from the tail). For each locus, the polyadenylation sites between its stop
+codon and the next coding sequence on the same strand (or within 2,000 nucleotides) were counted, and the most
+supported site (the 3′-most on ties) was used. Intercistronic regions were measured between the most supported
+polyadenylation site of a gene followed by another gene of its operon and the first trans-splice site of that gene,
+as the difference of their positions (one more than the number of nucleotides between the last base of the upstream
+mRNA and the first base of the downstream exon). Distances from the stop codon to the polyadenylation site and to the
+next trans-splice site were compared between selenoprotein genes and the other loci, separately for the genes
+followed by another gene of their operon and for the others, by Mann-Whitney U tests; the table also compares the
+annotated 3′ UTRs with those of the gold-standard models, which come from other sources. The proteins of the neighbours of each gene
 were compared between the three assemblies by blastp (E ≤ 10^-10^). Selenoprotein genes were compared with the other
 loci by Fisher's exact test. The procedure is `stage2/operons.py` of the analysis repository (`make operons`).
 

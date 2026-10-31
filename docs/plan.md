@@ -1661,3 +1661,12 @@ no earlier step waits for them.
   ties between polyadenylation sites now resolved to the 3'-most (priming on genomic A gives spurious upstream
   sites); 2-nt bins for the intercistronic region. Figure OPERONS: panel D (3' UTR from poly(A) sites, stop to next
   trans-splice site, intercistronic regions). To rerun: make operons.
+- make operons, final run (2026-10-31, commit a1dc2c5: 2-nt bins, 3'-most site on ties). Intercistronic regions:
+  median 31 nt (OKI2018, n = 76, IQR 29-34), 31 (OSKA2016, n = 9), 32 (OdB3, n = 292, IQR 29-39); 75% (OKI2018) and
+  65% (OdB3) between 26 and 35 nt. Distances are differences of positions (last base before the tail, first base after
+  the SL), one more than the number of nucleotides between them. OdB3 stop -> most supported polyadenylation site:
+  selenoprotein genes followed in operon 250.5 nt against 105 (n = 6 and 2,516; P = 0.0033); last or single 300 against
+  136 (n = 9 and 4,924; P = 0.035). Stop -> next trans-splice site: 281/302.5/365 against 160/169.5/166 (P = 0.10,
+  0.030, 0.081). SELENOW_pair1 (OdB3): ESTs end at 231 nt, next gene trans-spliced at 464 (233 nt apart). Figure
+  OPERONS (figures/operons.*, make operons-figure, commit 96db647) and manuscript Results "Selenoprotein genes in
+  operons" (poly(A) paragraphs, legend) and Methods "Operons" (polyadenylation sites, intercistronic distance, tests).
