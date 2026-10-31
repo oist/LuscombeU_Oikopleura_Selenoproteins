@@ -437,8 +437,10 @@ OPERON_WORK = work/stage2/operon_partners
 HUMAN_UNIPROT_QUERY = %28proteome%3AUP000005640%29%20AND%20%28reviewed%3Atrue%29
 human-uniprot:
 	mkdir -p data/references
-	curl -sSfL -D data/references/uniprot_human_sp.headers.txt -o data/references/uniprot_human_sp.tsv.gz \
-	  "https://rest.uniprot.org/uniprotkb/stream?compressed=true&format=tsv&fields=accession%2Cid%2Cgene_primary%2Cprotein_name%2Ckeyword%2Cgo_id&query=$(HUMAN_UNIPROT_QUERY)"
+	curl -sSfL --retry 4 --retry-delay 20 -D data/references/uniprot_human_sp.headers.txt -o data/references/uniprot_human_sp.tsv \
+	  "https://rest.uniprot.org/uniprotkb/stream?format=tsv&fields=accession%2Cid%2Cgene_primary%2Cprotein_name%2Ckeyword%2Cgo_id&query=$(HUMAN_UNIPROT_QUERY)"
+	gzip -f data/references/uniprot_human_sp.tsv
+	echo "$$(zcat data/references/uniprot_human_sp.tsv.gz | tail -n +2 | wc -l) entries"
 	md5sum data/references/uniprot_human_sp.tsv.gz | tee data/references/uniprot_human_sp.md5
 	date -u +%Y-%m-%dT%H:%MZ > data/references/uniprot_human_sp.date
 	grep -i "x-uniprot-release" data/references/uniprot_human_sp.headers.txt || true
