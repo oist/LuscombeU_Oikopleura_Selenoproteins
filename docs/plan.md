@@ -1717,3 +1717,11 @@ no earlier step waits for them.
   files it was built with (nodes.dmp, prot.accession2taxid), so --taxonlist should work. scripts/operon_search.sh now
   loads sprot/2022-07 with DIAMOND 2.0.15.153 (overridable: SPROT_MODULE, DIAMOND_MODULE); accessions are read with or
   without version, and the names of the human proteins come from the UniProt table when present.
+- diamond dbinfo of the sprot/2022-07 database (2026-10-31, Charles): DIAMOND 2.0.15.153 reads it (database format 3,
+  built with DIAMOND build 142), 474,458 sequences, 179,486,444 letters. UniProtKB/Swiss-Prot had about 570,000 entries
+  in 2022 (not checked for 2022_03): the smaller number and the module's NCBI taxonomy files suggest NCBI's
+  non-redundant Swiss-Prot (inference), with NCBI-style identifiers (sp|P10599.3|THIO_HUMAN, titles "RecName:
+  Full=...") and identical proteins of several species merged under one entry. operon_partners.py therefore matches a
+  hit to the UniProt table by accession without version, else by entry-name prefix (THIO_PANTR -> THIO_HUMAN), takes
+  names from the first title, and reports how many best hits matched; make operon-search falls back to a search
+  without --taxonlist (200 targets, rows with _HUMAN kept) if the taxonomy filter fails.

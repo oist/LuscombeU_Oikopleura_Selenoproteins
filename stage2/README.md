@@ -284,7 +284,11 @@ Do the genes that share an operon with a selenoprotein gene have to do with redo
 `operons.py`; the protein of each annotated locus (longest coding sequence, translated from the genome; `make
 operon-proteins`) is searched by DIAMOND (`--more-sensitive`, E <= 1e-5) in the Swiss-Prot database of the OIST
 Bioinformatics User Group (module DB/diamondDB/sprot/2022-07, https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human
-entries only (`--taxonlist 9606`; `scripts/operon_search.sh`, outside the container). Flags of the best hit: from its
+entries only (`--taxonlist 9606`, or, if the database has no taxonomy, all entries and the `_HUMAN` ones kept;
+`scripts/operon_search.sh`, outside the container). That database (474,458 sequences, `diamond dbinfo`) has NCBI-style
+identifiers (`sp|P10599.3|THIO_HUMAN`) and is probably NCBI's non-redundant Swiss-Prot, where identical proteins of
+several species share one entry: hits are matched to the UniProt table by accession, else by entry-name prefix
+(`THIO_PANTR` → `THIO_HUMAN`). Flags of the best hit: from its
 protein name (oxidoreductase-type names; seleno-), and, with the UniProt table of `make human-uniprot` (optional, on a
 node with internet access), its UniProt keywords (Oxidoreductase, Redox-active center, Antioxidant, Selenium,
 Selenocysteine) and directly annotated GO terms (cell redox homeostasis, response to oxidative stress, cellular oxidant

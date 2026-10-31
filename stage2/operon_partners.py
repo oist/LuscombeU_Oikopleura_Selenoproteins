@@ -12,14 +12,18 @@ genome (internal stop codons read as X); the gold-standard genes are not searche
 (<work>/<genome>.proteins.faa) and stops.
 Search, either of:
   - DIAMOND against the Swiss-Prot database of the OIST Bioinformatics User Group (module DB/diamondDB/sprot/2022-07, or another release,
-    https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human entries only (--taxonlist 9606), outside the
-    container (make operon-search), giving <work>/<genome>.diamond.tsv (qseqid sseqid pident evalue bitscore stitle);
+    https://github.com/oist/BioinfoUgrp/blob/master/DataBases.md), human entries only (--taxonlist 9606; if the
+    database has no taxonomy, all entries and the _HUMAN ones kept), outside the container (make operon-search), giving
+    <work>/<genome>.diamond.tsv (qseqid sseqid pident evalue bitscore stitle). That database (474,458 sequences, NCBI
+    style identifiers such as sp|P10599.3|THIO_HUMAN) looks like the non-redundant Swiss-Prot of NCBI, where identical
+    proteins of several species share one entry: a hit is matched to UniProt by accession, else by the prefix of its
+    entry name (THIO_PANTR -> THIO_HUMAN), and names are taken from the first title;
   - or, when that file is absent, legacy blastp against --human-fasta (formatdb), giving <work>/<genome>.blastp.tsv.
 The best hit (bit score, E <= 1e-5) of each protein gives the human protein. Flags:
   - from the hit's protein name (Swiss-Prot title or --human-table), always: "oxidoreductase (name)" for names with
     reductase, oxidase, dehydrogenase, oxygenase, peroxidase, peroxiredoxin, thioredoxin, glutaredoxin, catalase,
     superoxide dismutase, desaturase or hydroxylase; "selenium (name)" for names with seleno or selenium;
-  - from UniProt (--human-table, make human-uniprot; current release, matched by accession), when available:
+  - from UniProt (--human-table, make human-uniprot; current release), when available:
     keywords Oxidoreductase, Redox-active center, Antioxidant, Selenium, Selenocysteine; directly annotated GO terms
     GO:0045454 cell redox homeostasis, GO:0006979 response to oxidative stress, GO:0098869 cellular oxidant
     detoxification, GO:0016209 antioxidant activity, GO:0004601 peroxidase activity, GO:0001887 selenium compound
@@ -90,7 +94,8 @@ def accession(sid):
 
 
 def read_human_table(path):
-    """UniProt accession -> {gene, protein, keywords, go} (TSV of make human-uniprot); {} if absent."""
+    """UniProt accession -> {gene, protein, keywords, go} (TSV of make human-uniprot); {} if absent. Entry names are
+    also indexed by their prefix (THIO for THIO_HUMAN), under the key 'name:THIO'."""
     info = {}
     if not path or not os.path.exists(path): return info
     with opener(path) as fh:
@@ -98,19 +103,33 @@ def read_human_table(path):
             info[r["Entry"]] = {"gene": r.get("Gene Names (primary)", ""), "protein": r.get("Protein names", ""),
                                 "keywords": {k.strip() for k in (r.get("Keywords") or "").split(";")},
                                 "go": {g.strip() for g in (r.get("Gene Ontology IDs") or "").split(";")}}
+            name = r.get("Entry Name", "")
+            if name.endswith("_HUMAN"): info.setdefault("name:" + name[:-6], info[r["Entry"]])
     return info
 
 
+def human_entry(sid, info):
+    """UniProt table entry of a hit: by accession, else by entry-name prefix (a non-redundant database can show an
+    identical protein of another species, for example THIO_PANTR for THIO_HUMAN, first)."""
+    acc = accession(sid)
+    if acc in info: return info[acc]
+    parts = sid.split("|")
+    if len(parts) >= 3 and "_" in parts[2]: return info.get("name:" + parts[2].rsplit("_", 1)[0])
+    return None
+
+
 def title_names(stitle):
-    """(gene, protein name) from a UniProt FASTA title: 'sp|P10599|THIO_HUMAN Thioredoxin OS=... GN=TXN PE=1 SV=3'."""
+    """(gene, protein name) from a FASTA title: UniProt ('sp|P10599|THIO_HUMAN Thioredoxin OS=... GN=TXN PE=1 SV=3')
+    or NCBI ('sp|P10599.3|THIO_HUMAN RecName: Full=Thioredoxin; Short=Trx'); only the first of merged titles."""
+    stitle = stitle.split("\x01")[0]
     m = re.search(r"\sGN=(\S+)", stitle)
     rest = stitle.split(None, 1)[1] if " " in stitle else ""
-    return (m.group(1) if m else ""), rest.split(" OS=")[0]
+    full = re.search(r"Full=([^;]+)", rest)
+    return (m.group(1) if m else ""), (full.group(1).strip() if full else rest.split(" OS=")[0])
 
 
-def flags_of(acc, protein, info):
+def flags_of(h, protein):
     fl = [k for k, rx in NAME_FLAGS.items() if rx.search(protein or "")]
-    h = info.get(acc)
     if h:
         fl += [k for k in KEYWORDS if k in h["keywords"]] + [v for k, v in GO_TERMS.items() if k in h["go"]]
     return fl
@@ -130,7 +149,8 @@ def best_hits(path, fmt):
             q, s, pid, ev, bits = f[0], f[1], float(f[2]), float(f[10]), float(f[11])
             gene, prot = "", ""
         if q not in best or bits > best[q]["bits"]:
-            best[q] = {"acc": accession(s), "pident": pid, "evalue": ev, "bits": bits, "gene": gene, "protein": prot}
+            best[q] = {"acc": accession(s), "sid": s, "pident": pid, "evalue": ev, "bits": bits, "gene": gene,
+                       "protein": prot}
     return best
 
 
@@ -162,7 +182,7 @@ def main():
     os.makedirs(a.work, exist_ok=True)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     info = read_human_table(a.human_table)
-    print(f"UniProt annotation table: {len(info)} entries" if info else
+    print(f"UniProt annotation table: {sum(1 for k in info if not k.startswith('name:'))} entries" if info else
           f"no UniProt annotation table ({a.human_table}): flags from protein names only", flush=True)
     part_rows, summary = [], []
     for g in a.genomes:
@@ -204,10 +224,13 @@ def main():
             best = best_hits(bl, "blast")
         else:
             sys.exit(f"{g}: no search results ({dmd}): run make operon-search first (or give --human-fasta)")
+        matched = 0
         for q, b in best.items():      # names from the UniProt table when available, else from the search title
-            h = info.get(b["acc"])
-            if h: b["gene"], b["protein"] = h["gene"] or b["gene"], h["protein"] or b["protein"]
-            b["flags"] = flags_of(b["acc"], b["protein"], info)
+            h = human_entry(b["sid"], info)
+            if h:
+                matched += 1; b["gene"], b["protein"] = h["gene"] or b["gene"], h["protein"] or b["protein"]
+            b["flags"] = flags_of(h, b["protein"])
+        if info: print(f"{g}: {matched} of {len(best)} best hits found in the UniProt table", flush=True)
         print(f"{g}: {sum(len(L) for L in loci.values())} loci, {len(prot)} proteins, {len(best)} with a human hit",
               flush=True)
 

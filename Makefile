@@ -453,10 +453,15 @@ operon-search:
 	ls -l $${DIAMONDDB}
 	db=$$(ls $${DIAMONDDB}/*.dmnd | head -n 1); echo "database: $$db"; diamond --version; \
 	for g in OKI OSKA OdB3; do \
-	  diamond blastp --db $$db --query $(OPERON_WORK)/$$g.proteins.faa --taxonlist 9606 --more-sensitive \
-	    --evalue 1e-5 --max-target-seqs 5 --threads $${SLURM_CPUS_PER_TASK:-1} \
-	    --outfmt 6 qseqid sseqid pident evalue bitscore stitle --out $(OPERON_WORK)/$$g.diamond.tsv.part \
-	  && mv $(OPERON_WORK)/$$g.diamond.tsv.part $(OPERON_WORK)/$$g.diamond.tsv || exit 1; \
+	  q=$(OPERON_WORK)/$$g.proteins.faa; o=$(OPERON_WORK)/$$g.diamond.tsv; \
+	  opts="--more-sensitive --evalue 1e-5 --threads $${SLURM_CPUS_PER_TASK:-1} --outfmt 6 qseqid sseqid pident evalue bitscore stitle"; \
+	  if diamond blastp --db $$db --query $$q --taxonlist 9606 --max-target-seqs 5 $$opts --out $$o.part; then \
+	    mv $$o.part $$o; \
+	  else \
+	    echo "--taxonlist failed: all of Swiss-Prot, keeping the _HUMAN entries" >&2; \
+	    diamond blastp --db $$db --query $$q --max-target-seqs 200 $$opts --out $$o.all \
+	    && awk -F'\t' 'index($$2, "_HUMAN") || index($$6, "_HUMAN")' $$o.all > $$o || exit 1; \
+	  fi; \
 	done
 
 operon-partners:
