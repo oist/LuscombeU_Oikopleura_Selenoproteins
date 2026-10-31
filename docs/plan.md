@@ -1778,3 +1778,14 @@ no earlier step waits for them.
   0.18 against 0.11 over all genes: 155 and 144 of 175 calls; differences SEPHS2 (9 pairs) and SELENOT in OdB3 (3) for
   0.18, GPX_PAR in OSKA2016 with the OKI2018 protein (1) for 0.11. Manuscript: the sentence on SELENOT and SEPHS2 in
   "Settings for appendicularian genomes ..." rewritten and a Methods paragraph added (Stage 2 runs and benchmark).
+- Why the miniprot versions differ (2026-10-31; miniprot NEWS.md, https://github.com/lh3/miniprot/blob/master/NEWS.md,
+  read through WebFetch): 0.13-r248 "Reference deletions containing in-frame stops are now handled properly (#58)";
+  earlier versions "would not penalize these stop codons". In OSKA2016 the 13-codon deletion of the 0.11 SEPHS2
+  alignment contains an in-frame TAG (agg TAG gtt ...), not penalised in 0.11; the 14-codon deletion of the SELENOT
+  alignment (both versions) contains none, so 0.18 keeps the frameshift path there. Consistent with the observed
+  calls (OSKA2016 only checked). Other changes since 0.11: fs/st PAF tags (0.12), --spsc splice scores from a file
+  (0.14, tuned for minisplice in 0.16), stop codons in deletions counted (0.18). Possible manuscript clause.
+- LAST DNA-versus-protein mode considered (2026-10-31, Charles asked; LAST 1654 documentation in the source archive):
+  lastdb -q (21 letters, * = stop), lastal -F (frameshift costs) or last-train --codon (64x21 codon rates and four
+  frameshift probabilities), -G custom genetic code file; last-split does not support DNA-versus-protein, so no intron
+  model (exons as separate local alignments). Assessment in the conversation; not added.
