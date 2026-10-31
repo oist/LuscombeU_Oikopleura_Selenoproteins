@@ -1631,3 +1631,11 @@ no earlier step waits for them.
   own SECIS (23-92 nt after the stop); in OdB3 an annotated CDS (CBY21828.1, neighbour not conserved) starts 47 nt
   after the pair2 stop, inside its SECIS. 19 genes in the three assemblies: 13 same operon status, 9 same position.
   Step 10 done. Next: step 11 (Discussion, Zenodo deposits), diary update.
+- 3' UTRs of operon genes (2026-10-31, Charles: "a comparison of UTR length in operon genes and in operon
+  selenoprotein genes"). operons.py now also compares, for the genes followed by another gene of their operon (first
+  or internal), the distance from the stop codon to the next coding sequence and to the first trans-splice site of the
+  next gene (SL transcripts of the whole transcript set), and the 3' UTR length for all genes (annotated exons beyond
+  the coding sequence; gold-standard models for the selenoprotein genes, from transcripts; the OdB3 annotation has no
+  UTRs): selenoprotein genes against the others, Mann-Whitney U test; distributions of the others in 25-nt bins
+  (results/tables/stage2_operons_utr.tsv, stage2_operons_utr_bins.tsv) for a panel of Figure OPERONS. Tested on the
+  synthetic contig. To rerun: make operons.

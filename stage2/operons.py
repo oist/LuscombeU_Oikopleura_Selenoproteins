@@ -46,7 +46,14 @@ For each gold-standard gene:
     mRNA, and hence the end of its 3' UTR, lies before that site (23 to 30 nt before it in Ganot et al. 2004).
 Background: the same operon definition for all loci of each assembly; selenoprotein genes against the others,
 Fisher's exact test (operon or not; first position or not).
-Outputs: --table (one row per gene and assembly), --summary (one row per assembly).
+3' UTRs and intercistronic space (--utr-table, --utr-bins): for the loci followed by another gene of their operon
+(first or internal), the distance from the stop codon to the next coding sequence and to the first trans-splice site
+of the next gene (SL transcripts of the whole transcript set, placed as above), and, for all loci, the 3' UTR length
+(annotated exons beyond the coding sequence; for the gold-standard genes, the 3' UTR of the gold-standard model,
+from transcripts): selenoprotein genes against the others (Mann-Whitney U test; medians and quartiles), with the
+distributions of the others in bins for the figure. The OdB3 annotation has no UTRs and its ESTs have masked 5' ends:
+only the distance to the next coding sequence is available there.
+Outputs: --table (one row per gene and assembly), --summary (one row per assembly), --utr-table, --utr-bins.
 """
 import argparse, collections, csv, os, shutil, subprocess, sys, tempfile
 
@@ -115,6 +122,47 @@ def sl_match(seq, sl, window):
     return None
 
 
+def utr3_of(r):
+    """Annotated 3' UTR length of a transcript (exons beyond the coding sequence), or None without exon rows."""
+    if not r or not r["exons"] or not r["cds"]: return None
+    if r["strand"] == "+":
+        end = max(e for _, e in r["cds"])
+        return sum(max(0, e - max(s, end + 1)) for s, e in r["exons"])
+    start = min(s for s, _ in r["cds"])
+    return sum(max(0, min(e, start) - s) for s, e in r["exons"])
+
+
+def sl_junctions_all(alns, path, sl, window):
+    """Trans-splice sites of all SL transcripts of an assembly: (contig, strand) -> sorted genome positions (0-based
+    first base of the mRNA body); the strand is that of the mRNA."""
+    names = {al["q"] for v in alns.values() for al in v}
+    by_q = collections.defaultdict(list)
+    for c, v in alns.items():
+        for al in v: by_q[al["q"]].append((c, al))
+    out = collections.defaultdict(list)
+    for k, t in read_fasta(path, names):
+        t = t.upper()
+        p, same = sl_match(t, sl, window), True
+        if p is None:
+            p, same = sl_match(rc(t), sl, window), False
+        if p is None: continue
+        for c, al in by_q[k]:
+            strand = al["strand"] if same else ("-" if al["strand"] == "+" else "+")
+            qs_sense = al["qs"] if same else al["qlen"] - al["qe"]
+            j = al["ts"] + (p - qs_sense) if strand == "+" else al["te"] - (p - qs_sense)
+            out[(c, strand)].append(j)
+    for k in out: out[k].sort()
+    return out
+
+
+def quartiles(v):
+    import statistics
+    if not v: return "", "", ""
+    if len(v) < 4: return statistics.median(v), min(v), max(v)
+    q = statistics.quantiles(v, n=4)
+    return statistics.median(v), q[0], q[2]
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--samplesheet", default="stage1/samplesheet.csv")
@@ -130,11 +178,15 @@ def main():
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
     ap.add_argument("--table", default="results/tables/stage2_operons.tsv")
     ap.add_argument("--summary", default="results/tables/stage2_operons_summary.tsv")
+    ap.add_argument("--utr-table", default="results/tables/stage2_operons_utr.tsv")
+    ap.add_argument("--utr-bins", default="results/tables/stage2_operons_utr_bins.tsv")
+    ap.add_argument("--bin", type=int, default=25)
+    ap.add_argument("--bin-max", type=int, default=3000)
     a = ap.parse_args()
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     gtab = {(r["genome"], r["gene"]): r for r in csv.DictReader(open(a.gold_table), delimiter="\t")}
     work = tempfile.mkdtemp(prefix="operons_")
-    rows, summary, neighbour_prot = [], [], {}
+    rows, summary, neighbour_prot, utr_rows, utr_bins = [], [], {}, [], []
     for g in a.genomes:
         genes = gold_genes(f"{a.gold}/{g}.gff3")
         ann = read_annotation(sheet[g].get("annotation", ""), Everything())
@@ -297,6 +349,48 @@ def main():
                         "selenoprotein_first": first_sel,
                         "fisher_p_operon": f"{p_op:.3g}", "fisher_p_first_among_operonic": f"{p_first:.3g}" if p_first != "" else ""})
         print(f"{g}: {n_all} loci, {op_all} in operons; selenoprotein genes {op_sel} of {len(sel)} in operons", flush=True)
+        # 3' UTR and intercistronic space of the genes followed by another gene of their operon (first or internal),
+        # and 3' UTR of the last genes and of the genes outside operons: selenoprotein genes against the others
+        junc = sl_junctions_all(alns, sheet[g]["transcripts"], a.sl, a.sl_window) if alns and sheet[g].get("transcripts") else {}
+        vals = collections.defaultdict(list)     # (measure, context, group) -> values
+        for c, L in loci.items():
+            for l in L:
+                pos = position(l)
+                grp = "selenoprotein" if l["gold"] else "other"
+                u = int(gtab[(g, l["gold"])]["utr3_length"]) if l["gold"] and gtab.get((g, l["gold"]), {}).get("utr3_length", "") not in ("", "0") \
+                    else (None if l["gold"] else utr3_of(l["rep"]))
+                ctx = "followed in operon" if pos in ("first", "internal") else "last or single"
+                if u is not None and u > 0: vals[("3' UTR", ctx, grp)].append(u)
+                if pos not in ("first", "internal"): continue
+                m = members[l["operon"]]
+                order = m if l["strand"] == "+" else m[::-1]
+                n = order[order.index(l) + 1]
+                if l["strand"] == "+":
+                    stop, nxt = l["span"][1], n["span"][0]
+                    gap_ = nxt - stop - 1
+                    js = [j for j in junc.get((c, "+"), []) if stop < j <= nxt]
+                    first_sl = (min(js) - stop) if js else None
+                else:
+                    stop, nxt = l["span"][0], n["span"][1]
+                    gap_ = stop - nxt - 1
+                    js = [j for j in junc.get((c, "-"), []) if nxt <= j < stop]
+                    first_sl = (stop - max(js)) if js else None
+                vals[("stop to next coding sequence", ctx, grp)].append(gap_)
+                if first_sl is not None: vals[("stop to next trans-splice site", ctx, grp)].append(first_sl)
+        from scipy.stats import mannwhitneyu
+        for (meas, ctx) in sorted({(k[0], k[1]) for k in vals}):
+            o, sp = vals.get((meas, ctx, "other"), []), vals.get((meas, ctx, "selenoprotein"), [])
+            pval = mannwhitneyu(sp, o).pvalue if sp and o else ""
+            for grp, v in (("other", o), ("selenoprotein", sp)):
+                med, q1, q3 = quartiles(v)
+                utr_rows.append({"genome": g, "measure": meas, "context": ctx, "group": grp, "n": len(v),
+                                 "median": med, "q1": q1, "q3": q3,
+                                 "mann_whitney_p": (f"{pval:.3g}" if pval != "" else "") if grp == "selenoprotein" else ""})
+            nb = a.bin_max // a.bin
+            counts = [0] * (nb + 1)
+            for x in o: counts[min(max(x, 0) // a.bin, nb)] += 1
+            for b, n_ in enumerate(counts):
+                utr_bins.append({"genome": g, "measure": meas, "context": ctx, "bin_start": b * a.bin, "count": n_})
     # neighbours conserved between assemblies
     if neighbour_prot:
         fa = f"{work}/nb.faa"
@@ -321,6 +415,16 @@ def main():
         cols = list(summary[0])
         o.write("\t".join(cols) + "\n")
         for r in summary: o.write("\t".join(str(r[c]) for c in cols) + "\n")
+    if utr_rows:
+        cols = list(utr_rows[0])
+        with open(a.utr_table, "w") as o:
+            o.write("\t".join(cols) + "\n")
+            for r in utr_rows: o.write("\t".join(str(r[c]) for c in cols) + "\n")
+        cols = list(utr_bins[0])
+        with open(a.utr_bins, "w") as o:
+            o.write("# counts of the other (non-selenoprotein) loci in bins of --bin nt; the last bin holds the values from --bin-max\n")
+            o.write("\t".join(cols) + "\n")
+            for r in utr_bins: o.write("\t".join(str(r[c]) for c in cols) + "\n")
     shutil.rmtree(work, ignore_errors=True)
 
 
