@@ -157,14 +157,28 @@ machinery-domain-figures:
 gold-standard:
 	python3 curation/gold_standard.py
 
-# Machinery genes of the three O. dioica assemblies (decision of 2026-11-01): anchors from the machinery predictions of
-# the final stage 2 run (curation/machinery_anchors.py), then gene models built around them as for the selenoprotein
-# genes (curation/gold_standard.py --anchor sense; the transcript alignments of gold-standard are reused; minutes)
+# Machinery genes of the three O. dioica assemblies and of O. longicauda, O. albicans and O. vanhoeffeni (decisions of
+# 2026-11-01): anchors from the machinery predictions of the final stage 2 run and human reference proteins
+# (curation/machinery_anchors.py); a first pass on the O. dioica assemblies (curation/gold_standard.py --anchor sense,
+# candidates ranked by similarity to the human proteins; the transcript alignments of gold-standard are reused); miniprot
+# alignments of the human proteins and of the first-pass proteins on the six genomes (curation/machinery_projections.py);
+# the final pass on the six genomes, with these alignments as candidate models and the first-pass proteins of the other
+# genomes added to the references (minutes)
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2:00:00 scripts/run_in_container.sh make gold-standard-machinery
 GOLD_MACHINERY = curation/gold_standard_machinery
+MACHINERY_GOLD_GENOMES = OKI OSKA OdB3 Olon Oalb Ovan
+MACHINERY_WORK = work/stage2/gold_standard_machinery
 gold-standard-machinery:
-	python3 curation/machinery_anchors.py --gtf-dir $(SELENO_PREDICTIONS) --out curation/machinery_genes.tsv
-	python3 curation/gold_standard.py --anchor sense --baseline curation/machinery_genes.tsv --stage1 $(SELENO_PREDICTIONS) \
+	python3 curation/machinery_anchors.py --gtf-dir $(SELENO_PREDICTIONS) --genomes $(MACHINERY_GOLD_GENOMES) \
+	  --human data/genomes/Hsap --references curation/machinery_references.faa --out curation/machinery_genes.tsv
+	python3 curation/gold_standard.py --anchor sense --genomes OKI OSKA OdB3 --baseline curation/machinery_genes.tsv \
+	  --stage1 $(SELENO_PREDICTIONS) --references curation/machinery_references.faa \
+	  --out $(MACHINERY_WORK)/first_pass --table $(MACHINERY_WORK)/first_pass.tsv > /dev/null
+	python3 curation/machinery_projections.py --queries curation/machinery_references.faa $(MACHINERY_WORK)/first_pass/*.proteins.faa \
+	  --genomes $(MACHINERY_GOLD_GENOMES) --out $(MACHINERY_WORK)/projections
+	python3 curation/gold_standard.py --anchor sense --genomes $(MACHINERY_GOLD_GENOMES) --baseline curation/machinery_genes.tsv \
+	  --stage1 $(SELENO_PREDICTIONS) --references curation/machinery_references.faa \
+	  --reference-proteins $(MACHINERY_WORK)/first_pass --projections $(MACHINERY_WORK)/projections \
 	  --out $(GOLD_MACHINERY) --table results/tables/gold_standard_machinery.tsv
 
 # Step 1 of the plan of 2026-10-24: SECIS scores of the validated selenocysteine hits (seconds; reads results/ only)
@@ -256,7 +270,8 @@ SELENO_TREES = DIO GPX MsrA SELENOF SELENOK SELENOL SELENOO SELENOS SELENOT SELE
 SELENO_PREDICTIONS = work/stage2/pipeline/final/selenoprofiles
 GOLD = curation/gold_standard
 # Inputs of the machinery trees (machinery-phylogeny; decision of 2026-11-01)
-MACHINERY_TREE_INPUTS = --stage2 $(SELENO_PREDICTIONS) --gold $(GOLD) $(GOLD_MACHINERY) --exclude-genomes Bsty Mery
+MACHINERY_TREE_INPUTS = --stage2 $(SELENO_PREDICTIONS) --gold $(GOLD) $(GOLD_MACHINERY) --gold-genomes $(MACHINERY_GOLD_GENOMES) \
+  --exclude-genomes Bsty Mery
 # Best hits: SELENO_PREDICTIONS for the genomes they hold, stage 1 predictions for the other genomes
 SELENO_RBH = $(sort $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa) \
   $(filter-out $(addprefix work/stage1/pipeline/selenoprofiles/,$(notdir $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa))), \

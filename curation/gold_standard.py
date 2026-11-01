@@ -102,7 +102,7 @@ review), <genome>.gff3 (gene, mRNA, exon and CDS features; transl_except=(pos:..
 <genome>.proteins.faa (U for selenocysteine), <genome>.utr3.fa (3' UTR of the model), <genome>.after_stop.fa
 (--after-stop nucleotides of genome after the stop codon, on the gene strand), and --table.
 """
-import argparse, collections, csv, gzip, math, os, re, subprocess
+import argparse, collections, csv, glob, gzip, math, os, re, subprocess
 
 STOPS = {"TAA", "TAG", "TGA"}
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
@@ -507,6 +507,34 @@ def read_gtf(path):
     return by_contig
 
 
+def read_projections(path):
+    """miniprot GFF3 (curation/machinery_projections.py): contig -> alignment -> [(start0, end0 inclusive, strand)] of
+    its CDS and stop_codon rows; the alignment is named <query>#<mRNA ID>."""
+    out, target = collections.defaultdict(list), {}
+    if not path or not os.path.exists(path): return {}
+    with open(path) as fh:
+        for l in fh:
+            f = l.rstrip("\n").split("\t")
+            if len(f) < 9: continue
+            if f[2] == "mRNA":
+                i, t = re.search(r"ID=([^;]+)", f[8]), re.search(r"Target=(\S+)", f[8])
+                if i and t: target[i.group(1)] = t.group(1)
+            elif f[2] in ("CDS", "stop_codon"):
+                par = re.search(r"Parent=([^;]+)", f[8])
+                if par: out[(f[0], par.group(1))].append((int(f[3]) - 1, int(f[4]) - 1, f[6]))
+    by_contig = collections.defaultdict(dict)
+    for (c, mid), rows in out.items():
+        merged = []
+        for x, y, st in sorted(rows):   # the stop codon row abuts the last CDS row
+            if merged and x <= merged[-1][1] + 1: merged[-1] = (merged[-1][0], max(merged[-1][1], y), st)
+            else: merged.append((x, y, st))
+        by_contig[c][f"{target.get(mid, '?')}#{mid}"] = merged
+    return by_contig
+
+
+def gene_base(gene): return re.sub(r"_\d+$", "", gene)
+
+
 def read_annotation(path, contigs):
     """Annotated transcripts on the contigs: id -> {"contig", "strand", "exons": [(s0, e0 exclusive)],
     "cds": [(s0, e0 inclusive)], "protein", "sec"}; rows are grouped by Parent."""
@@ -772,6 +800,12 @@ def main():
                     "without selenocysteine (machinery genes, curation/machinery_genes.tsv)")
     ap.add_argument("--codon-column", default="", help="column of --baseline with the codon (default: sec_codon for "
                     "--anchor sec, anchor_codon for --anchor sense)")
+    ap.add_argument("--references", default="", help="--anchor sense: reference proteins, header <gene>|<label>|... "
+                    "(curation/machinery_references.faa)")
+    ap.add_argument("--reference-proteins", nargs="*", default=[],
+                    help="--anchor sense: directories with <genome>.proteins.faa of a first pass, added to the references "
+                    "of each gene for the other genomes")
+    ap.add_argument("--projections", default="", help="directory with <genome>.projections.gff (miniprot; candidate models)")
     a = ap.parse_args()
     global SEC
     SEC = a.anchor == "sec"
@@ -779,6 +813,28 @@ def main():
     os.makedirs(a.work, exist_ok=True); os.makedirs(a.out, exist_ok=True)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     base = [r for r in csv.DictReader(open(a.baseline), delimiter="\t") if r["genome"] in a.genomes]
+    from Bio import Align
+    from Bio.Align import substitution_matrices
+    blosum = substitution_matrices.load("BLOSUM62")
+    aligner = Align.PairwiseAligner(mode="global", substitution_matrix=blosum, open_gap_score=-10, extend_gap_score=-0.5)
+    aligner.target_end_gap_score = aligner.query_end_gap_score = 0.0
+    local = Align.PairwiseAligner(mode="local", substitution_matrix=blosum, open_gap_score=-11, extend_gap_score=-1)
+    # --anchor sense: reference proteins of each gene (human proteins, and the proteins of a first pass in the other
+    # genomes); a candidate's score is its best local alignment score to them
+    refs, ref_genome = collections.defaultdict(list), collections.defaultdict(list)
+    if a.references:
+        for n, sq in read_fasta(a.references):
+            f = n.split("|"); refs[f[0]].append((f[1] if len(f) > 1 else n, sq.replace("*", "")))
+    for d in a.reference_proteins:
+        for faa in sorted(glob.glob(f"{d}/*.proteins.faa")):
+            for n, sq in read_fasta(faa):
+                f = n.split("|"); ref_genome[gene_base(f[0])].append((f[1], f"{f[1]}_{f[0]}", sq.replace("*", "")))
+
+    def ref_score(protein, gene, g):
+        pool = refs[gene_base(gene)] + [(lab, sq) for og, lab, sq in ref_genome[gene_base(gene)] if og != g]
+        clean = protein.replace("U", "X").replace("*", "")
+        best = max(((local.score(clean, sq), lab) for lab, sq in pool if sq), default=(0.0, "-"))
+        return best
     # pass 1: candidate models of each gene
     records, genomes, annotations = [], {}, {}
     for g in a.genomes:
@@ -800,6 +856,7 @@ def main():
             alns = list(paf_alignments(paf, wanted))
         txseq = dict(read_fasta(tx_path, {x["q"] for x in alns})) if alns else {}
         gtf = read_gtf(f"{a.stage1}/{g}.selenoprofiles.gtf")
+        proj = read_projections(f"{a.projections}/{g}.projections.gff") if a.projections else {}
         ann = annotations[g] = read_annotation(sheet[g].get("annotation", ""), contigs)
         for r in genes:
             contig, strand = r["contig"], r["strand"]
@@ -847,12 +904,18 @@ def main():
                 if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
                 m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "prediction", cds_only=True)
                 if m: cands.append(m)
+            for pid, cds in proj.get(contig, {}).items():   # miniprot alignments of reference proteins
+                if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
+                m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "projection", cds_only=True)
+                if m: cands.append(m)
             # transcript chains extended with the exons of overlapping annotated mRNAs or predictions beyond their
             # ends (also models that do not hold the codon: the OdB3 annotation splits genes at the TGA); an
             # extension must change the coding sequence of the transcript's own model
             extenders = [("annotation", ar["protein"], ar["exons"] or [(x, y + 1) for x, y in ar["cds"]])
                          for ar in ann.values() if ar["contig"] == contig and ar["strand"] == strand]
             extenders += [("prediction", pid, [(x, y + 1) for x, y, _ in cds]) for pid, cds in gtf.get(contig, {}).items()
+                          if cds[0][2] == strand]
+            extenders += [("projection", pid, [(x, y + 1) for x, y, _ in cds]) for pid, cds in proj.get(contig, {}).items()
                           if cds[0][2] == strand]
             seen = {tuple(m["blocks"]) for m in cands}
             for tm in tms:
@@ -881,7 +944,18 @@ def main():
                 m["unsupported_sites"] = sum(1 for x, i in zip(m["sites"], m["introns"]) if x[0] not in INTRON_CLASSES and
                                              not any(same_intron(i, j, gs) for tm in m["support"] for j in tm["walk"]["introns"]))
             best = None
-            if usable:
+            if usable and not SEC:
+                # genes without selenocysteine: the candidates are ranked by their similarity to the reference proteins
+                # (a fragment scores less, a fusion with another protein no more), then as below
+                for m in usable: m["hom"], m["hom_ref"] = ref_score(m["protein"], r["gene"], g)
+                top_hom = max(m["hom"] for m in usable)
+                rank = lambda m: (m["hom"] >= 0.95 * top_hom, m["unsupported_sites"] == 0,
+                                  not m["open3"] and m["protein"].startswith("M"), bool(m["support"]),
+                                  not m["contradicted"], m["hom"], -effective_length(m), not m["other_gene_mrna"],
+                                  m["kind"] == "annotation")
+                best = max(usable, key=rank)
+                for m in usable: m["rank"] = rank(m)
+            elif usable:
                 pool = [m for m in usable if m["ctx"]] or usable
                 pool = [m for m in pool if not m["contradicted"]] or pool
                 longest = max(effective_length(m) for m in pool)
@@ -895,9 +969,13 @@ def main():
             reliable = [t for t in tx_ok if t["cds_indels"] <= MAX_TRANSCRIPT_INDELS] or tx_ok
             top = max((effective_length(t) for t in reliable), default=0)
             contained = lambda t: sum(u["protein"] in t["protein"] for u in tx_ok)
-            tbest = max(reliable, key=lambda t: (has_ctx(t["protein"]), not t["open3"], t["protein"].startswith("M"),
-                                                 effective_length(t) >= 0.95 * top, contained(t), effective_length(t),
-                                                 -t["cds_indels"])) if reliable else None
+            if not SEC:
+                for t in reliable: t["hom"], t["hom_ref"] = ref_score(t["protein"], r["gene"], g)
+                tbest = max(reliable, key=lambda t: (t["hom"], -t["cds_indels"])) if reliable else None
+            else:
+                tbest = max(reliable, key=lambda t: (has_ctx(t["protein"]), not t["open3"], t["protein"].startswith("M"),
+                                                     effective_length(t) >= 0.95 * top, contained(t), effective_length(t),
+                                                     -t["cds_indels"])) if reliable else None
             lo_n = min([codon0 - 5000] + [m["blocks"][0][0] for m in usable])     # 5 kb around the codon, or the candidates
             hi_n = max([codon0 + 5000] + [m["blocks"][-1][1] for m in usable])
             near = [(mid, ar) for mid, ar in ann.items() if ar["contig"] == contig and ar["strand"] == strand and
@@ -907,11 +985,6 @@ def main():
             records.append({"g": g, "r": r, "tms": tms, "candidates": len(usable), "usable": usable, "near": near,
                             "best": best, "tbest": tbest, "has_ctx": has_ctx})
     # pass 2: assembly or transcript protein, outputs
-    from Bio import Align
-    from Bio.Align import substitution_matrices
-    aligner = Align.PairwiseAligner(mode="global", substitution_matrix=substitution_matrices.load("BLOSUM62"),
-                                    open_gap_score=-10, extend_gap_score=-0.5)
-    aligner.target_end_gap_score = aligner.query_end_gap_score = 0.0
     proteins = collections.defaultdict(list)
     for rec in records:
         for m in (rec["best"], rec["tbest"]):
@@ -950,7 +1023,8 @@ def main():
             # extensions of a partial transcript, from the annotation and from the prediction): the protein that
             # aligns best to the other assemblies is used when its mean score is higher by TIE_SCORE_MARGIN or more
             score = lambda m: sum(aligner.score(m["protein"].replace("U", "C"), p.replace("U", "C")) for p in others) / len(others)
-            ties = [m for m in rec["usable"] if m is not best and m["rank"][:8] == best["rank"][:8] and m["protein"] != best["protein"]]
+            ties = [m for m in rec["usable"] if m is not best and m["rank"][:8] == best["rank"][:8] and
+                    m["protein"] != best["protein"]] if SEC else []
             alt = max(ties, key=score) if ties else None
             if alt and score(alt) >= score(best) + TIE_SCORE_MARGIN:
                 notes.append(f"{alt['source']} chosen over {best['source']} (equal on the criteria before protein length): "
@@ -974,6 +1048,16 @@ def main():
             use_tx = False
             if best is None:
                 use_tx = True
+            elif not SEC:   # genes without selenocysteine: the protein closer to the references
+                if tbest["cds_indels"] and tbest["protein"] != best["protein"]:
+                    use_tx = tbest["hom"] > 1.05 * best["hom"]
+                    if not use_tx:
+                        notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
+                                     f"scores {tbest['hom']:.0f} against the references, the assembly protein "
+                                     f"{best['hom']:.0f}: protein from the assembly")
+                elif tbest["hom"] > 1.05 * best["hom"]:
+                    notes.append(f"{tbest['tx']} encodes a protein closer to the references ({tbest['hom']:.0f} against "
+                                 f"{best['hom']:.0f}) without indel against the assembly (other exon chain)")
             elif tbest["cds_indels"] and tbest["protein"] != best["protein"]:
                 others = [p for og, p in proteins[gene] if og != g]
                 counts = [shared_identity(best["protein"], tbest["protein"], p, aligner) for p in others]
@@ -1001,6 +1085,7 @@ def main():
                 source = "transcript"
                 best = mapped_transcript_model(tbest, gs, strand)
                 best["ctx"] = has_ctx(best["protein"])
+                if not SEC: best["hom"], best["hom_ref"] = tbest["hom"], tbest["hom_ref"]
                 best["support"] = [tm for tm in tms if compatible(tm["blocks"], best["blocks"], gs)]
                 why = f"; identity to the other assemblies {id_t:.2f} against {id_g:.2f}" if id_t != "" else ""
                 notes.append(f"the assembly does not encode the protein of {tbest['tx']} ({best['exception']}{why}): "
@@ -1066,6 +1151,7 @@ def main():
                     "cds_insertions": ins, "cds_deletions": dels,
                     "context_match": ("yes" if has_ctx(protein) else "no") if r.get("context") else "-",
                     "annotation_status": status, "annotated_proteins": ids, "annotation_fix": fix,
+                    "reference_score": f"{best.get('hom', 0):.0f} ({best.get('hom_ref', '-')})" if not SEC else "",
                     "notes": "; ".join(notes) or "-"})
         report.append(row)
         o = out[g]
@@ -1096,6 +1182,7 @@ def main():
             "utr5_length", "utr3_length", "utr3_max_length", "polyA_signal", "difference_transcript",
             "cds_bases_covered", "cds_mismatches", "cds_insertions", "cds_deletions", "context_match",
             "annotation_status", "annotated_proteins", "annotation_fix", "notes"]
+    if not SEC: cols.insert(cols.index("notes"), "reference_score")
     os.makedirs(os.path.dirname(a.table) or ".", exist_ok=True)
     with open(a.table, "w") as fh:
         fh.write("\t".join(cols) + "\n")

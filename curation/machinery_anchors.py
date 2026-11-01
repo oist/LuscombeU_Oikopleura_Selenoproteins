@@ -11,18 +11,32 @@ selenoprotein genes.
     selenocysteine copy, SEPHS2, is a gene of the selenoprotein gold standard).
   - Left out: predictions labelled pseudo (by Selenoprofiles: frameshift or in-frame stop codon), and predictions
     whose coding span overlaps a gene of the selenoprotein gold standard on the same strand (--gold: the SEPHS2
-    predictions of the selenocysteine copy).
-  - Several predictions of one gene in an assembly are named <gene>, <gene>_2, ... by decreasing protein length.
+    predictions of the selenocysteine copy). In genomes without a selenoprotein gold standard (O. longicauda,
+    O. albicans, O. vanhoeffeni), the SEPHS2 predictions kept as SEPHS_b are those labelled with the residue found at
+    the selenocysteine position (alanine, serine, cysteine...): predictions labelled selenocysteine or unaligned may be
+    the selenocysteine copy, which stays a prediction in the trees.
+  - Several predictions of one gene in an assembly are named <gene>, <gene>_2, ... by decreasing protein length;
+    predictions shorter than --min-fraction (default 0.5) of the longest one of the gene in the assembly are left out
+    (fragments on short contigs, for example six short eEFsec predictions in O. longicauda).
   - Frame: the coding rows of the prediction are joined in transcript order and translated; the frame with the fewest
-    stop codons is used (the first one when tied), and the anchor is the sense codon nearest to the middle of that
-    frame whose three bases are contiguous in the genome.
+    stop codons (a terminal stop codon not counted) is used (the first one when tied), and the anchor is the sense
+    codon nearest to the middle of that frame whose three bases are contiguous in the genome.
 Output (--out): genome, gene, family, contig, anchor_codon (1-based lowest coordinate of the codon), strand, status
 ("prediction"), context (empty: no context check), prediction, label, protein_length, notes.
+With --human, also the reference proteins of each gene (--references): the human RefSeq proteins of its genes
+(REFERENCE_GENES; longest NP_ isoform, else the longest isoform; selenocysteine written X), header
+<gene>|Human_<symbol>|<protein id>; they rank the candidate models of curation/gold_standard.py --anchor sense and
+are projected on the genomes by curation/machinery_projections.py.
 """
 import argparse, csv, gzip, os, re
 
 FAMILY_GENE = {"pstk": "PSTK", "SecS": "SEPSECS", "eEFsec": "EEFSEC", "SBP2": "SBP2", "secp43": "TRNAU1AP",
                "SEPHS2": "SEPHS_b"}
+REFERENCE_GENES = {"PSTK": ["PSTK"], "SEPSECS": ["SEPSECS"], "EEFSEC": ["EEFSEC"], "SBP2": ["SECISBP2", "SECISBP2L"],
+                   "TRNAU1AP": ["TRNAU1AP"], "SEPHS_b": ["SEPHS1", "SEPHS2"]}
+RESIDUE_LABELS = {"alanine", "serine", "cysteine", "glycine", "threonine", "arginine", "leucine", "valine",
+                  "glutamine", "asparagine", "aspartate", "glutamate", "lysine", "histidine", "isoleucine",
+                  "methionine", "phenylalanine", "proline", "tryptophan", "tyrosine"}
 STOPS = {"TAA", "TAG", "TGA"}
 COMP = str.maketrans("ACGTNacgtn", "TGCANtgcan")
 
@@ -75,6 +89,7 @@ def anchor(genome, rows, strand):
     seq = "".join(genome[p] for p in pos)
     if strand == "-": seq = seq.translate(COMP)
     stops = [sum(seq[i:i + 3] in STOPS for i in range(fr, len(seq) - 2, 3)) for fr in range(3)]
+    if len(seq) >= 3 and seq[-3:] in STOPS and len(seq) % 3 == 0: stops[0] -= 1   # terminal stop codon of frame 0
     fr = min(range(3), key=lambda k: (stops[k], k))
     codons = list(range(fr, len(seq) - 2, 3))
     mid = len(codons) // 2
@@ -87,6 +102,32 @@ def anchor(genome, rows, strand):
     return None, "no sense codon with contiguous bases"
 
 
+def write_references(human, out):
+    gene_of = {}
+    with gzip.open(f"{human}/annotation.gff3.gz", "rt") as fh:
+        for l in fh:
+            if "\tCDS\t" not in l: continue
+            m, g = re.search(r"protein_id=([^;\n]+)", l), re.search(r"gene=([^;\n]+)", l)
+            if m and g: gene_of[m.group(1)] = g.group(1)
+    prot, name, buf = {}, None, []
+    with gzip.open(f"{human}/protein.faa.gz", "rt") as fh:
+        for l in fh:
+            if l.startswith(">"):
+                if name: prot[name] = "".join(buf)
+                name, buf = l[1:].split()[0], []
+            else: buf.append(l.strip())
+    if name: prot[name] = "".join(buf)
+    with open(out, "w") as o:
+        for gene, symbols in REFERENCE_GENES.items():
+            for sym in symbols:
+                ids = [p for p, gg in gene_of.items() if gg == sym and p in prot]
+                if not ids:
+                    print(f"WARNING: no human RefSeq protein for {sym}"); continue
+                p = max(ids, key=lambda x: (x.startswith("NP_"), len(prot[x])))
+                o.write(f">{gene}|Human_{sym}|{p}\n{prot[p].replace('U', 'X').rstrip('*')}\n")
+    print(f"references written to {out}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--predictions", default="results/tables/stage2_final_predictions.tsv")
@@ -95,7 +136,11 @@ def main():
     ap.add_argument("--gold", default="curation/gold_standard")
     ap.add_argument("--genomes", nargs="+", default=["OKI", "OSKA", "OdB3"])
     ap.add_argument("--out", default="curation/machinery_genes.tsv")
+    ap.add_argument("--min-fraction", type=float, default=0.5)
+    ap.add_argument("--human", default="", help="directory with the human RefSeq protein.faa.gz and annotation.gff3.gz")
+    ap.add_argument("--references", default="curation/machinery_references.faa")
     a = ap.parse_args()
+    if a.human: write_references(a.human, a.references)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     preds = [r for r in csv.DictReader(open(a.predictions), delimiter="\t")
              if r["genome"] in a.genomes and r["family"] in FAMILY_GENE]
@@ -108,7 +153,10 @@ def main():
         cds = gtf_cds(f"{a.gtf_dir}/{g}.selenoprofiles.gtf")
         gold = gold_spans(f"{a.gold}/{g}.gff3")
         genome = read_fasta(sheet[g]["fasta"], {r["contig"] for r in mine})
-        named = {}
+        named, longest = {}, {}
+        for r in mine:
+            if r["label"] != "pseudo":
+                longest[r["family"]] = max(longest.get(r["family"], 0), int(r["protein_length"]))
         for r in sorted(mine, key=lambda r: (r["family"], -int(r["protein_length"]))):
             lo, hi = int(r["start"]) - 1, int(r["end"]) - 1
             if r["label"] == "pseudo":
@@ -116,6 +164,12 @@ def main():
             hit = [s for s in gold if s[0] == r["contig"] and s[1] == r["strand"] and lo <= s[3] and hi >= s[2]]
             if hit:
                 left_out.append(f"{g} {r['prediction']}: overlaps a gold-standard selenoprotein gene"); continue
+            if r["family"] == "SEPHS2" and not gold and r["label"] not in RESIDUE_LABELS:
+                left_out.append(f"{g} {r['prediction']}: SEPHS2 labelled {r['label']} in a genome without "
+                                f"selenoprotein gold standard (selenocysteine copy possible)"); continue
+            if int(r["protein_length"]) < a.min_fraction * longest[r["family"]]:
+                left_out.append(f"{g} {r['prediction']}: {r['protein_length']} aa, shorter than {a.min_fraction} of the "
+                                f"longest prediction of the family ({longest[r['family']]} aa)"); continue
             c = cds.get(r["prediction"])
             if not c:
                 left_out.append(f"{g} {r['prediction']}: no CDS rows in {a.gtf_dir}/{g}.selenoprofiles.gtf"); continue

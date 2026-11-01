@@ -122,17 +122,21 @@ SECIS search); tRNA-Sec genes (Secmarker, cmsearch, optionally tRNAscan-SE); ann
 is given, with the optional transcript screen; reporting (assembly statistics, selenocysteine summary, optional
 expectation check, MultiQC). Dashed lines, optional routes.
 
-## Default settings miss part of the selenoproteome of *O. dioica*
+## Before optimisation for appendicularians, the pipeline misses part of the selenoproteome of *O. dioica*
 
-We ran the pipeline with its default settings on the three *O. dioica* assemblies and the genomes of six other
-appendicularians, and compared its predictions with a baseline of 18 selenoprotein genes curated in each *O. dioica*
+The tools that the pipeline runs were built and assessed on other organisms. Among the sequences of the Selenoprofiles
+profiles, the only appendicularian protein is an *O. dioica* SECIS-binding protein (GenBank CBY19450.1); the Rfam SECIS
+model is built from 61 seed elements [@Kalvari2020]; and miniprot was evaluated on vertebrate and insect genomes, with a
+splice model estimated from human data that penalises introns other than GT-AG [@Li2023], which make up 12.4% of the
+introns of the *O. dioica* reference annotation [@Denoeud2010; @Frey2020]. We first ran the pipeline with the original
+settings of its tools on the three *O. dioica* assemblies and the genomes of six other appendicularians, and compared its predictions with a baseline of 18 selenoprotein genes curated in each *O. dioica*
 assembly. The pipeline found 13 of the 18 selenocysteine codons in OKI2018, 14 in OSKA2016 and 13 in OdB3, nearly all
 through Selenoprofiles; miniprot found 6, 6 and 3. Transcripts supported almost all the codons found (13 of 13, 14 of 14
 and 12 of 13). Two genes were missed in all three assemblies: selenoprotein K (SELENOK), and SEPHS2, which
 Selenoprofiles predicted but without calling its selenocysteine codon. Other genes were missed in one or two assemblies,
 for reasons that include assembly gaps. No SECIS element reached the gathering threshold in any of the nine genomes (see
 below), whereas tRNA-Sec was found, by both methods, in every genome. Two releases of the pipeline (0.1.2 and 0.2.0)
-gave identical results on the appendicularians. With its default settings, the pipeline thus finds about three quarters
+gave identical results on the appendicularians. Before optimisation, the pipeline thus finds about three quarters
 of the curated selenocysteine codons of *O. dioica*, and none of their SECIS elements.
 
 The public annotations represent these genes poorly. Of the selenocysteine codons predicted by Selenoprofiles, 5 of 12
@@ -786,7 +790,7 @@ assemblies trained the profiles, the fair test builds the profiles without the s
 without each gold-standard assembly, and tested it on that assembly and on the new assembly of the same species.
 
 With these settings, the pipeline found every reference selenocysteine codon in the six assemblies, also when the
-profiles did not contain the species tested, against 11 to 14 with the default settings (Table STAGE2). TXNL1.b was
+profiles did not contain the species tested, against 11 to 14 before optimisation (Table STAGE2). TXNL1.b was
 found in all six assemblies, and KKSU also in *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, although its profile
 held only *O. dioica* proteins. In the six assemblies, every codon found by Selenoprofiles had a SECIS hit of at least
 20 bits after its gene (24.0 bits or more). The two methods of the pipeline complemented each other: Selenoprofiles
@@ -810,7 +814,7 @@ assemblies; the SELENOT codon was found in OdB3 only. The two misses of miniprot
 the short intron next to the codon instead of splicing it, which a newer version of miniprot avoids for SEPHS2 but not
 for SELENOT.
 
-| Assembly | Same species as | Reference genes | Default settings | Stage 2 | Stage 2, profiles without the species |
+| Assembly | Same species as | Reference genes | Before optimisation | Stage 2 | Stage 2, profiles without the species |
 |---|---|---|---|---|---|
 | OKI2018 | | 20 | 13 | 20 | 20 |
 | KUM-M3-7f | OKI2018 | 19 | 12 | 19 | 19 |
@@ -825,7 +829,7 @@ loo_OdB3), results of 2026-10-29. -->
 Table STAGE2. Selenocysteine codons of the reference genes found by the pipeline, by Selenoprofiles (selenocysteine
 label) or miniprot. Reference genes: the gold-standard genes (the OdB3 assembly lacks the codon of SELENOO), or, for
 the new assemblies, the gold-standard models of the same species whose codon could be placed on the assembly as a
-TGA. Default settings: stage 1, and the same settings on the new assemblies. Stage 2: profiles built from the gold
+TGA. Before optimisation: stage 1, and the same settings on the new assemblies. Stage 2: profiles built from the gold
 standard of the three *O. dioica* assemblies, *Oikopleura* SECIS model. Last column: profiles built without the gold
 standard of the species of the assembly.
 
@@ -1019,7 +1023,7 @@ SELENOW_chr2, SEPHS2 and TXNRD), with seven GPX loci outside the clades of the *
 absent from the Oikopleuridae: SELENOL (two loci) and SELENOU (one locus, with a SECIS element of 23.6 bits). KKSU,
 found in every oikopleurid genome, was not found in *F. borealis*.
 
-Compared with the other tunicates, analysed with the default settings of stage 1, the appendicularians lack several
+Compared with the other tunicates, analysed with the original settings of stage 1, the appendicularians lack several
 families (Table CENSUS-FAMILIES): SELENON was found in eight of the ten other tunicates, FrnE in eight, SELENOH and
 MSRB in six, and SELENOI in *C. intestinalis*, but none in any appendicularian; SELENOL was found in nine other
 tunicates and, among appendicularians, only in *F. borealis*. SELENOU, found in *F. borealis*, was found in no other
@@ -1139,7 +1143,7 @@ Several loci in an assembly may be copies, haplotypes kept in the assembly or fr
 <!-- From results/tables/stage2_census.tsv (make census); the columns of KUM-M3-7f, AOM-5-5f and Bar2_p4 are left out. -->
 
 Table CENSUS-FAMILIES. Selenoprotein loci per family: appendicularians from the census (final stage 2 run, loci
-counted), other genomes from stage 1 (default settings, all loci, no screen). Vertebrate counts include
+counted), other genomes from stage 1 (original settings, all loci, no screen). Vertebrate counts include
 multiple selenocysteine codons of SELENOP more than 30 nucleotides apart and processed pseudogenes.
 
 
@@ -1327,8 +1331,8 @@ those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_0
 for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
 (GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). These tunicates,
 with *Ciona robusta* (KH assembly, GCF_000224145.3, the genome of the published *Ciona* selenoproteome, formerly named
-*C. intestinalis*) and *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the default settings, to compare the
-appendicularians with other tunicates. As positive controls for the default settings, we used the human
+*C. intestinalis*) and *Halocynthia roretzi* (GCA_013436055.1), were also analysed with the original settings, to compare the
+appendicularians with other tunicates. As positive controls for the original settings, we used the human
 (GRCh38.p14, GCF_000001405.40), mouse (GRCm39, GCF_000001635.27) and zebrafish (GRCz11, GCF_000002035.6) genomes, with
 their RefSeq annotations. To test the settings of stage 2 on new assemblies of the three cryptic species of
 *O. dioica*, we used the long-read assemblies KUM-M3-7f (Okinawa), AOM-5-5f (Osaka) and Bar2_p4 (Barcelona)
@@ -1493,7 +1497,7 @@ from *O. dioica* transcripts. The other tunicates were the six analysed in stage
 analysis, *Botryllus schlosseri* (GCF_051294905.1), *Phallusia mammillata* (GCF_965637545.1), *Pegea* sp.
 (GCA_034620365.1) and *Salpa thompsoni* (GCA_047495815.1); the cephalochordates were *Branchiostoma floridae*
 (GCF_000003815.2) and *Branchiostoma lanceolatum* (GCF_035083965.1). These six genomes were run through the pipeline
-with the default settings, like the other stage 1 genomes. For PSTK and the SECIS-binding proteins, which have no
+with the original settings, like the other stage 1 genomes. For PSTK and the SECIS-binding proteins, which have no
 selenocysteine, the RefSeq proteins of a genome replaced its predictions, which cover only the region of the profile:
 for each gene whose proteins had PSTK or KTI12 (respectively SECISBP2 or SECISBP2L) as best human hit (blastp,
 E-value at most 10^-5^), the longest isoform. Predictions shorter than half the median length of the profile

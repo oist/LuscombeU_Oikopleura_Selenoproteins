@@ -1880,3 +1880,19 @@ no earlier step waits for them.
   where the test-run census has "fragment": the fragments file (work/stage2/machinery_fragments/fragments.tsv) was
   probably absent when stage2-collect ran; the tblastn absence test (stage2_absence_pstk.summary.tsv) carries the
   evidence. The selenoprotein trees still contain the B. stygius and M. erythrocephalus predictions (to decide).
+- First run of gold-standard-machinery (2026-11-01, commit 9fe4085; O. dioica only): SBP2 consistent (658, 617,
+  620 aa), but EEFSEC of OKI2018 lacks 56 N-terminal residues of the OSKA2016 and OdB3 proteins, SEPSECS of OSKA2016 and
+  OdB3 lack about 140 N-terminal residues of the OKI2018 protein (prediction chains), PSTK differs widely (241 aa from
+  a transcript in OKI2018, 604 aa from an annotated model of which 94 residues align in OSKA2016, 155 aa from an EST in
+  OdB3), and SEPHS_b of OKI2018 is 635 aa (a read-through or fused chain). The ranking rules made for the
+  selenocysteine genes (context, length, transcript support) do not protect genes without selenocysteine against
+  partial transcripts and fused annotated models. Revised (same day): candidates ranked by their local alignment score
+  to reference proteins (human RefSeq, then the first-pass proteins of the other genomes), miniprot alignments of these
+  proteins added as candidates, and O. longicauda, O. albicans and O. vanhoeffeni curated the same way (Charles:
+  "we can curate O. lon, O. alb and O. van for cleaner trees"); their selenocysteine SEPHS2 stays a prediction.
+- Manuscript: "Default settings" renamed "before optimisation for appendicularians" (Charles: "default settings"
+  suggests that we did not pick good settings); the section now opens with what the tools were built and assessed on:
+  one O. dioica protein (CBY19450.1, SBP2 profile) among the Selenoprofiles profile sequences (counted in the profile
+  files of results/models; to confirm on the standard profile directory), 61 seed elements for RF00031 (Rfam page),
+  miniprot evaluated on human, mouse, zebrafish, fly and mosquito with a human splice model (Li 2023, read in full via
+  PubMed).

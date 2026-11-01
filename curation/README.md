@@ -43,13 +43,19 @@ and assembly, UTRs, the treatment of the gene by the public annotation and the c
 CDS rows, for review), `<genome>.proteins.faa`,
 `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.
 
-`machinery_anchors.py` and `gold_standard.py --anchor sense` (run by `make gold-standard-machinery`; decision of
-2026-11-01) build gene models of the machinery genes of OKI2018, OSKA2016 and OdB3 (PSTK, SEPSECS, EEFSEC, the
-SECIS-binding protein SBP2, and SEPHS_b, the SEPHS copy without selenocysteine; SEPHS2 is in the selenoprotein gold
-standard), so that the machinery trees use final protein sequences. `machinery_anchors.py` writes
-`machinery_genes.tsv`: one row per machinery prediction of the final stage 2 run (predictions labelled pseudo, and
-those overlapping a selenoprotein gold-standard gene, left out), with an anchor codon in the middle of its coding
-sequence. The models are built around that codon as around the selenocysteine codon (same candidates, ranking without
-the context check, same choice between assembly and transcript protein). Outputs: `gold_standard_machinery/<genome>.gff3`
-(no `transl_except`), `<genome>.proteins.faa`, `<genome>.candidate_models.tsv`, and
-`results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of `sec_codon`).
+`machinery_anchors.py`, `machinery_projections.py` and `gold_standard.py --anchor sense` (run by
+`make gold-standard-machinery`; decisions of 2026-11-01) build gene models of the machinery genes (PSTK, SEPSECS,
+EEFSEC, the SECIS-binding protein SBP2, and SEPHS_b, the SEPHS copy without selenocysteine; SEPHS2 is in the
+selenoprotein gold standard) in OKI2018, OSKA2016, OdB3, *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, so that
+the machinery trees use final protein sequences. `machinery_anchors.py` writes `machinery_genes.tsv` (one row per
+machinery prediction of the final stage 2 run, with an anchor codon in the middle of its coding sequence; predictions
+labelled pseudo, fragments shorter than half the longest prediction of the gene, and predictions overlapping a
+selenoprotein gold-standard gene left out) and `machinery_references.faa` (human RefSeq proteins of each gene). A
+first pass builds the *O. dioica* models around the anchors, from transcripts, annotations and predictions, ranking
+the candidates by their best local alignment score to the human proteins (a fragment scores less, a fusion no more;
+then splice sites, completeness, transcript support, shorter protein). `machinery_projections.py` aligns the human
+proteins and the first-pass proteins to the six genomes with miniprot; the final pass adds these alignments as
+candidate models and the first-pass proteins of the other genomes as references. Outputs:
+`gold_standard_machinery/<genome>.gff3` (no `transl_except`), `<genome>.proteins.faa`,
+`<genome>.candidate_models.tsv`, and `results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of
+`sec_codon`; `reference_score`: the score and the reference it was reached with).
