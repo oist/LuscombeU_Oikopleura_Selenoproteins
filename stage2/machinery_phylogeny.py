@@ -86,9 +86,13 @@ def main():
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
     ap.add_argument("--stage2", default="work/stage2/machinery_test")
     ap.add_argument("--curated", default="curation/machinery_proteins.faa")
-    ap.add_argument("--gold", default="", help="gold-standard directory (<genome>.gff3, <genome>.proteins.faa): in "
-                    "--gold-genomes, the predictions that overlap a gold-standard gene of the family are replaced by "
-                    "its gold-standard protein, named <genome>|gold_<gene>")
+    ap.add_argument("--gold", nargs="*", default=[], help="gold-standard directories (<genome>.gff3, "
+                    "<genome>.proteins.faa; for example curation/gold_standard and curation/gold_standard_machinery): "
+                    "in --gold-genomes, the predictions that overlap a gold-standard gene of the family are replaced "
+                    "by its gold-standard protein, named <genome>|gold_<gene>, and the curated transcript proteins of "
+                    "--curated are not added for a genome that has a gold-standard gene of the family")
+    ap.add_argument("--exclude-genomes", nargs="*", default=[],
+                    help="appendicularian genomes whose predictions are left out (held-out genomes)")
     ap.add_argument("--gold-genomes", nargs="*", default=["OKI", "OSKA", "OdB3"])
     ap.add_argument("--references", default="curation/mariotti2015_sps.faa",
                     help="labelled reference proteins, header <family>|<label>|<source>")
@@ -176,10 +180,15 @@ def main():
                         skipped.append((label(f"{g}|{pid}"), kind(g), "human stage 1 prediction (human RefSeq proteins used)"))
                         continue
                     add(f"{g}|{pid}", s, kind(g))
-        gold = gold_models(a.gold, a.gold_genomes, fam) if a.gold else {}
+        gold = {}
+        for d in a.gold:
+            for g, genes in gold_models(d, a.gold_genomes, fam).items(): gold.setdefault(g, {}).update(genes)
+        gold = {g: genes for g, genes in gold.items() if genes}
         for faa in sorted(glob.glob(f"{a.stage2}/*.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in APPENDICULARIANS: continue
+            if g in a.exclude_genomes:
+                skipped.append((label(f"{g}|*"), "appendicularian", "held-out genome (--exclude-genomes)")); continue
             for n, s in read_fasta(faa):
                 pid = n.split()[0]
                 if pid.split(".")[0].removesuffix("_app") == fam and len(clean(s)) >= a.min_fraction * med:
@@ -194,7 +203,11 @@ def main():
         if os.path.exists(a.curated):
             for n, s in read_fasta(a.curated):
                 f = n.split("|")
-                if f[0] == fam: add(f"{f[1]}|curated_{f[0]}", s, "curated")
+                if f[0] != fam: continue
+                if f[1] in gold:
+                    skipped.append((label(f"{f[1]}|curated_{f[0]}"), "curated", "gold-standard gene of the genome used"))
+                    continue
+                add(f"{f[1]}|curated_{f[0]}", s, "curated")
         for gene in HUMAN_GENES.get(fam, []):
             prots = [p for p, gg in gene_of.items() if gg == gene and p in human]
             if prots:
@@ -322,9 +335,20 @@ def core_filter(aln, groups, min_core):
     return out
 
 
+# profile family of the gold-standard machinery genes (curation/machinery_anchors.py), whose names are not built
+# from the profile name; a numbered copy (<gene>_2) belongs to the family of <gene>
+GOLD_FAMILY = {"PSTK": "pstk", "SEPSECS": "SecS", "EEFSEC": "eEFsec", "SBP2": "SBP2", "TRNAU1AP": "secp43",
+               "SEPHS_b": "SEPHS2"}
+
+
+def gold_family(gene):
+    base = re.sub(r"_\d+$", "", gene)
+    return GOLD_FAMILY.get(base) or gene.split("_")[0].replace(".", "")
+
+
 def gold_models(gold, genomes, fam):
     """genome -> gene -> (contig, strand, start, end, protein) of the gold-standard genes of a family (the profile of
-    a gene is its name up to the first "_", without dots, as in stage2/build_profiles.py)."""
+    a gene is its name up to the first "_", without dots, as in stage2/build_profiles.py, or GOLD_FAMILY)."""
     out = {}
     for g in genomes:
         gff, faa = f"{gold}/{g}.gff3", f"{gold}/{g}.proteins.faa"
@@ -335,7 +359,7 @@ def gold_models(gold, genomes, fam):
             f = l.rstrip("\n").split("\t")
             if len(f) < 9 or f[2] != "CDS": continue
             gene = re.search(r"Parent=rna-([^;]+)", f[8]).group(1)[len(g) + 1:]
-            if gene.split("_")[0].replace(".", "") != fam or gene not in prot: continue
+            if gold_family(gene) != fam or gene not in prot: continue
             c = spans.setdefault(gene, [f[0], f[6], int(f[3]), int(f[4])])
             c[2], c[3] = min(c[2], int(f[3])), max(c[3], int(f[4]))
         out[g] = {gene: (c[0], c[1], c[2], c[3], prot[gene]) for gene, c in spans.items()}

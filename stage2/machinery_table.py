@@ -64,8 +64,9 @@ def sephs_second_copy(trees):
     names = {x.name for x in lba.read_tree(ml).get_terminals()}
     tax = {n: lba.taxon(n, groups, taxa) for n in names}
     sec_clade = lba.appendicularian_clade(ml, tax)
+    # predictions without selenocysteine, and the gold-standard second copy (SEPHS_b, curation/machinery_anchors.py)
     second = {n for n in names if tax[n] == "Appendicularians" and n not in sec_clade
-              and groups.get(n) == "appendicularian" and not n.endswith(".selenocysteine")}
+              and ((groups.get(n) == "appendicularian" and not n.endswith(".selenocysteine")) or "_gold_SEPHS_b" in n)}
     genomes = {n.split("_")[0] for n in second}
     glycine = {n for n in names if tax[n] == "Other tunicates" and re.search(lba.ORTHOLOG_EXCLUDE["SEPHS2"], n)}
     clade = glycine | second

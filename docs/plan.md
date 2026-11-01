@@ -1849,3 +1849,34 @@ no earlier step waits for them.
   Evidence package (script to write, `stage2/refseq_package.py`), Zenodo deposit, Gene and RefSeq Feedback form,
   offer of the profiles and SECIS model for the next annotation run (Ticó et al. 2026), check of the next release.
   Open questions in the plan. Slide "refseq" added after "massspec".
+
+## Decisions (2026-11-01)
+
+- Manuscript structure (proposed by Charles, outline agreed in principle): the Results present the iteration loop once
+  (Figure LOOP: pipeline, comparison with the baseline, targeted searches, gold-standard models, SECIS model, UGA/SECIS
+  screens, candidates by rules fixed in advance, baseline update, appendicularian profiles, rerun), then the census,
+  orthology and other analyses on the final gold standard and the final run only. The Git repository records the
+  rounds; they need not be reproducible bit for bit by third parties. The process is described plainly, with the
+  evidence that the baseline has converged (unchanged since 2026-10-26; the final run, the census and the screens since
+  then added no O. dioica gene; the final run finds the 60 reference codons, also with profiles built without the
+  assembly tested). Outline: pipeline; default settings miss part of the selenoproteome; iterative loop to a gold
+  standard; gold standard of O. dioica (selenoprotein and machinery genes, annotation fixes); Oikopleura SECIS model;
+  selenoproteomes (selenoproteins and machinery, absence tests, TXNL1.b and KKSU); orthology (selenoproteins and
+  machinery, final sequences, robustness in one paragraph); operons. Stage 1 against stage 2 counts per round, the first
+  SECIS model, the machinery-profile test run, the miniprot junctions, screen counts and the SELENOK profile history
+  move to the Methods or the supplement.
+- Machinery gene models (gold standard): `make gold-standard-machinery` (curation/machinery_anchors.py, then
+  curation/gold_standard.py --anchor sense). Sec mode unchanged (regression test on the local test data: identical
+  outputs). Tested here only on synthetic OKI2018 data (transcripts made from tblastn exons); first real run on Deigo.
+- Tree inputs, one rule for all families: gold-standard proteins for the three O. dioica assemblies, predictions of
+  the final stage 2 run for the other appendicularians (machinery-phylogeny now takes --stage2 $(SELENO_PREDICTIONS)
+  --gold curation/gold_standard curation/gold_standard_machinery). Held-out genomes: F. borealis stays in the trees,
+  uncurated (the only fritillariid); B. stygius and M. erythrocephalus leave the machinery trees (--exclude-genomes);
+  their presence and absence, and SECp43, move to the census section. Curated transcript proteins
+  (curation/machinery_proteins.faa) are no longer added for a genome with a gold-standard gene of the family.
+  machinery-rbh: stage 2 rows from the final-run predictions instead of the machinery-profile test run.
+- To check at the rewrite: Table MACHINERY presence should come from the final run plus the absence tests. The final
+  census (stage2_final_machinery_census.tsv) has PSTK "not found" in O. longicauda, B. stygius and M. erythrocephalus,
+  where the test-run census has "fragment": the fragments file (work/stage2/machinery_fragments/fragments.tsv) was
+  probably absent when stage2-collect ran; the tblastn absence test (stage2_absence_pstk.summary.tsv) carries the
+  evidence. The selenoprotein trees still contain the B. stygius and M. erythrocephalus predictions (to decide).

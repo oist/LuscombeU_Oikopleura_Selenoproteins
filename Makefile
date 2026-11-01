@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -86,9 +86,13 @@ machinery-absence:
 # all genomes) and stage 2 (appendicularian profiles)
 machinery-rbh:
 	python3 stage2/machinery_rbh.py --table results/tables/stage1_machinery_rbh.tsv
-	python3 stage2/machinery_rbh.py --predictions work/stage2/machinery_test/*.faa --table results/tables/stage2_machinery_rbh.tsv
+	python3 stage2/machinery_rbh.py --predictions $(SELENO_PREDICTIONS)/*.selenoprofiles.faa --table results/tables/stage2_machinery_rbh.tsv
 
 # Phylogenies of PSTK (with KTI12), SEPHS (SPS1/SPS2) and the SECISBP2 family (needs IQ-TREE and ClipKIT)
+# Inputs (decision of 2026-11-01): the gold-standard proteins of the three O. dioica assemblies (selenoprotein gold
+# standard for SEPHS2, machinery gold standard for the other genes; make gold-standard-machinery first) and the
+# predictions of the final stage 2 run for the other appendicularians; B. stygius and M. erythrocephalus (held out,
+# fragmented assemblies) left out, F. borealis kept (the only fritillariid).
 # Runs in the current shell (no job submission); on a cluster, wrap it in one job, for example
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=24:00:00 scripts/run_in_container.sh make machinery-phylogeny
 # The scripts use SLURM_CPUS_PER_TASK threads.
@@ -96,10 +100,10 @@ machinery-rbh:
 # script resumes from the IQ-TREE checkpoints.
 machinery-phylogeny:
 	rm -rf results/trees/C20 && rm -f results/trees/*.aln results/trees/*.trimmed results/trees/*.treefile results/trees/*.iqtree results/trees/*.ckp.gz results/trees/*.log
-	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3
-	python3 stage2/machinery_phylogeny.py --families SBP2 --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 $(MACHINERY_TREE_INPUTS)
+	python3 stage2/machinery_phylogeny.py --families SBP2 --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5 $(MACHINERY_TREE_INPUTS)
 	mkdir -p results/trees/C20 && cp results/trees/pstk.trimmed results/trees/SEPHS2.trimmed results/trees/C20/ 2>/dev/null || true
-	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20
+	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20 $(MACHINERY_TREE_INPUTS)
 	python3 figures/phylogeny_collapsed.py
 	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2 --trees results/trees/C20 --figures results/trees/C20
 
@@ -152,6 +156,16 @@ machinery-domain-figures:
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=4:00:00 scripts/run_in_container.sh make gold-standard
 gold-standard:
 	python3 curation/gold_standard.py
+
+# Machinery genes of the three O. dioica assemblies (decision of 2026-11-01): anchors from the machinery predictions of
+# the final stage 2 run (curation/machinery_anchors.py), then gene models built around them as for the selenoprotein
+# genes (curation/gold_standard.py --anchor sense; the transcript alignments of gold-standard are reused; minutes)
+#   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2:00:00 scripts/run_in_container.sh make gold-standard-machinery
+GOLD_MACHINERY = curation/gold_standard_machinery
+gold-standard-machinery:
+	python3 curation/machinery_anchors.py --gtf-dir $(SELENO_PREDICTIONS) --out curation/machinery_genes.tsv
+	python3 curation/gold_standard.py --anchor sense --baseline curation/machinery_genes.tsv --stage1 $(SELENO_PREDICTIONS) \
+	  --out $(GOLD_MACHINERY) --table results/tables/gold_standard_machinery.tsv
 
 # Step 1 of the plan of 2026-10-24: SECIS scores of the validated selenocysteine hits (seconds; reads results/ only)
 secis-hits:
@@ -241,6 +255,8 @@ SELENO_TREES = DIO GPX MsrA SELENOF SELENOK SELENOL SELENOO SELENOS SELENOT SELE
 # selenoprotein-orthology SELENO_PREDICTIONS=work/stage1/pipeline/selenoprofiles GOLD=
 SELENO_PREDICTIONS = work/stage2/pipeline/final/selenoprofiles
 GOLD = curation/gold_standard
+# Inputs of the machinery trees (machinery-phylogeny; decision of 2026-11-01)
+MACHINERY_TREE_INPUTS = --stage2 $(SELENO_PREDICTIONS) --gold $(GOLD) $(GOLD_MACHINERY) --exclude-genomes Bsty Mery
 # Best hits: SELENO_PREDICTIONS for the genomes they hold, stage 1 predictions for the other genomes
 SELENO_RBH = $(sort $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa) \
   $(filter-out $(addprefix work/stage1/pipeline/selenoprofiles/,$(notdir $(wildcard $(SELENO_PREDICTIONS)/*.selenoprofiles.faa))), \

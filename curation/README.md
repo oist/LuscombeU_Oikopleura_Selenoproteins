@@ -42,3 +42,14 @@ and assembly, UTRs, the treatment of the gene by the public annotation and the c
 (all candidate models and transcript frames, and the annotated models near the codon, with splice sites and annotated
 CDS rows, for review), `<genome>.proteins.faa`,
 `<genome>.utr3.fa`, `<genome>.after_stop.fa`, and `results/tables/gold_standard.tsv`.
+
+`machinery_anchors.py` and `gold_standard.py --anchor sense` (run by `make gold-standard-machinery`; decision of
+2026-11-01) build gene models of the machinery genes of OKI2018, OSKA2016 and OdB3 (PSTK, SEPSECS, EEFSEC, the
+SECIS-binding protein SBP2, and SEPHS_b, the SEPHS copy without selenocysteine; SEPHS2 is in the selenoprotein gold
+standard), so that the machinery trees use final protein sequences. `machinery_anchors.py` writes
+`machinery_genes.tsv`: one row per machinery prediction of the final stage 2 run (predictions labelled pseudo, and
+those overlapping a selenoprotein gold-standard gene, left out), with an anchor codon in the middle of its coding
+sequence. The models are built around that codon as around the selenocysteine codon (same candidates, ranking without
+the context check, same choice between assembly and transcript protein). Outputs: `gold_standard_machinery/<genome>.gff3`
+(no `transl_except`), `<genome>.proteins.faa`, `<genome>.candidate_models.tsv`, and
+`results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of `sec_codon`).

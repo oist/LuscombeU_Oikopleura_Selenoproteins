@@ -2,6 +2,13 @@
 """Step 2 of the plan (docs/plan.md, 2026-10-24): gold-standard gene models of the curated O. dioica selenoprotein
 genes in OKI2018, OSKA2016 and OdB3.
 
+With --anchor sense (decision of 2026-11-01), the same procedure builds the models of the machinery genes, which have
+no selenocysteine: the codon of each gene is then a sense codon of the machinery prediction of the final stage 2 run
+(curation/machinery_genes.tsv, written by curation/machinery_anchors.py), read as an ordinary codon; the context
+check is skipped (empty context), the GFF3 has no transl_except, and the annotation status and fix are worded for a
+codon without selenocysteine ("codon inside the coding sequence, in frame"; "none" when the annotated coding sequence
+is the model's). Everything below that refers to the TGA applies to that codon.
+
 For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   1. Transcripts. The transcripts of the assembly (stage1/samplesheet.csv: the OKI2018 Trinity transcriptome, the
      OSKA2016 transcript assembly, the OdB3 cDNA collection) are aligned to it with minimap2 (-x splice:hq -un, one
@@ -112,6 +119,12 @@ OTHER_COST = math.log10(INTRON_CLASSES["GT-AG"] / OTHER_SITES) / MISMATCH_LOG10
 END_TOLERANCE = 10
 TIE_SCORE_MARGIN = 20   # BLOSUM62 score units (half bits): about 10 bits
 MERGE_END, MERGE_GAP = 30, 300   # annotated models split at the codon: end after the codon, distance to the next model
+SEC = True   # --anchor sec: the codon is a TGA read as selenocysteine; --anchor sense: any sense codon of the gene
+
+
+def anchor_ok(codon):
+    """The codon at the anchor: TGA for selenocysteine genes, a sense codon otherwise."""
+    return codon == "TGA" if SEC else codon not in STOPS
 
 
 def rc(s): return s.translate(COMP)[::-1]
@@ -307,14 +320,14 @@ def model_from_chain(blocks, genome, codon0, strand, source, kind, cds_only=Fals
     s = idx.get(codon0) if strand == "+" else idx.get(codon0 + 2)
     if s is None or [idx.get(codon0 + d) for d in ((0, 1, 2) if strand == "+" else (2, 1, 0))] != [s, s + 1, s + 2]:
         return None
-    if seq[s:s + 3] != "TGA": return None
+    if not anchor_ok(seq[s:s + 3]): return None
     start, stop, open5, open3 = orf(seq, s)
     if cds_only and open5: open5 = seq[start:start + 3] != "ATG"   # a chain of CDS rows that starts with ATG
     m = {"source": source, "kind": kind, "blocks": sorted(blocks), "introns": chain_introns(blocks),
          "cds_only": cds_only, "open5": open5, "open3": open3, "cds": "", "protein": "", "utr3": "", "utr5_len": 0}
     if start is None: return m
     end = (stop + 3) if stop is not None else len(seq) - (len(seq) - s) % 3
-    m.update({"cds": seq[start:end], "protein": translate(seq[start:end], s - start).rstrip("*"),
+    m.update({"cds": seq[start:end], "protein": translate(seq[start:end], s - start if SEC else None).rstrip("*"),
               "utr3": seq[end:] if stop is not None else "", "utr5_len": start, "cds_genome": pos[start:end],
               "stop_genome": pos[end - 1] if stop is not None else None})
     m["sites"] = [equivalent_sites(genome, a, b, strand) for a, b in m["introns"]]
@@ -335,13 +348,13 @@ def transcript_model(aln, tx, genome, codon0, strand):
     else:
         mrna, s = rc(fwd).upper(), L - 1 - qs[2]
         m2g = lambda i: w["q2g"].get(L - 1 - i)
-    if mrna[s:s + 3] != "TGA": return None
+    if not anchor_ok(mrna[s:s + 3]): return None
     start, stop, open5, open3 = orf(mrna, s)
     m = {"tx": aln["q"], "walk": w, "fwd": fwd, "blocks": w["blocks"], "open5": open5, "open3": open3,
          "protein": "", "utr3": "", "cds_indels": 0, "stop_genome": None}
     if start is None: return m
     end = (stop + 3) if stop is not None else len(mrna) - (len(mrna) - s) % 3
-    m["protein"] = translate(mrna[start:end], s - start).rstrip("*")
+    m["protein"] = translate(mrna[start:end], s - start if SEC else None).rstrip("*")
     m["utr3"] = mrna[end:] if stop is not None else ""
     m["utr5_len"] = start
     gpos = [m2g(i) for i in range(start, end)]
@@ -531,7 +544,7 @@ def annotation_status(ann, contig, strand, codon0, lo, hi):
     for _, r, a, b in over:
         inside = any(x <= codon0 and codon0 + 2 <= y for x, y in r["cds"])
         last = (b == codon0 + 2) if strand == "+" else (a == codon0)   # the TGA is the annotated stop codon
-        if inside and last and not r["sec"]: statuses.append("coding sequence ends at the codon (TGA read as stop)")
+        if inside and last and not r["sec"] and SEC: statuses.append("coding sequence ends at the codon (TGA read as stop)")
         elif inside and r["sec"]: statuses.append("selenocysteine declared")
         elif inside:   # frame of the codon in the annotated coding sequence, counted from its first base
             rows = sorted(r["cds"]) if strand == "+" else sorted(r["cds"])[::-1]
@@ -549,7 +562,9 @@ def annotation_status(ann, contig, strand, codon0, lo, hi):
              "coding sequence ends at the codon (TGA read as stop)", "codon inside the coding sequence, in another frame",
              "codon in an intron of the coding sequence (skipped)", "coding sequence ends before the codon",
              "coding sequence starts after the codon"]
-    return next(s for s in order if s in statuses), ids, over
+    status = next(s for s in order if s in statuses)
+    if not SEC: status = status.replace(", not declared", ", in frame")   # anchor codon of a gene without selenocysteine
+    return status, ids, over
 
 
 def cds_segments(model):
@@ -564,13 +579,14 @@ def annotation_fix(model, over, genome):
     segs = cds_segments(model)
     for _, r, _, _ in over:
         if sorted(r["cds"]) == segs:
+            if not SEC: return "none"
             return "none (selenocysteine declared)" if r["sec"] else "declare the selenocysteine (transl_except)"
     if model["kind"] == "annotation":
         return f"change the coding sequence on the annotated exon chain of {model['source']}"
     compat = sorted({r["protein"] for _, r, _, _ in over
                      if compatible(r["exons"] or [(x, y + 1) for x, y in r["cds"]], model["blocks"], genome)})
     if len(compat) > 1:
-        return f"merge {' and '.join(compat)} into one coding sequence through the selenocysteine"
+        return f"merge {' and '.join(compat)} into one coding sequence" + (" through the selenocysteine" if SEC else "")
     if compat:
         return f"change the coding sequence of {compat[0]} (compatible exon chain, to be extended)"
     for _, r, _, _ in over:   # same number of introns, some placed differently
@@ -600,13 +616,14 @@ def gff_lines(g, gene, contig, strand, m, sec_genome):
         rows.append((contig, "gold_standard", "exon", a + 1, b + 1, ".", strand, ".", f"ID=exon-{g}_{gene}-{k};Parent={rid}"))
     order = cds if strand == "+" else cds[::-1]
     done = 0
-    te = f"transl_except=(pos:{sec_genome[0] + 1}..{sec_genome[1] + 1}%2Caa:Sec)" if strand == "+" else \
-        f"transl_except=(pos:complement({sec_genome[0] + 1}..{sec_genome[1] + 1})%2Caa:Sec)"
+    te = "" if sec_genome is None else \
+        f";transl_except=(pos:{sec_genome[0] + 1}..{sec_genome[1] + 1}%2Caa:Sec)" if strand == "+" else \
+        f";transl_except=(pos:complement({sec_genome[0] + 1}..{sec_genome[1] + 1})%2Caa:Sec)"
     phased = []
     for a, b in order:
         phased.append((a, b, (3 - done % 3) % 3)); done += b - a + 1
     for a, b, ph in sorted(phased):
-        rows.append((contig, "gold_standard", "CDS", a + 1, b + 1, ".", strand, str(ph), f"ID=cds-{g}_{gene};Parent={rid};{te}"))
+        rows.append((contig, "gold_standard", "CDS", a + 1, b + 1, ".", strand, str(ph), f"ID=cds-{g}_{gene};Parent={rid}{te}"))
     return rows
 
 
@@ -750,7 +767,15 @@ def main():
     ap.add_argument("--after-stop", type=int, default=2000)
     ap.add_argument("--window", type=int, default=8, help="junction placement window (nt on each side)")
     ap.add_argument("--cpus", type=int, default=int(os.environ.get("SLURM_CPUS_PER_TASK", 1)))
+    ap.add_argument("--anchor", choices=["sec", "sense"], default="sec",
+                    help="sec: the codon of each gene is a TGA read as selenocysteine; sense: a sense codon of a gene "
+                    "without selenocysteine (machinery genes, curation/machinery_genes.tsv)")
+    ap.add_argument("--codon-column", default="", help="column of --baseline with the codon (default: sec_codon for "
+                    "--anchor sec, anchor_codon for --anchor sense)")
     a = ap.parse_args()
+    global SEC
+    SEC = a.anchor == "sec"
+    cc = a.codon_column or ("sec_codon" if SEC else "anchor_codon")
     os.makedirs(a.work, exist_ok=True); os.makedirs(a.out, exist_ok=True)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     base = [r for r in csv.DictReader(open(a.baseline), delimiter="\t") if r["genome"] in a.genomes]
@@ -762,7 +787,7 @@ def main():
         contigs = {r["contig"] for r in genes}
         genome = genomes[g] = {k: v.upper() for k, v in read_fasta(sheet[g]["fasta"], contigs)}
         wanted = collections.defaultdict(list)
-        for r in genes: wanted[r["contig"]].append((int(r["sec_codon"]) - 1, int(r["sec_codon"]) + 2))
+        for r in genes: wanted[r["contig"]].append((int(r[cc]) - 1, int(r[cc]) + 2))
         alns = []
         tx_path = sheet[g].get("transcripts", "")
         if tx_path and os.path.exists(tx_path):
@@ -778,7 +803,7 @@ def main():
         ann = annotations[g] = read_annotation(sheet[g].get("annotation", ""), contigs)
         for r in genes:
             contig, strand = r["contig"], r["strand"]
-            codon0 = int(r["sec_codon"]) - 1
+            codon0 = int(r[cc]) - 1
             gs = genome[contig]
             has_ctx = context_check(r.get("context", ""))
             # supporting transcripts, with junctions placed
@@ -895,7 +920,7 @@ def main():
     neighbours = collections.defaultdict(Neighbours)
     for rec in records:
         r, m = rec["r"], rec["best"]
-        c0 = int(r["sec_codon"]) - 1
+        c0 = int(r[cc]) - 1
         span = (min(m["cds_genome"]), max(m["cds_genome"])) if m and m.get("cds_genome") else (c0, c0 + 2)
         neighbours[(rec["g"], r["contig"], r["strand"])].append((r["gene"], *span))
     out = {g: {"gff": ["##gff-version 3"], "prot": [], "utr": [], "after": []} for g in genomes}
@@ -903,9 +928,9 @@ def main():
     for rec in records:
         g, r, tms, best, tbest, has_ctx = rec["g"], rec["r"], rec["tms"], rec["best"], rec["tbest"], rec["has_ctx"]
         contig, strand, gene = r["contig"], r["strand"], r["gene"]
-        codon0 = int(r["sec_codon"]) - 1
+        codon0 = int(r[cc]) - 1
         gs = genomes[g][contig]
-        row = {"genome": g, "gene": gene, "family": r["family"], "contig": contig, "sec_codon": r["sec_codon"],
+        row = {"genome": g, "gene": gene, "family": r["family"], "contig": contig, cc: r[cc],
                "strand": strand, "baseline_status": r["status"], "transcripts_with_codon": len(tms),
                "candidates": rec["candidates"]}
         if best is None and tbest is None:
@@ -995,7 +1020,7 @@ def main():
         if source == "genome":   # internal check: the GFF3 coding sequence, read on the genome, gives the protein
             cds_seq = "".join(gs[x:y + 1] for x, y in cds_segments(best))
             cds_seq = cds_seq if strand == "+" else rc(cds_seq)
-            sec = best["cds_genome"].index(codon0 if strand == "+" else codon0 + 2)
+            sec = best["cds_genome"].index(codon0 if strand == "+" else codon0 + 2) if SEC else None
             if translate(cds_seq, sec).rstrip("*") != protein:
                 raise SystemExit(f"internal check failed: {g} {gene}: the GFF3 coding sequence does not give the protein")
         # differences between the assembly and the supporting transcripts
@@ -1008,7 +1033,8 @@ def main():
         for (x, y), (site_, txs) in sorted(short_intron_candidates(tms, gs, strand, lo_cds, hi_cds).items()):
             notes.append(f"possible intron of {y - x} nt ({site_}) aligned as a deletion at {x + 1}-{y} "
                          f"({','.join(sorted(set(txs))[:3])})")
-        if not protein.startswith("M"): notes.append("5' fragment: no ATG before the selenocysteine in the chain")
+        if not protein.startswith("M"):
+            notes.append(f"5' fragment: no ATG before the {'selenocysteine' if SEC else 'anchor codon'} in the chain")
         if best["open3"]: notes.append("3' end open (no stop codon in the chain)")
         if not best["support"]: notes.append("no supporting transcript compatible with the exon chain")
         if not best["ctx"]: notes.append("curated context not found in the protein")
@@ -1043,7 +1069,7 @@ def main():
                     "notes": "; ".join(notes) or "-"})
         report.append(row)
         o = out[g]
-        o["gff"] += ["\t".join(map(str, x)) for x in gff_lines(g, gene, contig, strand, best, (codon0, codon0 + 2))]
+        o["gff"] += ["\t".join(map(str, x)) for x in gff_lines(g, gene, contig, strand, best, (codon0, codon0 + 2) if SEC else None)]
         o["prot"].append(f">{gene}|{g}|{best['kind']}:{best['source']}|protein_source={source}|"
                          f"complete={'yes' if protein.startswith('M') and not best['open3'] else 'no'}\n{protein}\n")
         if best["utr3"]:
@@ -1062,7 +1088,7 @@ def main():
                 if r["genome"] == g: fh.write("\t".join(str(r[c]) for c in CANDIDATE_COLUMNS) + "\n")
         for suffix, key in (("proteins.faa", "prot"), ("utr3.fa", "utr"), ("after_stop.fa", "after")):
             with open(f"{a.out}/{g}.{suffix}", "w") as fh: fh.write("".join(o[key]))
-    cols = ["genome", "gene", "family", "contig", "sec_codon", "strand", "baseline_status", "evidence",
+    cols = ["genome", "gene", "family", "contig", cc, "strand", "baseline_status", "evidence",
             "transcripts_with_codon", "candidates", "supporting_transcripts", "protein_length", "protein_source",
             "identity_assembly_protein", "identity_transcript_protein",
             "complete", "upstream_stop", "start_in_transcripts", "cds_start", "cds_end", "exons", "introns", "atypical_introns", "other_splice_sites",
