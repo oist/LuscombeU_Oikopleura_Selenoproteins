@@ -185,10 +185,12 @@ the three assemblies (the gold standard, below) gave the 3′ regions on which a
 and this model drove screens for reading frames through a TGA codon upstream of a SECIS element in transcripts and
 genomes, and a comparative screen between species. Candidates from the screens were judged by rules fixed before the
 screens and, when accepted, added to the baseline. The profiles were then rebuilt from the gold standard and tested on
-assemblies that had not contributed to them, and the pipeline was run again. We decided each step from the results of
-the previous one; the scripts, tables and decisions of each round are recorded in the history of the Git repository
-(Data and code availability). The intermediate results are not reported: the results below come from the final run and
-the final gold standard.
+assemblies that had not contributed to them, and the pipeline was run again. The steps of the loop were carried out by a
+large language model, Claude Opus 5.5 (Anthropic), executing high-level instructions from the author, who chose each
+step from the results of the previous one and assessed the final results through the controls reported below (Methods,
+"Use of a large language model"); the scripts, tables and decisions of each round are recorded in the history of the Git
+repository (Data and code availability). The intermediate results are not reported: the results below come from the
+final run and the final gold standard.
 
 ![Figure LOOP](../figures/iteration_loop.png)
 
@@ -1868,10 +1870,22 @@ to 30 residues that holds the selenocysteine was recorded (peptides of 26 to 30 
 exists), with the number of tryptic peptides of 7 to 30 residues, without missed cleavage, that lie entirely after the
 selenocysteine.
 
+## Use of a large language model
+
+The iterative steps of the analysis (Figure LOOP) were carried out by Claude Opus 5.5 (Anthropic), a large language
+model working in a command-line environment, executing high-level instructions from the author: it wrote and ran the
+analysis code and the changes to the pipeline, and drafted the text of this manuscript; the jobs on the computing
+cluster were submitted by the author. The author assessed the final results, and this assessment is presented through
+the controls reported in the Results: tests on assemblies that did not contribute to the settings, transcript support
+of the gold-standard models, absence tests, and the comparison of the trees under several models. The Git repository
+of the analysis is given for accountability: its history records each step, but there is no guarantee that every
+commit is free from mistakes; as when working with people, some errors were made and later corrected.
+
 ## Data and code availability
 
 The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.2.0 for
-stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>.
+stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>;
+its history records the rounds of the loop (Methods, "Use of a large language model").
 The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
 The settings recommended for appendicularian genomes (profiles, SECIS model, pipeline configuration, expected
 selenoproteome of *O. dioica*) are described in `stage2/recommended/README.md` of the analysis repository and will be

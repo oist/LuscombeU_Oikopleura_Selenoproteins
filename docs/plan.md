@@ -1932,3 +1932,9 @@ no earlier step waits for them.
   banner of the old stage 2 section and the "table and figure for the screens to add" comment. Introduction: "default
   parameters" replaced. Still to do: trim the remaining loop-history wording in the moved sections (for example the
   machinery profile paragraph, the first SECIS model), rewrite the machinery orthology from the new trees, slides.
+- Use of a large language model (2026-11-02, Charles): the loop paragraph and a new Methods section ("Use of a large
+  language model") state that the iterative steps were carried out by Claude Opus 5.5 executing high-level
+  instructions from the author, that the author assessed the final result through the controls of the paper, and that
+  the repository is given for accountability without a guarantee that every commit is free from mistakes. Added
+  without explicit instruction, to confirm: the model also drafted the text of the manuscript; cluster jobs were
+  submitted by the author. Data and code availability points to the repository history.
