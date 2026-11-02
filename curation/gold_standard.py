@@ -835,6 +835,8 @@ def main():
                     help="--anchor sense: directories with <genome>.proteins.faa of a first pass, added to the references "
                     "of each gene for the other genomes")
     ap.add_argument("--projections", default="", help="directory with <genome>.projections.gff (miniprot; candidate models)")
+    ap.add_argument("--overrides", default="", help="curator's exon chains (genome, gene, exons as 1-based start-end of "
+                    "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates")
     a = ap.parse_args()
     global SEC
     SEC = a.anchor == "sec"
@@ -870,6 +872,10 @@ def main():
         score_cache[key] = (sum(x for x, _ in scores), max(scores)[1]) if scores else (0.0, "-")
         return score_cache[key]
     score_cache = {}
+    overrides = {}
+    if a.overrides and os.path.exists(a.overrides):
+        for r in csv.DictReader((l for l in open(a.overrides) if not l.startswith("#")), delimiter="\t"):
+            overrides[(r["genome"], r["gene"])] = r
     # pass 1: candidate models of each gene
     records, genomes, annotations = [], {}, {}
     for g in a.genomes:
@@ -1007,12 +1013,11 @@ def main():
                 # (a fragment scores less, a fusion with another protein no more), then as below
                 for m in usable: m["hom"], m["hom_ref"] = ref_score(m["protein"], r["gene"], g)
                 top_hom = max(m["hom"] for m in usable)
-                # splice sites outside the intron classes of O. dioica count against a candidate even when a transcript
-                # has the same intron: in the machinery genes they come from transcripts whose indels against the
-                # assembly displace the junctions (OKI2018 and OSKA2016 PSTK, OKI2018 SEPHS_b, OdB3 EEFSEC in the runs
-                # of 2026-11-02), while a candidate with canonical sites gives the same protein
-                for m in usable: m["other_sites"] = sum(1 for x in m["sites"] if x[0] not in INTRON_CLASSES)
-                rank = lambda m: (m["hom"] >= 0.95 * top_hom, m["other_sites"] == 0, m["unsupported_sites"] == 0,
+                # (splice sites outside the intron classes count only when no transcript has the same intron: ranking
+                # them lower in every case, tried on 2026-11-02, replaced the OKI2018 PSTK model of two transcripts by a
+                # canonical chain whose protein is less similar to the other assemblies; such genes go to the curator's
+                # overrides instead)
+                rank = lambda m: (m["hom"] >= 0.95 * top_hom, m["unsupported_sites"] == 0,
                                   not m["open3"] and m["protein"].startswith("M"), bool(m["support"]),
                                   not m["contradicted"], m["hom"], -effective_length(m), not m["other_gene_mrna"],
                                   m["kind"] == "annotation")
@@ -1028,6 +1033,17 @@ def main():
                                   effective_length(m), not m["other_gene_mrna"], m["kind"] == "annotation", len(m["utr3"]))
                 best = max(usable, key=rank)
                 for m in usable: m["rank"] = rank(m)
+            ov = overrides.get((g, r["gene"]))
+            if ov:   # the curator's exon chain replaces the choice among the candidates
+                blocks = [(int(x) - 1, int(y)) for x, y in (b.split("-") for b in ov["exons"].split(";"))]
+                m = model_from_chain(blocks, gs, codon0, strand, "override", "curator", cds_only=True)
+                if not m or not m["cds"]:
+                    raise SystemExit(f"{g} {r['gene']}: the curator's exon chain does not hold the anchor codon in a frame")
+                m.update(ctx=True, other_gene_mrna=False, contradicted=False, unsupported_sites=0, moved="-",
+                         support=[tm for tm in tms if compatible(tm["blocks"], m["blocks"], gs)], override=ov["evidence"])
+                if not SEC: m["hom"], m["hom_ref"] = ref_score(m["protein"], r["gene"], g)
+                m["rank"] = ()
+                best = m
             tx_ok = [tm for tm in tms if tm["protein"]]
             reliable = [t for t in tx_ok if t["cds_indels"] <= MAX_TRANSCRIPT_INDELS] or tx_ok
             top = max((effective_length(t) for t in reliable), default=0)
@@ -1107,7 +1123,9 @@ def main():
                     notes.append(f"N-terminal extension of {ext} aa from {best['source'].split('+', 1)[1]} not conserved in "
                                  f"the other assemblies: model of {best['base_tx']['tx']} kept")
                     best = best["base"]
-        if tbest:
+        if best is not None and best.get("override"):
+            notes.append(f"exon chain set by the curator: {best['override']}")
+        if tbest and not (best is not None and best.get("override")):
             use_tx = False
             if best is None:
                 use_tx = True

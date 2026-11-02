@@ -1966,3 +1966,11 @@ no earlier step waits for them.
   transcripts whose indels displace the junctions, while the predictions and projections give GT-AG chains of the same
   protein. gold_standard.py --anchor sense now ranks such candidates lower (sites outside the classes count even when a
   transcript has the same intron); Sec mode unchanged. To rerun: gold-standard-machinery, then the machinery trees.
+- PSTK models checked by hand (2026-11-03, Charles asked whether the short exon was really missing in OdB3): it is in
+  the assembly (FN653020.1:777890-777927, 38 nt, as in OKI2018 and OSKA2016; GenBank CBY23135.1; EST KT0AAA259YN02RM1);
+  the OdB3 model, from the prediction, read 44 nt of intron instead and 25 nt too many before the last intron. Decision
+  (Charles): curator's overrides now (curation/machinery_overrides.tsv, gold_standard.py --overrides), splice-graph
+  candidates later, for future automatic annotation, after all difficult genes are reviewed. The rule ranking
+  non-canonical sites lower (commit 688720a) is reverted: in OKI2018 PSTK the two transcripts' chain (TG-AG, AG-AA at
+  the assembly) gives a protein more similar to OSKA2016 and OdB3 than any chain with canonical sites (best
+  similarity score 1462 against 1442), which suggests small assembly errors at these junctions; it stays as chosen.

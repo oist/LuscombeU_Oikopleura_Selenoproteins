@@ -59,3 +59,8 @@ candidate models and the first-pass proteins of the other genomes as references.
 `gold_standard_machinery/<genome>.gff3` (no `transl_except`), `<genome>.proteins.faa`,
 `<genome>.candidate_models.tsv`, and `results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of
 `sec_codon`; `reference_score`: the score and the reference it was reached with).
+
+`machinery_overrides.tsv`: exon chains of machinery genes set by the curator, with the evidence, where no candidate
+of the automatic procedure holds the right chain (`gold_standard.py --overrides`; the model is read on the genome along
+this chain, and the notes of the gold-standard table say so). OdB3 PSTK (2026-11-03): the GenBank exons 1 to 3, with the
+38-nt third exon that the prediction skipped, and the last intron of the ESTs.
