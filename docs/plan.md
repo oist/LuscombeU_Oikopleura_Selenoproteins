@@ -2038,3 +2038,19 @@ no earlier step waits for them.
   make gold-standard-machinery). Figure PSTK: panels A (models, transcripts), B (proteins), C (placements, right
   column; reannotation_page.py --side-panel), D the tree. Manuscript: PSTK paragraphs, caption, Methods "Machinery gene
   models" added. .gitignore: results/gene_regions/*/{*.fa,*.gff3,regions.tsv} tracked.
+- Content of the PSTK introns (2026-11-03; Charles: "the fourth intron is big; anything inside: secondary structure, a
+  repeat insertion, something explaining the microhomology?"). Fourth intron: 62 nt (OKI2018, KUM-M3-7f), 146/147
+  (OSKA2016, AOM-5-5f), 232/231 (OdB3, Bar2_p4), 2,001 (O. albicans). OSKA2016 and OdB3 introns are homologous (81%
+  identity over the shared part); OdB3 has 129 extra nt between two copies of GCTTAAC (one copy in OSKA2016), the
+  signature of an insertion with a 7-nt duplication. The OKI2018 fourth intron shares only its first bases (TTTGGGTT,
+  at the TT-AG placement) with OSKA2016, while the third intron is 72% identical between OKI2018 and OSKA2016. O.
+  albicans fourth (last) intron: 12-nt perfect inverted repeat near its two ends (ATGGGATATTAT ... ATAATATCCCAT) and 6
+  nt repeated at both ends (AGAAAT), as left by a DNA transposon with its target-site duplication (introners: Huff et
+  al. 2016; Gozashti et al. 2022, 2025); larvacean genomes other than O. dioica are expanded by non-autonomous TEs
+  (Naville et al. 2019). Microhomology at intron ends is the rule, not the exception: in the 176 gold-standard introns
+  of OKI2018 and OdB3, 0 to 5+ repeated bases: 25, 24, 61, 41, 12, 13 introns (mean 2.1 for GT-AG introns), because
+  exons often end with AG and introns end with AG. Copies elsewhere (BLAST+, OdB3 only, test run here): no copy of the
+  PSTK introns; 6 of 74 OdB3 introns have copies (SELENOS intron 2: 45 loci; SELENOT intron 1: 64; SBP2 intron 4: 38;
+  EEFSEC intron 5, 9 kb: 9). New target make intron-content (curation/intron_content.py): RNAfold and RNAduplex
+  z-scores against dinucleotide shuffles (ViennaRNA is in the container, not installable here) and legacy BLASTN
+  copies, for the four genomes with gold-standard models (OKI, OSKA, OdB3, Oalb).
