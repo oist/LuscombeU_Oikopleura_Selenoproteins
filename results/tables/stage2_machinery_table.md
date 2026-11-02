@@ -6,5 +6,5 @@
 | PSTK | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.13) | found | found | found | fragment | found | found | fragment | fragment | not found |
 | SEPSECS | reciprocal best hit in all nine genomes | found | found | found | found | found | found | found | found | found |
 | EEFSEC | reciprocal best hit; best hit only in *B. stygius* and *M. erythrocephalus* | found | found | found | found | found | found | found | found | found |
-| SECISBP2/SECISBP2L | co-ortholog of SECISBP2 and SECISBP2L; with the other tunicates (98%, C60 99%) | found | found | found | found | found | found | found | found | found |
+| SECISBP2/SECISBP2L | ortholog of the tunicate protein (98%, C60 99%); relation to SECISBP2 and SECISBP2L unresolved | found | found | found | found | found | found | found | found | found |
 | TRNAU1AP (associated factor) | reciprocal best hit (*F. borealis*) | not found | not found | not found | not found | not found | not found | not found | not found | found |

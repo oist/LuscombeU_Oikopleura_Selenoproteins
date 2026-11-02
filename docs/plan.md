@@ -1940,3 +1940,14 @@ no earlier step waits for them.
   submitted by the author. Data and code availability points to the repository history.
 - Statement revised (2026-11-02, Charles): the cluster jobs are an implementation detail (not mentioned); the
   manuscript is written and edited entirely by the model through the author's prompts (stated).
+- Machinery trees on the gold-standard proteins (2026-11-02, pushed by Charles, commit e9ce61d): PSTK unchanged in
+  substance (appendicularian clade 100, with the insect-gut fungi 50-85, sister of all other PSTK without them 94, AU
+  with the other tunicates p = 0.13); SEPHS: second copy with the tunicate glycine forms (79-99), selenocysteine clade
+  outside the tunicate SEPHS (AU p = 0.022/0.013 inside all tunicate SEPHS, 0.0009/0.0024 next to the tunicate
+  selenocysteine copies), F. borealis joins it under C20 and PMSF only; SECIS-binding protein: oikopleurid clade with
+  the other tunicates 96-99 (was 53-93 on the predictions), F. borealis (128-aa prediction) next to Capsaspora, and the
+  tunicate, amphioxus, echinoderm, mollusc and annelid proteins group with vertebrate SECISBP2L (85-94) with SECISBP2
+  outside, whereas the first trees put the two vertebrate paralogs in one clade; the L7Ae domain alone does that (84).
+  Wording changed from "co-ortholog of SECISBP2 and SECISBP2L" to "ortholog of the tunicate protein; relation to the
+  vertebrate paralogs unresolved" (manuscript, stage2/machinery_table.py). Not yet updated: machinery-rbh (final-run
+  predictions), machinery-domains-pmsf (tables of 2026-10-23; the job did not finish before the push).

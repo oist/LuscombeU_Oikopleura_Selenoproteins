@@ -13,7 +13,8 @@ Rows added to the census:
   prediction exists.
 The orthology column is written from these results: reciprocal best hits for SEPSECS, EEFSEC and TRNAU1AP; the
 trees and AU tests for PSTK, SEPHS and the SECIS-binding protein. The SECIS-binding protein row is named
-SECISBP2/SECISBP2L (co-ortholog of both vertebrate paralogs).
+SECISBP2/SECISBP2L (ortholog of the single tunicate protein; its relation to the two vertebrate paralogs is not
+resolved, decision of 2026-11-02 after the trees on the gold-standard proteins).
 Outputs: --markdown and --table.
 """
 import argparse, collections, csv, glob, os, re, sys
@@ -113,9 +114,10 @@ def main():
                               "not placed",
         "PSTK": f"PSTK, not KTI12 ({pstk_out}%); position within PSTK unresolved "
                 f"(AU p = {fmt_p(au_values('pstk')[0])})",
-        "SECISBP2": f"co-ortholog of SECISBP2 and SECISBP2L; with the other tunicates "
+        "SECISBP2": f"ortholog of the tunicate protein "
                     f"({lt['SBP2']['reference']['appendicularians+tunicates']}%, "
-                    f"C60 {lt['SBP2']['PMSF LG+C60+F+G']['appendicularians+tunicates']}%)",
+                    f"C60 {lt['SBP2']['PMSF LG+C60+F+G']['appendicularians+tunicates']}%); relation to SECISBP2 and "
+                    f"SECISBP2L unresolved",
     }
     for gene, fam in RBH_FAMILY.items(): orthology[gene] = rbh_statement(rbh, fam)
 
