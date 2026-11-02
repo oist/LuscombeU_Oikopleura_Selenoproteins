@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 83 sequences with 293 amino-acid sites
-Number of constant sites: 3 (= 1.02389% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 3 (= 1.02389% of all sites)
-Number of parsimony informative sites: 283
-Number of distinct site patterns: 293
+Input data: 81 sequences with 292 amino-acid sites
+Number of constant sites: 3 (= 1.0274% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 3 (= 1.0274% of all sites)
+Number of parsimony informative sites: 278
+Number of distinct site patterns: 292
 
 ModelFinder
 -----------
@@ -46,29 +46,39 @@ Best-fit model according to BIC: LG+I+R4
 List of models sorted by BIC scores: 
 
 Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
-LG+I+R4          -30727.240   61794.479 - 7.26e-10   62271.037 +    0.994   62420.109 +    0.989
-LG+I+R5          -30726.430   61796.861 - 2.21e-10   62292.794 - 1.87e-05   62429.850 -  0.00758
-LG+R5            -30730.050   61802.100 - 1.61e-11   62288.248 - 0.000182   62431.409 -  0.00348
-LG+R4            -30738.130   61814.260 - 3.68e-14   62281.415 -  0.00554   62436.210 - 0.000315
-LG+R6            -30729.584   61805.168 - 3.47e-12   62311.084 -    2e-09   62441.838 - 1.89e-05
-LG+F+I+R4        -30687.417   61752.835 +    0.801   62450.117 - 1.29e-39   62448.388 - 7.15e-07
-LG+F+I+R5        -30686.812   61755.624 +    0.199   62481.803 -  1.7e-46   62458.537 - 4.47e-09
-LG+I+R3          -30754.218   61844.435 - 1.03e-20   62302.371 - 1.56e-07   62462.704 - 5.57e-10
-LG+R3            -30769.413   61872.826 - 7.05e-27   62321.722 -  9.8e-12   62487.415 -  2.4e-15
-LG+I+G4          -30787.436   61904.872 - 7.75e-34   62336.211 -    7e-15   62512.101 - 1.05e-20
-LG+G4            -30798.798   61925.596 - 2.45e-38   62348.408 - 1.57e-17   62529.144 - 2.08e-24
-WAG+F+I+R4       -30806.958   61991.917 - 9.73e-53   62689.198 - 1.57e-91   62687.469 - 8.68e-59
-WAG+F+I+R5       -30806.049   61994.098 - 3.27e-53   62720.277 - 2.79e-98   62697.011 - 7.35e-61
-LG+I+R2          -30878.333   62088.666 - 9.53e-74   62528.698 - 1.11e-56   62699.574 - 2.04e-61
-LG+R2            -30906.855   62143.709 - 1.06e-85   62575.048 -  9.6e-67   62750.937 - 1.43e-72
-WAG+I+R4         -30902.864   62145.728 - 3.87e-86   62622.285 - 5.31e-77   62771.357 - 5.28e-77
-WAG+I+R5         -30901.705   62147.410 - 1.67e-86   62643.344 - 1.42e-81   62780.400 - 5.74e-79
-JTT+F+I+R4       -30866.911   62111.823 - 8.93e-79   62809.104 - 1.44e-117   62807.375 - 7.97e-85
-JTT+F+I+R5       -30863.505   62109.011 - 3.64e-78   62835.189 - 3.11e-123   62811.924 - 8.19e-86
-JTT+I+R4         -31019.888   62379.776 - 5.83e-137   62856.333 - 7.98e-128   63005.405 - 7.94e-128
-JTT+I+R5         -31015.162   62374.325 - 8.89e-136   62870.258 - 7.56e-131   63007.314 - 3.05e-128
-LG+I             -31465.039   63258.078 -        0   63680.890 - 7.11e-307   63861.626 - 9.41e-314
-LG               -31544.696   63415.391 -        0   63829.841 -        0   64015.260 -        0
+LG+I+R4          -30094.902   60521.805 - 1.65e-11   60965.357 +    0.843   61132.146 +    0.932
+LG+R5            -30095.082   60524.164 - 5.07e-12   60976.680 -  0.00293   61138.182 -   0.0456
+LG+R4            -30101.998   60533.996 - 3.72e-14   60968.758 +    0.154   61140.661 -   0.0132
+LG+I+R5          -30093.934   60523.868 - 5.88e-12   60985.526 - 3.52e-05   61141.562 -  0.00841
+LG+R6            -30094.598   60527.196 - 1.11e-12   60998.179 - 6.29e-08   61148.567 - 0.000253
+LG+F+I+R4        -30051.527   60473.053 +    0.636   61122.299 - 7.02e-35   61153.253 - 2.43e-05
+LG+F+R4          -30055.002   60478.005 +   0.0535   61114.266 -  3.9e-33   61154.527 - 1.29e-05
+LG+F+R5          -30052.069   60476.139 +    0.136   61138.653 - 1.97e-38   61160.015 - 8.28e-07
+LG+I+R3          -30115.199   60558.397 - 1.87e-19   60984.539 - 5.76e-05   61161.385 - 4.17e-07
+LG+F+I+R5        -30050.824   60475.649 +    0.174   61151.726 - 2.86e-41   61163.202 - 1.68e-07
+LG+R3            -30126.911   60579.822 - 4.16e-24   60997.509 - 8.79e-08   61179.132 - 5.84e-11
+LG+I+G4          -30151.082   60624.164 - 9.79e-34   61025.425 - 7.62e-14   61216.121 - 5.43e-19
+LG+G4            -30160.613   60641.227 - 1.93e-37   61034.509 - 8.12e-16   61229.507 - 6.73e-22
+WAG+F+R4         -30168.387   60704.774 - 3.06e-51   61341.036 - 2.23e-82   61381.297 - 7.37e-55
+WAG+F+I+R4       -30166.678   60703.355 - 6.23e-51   61352.600 - 6.87e-85   61383.555 - 2.38e-55
+LG+I+R2          -30233.590   60791.181 - 5.29e-70   61200.576 - 7.06e-52   61386.815 - 4.67e-56
+WAG+F+R5         -30166.926   60705.852 - 1.79e-51   61368.366 - 2.59e-88   61389.728 - 1.09e-56
+WAG+F+I+R5       -30166.212   60706.425 - 1.34e-51   61382.502 - 2.21e-91   61393.978 -  1.3e-57
+LG+R2            -30257.014   60836.027 - 9.66e-80   61237.289 - 7.53e-60   61427.985 - 5.36e-65
+WAG+R4           -30266.171   60862.341 - 1.87e-85   61297.103 - 7.73e-73   61469.006 - 6.63e-74
+WAG+I+R4         -30264.716   60861.433 - 2.94e-85   61304.985 -  1.5e-74   61471.774 - 1.66e-74
+WAG+R5           -30264.358   60862.717 - 1.55e-85   61315.233 - 8.94e-77   61476.734 - 1.39e-75
+WAG+I+R5         -30264.243   60864.485 - 6.39e-86   61326.144 - 3.82e-79   61482.180 - 9.14e-77
+JTT+F+R4         -30232.933   60833.866 - 2.85e-79   61470.127 - 2.07e-110   61510.388 - 6.84e-83
+JTT+F+I+R4       -30231.089   60832.177 - 6.62e-79   61481.422 - 7.31e-113   61512.377 - 2.53e-83
+JTT+F+R5         -30230.075   60832.151 - 6.71e-79   61494.665 - 9.73e-116   61516.027 - 4.08e-84
+JTT+F+I+R5       -30228.653   60831.307 - 1.02e-78   61507.384 - 1.68e-118   61518.860 -  9.9e-85
+JTT+R4           -30380.269   61090.537 - 5.23e-135   61525.299 - 2.17e-122   61697.202 - 1.86e-123
+JTT+I+R4         -30379.020   61090.041 - 6.71e-135   61533.593 - 3.43e-124   61700.382 - 3.79e-124
+JTT+R5           -30377.303   61088.606 - 1.37e-134   61541.122 - 7.94e-126   61702.624 - 1.24e-124
+JTT+I+R5         -30376.444   61088.889 - 1.19e-134   61550.547 - 7.13e-128   61706.583 - 1.71e-125
+LG+I             -30816.839   61953.678 - 1.93e-322   62346.960 - 8.21e-301   62541.959 - 6.8e-307
+LG               -30885.096   62088.192 -        0   62473.647 -        0   62672.796 -        0
 
 AIC, w-AIC   : Akaike information criterion scores and weights.
 AICc, w-AICc : Corrected AIC scores and weights.
@@ -85,208 +95,204 @@ Model of substitution: LG+I+R4
 State frequencies: (model)
 
 Model of rate heterogeneity: Invar+FreeRate with 4 categories
-Proportion of invariable sites: 0.0092
-Site proportion and rates:  (0.0654,0.1168) (0.1183,0.3795) (0.3047,0.7575) (0.5026,1.4261)
+Proportion of invariable sites: 0.0091
+Site proportion and rates:  (0.0707,0.1247) (0.1309,0.3973) (0.2951,0.7752) (0.4942,1.4374)
 
  Category  Relative_rate  Proportion
-  0         0              0.0092
-  1         0.1168         0.0654
-  2         0.3795         0.1183
-  3         0.7575         0.3047
-  4         1.4261         0.5026
+  0         0              0.0091
+  1         0.1247         0.0707
+  2         0.3973         0.1309
+  3         0.7752         0.2951
+  4         1.4374         0.4942
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -30694.2998 (s.e. 793.0033)
-Unconstrained log-likelihood (without tree): -1664.2906
-Number of free parameters (#branches + #model parameters): 170
-Akaike information criterion (AIC) score: 61728.5996
-Corrected Akaike information criterion (AICc) score: 62205.1570
-Bayesian information criterion (BIC) score: 62354.2289
+Log-likelihood of the tree: -30074.4516 (s.e. 794.8313)
+Unconstrained log-likelihood (without tree): -1657.6121
+Number of free parameters (#branches + #model parameters): 166
+Akaike information criterion (AIC) score: 60480.9032
+Corrected Akaike information criterion (AICc) score: 60924.4552
+Bayesian information criterion (BIC) score: 61091.2443
 
-Total tree length (sum of branch lengths): 51.8119
-Sum of internal branch lengths: 20.2411 (39.0666% of tree length)
+Total tree length (sum of branch lengths): 51.3561
+Sum of internal branch lengths: 19.8414 (38.6350% of tree length)
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Trichinella_nativa_OUC47214.1' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
 +--Trichinella_nativa_OUC47214.1
 |
-|                                    +------Orbicella_faveolata_XP_020623798.1
-|                                 +--| (98)
-|                                 |  +-------Exaiptasia_pallida_XP_020895544.1
-|                              +--| (98)
-|                              |  +--------Apostichopus_japonicus_PIK58581.1
-|                           +--| (69)
-|                           |  |  +-----Acanthaster_planci_XP_022086645.1
-|                           |  +--| (73)
-|                           |     +------Blan_RefSeq_PSTK_XP_066278120.1
-|                        +--| (38)
-|                        |  |                +--Aquila_chrysaetos_canadensis_XP_011588348.1
-|                        |  |             +--| (53)
-|                        |  |             |  +--Calidris_pugnax_XP_014800702.1
-|                        |  |          +--| (100)
-|                        |  |          |  +--Falco_cherrug_XP_014135435.1
-|                        |  |       +--| (100)
-|                        |  |       |  |        +--Sarcophilus_harrisii_XP_012396107.1
-|                        |  |       |  |     +--| (100)
-|                        |  |       |  |     |  |        +**Colobus_angolensis_palliatus_XP_011785615.1
-|                        |  |       |  |     |  |     +--| (100)
-|                        |  |       |  |     |  |     |  +--Colobus_angolensis_palliatus_XP_011785616.1
-|                        |  |       |  |     |  |  +--| (100)
-|                        |  |       |  |     |  |  |  +--Human_PSTK_NP_001350460.1
-|                        |  |       |  |     |  +--| (100)
-|                        |  |       |  |     |     +--Mmus_RefSeq_PSTK_NP_001034623.1
-|                        |  |       |  |  +--| (81)
-|                        |  |       |  |  |  +--Alligator_sinensis_XP_006025206.1
-|                        |  |       |  +--| (52)
-|                        |  |       |     |     +--Xenopus_laevis_NP_001086273.1
-|                        |  |       |     +-----| (100)
-|                        |  |       |           +--Xenopus_tropicalis_NP_001121470.1
-|                        |  |    +--| (87)
-|                        |  |    |  |      +--Cynoglossus_semilaevis_XP_008312795.1
-|                        |  |    |  |  +---| (100)
-|                        |  |    |  |  |   +--Lates_calcarifer_XP_018554729.1
-|                        |  |    |  +--| (94)
-|                        |  |    |     +---Paramormyrops_kingsleyae_XP_023686643.1
-|                        |  +----| (100)
-|                        |       |       +--Drer_RefSeq_PSTK_XP_009305284.1
-|                        |       +-------| (100)
-|                        |               +--Drer_RefSeq_PSTK_XP_009296681.1
-|                     +--| (30)
-|                     |  |  +---------Capitella_teleta_ELU08829.1
-|                     |  +--| (92)
-|                     |     +-----Lingula_anatina_XP_013379694.1
-|                  +--| (21)
-|                  |  |     +------------Parasteatoda_tepidariorum_XP_015920699.1
-|                  |  |  +--| (49)
-|                  |  |  |  +--------Centruroides_sculpturatus_XP_023232125.1
-|                  |  +--| (21)
-|                  |     +-------Crassostrea_virginica_XP_022287831.1
-|               +--| (30)
-|               |  |                 +------------Zancudomyces_culisetae_OMH84707.1
-|               |  |            +----| (100)
-|               |  |            |    |        +--Smittium_culicis_OMJ24625.1
-|               |  |            |    +--------| (100)
-|               |  |            |             +--Smittium_culicis_OMJ25021.1
-|               |  |        +---| (77)
-|               |  |        |   |                   +--OKI_pstk.6.homologue
-|               |  |        |   |                +--| (100)
-|               |  |        |   |                |  +**OKI_curated_pstk
-|               |  |        |   |            +---| (100)
-|               |  |        |   |            |   |     +--OSKA_pstk.3.homologue
-|               |  |        |   |            |   |  +--| (97)
-|               |  |        |   |            |   |  |  +--OSKA_curated_pstk
-|               |  |        |   |            |   +--| (100)
-|               |  |        |   |            |      +--OdB3_pstk.3.homologue
-|               |  |        |   +------------| (100)
-|               |  |        |                |    +-------Oalb_pstk.1.homologue
-|               |  |        |                +----| (85)
-|               |  |        |                     |     +**Ovan_pstk.4.homologue
-|               |  |        |                     +-----| (100)
-|               |  |        |                           +--Ovan_pstk.5.pseudo
-|               |  |     +--| (42)
-|               |  |     |  |  +-----------Nilaparvata_lugens_XP_022202222.1
-|               |  |     |  +--| (68)
-|               |  |     |     |            +--Aedes_albopictus_KXJ82471.1
-|               |  |     |     |     +------| (100)
-|               |  |     |     |     |      +--Aedes_aegypti_XP_021697006.1
-|               |  |     |     |  +--| (93)
-|               |  |     |     |  |  +------------Anopheles_sinensis_KFB40386.1
-|               |  |     |     +--| (95)
-|               |  |     |        |      +----Musca_domestica_XP_005188129.1
-|               |  |     |        |   +--| (100)
-|               |  |     |        |   |  +----Stomoxys_calcitrans_XP_013117132.1
-|               |  |     |        +---| (100)
-|               |  |     |            +------Ceratitis_capitata_XP_012161924.1
-|               |  |  +--| (43)
-|               |  |  |  |  +-----------Opisthorchis_viverrini_XP_009169618.1
-|               |  |  |  +--| (88)
-|               |  |  |     +--------------Aphanomyces_invadans_XP_008879884.1
-|               |  +--| (82)
-|               |     |                                      +--Bflo_RefSeq_KTI12_XP_035671211.1
-|               |     |                                   +--| (100)
-|               |     |                                   |  +--Blan_RefSeq_KTI12_XP_066270687.1
-|               |     |                                +--| (86)
-|               |     |                                |  |     +--Drer_RefSeq_KTI12_NP_001119890.1
-|               |     |                                |  |  +--| (73)
-|               |     |                                |  |  |  +-------KTI12_Neoptera_UniRef50_A0A0A9VUI6
-|               |     |                                |  +--| (82)
-|               |     |                                |     |   +--Mmus_RefSeq_KTI12_NP_083847.1
-|               |     |                                |     +---| (100)
-|               |     |                                |         +--Human_KTI12_NP_612426.1
-|               |     |                             +--| (72)
-|               |     |                             |  |  +------KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2
-|               |     |                             |  +--| (94)
-|               |     |                             |     +----------KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8
-|               |     |                          +--| (73)
-|               |     |                          |  |        +--Bsch_RefSeq_KTI12_XP_080176166.1
-|               |     |                          |  |     +--| (100)
-|               |     |                          |  |     |  +--Scla_RefSeq_KTI12_XP_039256908.2
-|               |     |                          |  |  +--| (99)
-|               |     |                          |  |  |  |        +--Cint_RefSeq_KTI12_XP_026695236.2
-|               |     |                          |  |  |  |     +--| (100)
-|               |     |                          |  |  |  |     |  +--Crob_RefSeq_KTI12_XP_026695236.1
-|               |     |                          |  |  |  |  +--| (100)
-|               |     |                          |  |  |  |  |  +--Pmam_RefSeq_KTI12_XP_079953735.1
-|               |     |                          |  |  |  +--| (100)
-|               |     |                          |  |  |     +----Tdem_RefSeq_KTI12_XP_082793433.1
-|               |     |                          |  +--| (41)
-|               |     |                          |     |         +----KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8
-|               |     |                          |     |      +--| (99)
-|               |     |                          |     |      |  +----KTI12_core_chlorophytes_UniRef50_A0A087SSU6
-|               |     |                          |     |  +---| (100)
-|               |     |                          |     |  |   |     +--KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8
-|               |     |                          |     |  |   |  +--| (100)
-|               |     |                          |     |  |   |  |  +--KTI12_Tetraselmis_UniRef50_A0A061R522
-|               |     |                          |     |  |   +--| (56)
-|               |     |                          |     |  |      +--------KTI12_Gossypium_UniRef50_A0A0B0PXV4
-|               |     |                          |     +--| (95)
-|               |     |                          |        +---------KTI12_Digenea_UniRef50_A0A074ZQD4
-|               |     |                       +--| (78)
-|               |     |                       |  |  +------------KTI12_Strongyloidoidea_UniRef50_A0A090MYV8
-|               |     |                       |  +--| (96)
-|               |     |                       |     +----KTI12_Spirurina_UniRef50_A0A0B2V9G0
-|               |     |                    +--| (99)
-|               |     |                    |  +----------KTI12_KTI12_Oikopleura_dioica_XP_081641927.1
-|               |     |  +-----------------| (100)
-|               |     |  |                 +-----------KTI12_Trichuris_UniRef50_A0A077YZS3
-|               |     +--| (41)
-|               |        |           +-------Bsch_RefSeq_PSTK_XP_080181757.1
-|               |        |        +--| (100)
-|               |        |        |  +----Scla_RefSeq_PSTK_XP_039273489.2
-|               |        |     +--| (100)
-|               |        |     |  +-------Hror_pstk.2.homologue
-|               |        |  +--| (99)
-|               |        |  |  |           +--Cint_RefSeq_PSTK_XP_002120985.2
-|               |        |  |  |       +---| (100)
-|               |        |  |  |       |   +--Crob_RefSeq_PSTK_XP_002120985.1
-|               |        |  |  |  +----| (100)
-|               |        |  |  |  |    +------Csav_pstk.4.homologue
-|               |        |  |  +--| (93)
-|               |        |  |     +-------Pmam_RefSeq_PSTK_XP_079949190.1
-|               |        +--| (98)
-|               |           |    +--------Pege_pstk.1.homologue
-|               |           +----| (100)
-|               |                +--------Stho_pstk.1.homologue
-+---------------| (100)
-|               |      +--Zootermopsis_nevadensis_XP_021926958.1
-|               +------| (100)
-|                      +--Cryptotermes_secundus_XP_023706447.1
+|                                     +-----Orbicella_faveolata_XP_020623798.1
+|                                  +--| (100)
+|                                  |  +------Exaiptasia_pallida_XP_020895544.1
+|                               +--| (97)
+|                               |  +-------Apostichopus_japonicus_PIK58581.1
+|                            +--| (75)
+|                            |  +------Blan_RefSeq_PSTK_XP_066278120.1
+|                         +--| (91)
+|                         |  +------Acanthaster_planci_XP_022086645.1
+|                      +--| (61)
+|                      |  |             +--Aquila_chrysaetos_canadensis_XP_011588348.1
+|                      |  |          +--| (100)
+|                      |  |          |  |  +--Falco_cherrug_XP_014135435.1
+|                      |  |          |  +--| (88)
+|                      |  |          |     +--Calidris_pugnax_XP_014800702.1
+|                      |  |       +--| (100)
+|                      |  |       |  |        +--Sarcophilus_harrisii_XP_012396107.1
+|                      |  |       |  |     +--| (100)
+|                      |  |       |  |     |  |        +**Colobus_angolensis_palliatus_XP_011785615.1
+|                      |  |       |  |     |  |     +--| (100)
+|                      |  |       |  |     |  |     |  +--Colobus_angolensis_palliatus_XP_011785616.1
+|                      |  |       |  |     |  |  +--| (100)
+|                      |  |       |  |     |  |  |  +--Human_PSTK_NP_001350460.1
+|                      |  |       |  |     |  +--| (100)
+|                      |  |       |  |     |     +--Mmus_RefSeq_PSTK_NP_001034623.1
+|                      |  |       |  |  +--| (71)
+|                      |  |       |  |  |  +--Alligator_sinensis_XP_006025206.1
+|                      |  |       |  +--| (83)
+|                      |  |       |     |     +--Xenopus_laevis_NP_001086273.1
+|                      |  |       |     +-----| (100)
+|                      |  |       |           +--Xenopus_tropicalis_NP_001121470.1
+|                      |  |    +--| (79)
+|                      |  |    |  |      +--Cynoglossus_semilaevis_XP_008312795.1
+|                      |  |    |  |  +---| (100)
+|                      |  |    |  |  |   +--Lates_calcarifer_XP_018554729.1
+|                      |  |    |  +--| (94)
+|                      |  |    |     +---Paramormyrops_kingsleyae_XP_023686643.1
+|                      |  +----| (100)
+|                      |       |      +--Drer_RefSeq_PSTK_XP_009296681.1
+|                      |       +------| (100)
+|                      |              +--Drer_RefSeq_PSTK_XP_009305284.1
+|                   +--| (31)
+|                   |  |  +--------Capitella_teleta_ELU08829.1
+|                   |  +--| (90)
+|                   |     +-----Lingula_anatina_XP_013379694.1
+|                +--| (18)
+|                |  |     +-----------Parasteatoda_tepidariorum_XP_015920699.1
+|                |  |  +--| (74)
+|                |  |  |  +--------Centruroides_sculpturatus_XP_023232125.1
+|                |  +--| (21)
+|                |     +-------Crassostrea_virginica_XP_022287831.1
+|             +--| (32)
+|             |  |                  +-----------Zancudomyces_culisetae_OMH84707.1
+|             |  |             +----| (99)
+|             |  |             |    |        +--Smittium_culicis_OMJ24625.1
+|             |  |             |    +--------| (100)
+|             |  |             |             +--Smittium_culicis_OMJ25021.1
+|             |  |        +----| (82)
+|             |  |        |    |                      +--Ovan_pstk.5.pseudo
+|             |  |        |    |                 +----| (100)
+|             |  |        |    |                 |    +**Ovan_gold_PSTK
+|             |  |        |    |            +----| (82)
+|             |  |        |    |            |    +-------Oalb_gold_PSTK
+|             |  |        |    +------------| (100)
+|             |  |        |                 |    +--OKI_gold_PSTK
+|             |  |        |                 +----| (100)
+|             |  |        |                      |  +--OSKA_gold_PSTK
+|             |  |        |                      +--| (100)
+|             |  |        |                         +--OdB3_gold_PSTK
+|             |  |     +--| (58)
+|             |  |     |  |  +------------Nilaparvata_lugens_XP_022202222.1
+|             |  |     |  +--| (49)
+|             |  |     |     |              +--Aedes_albopictus_KXJ82471.1
+|             |  |     |     |        +-----| (100)
+|             |  |     |     |        |     +--Aedes_aegypti_XP_021697006.1
+|             |  |     |     |     +--| (92)
+|             |  |     |     |     |  +-----------Anopheles_sinensis_KFB40386.1
+|             |  |     |     |  +--| (89)
+|             |  |     |     |  |  |     +----Musca_domestica_XP_005188129.1
+|             |  |     |     |  |  |  +--| (100)
+|             |  |     |     |  |  |  |  +----Stomoxys_calcitrans_XP_013117132.1
+|             |  |     |     |  |  +--| (100)
+|             |  |     |     |  |     +-------Ceratitis_capitata_XP_012161924.1
+|             |  |     |     +--| (57)
+|             |  |     |        |                                  +--Bflo_RefSeq_KTI12_XP_035671211.1
+|             |  |     |        |                               +--| (100)
+|             |  |     |        |                               |  +--Blan_RefSeq_KTI12_XP_066270687.1
+|             |  |     |        |                            +--| (73)
+|             |  |     |        |                            |  |     +--Drer_RefSeq_KTI12_NP_001119890.1
+|             |  |     |        |                            |  |  +--| (68)
+|             |  |     |        |                            |  |  |  +-------KTI12_Neoptera_UniRef50_A0A0A9VUI6
+|             |  |     |        |                            |  +--| (72)
+|             |  |     |        |                            |     |   +--Mmus_RefSeq_KTI12_NP_083847.1
+|             |  |     |        |                            |     +---| (100)
+|             |  |     |        |                            |         +--Human_KTI12_NP_612426.1
+|             |  |     |        |                         +--| (60)
+|             |  |     |        |                         |  |  +-----KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2
+|             |  |     |        |                         |  +--| (91)
+|             |  |     |        |                         |     +----------KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8
+|             |  |     |        |                      +--| (70)
+|             |  |     |        |                      |  |        +--Bsch_RefSeq_KTI12_XP_080176166.1
+|             |  |     |        |                      |  |     +--| (99)
+|             |  |     |        |                      |  |     |  +--Scla_RefSeq_KTI12_XP_039256908.2
+|             |  |     |        |                      |  |  +--| (99)
+|             |  |     |        |                      |  |  |  |        +--Cint_RefSeq_KTI12_XP_026695236.2
+|             |  |     |        |                      |  |  |  |     +--| (100)
+|             |  |     |        |                      |  |  |  |     |  +--Crob_RefSeq_KTI12_XP_026695236.1
+|             |  |     |        |                      |  |  |  |  +--| (99)
+|             |  |     |        |                      |  |  |  |  |  +--Pmam_RefSeq_KTI12_XP_079953735.1
+|             |  |     |        |                      |  |  |  +--| (100)
+|             |  |     |        |                      |  |  |     +----Tdem_RefSeq_KTI12_XP_082793433.1
+|             |  |     |        |                      |  +--| (43)
+|             |  |     |        |                      |     |        +----KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8
+|             |  |     |        |                      |     |     +--| (100)
+|             |  |     |        |                      |     |     |  +----KTI12_core_chlorophytes_UniRef50_A0A087SSU6
+|             |  |     |        |                      |     |  +--| (100)
+|             |  |     |        |                      |     |  |  |     +--KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8
+|             |  |     |        |                      |     |  |  |  +--| (100)
+|             |  |     |        |                      |     |  |  |  |  +--KTI12_Tetraselmis_UniRef50_A0A061R522
+|             |  |     |        |                      |     |  |  +--| (98)
+|             |  |     |        |                      |     |  |     +-------KTI12_Gossypium_UniRef50_A0A0B0PXV4
+|             |  |     |        |                      |     +--| (98)
+|             |  |     |        |                      |        +--------KTI12_Digenea_UniRef50_A0A074ZQD4
+|             |  |     |        |                   +--| (79)
+|             |  |     |        |                   |  |  +-----------KTI12_Strongyloidoidea_UniRef50_A0A090MYV8
+|             |  |     |        |                   |  +--| (99)
+|             |  |     |        |                   |     +---KTI12_Spirurina_UniRef50_A0A0B2V9G0
+|             |  |     |        |               +---| (99)
+|             |  |     |        |               |   +-----------KTI12_KTI12_Oikopleura_dioica_XP_081641927.1
+|             |  |     |        +---------------| (100)
+|             |  |     |                        +---------KTI12_Trichuris_UniRef50_A0A077YZS3
+|             |  |  +--| (67)
+|             |  |  |  |  +----------Opisthorchis_viverrini_XP_009169618.1
+|             |  |  |  +--| (87)
+|             |  |  |     +-------------Aphanomyces_invadans_XP_008879884.1
+|             |  +--| (87)
+|             |     |           +------Bsch_RefSeq_PSTK_XP_080181757.1
+|             |     |        +--| (99)
+|             |     |        |  +----Scla_RefSeq_PSTK_XP_039273489.2
+|             |     |     +--| (100)
+|             |     |     |  +-------Hror_pstk.2.homologue
+|             |     |  +--| (97)
+|             |     |  |  |          +--Cint_RefSeq_PSTK_XP_002120985.2
+|             |     |  |  |       +--| (100)
+|             |     |  |  |       |  +--Crob_RefSeq_PSTK_XP_002120985.1
+|             |     |  |  |  +----| (100)
+|             |     |  |  |  |    +------Csav_pstk.4.homologue
+|             |     |  |  +--| (95)
+|             |     |  |     +-------Pmam_RefSeq_PSTK_XP_079949190.1
+|             |     +--| (100)
+|             |        |   +-------Pege_pstk.1.homologue
+|             |        +---| (100)
+|             |            +--------Stho_pstk.1.homologue
++-------------| (100)
+|             |      +--Zootermopsis_nevadensis_XP_021926958.1
+|             +------| (100)
+|                    +--Cryptotermes_secundus_XP_023706447.1
 |
 +--Trichinella_sp._T9_KRX53135.1
 
 Tree in newick format:
 
-(Trichinella_nativa_OUC47214.1:0.0202573163,((((((((Orbicella_faveolata_XP_020623798.1:0.5992313010,Exaiptasia_pallida_XP_020895544.1:0.6816999328)98:0.1478504241,Apostichopus_japonicus_PIK58581.1:0.7267301531)98:0.1501930384,(Acanthaster_planci_XP_022086645.1:0.5476755158,Blan_RefSeq_PSTK_XP_066278120.1:0.5875131548)73:0.1113658832)69:0.1048028655,(((((Aquila_chrysaetos_canadensis_XP_011588348.1:0.0293532778,Calidris_pugnax_XP_014800702.1:0.1240862920)53:0.0238772733,Falco_cherrug_XP_014135435.1:0.1904939091)100:0.1452674084,(((Sarcophilus_harrisii_XP_012396107.1:0.1822832102,(((Colobus_angolensis_palliatus_XP_011785615.1:0.0000022383,Colobus_angolensis_palliatus_XP_011785616.1:0.1104793563)100:0.0264170571,Human_PSTK_NP_001350460.1:0.0118501305)100:0.0860255511,Mmus_RefSeq_PSTK_NP_001034623.1:0.1286072384)100:0.0912889480)100:0.1805702378,Alligator_sinensis_XP_006025206.1:0.1679535068)81:0.0106253723,(Xenopus_laevis_NP_001086273.1:0.0797794751,Xenopus_tropicalis_NP_001121470.1:0.0452569580)100:0.5192482317)52:0.0611438672)100:0.2401322897,((Cynoglossus_semilaevis_XP_008312795.1:0.2299406587,Lates_calcarifer_XP_018554729.1:0.0949282048)100:0.3407391596,Paramormyrops_kingsleyae_XP_023686643.1:0.3557518497)94:0.1413329182)87:0.0713263786,(Drer_RefSeq_PSTK_XP_009305284.1:0.0090552230,Drer_RefSeq_PSTK_XP_009296681.1:0.0039767489)100:0.6288798689)100:0.4476196749)38:0.0765319263,(Capitella_teleta_ELU08829.1:0.8186898222,Lingula_anatina_XP_013379694.1:0.4869152394)92:0.2835372621)30:0.0759464698,((Parasteatoda_tepidariorum_XP_015920699.1:1.0300628143,Centruroides_sculpturatus_XP_023232125.1:0.7747373900)49:0.2467717911,Crassostrea_virginica_XP_022287831.1:0.7025198396)21:0.1373625281)21:0.0874818472,(((((Zancudomyces_culisetae_OMH84707.1:1.0436856321,(Smittium_culicis_OMJ24625.1:0.0910261765,Smittium_culicis_OMJ25021.1:0.0312861952)100:0.7623981015)100:0.4397372281,(((OKI_pstk.6.homologue:0.0051243186,OKI_curated_pstk:0.0000026473)100:0.2252161939,((OSKA_pstk.3.homologue:0.0232430548,OSKA_curated_pstk:0.0524909438)97:0.0846966465,OdB3_pstk.3.homologue:0.0185855531)100:0.3034292552)100:0.3327711930,(Oalb_pstk.1.homologue:0.6851335927,(Ovan_pstk.4.homologue:0.0008464604,Ovan_pstk.5.pseudo:0.2264254848)100:0.4801048835)85:0.4439666856)100:1.0633089210)77:0.3739192658,(Nilaparvata_lugens_XP_022202222.1:0.9913327194,(((Aedes_albopictus_KXJ82471.1:0.2830546644,Aedes_aegypti_XP_021697006.1:0.1606805900)100:0.5737688884,Anopheles_sinensis_KFB40386.1:1.0518778740)93:0.2290184053,((Musca_domestica_XP_005188129.1:0.4651330475,Stomoxys_calcitrans_XP_013117132.1:0.4590717681)100:0.2730668006,Ceratitis_capitata_XP_012161924.1:0.6198275728)100:0.3193489572)95:0.1820741189)68:0.0789576764)42:0.0740293579,(Opisthorchis_viverrini_XP_009169618.1:0.9407758663,Aphanomyces_invadans_XP_008879884.1:1.2046679957)88:0.1510090096)43:0.0399258670,((((((((Bflo_RefSeq_KTI12_XP_035671211.1:0.0236613063,Blan_RefSeq_KTI12_XP_066270687.1:0.0263176537)100:0.2584323789,((Drer_RefSeq_KTI12_NP_001119890.1:0.1548206053,KTI12_Neoptera_UniRef50_A0A0A9VUI6:0.7039129792)73:0.0582432477,(Mmus_RefSeq_KTI12_NP_083847.1:0.1103537478,Human_KTI12_NP_612426.1:0.0774508285)100:0.3805251380)82:0.0971249190)86:0.0782997828,(KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2:0.6093476592,KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8:0.9002383793)94:0.2556018792)72:0.0193708941,(((Bsch_RefSeq_KTI12_XP_080176166.1:0.1230921301,Scla_RefSeq_KTI12_XP_039256908.2:0.2168799758)100:0.1536243025,(((Cint_RefSeq_KTI12_XP_026695236.2:0.0479542989,Crob_RefSeq_KTI12_XP_026695236.1:0.0170890523)100:0.1863942191,Pmam_RefSeq_KTI12_XP_079953735.1:0.1803270022)100:0.1332081688,Tdem_RefSeq_KTI12_XP_082793433.1:0.4017543353)100:0.1971239262)99:0.1744642442,(((KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8:0.4157389791,KTI12_core_chlorophytes_UniRef50_A0A087SSU6:0.4399271798)99:0.1420978169,((KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8:0.1386817562,KTI12_Tetraselmis_UniRef50_A0A061R522:0.0077208537)100:0.3115875891,KTI12_Gossypium_UniRef50_A0A0B0PXV4:0.7193930436)56:0.0742490392)100:0.3308412499,KTI12_Digenea_UniRef50_A0A074ZQD4:0.7911748921)95:0.1296131595)41:0.0726988517)73:0.1058085948,(KTI12_Strongyloidoidea_UniRef50_A0A090MYV8:1.0404383887,KTI12_Spirurina_UniRef50_A0A0B2V9G0:0.3934328677)96:0.1843884481)78:0.0755315178,KTI12_KTI12_Oikopleura_dioica_XP_081641927.1:0.9123800483)99:0.1951787993,KTI12_Trichuris_UniRef50_A0A077YZS3:0.9643759540)100:1.4512625950,((((Bsch_RefSeq_PSTK_XP_080181757.1:0.7044619760,Scla_RefSeq_PSTK_XP_039273489.2:0.4176000876)100:0.2266376815,Hror_pstk.2.homologue:0.7018936122)100:0.2978952519,(((Cint_RefSeq_PSTK_XP_002120985.2:0.0717988217,Crob_RefSeq_PSTK_XP_002120985.1:0.0722528005)100:0.3202003539,Csav_pstk.4.homologue:0.6080174360)100:0.4333534211,Pmam_RefSeq_PSTK_XP_079949190.1:0.6516249267)93:0.1203020990)99:0.1611099042,(Pege_pstk.1.homologue:0.7103634465,Stho_pstk.1.homologue:0.7229853369)100:0.4356745690)98:0.1751928258)41:0.0479600443)82:0.1289852341)30:0.0737016627,(Zootermopsis_nevadensis_XP_021926958.1:0.1048154785,Cryptotermes_secundus_XP_023706447.1:0.2884641661)100:0.5946483245)100:1.2927263190,Trichinella_sp._T9_KRX53135.1:0.0059509852);
+(Trichinella_nativa_OUC47214.1:0.0203708900,(((((((((Orbicella_faveolata_XP_020623798.1:0.5522915942,Exaiptasia_pallida_XP_020895544.1:0.6424608653)100:0.2004052954,Apostichopus_japonicus_PIK58581.1:0.6794250461)97:0.1287924600,Blan_RefSeq_PSTK_XP_066278120.1:0.5862927421)75:0.0866499520,Acanthaster_planci_XP_022086645.1:0.6023812854)91:0.0884110757,((((Aquila_chrysaetos_canadensis_XP_011588348.1:0.0297288177,(Falco_cherrug_XP_014135435.1:0.1905362311,Calidris_pugnax_XP_014800702.1:0.0993859399)88:0.0250045860)100:0.1572641929,(((Sarcophilus_harrisii_XP_012396107.1:0.1873926579,(((Colobus_angolensis_palliatus_XP_011785615.1:0.0000024771,Colobus_angolensis_palliatus_XP_011785616.1:0.1165189641)100:0.0263643050,Human_PSTK_NP_001350460.1:0.0120408068)100:0.0724218620,Mmus_RefSeq_PSTK_NP_001034623.1:0.1364223836)100:0.0993493480)100:0.1729603179,Alligator_sinensis_XP_006025206.1:0.1610653022)71:0.0081037381,(Xenopus_laevis_NP_001086273.1:0.0842911110,Xenopus_tropicalis_NP_001121470.1:0.0405140455)100:0.5090257360)83:0.0743789147)100:0.2527462593,((Cynoglossus_semilaevis_XP_008312795.1:0.2114551317,Lates_calcarifer_XP_018554729.1:0.0888715514)100:0.3329230157,Paramormyrops_kingsleyae_XP_023686643.1:0.3369432788)94:0.1381666282)79:0.0659292099,(Drer_RefSeq_PSTK_XP_009296681.1:0.0041172574,Drer_RefSeq_PSTK_XP_009305284.1:0.0047036264)100:0.6354499828)100:0.4432752035)61:0.1225953757,(Capitella_teleta_ELU08829.1:0.7709921475,Lingula_anatina_XP_013379694.1:0.4912901698)90:0.2509575447)31:0.0602543431,((Parasteatoda_tepidariorum_XP_015920699.1:1.0007620973,Centruroides_sculpturatus_XP_023232125.1:0.8096747267)74:0.2922589735,Crassostrea_virginica_XP_022287831.1:0.6613990704)21:0.1537238838)18:0.0625769472,(((((Zancudomyces_culisetae_OMH84707.1:1.0121566803,(Smittium_culicis_OMJ24625.1:0.0836840512,Smittium_culicis_OMJ25021.1:0.0532728887)100:0.7381239775)99:0.4200819649,(((Ovan_pstk.5.pseudo:0.2175192657,Ovan_gold_PSTK:0.0014662656)100:0.4165660092,Oalb_gold_PSTK:0.6856558729)82:0.4493324066,(OKI_gold_PSTK:0.2110157262,(OSKA_gold_PSTK:0.0932165060,OdB3_gold_PSTK:0.1046427988)100:0.1936359679)100:0.4210526422)100:1.0728869460)82:0.4225640801,(Nilaparvata_lugens_XP_022202222.1:1.0733481068,((((Aedes_albopictus_KXJ82471.1:0.2704751775,Aedes_aegypti_XP_021697006.1:0.1673302252)100:0.5591699685,Anopheles_sinensis_KFB40386.1:1.0245168331)92:0.2326604981,((Musca_domestica_XP_005188129.1:0.4330368787,Stomoxys_calcitrans_XP_013117132.1:0.4553962547)100:0.2426086484,Ceratitis_capitata_XP_012161924.1:0.6543414723)100:0.2435481911)89:0.1076082606,(((((((Bflo_RefSeq_KTI12_XP_035671211.1:0.0232578093,Blan_RefSeq_KTI12_XP_066270687.1:0.0236375153)100:0.2551362372,((Drer_RefSeq_KTI12_NP_001119890.1:0.1382313503,KTI12_Neoptera_UniRef50_A0A0A9VUI6:0.7289241225)68:0.0614467311,(Mmus_RefSeq_KTI12_NP_083847.1:0.1125050085,Human_KTI12_NP_612426.1:0.0740401167)100:0.3965446340)72:0.1019893684)73:0.0765383007,(KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2:0.5678840679,KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8:0.9305693974)91:0.2544094986)60:0.0171346253,(((Bsch_RefSeq_KTI12_XP_080176166.1:0.1186814280,Scla_RefSeq_KTI12_XP_039256908.2:0.2256853037)99:0.1485368448,(((Cint_RefSeq_KTI12_XP_026695236.2:0.0492763223,Crob_RefSeq_KTI12_XP_026695236.1:0.0178595693)100:0.1726541444,Pmam_RefSeq_KTI12_XP_079953735.1:0.1846399919)99:0.1275865284,Tdem_RefSeq_KTI12_XP_082793433.1:0.4227848318)100:0.1972663225)99:0.1867839728,(((KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8:0.4135855792,KTI12_core_chlorophytes_UniRef50_A0A087SSU6:0.4494132214)100:0.1403125126,((KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8:0.1371778162,KTI12_Tetraselmis_UniRef50_A0A061R522:0.0162053710)100:0.2836277497,KTI12_Gossypium_UniRef50_A0A0B0PXV4:0.6810491671)98:0.1130500296)100:0.2724746664,KTI12_Digenea_UniRef50_A0A074ZQD4:0.7705620208)98:0.1468476283)43:0.0681052470)70:0.0969095809,(KTI12_Strongyloidoidea_UniRef50_A0A090MYV8:1.0357871915,KTI12_Spirurina_UniRef50_A0A0B2V9G0:0.3729370280)99:0.2096822730)79:0.0563944994,KTI12_KTI12_Oikopleura_dioica_XP_081641927.1:0.9853710145)99:0.3287100624,KTI12_Trichuris_UniRef50_A0A077YZS3:0.8467328039)100:1.3422739320)57:0.1486624748)49:0.0695160282)58:0.0589638711,(Opisthorchis_viverrini_XP_009169618.1:0.9347753517,Aphanomyces_invadans_XP_008879884.1:1.1739160249)87:0.1665621707)67:0.0460817541,((((Bsch_RefSeq_PSTK_XP_080181757.1:0.6500450670,Scla_RefSeq_PSTK_XP_039273489.2:0.4337148332)99:0.1886507868,Hror_pstk.2.homologue:0.6616243804)100:0.3059833826,(((Cint_RefSeq_PSTK_XP_002120985.2:0.0632763184,Crob_RefSeq_PSTK_XP_002120985.1:0.0822530635)100:0.3057460551,Csav_pstk.4.homologue:0.6401023639)100:0.4695677294,Pmam_RefSeq_PSTK_XP_079949190.1:0.6613520476)95:0.1473108680)97:0.1434917265,(Pege_pstk.1.homologue:0.6695471162,Stho_pstk.1.homologue:0.7622730945)100:0.4048254427)100:0.2856347787)87:0.1325611398)32:0.1029616514,(Zootermopsis_nevadensis_XP_021926958.1:0.1119085299,Cryptotermes_secundus_XP_023706447.1:0.2742906304)100:0.6175314738)100:1.2131480990,Trichinella_sp._T9_KRX53135.1:0.0064122161);
 
 CONSENSUS TREE
 --------------
 
 Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -30694.677967
-Robinson-Foulds distance between ML tree and consensus tree: 12
+Log-likelihood of consensus tree: -30075.246325
+Robinson-Foulds distance between ML tree and consensus tree: 8
 
 Branches with support >0.000000% are kept (extended consensus)
 Branch lengths are optimized by maximum likelihood on original alignment
@@ -294,180 +300,176 @@ Numbers in parentheses are bootstrap supports (%)
 
 +--Trichinella_nativa_OUC47214.1
 |
-|                                       +------Orbicella_faveolata_XP_020623798.1
-|                                    +--| (98)
-|                                    |  +-------Exaiptasia_pallida_XP_020895544.1
-|                                 +--| (98)
-|                                 |  +--------Apostichopus_japonicus_PIK58581.1
-|                              +--| (69)
-|                              |  |  +-----Acanthaster_planci_XP_022086645.1
-|                              |  +--| (73)
-|                              |     +------Blan_RefSeq_PSTK_XP_066278120.1
-|                           +--| (44)
-|                           |  +--------------Parasteatoda_tepidariorum_XP_015920699.1
-|                        +--| (28)
-|                        |  |                +--Aquila_chrysaetos_canadensis_XP_011588348.1
-|                        |  |             +--| (53)
-|                        |  |             |  +--Calidris_pugnax_XP_014800702.1
-|                        |  |          +--| (100)
-|                        |  |          |  +--Falco_cherrug_XP_014135435.1
-|                        |  |       +--| (100)
-|                        |  |       |  |        +--Sarcophilus_harrisii_XP_012396107.1
-|                        |  |       |  |     +--| (100)
-|                        |  |       |  |     |  |        +--Colobus_angolensis_palliatus_XP_011785615.1
-|                        |  |       |  |     |  |     +--| (100)
-|                        |  |       |  |     |  |     |  +--Colobus_angolensis_palliatus_XP_011785616.1
-|                        |  |       |  |     |  |  +--| (100)
-|                        |  |       |  |     |  |  |  +--Human_PSTK_NP_001350460.1
-|                        |  |       |  |     |  +--| (100)
-|                        |  |       |  |     |     +--Mmus_RefSeq_PSTK_NP_001034623.1
-|                        |  |       |  |  +--| (81)
-|                        |  |       |  |  |  +--Alligator_sinensis_XP_006025206.1
-|                        |  |       |  +--| (52)
-|                        |  |       |     |     +--Xenopus_laevis_NP_001086273.1
-|                        |  |       |     +-----| (100)
-|                        |  |       |           +--Xenopus_tropicalis_NP_001121470.1
-|                        |  |    +--| (87)
-|                        |  |    |  |      +--Cynoglossus_semilaevis_XP_008312795.1
-|                        |  |    |  |  +---| (100)
-|                        |  |    |  |  |   +--Lates_calcarifer_XP_018554729.1
-|                        |  |    |  +--| (94)
-|                        |  |    |     +---Paramormyrops_kingsleyae_XP_023686643.1
-|                        |  +----| (100)
-|                        |       |      +--Drer_RefSeq_PSTK_XP_009305284.1
-|                        |       +------| (100)
-|                        |              +--Drer_RefSeq_PSTK_XP_009296681.1
-|                     +--| (28)
-|                     |  |  +---------Capitella_teleta_ELU08829.1
-|                     |  +--| (92)
-|                     |     +-----Lingula_anatina_XP_013379694.1
-|                  +--| (47)
-|                  |  +---------Crassostrea_virginica_XP_022287831.1
-|               +--| (48)
-|               |  |                 +------------Zancudomyces_culisetae_OMH84707.1
-|               |  |            +----| (100)
-|               |  |            |    |        +--Smittium_culicis_OMJ24625.1
-|               |  |            |    +--------| (100)
-|               |  |            |             +--Smittium_culicis_OMJ25021.1
-|               |  |        +---| (77)
-|               |  |        |   |                   +--OKI_pstk.6.homologue
-|               |  |        |   |                +--| (100)
-|               |  |        |   |                |  +--OKI_curated_pstk
-|               |  |        |   |            +---| (100)
-|               |  |        |   |            |   |     +--OSKA_pstk.3.homologue
-|               |  |        |   |            |   |  +--| (97)
-|               |  |        |   |            |   |  |  +--OSKA_curated_pstk
-|               |  |        |   |            |   +--| (100)
-|               |  |        |   |            |      +--OdB3_pstk.3.homologue
-|               |  |        |   +------------| (100)
-|               |  |        |                |    +-------Oalb_pstk.1.homologue
-|               |  |        |                +----| (85)
-|               |  |        |                     |     +--Ovan_pstk.4.homologue
-|               |  |        |                     +-----| (100)
-|               |  |        |                           +--Ovan_pstk.5.pseudo
-|               |  |     +--| (42)
-|               |  |     |  |  +-----------Nilaparvata_lugens_XP_022202222.1
-|               |  |     |  +--| (68)
-|               |  |     |     |            +--Aedes_albopictus_KXJ82471.1
-|               |  |     |     |     +------| (100)
-|               |  |     |     |     |      +--Aedes_aegypti_XP_021697006.1
-|               |  |     |     |  +--| (93)
-|               |  |     |     |  |  +------------Anopheles_sinensis_KFB40386.1
-|               |  |     |     +--| (95)
-|               |  |     |        |      +----Musca_domestica_XP_005188129.1
-|               |  |     |        |   +--| (100)
-|               |  |     |        |   |  +----Stomoxys_calcitrans_XP_013117132.1
-|               |  |     |        +---| (100)
-|               |  |     |            +------Ceratitis_capitata_XP_012161924.1
-|               |  |  +--| (43)
-|               |  |  |  |  +----------Opisthorchis_viverrini_XP_009169618.1
-|               |  |  |  +--| (88)
-|               |  |  |     +--------------Aphanomyces_invadans_XP_008879884.1
-|               |  +--| (82)
-|               |     |                                      +--Bflo_RefSeq_KTI12_XP_035671211.1
-|               |     |                                   +--| (100)
-|               |     |                                   |  +--Blan_RefSeq_KTI12_XP_066270687.1
-|               |     |                                +--| (86)
-|               |     |                                |  |     +--Drer_RefSeq_KTI12_NP_001119890.1
-|               |     |                                |  |  +--| (73)
-|               |     |                                |  |  |  +-------KTI12_Neoptera_UniRef50_A0A0A9VUI6
-|               |     |                                |  +--| (82)
-|               |     |                                |     |   +--Mmus_RefSeq_KTI12_NP_083847.1
-|               |     |                                |     +---| (100)
-|               |     |                                |         +--Human_KTI12_NP_612426.1
-|               |     |                             +--| (72)
-|               |     |                             |  |  +------KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2
-|               |     |                             |  +--| (94)
-|               |     |                             |     +----------KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8
-|               |     |                          +--| (73)
-|               |     |                          |  |        +--Bsch_RefSeq_KTI12_XP_080176166.1
-|               |     |                          |  |     +--| (100)
-|               |     |                          |  |     |  +--Scla_RefSeq_KTI12_XP_039256908.2
-|               |     |                          |  |  +--| (99)
-|               |     |                          |  |  |  |        +--Cint_RefSeq_KTI12_XP_026695236.2
-|               |     |                          |  |  |  |     +--| (100)
-|               |     |                          |  |  |  |     |  +--Crob_RefSeq_KTI12_XP_026695236.1
-|               |     |                          |  |  |  |  +--| (100)
-|               |     |                          |  |  |  |  |  +--Pmam_RefSeq_KTI12_XP_079953735.1
-|               |     |                          |  |  |  +--| (100)
-|               |     |                          |  |  |     +----Tdem_RefSeq_KTI12_XP_082793433.1
-|               |     |                          |  +--| (41)
-|               |     |                          |     |         +----KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8
-|               |     |                          |     |      +--| (99)
-|               |     |                          |     |      |  +----KTI12_core_chlorophytes_UniRef50_A0A087SSU6
-|               |     |                          |     |  +---| (100)
-|               |     |                          |     |  |   |     +--KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8
-|               |     |                          |     |  |   |  +--| (100)
-|               |     |                          |     |  |   |  |  +--KTI12_Tetraselmis_UniRef50_A0A061R522
-|               |     |                          |     |  |   +--| (56)
-|               |     |                          |     |  |      +--------KTI12_Gossypium_UniRef50_A0A0B0PXV4
-|               |     |                          |     +--| (95)
-|               |     |                          |        +---------KTI12_Digenea_UniRef50_A0A074ZQD4
-|               |     |                       +--| (78)
-|               |     |                       |  |  +------------KTI12_Strongyloidoidea_UniRef50_A0A090MYV8
-|               |     |                       |  +--| (96)
-|               |     |                       |     +---KTI12_Spirurina_UniRef50_A0A0B2V9G0
-|               |     |                    +--| (99)
-|               |     |                    |  +----------KTI12_KTI12_Oikopleura_dioica_XP_081641927.1
-|               |     |  +-----------------| (100)
-|               |     |  |                 +-----------KTI12_Trichuris_UniRef50_A0A077YZS3
-|               |     +--| (41)
-|               |        |           +-------Bsch_RefSeq_PSTK_XP_080181757.1
-|               |        |        +--| (100)
-|               |        |        |  +----Scla_RefSeq_PSTK_XP_039273489.2
-|               |        |     +--| (100)
-|               |        |     |  +-------Hror_pstk.2.homologue
-|               |        |  +--| (99)
-|               |        |  |  |           +--Cint_RefSeq_PSTK_XP_002120985.2
-|               |        |  |  |       +---| (100)
-|               |        |  |  |       |   +--Crob_RefSeq_PSTK_XP_002120985.1
-|               |        |  |  |  +----| (100)
-|               |        |  |  |  |    +------Csav_pstk.4.homologue
-|               |        |  |  +--| (93)
-|               |        |  |     +-------Pmam_RefSeq_PSTK_XP_079949190.1
-|               |        +--| (98)
-|               |           |    +-------Pege_pstk.1.homologue
-|               |           +----| (100)
-|               |                +--------Stho_pstk.1.homologue
-|            +--| (50)
-|            |  |      +--Zootermopsis_nevadensis_XP_021926958.1
-|            |  +------| (100)
-|            |         +--Cryptotermes_secundus_XP_023706447.1
-+------------| (100)
-|            +---------Centruroides_sculpturatus_XP_023232125.1
+|                                        +-----Orbicella_faveolata_XP_020623798.1
+|                                     +--| (100)
+|                                     |  +------Exaiptasia_pallida_XP_020895544.1
+|                                  +--| (97)
+|                                  |  +-------Apostichopus_japonicus_PIK58581.1
+|                               +--| (75)
+|                               |  +------Blan_RefSeq_PSTK_XP_066278120.1
+|                            +--| (91)
+|                            |  +------Acanthaster_planci_XP_022086645.1
+|                         +--| (61)
+|                         |  |             +--Aquila_chrysaetos_canadensis_XP_011588348.1
+|                         |  |          +--| (100)
+|                         |  |          |  |  +--Falco_cherrug_XP_014135435.1
+|                         |  |          |  +--| (88)
+|                         |  |          |     +--Calidris_pugnax_XP_014800702.1
+|                         |  |       +--| (100)
+|                         |  |       |  |        +--Sarcophilus_harrisii_XP_012396107.1
+|                         |  |       |  |     +--| (100)
+|                         |  |       |  |     |  |        +--Colobus_angolensis_palliatus_XP_011785615.1
+|                         |  |       |  |     |  |     +--| (100)
+|                         |  |       |  |     |  |     |  +--Colobus_angolensis_palliatus_XP_011785616.1
+|                         |  |       |  |     |  |  +--| (100)
+|                         |  |       |  |     |  |  |  +--Human_PSTK_NP_001350460.1
+|                         |  |       |  |     |  +--| (100)
+|                         |  |       |  |     |     +--Mmus_RefSeq_PSTK_NP_001034623.1
+|                         |  |       |  |  +--| (71)
+|                         |  |       |  |  |  +--Alligator_sinensis_XP_006025206.1
+|                         |  |       |  +--| (83)
+|                         |  |       |     |     +--Xenopus_laevis_NP_001086273.1
+|                         |  |       |     +-----| (100)
+|                         |  |       |           +--Xenopus_tropicalis_NP_001121470.1
+|                         |  |    +--| (79)
+|                         |  |    |  |      +--Cynoglossus_semilaevis_XP_008312795.1
+|                         |  |    |  |  +---| (100)
+|                         |  |    |  |  |   +--Lates_calcarifer_XP_018554729.1
+|                         |  |    |  +--| (94)
+|                         |  |    |     +---Paramormyrops_kingsleyae_XP_023686643.1
+|                         |  +----| (100)
+|                         |       |      +--Drer_RefSeq_PSTK_XP_009296681.1
+|                         |       +------| (100)
+|                         |              +--Drer_RefSeq_PSTK_XP_009305284.1
+|                      +--| (39)
+|                      |  +--------Crassostrea_virginica_XP_022287831.1
+|                   +--| (36)
+|                   |  |  +--------Capitella_teleta_ELU08829.1
+|                   |  +--| (90)
+|                   |     +-----Lingula_anatina_XP_013379694.1
+|                +--| (19)
+|                |  |                  +-----------Zancudomyces_culisetae_OMH84707.1
+|                |  |             +----| (99)
+|                |  |             |    |        +--Smittium_culicis_OMJ24625.1
+|                |  |             |    +--------| (100)
+|                |  |             |             +--Smittium_culicis_OMJ25021.1
+|                |  |        +----| (82)
+|                |  |        |    |                      +--Ovan_pstk.5.pseudo
+|                |  |        |    |                 +----| (100)
+|                |  |        |    |                 |    +--Ovan_gold_PSTK
+|                |  |        |    |            +----| (82)
+|                |  |        |    |            |    +-------Oalb_gold_PSTK
+|                |  |        |    +------------| (100)
+|                |  |        |                 |    +--OKI_gold_PSTK
+|                |  |        |                 +----| (100)
+|                |  |        |                      |  +--OSKA_gold_PSTK
+|                |  |        |                      +--| (100)
+|                |  |        |                         +--OdB3_gold_PSTK
+|                |  |     +--| (58)
+|                |  |     |  |  +------------Nilaparvata_lugens_XP_022202222.1
+|                |  |     |  +--| (49)
+|                |  |     |     |              +--Aedes_albopictus_KXJ82471.1
+|                |  |     |     |        +-----| (100)
+|                |  |     |     |        |     +--Aedes_aegypti_XP_021697006.1
+|                |  |     |     |     +--| (92)
+|                |  |     |     |     |  +-----------Anopheles_sinensis_KFB40386.1
+|                |  |     |     |  +--| (89)
+|                |  |     |     |  |  |     +----Musca_domestica_XP_005188129.1
+|                |  |     |     |  |  |  +--| (100)
+|                |  |     |     |  |  |  |  +----Stomoxys_calcitrans_XP_013117132.1
+|                |  |     |     |  |  +--| (100)
+|                |  |     |     |  |     +-------Ceratitis_capitata_XP_012161924.1
+|                |  |     |     +--| (57)
+|                |  |     |        |                                  +--Bflo_RefSeq_KTI12_XP_035671211.1
+|                |  |     |        |                               +--| (100)
+|                |  |     |        |                               |  +--Blan_RefSeq_KTI12_XP_066270687.1
+|                |  |     |        |                            +--| (73)
+|                |  |     |        |                            |  |     +--Drer_RefSeq_KTI12_NP_001119890.1
+|                |  |     |        |                            |  |  +--| (68)
+|                |  |     |        |                            |  |  |  +--------KTI12_Neoptera_UniRef50_A0A0A9VUI6
+|                |  |     |        |                            |  +--| (72)
+|                |  |     |        |                            |     |   +--Mmus_RefSeq_KTI12_NP_083847.1
+|                |  |     |        |                            |     +---| (100)
+|                |  |     |        |                            |         +--Human_KTI12_NP_612426.1
+|                |  |     |        |                         +--| (60)
+|                |  |     |        |                         |  |  +------KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2
+|                |  |     |        |                         |  +--| (91)
+|                |  |     |        |                         |     +----------KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8
+|                |  |     |        |                      +--| (70)
+|                |  |     |        |                      |  |        +--Bsch_RefSeq_KTI12_XP_080176166.1
+|                |  |     |        |                      |  |     +--| (99)
+|                |  |     |        |                      |  |     |  +--Scla_RefSeq_KTI12_XP_039256908.2
+|                |  |     |        |                      |  |  +--| (99)
+|                |  |     |        |                      |  |  |  |        +--Cint_RefSeq_KTI12_XP_026695236.2
+|                |  |     |        |                      |  |  |  |     +--| (100)
+|                |  |     |        |                      |  |  |  |     |  +--Crob_RefSeq_KTI12_XP_026695236.1
+|                |  |     |        |                      |  |  |  |  +--| (99)
+|                |  |     |        |                      |  |  |  |  |  +--Pmam_RefSeq_KTI12_XP_079953735.1
+|                |  |     |        |                      |  |  |  +--| (100)
+|                |  |     |        |                      |  |  |     +----Tdem_RefSeq_KTI12_XP_082793433.1
+|                |  |     |        |                      |  +--| (43)
+|                |  |     |        |                      |     |        +----KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8
+|                |  |     |        |                      |     |     +--| (100)
+|                |  |     |        |                      |     |     |  +----KTI12_core_chlorophytes_UniRef50_A0A087SSU6
+|                |  |     |        |                      |     |  +--| (100)
+|                |  |     |        |                      |     |  |  |     +--KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8
+|                |  |     |        |                      |     |  |  |  +--| (100)
+|                |  |     |        |                      |     |  |  |  |  +--KTI12_Tetraselmis_UniRef50_A0A061R522
+|                |  |     |        |                      |     |  |  +--| (98)
+|                |  |     |        |                      |     |  |     +-------KTI12_Gossypium_UniRef50_A0A0B0PXV4
+|                |  |     |        |                      |     +--| (98)
+|                |  |     |        |                      |        +--------KTI12_Digenea_UniRef50_A0A074ZQD4
+|                |  |     |        |                   +--| (79)
+|                |  |     |        |                   |  |  +-----------KTI12_Strongyloidoidea_UniRef50_A0A090MYV8
+|                |  |     |        |                   |  +--| (99)
+|                |  |     |        |                   |     +---KTI12_Spirurina_UniRef50_A0A0B2V9G0
+|                |  |     |        |               +---| (99)
+|                |  |     |        |               |   +-----------KTI12_KTI12_Oikopleura_dioica_XP_081641927.1
+|                |  |     |        +---------------| (100)
+|                |  |     |                        +---------KTI12_Trichuris_UniRef50_A0A077YZS3
+|                |  |  +--| (67)
+|                |  |  |  |  +----------Opisthorchis_viverrini_XP_009169618.1
+|                |  |  |  +--| (87)
+|                |  |  |     +-------------Aphanomyces_invadans_XP_008879884.1
+|                |  +--| (87)
+|                |     |           +-------Bsch_RefSeq_PSTK_XP_080181757.1
+|                |     |        +--| (99)
+|                |     |        |  +----Scla_RefSeq_PSTK_XP_039273489.2
+|                |     |     +--| (100)
+|                |     |     |  +-------Hror_pstk.2.homologue
+|                |     |  +--| (97)
+|                |     |  |  |          +--Cint_RefSeq_PSTK_XP_002120985.2
+|                |     |  |  |       +--| (100)
+|                |     |  |  |       |  +--Crob_RefSeq_PSTK_XP_002120985.1
+|                |     |  |  |  +----| (100)
+|                |     |  |  |  |    +------Csav_pstk.4.homologue
+|                |     |  |  +--| (95)
+|                |     |  |     +-------Pmam_RefSeq_PSTK_XP_079949190.1
+|                |     +--| (100)
+|                |        |    +-------Pege_pstk.1.homologue
+|                |        +----| (100)
+|                |             +--------Stho_pstk.1.homologue
+|             +--| (34)
+|             |  |       +--Zootermopsis_nevadensis_XP_021926958.1
+|             |  +-------| (100)
+|             |          +--Cryptotermes_secundus_XP_023706447.1
++-------------| (100)
+|             |  +-----------Parasteatoda_tepidariorum_XP_015920699.1
+|             +--| (74)
+|                +---------Centruroides_sculpturatus_XP_023232125.1
 |
 +--Trichinella_sp._T9_KRX53135.1
 
 
 Consensus tree in newick format: 
 
-(Trichinella_nativa_OUC47214.1:0.0212460301,((((((((((Orbicella_faveolata_XP_020623798.1:0.6104261589,Exaiptasia_pallida_XP_020895544.1:0.6709845787)98:0.1386450963,Apostichopus_japonicus_PIK58581.1:0.7412321521)98:0.1613039592,(Acanthaster_planci_XP_022086645.1:0.5523060281,Blan_RefSeq_PSTK_XP_066278120.1:0.5870422329)73:0.1347908183)69:0.0000027871,Parasteatoda_tepidariorum_XP_015920699.1:1.2532289518)44:0.1058873462,(((((Aquila_chrysaetos_canadensis_XP_011588348.1:0.0293577857,Calidris_pugnax_XP_014800702.1:0.1240879118)53:0.0237910689,Falco_cherrug_XP_014135435.1:0.1908735358)100:0.1460682249,(((Sarcophilus_harrisii_XP_012396107.1:0.1827120129,(((Colobus_angolensis_palliatus_XP_011785615.1:0.0000026721,Colobus_angolensis_palliatus_XP_011785616.1:0.1104042994)100:0.0264064226,Human_PSTK_NP_001350460.1:0.0118446276)100:0.0859196148,Mmus_RefSeq_PSTK_NP_001034623.1:0.1285913151)100:0.0909384492)100:0.1809962664,Alligator_sinensis_XP_006025206.1:0.1678709750)81:0.0094388656,(Xenopus_laevis_NP_001086273.1:0.0798486202,Xenopus_tropicalis_NP_001121470.1:0.0450713424)100:0.5197247117)52:0.0605050784)100:0.2385444591,((Cynoglossus_semilaevis_XP_008312795.1:0.2287499632,Lates_calcarifer_XP_018554729.1:0.0959812909)100:0.3345983293,Paramormyrops_kingsleyae_XP_023686643.1:0.3597780813)94:0.1443795331)87:0.0701309677,(Drer_RefSeq_PSTK_XP_009305284.1:0.0089440014,Drer_RefSeq_PSTK_XP_009296681.1:0.0040791852)100:0.6278200125)100:0.4736803097)28:0.0440570039,(Capitella_teleta_ELU08829.1:0.8145140409,Lingula_anatina_XP_013379694.1:0.4926743247)92:0.2705018907)28:0.0815730428,Crassostrea_virginica_XP_022287831.1:0.8047755540)47:0.0956859472,(((((Zancudomyces_culisetae_OMH84707.1:1.0411878664,(Smittium_culicis_OMJ24625.1:0.0908402562,Smittium_culicis_OMJ25021.1:0.0311785448)100:0.7658402492)100:0.4476910901,(((OKI_pstk.6.homologue:0.0051208989,OKI_curated_pstk:0.0000026721)100:0.2234970462,((OSKA_pstk.3.homologue:0.0231838267,OSKA_curated_pstk:0.0525207964)97:0.0846956554,OdB3_pstk.3.homologue:0.0186524084)100:0.3049994073)100:0.3297186423,(Oalb_pstk.1.homologue:0.6870217562,(Ovan_pstk.4.homologue:0.0009376868,Ovan_pstk.5.pseudo:0.2261350567)100:0.4783768358)85:0.4495533511)100:1.0570734660)77:0.3751304181,(Nilaparvata_lugens_XP_022202222.1:0.9951592946,(((Aedes_albopictus_KXJ82471.1:0.2841873023,Aedes_aegypti_XP_021697006.1:0.1593741900)100:0.5749270299,Anopheles_sinensis_KFB40386.1:1.0496535947)93:0.2278517277,((Musca_domestica_XP_005188129.1:0.4675838769,Stomoxys_calcitrans_XP_013117132.1:0.4570855859)100:0.2732813320,Ceratitis_capitata_XP_012161924.1:0.6188659681)100:0.3223531959)95:0.1798749510)68:0.0796919746)42:0.0736838194,(Opisthorchis_viverrini_XP_009169618.1:0.9376667253,Aphanomyces_invadans_XP_008879884.1:1.2036004683)88:0.1475843000)43:0.0353628315,((((((((Bflo_RefSeq_KTI12_XP_035671211.1:0.0236884644,Blan_RefSeq_KTI12_XP_066270687.1:0.0263292267)100:0.2591577120,((Drer_RefSeq_KTI12_NP_001119890.1:0.1553007436,KTI12_Neoptera_UniRef50_A0A0A9VUI6:0.7041408126)73:0.0580933888,(Mmus_RefSeq_KTI12_NP_083847.1:0.1105162296,Human_KTI12_NP_612426.1:0.0773583779)100:0.3809374854)82:0.0970661212)86:0.0786785187,(KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2:0.6102251075,KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8:0.9010856890)94:0.2560385776)72:0.0188774046,(((Bsch_RefSeq_KTI12_XP_080176166.1:0.1229854242,Scla_RefSeq_KTI12_XP_039256908.2:0.2172799259)100:0.1535746123,(((Cint_RefSeq_KTI12_XP_026695236.2:0.0480035759,Crob_RefSeq_KTI12_XP_026695236.1:0.0170960547)100:0.1865683893,Pmam_RefSeq_KTI12_XP_079953735.1:0.1806309608)100:0.1335057725,Tdem_RefSeq_KTI12_XP_082793433.1:0.4021675465)100:0.1974236157)99:0.1752900502,(((KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8:0.4165175172,KTI12_core_chlorophytes_UniRef50_A0A087SSU6:0.4402126317)99:0.1423868387,((KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8:0.1387671849,KTI12_Tetraselmis_UniRef50_A0A061R522:0.0077143885)100:0.3118753508,KTI12_Gossypium_UniRef50_A0A0B0PXV4:0.7216735890)56:0.0744337994)100:0.3321061248,KTI12_Digenea_UniRef50_A0A074ZQD4:0.7920433982)95:0.1296507442)41:0.0725694628)73:0.1060639776,(KTI12_Strongyloidoidea_UniRef50_A0A090MYV8:1.0416972504,KTI12_Spirurina_UniRef50_A0A0B2V9G0:0.3933758524)96:0.1847455231)78:0.0754466412,KTI12_KTI12_Oikopleura_dioica_XP_081641927.1:0.9128553269)99:0.1936486176,KTI12_Trichuris_UniRef50_A0A077YZS3:0.9690790922)100:1.4653700741,((((Bsch_RefSeq_PSTK_XP_080181757.1:0.7030979105,Scla_RefSeq_PSTK_XP_039273489.2:0.4194068914)100:0.2235297643,Hror_pstk.2.homologue:0.7068830792)100:0.2966380610,(((Cint_RefSeq_PSTK_XP_002120985.2:0.0718765945,Crob_RefSeq_PSTK_XP_002120985.1:0.0721953785)100:0.3193806398,Csav_pstk.4.homologue:0.6077922862)100:0.4344945197,Pmam_RefSeq_PSTK_XP_079949190.1:0.6528540207)93:0.1185625422)99:0.1583355822,(Pege_pstk.1.homologue:0.7060933657,Stho_pstk.1.homologue:0.7296739217)100:0.4385787182)98:0.1805946672)41:0.0479898945)82:0.1257800224)48:0.0831929828,(Zootermopsis_nevadensis_XP_021926958.1:0.1041441799,Cryptotermes_secundus_XP_023706447.1:0.2888448482)100:0.5966498268)50:0.2264861371,Centruroides_sculpturatus_XP_023232125.1:0.8354592033)100:1.0936783904,Trichinella_sp._T9_KRX53135.1:0.0049074540);
+(Trichinella_nativa_OUC47214.1:0.0207812072,((((((((((Orbicella_faveolata_XP_020623798.1:0.5556164660,Exaiptasia_pallida_XP_020895544.1:0.6368480033)100:0.2010850685,Apostichopus_japonicus_PIK58581.1:0.6791634824)97:0.1284189965,Blan_RefSeq_PSTK_XP_066278120.1:0.5806069589)75:0.0900890569,Acanthaster_planci_XP_022086645.1:0.6029575810)91:0.0869719040,((((Aquila_chrysaetos_canadensis_XP_011588348.1:0.0296827624,(Falco_cherrug_XP_014135435.1:0.1906114108,Calidris_pugnax_XP_014800702.1:0.0993105349)88:0.0250356768)100:0.1573811978,(((Sarcophilus_harrisii_XP_012396107.1:0.1875400074,(((Colobus_angolensis_palliatus_XP_011785615.1:0.0000026778,Colobus_angolensis_palliatus_XP_011785616.1:0.1164764721)100:0.0263504080,Human_PSTK_NP_001350460.1:0.0120411390)100:0.0723054879,Mmus_RefSeq_PSTK_NP_001034623.1:0.1364528042)100:0.0993164451)100:0.1728131868,Alligator_sinensis_XP_006025206.1:0.1613283237)71:0.0076446064,(Xenopus_laevis_NP_001086273.1:0.0842786135,Xenopus_tropicalis_NP_001121470.1:0.0404796715)100:0.5090094404)83:0.0746020218)100:0.2534989805,((Cynoglossus_semilaevis_XP_008312795.1:0.2118468226,Lates_calcarifer_XP_018554729.1:0.0882139317)100:0.3313639595,Paramormyrops_kingsleyae_XP_023686643.1:0.3382312274)94:0.1393293388)79:0.0659587443,(Drer_RefSeq_PSTK_XP_009296681.1:0.0041232717,Drer_RefSeq_PSTK_XP_009305284.1:0.0046874046)100:0.6320014228)100:0.4434165630)61:0.0797628508,Crassostrea_virginica_XP_022287831.1:0.7801202566)39:0.0851795494,(Capitella_teleta_ELU08829.1:0.7718167614,Lingula_anatina_XP_013379694.1:0.4869430191)90:0.2462318517)36:0.0995593883,(((((Zancudomyces_culisetae_OMH84707.1:1.0134061296,(Smittium_culicis_OMJ24625.1:0.0835945004,Smittium_culicis_OMJ25021.1:0.0531053355)100:0.7345796111)99:0.4154691650,(((Ovan_pstk.5.pseudo:0.2172197718,Ovan_gold_PSTK:0.0014993194)100:0.4134886516,Oalb_gold_PSTK:0.6866552907)82:0.4517156291,(OKI_gold_PSTK:0.2098491968,(OSKA_gold_PSTK:0.0930875348,OdB3_gold_PSTK:0.1045098213)100:0.1943598841)100:0.4193549649)100:1.0727153678)82:0.4253470748,(Nilaparvata_lugens_XP_022202222.1:1.0754499243,((((Aedes_albopictus_KXJ82471.1:0.2714847033,Aedes_aegypti_XP_021697006.1:0.1664029750)100:0.5525652969,Anopheles_sinensis_KFB40386.1:1.0289629951)92:0.2298172797,((Musca_domestica_XP_005188129.1:0.4316610124,Stomoxys_calcitrans_XP_013117132.1:0.4548901458)100:0.2460515030,Ceratitis_capitata_XP_012161924.1:0.6507710501)100:0.2454526971)89:0.1088746083,(((((((Bflo_RefSeq_KTI12_XP_035671211.1:0.0232340578,Blan_RefSeq_KTI12_XP_066270687.1:0.0236049363)100:0.2554829691,((Drer_RefSeq_KTI12_NP_001119890.1:0.1383519299,KTI12_Neoptera_UniRef50_A0A0A9VUI6:0.7278907588)68:0.0613867575,(Mmus_RefSeq_KTI12_NP_083847.1:0.1125554030,Human_KTI12_NP_612426.1:0.0737697362)100:0.3963882235)72:0.1015439461)73:0.0764831078,(KTI12_Aureobasidium_namibiae_CBS_147.97_UniRef50_A0A074X2N2:0.5676299148,KTI12_Rozella_allomycis_strain_CSF55_UniRef50_A0A075AVD8:0.9289756593)91:0.2542561353)60:0.0169754383,(((Bsch_RefSeq_KTI12_XP_080176166.1:0.1182500415,Scla_RefSeq_KTI12_XP_039256908.2:0.2256591092)99:0.1486069938,(((Cint_RefSeq_KTI12_XP_026695236.2:0.0491730142,Crob_RefSeq_KTI12_XP_026695236.1:0.0178536684)100:0.1723925944,Pmam_RefSeq_KTI12_XP_079953735.1:0.1844907023)99:0.1275959134,Tdem_RefSeq_KTI12_XP_082793433.1:0.4222336490)100:0.1970622690)99:0.1862036495,(((KTI12_Helicosporidium_sp._ATCC_50920_UniRef50_A0A059LLF8:0.4129465614,KTI12_core_chlorophytes_UniRef50_A0A087SSU6:0.4489112241)100:0.1403379326,((KTI12_Tetraselmis_sp._GSL018_UniRef50_A0A061QHB8:0.1369735842,KTI12_Tetraselmis_UniRef50_A0A061R522:0.0161711468)100:0.2832333338,KTI12_Gossypium_UniRef50_A0A0B0PXV4:0.6813101315)98:0.1130852638)100:0.2724669249,KTI12_Digenea_UniRef50_A0A074ZQD4:0.7702039419)98:0.1468502113)43:0.0684789377)70:0.0970331378,(KTI12_Strongyloidoidea_UniRef50_A0A090MYV8:1.0346047994,KTI12_Spirurina_UniRef50_A0A0B2V9G0:0.3728147429)99:0.2089928364)79:0.0565366293,KTI12_KTI12_Oikopleura_dioica_XP_081641927.1:0.9857644543)99:0.3213813528,KTI12_Trichuris_UniRef50_A0A077YZS3:0.8530683044)100:1.3366728197)57:0.1458171627)49:0.0692190371)58:0.0532650910,(Opisthorchis_viverrini_XP_009169618.1:0.9397336926,Aphanomyces_invadans_XP_008879884.1:1.1770900455)87:0.1699800210)67:0.0357737949,((((Bsch_RefSeq_PSTK_XP_080181757.1:0.6534599390,Scla_RefSeq_PSTK_XP_039273489.2:0.4289834760)99:0.1923500620,Hror_pstk.2.homologue:0.6598261387)100:0.3034520210,(((Cint_RefSeq_PSTK_XP_002120985.2:0.0630251942,Crob_RefSeq_PSTK_XP_002120985.1:0.0824127221)100:0.3053107758,Csav_pstk.4.homologue:0.6396224818)100:0.4672409279,Pmam_RefSeq_PSTK_XP_079949190.1:0.6624618128)95:0.1491783640)97:0.1430847061,(Pege_pstk.1.homologue:0.6715890408,Stho_pstk.1.homologue:0.7569188728)100:0.4018954709)100:0.3017752290)87:0.1254092172)19:0.0277067300,(Zootermopsis_nevadensis_XP_021926958.1:0.1108664799,Cryptotermes_secundus_XP_023706447.1:0.2749914452)100:0.6952462164)34:0.0914974344,(Parasteatoda_tepidariorum_XP_015920699.1:1.0132651881,Centruroides_sculpturatus_XP_023232125.1:0.8242848118)74:0.2818670940)100:1.1634381922,Trichinella_sp._T9_KRX53135.1:0.0059647091);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/lba/pstk.slowfast30.treefile -m "LG+I{0.00916495}+R4{0.0653646,0.116759,0.118258,0.379533,0.304652,0.757528,0.50256,1.4261}" --length 293
+--alisim simulated_MSA -t results/trees/lba/pstk.slowfast30.treefile -m "LG+I{0.00907723}+R4{0.0706982,0.124706,0.130886,0.397336,0.295095,0.77524,0.494244,1.43736}" --length 292
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -482,7 +484,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Wed Oct 21 22:29:12 2026
-Total CPU time used: 1028.42756 seconds (0h:17m:8s)
-Total wall-clock time used: 133.5825575 seconds (0h:2m:13s)
+Date and time: Mon Nov  2 15:02:22 2026
+Total CPU time used: 14858.78887 seconds (4h:7m:38s)
+Total wall-clock time used: 2127.316413 seconds (0h:35m:27s)
 
