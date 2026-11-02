@@ -131,8 +131,10 @@ machinery-domains:
 	python3 stage2/machinery_domains.py
 	$(MAKE) machinery-domain-figures
 
-# The same under LG+C60+F+G with PMSF (after machinery-domains, whose maximum-likelihood trees are the guide trees;
-# keeps finished analyses, so it can be resubmitted after an interruption)
+# The same under LG+C60+F+G with PMSF (after machinery-domains, whose maximum-likelihood trees are the guide trees, and
+# after machinery-lba, whose full-length PMSF trees it compares; keeps finished analyses, so it can be resubmitted after
+# an interruption)
+#   sbatch --dependency=afterok:<machinery-domains job>:<machinery-lba job> ...
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2-00:00:00 scripts/run_in_container.sh make machinery-domains-pmsf
 machinery-domains-pmsf:
 	python3 stage2/machinery_domains.py --pmsf --table results/tables/stage2_machinery_domains_pmsf.tsv \
