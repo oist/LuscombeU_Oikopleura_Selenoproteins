@@ -945,9 +945,8 @@ groups of the smallest side of a bipartition that holds the clade and other sequ
 side that holds vertebrate sequences with a known human gene (number of sequences).
 
 > **Machinery part (2026-11-02).** Trees on the gold-standard proteins (`make machinery-phylogeny`, `machinery-lba`,
-> `machinery-domains`; results/tables/stage2_machinery_lba.tsv, stage2_machinery_domains.tsv). Still to update: the
-> reciprocal best hits of the first paragraph (`make machinery-rbh` on the final-run predictions) and the domain
-> analyses under PMSF (`make machinery-domains-pmsf`, tables of 2026-10-23).
+> `machinery-domains`, `machinery-domains-pmsf`; results/tables/stage2_machinery_lba.tsv, stage2_machinery_domains*.tsv);
+> reciprocal best hits on the final-run predictions (`make machinery-rbh`; results/tables/stage2_machinery_rbh.tsv).
 
 Selenoprofiles predicts homologs of its profile families, not necessarily orthologs of the named human genes. We
 therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Table
@@ -955,11 +954,12 @@ MACHINERY). SecS proteins were reciprocal best hits of human SEPSECS in all nine
 EEFSEC in seven. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. The PSTK proteins of *O. dioica* and
 *O. albicans* had no hit in the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted
 with the standard profile in each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits).
-The SECIS-binding proteins of all nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits, as were
-those of nine of the ten other tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was closer
-to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 9 bits of each other; best hits do not
-separate these paralogs outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not PSTK, the
-SECIS-binding protein or SEPHS2.
+The SECIS-binding proteins of all nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits (a
+second, shorter prediction in *B. stygius* and *M. erythrocephalus* was closer to SECISBP2, by 6.5 and 11.5 bits), as
+were those of nine of the ten other tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was
+closer to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 13 bits of each other; best
+hits do not separate these paralogs outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not
+PSTK, the SECIS-binding protein or SEPHS2.
 
 For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from: the
 related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS, and human
@@ -1023,16 +1023,18 @@ divergent ortholog of the tunicate selenocysteine copy whose signal these models
 lineage. In both cases it is a selenocysteine SEPHS2, by the residue at its catalytic site [@Mariotti2015].
 
 Trees of each half of the alignments, split at a domain boundary of the human protein (Table DOMAINS), recovered the
-appendicularian clades of PSTK and of the SECIS-binding protein in both halves (99 to 100%), and the selenocysteine
-SEPHS2 clade in the N-terminal half only (100%). Neither half rejected a grouping of the appendicularian PSTK or
-SECIS-binding protein with the other tunicates (AU tests, p = 0.28 to 0.54). For SEPHS, the N-terminal half rejected
-none of the tested positions of the selenocysteine clade (p = 0.11 to 0.52), whereas the C-terminal half rejected all
-three (p = 0.005 to 0.031). Clades supported by 95% or more in one half and incompatible with a clade so supported in
-the other were found only within groups (appendicularians, other tunicates, vertebrates), except one: the amphioxus and
-echinoderm SECIS-binding proteins grouped with vertebrate SECISBP2L in the region upstream of the L7Ae domain (95%) and
-with the tunicate and mollusc proteins in the L7Ae domain (97%), and the L7Ae domain alone placed vertebrate SECISBP2
-and SECISBP2L in one clade that excluded the tunicate proteins (84%) (Supplementary note "Domain analysis of the
-machinery trees").
+appendicularian clades of PSTK and of the SECIS-binding protein in both halves (97 to 100% under the selected model and
+with PMSF), and the selenocysteine SEPHS2 clade in the N-terminal half only (100%). Neither half rejected a grouping of
+the appendicularian PSTK or SECIS-binding protein with the other tunicates (AU tests, p = 0.14 to 0.58 under the two
+models). For SEPHS, the C-terminal half rejected the placement of the selenocysteine clade inside the clade of all
+tunicate SEPHS and at the position of an ortholog under both models (p = 0.004 to 0.028), whereas the N-terminal half
+rejected only the position of an ortholog, and only under PMSF (p = 0.032). For the SECIS-binding protein, the L7Ae
+domain placed vertebrate SECISBP2 and SECISBP2L in one clade that excluded the tunicate proteins (84%, 92% with PMSF),
+whereas the region upstream of it grouped vertebrate SECISBP2L with the amphioxus and echinoderm proteins (95%, 96% with
+PMSF), as did the full-length trees with all invertebrate deuterostome proteins. Apart from this conflict under the
+selected model, clades supported by 95% or more in one half and incompatible with a clade so supported in the other were
+found only within groups (appendicularians, other tunicates, vertebrates, insects and nematodes) (Supplementary note
+"Domain analysis of the machinery trees").
 
 <!-- Provisional section, notes:
 - Figure TREES: figures/phylogeny_<family>_collapsed_pmsf.{png,pdf} (make machinery-lba-figures); supplementary
@@ -2050,8 +2052,9 @@ SEPHS: N- and C-terminal halves; SECIS-binding protein: the region upstream of t
 each part analysed on the same sequences, and the tree of each part tested against the data of the other (AU tests). In
 each family, the data of each part rejected the tree of the other part (p ≤ 0.0014), but the differences lay in weakly
 supported nodes, with the exceptions given in the main text (Table DOMAINS;
-`results/tables/stage2_machinery_domains.tsv`, `stage2_machinery_domain_conflicts.tsv`). The same analyses under
-LG+C60+F+G with posterior mean site frequencies are being rerun on the gold-standard proteins.
+`results/tables/stage2_machinery_domains.tsv`, `stage2_machinery_domain_conflicts.tsv`). The same analyses were run
+under LG+C60+F+G with posterior mean site frequencies estimated on the tree of each part
+(`results/tables/stage2_machinery_domains_pmsf.tsv`, `stage2_machinery_domain_conflicts_pmsf.tsv`).
 
 # Acknowledgements
 

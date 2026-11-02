@@ -1951,3 +1951,10 @@ no earlier step waits for them.
   Wording changed from "co-ortholog of SECISBP2 and SECISBP2L" to "ortholog of the tunicate protein; relation to the
   vertebrate paralogs unresolved" (manuscript, stage2/machinery_table.py). Not yet updated: machinery-rbh (final-run
   predictions), machinery-domains-pmsf (tables of 2026-10-23; the job did not finish before the push).
+- PMSF domain analyses and best hits on the final run (2026-11-02, commit 71fc87a; the first PMSF domain job had failed
+  because it started before machinery-lba had written the full-length PMSF trees): no strongly supported conflict
+  between halves under PMSF outside groups; SEPHS N-terminal half rejects the position of an ortholog under PMSF only
+  (p = 0.032); SECIS-binding protein: L7Ae domain puts SECISBP2 and SECISBP2L together (84, 92 PMSF), the upstream region
+  puts SECISBP2L with amphioxus and echinoderm (95, 96). Best hits unchanged in substance (second, shorter SBP2
+  predictions of B. stygius and M. erythrocephalus closer to SECISBP2; selenocysteine SEPHS within 13 bits of SEPHS1 and
+  SEPHS2, F. borealis included). Machinery orthology text no longer provisional.
