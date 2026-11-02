@@ -119,6 +119,7 @@ OTHER_COST = math.log10(INTRON_CLASSES["GT-AG"] / OTHER_SITES) / MISMATCH_LOG10
 END_TOLERANCE = 10
 TIE_SCORE_MARGIN = 20   # BLOSUM62 score units (half bits): about 10 bits
 MERGE_END, MERGE_GAP = 30, 300   # annotated models split at the codon: end after the codon, distance to the next model
+EXTEND3 = 300   # --anchor sense: genome read after a chain of CDS rows whose frame runs to its end, to find the stop codon
 SEC = True   # --anchor sec: the codon is a TGA read as selenocysteine; --anchor sense: any sense codon of the gene
 
 
@@ -831,10 +832,12 @@ def main():
                 f = n.split("|"); ref_genome[gene_base(f[0])].append((f[1], f"{f[1]}_{f[0]}", sq.replace("*", "")))
 
     def ref_score(protein, gene, g):
+        """Sum of the local alignment scores of a protein to the references of its gene, and the reference with the
+        best score: a reference that is itself truncated cannot favour a truncated candidate over a complete one."""
         pool = refs[gene_base(gene)] + [(lab, sq) for og, lab, sq in ref_genome[gene_base(gene)] if og != g]
         clean = protein.replace("U", "X").replace("*", "")
-        best = max(((local.score(clean, sq), lab) for lab, sq in pool if sq), default=(0.0, "-"))
-        return best
+        scores = [(local.score(clean, sq), lab) for lab, sq in pool if sq]
+        return (sum(x for x, _ in scores), max(scores)[1]) if scores else (0.0, "-")
     # pass 1: candidate models of each gene
     records, genomes, annotations = [], {}, {}
     for g in a.genomes:
@@ -908,6 +911,27 @@ def main():
                 if cds[0][2] != strand or not (min(x for x, _, _ in cds) <= codon0 <= max(y for _, y, _ in cds)): continue
                 m = model_from_chain([(x, y + 1) for x, y, _ in cds], gs, codon0, strand, pid, "projection", cds_only=True)
                 if m: cands.append(m)
+            if proj:
+                # predictions and annotated models extended with the exons of a projection beyond their ends (a
+                # prediction covers only its profile; miniprot may read through the short introns of O. dioica inside
+                # the gene but places its terminal exons)
+                pchains = [(pid, [(x, y + 1) for x, y, _ in cds]) for pid, cds in proj.get(contig, {}).items()
+                           if cds[0][2] == strand]
+                for m0 in [c for c in cands if c["kind"] in ("prediction", "annotation")]:
+                    for pid, pb in pchains:
+                        blocks = extend_chain(m0["blocks"], pb)
+                        if not blocks: continue
+                        m = model_from_chain(blocks, gs, codon0, strand, f"{m0['source']}+{pid}",
+                                             f"{m0['kind']}+projection", cds_only=True)
+                        if m and m["cds"]: cands.append(m)
+                # chains of CDS rows whose frame runs to their 3' end: extended by up to EXTEND3 nt of genome to the
+                # next stop codon (a projection or prediction that stops short of the C-terminus)
+                for m0 in [c for c in cands if c["cds_only"] and c["open3"] and c["cds"]]:
+                    b = sorted(m0["blocks"])
+                    if strand == "+": b[-1] = (b[-1][0], min(len(gs), b[-1][1] + EXTEND3))
+                    else: b[0] = (max(0, b[0][0] - EXTEND3), b[0][1])
+                    m = model_from_chain(b, gs, codon0, strand, m0["source"], m0["kind"] + "+3'extension", cds_only=True)
+                    if m and m["cds"] and not m["open3"]: cands.append(m)
             # transcript chains extended with the exons of overlapping annotated mRNAs or predictions beyond their
             # ends (also models that do not hold the codon: the OdB3 annotation splits genes at the TGA); an
             # extension must change the coding sequence of the transcript's own model

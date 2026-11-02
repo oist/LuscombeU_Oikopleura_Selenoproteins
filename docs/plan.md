@@ -1896,3 +1896,14 @@ no earlier step waits for them.
   files of results/models; to confirm on the standard profile directory), 61 seed elements for RF00031 (Rfam page),
   miniprot evaluated on human, mouse, zebrafish, fly and mosquito with a human splice model (Li 2023, read in full via
   PubMed).
+- Second run of gold-standard-machinery (2026-11-02, commit a6b4692; six genomes): PSTK now consistent (241, 246, 258,
+  207, 248 aa; shorter than human PSTK, 358 aa), SBP2 and EEFSEC consistent in O. dioica (658/617/620; 515/523/523),
+  SEPHS_b of OKI2018 still 635 aa, but its first 393 residues align to human SEPHS1 over its whole length and the
+  C-terminal extension is also in the RefSeq model (XP_081645007.1) and partly in the O. albicans projection (kept).
+  Remaining problems: SEPSECS of OKI2018 fell to 332 aa (TRINITY_DN6371_c0_g1_i4, a retained intron; the complete
+  i1 model is 473 aa) because the best score against a truncated first-pass reference (OSKA2016, OdB3) cannot tell
+  them apart; SEPSECS of OdB3 stays 349 aa (prediction): the miniprot projection of the OKI2018 protein reaches the
+  N-terminal exon but reads through a 48-nt intron; several projections in the other species end without a stop
+  codon. Changes: the score is the sum over the references (a truncated reference no longer decides); predictions and
+  annotated models are extended with the exons of a projection beyond their ends; chains of CDS rows whose frame runs
+  to their end are extended by up to 300 nt to the next stop codon (kind "+3'extension").
