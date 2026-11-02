@@ -1938,3 +1938,5 @@ no earlier step waits for them.
   the repository is given for accountability without a guarantee that every commit is free from mistakes. Added
   without explicit instruction, to confirm: the model also drafted the text of the manuscript; cluster jobs were
   submitted by the author. Data and code availability points to the repository history.
+- Statement revised (2026-11-02, Charles): the cluster jobs are an implementation detail (not mentioned); the
+  manuscript is written and edited entirely by the model through the author's prompts (stated).

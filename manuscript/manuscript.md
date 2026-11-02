@@ -1874,12 +1874,12 @@ selenocysteine.
 
 The iterative steps of the analysis (Figure LOOP) were carried out by Claude Opus 5.5 (Anthropic), a large language
 model working in a command-line environment, executing high-level instructions from the author: it wrote and ran the
-analysis code and the changes to the pipeline, and drafted the text of this manuscript; the jobs on the computing
-cluster were submitted by the author. The author assessed the final results, and this assessment is presented through
-the controls reported in the Results: tests on assemblies that did not contribute to the settings, transcript support
-of the gold-standard models, absence tests, and the comparison of the trees under several models. The Git repository
-of the analysis is given for accountability: its history records each step, but there is no guarantee that every
-commit is free from mistakes; as when working with people, some errors were made and later corrected.
+analysis code and the changes to the pipeline. The text of this manuscript was also written and edited entirely by the
+model, following prompts from the author. The author assessed the final results, and this assessment is presented
+through the controls reported in the Results: tests on assemblies that did not contribute to the settings, transcript
+support of the gold-standard models, absence tests, and the comparison of the trees under several models. The Git
+repository of the analysis is given for accountability: its history records each step, but there is no guarantee that
+every commit is free from mistakes; as when working with people, some errors were made and later corrected.
 
 ## Data and code availability
 
