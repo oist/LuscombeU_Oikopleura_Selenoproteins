@@ -96,9 +96,10 @@ another frame (counted from the first base of the coding sequence), codon in an 
 sequence ending before the codon or starting after it, no model); and the change that the annotation needs
 (annotation_fix).
 Outputs in --out: <genome>.candidate_models.tsv (every candidate model with its exon chain, splice sites and the ranking
-criteria, every supporting transcript with its own frame, and the annotated transcripts near the codon that are not
-candidates, with the splice sites of their chain as annotated; the CDS rows of annotated models in annotated_cds; for
-review), <genome>.gff3 (gene, mRNA, exon and CDS features; transl_except=(pos:..%2Caa:Sec) on the CDS rows),
+criteria, every supporting transcript with its own frame and its differences to the assembly in the aligned blocks
+(insertions as 1-based genome position:number of bases, deletions as 1-based spans, mismatches as 1-based positions),
+and the annotated transcripts near the codon that are not candidates, with the splice sites of their chain as
+annotated; the CDS rows of annotated models in annotated_cds; for review), <genome>.gff3 (gene, mRNA, exon and CDS features; transl_except=(pos:..%2Caa:Sec) on the CDS rows),
 <genome>.proteins.faa (U for selenocysteine), <genome>.utr3.fa (3' UTR of the model), <genome>.after_stop.fa
 (--after-stop nucleotides of genome after the stop codon, on the gene strand), and --table.
 """
@@ -791,8 +792,19 @@ def candidate_rows(g, gene, models, tms, chosen, others, genome, strand):
                      "indels": "", "exons": fmt(m["blocks"]),
                      "splice_sites": ";".join(x[0] for x in m.get("sites", [])),
                      "annotated_cds": fmt([(x, y + 1) for x, y in m["annotated_cds"]]) if m.get("annotated_cds") else ""})
+    def differences(tm):
+        """Insertions (genome position before which the transcript has extra bases, and their number), deletions
+        (genome spans missing from the transcript) and mismatches (genome positions), 1-based, of the aligned blocks."""
+        w, fwd = tm["walk"], tm["fwd"].upper()
+        ins = collections.Counter(t for _, t in w["ins"])
+        mism = sorted(p for p, q in w["g2q"].items() if p < len(genome) and q < len(fwd) and fwd[q] != genome[p] and
+                      fwd[q] in "ACGT")
+        return (";".join(f"{t + 1}:{n}" for t, n in sorted(ins.items())),
+                ";".join(f"{a + 1}-{b}" for a, b in w.get("del_spans", [])), ";".join(str(p + 1) for p in mism))
     for tm in tms:
+        ins_, del_, mis_ = differences(tm)
         rows.append({"genome": g, "gene": gene, "item": "transcript frame", "kind": "transcript", "source": tm["tx"],
+                     "insertions": ins_, "deletions": del_, "mismatches": mis_,
                      "chosen": "", "protein_length": len(tm["protein"]),
                      "starts_with_M": "yes" if tm["protein"].startswith("M") else "no",
                      "stop": "no" if tm["open3"] else "yes", "upstream_stop": "no" if tm["open5"] else "yes",
@@ -809,7 +821,8 @@ def candidate_rows(g, gene, models, tms, chosen, others, genome, strand):
 
 
 CANDIDATE_COLUMNS = ["genome", "gene", "item", "kind", "source", "chosen", "protein_length", "starts_with_M", "stop",
-                     "upstream_stop", "context", "compatible_transcripts", "indels", "exons", "splice_sites", "annotated_cds"]
+                     "upstream_stop", "context", "compatible_transcripts", "indels", "exons", "splice_sites", "annotated_cds",
+                     "insertions", "deletions", "mismatches"]
 
 
 def main():
@@ -1252,7 +1265,7 @@ def main():
         with open(f"{a.out}/{g}.candidate_models.tsv", "w") as fh:
             fh.write("\t".join(CANDIDATE_COLUMNS) + "\n")
             for r in cand_rows:
-                if r["genome"] == g: fh.write("\t".join(str(r[c]) for c in CANDIDATE_COLUMNS) + "\n")
+                if r["genome"] == g: fh.write("\t".join(str(r.get(c, "")) for c in CANDIDATE_COLUMNS) + "\n")
         for suffix, key in (("proteins.faa", "prot"), ("utr3.fa", "utr"), ("after_stop.fa", "after")):
             with open(f"{a.out}/{g}.{suffix}", "w") as fh: fh.write("".join(o[key]))
     cols = ["genome", "gene", "family", "contig", cc, "strand", "baseline_status", "evidence",

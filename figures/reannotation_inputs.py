@@ -13,8 +13,11 @@ Splice sites of the drawn introns of the public and gold-standard models: read o
 otherwise taken from the rows of the candidate table that have the same intron ("?" when none has it).
 Reference proteins (--reference label=UniProt accession, the first one giving the coordinates of panel B): sequence,
 selenocysteine positions and Pfam domains (short names) from the InterPro API.
-Needs network access to www.ebi.ac.uk. Outputs figures/inputs/reannotation_<gene>.tsv (with the source of each
-value) and .fa (public and reference proteins).
+With --transcripts N, also the N supporting transcripts per assembly with the most introns (then the longest), with
+their exon chains as aligned and junctions placed by step 2, and their insertions, deletions and mismatches against the
+assembly (candidate table of step 2; columns written since 2026-11-03).
+Needs network access to www.ebi.ac.uk. Outputs figures/inputs/reannotation_<gene>.tsv (with the source of each value)
+and .fa (public and reference proteins).
 """
 import argparse, csv, json, os, re, sys, urllib.request
 
@@ -143,6 +146,9 @@ def main():
     ap.add_argument("--reference-note", nargs="*", default=[], help="label=text shown under a reference protein")
     ap.add_argument("--gold-note", nargs="*", default=[], help="genome=text shown next to a gold-standard model")
     ap.add_argument("--out", default="figures/inputs")
+    ap.add_argument("--transcripts", type=int, default=0,
+                    help="supporting transcripts drawn per assembly (rows 'transcript frame' of the candidate table that "
+                    "carry their differences to the assembly; the ones with most introns, then the longest)")
     a = ap.parse_args()
     gene = a.gene
     genomes = {k: v for k, v in (x.split("=", 1) for x in a.genome)}
@@ -207,6 +213,15 @@ def main():
             ng, _, nm = k.partition(":")
             if ng == g and nm in seen: rows.append(("public", g, nm, "note", text, "curator"))
         rows.append(("gold", g, gene, "sites", *intron_sites(gex, cseq, strand, tsites)))
+        if a.transcripts:   # supporting transcripts with their differences to the assembly
+            txs = [r for r in allrows if r["item"] == "transcript frame" and "insertions" in r]
+            txs.sort(key=lambda r: (-len(blocks(r["exons"])), -sum(y - x for x, y in blocks(r["exons"]))))
+            src = f"candidate table of step 2 ({g}.candidate_models.tsv; minimap2 alignment, junctions placed)"
+            rows.append(("transcripts", g, "-", "count", str(len(txs)), src))
+            for r in txs[:a.transcripts]:
+                for fld in ("exons", "insertions", "deletions", "mismatches"):
+                    rows.append(("transcript", g, r["source"], fld, r[fld], src))
+                rows.append(("transcript", g, r["source"], "sites", *intron_sites(blocks(r["exons"]), cseq, strand, tsites)))
         for n in a.gold_note:
             ng, _, text = n.partition("=")
             if ng == g: rows.append(("gold", g, gene, "note", text, "curator"))

@@ -25,7 +25,12 @@ below the genes, and the page is cut below it). Sizes are physical (mm), so that
 Inputs: figures/inputs/reannotation_<gene>.{tsv,fa} (figures/reannotation_inputs.py) and the gold-standard outputs
 of step 2; when figures/inputs/reannotation_<gene>.paralogs.{tsv,fa} exist (make txnl1-paralogs), the paralog of each
 assembly is drawn below the gold-standard model (public model, aligned on its codon aligned to the selenocysteine)
-and its protein below the gold-standard proteins. Output: <out>/<name>.{pdf,svg,png}.
+and its protein below the gold-standard proteins. When the inputs carry supporting transcripts
+(reannotation_inputs.py --transcripts), they are drawn below the gold-standard model of their assembly (exon chain as
+aligned and placed by step 2, splice sites coloured as for the models), with their differences to the assembly:
+bases of the transcript missing from the assembly (triangle above the track, with their number when more than one),
+bases of the assembly missing from the transcript (open box, at least 0.6 mm wide) and mismatches (thin ticks); their
+names are listed in the paragraph. Output: <out>/<name>.{pdf,svg,png}.
 """
 import argparse, collections, csv, math, os, sys
 import matplotlib
@@ -46,6 +51,9 @@ GOLD, PUBLIC, OTHER, SEC, SECIS, DOM = rf.GOLD, rf.PUBLIC, rf.OTHER, rf.SEC, rf.
 PARALOG = "0.1"                            # paralog of the gene (public model and protein)
 ORIGIN = "sec"                             # x origin of the gene models (--origin)
 ORIGIN_LABEL = {"sec": "TGA", "start": "ATG"}
+TX = "#2c7a7b"                             # supporting transcripts
+TX_GAP = 1.5                               # distance between transcript tracks (mm)
+DIFF = "#c53030"                           # insertions and deletions of a transcript against the assembly
 NO_SECIS = False                           # --no-secis
 GENOMES, NAMES, SITE_COLOURS = rf.GENOMES, rf.NAMES, rf.SITE_COLOURS
 MM = 1 / 25.4
@@ -85,10 +93,14 @@ def short(name): return name.replace("Oidioi.CG.OSKA2016.", "").replace("rna-", 
 def load(gene, a):
     rows = list(csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.tsv"), delimiter="\t"))
     d = {"gene": gene, "seqs": rf.read_fasta(f"{a.inputs}/reannotation_{gene}.fa"), "public": collections.defaultdict(dict),
-         "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict()}
+         "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict(), "tx": {}, "tx_count": {}}
     for r in rows:
         if r["kind"] == "public": d["public"][r["assembly"]].setdefault(r["name"], {})[r["field"]] = r["value"]
         elif r["kind"] == "gold": (d["gold_sites"] if r["field"] == "sites" else d["gold_notes"])[r["assembly"]] = r["value"]
+        elif r["kind"] == "transcript":
+            tx = d["tx"].setdefault(r["assembly"], collections.OrderedDict()).setdefault(r["name"], {})
+            tx[r["field"]] = r["value"]
+        elif r["kind"] == "transcripts": d["tx_count"][r["assembly"]] = int(r["value"])
         elif r["kind"] == "reference":
             x = d["refs"].setdefault(r["name"], {"domains": []})
             if r["field"] == "domain": x["domains"].append(r["value"])
@@ -132,6 +144,10 @@ def load(gene, a):
     for g in xr:
         feats += [(min(xr[g](p), xr[g](q)), max(xr[g](p), xr[g](q)) + 1) for p, q in d["gold"][g][1]]
         for m in d["public"][g].values():
+            for p, q in rf.blocks(m["exons"]):
+                a0, a1 = max(min(xr[g](p), xr[g](q)), win[g][0]), min(max(xr[g](p), xr[g](q)) + 1, win[g][1])
+                if a1 > a0: feats.append((a0, a1))
+        for m in d["tx"].get(g, {}).values():
             for p, q in rf.blocks(m["exons"]):
                 a0, a1 = max(min(xr[g](p), xr[g](q)), win[g][0]), min(max(xr[g](p), xr[g](q)) + 1, win[g][1])
                 if a1 > a0: feats.append((a0, a1))
@@ -187,6 +203,10 @@ def notes(d):
         if g not in d["x"]:
             text = "no gold-standard model" + (f": {d['gold_notes'][g]}." if d["gold_notes"].get(g) else ".")
         elif d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
+        if d["tx"].get(g):
+            n, k = d["tx_count"].get(g, 0), len(d["tx"][g])
+            text += (f" Transcripts (top to bottom; {k} of the {n} that hold the anchor codon, most introns first): "
+                     if n > k else " Transcripts (top to bottom): ") + ", ".join(short(t) for t in d["tx"][g]) + "."
         out.append((NAMES[g], text))
     if d["par"]:
         lbl = next(iter(d["par"].values())).get("label", "paralog")
@@ -252,6 +272,11 @@ def layout_models(genes):
         pub = y
         y -= PAIR                      # public and gold-standard models of one assembly: closer than two assemblies
         tracks[g] = {"pub": pub, "gold": y}
+        ntx = max((len(d["tx"].get(g, {})) for d in genes), default=0)
+        if ntx:
+            y -= 0.6
+            tracks[g]["tx"] = [y - TX_GAP * (k + 1) for k in range(ntx)]
+            y -= TX_GAP * ntx
         if has_par:
             y -= PAIR + 0.6
             tracks[g]["par"] = y
@@ -301,6 +326,25 @@ def draw_models(ax, d, tracks, col_w):
             end = max(end, x1)
             ax.text(end + 0.8 * ntmm, t["gold"], f"{bits:.0f}", fontsize=4.5, color=SECIS, va="center")
         last_gold = t["gold"]
+        for (name, m), yy in zip(d["tx"].get(g, {}).items(), t.get("tx", [])):
+            e = rf.blocks(m["exons"])
+            drawn = draw_model(ax, yy, e, [], x, TX, sites=rf.site_map(e, m.get("sites", "")), clip=(lo, hi))
+            mark_breaks(ax, d, yy, drawn, ntmm)
+            inside = lambda p: lo <= x(p) <= hi
+            for v in filter(None, m.get("mismatches", "").split(";")):
+                if inside(int(v)): ax.plot([x(int(v))] * 2, [yy - 0.45, yy + 0.45], color="0.15", lw=0.3, zorder=4)
+            for v in filter(None, m.get("insertions", "").split(";")):
+                pos, n = map(int, v.split(":"))
+                if not inside(pos): continue
+                ax.plot([x(pos)], [yy + 0.75], marker="v", ms=1.8, color=DIFF, mew=0, zorder=5)
+                if n > 1: ax.text(x(pos) + 0.5 * ntmm, yy + 0.75, str(n), fontsize=3.5, color=DIFF, va="center")
+            for v in filter(None, m.get("deletions", "").split(";")):
+                a0, a1 = map(int, v.split("-"))
+                if not inside(a0): continue
+                w = max(abs(x(a1) - x(a0)) + 1, 0.6 * ntmm)    # at least 0.6 mm wide
+                ax.add_patch(Rectangle((min(x(a0), x(a1)) - (w - abs(x(a1) - x(a0)) - 1) / 2, yy - 0.55), w, 1.1,
+                                       facecolor="white", edgecolor=DIFF, lw=0.4, zorder=5))
+            last_gold = yy
         if g in d["par"]:
             m, xpg = d["par"][g], d["xp"][g]
             plo, phi = d["pwin"][g]
@@ -484,7 +528,7 @@ def draw_proteins(ax, d, refs_y, gold_y, par_y, col_w, fig):
     ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
-def key(fig, used_sites, sources, top=None, paralog=None):
+def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False):
     """Key at the bottom of the page (or below the genes, its top at top mm): items one after the other, a new line
     when the page width is reached; one group for the gene models, one for the proteins. Returns its height and its
     bottom (mm)."""
@@ -520,6 +564,18 @@ def key(fig, used_sites, sources, top=None, paralog=None):
                "public models of the same row, as named in the paragraph", "black")]
     if NO_SECIS:   # genes without selenocysteine: no SECIS entry; the selenocysteine circle is not used either
         models = [m for m in models if not m[1].startswith("best SECIS hit")]
+    if transcripts:
+        models += [(lambda ax, cx, y: ax.add_patch(Rectangle((cx, y - UTR_H / 2), 7, UTR_H, facecolor=TX, edgecolor="none")),
+                    "transcript aligned to the assembly (exons)", "black"),
+                   (lambda ax, cx, y: (ax.add_patch(Rectangle((cx, y - UTR_H / 2), 7, UTR_H, facecolor=TX, edgecolor="none")),
+                                       ax.plot([cx + 3.5], [y + 0.75], marker="v", ms=1.8, color=DIFF, mew=0)),
+                    "bases of the transcript missing from the assembly (number when more than one)", "black"),
+                   (lambda ax, cx, y: (ax.add_patch(Rectangle((cx, y - UTR_H / 2), 7, UTR_H, facecolor=TX, edgecolor="none")),
+                                       ax.add_patch(Rectangle((cx + 2.5, y - 0.55), 2, 1.1, facecolor="white", edgecolor=DIFF, lw=0.4))),
+                    "bases of the assembly missing from the transcript", "black"),
+                   (lambda ax, cx, y: (ax.add_patch(Rectangle((cx, y - UTR_H / 2), 7, UTR_H, facecolor=TX, edgecolor="none")),
+                                       [ax.plot([cx + v] * 2, [y - 0.45, y + 0.45], color="0.15", lw=0.3) for v in (2, 3.2, 5)]),
+                    "mismatches", "black")]
     if paralog:
         models.insert(3, (lambda ax, cx, y: exon(ax, cx, y, PARALOG),
                           f"{paralog} (public model; aligned on its codon aligned to the selenocysteine)", "black"))
@@ -540,7 +596,9 @@ def key(fig, used_sites, sources, top=None, paralog=None):
                 (None, sources, "black")]
     lines, line, cx = [], [], 0
     split = 5 if paralog else 4
-    for group in (models[:split], models[split:], introns, proteins):
+    ntx = 4 if transcripts else 0
+    groups = (models[:split], models[split:len(models) - ntx], models[len(models) - ntx:], introns, proteins)
+    for group in (g_ for g_ in groups if g_):
         for f, text, col in group:
             w = (G if f else 0) + width_mm(text, 5.5) + 3.5
             if line and cx + w > W: lines.append(line); line, cx = [], 0
@@ -597,6 +655,7 @@ def main():
         for g in GENOMES:
             used |= set(d["gold_sites"].get(g, "").split(";"))
             for m in d["public"].get(g, {}).values(): used |= set(m.get("sites", "").split(";"))
+            for m in d["tx"].get(g, {}).values(): used |= set(m.get("sites", "").split(";"))
     for r in range(0, len(genes), NC):
         row = genes[r:r + NC]
         tracks, hA = layout_models(row)
@@ -625,6 +684,12 @@ def main():
                     axA.text(fx(LEFT - 1.5), t["pub"], DB[g], transform=lab, fontsize=5, ha="right", va="center", color="0.25")
                     axA.text(fx(LEFT - 1.5), t["gold"], "gold standard", transform=lab, fontsize=5.5, ha="right", va="center", color=GOLD)
                     axA.text(fx(2), t["pub"], NAMES[g], transform=lab, fontsize=5.5, fontweight="bold", ha="left", va="center")
+                    if t.get("tx"):
+                        shown = max(len(x["tx"].get(g, {})) for x in row)
+                        total = max(x["tx_count"].get(g, 0) for x in row)
+                        axA.text(fx(LEFT - 1.5), (t["tx"][0] + t["tx"][-1]) / 2,
+                                 f"transcripts ({shown} of {total})" if total > shown else "transcripts", transform=lab,
+                                 fontsize=5.5, ha="right", va="center", color=TX)
                     pm = next((x["par"][g] for x in row if g in x["par"]), None)
                     if "par" in t and pm:
                         axA.text(fx(LEFT - 1.5), t["par"], f"{pm.get('label', 'paralog')}, {pm.get('database', '')}", transform=lab,
@@ -647,7 +712,8 @@ def main():
         rulers.append((row_top, row_bottom))
         top = axN_bottom - 6
     plabel = next((next(iter(d["par"].values())).get("label", "paralog") for d in genes if d["par"]), None)
-    key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel)
+    key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel,
+                            transcripts=any(d["tx"] for d in genes))
     # thin rulers: between rows of genes and above the key, and between the columns of each row
     from matplotlib.lines import Line2D
     rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)

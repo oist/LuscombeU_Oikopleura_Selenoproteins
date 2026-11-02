@@ -7,8 +7,9 @@
 set -e
 GOLD=${GOLD:-curation/gold_standard_machinery}
 OUT=${OUT:-figures/inputs}
+TRANSCRIPTS=${TRANSCRIPTS:-4}   # supporting transcripts drawn per assembly
 run() { python3 figures/reannotation_inputs.py --gold "$GOLD" --table results/tables/gold_standard_machinery.tsv \
-          --genome OKI="$OKI_GENOME" OdB3="$ODB3_GENOME" --out "$OUT" "$@" > /dev/null; }
+          --genome OKI="$OKI_GENOME" OdB3="$ODB3_GENOME" --out "$OUT" --transcripts "$TRANSCRIPTS" "$@" > /dev/null; }
 
 run --gene PSTK --embl FN653020.1 --reference "human=Q8IV42" \
     --reference-fasta "C. intestinalis=results/trees/pstk.faa:Cint_RefSeq_PSTK_XP_002120985.2:XP_002120985.2" \

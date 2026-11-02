@@ -1978,3 +1978,10 @@ no earlier step waits for them.
   (inputs: figures/machinery_reannotation_inputs.sh, run here with the OKI2018 and OdB3 genomes and the EBI API), panel B
   the PMSF tree (to update after the next tree run, which will include the OdB3 override). The PSTK paragraphs of the
   orthology section (best hits, tree, domain halves) moved into the subsection; SECp43 gets its own subsection.
+- Transcript evidence in the machinery panels (2026-11-03; Charles: with so many non-canonical exons, show some of the
+  transcript data so that readers can assess the confidence). gold_standard.py writes, for each supporting transcript
+  of the candidate table, its insertions, deletions and mismatches against the assembly (aligned blocks after junction
+  placement); models and tables unchanged (checked on the local test data). reannotation_inputs.py --transcripts N keeps
+  the N transcripts with most introns (then longest) per assembly; reannotation_page.py draws them below the
+  gold-standard model with their splice sites and differences, and lists their names in the paragraph (pages without
+  transcripts unchanged: Figure PSTK identical). Needs a rerun of make gold-standard-machinery for the new columns.

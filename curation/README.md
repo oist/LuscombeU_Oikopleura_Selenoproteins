@@ -52,12 +52,15 @@ machinery prediction of the final stage 2 run, with an anchor codon in the middl
 labelled pseudo, fragments shorter than half the longest prediction of the gene, and predictions overlapping a
 selenoprotein gold-standard gene left out) and `machinery_references.faa` (human RefSeq proteins of each gene). A
 first pass builds the *O. dioica* models around the anchors, from transcripts, annotations and predictions, ranking
-the candidates by their best local alignment score to the human proteins (a fragment scores less, a fusion no more;
-then splice sites, completeness, transcript support, shorter protein). `machinery_projections.py` aligns the human
+the candidates by the sum of their local alignment scores to the human proteins and, in the final pass, to the
+first-pass proteins of the other assemblies (a fragment scores less, a fusion no more): candidates within 5% of the best
+score come first, then those without unsupported splice sites, complete ones, those with transcript support, those
+not contradicted by a transcript, and higher score. `machinery_projections.py` aligns the human
 proteins and the first-pass proteins to the six genomes with miniprot; the final pass adds these alignments as
 candidate models and the first-pass proteins of the other genomes as references. Outputs:
 `gold_standard_machinery/<genome>.gff3` (no `transl_except`), `<genome>.proteins.faa`,
-`<genome>.candidate_models.tsv`, and `results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of
+`<genome>.candidate_models.tsv` (since 2026-11-03 with the insertions, deletions and mismatches of each supporting
+transcript against the assembly, drawn in the machinery panels), and `results/tables/gold_standard_machinery.tsv` (column `anchor_codon` instead of
 `sec_codon`; `reference_score`: the score and the reference it was reached with).
 
 `machinery_overrides.tsv`: exon chains of machinery genes set by the curator, with the evidence, where no candidate
