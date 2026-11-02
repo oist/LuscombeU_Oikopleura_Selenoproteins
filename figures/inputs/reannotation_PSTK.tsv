@@ -21,7 +21,7 @@ transcript	OKI	TRINITY_DN16768_c0_g1_i4	insertions		candidate table of step 2 (O
 transcript	OKI	TRINITY_DN16768_c0_g1_i4	deletions		candidate table of step 2 (OKI.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OKI	TRINITY_DN16768_c0_g1_i4	mismatches		candidate table of step 2 (OKI.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OKI	TRINITY_DN16768_c0_g1_i4	sites	GT-AG;TG-AG;AG-AA	genome sequence
-gold	OKI	PSTK	note	two splice sites outside the intron classes, as in both supporting transcripts (possible assembly errors)	curator
+gold	OKI	PSTK	note	third and fourth introns with splice sites outside the intron classes (TG-AG, AG-AA), as in the three supporting transcripts	curator
 public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	database	ANISEED	
 public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	exons	1351967-1352170;1352532-1352838;1352902-1352976;1353022-1353167;1353511-1353810;1353897-1354151;1355541-1355787;1355824-1355954;1356248-1356397	candidate table of step 2 (OSKA.candidate_models.tsv)
 public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	cds	1351967-1352170;1352532-1352838;1352902-1352976;1353022-1353167;1353511-1353810;1353897-1354151;1355541-1355787;1355824-1355954;1356248-1356397	candidate table of step 2 (OSKA.candidate_models.tsv)
@@ -49,13 +49,13 @@ transcript	OSKA	comp20361_c0_seq4	insertions		candidate table of step 2 (OSKA.ca
 transcript	OSKA	comp20361_c0_seq4	deletions		candidate table of step 2 (OSKA.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OSKA	comp20361_c0_seq4	mismatches	1355828;1355886;1355967;1355974;1355979;1356341;1356352;1356353;1356472;1356661;1356703;1356712;1356716;1356721	candidate table of step 2 (OSKA.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OSKA	comp20361_c0_seq4	sites	TT-GT;GG-AG	candidate table of step 2 (same intron)
-gold	OSKA	PSTK	note	two splice sites outside the intron classes, as in the supporting transcript	curator
+gold	OSKA	PSTK	note	third and fourth introns with splice sites outside the intron classes (AA-AG, TT-GT), as in the supporting transcripts; the third intron is retained in two of them	curator
 public	OdB3	CBY23135.1	database	GenBank	
 public	OdB3	CBY23135.1	exons	777153-777484;777485-777723;777890-777927;778023-778155;778205-778331;778332-778335	ENA EMBL record (mRNA location)
 public	OdB3	CBY23135.1	cds	777485-777723;777890-777927;778023-778155;778205-778331	ENA EMBL record (CDS location)
 public	OdB3	CBY23135.1	sites	GA-AG;GG-AG;GT-AG	genome sequence
 public	OdB3	CBY23135.1	note	same first three exons; other first site of the fourth exon, and no last exon (178 codons)	curator
-gold	OdB3	PSTK	sites	GG-AG;GA-AG;GG-AG;GT-AG	genome sequence
+gold	OdB3	PSTK	sites	AT-AG;GA-AG;GG-AG;GT-AG	genome sequence
 transcripts	OdB3	-	count	2	candidate table of step 2 (OdB3.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OdB3	KT0AAA259YN02RM1	exons	777154-777332;777565-777927;778023-778155;778205-778338	candidate table of step 2 (OdB3.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OdB3	KT0AAA259YN02RM1	insertions		candidate table of step 2 (OdB3.candidate_models.tsv; minimap2 alignment, junctions placed)
@@ -67,7 +67,7 @@ transcript	OdB3	KT0AAA109YN17RM1	insertions	777927:2;777965:1;778008:2	candidate
 transcript	OdB3	KT0AAA109YN17RM1	deletions	777934-777934;778003-778003;778031-778031	candidate table of step 2 (OdB3.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OdB3	KT0AAA109YN17RM1	mismatches	777896;777931;777982;777999;778008;778028	candidate table of step 2 (OdB3.candidate_models.tsv; minimap2 alignment, junctions placed)
 transcript	OdB3	KT0AAA109YN17RM1	sites	AT-AG	genome sequence
-gold	OdB3	PSTK	note	exon chain set by the curator: the GenBank exons 1 to 3 and the last intron of the ESTs	curator
+gold	OdB3	PSTK	note	exon chain set by the curator: the GenBank exons 1 to 3, the acceptor of the third intron (GA-AG; retained in both ESTs) from the prediction, and the last intron of the ESTs (AT-AG)	curator
 reference	-	human	accession	UniProt Q8IV42	UniProt Q8IV42 (InterPro API)
 reference	-	human	organism	Homo sapiens	UniProt Q8IV42 (InterPro API)
 reference	-	human	axis	yes	

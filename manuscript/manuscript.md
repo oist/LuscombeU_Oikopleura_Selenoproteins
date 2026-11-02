@@ -796,7 +796,7 @@ intron, the ANISEED model of OSKA2016 starts in the fourth exon and continues pa
 the next gene, and the GenBank model of OdB3 has the first three exons, another first site for the fourth exon and no
 last exon. The gold-standard proteins, of 241, 246 and 246 residues, are about 100 residues shorter than human PSTK (348
 residues) and 75 shorter than that of *Ciona intestinalis* (320 residues), and they are distant from both: the OdB3
-protein has 33 and 37% similar residues with them, against 76 and 93% with the OKI2018 and OSKA2016 proteins. The fourth
+protein has 34 and 37% similar residues with them, against 77 and 93% with the OKI2018 and OSKA2016 proteins. The fourth
 intron has splice sites outside the intron classes of *O. dioica* in the three assemblies (AG-AA in OKI2018, TT-GT in
 OSKA2016 and AT-AG in OdB3, read on the assemblies), and so has the third intron in OKI2018 (TG-AG) and OSKA2016
 (AA-AG), whereas it is a GA-AG intron in OdB3. The transcripts that splice these introns all splice them at these sites
@@ -838,8 +838,9 @@ PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0
 
 <!-- Panel B and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
 8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf).
-Panel A, the OdB3 protein length (246) and the similarities: the OdB3 last intron moved to the EST site on 2026-11-03;
-to check after the next run of make gold-standard-machinery. -->
+Panel A: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site). The splice sites of the third
+and fourth introns: to revise after make pstk-regions (equivalent placements; assemblies of other individuals) and
+Charles's check of the RNA-seq reads. -->
 
 Figure PSTK. PSTK of appendicularians. A (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`), gene models and
 proteins in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the

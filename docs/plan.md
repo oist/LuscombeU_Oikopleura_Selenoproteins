@@ -1996,3 +1996,28 @@ no earlier step waits for them.
   local scores 736/1093 against 749/1106 for the EST site, to OKI2018/OSKA2016): override corrected to the EST site
   (OdB3 PSTK 246 residues). Needs a rerun of make gold-standard-machinery, then inputs and Figure PSTK again; the trees
   after the review of the other machinery genes.
+- Figure PSTK redrawn from run 850caba (OdB3 PSTK 246 residues, last intron AT-AG as in the ESTs; similarity of the
+  OdB3 protein: 34% human, 37% C. intestinalis, 77% OKI2018, 93% OSKA2016). Charles asked whether five splice sites
+  outside the intron classes in one gene is an extraordinary claim, and whether other assemblies support the exon
+  chain. Observations so far: (1) where no class site exists, gold_standard.py names the placement with the smallest
+  move among equivalent ones, so the dinucleotides are partly arbitrary: in OKI2018 the fourth intron can be placed at
+  AG-AA, GT-AA, TT-AG or TT-GT without changing the transcript; placed on an AG acceptor it is TT-AG, in the same phase
+  (1) as the AT-AG intron of the OdB3 ESTs (OSKA2016 lists TT-AG among its placements; phase to check on the sequence).
+  (2) O. vanhoeffeni PSTK (prediction, no transcripts) is one open reading frame of 248 codons aligned along the whole
+  O. dioica protein: no intron at all. O. albicans PSTK (prediction) has two exons, its only intron near the third
+  O. dioica intron (with a 5-residue insertion next to it), and its protein ends about 50 residues early, diverging
+  near the position of the fourth intron, as a prediction that reads into an unspliced intron would. O. longicauda,
+  B. stygius and M. erythrocephalus: fragments only. (3) ENA: no transcriptome for O. longicauda, O. albicans or
+  O. vanhoeffeni; Bathochordaeus mcnutti has 5 RNA-seq runs but no genome. (4) C. intestinalis RefSeq PSTK
+  (XP_002120985.2, LOC100177473, chromosome NC_136093): Gnomon model "supported by EST evidence" (3 ESTs, 6 long SRA
+  reads; NCBI record read on 2026-11-03); exon structure to read in the regions. New target make pstk-regions
+  (curation/gene_regions.py): regions of PSTK in the gold-standard assemblies, O. albicans and O. vanhoeffeni, the
+  assemblies of other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4; region aligned with minimap2), the C. intestinalis
+  gene and the fragments, written to results/gene_regions/PSTK for reading by hand.
+
+## Checks by hand (Charles)
+
+- PSTK: look at the locus in the genome browser with the RNA-seq reads loaded (OKI2018 NC_137294.1:1940248-1941206,
+  OSKA2016 S10:1355815-1356898): split reads at the third and fourth introns (number, exact junctions, other
+  junctions nearby), retention of the third intron, and, if genomic reads are loaded, the assembly bases at the splice
+  sites. OdB3 has only the two ESTs.
