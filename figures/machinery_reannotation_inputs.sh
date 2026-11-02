@@ -11,4 +11,10 @@ run() { python3 figures/reannotation_inputs.py --gold "$GOLD" --table results/ta
           --genome OKI="$OKI_GENOME" OdB3="$ODB3_GENOME" --out "$OUT" "$@" > /dev/null; }
 
 run --gene PSTK --embl FN653020.1 --reference "human=Q8IV42" \
-    --reference-fasta "C. intestinalis=results/trees/pstk.faa:Cint_RefSeq_PSTK_XP_002120985.2:XP_002120985.2"
+    --reference-fasta "C. intestinalis=results/trees/pstk.faa:Cint_RefSeq_PSTK_XP_002120985.2:XP_002120985.2" \
+    --note "OKI:XP_081642556.1=first three exons only; reads on into the third intron (110 codons, 98 of them as in the gold standard)" \
+           "OSKA:Oidioi.CG.OSKA2016.S10.g09825.01.t=starts in the fourth exon and continues past the stop codon into seven exons downstream (604 codons)" \
+           "OdB3:CBY23135.1=same first three exons; other first site of the fourth exon, and no last exon (178 codons)" \
+    --gold-note "OKI=two splice sites outside the intron classes, as in both supporting transcripts (possible assembly errors)" \
+                "OSKA=two splice sites outside the intron classes, as in the supporting transcript" \
+                "OdB3=exon chain set by the curator: the GenBank exons 1 to 3 and the last intron of the ESTs"

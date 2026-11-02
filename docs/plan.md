@@ -1974,3 +1974,7 @@ no earlier step waits for them.
   non-canonical sites lower (commit 688720a) is reverted: in OKI2018 PSTK the two transcripts' chain (TG-AG, AG-AA at
   the assembly) gives a protein more similar to OSKA2016 and OdB3 than any chain with canonical sites (best
   similarity score 1462 against 1442), which suggests small assembly errors at these junctions; it stays as chosen.
+- Figure PSTK and the PSTK subsection of the machinery section (2026-11-03): panel A from make machinery-reannotation
+  (inputs: figures/machinery_reannotation_inputs.sh, run here with the OKI2018 and OdB3 genomes and the EBI API), panel B
+  the PMSF tree (to update after the next tree run, which will include the OdB3 override). The PSTK paragraphs of the
+  orthology section (best hits, tree, domain halves) moved into the subsection; SECp43 gets its own subsection.

@@ -1,0 +1,28 @@
+kind	assembly	name	field	value	source
+public	OKI	XP_081642556.1	database	RefSeq	
+public	OKI	XP_081642556.1	exons	1940249-1940381;1940425-1940554;1940598-1940676	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081642556.1	cds	1940258-1940381;1940425-1940554;1940598-1940676	candidate table of step 2 (OKI.candidate_models.tsv)
+public	OKI	XP_081642556.1	sites	GT-AG;GT-AG	genome sequence
+public	OKI	XP_081642556.1	note	first three exons only; reads on into the third intron (110 codons, 98 of them as in the gold standard)	curator
+gold	OKI	PSTK	sites	GT-AG;GT-AG;TG-AG;AG-AA	genome sequence
+gold	OKI	PSTK	note	two splice sites outside the intron classes, as in both supporting transcripts (possible assembly errors)	curator
+public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	database	ANISEED	
+public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	exons	1351967-1352170;1352532-1352838;1352902-1352976;1353022-1353167;1353511-1353810;1353897-1354151;1355541-1355787;1355824-1355954;1356248-1356397	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	cds	1351967-1352170;1352532-1352838;1352902-1352976;1353022-1353167;1353511-1353810;1353897-1354151;1355541-1355787;1355824-1355954;1356248-1356397	candidate table of step 2 (OSKA.candidate_models.tsv)
+public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	sites	GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG;GT-AG	candidate table of step 2 (same intron)
+public	OSKA	Oidioi.CG.OSKA2016.S10.g09825.01.t	note	starts in the fourth exon and continues past the stop codon into seven exons downstream (604 codons)	curator
+gold	OSKA	PSTK	sites	TT-GT;AA-AG;GG-AG;GT-AG	candidate table of step 2 (same intron)
+gold	OSKA	PSTK	note	two splice sites outside the intron classes, as in the supporting transcript	curator
+public	OdB3	CBY23135.1	database	GenBank	
+public	OdB3	CBY23135.1	exons	777153-777484;777485-777723;777890-777927;778023-778155;778205-778331;778332-778335	ENA EMBL record (mRNA location)
+public	OdB3	CBY23135.1	cds	777485-777723;777890-777927;778023-778155;778205-778331	ENA EMBL record (CDS location)
+public	OdB3	CBY23135.1	sites	GA-AG;GG-AG;GT-AG	genome sequence
+public	OdB3	CBY23135.1	note	same first three exons; other first site of the fourth exon, and no last exon (178 codons)	curator
+gold	OdB3	PSTK	sites	GG-AG;GA-AG;GG-AG;GT-AG	genome sequence
+gold	OdB3	PSTK	note	exon chain set by the curator: the GenBank exons 1 to 3 and the last intron of the ESTs	curator
+reference	-	human	accession	UniProt Q8IV42	UniProt Q8IV42 (InterPro API)
+reference	-	human	organism	Homo sapiens	UniProt Q8IV42 (InterPro API)
+reference	-	human	axis	yes	
+reference	-	human	selenocysteine		UniProt Q8IV42 (InterPro API)
+reference	-	human	domain	PF08433:137-302:KTI12	UniProt Q8IV42 (InterPro API), Pfam short name
+reference	-	C. intestinalis	accession	XP_002120985.2	results/trees/pstk.faa

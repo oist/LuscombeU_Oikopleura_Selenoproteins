@@ -777,10 +777,9 @@ With the standard profiles, Selenoprofiles did not find PSTK in any of the three
 transcripts are expressed, and did not call the selenocysteine codon of SEPHS2. We therefore extended each profile of
 the machinery set with appendicularian proteins: the predictions of the standard profiles in the appendicularian
 genomes, and the PSTK and SEPHS2 proteins reconstructed from *O. dioica* transcripts. The OdB3 assembly contributed no
-sequence and served as a test. With these profiles, Selenoprofiles found in every *O. dioica* assembly PSTK, whose
-predicted gene models in OKI2018 and OdB3 match the curated ones, SEPHS2 with its selenocysteine codon, SecS (SEPSECS),
-eEFSec (EEFSEC), a SECIS-binding protein and tRNA-Sec (Table MACHINERY). The appendicularian profiles thus recover the
-complete machinery of *O. dioica*, in the test assembly OdB3 as well.
+sequence and served as a test. With these profiles, Selenoprofiles found in every *O. dioica* assembly PSTK, SEPHS2 with
+its selenocysteine codon, SecS (SEPSECS), eEFSec (EEFSEC), a SECIS-binding protein and tRNA-Sec (Table MACHINERY). The
+appendicularian profiles thus recover the complete machinery of *O. dioica*, in the test assembly OdB3 as well.
 
 In the other appendicularian genomes, SecS, eEFSec, a SECIS-binding protein and tRNA-Sec were found in every genome, and
 SEPHS2 with its selenocysteine codon in seven of the nine genomes, missing or partial only in two fragmented assemblies
@@ -788,15 +787,57 @@ SEPHS2 with its selenocysteine codon in seven of the nine genomes, missing or pa
 and its best human hit is SECIS-binding protein 2-like (SECISBP2L), as shown below. Apart from PSTK, the machinery is
 thus found throughout the appendicularians wherever the assembly allows.
 
+### PSTK
+
+PSTK has five coding exons in the three *O. dioica* assemblies, the third of them 38 nucleotides long (Figure PSTK A).
+No public annotation gives the gene: the RefSeq model of OKI2018 holds the first three exons and reads on into the third
+intron, the ANISEED model of OSKA2016 starts in the fourth exon and continues past the stop codon into seven exons of
+the next gene, and the GenBank model of OdB3 has the first three exons, another first site for the fourth exon and no
+last exon. The gold-standard proteins, of 241, 246 and 247 residues, are about 100 residues shorter than human PSTK (348
+residues) and 75 shorter than that of *Ciona intestinalis* (320 residues), and they are distant from both: the OdB3
+protein has 33 and 37% similar residues with them, against 76 and 93% with the OKI2018 and OSKA2016 proteins. In OKI2018
+and OSKA2016, two introns of the model have splice sites outside the intron classes of *O. dioica*, as in the
+transcripts that support them, which suggests small assembly errors at these junctions. In OdB3, where the prediction
+skipped the 38-nucleotide exon and read 25 nucleotides further before the last intron, and where the ESTs cover only
+part of the gene, the exon chain was set by the curator, from the GenBank model and the ESTs.
+
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
 discards but which match the PSTK of other appendicularians more closely than its relative KTI12. To test these
 fragments, we searched each genome with the PSTK proteins of the other genomes (tblastn) and compared each hit with
 KTI12. This supported the loci of *O. longicauda* and *M. erythrocephalus* (38 and 50 bits closer to PSTK than to KTI12)
 and the PSTK transcripts of the three *O. dioica* transcriptomes (66 to 84 bits), and left that of *B. stygius*
-ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the trees below place in the PSTK
-family; in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine genomes,
-ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly.
+ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the tree places in the PSTK family
+(Figure PSTK B); in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine
+genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly.
+
+Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
+the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
+each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The appendicularian PSTK are
+PSTK and not KTI12: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
+dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted as a pseudogene) formed a
+clade (100%), apart from the other tunicates, which formed their own clade (98 to 100%). In every analysis, the
+appendicularian clade grouped with the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, which also lie on
+long branches (76% in the maximum-likelihood tree, 50% under C20, 85% with PMSF, 65 to 82% after site removal); without
+these fungi, it branched as the sister of all other PSTK (94%). Two long branches grouped together is the pattern
+expected from long-branch attraction. A tree grouping the appendicularians with the other tunicates was not rejected (AU
+test, p = 0.13). The position of the appendicularian PSTK within the family is therefore unresolved. Trees of the kinase
+domain and of the C-terminal region recovered the appendicularian clade (97 to 100% under the selected model and with
+PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0.14 to 0.45).
+
+![Figure PSTK, A](../figures/machinery_PSTK.png)
+![Figure PSTK, B](../figures/phylogeny_pstk_collapsed_pmsf.png)
+
+<!-- Panel B and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
+8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf). -->
+
+Figure PSTK. PSTK of appendicularians. A (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`), gene models and
+proteins in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
+gold-standard model. B (`figures/phylogeny_pstk_collapsed_pmsf.pdf`), tree of PSTK and of the related kinase KTI12 under
+LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast bootstrap replicates (supports of
+70% or more shown); clades of one taxonomic group collapsed.
+
+### SECp43
 
 Selenoprofiles also searches for SECp43 (TRNAU1AP), which binds tRNA-Sec in complexes with SecS and SEPHS2
 [@SmallHoward2006] but is an associated factor whose role is debated: selenoprotein synthesis did not depend on it in
@@ -951,15 +992,13 @@ side that holds vertebrate sequences with a known human gene (number of sequence
 Selenoprofiles predicts homologs of its profile families, not necessarily orthologs of the named human genes. We
 therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Table
 MACHINERY). SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes, and eEFSec proteins of human
-EEFSEC in seven. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. The PSTK proteins of *O. dioica* and
-*O. albicans* had no hit in the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted
-with the standard profile in each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits).
-The SECIS-binding proteins of all nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits (a
-second, shorter prediction in *B. stygius* and *M. erythrocephalus* was closer to SECISBP2, by 6.5 and 11.5 bits), as
-were those of nine of the ten other tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was
-closer to SECISBP2 by 1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 13 bits of each other; best
-hits do not separate these paralogs outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not
-PSTK, the SECIS-binding protein or SEPHS2.
+EEFSEC in seven. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP. The SECIS-binding proteins of all
+nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits (a second, shorter prediction in *B.
+stygius* and *M. erythrocephalus* was closer to SECISBP2, by 6.5 and 11.5 bits), as were those of nine of the ten other
+tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was closer to SECISBP2 by 1 bit. The
+selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 13 bits of each other; best hits do not separate these paralogs
+outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not the SECIS-binding protein or SEPHS2 (nor
+PSTK, above).
 
 For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from: the
 related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS, and human
@@ -981,15 +1020,6 @@ PMSF trees).
 Figure TREES (`figures/phylogeny_<family>_collapsed_pmsf.pdf`). Trees of SEPHS, PSTK and the SECIS-binding proteins
 under LG+C60+F+G with posterior mean site frequencies, with 1,000 ultrafast bootstrap replicates; clades collapsed by
 taxonomic group.
-
-The appendicularian PSTK are PSTK and not KTI12: the two families separated with 100% support in every analysis. The
-appendicularian proteins (*O. dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted
-as a pseudogene) formed a clade (100%), apart from the other tunicates, which formed their own clade (98 to 100%). In
-every analysis, the appendicularian clade grouped with the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*,
-which also lie on long branches (76% in the maximum-likelihood tree, 50% under C20, 85% with PMSF, 65 to 82% after site
-removal); without these fungi, it branched as the sister of all other PSTK (94%). Two long branches grouped together is
-the pattern expected from long-branch attraction. A tree grouping the appendicularians with the other tunicates was not
-rejected (AU test, p = 0.13). The position of the appendicularian PSTK within the family is therefore unresolved.
 
 The trees identify the appendicularian SECIS-binding protein as the ortholog of the single protein of the other
 tunicates. The proteins of the six oikopleurid genomes formed a clade in every analysis (100%), which grouped with the
