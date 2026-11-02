@@ -1879,14 +1879,16 @@ the model, following prompts from the author that ranged from general requests t
 by wording that the author supplied. The author assessed the final results, and this assessment is presented through the
 controls reported in the Results: tests on assemblies that did not contribute to the settings, transcript support of the
 gold-standard models, absence tests, and the comparison of the trees under several models. The Git repository of the
-analysis is given for accountability: its history records each step, but there is no guarantee that every commit is free
-from mistakes; as when working with people, some errors were made and later corrected.
+analysis is given for accountability: its history records each step of the analysis and each edit of the manuscript, but
+there is no guarantee that every commit is free from mistakes; as when working with people, some errors were made and
+later corrected.
 
 ## Data and code availability
 
 The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_Pipeline> (release 0.2.0 for
 stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>;
-its history records the rounds of the loop (Methods, "Use of a large language model").
+its history records the rounds of the loop and the edits of this manuscript (Methods, "Use of a large
+language model").
 The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
 The settings recommended for appendicularian genomes (profiles, SECIS model, pipeline configuration, expected
 selenoproteome of *O. dioica*) are described in `stage2/recommended/README.md` of the analysis repository and will be
