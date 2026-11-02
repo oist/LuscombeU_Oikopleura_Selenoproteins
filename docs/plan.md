@@ -1907,3 +1907,13 @@ no earlier step waits for them.
   codon. Changes: the score is the sum over the references (a truncated reference no longer decides); predictions and
   annotated models are extended with the exons of a projection beyond their ends; chains of CDS rows whose frame runs
   to their end are extended by up to 300 nt to the next stop codon (kind "+3'extension").
+- Third run (2026-11-02, commit 68f3b72): all 29 models complete (ATG to stop); OKI2018 SEPSECS back to 473 aa. Coverage
+  against the OKI2018 and human proteins (local alignments): PSTK, EEFSEC and SEPHS_b cover the OKI2018 protein in
+  every genome where the assembly allows (O. vanhoeffeni SEPHS_b, 334 aa, lies at the start of its contig); still
+  N-terminally short: OdB3 SEPSECS (349 aa, from OKI2018 residue 142), O. albicans SEPSECS (from residue 48), and the
+  SECIS-binding proteins of O. longicauda (two loci) and O. vanhoeffeni (from residues 238 to 304; divergent N-terminal
+  region, short contigs in O. longicauda). OdB3 SEPSECS: the prediction ends 1 nt beyond the projection exon at the
+  same acceptor site, so the projection's N-terminal exon was not joined. Change: hybrid chains (prediction or
+  annotated model plus the projection exons beyond an end that lies within 10 nt of a projection exon, the terminal
+  block moved by up to 3 nt; curation/gold_standard.py hybrid_chains). Checked on the OdB3 genome
+  (GCA_000209535.1): the hybrid gives a 492-aa protein aligned to OKI2018 residues 1-472.

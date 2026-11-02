@@ -431,6 +431,34 @@ def extend_chain(t_blocks, o_blocks):
     return new if added else None
 
 
+def hybrid_chains(t_blocks, o_blocks, tol=10, shift=3):
+    """Chains made of the blocks of t (a prediction) and of the blocks of o (a projection) that lie entirely beyond an
+    end of t, when that end lies within tol nt of an exon of o; the terminal block of t is also moved by up to shift
+    nt at that end, because the two chains may place the same splice site differently (the ranking then keeps the
+    variant whose protein aligns best to the references). Returns a list of chains (possibly empty)."""
+    t, o = sorted(t_blocks), sorted(o_blocks)
+    t0, t1 = t[0][0], t[-1][1]
+    near = lambda x: any(a - tol <= x <= b + tol for a, b in o)
+    lows, highs = [None], [None]
+    before, after = [(a, b) for a, b in o if b < t0], [(a, b) for a, b in o if a > t1]
+    if before and near(t0): lows += [(d, before) for d in range(-shift, shift + 1)]
+    if after and near(t1): highs += [(d, after) for d in range(-shift, shift + 1)]
+    out = []
+    for lo in lows:
+        for hi in highs:
+            if lo is None and hi is None: continue
+            new = [list(x) for x in t]
+            extra = []
+            if lo is not None:
+                new[0][0] += lo[0]; extra += lo[1]
+            if hi is not None:
+                new[-1][1] += hi[0]; extra += hi[1]
+            chain = [tuple(x) for x in new if x[1] > x[0]] + extra
+            chain = sorted(chain)
+            if all(chain[i][1] < chain[i + 1][0] for i in range(len(chain) - 1)): out.append(chain)
+    return out
+
+
 def nterm_extension(m, genome, strand):
     """Number of residues that an extended transcript chain adds before the start of the transcript's own complete
     model (same stop codon), when its start codon lies beyond the transcript; 0 otherwise."""
@@ -834,10 +862,14 @@ def main():
     def ref_score(protein, gene, g):
         """Sum of the local alignment scores of a protein to the references of its gene, and the reference with the
         best score: a reference that is itself truncated cannot favour a truncated candidate over a complete one."""
+        key = (protein, gene_base(gene), g)
+        if key in score_cache: return score_cache[key]
         pool = refs[gene_base(gene)] + [(lab, sq) for og, lab, sq in ref_genome[gene_base(gene)] if og != g]
         clean = protein.replace("U", "X").replace("*", "")
         scores = [(local.score(clean, sq), lab) for lab, sq in pool if sq]
-        return (sum(x for x, _ in scores), max(scores)[1]) if scores else (0.0, "-")
+        score_cache[key] = (sum(x for x, _ in scores), max(scores)[1]) if scores else (0.0, "-")
+        return score_cache[key]
+    score_cache = {}
     # pass 1: candidate models of each gene
     records, genomes, annotations = [], {}, {}
     for g in a.genomes:
@@ -917,13 +949,15 @@ def main():
                 # the gene but places its terminal exons)
                 pchains = [(pid, [(x, y + 1) for x, y, _ in cds]) for pid, cds in proj.get(contig, {}).items()
                            if cds[0][2] == strand]
+                seen_h = set()
                 for m0 in [c for c in cands if c["kind"] in ("prediction", "annotation")]:
                     for pid, pb in pchains:
-                        blocks = extend_chain(m0["blocks"], pb)
-                        if not blocks: continue
-                        m = model_from_chain(blocks, gs, codon0, strand, f"{m0['source']}+{pid}",
-                                             f"{m0['kind']}+projection", cds_only=True)
-                        if m and m["cds"]: cands.append(m)
+                        for blocks in [extend_chain(m0["blocks"], pb)] + hybrid_chains(m0["blocks"], pb):
+                            if not blocks or tuple(sorted(blocks)) in seen_h: continue
+                            seen_h.add(tuple(sorted(blocks)))
+                            m = model_from_chain(blocks, gs, codon0, strand, f"{m0['source']}+{pid}",
+                                                 f"{m0['kind']}+projection", cds_only=True)
+                            if m and m["cds"]: cands.append(m)
                 # chains of CDS rows whose frame runs to their 3' end: extended by up to EXTEND3 nt of genome to the
                 # next stop codon (a projection or prediction that stops short of the C-terminus)
                 for m0 in [c for c in cands if c["cds_only"] and c["open3"] and c["cds"]]:
