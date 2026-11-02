@@ -1007,7 +1007,12 @@ def main():
                 # (a fragment scores less, a fusion with another protein no more), then as below
                 for m in usable: m["hom"], m["hom_ref"] = ref_score(m["protein"], r["gene"], g)
                 top_hom = max(m["hom"] for m in usable)
-                rank = lambda m: (m["hom"] >= 0.95 * top_hom, m["unsupported_sites"] == 0,
+                # splice sites outside the intron classes of O. dioica count against a candidate even when a transcript
+                # has the same intron: in the machinery genes they come from transcripts whose indels against the
+                # assembly displace the junctions (OKI2018 and OSKA2016 PSTK, OKI2018 SEPHS_b, OdB3 EEFSEC in the runs
+                # of 2026-11-02), while a candidate with canonical sites gives the same protein
+                for m in usable: m["other_sites"] = sum(1 for x in m["sites"] if x[0] not in INTRON_CLASSES)
+                rank = lambda m: (m["hom"] >= 0.95 * top_hom, m["other_sites"] == 0, m["unsupported_sites"] == 0,
                                   not m["open3"] and m["protein"].startswith("M"), bool(m["support"]),
                                   not m["contradicted"], m["hom"], -effective_length(m), not m["other_gene_mrna"],
                                   m["kind"] == "annotation")

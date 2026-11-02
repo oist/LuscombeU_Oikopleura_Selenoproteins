@@ -44,6 +44,9 @@ plt.rcParams.update({"svg.fonttype": "none", "font.family": "sans-serif", "font.
                      "xtick.major.width": 0.4, "axes.linewidth": 0.4})
 GOLD, PUBLIC, OTHER, SEC, SECIS, DOM = rf.GOLD, rf.PUBLIC, rf.OTHER, rf.SEC, rf.SECIS, rf.DOM
 PARALOG = "0.1"                            # paralog of the gene (public model and protein)
+ORIGIN = "sec"                             # x origin of the gene models (--origin)
+ORIGIN_LABEL = {"sec": "TGA", "start": "ATG"}
+NO_SECIS = False                           # --no-secis
 GENOMES, NAMES, SITE_COLOURS = rf.GENOMES, rf.NAMES, rf.SITE_COLOURS
 MM = 1 / 25.4
 PAGE_W, PAGE_H = 210, 297                  # mm
@@ -97,7 +100,13 @@ def load(gene, a):
         for l in open(f"{a.gold}/{g}.proteins.faa"):
             if l.startswith(">"): name = l[1:].split("|")[0]
             elif name == gene: d["gprot"][g] = l.strip()
-    d["secis"] = rf.secis_hits(a.cm, a.gold, gene)
+    d["secis"] = {} if a.no_secis else rf.secis_hits(a.cm, a.gold, gene)
+    if a.origin == "start":   # the start codon of the gold-standard model as origin (genes without selenocysteine)
+        for g, (st, ex, cds, sec) in list(d["gold"].items()):
+            if cds:
+                c = (min(x for x, _ in cds), min(x for x, _ in cds) + 2) if st == "+" else \
+                    (max(y for _, y in cds) - 2, max(y for _, y in cds))
+                d["gold"][g] = (st, ex, cds, c)
     d["par"], d["par_seqs"] = {}, {}
     if os.path.exists(f"{a.inputs}/reannotation_{gene}.paralogs.tsv"):
         for r in csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.paralogs.tsv"), delimiter="\t"):
@@ -307,7 +316,7 @@ def draw_models(ax, d, tracks, col_w):
                 if n_right: ax.text(xM, t["par"] + 1.0, f"{n_right} ▶", fontsize=4.5, color=PARALOG, va="bottom", ha="right")
             last_gold = t["par"]
     ax.plot([1.5, 1.5], [last_gold - 1.2, -2.4], color=SEC, lw=0.5, ls=(0, (2, 1.5)), zorder=1)
-    ax.text(1.5, -2.3, "TGA", color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
+    ax.text(1.5, -2.3, ORIGIN_LABEL[ORIGIN], color=SEC, ha="center", fontsize=5, fontweight="bold", va="bottom")
     ax.set_xlim(X0, X1)
     step = next(s for s in (250, 500, 1000, 2000) if (X1 - X0) / s <= 6)
     ticks = [v for v in range(math.ceil(d["X0raw"] / step) * step, int(d["X1raw"]) + 1, step)
@@ -500,7 +509,8 @@ def key(fig, used_sites, sources, top=None, paralog=None):
               (lambda ax, cx, y: ax.add_patch(Rectangle((cx + 1, y - CDS_H / 2), 6, CDS_H, facecolor="white", edgecolor=OTHER,
                                                         lw=0.4, hatch="//////")), "coding sequence in another frame", "black"),
               (lambda ax, cx, y: ax.plot([cx + 4, cx + 4], [y - 1.5, y + 1.5], color=SEC, lw=0.5, ls=(0, (2, 1.5))),
-               "selenocysteine TGA (x axis: nucleotides from it, gene orientation)", "black"),
+               ("selenocysteine TGA" if ORIGIN == "sec" else "start codon of the gold-standard model") +
+               " (x axis: nucleotides from it, gene orientation)", "black"),
               (lambda ax, cx, y: (secis_box(ax, cx + 0.3, cx + 2.1, y), secis_box(ax, cx + 2.8, cx + 4.6, y, False),
                                   ax.text(cx + 5.1, y, "37", fontsize=4.5, color=SECIS, va="center")),
                "best SECIS hit and bit score (Oikopleura model; open box: below 20 bits)", "black"),
@@ -508,6 +518,8 @@ def key(fig, used_sites, sources, top=None, paralog=None):
                "number of exons beyond the drawn region", "black"),
               (lambda ax, cx, y: ax.text(cx + 6, y, "a b", fontsize=5, fontweight="bold", color=PUBLIC, va="center", ha="right"),
                "public models of the same row, as named in the paragraph", "black")]
+    if NO_SECIS:   # genes without selenocysteine: no SECIS entry; the selenocysteine circle is not used either
+        models = [m for m in models if not m[1].startswith("best SECIS hit")]
     if paralog:
         models.insert(3, (lambda ax, cx, y: exon(ax, cx, y, PARALOG),
                           f"{paralog} (public model; aligned on its codon aligned to the selenocysteine)", "black"))
@@ -519,8 +531,9 @@ def key(fig, used_sites, sources, top=None, paralog=None):
                 "0.4" if k == "GT-AG" else SITE_COLOURS.get(k, "black")) for k in sites]
     proteins = [(lambda ax, cx, y: ax.add_patch(Rectangle((cx + 1, y - BAR_H / 2), 6, BAR_H, facecolor=DOM, edgecolor="black", lw=0.5)),
                  "Pfam domain of the first reference", "black"),
+                ] + ([] if NO_SECIS else [
                 (circle("U", SEC, SEC, "white"), "selenocysteine aligned to one of the first reference", "black"),
-                (circle("C", "white", "black", "black"), "other residue aligned to it", "black"),
+                (circle("C", "white", "black", "black"), "other residue aligned to it", "black")]) + [
                 (lambda ax, cx, y: ax.plot([cx + 1, cx + 7], [y, y], color="black", lw=0.6), "residues not aligned to the first reference", "black"),
                 (lambda ax, cx, y: ax.text(cx + 7, y, "92", fontsize=4.5, color="black", va="center", ha="right"),
                  f"% similar residues to the {rf.NAMES[SIM_TO]} protein (BLOSUM62 > 0; global alignment, aligned part)", "black"),
@@ -561,12 +574,20 @@ def main():
                     help="last line of the key: where the reference proteins come from")
     ap.add_argument("--labels", nargs="*", default=[], help="displayed names, as gene=label (for example TXNL1=TXNL1.b)")
     ap.add_argument("--fit", action="store_true", help="key right below the genes, and the page cut below the key")
+    ap.add_argument("--columns", type=int, default=3, help="genes per row")
+    ap.add_argument("--origin", choices=["sec", "start"], default="sec",
+                    help="x origin: the selenocysteine TGA (sec) or the start codon of the gold-standard model (start; genes "
+                    "without selenocysteine, such as the machinery genes of curation/gold_standard_machinery)")
+    ap.add_argument("--no-secis", action="store_true", help="do not search or draw SECIS elements")
     a = ap.parse_args()
+    global ORIGIN, NO_SECIS
+    ORIGIN, NO_SECIS = a.origin, a.no_secis
     global SECIS_BITS
     SECIS_BITS = a.secis_bits
     genes = [load(g, a) for g in a.genes]
     labels = dict(x.split("=", 1) for x in a.labels)
-    col_w = (PAGE_W - LEFT - RIGHT - 2 * COL_GAP) / 3
+    NC = a.columns
+    col_w = (PAGE_W - LEFT - RIGHT - (NC - 1) * COL_GAP) / NC
     fig = plt.figure(figsize=(PAGE_W * MM, PAGE_H * MM))
     fx = lambda mm: mm / PAGE_W
     fy = lambda mm: mm / PAGE_H                    # from the bottom of the page
@@ -576,8 +597,8 @@ def main():
         for g in GENOMES:
             used |= set(d["gold_sites"].get(g, "").split(";"))
             for m in d["public"].get(g, {}).values(): used |= set(m.get("sites", "").split(";"))
-    for r in range(0, len(genes), 3):
-        row = genes[r:r + 3]
+    for r in range(0, len(genes), NC):
+        row = genes[r:r + NC]
         tracks, hA = layout_models(row)
         paras, indent, hN = layout_notes(row, col_w)
         refs_y, gold_y, par_y, hB = layout_proteins(row)
@@ -608,7 +629,7 @@ def main():
                     if "par" in t and pm:
                         axA.text(fx(LEFT - 1.5), t["par"], f"{pm.get('label', 'paralog')}, {pm.get('database', '')}", transform=lab,
                                  fontsize=5.5, ha="right", va="center", color=PARALOG)
-                axA.text(fx(LEFT - 1.5), -hA - 0.5, "nt from TGA", transform=lab, fontsize=5, ha="right", va="top", color="0.25")
+                axA.text(fx(LEFT - 1.5), -hA - 0.5, f"nt from {ORIGIN_LABEL[ORIGIN]}", transform=lab, fontsize=5, ha="right", va="top", color="0.25")
                 labB = blended_transform_factory(fig.transFigure, axB.transData)
                 for sp, yy in refs_y.items():
                     axB.text(fx(LEFT - 1.5), yy, sp, transform=labB, fontsize=5.5, ha="right", va="center",
@@ -635,7 +656,7 @@ def main():
         y = (rb + (rulers[k + 1][0] if k + 1 < len(rulers) else key_bottom + key_h)) / 2
         fig.add_artist(Line2D([fx(2), fx(PAGE_W - RIGHT)], [fy(y), fy(y)], **rule))
         top_ = (rt + (rulers[k - 1][1] if k else PAGE_H)) / 2 if k else rt
-        for c in (1, 2):
+        for c in range(1, NC):
             x = LEFT + c * col_w + (c - 0.5) * COL_GAP
             fig.add_artist(Line2D([fx(x), fx(x)], [fy(rt), fy(rb)], **rule))
     os.makedirs(a.out, exist_ok=True)

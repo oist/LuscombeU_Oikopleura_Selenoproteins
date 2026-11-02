@@ -63,7 +63,8 @@ def gold_model(path, gene):
         if f[2] == "exon": exons.append((int(f[3]), int(f[4])))
         else:
             cds.append((int(f[3]), int(f[4])))
-            sec = tuple(map(int, re.search(r"pos:(?:complement\()?(\d+)\.\.(\d+)", f[8]).groups()))
+            m = re.search(r"pos:(?:complement\()?(\d+)\.\.(\d+)", f[8])
+            if m: sec = tuple(map(int, m.groups()))   # no transl_except: a gene without selenocysteine (sec stays None)
     return strand, sorted(exons), sorted(cds), sec
 
 

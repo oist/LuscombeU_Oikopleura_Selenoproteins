@@ -1958,3 +1958,11 @@ no earlier step waits for them.
   puts SECISBP2L with amphioxus and echinoderm (95, 96). Best hits unchanged in substance (second, shorter SBP2
   predictions of B. stygius and M. erythrocephalus closer to SECISBP2; selenocysteine SEPHS within 13 bits of SEPHS1 and
   SEPHS2, F. borealis included). Machinery orthology text no longer provisional.
+- Machinery figures, one difficult gene at a time (2026-11-02, Charles: "a panel showing the fixed annotations and
+  predicted protein domains, as in the two-page figure, and the tree(s)"; start with PSTK). figures/reannotation_page.py
+  gained --columns, --origin start (x axis from the start codon of the gold-standard model) and --no-secis;
+  figures/machinery_reannotation_inputs.sh and make machinery-reannotation. Draft of the PSTK panel showed splice sites
+  outside the intron classes in the OKI2018 and OSKA2016 gold-standard models (TG-AG, AG-AA; TT-GT, AA-AG), from
+  transcripts whose indels displace the junctions, while the predictions and projections give GT-AG chains of the same
+  protein. gold_standard.py --anchor sense now ranks such candidates lower (sites outside the classes count even when a
+  transcript has the same intron); Sec mode unchanged. To rerun: gold-standard-machinery, then the machinery trees.
