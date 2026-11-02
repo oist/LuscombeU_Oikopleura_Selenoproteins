@@ -1985,3 +1985,14 @@ no earlier step waits for them.
   the N transcripts with most introns (then longest) per assembly; reannotation_page.py draws them below the
   gold-standard model with their splice sites and differences, and lists their names in the paragraph (pages without
   transcripts unchanged: Figure PSTK identical). Needs a rerun of make gold-standard-machinery for the new columns.
+- Figure PSTK with transcripts (2026-11-03, run f2fba94 of make gold-standard-machinery). OKI2018: three isoforms of
+  one Trinity locus, all with the TG-AG third and AG-AA fourth introns, no mismatch, one 1-nt deletion in exon 4.
+  OSKA2016: four isoforms of one locus, all with the TT-GT fourth intron; the AA-AG third intron spliced in two and
+  retained in two (63 nt, in-frame stop codon); 14 to 18 mismatches each, one of them at the last exon base before the
+  third intron in all four. OdB3: both ESTs place the last intron at AT-AG (777333-777564) and retain the GA-AG third
+  intron. The fourth intron is thus outside the intron classes in the three assemblies, which makes assembly errors an
+  unlikely explanation; the manuscript no longer says "small assembly errors" for PSTK. The OdB3 override had put the
+  last intron at the GG-AG site 3 nt away (an intron class), which adds a residue (KHLDLEN against KHLVEN in OSKA2016;
+  local scores 736/1093 against 749/1106 for the EST site, to OKI2018/OSKA2016): override corrected to the EST site
+  (OdB3 PSTK 246 residues). Needs a rerun of make gold-standard-machinery, then inputs and Figure PSTK again; the trees
+  after the review of the other machinery genes.
