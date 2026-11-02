@@ -1917,3 +1917,18 @@ no earlier step waits for them.
   annotated model plus the projection exons beyond an end that lies within 10 nt of a projection exon, the terminal
   block moved by up to 3 nt; curation/gold_standard.py hybrid_chains). Checked on the OdB3 genome
   (GCA_000209535.1): the hybrid gives a 492-aa protein aligned to OKI2018 residues 1-472.
+- Fourth run of gold-standard-machinery (2026-11-02, commit a9bdcd3): OdB3 SEPSECS 492 aa (OKI2018 residues 1-472);
+  O. longicauda SBP2_2 534 aa; remaining N-terminal gaps (O. albicans SEPSECS from residue 48; SECIS-binding proteins of
+  O. albicans, O. longicauda and O. vanhoeffeni from residues 54 to 240) accepted. Tree jobs (machinery-phylogeny,
+  machinery-lba, machinery-domains, machinery-domains-pmsf) submitted with dependencies on this run.
+- Results restructured (2026-11-02; script kept outside the repository, every moved block checked to appear once):
+  pipeline; before optimisation (with the Rfam result in one paragraph); new section on the loop (Figure LOOP,
+  figures/iteration_loop.py) with the final settings and Table STAGE2; gold-standard models of the selenoprotein and
+  machinery genes (new paragraph on the machinery models); SECIS model; two genes outside the known families (with
+  their discovery by the screens); census of the selenoproteins (with one paragraph on the SECIS scans); census of the
+  machinery (with Table MACHINERY); orthology of the selenoprotein genes and of the machinery (domain analysis in one
+  paragraph); operons. Moved to a new "Supplementary notes" part: Rfam scores (with Figure SECIS-1), miniprot at short
+  introns, details of the UGA/SECIS screens (with Figure SECIS-SCORES), domain analysis. Dropped: the provisional
+  banner of the old stage 2 section and the "table and figure for the screens to add" comment. Introduction: "default
+  parameters" replaced. Still to do: trim the remaining loop-history wording in the moved sections (for example the
+  machinery profile paragraph, the first SECIS model), rewrite the machinery orthology from the new trees, slides.
