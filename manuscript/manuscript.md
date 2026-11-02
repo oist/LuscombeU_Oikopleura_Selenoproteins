@@ -340,14 +340,16 @@ models ranked by their similarity to the human proteins and to the proteins of t
 the machinery genes (`results/tables/gold_standard_machinery.tsv`). Of the 13 models of *O. dioica* (PSTK, SEPSECS,
 EEFSEC and the SECIS-binding protein in each assembly, and the second SEPHS copy in OKI2018), one is the public model
 unchanged (the OdB3 SECIS-binding protein); the others need introns moved (5) or a new exon chain (7). Five models have
-splice sites outside the intron classes of *O. dioica*: PSTK in the three assemblies, at the same intron and as in every
-transcript that covers it (see the PSTK section), and OKI2018 SEPHS_b and OdB3 EEFSEC, where they may come from
-transcript or assembly errors. The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal
-extension of 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*,
-which have no transcript data, the 15 models come from the predictions, alone or joined to the exons of
-protein-to-genome alignments of the *O. dioica* proteins (miniprot); all are complete, but five lack 47 to 239
-N-terminal residues of the OKI2018 protein (the SECIS-binding proteins of the three species and *O. albicans* SEPSECS),
-on short contigs or in the divergent N-terminal region of the SECIS-binding protein.
+splice sites outside the intron classes of *O. dioica*: PSTK in the three assemblies, at the same intron, with the same
+junctions in every transcript that splices it and the same bases in assemblies of other individuals (see the PSTK
+section), and OKI2018 SEPHS_b and OdB3 EEFSEC, where they may come from transcript or assembly errors. The OKI2018
+SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of 242 residues, also present in
+its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
+come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
+(miniprot); all have start and stop codons, but five lack 47 to 239 N-terminal residues of the OKI2018 protein (the
+SECIS-binding proteins of the three species and *O. albicans* SEPSECS), on short contigs or in the divergent N-terminal
+region of the SECIS-binding protein, and the prediction of *O. albicans* PSTK missed its last exon, which the curator
+added (see the PSTK section).
 
 <!-- Machinery gold standard: make gold-standard-machinery (curation/machinery_anchors.py, machinery_projections.py,
 gold_standard.py --anchor sense), fourth run of 2026-11-02 (commit a9bdcd3). Numbers to check at the final version;
@@ -794,20 +796,28 @@ PSTK has five coding exons in the three *O. dioica* assemblies, the third of the
 No public annotation gives the gene: the RefSeq model of OKI2018 holds the first three exons and reads on into the third
 intron, the ANISEED model of OSKA2016 starts in the fourth exon and continues past the stop codon into seven exons of
 the next gene, and the GenBank model of OdB3 has the first three exons, another first site for the fourth exon and no
-last exon. The gold-standard proteins, of 241, 246 and 246 residues, are about 100 residues shorter than human PSTK (348
-residues) and 75 shorter than that of *Ciona intestinalis* (320 residues), and they are distant from both: the OdB3
-protein has 34 and 37% similar residues with them, against 77 and 93% with the OKI2018 and OSKA2016 proteins. The fourth
-intron has splice sites outside the intron classes of *O. dioica* in the three assemblies (AG-AA in OKI2018, TT-GT in
-OSKA2016 and AT-AG in OdB3, read on the assemblies), and so has the third intron in OKI2018 (TG-AG) and OSKA2016
-(AA-AG), whereas it is a GA-AG intron in OdB3. The transcripts that splice these introns all splice them at these sites
-(Figure PSTK A; isoforms of one assembled locus in OKI2018 and in OSKA2016, two ESTs in OdB3). The transcripts cannot
-test the intronic bases that make the splice sites, but assembly errors at the same intron of three assemblies are
-unlikely, and these introns may be spliced at sites that are rare in *O. dioica*. The third intron is also retained in
-two of the four OSKA2016 transcripts (63 nucleotides, with a stop codon in the frame of the protein) and in both OdB3
-ESTs (58 nucleotides, which shift the frame). In OdB3, where the prediction skipped the 38-nucleotide exon and read 25
-nucleotides further before the last intron, and where no EST covers the whole gene, the curator set the exon chain: the
-first three exons of the GenBank model, the acceptor of the third intron from the prediction, and the last intron of the
-ESTs.
+last exon. In OdB3, where the prediction skipped the 38-nucleotide exon and read 25 nucleotides further before the last
+intron, and where no EST covers the whole gene, the curator set the exon chain: the first three exons of the GenBank
+model, the acceptor of the third intron from the prediction, and the last intron of the ESTs. The gold-standard
+proteins, of 241, 246 and 246 residues, are about 100 residues shorter than human PSTK (348 residues) and 75 shorter
+than that of *Ciona intestinalis* (320 residues), and they are distant from both (Figure PSTK B): the OdB3 protein has
+34 and 37% similar residues with them, against 77 and 93% with the OKI2018 and OSKA2016 proteins.
+
+The third and fourth introns have splice sites outside the intron classes of *O. dioica* in OKI2018 and OSKA2016, and so
+has the fourth intron in OdB3 (Figure PSTK A). The transcripts that splice these introns all splice them at the same
+junctions (isoforms of one assembled locus in OKI2018 and in OSKA2016, two ESTs in OdB3), and the assemblies of other
+individuals of the three species (KUM-M3-7f, AOM-5-5f and Bar2_p4) have the same exon chains and the same bases at the
+ends of both introns (Figure PSTK C): these splice sites are not assembly errors. Their names, however, depend on where
+the junction is placed. The first bases of each of these introns repeat the first bases of the next exon, or its last
+bases the last bases of the previous exon (one to three bases, shaded in Figure PSTK C), so that the intron can be moved
+across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
+intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
+AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Placed on an AG acceptor, the fourth intron is a TT-AG intron in
+OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same phase, and the third intron a TG-AG, AA-AG and GA-AG
+intron. All are thus introns that end with AG without starting with GT, the second class of *O. dioica* introns after
+GT-AG [@Soo2026]; TT-AG and AT-AG introns are also minor classes of human introns (0.19 and 0.42% in the compilation
+shown by @Soo2026). The third intron is retained in two of the four OSKA2016 transcripts (63 nucleotides, with a stop
+codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame).
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
@@ -816,8 +826,19 @@ fragments, we searched each genome with the PSTK proteins of the other genomes (
 KTI12. This supported the loci of *O. longicauda* and *M. erythrocephalus* (38 and 50 bits closer to PSTK than to KTI12)
 and the PSTK transcripts of the three *O. dioica* transcriptomes (66 to 84 bits), and left that of *B. stygius*
 ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the tree places in the PSTK family
-(Figure PSTK B); in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine
+(Figure PSTK D); in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine
 genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly.
+
+Outside *O. dioica*, the introns of PSTK differ (regions of `make pstk-regions`). *O. vanhoeffeni* PSTK is one open
+reading frame of 248 codons aligned along the whole *O. dioica* protein, the two *O. longicauda* fragments align without
+interruption over residues 12 to 225 of the OdB3 protein (tblastn), the fragments of *M. erythrocephalus* and *B.
+stygius* are interrupted at other positions, and *C. intestinalis* PSTK is a single-exon gene, whose RefSeq model is
+covered by RNA-seq alignments over its whole length. *O. albicans* PSTK has an intron of 389 nucleotides near the
+position of the third *O. dioica* intron but in another phase, and a last intron of 2,001 nucleotides within ten
+residues of the position of the fourth in the alignment. The prediction read into this last intron and missed the last
+exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni* protein found 2 kb downstream (E =
+10^-5^); the curator added it to the model (243 residues). Placed by the similarity of the protein to those of *O.
+dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no transcript tests it.
 
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
@@ -833,22 +854,27 @@ test, p = 0.13). The position of the appendicularian PSTK within the family is t
 domain and of the C-terminal region recovered the appendicularian clade (97 to 100% under the selected model and with
 PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0.14 to 0.45).
 
-![Figure PSTK, A](../figures/machinery_PSTK.png)
-![Figure PSTK, B](../figures/phylogeny_pstk_collapsed_pmsf.png)
+![Figure PSTK, A to C](../figures/machinery_PSTK.png)
+![Figure PSTK, D](../figures/phylogeny_pstk_collapsed_pmsf.png)
 
-<!-- Panel B and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
+<!-- Panel D and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
 8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf).
-Panel A: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site). The splice sites of the third
-and fourth introns: to revise after make pstk-regions (equivalent placements; assemblies of other individuals) and
-Charles's check of the RNA-seq reads. -->
+Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
+pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand). -->
 
-Figure PSTK. PSTK of appendicularians. A (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`), gene models and
-proteins in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
+Figure PSTK. PSTK of appendicularians. A to C (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`). A, gene
+models in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
 gold-standard model; below each gold-standard model, the supporting transcripts (up to four, those with most introns
 first: transcript assemblies for OKI2018 and OSKA2016, ESTs for OdB3) with their splice sites and their differences to
-the assembly. B (`figures/phylogeny_pstk_collapsed_pmsf.pdf`), tree of PSTK and of the related kinase KTI12 under
-LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast bootstrap replicates (supports of
-70% or more shown); clades of one taxonomic group collapsed.
+the assembly. B, reference and gold-standard proteins, as in Figure REANNOTATION. C, equivalent placements of the third
+and fourth introns (`figures/intron_placements.py`): the gene-strand sequence at both ends of each intron in the
+gold-standard assemblies and in the assemblies of other individuals of the same species (KUM-M3-7f, AOM-5-5f, Bar2_p4;
+exons carried from the gold standard through a minimap2 alignment of the regions); shaded, the bases repeated at both
+ends, across which the intron can be moved without changing the spliced sequence; ticks, the possible intron ends, whose
+dinucleotides are listed on the right from left to right; triangle, the placement named by the gold-standard script;
+blue, the placement on an AG acceptor in phase 1. D (`figures/phylogeny_pstk_collapsed_pmsf.pdf`), tree of PSTK and of
+the related kinase KTI12 under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast
+bootstrap replicates (supports of 70% or more shown); clades of one taxonomic group collapsed.
 
 ### SECp43
 
@@ -1358,7 +1384,8 @@ genes).
 For each curated selenocysteine codon of OKI2018, OSKA2016 and OdB3, the transcripts of the assembly were aligned to
 it with minimap2 [@Li2018] (`-x splice:hq -un`, primary alignments), without preference for GT-AG splice sites,
 which otherwise displaces the junctions of the atypical introns of *O. dioica* and creates false indels. Junctions
-were then placed by moving each intron within 8 nucleotides to the position of lowest cost, the number of mismatches
+were then placed by moving each intron within 8 nucleotides to the position of lowest cost (at equal cost, the smallest
+move), the number of mismatches
 between transcript and genome plus a splice-site cost of log10(f(GT-AG)/f(site))/2, with the intron frequencies of the
 *O. dioica* reference annotation (GT-AG 87.6%, GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%, other sites taken as 0.1%)
 [@Denoeud2010], the factor 2 being the log10 cost of a mismatch at 1% divergence. A transcript supported the gene when
@@ -1387,6 +1414,31 @@ either more than 10% longer while the assembly protein was not complete, or more
 the assembly); the model was then the transcript chain mapped onto the assembly. The models are
 given in GFF3 with the selenocysteine declared (`transl_except`), with their proteins, 3′ UTRs, the 2,000
 nucleotides of genome that follow each stop codon, and a table of all candidates.
+
+## Machinery gene models
+
+The machinery genes (PSTK, SEPSECS, EEFSEC, the SECIS-binding protein and the SEPHS copy without selenocysteine) were
+modelled in OKI2018, OSKA2016, OdB3, *O. longicauda*, *O. albicans* and *O. vanhoeffeni* with the same script (`make
+gold-standard-machinery`), the selenocysteine codon replaced by a sense codon in the middle of each prediction of the
+final run (`curation/machinery_anchors.py`). Candidates were ranked first by the sum of the local alignment scores of
+their proteins (BLOSUM62) to the human proteins of the gene (RefSeq) and, in a second pass, to the first-pass proteins
+of the other assemblies, keeping the candidates within 5% of the best score, then by the criteria of the selenoprotein
+models; the second pass also took as candidates the protein-to-genome alignments of these proteins (miniprot [@Li2023],
+`curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
+chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
+*O. albicans* PSTK), and the model was read on the genome along that chain.
+
+To check the splice sites of PSTK, its genomic regions (coding span and 3 kb on each side) were extracted from the
+gold-standard assemblies, from *O. albicans*, *O. vanhoeffeni* and *C. intestinalis* (RefSeq gene of XP_002120985.2),
+from the contigs of the *O. longicauda*, *M. erythrocephalus* and *B. stygius* fragments, and from the assemblies of
+other individuals of the three species (KUM-M3-7f, AOM-5-5f and Bar2_p4), where the region was the minimap2 alignment
+(`-x asm20`) of the gold-standard region (`make pstk-regions`, `curation/gene_regions.py`). The gold-standard exons were
+carried base by base onto the other individuals through minimap2 alignments of the regions, and for each intron all
+placements that leave the spliced sequence unchanged were listed with their dinucleotides and phases
+(`figures/intron_placements.py`). The PSTK exons of the other species were located by tblastn with the OdB3 protein, and
+the last exon of *O. albicans* with the C-terminal region of the *O. vanhoeffeni* protein; its junction was placed where
+the protein of the spliced chain had the highest sum of local alignment scores to the OdB3 and *O. vanhoeffeni*
+proteins.
 
 ## Appendicularian profiles of the selenocysteine machinery
 

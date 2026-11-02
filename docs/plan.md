@@ -2021,3 +2021,20 @@ no earlier step waits for them.
   OSKA2016 S10:1355815-1356898): split reads at the third and fourth introns (number, exact junctions, other
   junctions nearby), retention of the third intron, and, if genomic reads are loaded, the assembly bases at the splice
   sites. OdB3 has only the two ESTs.
+- PSTK splice sites checked outside the gold standard (2026-11-03; make pstk-regions, run 7bcea33; Charles: "use them
+  for validation"). KUM-M3-7f, AOM-5-5f and Bar2_p4: same exon chains (exons carried from the gold standard with
+  minimap2), proteins without stop, same bases at both ends of the third and fourth introns, hence the same
+  dinucleotides and placements: the unusual splice sites are not assembly errors. Equivalent placements
+  (figures/intron_placements.py): fourth intron TT-AG (OKI2018, OSKA2016) and AT-AG (OdB3) on an AG acceptor, all in
+  phase 1; third intron TG-AG, AA-AG, GA-AG (phase 1). The names reported by gold_standard.py (smallest move) are
+  AG-AA, TT-GT and AT-AG for the fourth intron. Soo et al. 2026 (NAR, gkag659; Henriet lab, sent by Charles): in
+  O. dioica, introns ending with AG but not starting with GT form the second class after GT-AG (their Figure 2E);
+  human minor classes include AT-AG 0.42% and TT-AG 0.19% (their Figure 5B, after Olthof et al.); they also place
+  ambiguous intron borders by consensus rules (YAY triplets, F. borealis). Other species: O. vanhoeffeni one ORF of 248
+  codons; O. longicauda fragments uninterrupted over residues 12-225; M. erythrocephalus and B. stygius fragments
+  interrupted at other positions; C. intestinalis single-exon RefSeq gene (3 ESTs, 6 long SRA reads, 100% RNA-seq
+  coverage); O. albicans: introns of 389 nt (near the third, phase 0) and 2,001 nt (near the fourth), the last exon
+  missed by the prediction found by tblastn with the O. vanhoeffeni C-terminus: override added (243 residues; needs
+  make gold-standard-machinery). Figure PSTK: panels A (models, transcripts), B (proteins), C (placements, right
+  column; reannotation_page.py --side-panel), D the tree. Manuscript: PSTK paragraphs, caption, Methods "Machinery gene
+  models" added. .gitignore: results/gene_regions/*/{*.fa,*.gff3,regions.tsv} tracked.

@@ -115,3 +115,11 @@ results/trees/txnl1_pith/*
 !figures/inputs/*.fa
 # Ignore logs
 selenoproteins-analysis-*.log
+# small genomic regions of single genes, for checks by hand (curation/gene_regions.py; exceptions to the patterns above)
+!results/gene_regions/
+results/gene_regions/*
+!results/gene_regions/*/
+results/gene_regions/*/*
+!results/gene_regions/*/*.fa
+!results/gene_regions/*/*.gff3
+!results/gene_regions/*/regions.tsv

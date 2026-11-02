@@ -30,9 +30,11 @@ and its protein below the gold-standard proteins. When the inputs carry supporti
 aligned and placed by step 2, splice sites coloured as for the models), with their differences to the assembly:
 bases of the transcript missing from the assembly (triangle above the track, with their number when more than one),
 bases of the assembly missing from the transcript (open box, at least 0.6 mm wide) and mismatches (thin ticks); their
-names are listed in the paragraph. Output: <out>/<name>.{pdf,svg,png}.
+names are listed in the paragraph. With --side-panel (a table of figures/intron_placements.py), the first gene gets
+panel letters (A: gene models, B: proteins) and a panel C on its right: the equivalent placements of introns, one row
+per assembly. Output: <out>/<name>.{pdf,svg,png}.
 """
-import argparse, collections, csv, math, os, sys
+import argparse, collections, csv, math, os, re, sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -616,6 +618,84 @@ def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False):
     return h, bottom
 
 
+def read_side(path):
+    """Rows of figures/intron_placements.py: per intron, the assemblies in file order."""
+    blocks = collections.OrderedDict()
+    for r in csv.DictReader(open(path), delimiter="\t"):
+        r["pl"] = [(int(k), dn, int(ph)) for k, dn, ph in (x.split(":") for x in r["placements"].split(";"))]
+        blocks.setdefault(int(r["intron"]), []).append(r)
+    return blocks
+
+
+ORDINAL = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth"}
+
+
+def side_panel(fig, x0, top, width, blocks, names, phase):
+    """Panel C: equivalent placements of introns (figures/intron_placements.py), one block per intron, one row per
+    assembly: the gene-strand window around the two ends (exon bases grey, lowercase; intron bases black; the bases
+    repeated at both ends shaded), a tick at each possible intron end, a triangle under the placement named by the
+    gold-standard script, the placement on an AG acceptor in the given phase in blue, and the dinucleotides of every
+    placement on the right. Returns the bottom of the panel (mm from the bottom of the page)."""
+    RH, CW, FS = 3.0, 1.0, 4.8                      # row height, character advance (mm), font size (pt)
+    mono = dict(family="DejaVu Sans Mono", fontsize=FS)
+    lab_w = 14.0
+    nrows = sum(len(v) for v in blocks.values())
+    legend = wrap("Gene strand. Lowercase grey: exon; uppercase: intron; shaded: bases found at both ends, across which "
+                  "the intron can be moved without changing the spliced sequence; ticks: possible intron ends; \u25b2: "
+                  f"placement named by the gold-standard script; blue: placement on an AG acceptor (phase {phase}). Right: "
+                  "dinucleotides of each placement, from left to right. Rows in italics: other individuals of the same "
+                  "species, exons carried from the gold standard.", width - 1, 4.5)
+    h = 5.0 + len(blocks) * 4.0 + nrows * RH + 1.5 + len(legend) * 2.0
+    ax = fig.add_axes([x0 / PAGE_W, (top - h) / PAGE_H, width / PAGE_W, h / PAGE_H])
+    ax.set_xlim(0, width); ax.set_ylim(-h, 0); ax.axis("off")
+    ax.text(0, -1.2, "C", fontsize=8, fontweight="bold", va="top")
+    ax.text(5, -1.4, "Equivalent placements of introns", fontsize=5.5, va="top")
+    y = -5.0
+    for intron, rows in blocks.items():
+        y -= 2.6
+        ax.text(0, y, f"{ORDINAL.get(intron, str(intron))} intron".capitalize(), fontsize=5.5, fontweight="bold", va="center")
+        y -= 1.4
+        for r in rows:
+            y -= RH / 2
+            other = r["source"] != "gold standard"
+            ax.text(lab_w - 1.5, y, names.get(r["assembly"], r["assembly"]), fontsize=5, ha="right", va="center",
+                    style="italic" if other else "normal", color="0.35" if other else "black")
+            left, right = r["window"].split(" ... ")
+            k0 = min(k for k, _, _ in r["pl"])
+            xs = lab_w
+            for part, is_donor in ((left, True), (right, False)):
+                pre, amb, post = re.match(r"^([^\[]*)\[([^\]]*)\](.*)$", part).groups()
+                x = xs
+                for i, c in enumerate(pre + amb + post):
+                    inamb = len(pre) <= i < len(pre) + len(amb)
+                    if inamb and i == len(pre):
+                        ax.add_patch(Rectangle((x - 0.05, y - 0.95), len(amb) * CW + 0.1, 1.9, facecolor="#e4e4e4",
+                                               edgecolor="none", zorder=1))
+                    col = "0.55" if c.islower() else "black"
+                    ax.text(x + CW / 2, y, c, ha="center", va="center", color=col, zorder=3, **mono)
+                    x += CW
+                for k, dn, ph in r["pl"]:          # tick at each possible end: the boundary after len(pre) + k - k0 bases
+                    xb = xs + (len(pre) + k - k0) * CW
+                    ag = dn.endswith("-AG") and ph == phase
+                    ax.plot([xb, xb], [y - 1.0, y + 1.0], color=GOLD if ag else "0.45", lw=0.7 if ag else 0.3, zorder=2)
+                    if k == int(r["named_k"]):
+                        ax.plot([xb], [y - 1.25], marker="^", ms=1.4, color="black", mew=0, zorder=5)
+                xs = x + (2.5 if is_donor else 0)
+                if is_donor: ax.text(x + 1.25, y, "\u2026", ha="center", va="center", fontsize=FS, color="0.4")
+            xp = xs + 1.5
+            for k, dn, ph in r["pl"]:
+                ag = dn.endswith("-AG") and ph == phase
+                t = ax.text(xp, y, dn, fontsize=4.5, va="center", color=GOLD if ag else "black",
+                            fontweight="bold" if ag else "normal")
+                xp += width_mm(dn, 4.5, "bold" if ag else "normal") + 1.0
+            y -= RH / 2
+    y -= 1.5
+    for l in legend:
+        y -= 2.0
+        ax.text(0, y, l, fontsize=4.5, va="center", color="0.25")
+    return top - h
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--genes", nargs="+", required=True, help="genes in reading order, three per row")
@@ -637,6 +717,12 @@ def main():
                     help="x origin: the selenocysteine TGA (sec) or the start codon of the gold-standard model (start; genes "
                     "without selenocysteine, such as the machinery genes of curation/gold_standard_machinery)")
     ap.add_argument("--no-secis", action="store_true", help="do not search or draw SECIS elements")
+    ap.add_argument("--side-panel", default="", help="table of figures/intron_placements.py: panel C on the right of the "
+                    "first gene, with panel letters A (gene models) and B (proteins)")
+    ap.add_argument("--side-width", type=float, default=72.0, help="width of the side panel (mm)")
+    ap.add_argument("--side-names", nargs="*", default=[], help="displayed names of the assemblies of the side panel, as "
+                    "name=label (the gold-standard assemblies keep their names)")
+    ap.add_argument("--side-phase", type=int, default=1, help="phase of the placements on an AG acceptor drawn in blue")
     a = ap.parse_args()
     global ORIGIN, NO_SECIS
     ORIGIN, NO_SECIS = a.origin, a.no_secis
@@ -645,12 +731,13 @@ def main():
     genes = [load(g, a) for g in a.genes]
     labels = dict(x.split("=", 1) for x in a.labels)
     NC = a.columns
-    col_w = (PAGE_W - LEFT - RIGHT - (NC - 1) * COL_GAP) / NC
+    side_w = (a.side_width + COL_GAP) if a.side_panel else 0.0
+    col_w = (PAGE_W - LEFT - RIGHT - side_w - (NC - 1) * COL_GAP) / NC
     fig = plt.figure(figsize=(PAGE_W * MM, PAGE_H * MM))
     fx = lambda mm: mm / PAGE_W
     fy = lambda mm: mm / PAGE_H                    # from the bottom of the page
     top = PAGE_H - TOP
-    used, rulers = set(), []
+    used, rulers, side_ruler = set(), [], None
     for d in genes:
         for g in GENOMES:
             used |= set(d["gold_sites"].get(g, "").split(";"))
@@ -677,6 +764,14 @@ def main():
             axB = fig.add_axes([fx(left), fy(axB_bottom), fx(col_w), fy(hB)])
             axB.set_ylim(-hB, 0)
             draw_proteins(axB, d, refs_y, gold_y, par_y, col_w, fig)
+            if a.side_panel and r == 0 and k == 0:     # panel letters, and panel C on the right
+                fig.text(fx(2), fy(top), "A", fontsize=8, fontweight="bold", va="top")
+                fig.text(fx(2), fy(axB_bottom + hB + 4.5), "B", fontsize=8, fontweight="bold", va="top")
+                names = dict(NAMES, **dict(x.split("=", 1) for x in a.side_names))
+                xc = LEFT + NC * col_w + NC * COL_GAP
+                c_bottom = side_panel(fig, xc, top + 1.0, a.side_width, read_side(a.side_panel), names, a.side_phase)
+                row_bottom = min(row_bottom, c_bottom - 1.0)
+                side_ruler = (xc - COL_GAP / 2, row_top, row_bottom)
             if k == 0:
                 lab = blended_transform_factory(fig.transFigure, axA.transData)
                 for g in GENOMES:
@@ -710,7 +805,7 @@ def main():
                     axB.text(fx(9), (par_y[0] + par_y[-1]) / 2, plabel, transform=labB, fontsize=5.5, rotation=90,
                              ha="center", va="center", color=PARALOG)
         rulers.append((row_top, row_bottom))
-        top = axN_bottom - 6
+        top = min(axN_bottom, row_bottom + 1.0) - 6
     plabel = next((next(iter(d["par"].values())).get("label", "paralog") for d in genes if d["par"]), None)
     key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel,
                             transcripts=any(d["tx"] for d in genes))
@@ -725,6 +820,9 @@ def main():
         for c in range(1, NC):
             x = LEFT + c * col_w + (c - 0.5) * COL_GAP
             fig.add_artist(Line2D([fx(x), fx(x)], [fy(rt), fy(rb)], **rule))
+    if side_ruler:
+        x, rt, rb = side_ruler
+        fig.add_artist(Line2D([fx(x), fx(x)], [fy(rt), fy(rb)], **rule))
     os.makedirs(a.out, exist_ok=True)
     out = os.path.join(a.out, a.name)
     from matplotlib.transforms import Bbox

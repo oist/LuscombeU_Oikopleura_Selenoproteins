@@ -19,3 +19,8 @@ run --gene PSTK --embl FN653020.1 --reference "human=Q8IV42" \
     --gold-note "OKI=third and fourth introns with splice sites outside the intron classes (TG-AG, AG-AA), as in the three supporting transcripts" \
                 "OSKA=third and fourth introns with splice sites outside the intron classes (AA-AG, TT-GT), as in the supporting transcripts; the third intron is retained in two of them" \
                 "OdB3=exon chain set by the curator: the GenBank exons 1 to 3, the acceptor of the third intron (GA-AG; retained in both ESTs) from the prediction, and the last intron of the ESTs (AT-AG)"
+
+# Panel C of Figure PSTK: equivalent placements of the third and fourth introns, in the gold-standard assemblies and
+# in the assemblies of other individuals (results/gene_regions/PSTK, make pstk-regions; needs minimap2)
+python3 figures/intron_placements.py --gene PSTK --assembly OKI=gold KUM=lift:OKI OSKA=gold AOM=lift:OSKA OdB3=gold \
+    Bar2=lift:OdB3 --introns 3 4 --gold-dir "$GOLD" --out "$OUT/intron_placements_PSTK.tsv" > /dev/null

@@ -369,11 +369,14 @@ pstk-regions:
 
 # Reannotation panels of the machinery genes (one gene per figure, aligned on the start codon of the gold-standard
 # model, no SECIS), from the machinery gold standard and figures/inputs (figures/machinery_reannotation_inputs.sh,
-# which needs www.ebi.ac.uk and the genomes)
+# which needs www.ebi.ac.uk and the genomes); panel C, equivalent placements of introns, when
+# figures/inputs/intron_placements_<gene>.tsv exists (figures/intron_placements.py, from results/gene_regions)
 MACHINERY_FIGURE_GENES = PSTK
 machinery-reannotation:
 	for g in $(MACHINERY_FIGURE_GENES); do python3 figures/reannotation_page.py --genes $$g --columns 1 --origin start \
-	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; C. intestinalis: RefSeq"; done
+	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; C. intestinalis: RefSeq" \
+	  $$([ -f figures/inputs/intron_placements_$$g.tsv ] && echo --side-panel figures/inputs/intron_placements_$$g.tsv \
+	  --side-names KUM=KUM-M3-7f AOM=AOM-5-5f Bar2=Bar2_p4); done
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:
