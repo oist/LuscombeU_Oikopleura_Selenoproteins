@@ -2199,3 +2199,20 @@ no earlier step waits for them.
   last two exons (end_support), so that OdB3 PSTK gets the ends of its ESTs (5' UTR 7 nt, 3' UTR 3 nt; tested on the
   region of results/gene_regions/PSTK); other models unchanged. Needs make gold-standard-machinery, then make
   machinery-reannotation-inputs and machinery-reannotation.
+- Figure PSTK D (2026-11-04, Charles: a simplified tree as panel D, even as a placeholder): figures/simplified_tree.py
+  (PMSF tree rooted on KTI12, nodes < 50 collapsed, display groups: appendicularian species, other tunicates,
+  vertebrates, outgroup, other; one-group clades as wedges; sibling "other" tips of one polytomy merged as
+  "unresolved"); figures/reannotation_page.py --tree-panel draws it below panel C (make machinery-reannotation, PSTK
+  only). The full collapsed tree stays in Figure TREES. To redraw after the next tree run.
+- PSTK literature (2026-11-04, Charles asked for a well-resolved PSTK phylogeny): none within animals. Sherrer et al.
+  2008 (NAR): PSTK and KTI12 resolved at the level of archaea, eukaryotes and the KTI12 split (KTI12 diverged from the
+  archaeal-eukaryotic ancestral PSTK); Mariotti et al. 2019 (Nat Microbiol): Harpellales (Smittium, Zancudomyces) use
+  Sec, their PSTK form one cluster, and nematodes and insects branch too basally in machinery trees (long-branch
+  attraction). Both cited in the PSTK text and Methods.
+- Charles: remove non-Sec organisms from the tree, as the pressures on the protein differ? PSTK occurs only with the Sec
+  machinery (Sherrer 2008: every genome with SepSecS has PSTK, non-Sec eukaryotes and archaea lack it), so the non-Sec
+  sequences of the tree are the KTI12 outgroup. make pstk-no-outgroup (local, 15 min; machinery_lba.py --analyses taxa
+  --exclude KTI12 --out results/trees/lba_no_outgroup): without KTI12 the appendicularian clade groups with the
+  Harpellales PSTK (72%; then with the other tunicates, flatworm and oomycete, 28%); other tunicates 97%. Two long
+  branches together: the position stays unresolved -> sentence in the PSTK paragraph, Methods (5). Possible next test:
+  a heterotachy model (IQ-TREE GHOST, +H) for lineage-specific rates.
