@@ -69,14 +69,14 @@ rearranged relative to each other [@Plessy2024]. A genome assembly is public for
 [@Denoeud2010], OSKA2016 from near Osaka [@Wang2020] and OKI2018 from Okinawa [@Bliznina2021]. How the annotations of
 the three assemblies represent selenoprotein genes has not been examined.
 
-Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona intestinalis*
-has 19 selenoprotein genes [@Jiang2010] and a selenocysteine-containing deiodinase was characterised in *Halocynthia
-roretzi* [@Shepherdley2004]. A survey of the thyroid hormone toolkit across chordates found that tunicate deiodinase
-sequences in public databases often lack parts of the protein [@Esposito2021], an example of how annotation errors
-limit comparative studies. No appendicularian selenoproteome has been described; to our knowledge, the only
-appendicularian selenoprotein gene reported is the selenophosphate synthetase SEPHS2 of *O. dioica*, with its SECIS
-element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen of the large surveys (SelenoDB 2.0, Secmarker,
-Baclaocos 2019, Trenz 2021, Esposito 2021). -->
+Tunicate selenoproteins are known mostly from ascidians, where they show a dynamic evolution. *Ciona robusta* (formerly
+*C. intestinalis* type A) has 19 selenoprotein genes [@Jiang2010] and a selenocysteine-containing deiodinase was
+characterised in *Halocynthia roretzi* [@Shepherdley2004]. A survey of the thyroid hormone toolkit across chordates
+found that tunicate deiodinase sequences in public databases often lack parts of the protein [@Esposito2021], an example
+of how annotation errors limit comparative studies. No appendicularian selenoproteome has been described; to our
+knowledge, the only appendicularian selenoprotein gene reported is the selenophosphate synthetase SEPHS2 of *O. dioica*,
+with its SECIS element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen of the large surveys (SelenoDB 2.0,
+Secmarker, Baclaocos 2019, Trenz 2021, Esposito 2021). -->
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
 operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; @Satou2006]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In

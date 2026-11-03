@@ -2080,3 +2080,6 @@ no earlier step waits for them.
   covered by ESTs and by RNA-seq (Waki et al. 2015 late gastrulae). With the C. intestinalis RefSeq single-exon model
   (full RNA-seq coverage), the manuscript now says that Ciona PSTK has no intron (Satou et al. 2022, KY21 models). The
   check of Ciona in the list of checks by hand is done.
+- Ciona names (2026-11-03, Charles agrees to call type A C. robusta): Cint = C. intestinalis (GCF_018327825.1,
+  RefSeq, Roscoff isolate), Crob = C. robusta (KH, GCF_000224145.3; KY21 models on Ghost). Introduction corrected:
+  the 19 selenoprotein genes of Jiang et al. 2010 are those of C. robusta (formerly C. intestinalis type A).
