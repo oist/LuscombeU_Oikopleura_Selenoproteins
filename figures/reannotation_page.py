@@ -696,6 +696,27 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
     return top - h
 
 
+def tree_panel(fig, x0, top, width, path, groups, title, taxa="config/taxon_groups.tsv"):
+    """Panel D, below panel C: simplified tree of the family (figures/simplified_tree.py). Returns the bottom of the
+    panel (mm from the bottom of the page)."""
+    import simplified_tree as st
+    root = st.simplify(path, groups, taxa)
+    n, row = len(st.tips_of(root)), 2.6
+    legend = wrap("Nodes supported by less than 50% collapsed; ultrafast bootstrap supports of 70% or more shown. Wedges: "
+                  "clades of sequences of one group, from their ancestor to the deepest sequence; \u201cunresolved\u201d: "
+                  "sequences of the other groups in one polytomy, drawn as one tip. Full tree: Figure TREES.", width - 1, 4.5)
+    h = 5.0 + n * row + 4.0 + len(legend) * 2.0 + 1.0
+    ax = fig.add_axes([x0 / PAGE_W, (top - h) / PAGE_H, width / PAGE_W, h / PAGE_H])
+    ax.set_xlim(0, width); ax.set_ylim(-h, 0); ax.axis("off")
+    ax.text(0, -1.2, "D", fontsize=8, fontweight="bold", va="top")
+    ax.text(5, -1.4, title, fontsize=5.5, va="top")
+    y = st.draw(ax, root, 1.0, -5.0, width - 1.0, row, fontsize=4.8) - 1.5
+    for l in legend:
+        y -= 2.0
+        ax.text(0, y, l, fontsize=4.5, va="center", color="0.25")
+    return top - h
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--genes", nargs="+", required=True, help="genes in reading order, three per row")
@@ -723,6 +744,11 @@ def main():
     ap.add_argument("--side-names", nargs="*", default=[], help="displayed names of the assemblies of the side panel, as "
                     "name=label (the gold-standard assemblies keep their names)")
     ap.add_argument("--side-phase", type=int, default=1, help="phase of the placements on an AG acceptor drawn in blue")
+    ap.add_argument("--tree-panel", default="", help="tree file: panel D below panel C, a simplified tree of the family "
+                    "(figures/simplified_tree.py; needs --side-panel)")
+    ap.add_argument("--tree-groups", default="", help="groups table of the tree (stage2/machinery_phylogeny.py)")
+    ap.add_argument("--tree-title", default="", help="title of panel D (default: simplified tree of the gene, with the "
+                    "model for a PMSF tree)")
     a = ap.parse_args()
     global ORIGIN, NO_SECIS
     ORIGIN, NO_SECIS = a.origin, a.no_secis
@@ -770,6 +796,10 @@ def main():
                 names = dict(NAMES, **dict(x.split("=", 1) for x in a.side_names))
                 xc = LEFT + NC * col_w + NC * COL_GAP
                 c_bottom = side_panel(fig, xc, top + 1.0, a.side_width, read_side(a.side_panel), names, a.side_phase)
+                if a.tree_panel:
+                    title = a.tree_title or (f"Simplified tree of {labels.get(d['gene'], d['gene'])}" +
+                                             (" (LG+C60+F+G, PMSF)" if ".pmsf." in a.tree_panel else ""))
+                    c_bottom = tree_panel(fig, xc, c_bottom - 4.0, a.side_width, a.tree_panel, a.tree_groups, title)
                 row_bottom = min(row_bottom, c_bottom - 1.0)
                 side_ruler = (xc - COL_GAP / 2, row_top, row_bottom)
             if k == 0:

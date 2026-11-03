@@ -2199,3 +2199,8 @@ no earlier step waits for them.
   last two exons (end_support), so that OdB3 PSTK gets the ends of its ESTs (5' UTR 7 nt, 3' UTR 3 nt; tested on the
   region of results/gene_regions/PSTK); other models unchanged. Needs make gold-standard-machinery, then make
   machinery-reannotation-inputs and machinery-reannotation.
+- Figure PSTK D (2026-11-04, Charles: a simplified tree as panel D, even as a placeholder): figures/simplified_tree.py
+  (PMSF tree rooted on KTI12, nodes < 50 collapsed, display groups: appendicularian species, other tunicates,
+  vertebrates, outgroup, other; one-group clades as wedges; sibling "other" tips of one polytomy merged as
+  "unresolved"); figures/reannotation_page.py --tree-panel draws it below panel C (make machinery-reannotation, PSTK
+  only). The full collapsed tree stays in Figure TREES. To redraw after the next tree run.

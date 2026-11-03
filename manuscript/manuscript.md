@@ -906,8 +906,7 @@ to 100% under the selected model and with PMSF); the kinase domain placed it as 
 with PMSF), the C-terminal region next to fly proteins (47%, 61% with PMSF), and neither rejected a grouping with the
 other tunicates (AU tests, p = 0.11 to 0.42).
 
-![Figure PSTK, A to C](../figures/machinery_PSTK.png)
-![Figure PSTK, D](../figures/phylogeny_pstk_collapsed_pmsf.png)
+![Figure PSTK](../figures/machinery_PSTK.png)
 
 <!-- Panel D and the tree numbers: trees of commit c7865cd (make machinery-phylogeny, machinery-lba,
 machinery-domains(-pmsf) and pstk-one-leaf, with the curated OdB3 and O. albicans PSTK models); supports not in
@@ -926,10 +925,11 @@ gold-standard assemblies and in the assemblies of other individuals of the same 
 exons carried from the gold standard through a minimap2 alignment of the regions); shaded, the bases repeated at both
 ends, across which the intron can be moved without changing the spliced sequence; ticks, the possible intron ends, whose
 dinucleotides are listed on the right from left to right; triangle, the placement named by the gold-standard script;
-blue, the placement on an AG acceptor in phase 1. D (`figures/phylogeny_pstk_collapsed_pmsf.pdf`), tree of PSTK and of
-the related kinase KTI12 under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast
-bootstrap replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown); clades of one
-taxonomic group collapsed.
+blue, the placement on an AG acceptor in phase 1. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
+related kinase KTI12 under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast
+bootstrap replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences
+of one group drawn as wedges, and the sequences of the other groups that branch from one polytomy drawn as one tip;
+the full tree is in Figure TREES.
 
 ### SECp43
 
