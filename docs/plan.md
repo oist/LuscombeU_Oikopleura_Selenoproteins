@@ -2097,8 +2097,8 @@ no earlier step waits for them.
   columns, phases 0, 1, 2, 0, 1): the chordate ancestor's structure. C. intestinalis, C. robusta, P. mammillata, S.
   clava, B. schlosseri and T. democratica (XM_082946145.1, from Charles's tblastn): one exon. No appendicularian intron
   at a chordate column: O. dioica introns 2 and 3 (phases 2 and 1) lie 7 and 6 columns from chordate intron 2 (phase 1)
-  in the ungapped DD..RS.R region; O. dioica intron 4 lies 2 columns after a conserved His, 14 columns before chordate
-  intron 5; O. albicans introns 4 and 7 columns from O. dioica introns 3 and 4 (RKEIS anchor). Interpretation in the
+  in the ungapped DD..RS.R region; O. dioica intron 4 lies 2 columns after a conserved His, 14 columns after chordate
+  intron 4 (phase 0) and 17 before chordate intron 5; O. albicans introns 4 and 7 columns from O. dioica introns 3 and 4 (RKEIS anchor). Interpretation in the
   Results: loss of the five chordate introns in an ancestor of tunicates (mRNA-mediated replacement, the mechanism
   proposed for O. dioica intron losses by Denoeud et al. 2010), gains in appendicularian lineages. Synteny of the
   tunicate PSTK (a retrocopy elsewhere in the genome) not examined.
