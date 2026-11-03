@@ -94,6 +94,8 @@ def main():
     ap.add_argument("--exclude-genomes", nargs="*", default=[],
                     help="appendicularian genomes whose predictions are left out (held-out genomes)")
     ap.add_argument("--gold-genomes", nargs="*", default=["OKI", "OSKA", "OdB3"])
+    ap.add_argument("--exclude-sequences", nargs="*", default=[],
+                    help="regular expressions: sequences whose (final) name matches one are left out (recorded in removed.tsv)")
     ap.add_argument("--references", default="curation/mariotti2015_sps.faa",
                     help="labelled reference proteins, header <family>|<label>|<source>")
     ap.add_argument("--genomes", default="data/genomes", help="RefSeq proteins and annotations of the genomes")
@@ -226,6 +228,10 @@ def main():
                 if re.search(OUTGROUP_PATTERN[fam], n):
                     sp = re.search(r"Tax=([^=]+?) TaxID", n)
                     add(f"KTI12|{(sp.group(1) if sp else '')}|{n.split()[0]}", s, "outgroup"); k += 1
+        for n in list(seqs):              # sequences left out by name (--exclude-sequences), for example for a tree
+            pat = next((x for x in a.exclude_sequences if re.search(x, n)), None)   # with one leaf per species
+            if pat:
+                skipped.append((n, groups[n], f"left out by name (--exclude-sequences {pat})")); seqs.pop(n); groups.pop(n)
         base = f"{a.out}/{fam}"
         removed = skipped + deduplicate(seqs, groups)
         write_set(base, seqs, groups, removed)

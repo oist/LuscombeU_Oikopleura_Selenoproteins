@@ -2140,3 +2140,9 @@ no earlier step waits for them.
   across assemblies) -> provisional Discussion paragraph; genome-wide test with RNA-seq-supported introns proposed.
   The O. albicans EEFSEC model has five introns with odd sites (GT-TG, AT-AG, AA-AG, TT-AG, AT-TT): to review with
   EEFSEC.
+- Trees rebuilt now (2026-11-03, Charles away later; before the review of SEPHS, SBP2 and EEFSEC models and without the
+  NCBI enrichment of the PSTK tree): make machinery-phylogeny, then machinery-lba and machinery-domains, then
+  machinery-domains-pmsf, and in parallel make pstk-one-leaf (new: machinery_phylogeny.py --exclude-sequences; PSTK
+  tree with OdB3 as the only O. dioica assembly and without the O. vanhoeffeni pseudogene locus, ML and LG+C20+F+G).
+  Job IDs written to work/tree_jobs.txt on Deigo. After the run: update Figure PSTK D and the tree numbers of the
+  manuscript (comments mark them), and compare the one-leaf tree with the full one.

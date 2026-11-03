@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-reannotation pstk-regions pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-reannotation pstk-regions pstk-one-leaf pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -106,6 +106,17 @@ machinery-phylogeny:
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20 $(MACHINERY_TREE_INPUTS)
 	python3 figures/phylogeny_collapsed.py
 	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2 --trees results/trees/C20 --figures results/trees/C20
+
+# PSTK tree with one leaf per appendicularian species (robustness of the appendicularian placement to related leaves):
+# OdB3 as the only O. dioica assembly, without the second O. vanhoeffeni locus (pseudogene); maximum likelihood and
+# LG+C20+F+G (hours; after or alongside machinery-phylogeny)
+pstk-one-leaf:
+	rm -rf results/trees/pstk_one_leaf && mkdir -p results/trees/pstk_one_leaf
+	python3 stage2/machinery_phylogeny.py --families pstk --max-per-group 3 $(MACHINERY_TREE_INPUTS) \
+	  --exclude-sequences '^OKI_' '^OSKA_' 'pseudo' --out results/trees/pstk_one_leaf --figures results/trees/pstk_one_leaf
+	mkdir -p results/trees/pstk_one_leaf/C20 && cp results/trees/pstk_one_leaf/pstk.trimmed results/trees/pstk_one_leaf/C20/
+	python3 stage2/machinery_phylogeny.py --families pstk --max-per-group 3 --model LG+C20+F+G $(MACHINERY_TREE_INPUTS) \
+	  --exclude-sequences '^OKI_' '^OSKA_' 'pseudo' --out results/trees/pstk_one_leaf/C20 --figures results/trees/pstk_one_leaf/C20
 
 # Long-branch analyses of the machinery trees (after machinery-phylogeny): PMSF LG+C60, slow-fast, taxon removal,
 # AU test; several hours to days on 8 CPUs
