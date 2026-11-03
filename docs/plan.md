@@ -2146,3 +2146,18 @@ no earlier step waits for them.
   tree with OdB3 as the only O. dioica assembly and without the O. vanhoeffeni pseudogene locus, ML and LG+C20+F+G).
   Job IDs written to work/tree_jobs.txt on Deigo. After the run: update Figure PSTK D and the tree numbers of the
   manuscript (comments mark them), and compare the one-leaf tree with the full one.
+- Trees of c7865cd read (2026-11-03). New script stage2/machinery_clade_supports.py (make machinery-clade-supports,
+  results/tables/stage2_machinery_clade_supports.tsv): supports of the clades cited in the text, read as bipartitions
+  of the unrooted trees. The scratch reading of the PSTK "sister of all other PSTK" supports reported to Charles
+  earlier the same day (51, 62, 31%...) took supports from Bio.Phylo nodes after rerooting, which moves them by one
+  branch; the bipartition values replace them. PSTK: the appendicularian clade no longer groups with the
+  Smittium/Zancudomyces PSTK in any tree; it is the sister of all other PSTK (ML 86, C20 68, PMSF 46, site removal
+  76-92, without fungi 95; one leaf per species 94, C20 92; kinase domain 89/78, C-terminal next to flies 47/61); AU
+  with the other tunicates p = 0.088 (domains 0.11-0.42). SEPHS: second copy + tunicate glycine forms 70-100, next to
+  Pmam (38-99); F. borealis joins the oikopleurid Sec clade under C20, PMSF, 10% removal; AU p 0.046/0.029 (inside
+  tunicate SEPHS) and 0.014/0.009 (ortholog position). SECIS-binding protein: with the other tunicates 89 (ML), 99
+  (PMSF), 97-99 (10, 30, 40% removal), 48 at 20% removal with F. borealis inside the oikopleurid clade; F. borealis
+  no longer next to Capsaspora; invertebrates + tunicates with vertebrate SECISBP2L 58/79/72/44, but SECISBP2 +
+  SECISBP2L one clade after 30-40% removal (73, 67). Domain conflicts at 95%: only within groups, except SEPHS with
+  PMSF (N-terminal: vertebrates with amphioxus and protostomes, 96; C-terminal: with tunicates, 98). Manuscript,
+  Table MACHINERY, Methods and supplementary note updated.

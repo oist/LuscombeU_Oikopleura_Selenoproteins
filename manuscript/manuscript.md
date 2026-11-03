@@ -879,21 +879,25 @@ the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PST
 each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The appendicularian PSTK are
 PSTK and not KTI12: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
 dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted as a pseudogene) formed a
-clade (100%)<!-- To check when the trees are rerun: the same tree with one leaf per appendicularian species (one O.
-dioica assembly, without the O. vanhoeffeni pseudogene locus), so that related leaves do not drive the topology. -->, apart from the other tunicates, which formed their own clade (98 to 100%). In every analysis, the
-appendicularian clade grouped with the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, which also lie on
-long branches (76% in the maximum-likelihood tree, 50% under C20, 85% with PMSF, 65 to 82% after site removal); without
-these fungi, it branched as the sister of all other PSTK (94%). Two long branches grouped together is the pattern
-expected from long-branch attraction. A tree grouping the appendicularians with the other tunicates was not rejected (AU
-test, p = 0.13). The position of the appendicularian PSTK within the family is therefore unresolved. Trees of the kinase
-domain and of the C-terminal region recovered the appendicularian clade (97 to 100% under the selected model and with
-PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0.14 to 0.45).
+clade (100%), apart from the other tunicates, which formed their own clade (97 to 99%). The appendicularian clade
+branched as the sister of all other PSTK (86% in the maximum-likelihood tree, 68% under C20, 46% with PMSF, 76 to 92%
+after site removal, and 95% without the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, which also lie on
+long branches and branched among the animal proteins, at unresolved positions). With one leaf per appendicularian species (the OdB3 model for
+*O. dioica*, and without the *O. vanhoeffeni* pseudogene locus), so that related leaves do not weigh on the topology,
+the appendicularian clade kept this position (94%, 92% under C20). A long branch next to the outgroup is also the
+position expected from long-branch attraction [@Bergsten2005], and a tree grouping the appendicularians with the other
+tunicates was not rejected (AU test, p = 0.088). The position of the appendicularian PSTK within the family is
+therefore unresolved. Trees of the kinase domain and of the C-terminal region recovered the appendicularian clade (91
+to 100% under the selected model and with PMSF); the kinase domain placed it as the sister of all other PSTK (89%, 78%
+with PMSF), the C-terminal region next to fly proteins (47%, 61% with PMSF), and neither rejected a grouping with the
+other tunicates (AU tests, p = 0.11 to 0.42).
 
 ![Figure PSTK, A to C](../figures/machinery_PSTK.png)
 ![Figure PSTK, D](../figures/phylogeny_pstk_collapsed_pmsf.png)
 
-<!-- Panel D and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
-8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf).
+<!-- Panel D and the tree numbers: trees of commit c7865cd (make machinery-phylogeny, machinery-lba,
+machinery-domains(-pmsf) and pstk-one-leaf, with the curated OdB3 and O. albicans PSTK models); supports not in
+Table LBA or Table DOMAINS from results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports).
 Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
 pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand).
 Repeated bases, pairing of intron ends and copies: results/tables/intron_content.tsv (make intron-content, run 13b50c5). -->
@@ -910,7 +914,8 @@ ends, across which the intron can be moved without changing the spliced sequence
 dinucleotides are listed on the right from left to right; triangle, the placement named by the gold-standard script;
 blue, the placement on an AG acceptor in phase 1. D (`figures/phylogeny_pstk_collapsed_pmsf.pdf`), tree of PSTK and of
 the related kinase KTI12 under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast
-bootstrap replicates (supports of 70% or more shown); clades of one taxonomic group collapsed.
+bootstrap replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown); clades of one
+taxonomic group collapsed.
 
 ### SECp43
 
@@ -927,12 +932,12 @@ ancestor.
 | Gene | Orthology | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|---|
 | tRNA-Sec | not tested (RNA gene) | found | found | found | found (4 loci) | found (2 loci) | found (2 loci) | found | found (2 loci) | found |
-| SEPHS2 | selenocysteine at the catalytic site; outside the tunicate SEPHS in the trees (AU p at most 0.022) | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | not found | partial | selenocysteine |
-| SEPHS, second copy | ortholog of the tunicate glycine form (79 to 99%) | found | not found | not found | found | found | found | not found | not found | not found |
-| PSTK | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.13) | found | found | found | fragment | found | found | fragment | fragment | not found |
+| SEPHS2 | selenocysteine at the catalytic site; outside the tunicate SEPHS in the trees (AU p at most 0.046) | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | not found | partial | selenocysteine |
+| SEPHS, second copy | ortholog of the tunicate glycine form (70 to 100%) | found | not found | not found | found | found | found | not found | not found | not found |
+| PSTK | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.088) | found | found | found | fragment | found | found | fragment | fragment | not found |
 | SEPSECS | reciprocal best hit in all nine genomes | found | found | found | found | found | found | found | found | found |
 | EEFSEC | reciprocal best hit; best hit only in *B. stygius* and *M. erythrocephalus* | found | found | found | found | found | found | found | found | found |
-| SECISBP2/SECISBP2L | ortholog of the tunicate protein (98%, C60 99%); relation to SECISBP2 and SECISBP2L unresolved | found | found | found | found | found | found | found | found | found |
+| SECISBP2/SECISBP2L | ortholog of the tunicate protein (89%, C60 99%); relation to SECISBP2 and SECISBP2L unresolved | found | found | found | found | found | found | found | found | found |
 | TRNAU1AP (associated factor) | reciprocal best hit (*F. borealis*) | not found | not found | not found | not found | not found | not found | not found | not found | found |
 
 <!-- Table generated by stage2/machinery_table.py (make machinery-table; results/tables/stage2_machinery_table.md),
@@ -1097,48 +1102,56 @@ under LG+C60+F+G with posterior mean site frequencies, with 1,000 ultrafast boot
 taxonomic group.
 
 The trees identify the appendicularian SECIS-binding protein as the ortholog of the single protein of the other
-tunicates. The proteins of the six oikopleurid genomes formed a clade in every analysis (100%), which grouped with the
-SECIS-binding proteins of the ten other tunicates (98% in the maximum-likelihood tree, 99% with PMSF, 96 to 99% after
-site removal). The *F. borealis* protein, a predicted fragment of 128 residues, fell next to a *Capsaspora* protein,
-outside the animal proteins (50 to 90%). Together with the amphioxus, echinoderm, mollusc and annelid proteins, the
-tunicate proteins grouped with vertebrate SECISBP2L (93% in the maximum-likelihood tree, 94% with PMSF, 85 to 91% after
-site removal), and vertebrate SECISBP2 fell outside this group. This is not the tree expected from a duplication in
-early vertebrates, which would place SECISBP2 and SECISBP2L in one clade, with the SECISBP2L-type proteins of
-invertebrate deuterostomes outside it [@Donovan2009], and the two parts of the protein disagree on it (below).
+tunicates. The proteins of the six oikopleurid genomes formed a clade (100%, 87% after removal of 20% of the sites), which grouped
+with the SECIS-binding proteins of the ten other tunicates (89% in the maximum-likelihood tree, 99% with PMSF, 97 to 99%
+after removal of 10, 30 or 40% of the sites; after removal of 20%, the *F. borealis* protein joined the oikopleurid
+clade, and both grouped with the other tunicates, 48%). The *F. borealis* protein, a predicted fragment of 128 residues, had no stable position (next
+to insect or nematode proteins in the other analyses, 18 to 58%). Together with the amphioxus, echinoderm, mollusc and
+annelid proteins, the tunicate proteins grouped with vertebrate SECISBP2L in the maximum-likelihood tree (58%), with
+PMSF (79%) and after removal of 10 or 20% of the sites (72 and 44%), and vertebrate SECISBP2 fell outside this group.
+After removal of 30 or 40% of the sites, vertebrate SECISBP2 and SECISBP2L formed one clade (73 and 67%), with the
+invertebrate proteins outside it, the tree expected from a duplication in early vertebrates [@Donovan2009]. The
+full-length trees thus disagree on the relation of the invertebrate proteins to the two vertebrate paralogs, and so
+do the two parts of the protein (below).
 Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish embryos without Sbp2 still make a subset of
 selenoproteins, and only the loss of both genes abolishes their synthesis [@Kiledjian2022], and selenoprotein synthesis
 that depends on SECISBP2L is required for oligodendrocyte differentiation [@Dai2022]. The appendicularian protein is
-thus the ortholog of the tunicate protein, closest to SECISBP2L by best hits and in the full-length trees, but its
+thus the ortholog of the tunicate protein, closest to SECISBP2L by best hits and in most full-length trees, but its
 relationship to the two vertebrate paralogs is not resolved.
 
 Appendicularians have two SEPHS genes. The second copy, found in OKI2018, *O. longicauda*, *O. albicans* and *O.
 vanhoeffeni*, carries a residue other than selenocysteine (alanine or serine where aligned). In every analysis it fell
-with the glycine forms of the other tunicates, in a clade supported by 79 to 99% (next to the *Phallusia mammillata*
-protein with PMSF, 89%); these glycine forms include the *Botryllus schlosseri* protein labelled SPS1 by Mariotti et al.
+with the glycine forms of the other tunicates, in a clade supported by 70 to 100%, next to the *Phallusia mammillata*
+protein (38 to 99%); these glycine forms include the *Botryllus schlosseri* protein labelled SPS1 by Mariotti et al.
 [-@Mariotti2015]. The tunicate SEPHS other than the appendicularian selenocysteine copies formed a clade in every
-analysis (81 to 98%): the duplication that produced the selenocysteine and glycine forms of tunicates therefore preceded
+analysis (65 to 98%): the duplication that produced the selenocysteine and glycine forms of tunicates therefore preceded
 the divergence of appendicularians. The selenocysteine SEPHS2 of the six oikopleurid genomes formed a clade in every
-analysis (100%), which the *F. borealis* protein joined only under C20 and PMSF (95 and 83%). Its position was unstable:
-at the base of the animal SEPHS under C20 and PMSF (support of the parent node 50 and 86%), and outside a group that
-includes the animal, choanoflagellate, kinetoplastid, stramenopile, alveolate and amoebozoan proteins in the
-maximum-likelihood tree and in every site-removal analysis (45 to 79%). AU tests rejected its placement inside the clade
-of all tunicate SEPHS (p = 0.022 under the maximum-likelihood model, 0.013 under PMSF) and next to the selenocysteine
-copies of the other tunicates (p = 0.0009 and 0.0024). The appendicularian selenocysteine SEPHS2 is thus either a
+analysis (100%), which the *F. borealis* protein joined under C20, with PMSF and after removal of 10% of the sites
+(92, 85 and 84%). Its position was unstable: at the base of the animal SEPHS with PMSF (support of the parent node
+89%), inside them under C20, as the sister of all animal SEPHS except the selenocysteine forms of insects and of
+*Caenorhabditis elegans* (43%), next to the insect selenocysteine forms after removal of 10% of the sites (36%), and
+outside a group that includes the animal, choanoflagellate, kinetoplastid, stramenopile, alveolate and amoebozoan
+proteins in the maximum-likelihood tree and after removal of 20 to 40% of the sites (53 to 83%). AU tests rejected its
+placement inside the clade of all tunicate SEPHS (p = 0.046 under the maximum-likelihood model, 0.029 under PMSF) and
+next to the selenocysteine copies of the other tunicates (p = 0.014 and 0.009). The appendicularian selenocysteine SEPHS2 is thus either a
 divergent ortholog of the tunicate selenocysteine copy whose signal these models do not recover, or a separate SEPHS2
 lineage. In both cases it is a selenocysteine SEPHS2, by the residue at its catalytic site [@Mariotti2015].
 
 Trees of each half of the alignments, split at a domain boundary of the human protein (Table DOMAINS), recovered the
-appendicularian clades of PSTK and of the SECIS-binding protein in both halves (97 to 100% under the selected model and
-with PMSF), and the selenocysteine SEPHS2 clade in the N-terminal half only (100%). Neither half rejected a grouping of
-the appendicularian PSTK or SECIS-binding protein with the other tunicates (AU tests, p = 0.14 to 0.58 under the two
+appendicularian clades of PSTK and of the SECIS-binding protein in both halves (91 to 100% under the selected model and
+with PMSF), and the selenocysteine SEPHS2 clade in the N-terminal half (100%); in the C-terminal half, the oikopleurid
+selenocysteine SEPHS2 grouped with the *F. borealis* protein (83% under both models). Neither half rejected a grouping
+of the appendicularian PSTK or SECIS-binding protein with the other tunicates (AU tests, p = 0.11 to 0.60 under the two
 models). For SEPHS, the C-terminal half rejected the placement of the selenocysteine clade inside the clade of all
-tunicate SEPHS and at the position of an ortholog under both models (p = 0.004 to 0.028), whereas the N-terminal half
-rejected only the position of an ortholog, and only under PMSF (p = 0.032). For the SECIS-binding protein, the L7Ae
-domain placed vertebrate SECISBP2 and SECISBP2L in one clade that excluded the tunicate proteins (84%, 92% with PMSF),
-whereas the region upstream of it grouped vertebrate SECISBP2L with the amphioxus and echinoderm proteins (95%, 96% with
-PMSF), as did the full-length trees with all invertebrate deuterostome proteins. Apart from this conflict under the
-selected model, clades supported by 95% or more in one half and incompatible with a clade so supported in the other were
-found only within groups (appendicularians, other tunicates, vertebrates, insects and nematodes) (Supplementary note
+tunicate SEPHS and at the position of an ortholog under both models (p = 0.004 to 0.047), whereas the N-terminal half
+rejected only the position of an ortholog, and only under PMSF (p = 0.041). For the SECIS-binding protein, the L7Ae
+domain placed vertebrate SECISBP2 and SECISBP2L in one clade that excluded the tunicate proteins (88%, 94% with PMSF),
+whereas the region upstream of it grouped vertebrate SECISBP2L with the amphioxus and echinoderm proteins (66%; with
+PMSF, 50%, with mollusc and annelid proteins in the same clade), as did most full-length trees with all invertebrate
+deuterostome proteins. Clades supported by 95% or more in one half and incompatible with a clade so supported in the
+other were found within groups (appendicularians, other tunicates, vertebrates, protostomes, and the non-animal
+SECIS-binding proteins), with one exception: for SEPHS with PMSF, the N-terminal half grouped the vertebrate SEPHS with
+those of amphioxus and protostomes (96%), and the C-terminal half with those of tunicates (98%) (Supplementary note
 "Domain analysis of the machinery trees").
 
 <!-- Provisional section, notes:
@@ -1147,12 +1160,11 @@ found only within groups (appendicularians, other tunicates, vertebrates, insect
   (figures/phylogeny_<family>.*). Table LBA: results/tables/stage2_machinery_lba.tsv.
 - Domain analysis (2026-10-22, local run, make machinery-domains): Table DOMAINS from
   results/tables/stage2_machinery_domains.tsv and stage2_machinery_domain_conflicts.tsv; supplementary figures
-  figures/phylogeny_<family>_collapsed_domain_<domain>.pdf (make machinery-domain-figures). Supports quoted in the
-  text that are not in the tables (57, 54, 67, 81, 84, 94, 77, 83%) were read from the domain trees in
-  results/trees/domains/. PMSF versions (2026-10-23, Deigo, make machinery-domains-pmsf):
-  results/tables/stage2_machinery_domains_pmsf.tsv, stage2_machinery_domain_conflicts_pmsf.tsv and
-  figures/phylogeny_<family>_collapsed_domain_<domain>_pmsf.pdf; supports quoted (42, 70, 91, 96, 39 to 65%) read
-  from results/trees/domains/*.pmsf.treefile.
+  figures/phylogeny_<family>_collapsed_domain_<domain>.pdf (make machinery-domain-figures). PMSF versions (make
+  machinery-domains-pmsf): results/tables/stage2_machinery_domains_pmsf.tsv, stage2_machinery_domain_conflicts_pmsf.tsv
+  and figures/phylogeny_<family>_collapsed_domain_<domain>_pmsf.pdf. Supports quoted in this section that are not in
+  Table LBA or Table DOMAINS: results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports), from
+  the trees of commit c7865cd (2026-11-03).
 - Reciprocal best hits of the other tunicates: results/tables/stage1_machinery_rbh.tsv (regenerated 2026-10-23,
   make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
   for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
@@ -1628,11 +1640,16 @@ their bipartitions when the trees were rerooted.
 *Long-branch analyses.* Each tree was reanalysed (1) under LG+C60+F+G with posterior mean site frequencies (PMSF)
 [@Le2008; @Wang2017], with the maximum-likelihood tree as guide tree and 1,000 ultrafast
 bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 40% of the sites [@Brinkmann1999], ranked by their empirical Bayesian rates (IQ-TREE `-wsr`) under the selected model on the
-maximum-likelihood tree, each reduced alignment being analysed as above; and (3) for PSTK, without the long-branched
-proteins of the insect-gut fungi *Smittium* and *Zancudomyces*. In each tree, we read as unrooted bipartitions the
+maximum-likelihood tree, each reduced alignment being analysed as above; (3) for PSTK, without the long-branched
+proteins of the insect-gut fungi *Smittium* and *Zancudomyces*; and (4) for PSTK, with one sequence per appendicularian
+species (the OdB3 model for *O. dioica*, without the *O. vanhoeffeni* pseudogene locus), under the selected model and
+under C20. In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
 (for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.
+The other clades cited in the text were read in the same way from every tree, including those of the domain analysis
+below; the position of a clade is the support of its parent node and the composition of its sister group, in the tree
+rooted as in the figures (`stage2/machinery_clade_supports.py`, `results/tables/stage2_machinery_clade_supports.tsv`).
 
 AU tests [@Shimodaira2002] compared the unconstrained tree with the best trees found under topological
 constraints (IQ-TREE `-g`), with 10,000 RELL replicates. For each family, the constraint grouped the appendicularian
@@ -2236,7 +2253,7 @@ GPX, DIO and SELENOW. The comparative screen thus confirms most known genes and 
 Each alignment was split in two at a domain boundary of the human protein (PSTK: kinase domain and C-terminal region;
 SEPHS: N- and C-terminal halves; SECIS-binding protein: the region upstream of the L7Ae domain and the L7Ae domain),
 each part analysed on the same sequences, and the tree of each part tested against the data of the other (AU tests). In
-each family, the data of each part rejected the tree of the other part (p ≤ 0.0014), but the differences lay in weakly
+each family, the data of each part rejected the tree of the other part (p ≤ 0.0002), but the differences lay in weakly
 supported nodes, with the exceptions given in the main text (Table DOMAINS;
 `results/tables/stage2_machinery_domains.tsv`, `stage2_machinery_domain_conflicts.tsv`). The same analyses were run
 under LG+C60+F+G with posterior mean site frequencies estimated on the tree of each part

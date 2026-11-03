@@ -171,6 +171,16 @@ long-branch table and the SEPHS trees into the table of the manuscript, with an 
 second, non-selenocysteine SEPHS copy (`results/tables/stage2_machinery_table.{md,tsv}`). It reads only `results/` and
 runs in seconds; `make machinery-lba` runs it at the end.
 
+### Other clades cited in the text (`machinery_clade_supports.py`, `make machinery-clade-supports`)
+
+Reads, from every machinery tree on disk (maximum likelihood, C20, PMSF, site removal, without the fungal long branches,
+one leaf per appendicularian species, and the trees of the two parts of each alignment), the supports of the clades that
+the manuscript cites besides those of the long-branch table: paralogous forms (the second SEPHS copy with the tunicate
+glycine forms), the position of the appendicularian clades (support of the parent node and composition of the sister
+group, in the tree rooted as in the figures), and the vertebrate SECISBP2 and SECISBP2L. Supports are read as
+bipartitions of the unrooted trees, so that rerooting cannot move them. Output
+`results/tables/stage2_machinery_clade_supports.tsv`; local, seconds.
+
 ## SECIS search in the validated hits (`secis_validated_hits.py`, `make secis-hits`)
 
 Step 1 of the plan of 2026-10-24. The stage 1 predictions with a selenocysteine codon in the six *Oikopleura*
