@@ -5,7 +5,8 @@ The long-branch summary (stage2/machinery_lba.py) records three clades per famil
 (paralogous forms, the position of the appendicularian clade, vertebrate paralogs). This script reads them from all
 trees of a family: maximum likelihood (results/trees/<family>.treefile), C20 (results/trees/C20/), PMSF and site
 removal (results/trees/lba/), the tree without the outgroup long branches (lba/<family>.taxa), the PSTK tree with one
-leaf per appendicularian species (results/trees/pstk_one_leaf/), and the trees of the two parts of the alignment
+leaf per appendicularian species (results/trees/pstk_one_leaf/), the PSTK tree without its outgroup
+(results/trees/lba_no_outgroup/, clades only, as it has no root), and the trees of the two parts of the alignment
 (results/trees/domains/, selected model and PMSF). Trees missing on disk are skipped, and so are entries whose required leaves (for example the fungi, in the tree
 without them) are absent.
 Three kinds of entries:
@@ -50,7 +51,7 @@ ENTRIES = {
         ("appendicularians", "clade", T("Appendicularians")),
         ("other tunicates", "clade", T("Other tunicates")),
         ("appendicularians and other tunicates", "clade", T("Appendicularians", "Other tunicates")),
-        ("PSTK other than appendicularians", "clade", AND(NOT(T("outgroup")), NOT(T("Appendicularians")))),
+        ("PSTK other than appendicularians", "clade", AND(NOT(T("outgroup")), NOT(T("Appendicularians"))), [T("outgroup")]),
         ("Smittium and Zancudomyces", "clade", R(FUNGI)),
         ("appendicularians with Smittium and Zancudomyces", "clade", OR(T("Appendicularians"), R(FUNGI)), [R(FUNGI)]),
         ("appendicularians", "position", T("Appendicularians")),
@@ -86,7 +87,8 @@ def trees(fam, root):
     out = [("maximum likelihood", f"{root}/{fam}.treefile"), ("C20", f"{root}/C20/{fam}.treefile"),
            ("PMSF", f"{root}/lba/{fam}.pmsf.treefile")]
     out += [(f"fastest {k} % of sites removed", f"{root}/lba/{fam}.slowfast{k}.treefile") for k in (10, 20, 30, 40)]
-    out += [("without the outgroup long branches", f"{root}/lba/{fam}.taxa.treefile")]
+    out += [("without Smittium and Zancudomyces (machinery_lba.py --exclude)", f"{root}/lba/{fam}.taxa.treefile"),
+            ("without the outgroup (make pstk-no-outgroup)", f"{root}/lba_no_outgroup/{fam}.taxa.treefile")]
     out += [("one leaf per species", f"{root}/{fam}_one_leaf/{fam}.treefile"),
             ("one leaf per species, C20", f"{root}/{fam}_one_leaf/C20/{fam}.treefile")]
     for p in sorted(os.listdir(f"{root}/domains")) if os.path.isdir(f"{root}/domains") else []:
@@ -140,7 +142,9 @@ def main():
             names = {x.name for x in t.get_terminals()}
             tax = {n: taxon(n, groups, taxa) for n in names}
             rt = rooted(path, fam, tax)
+            unrooted = fam == "pstk" and not any(tax[n] == "outgroup" for n in names)   # no root: no position
             for entry, kind, sel, *req in ENTRIES.get(fam, []):
+                if unrooted and kind != "clade": continue
                 S = {n for n in names if sel(n, tax)}
                 if not S or any(not any(f(n, tax) for n in names) for f in (req[0] if req else [])): continue
                 row = dict(family=fam, tree=label, entry=entry, kind=kind, leaves=len(S), support="", composition="")

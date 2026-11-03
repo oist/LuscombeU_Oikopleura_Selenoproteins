@@ -891,15 +891,18 @@ second locus, predicted as a pseudogene, lies 9.5 kb from the gene on the same c
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
 each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The appendicularian PSTK are
-PSTK and not KTI12: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
+PSTK and not KTI12, the only protein homologous to PSTK over its whole length, which diverged from it before the
+separation of archaea and eukaryotes [@Sherrer2008]: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
 dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted as a pseudogene) formed a
 clade (100%), apart from the other tunicates, which formed their own clade (97 to 99%). The appendicularian clade
 branched as the sister of all other PSTK (86% in the maximum-likelihood tree, 68% under C20, 46% with PMSF, 76 to 92%
-after site removal, and 95% without the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, which also lie on
-long branches and branched among the animal proteins, at unresolved positions). With one leaf per appendicularian species (the OdB3 model for
+after site removal, and 95% without the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, Harpellales that use selenocysteine
+[@Mariotti2019], which also lie on long branches and branched among the animal proteins, at unresolved positions). With one leaf per appendicularian species (the OdB3 model for
 *O. dioica*, and without the *O. vanhoeffeni* pseudogene locus), so that related leaves do not weigh on the topology,
-the appendicularian clade kept this position (94%, 92% under C20). A long branch next to the outgroup is also the
-position expected from long-branch attraction [@Bergsten2005], and a tree grouping the appendicularians with the other
+the appendicularian clade kept this position (94%, 92% under C20). Without KTI12, the appendicularian clade grouped
+with the PSTK of *Smittium* and *Zancudomyces* (72%), the other long branch of the tree. A long branch next to the
+outgroup, or next to another long branch, is the position expected from long-branch attraction [@Bergsten2005], and fast-evolving lineages such as nematodes and
+insects branch nearer the base than expected in other trees of the selenocysteine machinery [@Mariotti2019]; a tree grouping the appendicularians with the other
 tunicates was not rejected (AU test, p = 0.088). The position of the appendicularian PSTK within the family is
 therefore unresolved. Trees of the kinase domain and of the C-terminal region recovered the appendicularian clade (91
 to 100% under the selected model and with PMSF); the kinase domain placed it as the sister of all other PSTK (89%, 78%
@@ -1625,7 +1628,8 @@ selenocysteine, the RefSeq proteins of a genome replaced its predictions, which 
 for each gene whose proteins had PSTK or KTI12 (respectively SECISBP2 or SECISBP2L) as best human hit (blastp,
 E-value at most 10^-5^), the longest isoform. Predictions shorter than half the median length of the profile
 sequences were left out (a fifth for the SECIS-binding proteins, whose tunicate predictions often cover only the
-C-terminal domain). The PSTK tree included KTI12 as outgroup: the human and *O. dioica* proteins, the KTI12 of the
+C-terminal domain). The PSTK tree included KTI12, which diverged from PSTK before the separation of archaea and eukaryotes
+[@Sherrer2008], as outgroup: the human and *O. dioica* proteins, the KTI12 of the
 RefSeq proteomes and the KTI12 entries of the Selenoprofiles UniRef50 database. The SEPHS tree included the 101 SPS1-
 and SPS2-type proteins of Mariotti et al. [-@Mariotti2015], translated from the codon alignments of their
 Supplemental Material S8 with selenocysteine codons as X, and human SEPHS1 and SEPHS2; it was rooted on the
@@ -1655,9 +1659,9 @@ their bipartitions when the trees were rerooted.
 [@Le2008; @Wang2017], with the maximum-likelihood tree as guide tree and 1,000 ultrafast
 bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 40% of the sites [@Brinkmann1999], ranked by their empirical Bayesian rates (IQ-TREE `-wsr`) under the selected model on the
 maximum-likelihood tree, each reduced alignment being analysed as above; (3) for PSTK, without the long-branched
-proteins of the insect-gut fungi *Smittium* and *Zancudomyces*; and (4) for PSTK, with one sequence per appendicularian
+proteins of the insect-gut fungi *Smittium* and *Zancudomyces*; (4) for PSTK, with one sequence per appendicularian
 species (the OdB3 model for *O. dioica*, without the *O. vanhoeffeni* pseudogene locus), under the selected model and
-under C20. In each tree, we read as unrooted bipartitions the
+under C20; and (5) for PSTK, without the KTI12 outgroup (unrooted). In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
 (for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.
