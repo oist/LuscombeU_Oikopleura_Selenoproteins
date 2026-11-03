@@ -2102,3 +2102,13 @@ no earlier step waits for them.
   Results: loss of the five chordate introns in an ancestor of tunicates (mRNA-mediated replacement, the mechanism
   proposed for O. dioica intron losses by Denoeud et al. 2010), gains in appendicularian lineages. Synteny of the
   tunicate PSTK (a retrocopy elsewhere in the genome) not examined.
+- Manuscript (2026-11-03, Charles): the intronless tunicate ancestor is used in the Results as support for what O.
+  albicans shows (introns at other positions, gained in its lineage; the transposon-like last intron), and to accept
+  complete loci of fragmented assemblies as evidence of PSTK (an intronless gene can lie whole on a short contig);
+  such loci count for presence only, not for duplications (two overlapping O. longicauda fragments, the O.
+  vanhoeffeni pseudogene locus: alleles assembled apart or contamination possible). The history (loss in a tunicate
+  ancestor, gains in appendicularians, mRNA-mediated loss), the persistence of the unusual donors through the
+  divergence of the three O. dioica species, the G-run lead and the consequence for annotation tools are in a new
+  provisional Discussion subsection ("Introns gained in PSTK, with unusual splice sites"). To do at the tree rerun:
+  PSTK tree with one leaf per appendicularian species (one O. dioica assembly, no O. vanhoeffeni pseudogene locus),
+  to check that related leaves do not drive the topology (comment in the Results).
