@@ -2186,3 +2186,16 @@ no earlier step waits for them.
   - Next: make machinery-regions (Deigo; gene_regions.py gained --protein TARGET=SOURCE, miniprot) and make
     machinery-reannotation-inputs (EBI APIs), then the panels of SBP2, SEPHS_b, SEPSECS and EEFSEC (make
     machinery-reannotation) and overrides where the evidence is clear.
+- PSTK 3' UTRs (2026-11-03, Charles asked why they are so short): all transcripts end 3-11 nt after the stop codon
+  (OKI2018 three Trinity transcripts at 1941206, OSKA2016 four at 1355815, OdB3 two ESTs at 777154); none ends with a
+  poly(A) tail (OKI2018: Illumina adapter right after the end; OSKA2016: contig end; OdB3: masked, or a 3' tail not
+  found within 3 kb). SL at the 5' end of OKI2018 i1, i3 and OSKA2016 seq1, seq5. The next gene on the same strand
+  starts 34-48 nt after the stop, one nt after an AG acceptor; transcript ends 27-35 nt before it, as the median 31-32
+  nt between polyadenylation and next trans-splice site of the operon section; previous gene 134-143 nt upstream: PSTK
+  is internal in an operon in the three assemblies -> paragraph in the PSTK subsection. Charles: fine, intercistronic
+  distances can be short. Side note: OKI2018 Trinity contigs can end with adapter; the polyadenylation-site count
+  (contigs ending with >= 10 A) misses tails followed by adapter (fewer sites, distances unaffected).
+- gold_standard.py: a curator's chain (--overrides) now takes its UTRs from the transcripts that agree with its first or
+  last two exons (end_support), so that OdB3 PSTK gets the ends of its ESTs (5' UTR 7 nt, 3' UTR 3 nt; tested on the
+  region of results/gene_regions/PSTK); other models unchanged. Needs make gold-standard-machinery, then make
+  machinery-reannotation-inputs and machinery-reannotation.

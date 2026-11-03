@@ -63,7 +63,8 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      from the prediction, are so chosen by similarity rather than by length. An in-frame stop codon
      upstream of the start is not required: many O. dioica mRNAs are trans-spliced and have short 5' UTRs; it is
      reported (upstream_stop). A chosen model of CDS rows is given the UTR exons of the compatible transcripts that
-     reach furthest 5' and 3', its coding sequence unchanged. 3' UTR exons after the exon of the stop codon are left
+     reach furthest 5' and 3', its coding sequence unchanged (for a curator's chain, --overrides, the transcripts that
+     agree with its first or last two exons, even where they contradict it elsewhere). 3' UTR exons after the exon of the stop codon are left
      out from the first one that overlaps the coding sequence of another annotated model (read-through into a
      downstream gene), and the UTRs are cut at the coding sequence of another gene of the baseline table (its model of
      the first pass, or its codon) when the exon chain reaches it: the 3' UTR ends before the next coding sequence
@@ -700,17 +701,40 @@ def shared_identity(a, t, ref, aligner):
     return sum(sa.get(j, False) for j in range(lo, hi)), sum(st.get(j, False) for j in range(lo, hi)), hi - lo
 
 
-def graft_utrs(m, genome, strand):
+def end_support(m, tms, genome):
+    """Transcripts that agree with a chain at each of its ends (genome order): compatible with its first (last) two
+    exons and reaching beyond its first (last) base. Used for the curator's chains, which the transcripts may contradict
+    elsewhere (a retained intron, for example) while holding the same first or last exon."""
+    b = sorted(m["blocks"])
+    ends = {"left": b[:2], "right": b[-2:]}
+    out = {}
+    for side, part in ends.items():
+        c0, c1 = part[0][0], part[-1][1]
+        ok = [t for t in tms if compatible(t["blocks"], part, genome) and
+              (min(x for x, _ in t["blocks"]) < c0 if side == "left" else max(y for _, y in t["blocks"]) > c1)]
+        out[side] = ok
+    return out
+
+
+def graft_utrs(m, genome, strand, tms=None):
     """Model of CDS rows (prediction, annotation without exons) extended with the UTR exons of the compatible
     supporting transcripts that reach furthest 5' and 3' (their blocks beyond the ends of the chain); the coding
-    sequence is unchanged."""
-    if not m["cds_only"] or not m["support"]: return m
+    sequence is unchanged. For the curator's chains (m["override"]), the transcripts of tms that agree with the chain
+    at that end are used instead (end_support)."""
+    if not m["cds_only"]: return m
+    if m.get("override") and tms:
+        es = end_support(m, tms, genome)
+        if not es["left"] and not es["right"]: return m
+        left = min(es["left"], key=lambda t: min(a for a, _ in t["blocks"])) if es["left"] else None
+        right = max(es["right"], key=lambda t: max(b for _, b in t["blocks"])) if es["right"] else None
+    elif m["support"]:
+        left = min(m["support"], key=lambda t: min(a for a, _ in t["blocks"]))
+        right = max(m["support"], key=lambda t: max(b for _, b in t["blocks"]))
+    else: return m
     c0, c1 = min(a for a, _ in m["blocks"]), max(b for _, b in m["blocks"])
     blocks = list(m["blocks"])
-    left = min(m["support"], key=lambda t: min(a for a, _ in t["blocks"]))
-    right = max(m["support"], key=lambda t: max(b for _, b in t["blocks"]))
-    blocks += [(a, min(b, c0)) for a, b in left["blocks"] if a < c0]
-    blocks += [(max(a, c1), b) for a, b in right["blocks"] if b > c1]
+    if left: blocks += [(a, min(b, c0)) for a, b in left["blocks"] if a < c0]
+    if right: blocks += [(max(a, c1), b) for a, b in right["blocks"] if b > c1]
     blocks = normalise_blocks(blocks, genome, strand)
     seq, pos = spliced(genome, blocks, strand)
     idx = {p: i for i, p in enumerate(pos)}
@@ -718,7 +742,7 @@ def graft_utrs(m, genome, strand):
     if first is None or last is None or last - first + 1 != len(m["cds_genome"]): return m
     open5 = not any(seq[i:i + 3] in STOPS for i in range(first - 3, -1, -3))
     g = dict(m, blocks=blocks, introns=chain_introns(blocks), cds_only=False, utr5_len=first, utr3=seq[last + 1:], open5=open5,
-             grafted=f"UTRs from {left['tx']}" + (f" and {right['tx']}" if right is not left else ""))
+             grafted="UTRs from " + " and ".join(dict.fromkeys(t["tx"] for t in (left, right) if t)))
     g["sites"] = [equivalent_sites(genome, a, b, strand) for a, b in g["introns"]]
     return g
 
@@ -1186,7 +1210,7 @@ def main():
                              f"model mapped from the transcript, protein from the transcript")
         chosen = best
         if source == "genome":
-            best = graft_utrs(best, gs, strand)
+            best = graft_utrs(best, gs, strand, tms)
             best, cut = trim_readthrough(best, annotations[g], contig, strand, gs, codon0)
             if cut: notes.append(f"3' UTR exons overlapping the coding sequence of {','.join(cut)} left out (read-through "
                                  f"into a downstream gene)")

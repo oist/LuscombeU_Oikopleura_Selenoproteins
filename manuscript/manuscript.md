@@ -803,6 +803,20 @@ proteins, of 241, 246 and 246 residues, are about 100 residues shorter than huma
 than that of *Ciona intestinalis* (320 residues), and they are distant from both (Figure PSTK B): the OdB3 protein has
 34 and 37% similar residues with them, against 77 and 93% with the OKI2018 and OSKA2016 proteins.
 
+PSTK is an internal gene of an operon in the three assemblies. Its transcripts start with the spliced leader in OKI2018
+and OSKA2016 (the 5′ ends of the OdB3 ESTs are masked) and all end 3 to 11 nucleotides after the stop codon. The start
+codon of the next gene on the same strand begins 34 to 48 nucleotides after the stop codon, one nucleotide after an AG
+acceptor, a candidate trans-splice site; the transcript ends lie 27 to 35 nucleotides before this acceptor, the spacing
+found between the polyadenylation site of a gene and the trans-splice site of the next gene of its operon (median 31
+and 32 nucleotides; section "Selenoprotein genes in operons"). The 3′ UTR of PSTK is thus a few nucleotides long. None
+of these transcripts ends with a poly(A) tail (adapter sequence follows the end of the OKI2018 transcripts), so that the
+polyadenylation site is inferred from where the transcripts end.
+<!-- 2026-11-03: transcript ends from the candidate tables (OKI2018 1941206, three transcripts; OSKA2016 1355815, four;
+OdB3 777154, two ESTs), sequences of the transcript ends printed on Deigo (Charles), genome after the stop codon from
+results/gene_regions/PSTK; next gene: XP_081641984.1 (OKI2018), the downstream part of the ANISEED model
+S10.g09825.01 (OSKA2016), CBY23134.1 (OdB3); previous gene on the same strand, coding sequences 134 to 143 nt
+apart: XP_081641987.1, S10.g09826.01, CBY23136.1. -->
+
 The third and fourth introns have splice sites outside the intron classes of *O. dioica* in OKI2018 and OSKA2016, and so
 has the fourth intron in OdB3 (Figure PSTK A). The transcripts that splice these introns all splice them at the same
 junctions (isoforms of one assembled locus in OKI2018 and in OSKA2016, two ESTs in OdB3), and the assemblies of other

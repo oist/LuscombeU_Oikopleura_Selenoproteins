@@ -65,7 +65,8 @@ transcript against the assembly, drawn in the machinery panels), and `results/ta
 
 `machinery_overrides.tsv`: exon chains of machinery genes set by the curator, with the evidence, where no candidate
 of the automatic procedure holds the right chain (`gold_standard.py --overrides`; the model is read on the genome along
-this chain, and the notes of the gold-standard table say so). OdB3 PSTK (2026-11-03): the GenBank exons 1 to 3, with the
+this chain, and the notes of the gold-standard table say so; its UTRs come from the transcripts that agree with its
+first or last two exons, even when they differ elsewhere, for example by a retained intron). OdB3 PSTK (2026-11-03): the GenBank exons 1 to 3, with the
 38-nt third exon that the prediction skipped, and the last intron of the ESTs (AT-AG; first set at a GG-AG site 3 nt
 away, which added a residue absent from OKI2018 and OSKA2016; corrected when the transcript tracks of Figure PSTK
 showed the difference). *O. albicans* PSTK (2026-11-03): the prediction read into its last intron (2 kb) and missed the
