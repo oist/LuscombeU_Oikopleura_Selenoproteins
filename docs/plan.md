@@ -2075,3 +2075,8 @@ no earlier step waits for them.
   intron sequences evolving too fast to keep similarity to their donors. Manuscript: the PSTK introns other than the
   OdB3 GA-AG intron are outside the G(non-T)/AG class; the O. albicans last intron (12-nt TIR near its ends, AGAAAT at
   both ends) compared with the F. borealis MITE-derived introns; its copies to add from make intron-content.
+- Ciona PSTK intronless (2026-11-03; Charles, screenshot of the Ghost browser, C. robusta HT assembly,
+  Chr1:1787216-1794690): KY21 model KY21.Chr1.237.v1.ND1-1 (ORF 438..1427 of 1655, human homolog PSTK) is one exon,
+  covered by ESTs and by RNA-seq (Waki et al. 2015 late gastrulae). With the C. intestinalis RefSeq single-exon model
+  (full RNA-seq coverage), the manuscript now says that Ciona PSTK has no intron (Satou et al. 2022, KY21 models). The
+  check of Ciona in the list of checks by hand is done.

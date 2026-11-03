@@ -837,16 +837,17 @@ genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* 
 Outside *O. dioica*, the introns of PSTK differ (regions of `make pstk-regions`). *O. vanhoeffeni* PSTK is one open
 reading frame of 248 codons aligned along the whole *O. dioica* protein, the two *O. longicauda* fragments align without
 interruption over residues 12 to 225 of the OdB3 protein (tblastn), the fragments of *M. erythrocephalus* and *B.
-stygius* are interrupted at other positions, and *C. intestinalis* PSTK is a single-exon gene, whose RefSeq model is
-covered by RNA-seq alignments over its whole length. *O. albicans* PSTK has an intron of 389 nucleotides near the
-position of the third *O. dioica* intron but in another phase, and a last intron of 2,001 nucleotides within ten
-residues of the position of the fourth in the alignment. The prediction read into this last intron and missed the last
-exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni* protein found 2 kb downstream (E =
-10^-5^); the curator added it to the model (243 residues). Placed by the similarity of the protein to those of *O.
-dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no transcript tests it. A
-perfect inverted repeat of 12 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six
-nucleotides (AGAAAT) are found at both ends: the arrangement of the introns of *F. borealis* that arose from miniature
-inverted-repeat transposable elements, with their terminal inverted repeats and target-site duplications
+stygius* are interrupted at other positions, and *Ciona* PSTK has no intron: the RefSeq model of *C. intestinalis* is a
+single exon covered by RNA-seq alignments over its whole length, and so is the curated KY21 model of *C. robusta*
+(KY21.Chr1.237.v1.ND1-1), which ESTs cover in the Ghost database [@Satou2022]. *O. albicans* PSTK has an intron of 389
+nucleotides near the position of the third *O. dioica* intron but in another phase, and a last intron of 2,001
+nucleotides within ten residues of the position of the fourth in the alignment. The prediction read into this last
+intron and missed the last exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni* protein found
+2 kb downstream (E = 10^-5^); the curator added it to the model (243 residues). Placed by the similarity of the protein
+to those of *O. dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no
+transcript tests it. A perfect inverted repeat of 12 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT),
+and the same six nucleotides (AGAAAT) are found at both ends: the arrangement of the introns of *F. borealis* that arose
+from miniature inverted-repeat transposable elements, with their terminal inverted repeats and target-site duplications
 [@Henriet2019].<!-- Copies of this intron in the O. albicans genome: from make intron-content
 (results/tables/intron_content.tsv), to add. -->
 
