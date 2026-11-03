@@ -2112,3 +2112,17 @@ no earlier step waits for them.
   provisional Discussion subsection ("Introns gained in PSTK, with unusual splice sites"). To do at the tree rerun:
   PSTK tree with one leaf per appendicularian species (one O. dioica assembly, no O. vanhoeffeni pseudogene locus),
   to check that related leaves do not drive the topology (comment in the Results).
+- PSTK in O. longicauda and the giant larvaceans (2026-11-03, Charles asked for a reminder; checked again here on the
+  regions of make pstk-regions, tblastn with the OdB3 protein, junctions placed by protein similarity, no
+  transcripts). Corrections to the earlier text (which said that the O. longicauda fragments were uninterrupted over
+  residues 12-225 and that O. longicauda kept an intronless gene): O. longicauda locus SCLD01107789.1 has two exons
+  (an intron of about 70 nt, phase 0, GT-AG placement possible, at alignment column 262, five columns before the second
+  O. dioica intron and 12 before the second chordate intron), covering residues ~28-225; locus SCLD01051426.1 (contig
+  of 604 nt) has no intron over 12-198 but two stop codons in frame, 45% identical to the other locus and 37-42% to
+  OKI2018, OdB3, O. albicans and O. vanhoeffeni PSTK. B. stygius (SCLE01192721.1, 2.4-kb contig): three segments
+  covering residues ~24-230, introns near 92 (TT-AG placement, phase 1, weak) and 136 (317 nt, GT-AG placement, phase
+  1). M. erythrocephalus (SCLF01145532.1): segments covering 1-178, introns near 23 (85 nt, GT-AG, phase 2) and 131-136
+  (1,221 nt; GA-AG placement in phase 1 near 136, an AA-TT placement scoring slightly better). The two giant larvaceans
+  may share the phase-1 intron near 136. O. vanhoeffeni second locus (pstk.5.pseudo): same contig as the gene, 9.5 kb
+  upstream, 83% identical. The B. stygius margin test (24 bits, ambiguous) used a 63-residue HSP only; a test with the
+  spliced protein (~200 residues) could settle it.

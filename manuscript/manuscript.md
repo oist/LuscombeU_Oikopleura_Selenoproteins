@@ -835,18 +835,21 @@ lie seven and six columns from the second chordate intron, in a region aligned w
 therefore had an intronless PSTK, and the introns of appendicularians were gained in their lineages.
 
 The other appendicularians agree with this (regions of `make pstk-regions`). *O. vanhoeffeni* PSTK is one open reading
-frame of 248 codons aligned along the whole *O. dioica* protein, the two *O. longicauda* fragments align without
-interruption over residues 12 to 225 of the OdB3 protein (tblastn), and the fragments of *M. erythrocephalus* and *B.
-stygius* are interrupted at other positions than the *O. dioica* introns. *O. albicans* PSTK has two introns, of 389 and
-2,001 nucleotides, four and seven alignment columns away from the third and fourth *O. dioica* introns, in another phase
-for the first: introns gained in its own lineage, as the intronless ancestral state predicts. The prediction read into
-the last intron and missed the last exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni*
-protein found 2 kb downstream (E = 10^-5^); the curator added it to the model (243 residues). Placed by the similarity
-of the protein to those of *O. dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either,
-but no transcript tests it. A perfect inverted repeat of 12 nucleotides lies near its two ends (ATGGGATATTAT ...
-ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at both ends: the arrangement of the introns of *F.
-borealis* that arose from miniature inverted-repeat transposable elements, with their terminal inverted repeats and
-target-site duplications [@Henriet2019], and that of a gain by the insertion of a transposon.<!-- Copies of this intron in the O. albicans genome: from make intron-content
+frame of 248 codons aligned along the whole *O. dioica* protein, and the PSTK of *O. longicauda*, *M. erythrocephalus*
+and *B. stygius* have introns at other positions than the *O. dioica* introns (tblastn with the OdB3 protein, junctions
+placed by protein similarity, no transcripts): in *O. longicauda*, an intron of about 70 nucleotides, in phase 0, five
+alignment columns before the second *O. dioica* intron; in *M. erythrocephalus* and *B. stygius*, introns near residues
+23 and 92 of the OdB3 protein, and in both species an intron in phase 1 near residue 136, which the two giant larvaceans
+may share. *O. albicans* PSTK has two introns, of 389 and 2,001 nucleotides, four and seven alignment columns away from
+the third and fourth *O. dioica* introns, in another phase for the first: introns gained in its own lineage, as the
+intronless ancestral state predicts. The prediction read into the last intron and missed the last exon, which a tblastn
+search with the C-terminal region of the *O. vanhoeffeni* protein found 2 kb downstream (E = 10^-5^); the curator added
+it to the model (243 residues). Placed by the similarity of the protein to those of *O. dioica* and *O. vanhoeffeni*,
+this intron has no placement in the intron classes either, but no transcript tests it. A perfect inverted repeat of 12
+nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
+both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
+elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
+insertion of a transposon.<!-- Copies of this intron in the O. albicans genome: from make intron-content
 (results/tables/intron_content.tsv), to add. -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
@@ -858,11 +861,12 @@ and the PSTK transcripts of the three *O. dioica* transcriptomes (66 to 84 bits)
 ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the tree places in the PSTK family
 (Figure PSTK D); in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine
 genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly. Because the gene had no intron
-in the tunicate ancestor and still has none in *O. vanhoeffeni* and *O. longicauda* (above), a complete PSTK can lie on
-a short contig, and loci of the fragmented assemblies that align along the protein are acceptable evidence of the gene.
-We use them for presence only: several loci in one assembly (the two *O. longicauda* fragments, which overlap over
-residues 80 to 198, and the second *O. vanhoeffeni* locus, predicted as a pseudogene) could be alleles assembled apart
-or contamination, and are not taken as duplications.
+in the tunicate ancestor and has few in appendicularians (above), a complete PSTK can lie on a short contig, and loci of
+the fragmented assemblies that align along the protein are acceptable evidence of the gene. We use them for presence
+only, and do not count copies. In *O. longicauda*, a second locus, on a contig of 604 nucleotides, has no intron over
+residues 12 to 198 but two stop codons in frame, and is 45% identical to the other locus and 37 to 42% to the PSTK of
+the other *Oikopleura* species: a pseudogene, or contamination by an unsequenced species. In *O. vanhoeffeni*, the
+second locus, predicted as a pseudogene, lies 9.5 kb from the gene on the same contig and is 83% identical to it.
 
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
