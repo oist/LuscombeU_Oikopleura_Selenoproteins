@@ -8,6 +8,12 @@ Regions, by source (1-based, inclusive coordinates; --flank nt added on each sid
                               (-x asm20); every alignment that covers at least --min-cover of the region is written
                               (best first: the locus, then possible copies such as uncollapsed haplotypes), its target
                               span extended by --flank.
+  --protein TARGET=SOURCE ...  the protein of the gold-standard model of SOURCE aligned to the genome of TARGET with
+                              miniprot (spliced protein-to-genome alignment; up to 10 alignments, down to 30% of the best
+                              score): every alignment that covers at least --min-cover of the protein is written (best
+                              first), its span extended by --flank, and the miniprot GFF3 rows of these alignments are
+                              written to <out>/<TARGET>.miniprot.gff3 (to look for a gene where the assembly has no model,
+                              or to compare an independent exon chain with the model; index cached in --index-dir).
   --annotation GENOME=PROTEIN the coding rows of a protein in the annotation of GENOME (samplesheet column
                               "annotation"), and the GFF3 rows of its gene, mRNA, exons and CDS (<out>/<GENOME>.gff3).
   --contig GENOME=CONTIG[:START-END] ...  a region given by hand (the whole contig without a range).
@@ -67,6 +73,8 @@ def main():
     ap.add_argument("--gold-dir", default="curation/gold_standard_machinery")
     ap.add_argument("--gold", nargs="*", default=[])
     ap.add_argument("--lift", nargs="*", default=[])
+    ap.add_argument("--protein", nargs="*", default=[])
+    ap.add_argument("--index-dir", default="work/gene_regions", help="miniprot indexes of the --protein targets")
     ap.add_argument("--annotation", nargs="*", default=[])
     ap.add_argument("--contig", nargs="*", default=[])
     ap.add_argument("--samplesheet", nargs="+", default=["stage1/samplesheet.csv", "stage2/run/samplesheet_final.csv"])
@@ -117,6 +125,44 @@ def main():
             gstrand = strand if ori == "+" else ("-" if strand == "+" else "+")
             regions.append([tgt, t, ts + 1 - a.flank, te + a.flank, gstrand, f"lift:{src}" + ("" if k == 0 else f":copy{k}"),
                             f"query {qs + 1}-{qe} of {ql} nt aligned, {match} matching bases in {alen} columns"])
+    started = set()       # targets whose miniprot GFF3 was started in this run
+    for pair in a.protein:
+        tgt, src = pair.split("=")
+        prot, name = None, None
+        for l in open(f"{a.gold_dir}/{src}.proteins.faa"):
+            if l.startswith(">"): name = l[1:].split("|")[0]
+            elif name == a.gene: prot = l.strip().rstrip("*").replace("*", "X").replace("U", "X")
+        if not prot: print(f"{tgt}: no gold-standard protein of {a.gene} in {src}"); continue
+        os.makedirs(a.index_dir, exist_ok=True)
+        idx = f"{a.index_dir}/{tgt}.mpi"
+        if not os.path.exists(idx):
+            subprocess.run(["miniprot", "-t", str(a.threads), "-d", idx, sheet[tgt]["fasta"]], check=True,
+                           capture_output=True)
+        with tempfile.TemporaryDirectory() as tmp:
+            q = f"{tmp}/q.faa"
+            with open(q, "w") as o: o.write(f">{src}_{a.gene}\n{prot}\n")
+            out = subprocess.run(["miniprot", "-t", str(a.threads), "--gff", "-N", "10", "-p", "0.3", "--outs=0.3", idx, q],
+                                 capture_output=True, text=True, check=True).stdout
+        alns, cur = [], None          # (score, PAF fields, GFF rows)
+        for l in out.splitlines():
+            if l.startswith("##PAF"):
+                f = l.split("\t")[1:]
+                score = int(next((x[5:] for x in f if x.startswith("AS:i:")), "0"))
+                cur = [score, f, []]; alns.append(cur)
+            elif cur and not l.startswith("#") and l.strip():
+                cur[2].append(l)
+        alns = [x for x in alns if (int(x[1][3]) - int(x[1][2])) >= a.min_cover * int(x[1][1])]
+        alns.sort(key=lambda x: -x[0])
+        if not alns: print(f"{tgt}: protein of {src} {a.gene} not found by miniprot"); continue
+        with open(f"{a.out}/{tgt}.miniprot.gff3", "a" if tgt in started else "w") as o:
+            started.add(tgt)
+            for k, (score, f, gff) in enumerate(alns):
+                ql, qs, qe, ori, t, ts, te, match, alen = int(f[1]), int(f[2]), int(f[3]), f[4], f[5], int(f[7]), int(f[8]), int(f[9]), int(f[10])
+                tag = f"miniprot:{src}" + ("" if k == 0 else f":copy{k}")
+                regions.append([tgt, t, ts + 1 - a.flank, te + a.flank, ori, tag,
+                                f"protein {qs + 1}-{qe} of {ql} aa aligned, PAF columns 10 and 11: {match} and {alen}, "
+                                f"score {score}"])
+                o.write(f"# {tag}\n" + "".join(x + "\n" for x in gff))
     for pair in a.annotation:
         g, prot = pair.split("=")
         rows = annotation_rows(sheet[g]["annotation"], prot)

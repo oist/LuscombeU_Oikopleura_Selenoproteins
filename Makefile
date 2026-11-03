@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation pstk-regions pstk-one-leaf pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions pstk-regions pstk-one-leaf pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -378,6 +378,23 @@ pstk-regions:
 	  --annotation Cint=XP_002120985.2 Crob=XP_002120985.1 --contig Olon=SCLD01107789.1:4496-5011 Olon=SCLD01051426.1:5-604 \
 	  Mery=SCLF01145532.1:2326-2851 Bsty=SCLE01192721.1:1101-1292 --flank 3000 --out results/gene_regions/PSTK
 
+# Regions of the other machinery genes under review (2026-11-03), as for PSTK: gold-standard models with 3 kb on each
+# side, the same regions in the assemblies of other individuals (minimap2), and miniprot alignments of an O. dioica
+# protein to the other genomes (second SEPHS copy in the assemblies without a model; independent exon chains in the
+# other species); results/gene_regions/<gene>/ (FASTA, regions.tsv, <genome>.miniprot.gff3); miniprot indexes in
+# work/gene_regions. About 30 min on 4 CPUs:
+#   sbatch -p compute --cpus-per-task=4 --mem=16G --time=2:00:00 scripts/run_in_container.sh make machinery-regions
+machinery-regions:
+	python3 curation/gene_regions.py --gene SBP2 --gold OKI OSKA OdB3 Olon Oalb Ovan --lift KUM=OKI AOM=OSKA Bar2=OdB3 \
+	  --protein Olon=OdB3 Oalb=OdB3 Ovan=OdB3 --flank 3000 --out results/gene_regions/SBP2
+	python3 curation/gene_regions.py --gene SBP2_2 --gold Olon --flank 3000 --out results/gene_regions/SBP2_2
+	python3 curation/gene_regions.py --gene SEPHS_b --gold OKI Olon Oalb Ovan --lift KUM=OKI \
+	  --protein KUM=OKI OSKA=OKI AOM=OKI OdB3=OKI Bar2=OKI Olon=OKI Oalb=OKI Ovan=OKI --flank 3000 --out results/gene_regions/SEPHS_b
+	python3 curation/gene_regions.py --gene SEPSECS --gold OKI OSKA OdB3 Olon Oalb Ovan --lift KUM=OKI AOM=OSKA Bar2=OdB3 \
+	  --protein Olon=OKI Oalb=OKI Ovan=OKI --flank 3000 --out results/gene_regions/SEPSECS
+	python3 curation/gene_regions.py --gene EEFSEC --gold OKI OSKA OdB3 Olon Oalb Ovan --lift KUM=OKI AOM=OSKA Bar2=OdB3 \
+	  --protein Olon=OKI Oalb=OKI Ovan=OKI --flank 3000 --out results/gene_regions/EEFSEC
+
 # Intron positions of PSTK across chordates, on the coordinates of human PSTK (seconds): RefSeq models of
 # vertebrates, amphioxus and tunicates (proteins of results/trees/pstk.faa; the Thalia democratica transcript found by
 # tblastn of the RefSeq transcripts with the C. intestinalis protein) and the gold-standard models of the Oikopleura
@@ -402,7 +419,13 @@ intron-content:
 # model, no SECIS), from the machinery gold standard and figures/inputs (figures/machinery_reannotation_inputs.sh,
 # which needs www.ebi.ac.uk and the genomes); panel C, equivalent placements of introns, when
 # figures/inputs/intron_placements_<gene>.tsv exists (figures/intron_placements.py, from results/gene_regions)
-MACHINERY_FIGURE_GENES = PSTK
+MACHINERY_FIGURE_GENES = PSTK SBP2 SEPHS_b SEPSECS EEFSEC
+# inputs of the machinery panels (figures/machinery_reannotation_inputs.sh): needs the EBI APIs (ENA, InterPro,
+# dbfetch) and the OKI2018 and OdB3 genomes; minutes. Then make machinery-reannotation (local, seconds)
+#   scripts/run_in_container.sh make machinery-reannotation-inputs
+machinery-reannotation-inputs:
+	OKI_GENOME=data/genomes/OKI/genome.fna.gz ODB3_GENOME=data/genomes/OdB3/genome.fna.gz sh figures/machinery_reannotation_inputs.sh
+
 machinery-reannotation:
 	for g in $(MACHINERY_FIGURE_GENES); do python3 figures/reannotation_page.py --genes $$g --columns 1 --origin start \
 	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; C. intestinalis: RefSeq" \

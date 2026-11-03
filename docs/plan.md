@@ -2161,3 +2161,28 @@ no earlier step waits for them.
   SECISBP2L one clade after 30-40% removal (73, 67). Domain conflicts at 95%: only within groups, except SEPHS with
   PMSF (N-terminal: vertebrates with amphioxus and protostomes, 96; C-terminal: with tunicates, 98). Manuscript,
   Table MACHINERY, Methods and supplementary note updated.
+- Review of the other machinery models (2026-11-03), first pass from the gold-standard files only (exon lengths,
+  MAFFT L-INS-i alignment with human and Ciona proteins, intron positions mapped to the alignment):
+  - SBP2: the three O. dioica models share their five introns (same columns and phases); OKI2018 has a longer first
+    exon and a third exon longer by 54 nt than OSKA2016 and OdB3 (transcripts to check).
+  - SEPHS_b (second SEPHS copy; OKI2018, O. longicauda, O. albicans, O. vanhoeffeni): OKI2018 model (635 aa, transcript
+    TRINITY_DN748_c0_g1_i7) has a 19-nt exon between a GA-AG intron and an intron with nine equivalent placements, none
+    in the intron classes (also in transcript i3), where the RefSeq model XP_081645007.1 has one GT-AG intron and the same
+    protein length; a C-terminal extension of about 240 residues, low complexity (Q, H, S), is in the transcripts, and
+    the C. intestinalis glycine form also ends with a Q/H-rich extension. No model in OSKA2016 and OdB3: miniprot of the
+    OKI2018 protein on these assemblies and on KUM, AOM and Bar2 (make machinery-regions) to look for it.
+  - SEPSECS: OKI2018 has two introns (86 and 75 nt; C. robusta residues 63 and 86) that OSKA2016 and OdB3 lack (their
+    exon is 6 nt longer than the three OKI2018 exons together, so no read-through); OSKA2016 (projection of OKI2018, no
+    transcript) lacks the intron of residue 258 present in OKI2018 and OdB3 (48 nt in OdB3) and has 16-20 extra
+    residues there: probably the 48-nt intron read as coding (override to consider). OdB3 has 10 extra residues near
+    residue 334.
+  - EEFSEC: OKI2018 first intron 25 residues upstream of that of OSKA2016 and OdB3; OSKA2016 has an extra intron of 391
+    nt (residue 118; its transcript comp23981_c0_seq1); OdB3 has an intron of 8,982 nt (residue 478) with six
+    equivalent placements, none in the intron classes (EST KT0AAA4YE16NM1 and GenBank model), inside an exon of OKI2018
+    and OSKA2016: an insertion spliced out, or an assembly artefact (to check in Bar2_p4). The O. albicans, O.
+    longicauda and O. vanhoeffeni models (no transcripts) have several introns outside the classes: to recheck against
+    miniprot and exonerate exon chains. These introns enter the intron-content analysis (non-GT-AG introns pair their
+    ends more): its provisional Discussion paragraph waits for this review.
+  - Next: make machinery-regions (Deigo; gene_regions.py gained --protein TARGET=SOURCE, miniprot) and make
+    machinery-reannotation-inputs (EBI APIs), then the panels of SBP2, SEPHS_b, SEPSECS and EEFSEC (make
+    machinery-reannotation) and overrides where the evidence is clear.

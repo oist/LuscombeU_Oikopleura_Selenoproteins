@@ -20,6 +20,20 @@ run --gene PSTK --embl FN653020.1 --reference "human=Q8IV42" \
                 "OSKA=third and fourth introns with splice sites outside the intron classes (AA-AG, TT-GT), as in the supporting transcripts; the third intron is retained in two of them" \
                 "OdB3=exon chain set by the curator: the GenBank exons 1 to 3, the acceptor of the third intron (GA-AG; retained in both ESTs) from the prediction, and the last intron of the ESTs (AT-AG)"
 
+# Genes under review (2026-11-03): public models, gold-standard models and supporting transcripts; notes to add after
+# the review. Reference proteins: human (UniProt) and a Ciona protein (C. intestinalis from the machinery trees, or the
+# C. robusta RefSeq protein of the Selenoprofiles profile).
+run --gene SBP2 --embl FN653040.1 --reference "human=Q93073" \
+    --reference-fasta "C. intestinalis=results/trees/SBP2.faa:Cint_RefSeq_SECISBP2L_XP_078482116.1:XP_078482116.1"
+run --gene SEPHS_b --reference "human=P49903" \
+    --reference-fasta "C. intestinalis=results/trees/SEPHS2.faa:Cint_SEPHS2.5.glycine:Selenoprofiles prediction, glycine form" \
+    --gold-note "OSKA=no model: no Selenoprofiles prediction of a second SEPHS copy in this assembly" \
+                "OdB3=no model: no Selenoprofiles prediction of a second SEPHS copy in this assembly"
+run --gene SEPSECS --embl FN653034.1 --reference "human=Q9HD40" \
+    --reference-fasta "C. robusta=results/models/machinery_profiles/SecS.fa:XP_002120570:XP_002120570.1"
+run --gene EEFSEC --embl FN653026.1 --reference "human=P57772" \
+    --reference-fasta "C. robusta=results/models/machinery_profiles/eEFsec.fa:XP_002124067:XP_002124067.1"
+
 # Panel C of Figure PSTK: equivalent placements of the third and fourth introns, in the gold-standard assemblies and
 # in the assemblies of other individuals (results/gene_regions/PSTK, make pstk-regions; needs minimap2)
 python3 figures/intron_placements.py --gene PSTK --assembly OKI=gold KUM=lift:OKI OSKA=gold AOM=lift:OSKA OdB3=gold \
