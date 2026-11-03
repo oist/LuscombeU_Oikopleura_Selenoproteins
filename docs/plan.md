@@ -2065,3 +2065,13 @@ no earlier step waits for them.
   (PubMed abstract). Results: sentence added on repeated bases at intron ends (the rule; what is unusual in PSTK is
   that no placement gives an intron class); numbers from OKI2018 and OdB3 computed here, to replace by those of
   make intron-content.
+- Henriet et al. 2019 (Curr Biol 29:3193; PDF sent by Charles, 453ff8fa-mmc3.pdf). Points used: oikopleurid genomes
+  (O. dioica, O. albicans, O. vanhoeffeni, O. longicauda) have an important minority of nearly canonical G(non-T)/AG
+  introns, which human cells do not splice (HEK293T constructs of O. dioica introns), while other non-canonical
+  introns dominate in fritillarids; in F. borealis, introns arose from MITEs (Tc1/Mariner-like): copies, terminal
+  inverted repeats, TA target-site duplications, TAC/TAT exonic triplet before the intron, the 5' splice site within
+  the 5' inverted repeat and the 3' splice site within the 3' duplication. Also: lariats of 111 O. dioica introns,
+  branch point near the 3' end; O. dioica intron gain by reverse splicing and transposon insertion (Denoeud 2010),
+  intron sequences evolving too fast to keep similarity to their donors. Manuscript: the PSTK introns other than the
+  OdB3 GA-AG intron are outside the G(non-T)/AG class; the O. albicans last intron (12-nt TIR near its ends, AGAAAT at
+  both ends) compared with the F. borealis MITE-derived introns; its copies to add from make intron-content.

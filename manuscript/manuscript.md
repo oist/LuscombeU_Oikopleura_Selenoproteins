@@ -817,10 +817,12 @@ than the exception: of the 176 gold-standard introns of OKI2018 and OdB3, 151 ha
 three (2.1 on average in the GT-AG introns), because exons often end with AG, as introns do. What is unusual in PSTK is
 not this ambiguity, but that no placement within it gives an intron class. Placed on an AG acceptor, the fourth intron
 is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same phase, and the third intron a TG-AG,
-AA-AG and GA-AG intron. All are thus introns that end with AG without starting with GT, the second class of *O. dioica*
-introns after GT-AG [@Soo2026]; TT-AG and AT-AG introns are also minor classes of human introns (0.19 and 0.42% in the
-compilation shown by @Soo2026). The third intron is retained in two of the four OSKA2016 transcripts (63 nucleotides,
-with a stop codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame).
+AA-AG and GA-AG intron. All end with AG without starting with GT, as does the second class of *O. dioica* introns after
+GT-AG [@Soo2026], but only the GA-AG intron belongs to the nearly canonical G(non-T)/AG introns, an important minority
+in oikopleurid genomes that human cells do not splice [@Henriet2019]; TT-AG and AT-AG introns are minor classes of human
+introns (0.19 and 0.42% in the compilation shown by @Soo2026). The third intron is retained in two of the four OSKA2016
+transcripts (63 nucleotides, with a stop codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which
+shift the frame).
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
@@ -841,7 +843,12 @@ position of the third *O. dioica* intron but in another phase, and a last intron
 residues of the position of the fourth in the alignment. The prediction read into this last intron and missed the last
 exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni* protein found 2 kb downstream (E =
 10^-5^); the curator added it to the model (243 residues). Placed by the similarity of the protein to those of *O.
-dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no transcript tests it.
+dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no transcript tests it. A
+perfect inverted repeat of 12 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six
+nucleotides (AGAAAT) are found at both ends: the arrangement of the introns of *F. borealis* that arose from miniature
+inverted-repeat transposable elements, with their terminal inverted repeats and target-site duplications
+[@Henriet2019].<!-- Copies of this intron in the O. albicans genome: from make intron-content
+(results/tables/intron_content.tsv), to add. -->
 
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
