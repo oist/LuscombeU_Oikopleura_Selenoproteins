@@ -2083,3 +2083,12 @@ no earlier step waits for them.
 - Ciona names (2026-11-03, Charles agrees to call type A C. robusta): Cint = C. intestinalis (GCF_018327825.1,
   RefSeq, Roscoff isolate), Crob = C. robusta (KH, GCF_000224145.3; KY21 models on Ghost). Introduction corrected:
   the 19 selenoprotein genes of Jiang et al. 2010 are those of C. robusta (formerly C. intestinalis type A).
+- Ancestral state of PSTK in tunicates (2026-11-03; Charles, after a BLAST of the Ciona PSTK mRNA, which finds
+  PSTK in Corella, Phallusia, Ascidiella, Clavelina, Aplidium, Ascidia, Styela, Botryllus and Thalia: "could the
+  ancestral state be intronless?"). So far: no intron in C. intestinalis and C. robusta, none in the O. vanhoeffeni
+  ORF, none over residues 12-225 in the O. longicauda fragments; O. dioica introns at positions not shared with the
+  other appendicularians (O. albicans near the third and fourth but in other phases or a few residues away; M.
+  erythrocephalus and B. stygius at other positions). New target make pstk-introns (curation/intron_positions.py):
+  intron positions and phases of RefSeq PSTK models (human, mouse, zebrafish, amphioxus, Ciona x2, Phallusia, Styela,
+  Botryllus, Thalia) and of the Oikopleura gold-standard models, on human PSTK coordinates. Test: an ancestral
+  chordate intron would appear at the same human position and phase in vertebrates or amphioxus and in a tunicate.
