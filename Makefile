@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-reannotation pstk-regions pstk-introns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-reannotation pstk-regions pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -369,12 +369,17 @@ pstk-regions:
 
 # Intron positions of PSTK across chordates, on the coordinates of human PSTK (seconds): RefSeq models of
 # vertebrates, amphioxus and tunicates (proteins of results/trees/pstk.faa; the Thalia democratica transcript found by
-# BLAST of the Ciona mRNA) and the gold-standard models of the Oikopleura species
+# tblastn of the RefSeq transcripts with the C. intestinalis protein) and the gold-standard models of the Oikopleura
+# species; then curation/intron_columns.py (local, MAFFT) places the introns on an alignment
 pstk-introns:
 	python3 curation/intron_positions.py --gene PSTK --reference Hsap=NP_001350460.1 \
 	  --models Mmus=NP_001034623.1 Drer=XP_009296681.1 Drer=XP_009305284.1 Blan=XP_066278120.1 Cint=XP_002120985.2 \
 	  Crob=XP_002120985.1 Pmam=XP_079949190.1 Scla=XP_039273489.2 Bsch=XP_080181757.1 Tdem=XM_082946145.1 \
 	  --gold OKI OSKA OdB3 Oalb Ovan --out results/tables/pstk_intron_positions.tsv
+
+pstk-intron-columns:
+	python3 curation/intron_columns.py --positions results/tables/pstk_intron_positions.tsv --out results/tables/pstk_intron_columns.tsv \
+	  --alignment results/trees/pstk_introns.aln
 
 # Content of the introns of the gold-standard models (OKI2018, OSKA2016, OdB3; machinery models of O. albicans):
 # secondary structure and pairing of the two ends (ViennaRNA, against dinucleotide shuffles) and copies elsewhere in
