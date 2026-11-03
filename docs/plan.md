@@ -2126,3 +2126,7 @@ no earlier step waits for them.
   may share the phase-1 intron near 136. O. vanhoeffeni second locus (pstk.5.pseudo): same contig as the gene, 9.5 kb
   upstream, 83% identical. The B. stygius margin test (24 bits, ambiguous) used a 63-residue HSP only; a test with the
   spliced protein (~200 residues) could settle it.
+- Decision (2026-11-03, Charles): the PSTK fragments of O. longicauda, B. stygius and M. erythrocephalus stay as
+  they are (no re-test of the B. stygius margin with the spliced protein, no override for O. longicauda). Optional,
+  only after the first complete brush-up of the manuscript: longer unpublished O. longicauda scaffolds may become
+  available; until then, work without them.
