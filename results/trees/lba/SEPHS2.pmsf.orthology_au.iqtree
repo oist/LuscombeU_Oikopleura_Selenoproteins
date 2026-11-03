@@ -26,11 +26,11 @@ https://doi.org/10.1093/sysbio/syx068
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 115 sequences with 451 amino-acid sites
-Number of constant sites: 8 (= 1.77384% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 8 (= 1.77384% of all sites)
-Number of parsimony informative sites: 425
-Number of distinct site patterns: 447
+Input data: 115 sequences with 448 amino-acid sites
+Number of constant sites: 8 (= 1.78571% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 8 (= 1.78571% of all sites)
+Number of parsimony informative sites: 422
+Number of distinct site patterns: 444
 
 SUBSTITUTION PROCESS
 --------------------
@@ -40,29 +40,29 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 0.6008
+Gamma shape alpha: 0.5857
 
  Category  Relative_rate  Proportion
-  1         0.0533         0.2500
-  2         0.3127         0.2500
-  3         0.8817         0.2500
-  4         2.7523         0.2500
+  1         0.0502         0.2500
+  2         0.3042         0.2500
+  3         0.8739         0.2500
+  4         2.7717         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 USER TREE
 ---------
 
-Log-likelihood of the tree: -33821.4904 (s.e. 933.8568)
-Unconstrained log-likelihood (without tree): -2749.6801
+Log-likelihood of the tree: -33763.1931 (s.e. 934.6852)
+Unconstrained log-likelihood (without tree): -2728.3557
 Number of free parameters (#branches + #model parameters): 247
-Akaike information criterion (AIC) score: 68136.9808
-Corrected Akaike information criterion (AICc) score: 68740.4882
-Bayesian information criterion (BIC) score: 69152.5133
+Akaike information criterion (AIC) score: 68020.3863
+Corrected Akaike information criterion (AICc) score: 68632.9463
+Bayesian information criterion (BIC) score: 69034.2702
 
-Total tree length (sum of branch lengths): 58.4161
-Sum of internal branch lengths: 24.4587 (41.8697% of tree length)
+Total tree length (sum of branch lengths): 59.8653
+Sum of internal branch lengths: 25.1368 (41.9890% of tree length)
 
-WARNING: 5 near-zero internal branches (<0.0022) should be treated with caution
+WARNING: 4 near-zero internal branches (<0.0022) should be treated with caution
          Such branches are denoted by '**' in the figure below
 
 NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-2008_sps_Plasmodium_knowlesi_20' is drawn at root
@@ -74,7 +74,7 @@ NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-200
 |               |                                                                          +**Bos_taurus_gi_168480154_ref_NP_001108204.1
 |               |                                                                       +--| (100)
 |               |                                                                       |  +**Bos_taurus.SPS2
-|               |                                                                    +--| (99)
+|               |                                                                    +--| (100)
 |               |                                                                    |  +--Equus_caballus.SPS2
 |               |                                                                 +--| (100)
 |               |                                                                 |  |        +--Rattus_norvegicus_gi_142976617_ref_NP_001073358.2
@@ -82,7 +82,7 @@ NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-200
 |               |                                                                 |  |     |  +--Mmus_SEPHS2.1.selenocysteine
 |               |                                                                 |  |  +--| (100)
 |               |                                                                 |  |  |  +--Cricetulus_griseus.SPS2
-|               |                                                                 |  +--| (93)
+|               |                                                                 |  +--| (96)
 |               |                                                                 |     +--Human_SEPHS2_NP_036380.2
 |               |                                                              +--| (100)
 |               |                                                              |  |  +--Chrysemys_picta_bellii.SPS2
@@ -104,75 +104,75 @@ NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-200
 |               |                                                  |  |                    +**Homo_sapiens.SPS1
 |               |                                                  |  |                 +--| (100)
 |               |                                                  |  |                 |  +**Human_SEPHS1_NP_036379.2
-|               |                                                  |  |              +**| (79)
+|               |                                                  |  |              +**| (85)
 |               |                                                  |  |              |  +--Mmus_SEPHS2.2.threonine
-|               |                                                  |  |           +--| (96)
+|               |                                                  |  |           +--| (95)
 |               |                                                  |  |           |  +--Rattus_norvegicus.SPS1
 |               |                                                  |  |        +--| (99)
 |               |                                                  |  |        |  +**Chrysemys_picta_bellii.SPS1
-|               |                                                  |  |     +--| (99)
+|               |                                                  |  |     +--| (100)
 |               |                                                  |  |     |  +--Anolis_carolinensis.SPS1
-|               |                                                  |  |  +--| (97)
+|               |                                                  |  |  +--| (100)
 |               |                                                  |  |  |  +**Latimeria_chalumnae.SPS1
 |               |                                                  |  +--| (100)
 |               |                                                  |     |     +--Xiphophorus_maculatus.SPS1
-|               |                                                  |     |  +--| (99)
+|               |                                                  |     |  +--| (98)
 |               |                                                  |     |  |  +--Tetraodon_nigroviridis.SPS1
-|               |                                                  |     +--| (98)
+|               |                                                  |     +--| (99)
 |               |                                                  |        |     +**Danio_rerio.SPS1
-|               |                                                  |        |  +**| (78)
+|               |                                                  |        |  +**| (73)
 |               |                                                  |        |  |  +**Drer_SEPHS2.13.threonine
-|               |                                                  |        +--| (99)
+|               |                                                  |        +--| (98)
 |               |                                                  |           +--Drer_SEPHS2.17.threonine
-|               |                                               +--| (57)
-|               |                                               |  |                                +--Atta_cephalotes_Atta_cephalotes
-|               |                                               |  |                             +--| (100)
-|               |                                               |  |                             |  +--Apis_florea.SPS1
-|               |                                               |  |                          +--| (66)
-|               |                                               |  |                          |  |     +--Acyrthosiphon_pisum_gi_193652783_ref_XP_001947297.1
-|               |                                               |  |                          |  |  +--| (64)
-|               |                                               |  |                          |  |  |  +--Rhodnius_prolixus.SPS1
-|               |                                               |  |                          |  +--| (66)
-|               |                                               |  |                          |     |        +**Anopheles_gambiae_str._PEST_gi_158297241_ref_XP_317503.3
-|               |                                               |  |                          |     |     +--| (100)
-|               |                                               |  |                          |     |     |  +**Anopheles_gambiae.SPS1
-|               |                                               |  |                          |     |  +--| (100)
-|               |                                               |  |                          |     |  |  |  +--Aedes_aegypti.SPS1
-|               |                                               |  |                          |     |  |  +--| (100)
-|               |                                               |  |                          |     |  |     +--Culex_pipiens.SPS1
-|               |                                               |  |                          |     +--| (100)
-|               |                                               |  |                          |        |     +--Drosophila_melanogaster_gi_2411487_gb_AAB88790.1
-|               |                                               |  |                          |        |  +--| (72)
-|               |                                               |  |                          |        |  |  |  +--Drosophila_ananassae.SPS1
-|               |                                               |  |                          |        |  |  +**| (35)
-|               |                                               |  |                          |        |  |     +**Drosophila_erecta.SPS1
-|               |                                               |  |                          |        +--| (100)
-|               |                                               |  |                          |           +--Drosophila_grimshawi.SPS1
-|               |                                               |  |                       +--| (52)
-|               |                                               |  |                       |  +--Pediculus_humanusA_Pediculus_humanusA
-|               |                                               |  |                    +--| (35)
-|               |                                               |  |                    |  |     +--Daphnia_pulex.SPS2
-|               |                                               |  |                    |  |  +--| (100)
-|               |                                               |  |                    |  |  |  +--Hyalella_azteca.SPS2
-|               |                                               |  |                    |  +--| (80)
-|               |                                               |  |                    |     +--Lepeophtheirus_salmonis.SPS2
-|               |                                               |  |                 +**| (24)
-|               |                                               |  |                 |  +--Catajapyx_aquilonaris.SPS2
-|               |                                               |  |              +--| (63)
-|               |                                               |  |              |  +-----Drosophila_pseudoobscura_pseudoobscura_gi_198472233_ref_XP_0
-|               |                                               |  |           +--| (44)
-|               |                                               |  |           |  |  +--Tetranychus_urticae.SPS2
-|               |                                               |  |           |  +--| (98)
-|               |                                               |  |           |     +--Parasteatoda_tepidariorum.SPS2
-|               |                                               |  |        +--| (85)
-|               |                                               |  |        |  +--Strigamia_maritima.SPS2
-|               |                                               |  |     +--| (78)
+|               |                                               +--| (88)
+|               |                                               |  |                          +--Atta_cephalotes_Atta_cephalotes
+|               |                                               |  |                       +--| (98)
+|               |                                               |  |                       |  +--Apis_florea.SPS1
+|               |                                               |  |                    +--| (78)
+|               |                                               |  |                    |  |     +--Acyrthosiphon_pisum_gi_193652783_ref_XP_001947297.1
+|               |                                               |  |                    |  |  +--| (92)
+|               |                                               |  |                    |  |  |  +--Rhodnius_prolixus.SPS1
+|               |                                               |  |                    |  +--| (79)
+|               |                                               |  |                    |     |        +**Anopheles_gambiae_str._PEST_gi_158297241_ref_XP_317503.3
+|               |                                               |  |                    |     |     +--| (100)
+|               |                                               |  |                    |     |     |  +**Anopheles_gambiae.SPS1
+|               |                                               |  |                    |     |  +--| (100)
+|               |                                               |  |                    |     |  |  |  +--Aedes_aegypti.SPS1
+|               |                                               |  |                    |     |  |  +--| (99)
+|               |                                               |  |                    |     |  |     +--Culex_pipiens.SPS1
+|               |                                               |  |                    |     +--| (93)
+|               |                                               |  |                    |        |     +--Drosophila_melanogaster_gi_2411487_gb_AAB88790.1
+|               |                                               |  |                    |        |  +--| (62)
+|               |                                               |  |                    |        |  |  |  +--Drosophila_ananassae.SPS1
+|               |                                               |  |                    |        |  |  +**| (33)
+|               |                                               |  |                    |        |  |     +**Drosophila_erecta.SPS1
+|               |                                               |  |                    |        +--| (100)
+|               |                                               |  |                    |           +--Drosophila_grimshawi.SPS1
+|               |                                               |  |                 +--| (88)
+|               |                                               |  |                 |  |  +-----Drosophila_pseudoobscura_pseudoobscura_gi_198472233_ref_XP_0
+|               |                                               |  |                 |  +--| (74)
+|               |                                               |  |                 |     +--Pediculus_humanusA_Pediculus_humanusA
+|               |                                               |  |              +--| (74)
+|               |                                               |  |              |  |     +--Daphnia_pulex.SPS2
+|               |                                               |  |              |  |  +--| (100)
+|               |                                               |  |              |  |  |  +--Hyalella_azteca.SPS2
+|               |                                               |  |              |  +--| (80)
+|               |                                               |  |              |     +--Lepeophtheirus_salmonis.SPS2
+|               |                                               |  |           +--| (95)
+|               |                                               |  |           |  +--Catajapyx_aquilonaris.SPS2
+|               |                                               |  |        +--| (90)
+|               |                                               |  |        |  |     +--Tetranychus_urticae.SPS2
+|               |                                               |  |        |  |  +--| (100)
+|               |                                               |  |        |  |  |  +--Parasteatoda_tepidariorum.SPS2
+|               |                                               |  |        |  +--| (88)
+|               |                                               |  |        |     +--Strigamia_maritima.SPS2
+|               |                                               |  |     +--| (82)
 |               |                                               |  |     |  +--Priapulus_caudatus.SPS2
-|               |                                               |  |  +--| (81)
+|               |                                               |  |  +--| (87)
 |               |                                               |  |  |  |  +--Capitella_teleta.SPS2
 |               |                                               |  |  |  +--| (100)
 |               |                                               |  |  |     +--Helobdella_robusta.SPS1
-|               |                                               |  +--| (99)
+|               |                                               |  +--| (98)
 |               |                                               |     |  +--Bflo_SEPHS2.5.selenocysteine
 |               |                                               |     +--| (100)
 |               |                                               |        +--Blan_SEPHS2.2.selenocysteine
@@ -180,13 +180,13 @@ NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-200
 |               |                                            |  |              +**Botryllus_schlosseri.SPS2
 |               |                                            |  |           +--| (100)
 |               |                                            |  |           |  +**Bsch_SEPHS2.1.selenocysteine
-|               |                                            |  |        +--| (91)
+|               |                                            |  |        +--| (85)
 |               |                                            |  |        |  +--Scla_SEPHS2.2.selenocysteine
-|               |                                            |  |     +--| (88)
+|               |                                            |  |     +--| (82)
 |               |                                            |  |     |  +--Scla_SEPHS2.1.selenocysteine
 |               |                                            |  |  +--| (100)
 |               |                                            |  |  |  +--Hror_SEPHS2.1.selenocysteine
-|               |                                            |  +--| (98)
+|               |                                            |  +--| (86)
 |               |                                            |     |              +**Botryllus_schlosseri.SPS1
 |               |                                            |     |           +--| (100)
 |               |                                            |     |           |  +--Bsch_SEPHS2.3.glycine
@@ -194,112 +194,112 @@ NOTE: Tree is UNROOTED although outgroup taxon 'sps_Plasmodium_knowlesi_2007-200
 |               |                                            |     |        |  +--Scla_SEPHS2.4.glycine
 |               |                                            |     |     +--| (100)
 |               |                                            |     |     |  +--Hror_SEPHS2.5.glycine
-|               |                                            |     |  +--| (99)
+|               |                                            |     |  +--| (100)
 |               |                                            |     |  |  |        +**Cint_SEPHS2.5.glycine
 |               |                                            |     |  |  |     +--| (100)
 |               |                                            |     |  |  |     |  +--Crob_SEPHS2.6.glycine
 |               |                                            |     |  |  |  +--| (100)
 |               |                                            |     |  |  |  |  +--Csav_SEPHS2.3.glycine
-|               |                                            |     |  |  +--| (95)
+|               |                                            |     |  |  +--| (99)
 |               |                                            |     |  |     |  +--Pmam_SEPHS2.3.glycine
-|               |                                            |     |  |     +--| (89)
-|               |                                            |     |  |        |       +--Olon_SEPHS2.5.unaligned
-|               |                                            |     |  |        |    +--| (97)
-|               |                                            |     |  |        |    |  +--Olon_gold_SEPHS_b
-|               |                                            |     |  |        +----| (100)
-|               |                                            |     |  |             |  +--OKI_gold_SEPHS_b
-|               |                                            |     |  |             +--| (98)
-|               |                                            |     |  |                |  +--Oalb_gold_SEPHS_b
-|               |                                            |     |  |                +--| (84)
-|               |                                            |     |  |                   +--Ovan_gold_SEPHS_b
-|               |                                            |     +--| (60)
+|               |                                            |     |  |     +--| (99)
+|               |                                            |     |  |        |      +--Olon_SEPHS2.5.unaligned
+|               |                                            |     |  |        |   +--| (100)
+|               |                                            |     |  |        |   |  +--Olon_gold_SEPHS_b
+|               |                                            |     |  |        +---| (100)
+|               |                                            |     |  |            |  +--OKI_gold_SEPHS_b
+|               |                                            |     |  |            +--| (99)
+|               |                                            |     |  |               |  +--Oalb_gold_SEPHS_b
+|               |                                            |     |  |               +--| (95)
+|               |                                            |     |  |                  +--Ovan_gold_SEPHS_b
+|               |                                            |     +--| (72)
 |               |                                            |        |     +--Pege_SEPHS2.5.selenocysteine
-|               |                                            |        |  +--| (94)
+|               |                                            |        |  +--| (90)
 |               |                                            |        |  |  +--Stho_SEPHS2.1.pseudo
-|               |                                            |        +--| (100)
+|               |                                            |        +--| (99)
 |               |                                            |           +--Tdem_SEPHS2.1.selenocysteine
-|               |                                         +--| (31)
+|               |                                         +--| (46)
 |               |                                         |  |  +----Caenorhabditis_elegans_gi_17543426_ref_NP_502604.1
-|               |                                         |  +--| (33)
+|               |                                         |  +--| (59)
 |               |                                         |     +--Helobdella_robusta.SPS2
-|               |                                      +--| (59)
-|               |                                      |  |           +--Drosophila_persimilis_Drosophila_persimilis
-|               |                                      |  |        +--| (100)
-|               |                                      |  |        |  |     +--Drosophila_melanogaster.SPS2
-|               |                                      |  |        |  |  +--| (48)
-|               |                                      |  |        |  |  |  +--Drosophila_simulans.SPS2
-|               |                                      |  |        |  +--| (100)
-|               |                                      |  |        |     +--Drosophila_yakuba.SPS2
+|               |                                      +--| (46)
+|               |                                      |  |        +--Drosophila_persimilis_Drosophila_persimilis
 |               |                                      |  |     +--| (100)
-|               |                                      |  |     |  |     +**Anopheles_gambiae_Anopheles_gambiae
-|               |                                      |  |     |  |  +--| (100)
-|               |                                      |  |     |  |  |  +**Anopheles_gambiae.SPS2
+|               |                                      |  |     |  |  +**Drosophila_melanogaster.SPS2
 |               |                                      |  |     |  +--| (100)
-|               |                                      |  |     |     |     +--Culex_pipiens_Culex_pipiens
-|               |                                      |  |     |     |  +--| (100)
-|               |                                      |  |     |     |  |  +--Culex_pipiens.SPS2
-|               |                                      |  |     |     +--| (39)
-|               |                                      |  |     |        +--Aedes_aegypti.SPS2
-|               |                                      |  |  +--| (79)
-|               |                                      |  |  |  +----Pediculus_humanus.SPS2
-|               |                                      |  +--| (32)
-|               |                                      |     +-------Rhodnius_prolixus.SPS2
-|               |                                   +--| (86)
-|               |                                   |  |                 +**Oikopleura_dioica.SPS2
-|               |                                   |  |              +--| (100)
-|               |                                   |  |              |  +**OdB3_gold_SEPHS2
-|               |                                   |  |           +--| (99)
-|               |                                   |  |           |  +--OSKA_gold_SEPHS2
-|               |                                   |  |        +--| (100)
-|               |                                   |  |        |  +--OKI_gold_SEPHS2
-|               |                                   |  |     +--| (92)
-|               |                                   |  |     |  |     +--Oalb_SEPHS2.3.selenocysteine
-|               |                                   |  |     |  |  +--| (100)
-|               |                                   |  |     |  |  |  +--Ovan_SEPHS2.10.selenocysteine
-|               |                                   |  |     |  +--| (91)
-|               |                                   |  |     |     +--Olon_SEPHS2.2.selenocysteine
-|               |                                   |  |  +--| (100)
-|               |                                   |  |  |  +--Olon_SEPHS2.4.selenocysteine
-|               |                                   |  +--| (83)
-|               |                                   |     +-----Fbor_SEPHS2.1.selenocysteine
-|               |                                +--| (55)
-|               |                                |  +----Monosiga_brevicollis_SPSsec_Monosiga_brevicollis_SPSsec
-|               |                             +**| (36)
+|               |                                      |  |     |     |  +--Drosophila_simulans.SPS2
+|               |                                      |  |     |     +--| (100)
+|               |                                      |  |     |        +--Drosophila_yakuba.SPS2
+|               |                                      |  |  +--| (100)
+|               |                                      |  |  |  |        +**Anopheles_gambiae_Anopheles_gambiae
+|               |                                      |  |  |  |     +--| (100)
+|               |                                      |  |  |  |     |  +**Anopheles_gambiae.SPS2
+|               |                                      |  |  |  |  +--| (81)
+|               |                                      |  |  |  |  |  |  +--Culex_pipiens_Culex_pipiens
+|               |                                      |  |  |  |  |  +--| (100)
+|               |                                      |  |  |  |  |     +--Culex_pipiens.SPS2
+|               |                                      |  |  |  +--| (100)
+|               |                                      |  |  |     +--Aedes_aegypti.SPS2
+|               |                                      |  +--| (74)
+|               |                                      |     +-----Pediculus_humanus.SPS2
+|               |                                   +--| (69)
+|               |                                   |  +-------Rhodnius_prolixus.SPS2
+|               |                                +--| (89)
+|               |                                |  |                 +**Oikopleura_dioica.SPS2
+|               |                                |  |              +--| (100)
+|               |                                |  |              |  +**OdB3_gold_SEPHS2
+|               |                                |  |           +--| (98)
+|               |                                |  |           |  +--OSKA_gold_SEPHS2
+|               |                                |  |        +--| (100)
+|               |                                |  |        |  +--OKI_gold_SEPHS2
+|               |                                |  |     +--| (78)
+|               |                                |  |     |  |     +--Oalb_SEPHS2.3.selenocysteine
+|               |                                |  |     |  |  +--| (99)
+|               |                                |  |     |  |  |  +--Ovan_SEPHS2.10.selenocysteine
+|               |                                |  |     |  +--| (91)
+|               |                                |  |     |     +--Olon_SEPHS2.2.selenocysteine
+|               |                                |  |  +--| (100)
+|               |                                |  |  |  +--Olon_SEPHS2.4.selenocysteine
+|               |                                |  +--| (85)
+|               |                                |     +-----Fbor_SEPHS2.1.selenocysteine
+|               |                             +--| (31)
 |               |                             |  |      +--Leishmania_braziliensis_MHOM_BR_75_M2904_gi_154346488_ref_XP
 |               |                             |  |  +---| (100)
 |               |                             |  |  |   |  +--Trypanosoma_brucei_TREU927_gi_71748218_ref_XP_823164.1
-|               |                             |  |  |   +--| (100)
+|               |                             |  |  |   +--| (99)
 |               |                             |  |  |      +--Trypanosoma_cruzi_strain_CL_Brener_gi_71401242_ref_XP_803303
-|               |                             |  +--| (94)
+|               |                             |  +--| (96)
 |               |                             |     |     +--sps2_Phytophtora_infestans_2007-2008_sps2_Phytophtora_infest
 |               |                             |     |  +--| (100)
 |               |                             |     |  |  +--sps2_Phytophthora_sojae_2009_2010_sps2_Phytophthora_sojae_20
-|               |                             |     +--| (91)
+|               |                             |     +--| (92)
 |               |                             |        +---------sps2_Perkinsus_marinus_2008-2009_sps2_Perkinsus_marinus_2008
 |               |                    +--------| (100)
-|               |                    |        +----Dictyostelium_discoideum_gi_1657427_gb_AAB17998.1
+|               |                    |        |  +----Dictyostelium_discoideum_gi_1657427_gb_AAB17998.1
+|               |                    |        +**| (15)
+|               |                    |           +----Monosiga_brevicollis_SPSsec_Monosiga_brevicollis_SPSsec
 |               |         +----------| (100)
 |               |         |          |       +--Methanococcus_maripaludis_C7_gi_150402078_ref_YP_001329372.1
 |               |         |          |    +--| (100)
 |               |         |          |    |  +--Methanococcus_vannielii_SB_gi_150398777_ref_YP_001322544.1
 |               |         |          +----| (100)
 |               |         |               +--Methanococcus_aeolicus_Nankai-3_gi_150401153_ref_YP_00132491
-|               |      +--| (96)
+|               |      +--| (98)
 |               |      |  |     +------Marinobacter_aquaeolei_VT8_gi_120554813_ref_YP_959164.1
 |               |      |  +-----| (100)
-|               |      |        +-----Polaromonas_naphthalenivorans_CJ2_gi_121604411_ref_YP_981740
+|               |      |        +----Polaromonas_naphthalenivorans_CJ2_gi_121604411_ref_YP_981740
 |               +------| (100)
 |                      |     +----------Campylobacter_hominis_ATCC_BAA-381_gi_154148991_ref_YP_00140
-|                      |  +--| (97)
-|                      |  |  +---gi_212283264_sp_Q9L4E1.2_SELD1_EUBAC_gi_212283264_sp_Q9L4E1.
-|                      +--| (96)
+|                      |  +--| (98)
+|                      |  |  +--gi_212283264_sp_Q9L4E1.2_SELD1_EUBAC_gi_212283264_sp_Q9L4E1.
+|                      +--| (98)
 |                         +-----------gi_190358310_sp_O67139.3_SELD_AQUAE_gi_190358310_sp_O67139.3
 |
 +--sps2_Plasmodium_gallinaceum_2007-2008_sps2_Plasmodium_gallin
 
 Tree in newick format:
 
-(sps_Plasmodium_knowlesi_2007-2008_sps_Plasmodium_knowlesi_20:0.0438379871,(sps1_Aureococcus_anophagefferens_2008-2009_sps1_Aureococcus_:1.9055576186,(((((((((((((((((((Bos_taurus_gi_168480154_ref_NP_001108204.1:0.0000026465,Bos_taurus.SPS2:0.0000010000)100:0.0462974097,Equus_caballus.SPS2:0.0268912316)99:0.0105927940,(((Rattus_norvegicus_gi_142976617_ref_NP_001073358.2:0.0063755100,Mmus_SEPHS2.1.selenocysteine:0.0029991640)100:0.0107441724,Cricetulus_griseus.SPS2:0.0110857155)100:0.0784621530,Human_SEPHS2_NP_036380.2:0.0261364676)93:0.0060986570)100:0.1235769120,(Chrysemys_picta_bellii.SPS2:0.0522376447,Anolis_carolinensis.SPS2:0.0535874535)100:0.0697096662)100:0.0790007105,Latimeria_chalumnae.SPS2:0.1158379078)100:0.0433423681,((Oryzias_latipes.SPS2:0.1075402875,Xiphophorus_maculatus.SPS2:0.1043816115)100:0.1619406688,(Danio_rerio.SPS2:0.0000010000,Drer_SEPHS2.5.selenocysteine:0.0000029677)100:0.1875551366)100:0.1100460145)100:0.1417525127,Petromyzon_marinus.SPS2:0.0408919042)99:0.0318415525,(((((((Homo_sapiens.SPS1:0.0000021438,Human_SEPHS1_NP_036379.2:0.0000010000)100:0.0052653935,Mmus_SEPHS2.2.threonine:0.0030198248)79:0.0000026141,Rattus_norvegicus.SPS1:0.0039613358)96:0.0074665404,Chrysemys_picta_bellii.SPS1:0.0000025906)99:0.0074084188,Anolis_carolinensis.SPS1:0.0101284560)99:0.0037019977,Latimeria_chalumnae.SPS1:0.0000027334)97:0.0083369405,((Xiphophorus_maculatus.SPS1:0.0214542836,Tetraodon_nigroviridis.SPS1:0.0081071943)99:0.0371124768,((Danio_rerio.SPS1:0.0000010000,Drer_SEPHS2.13.threonine:0.0000010000)78:0.0000025531,Drer_SEPHS2.17.threonine:0.0478820950)99:0.0176265957)98:0.0124533082)100:0.1588189082)100:0.1426787932,(((((((((((Atta_cephalotes_Atta_cephalotes:0.0410917376,Apis_florea.SPS1:0.0071536975)100:0.0217202680,((Acyrthosiphon_pisum_gi_193652783_ref_XP_001947297.1:0.2074019681,Rhodnius_prolixus.SPS1:0.0884484902)64:0.0120672072,(((Anopheles_gambiae_str._PEST_gi_158297241_ref_XP_317503.3:0.0000029565,Anopheles_gambiae.SPS1:0.0000029500)100:0.0556036938,(Aedes_aegypti.SPS1:0.0165958517,Culex_pipiens.SPS1:0.0151816957)100:0.0221605551)100:0.0784111723,((Drosophila_melanogaster_gi_2411487_gb_AAB88790.1:0.0085963399,(Drosophila_ananassae.SPS1:0.0028570578,Drosophila_erecta.SPS1:0.0000010000)35:0.0000022319)72:0.0049615026,Drosophila_grimshawi.SPS1:0.0065358160)100:0.0732532124)100:0.0797550504)66:0.0129176391)66:0.0147337164,Pediculus_humanusA_Pediculus_humanusA:0.1395436943)52:0.0248827584,((Daphnia_pulex.SPS2:0.1309656483,Hyalella_azteca.SPS2:0.2082700285)100:0.0407154158,Lepeophtheirus_salmonis.SPS2:0.1001120343)80:0.0195629037)35:0.0120834883,Catajapyx_aquilonaris.SPS2:0.1002482137)24:0.0000020571,Drosophila_pseudoobscura_pseudoobscura_gi_198472233_ref_XP_0:1.3268925550)63:0.0311630138,(Tetranychus_urticae.SPS2:0.2431129739,Parasteatoda_tepidariorum.SPS2:0.2688286661)98:0.0806868424)44:0.0294025712,Strigamia_maritima.SPS2:0.1670467759)85:0.0225312277,Priapulus_caudatus.SPS2:0.2919212076)78:0.0258754018,(Capitella_teleta.SPS2:0.0326141434,Helobdella_robusta.SPS1:0.3324677921)100:0.0950784783)81:0.0377605711,(Bflo_SEPHS2.5.selenocysteine:0.0168394910,Blan_SEPHS2.2.selenocysteine:0.0312321010)100:0.3192877792)99:0.1228913308)57:0.0894740259,(((((Botryllus_schlosseri.SPS2:0.0000010000,Bsch_SEPHS2.1.selenocysteine:0.0000022664)100:0.2608620817,Scla_SEPHS2.2.selenocysteine:0.4263185621)91:0.0402343948,Scla_SEPHS2.1.selenocysteine:0.1754323321)88:0.0537715115,Hror_SEPHS2.1.selenocysteine:0.2153489254)100:0.2786035024,(((((Botryllus_schlosseri.SPS1:0.0000028669,Bsch_SEPHS2.3.glycine:0.0410550388)100:0.1442569196,Scla_SEPHS2.4.glycine:0.0682264991)100:0.0559328429,Hror_SEPHS2.5.glycine:0.0874455017)100:0.0470458220,(((Cint_SEPHS2.5.glycine:0.0000023453,Crob_SEPHS2.6.glycine:0.0028493478)100:0.0508878934,Csav_SEPHS2.3.glycine:0.0523302927)100:0.0616537313,(Pmam_SEPHS2.3.glycine:0.1214202145,((Olon_SEPHS2.5.unaligned:0.0966491957,Olon_gold_SEPHS_b:0.0799756425)97:0.0452890674,(OKI_gold_SEPHS_b:0.6418602686,(Oalb_gold_SEPHS_b:0.0300375853,Ovan_gold_SEPHS_b:0.1203762047)84:0.0296792857)98:0.0481538279)100:1.0300389584)89:0.0393497528)95:0.0371241155)99:0.0967314320,((Pege_SEPHS2.5.selenocysteine:0.2780648123,Stho_SEPHS2.1.pseudo:0.1787090266)94:0.0655005676,Tdem_SEPHS2.1.selenocysteine:0.4765667331)100:0.1344348148)60:0.0415727369)98:0.0636125833)100:0.2638736874,(Caenorhabditis_elegans_gi_17543426_ref_NP_502604.1:1.1584789000,Helobdella_robusta.SPS2:0.7295980087)33:0.1055021273)31:0.0383390168,((((Drosophila_persimilis_Drosophila_persimilis:0.2905324509,((Drosophila_melanogaster.SPS2:0.0278037161,Drosophila_simulans.SPS2:0.0073505024)48:0.0230319584,Drosophila_yakuba.SPS2:0.0376750078)100:0.4279315683)100:0.6960096221,((Anopheles_gambiae_Anopheles_gambiae:0.0000028180,Anopheles_gambiae.SPS2:0.0000010000)100:0.4605910155,((Culex_pipiens_Culex_pipiens:0.0390472151,Culex_pipiens.SPS2:0.0221750045)100:0.2280021959,Aedes_aegypti.SPS2:0.1689157338)39:0.0579594084)100:0.4394608484)100:0.4909152855,Pediculus_humanus.SPS2:1.1722174623)79:0.1326725385,Rhodnius_prolixus.SPS2:1.6878108972)32:0.1020891229)59:0.0899130942,((((((Oikopleura_dioica.SPS2:0.0000010000,OdB3_gold_SEPHS2:0.0000029319)100:0.0494870050,OSKA_gold_SEPHS2:0.0491686695)99:0.0750580504,OKI_gold_SEPHS2:0.0612680690)100:0.4537823666,((Oalb_SEPHS2.3.selenocysteine:0.5617019364,Ovan_SEPHS2.10.selenocysteine:0.3268462026)100:0.1148506764,Olon_SEPHS2.2.selenocysteine:0.3485145501)91:0.0723890077)92:0.0750639922,Olon_SEPHS2.4.selenocysteine:0.4734064119)100:0.5654311380,Fbor_SEPHS2.1.selenocysteine:1.3496966731)83:0.1801813112)86:0.1516772525,Monosiga_brevicollis_SPSsec_Monosiga_brevicollis_SPSsec:1.2145889044)55:0.0927294447,((Leishmania_braziliensis_MHOM_BR_75_M2904_gi_154346488_ref_XP:0.3297059378,(Trypanosoma_brucei_TREU927_gi_71748218_ref_XP_823164.1:0.2496499635,Trypanosoma_cruzi_strain_CL_Brener_gi_71401242_ref_XP_803303:0.3025843118)100:0.1661396860)100:0.9565376088,((sps2_Phytophtora_infestans_2007-2008_sps2_Phytophtora_infest:0.0771822269,sps2_Phytophthora_sojae_2009_2010_sps2_Phytophthora_sojae_20:0.0575923722)100:0.5109200537,sps2_Perkinsus_marinus_2008-2009_sps2_Perkinsus_marinus_2008:2.1117167742)91:0.1268502251)94:0.1887694533)36:0.0000023573,Dictyostelium_discoideum_gi_1657427_gb_AAB17998.1:1.1888786527)100:1.9774361343,((Methanococcus_maripaludis_C7_gi_150402078_ref_YP_001329372.1:0.3015866369,Methanococcus_vannielii_SB_gi_150398777_ref_YP_001322544.1:0.1911683444)100:0.2359332865,Methanococcus_aeolicus_Nankai-3_gi_150401153_ref_YP_00132491:0.2752635925)100:1.1797846324)100:2.3379766842,(Marinobacter_aquaeolei_VT8_gi_120554813_ref_YP_959164.1:1.5460336130,Polaromonas_naphthalenivorans_CJ2_gi_121604411_ref_YP_981740:1.2426377497)100:1.3050275920)96:0.2248624421,((Campylobacter_hominis_ATCC_BAA-381_gi_154148991_ref_YP_00140:2.2487742238,gi_212283264_sp_Q9L4E1.2_SELD1_EUBAC_gi_212283264_sp_Q9L4E1.:0.8417533106)97:0.2754210515,gi_190358310_sp_O67139.3_SELD_AQUAE_gi_190358310_sp_O67139.3:2.4811651420)96:0.1733878675)100:1.6083096608)100:3.4164695161,sps2_Plasmodium_gallinaceum_2007-2008_sps2_Plasmodium_gallin:0.2507247462);
+(sps_Plasmodium_knowlesi_2007-2008_sps_Plasmodium_knowlesi_20:0.0466661031,(sps1_Aureococcus_anophagefferens_2008-2009_sps1_Aureococcus_:1.9464329420,(((((((((((((((((((Bos_taurus_gi_168480154_ref_NP_001108204.1:0.0000022626,Bos_taurus.SPS2:0.0000010000)100:0.0472986352,Equus_caballus.SPS2:0.0268774001)100:0.0105905775,(((Rattus_norvegicus_gi_142976617_ref_NP_001073358.2:0.0067602800,Mmus_SEPHS2.1.selenocysteine:0.0031784998)100:0.0098566965,Cricetulus_griseus.SPS2:0.0113744420)100:0.0753098387,Human_SEPHS2_NP_036380.2:0.0268470596)96:0.0064539494)100:0.1284378400,(Chrysemys_picta_bellii.SPS2:0.0524908715,Anolis_carolinensis.SPS2:0.0544770848)100:0.0703459532)100:0.0822946615,Latimeria_chalumnae.SPS2:0.1155668374)100:0.0449893188,((Oryzias_latipes.SPS2:0.1089439949,Xiphophorus_maculatus.SPS2:0.1067837851)100:0.1659179804,(Danio_rerio.SPS2:0.0000010000,Drer_SEPHS2.5.selenocysteine:0.0000010000)100:0.1899328996)100:0.1119781618)100:0.1447154920,Petromyzon_marinus.SPS2:0.0403886267)99:0.0308714576,(((((((Homo_sapiens.SPS1:0.0000010000,Human_SEPHS1_NP_036379.2:0.0000010000)100:0.0052477276,Mmus_SEPHS2.2.threonine:0.0030443571)85:0.0000027278,Rattus_norvegicus.SPS1:0.0040664393)95:0.0076488324,Chrysemys_picta_bellii.SPS1:0.0000025110)99:0.0075594248,Anolis_carolinensis.SPS1:0.0101936687)100:0.0037865109,Latimeria_chalumnae.SPS1:0.0000010000)100:0.0083794961,((Xiphophorus_maculatus.SPS1:0.0213350667,Tetraodon_nigroviridis.SPS1:0.0082008668)98:0.0370824082,((Danio_rerio.SPS1:0.0000010000,Drer_SEPHS2.13.threonine:0.0000010000)73:0.0000010000,Drer_SEPHS2.17.threonine:0.0482521985)98:0.0177592028)99:0.0126214502)100:0.1625062285)100:0.1441395417,(((((((((Atta_cephalotes_Atta_cephalotes:0.0411601139,Apis_florea.SPS1:0.0070893617)98:0.0208518317,((Acyrthosiphon_pisum_gi_193652783_ref_XP_001947297.1:0.2095593941,Rhodnius_prolixus.SPS1:0.0896437455)92:0.0129329545,(((Anopheles_gambiae_str._PEST_gi_158297241_ref_XP_317503.3:0.0000010000,Anopheles_gambiae.SPS1:0.0000010000)100:0.0560089045,(Aedes_aegypti.SPS1:0.0167034881,Culex_pipiens.SPS1:0.0153882052)99:0.0218582765)100:0.0792969270,((Drosophila_melanogaster_gi_2411487_gb_AAB88790.1:0.0085822497,(Drosophila_ananassae.SPS1:0.0028523906,Drosophila_erecta.SPS1:0.0000010000)33:0.0000010000)62:0.0052826786,Drosophila_grimshawi.SPS1:0.0061933550)100:0.0729782376)93:0.0803915292)79:0.0123395760)78:0.0142602861,(Drosophila_pseudoobscura_pseudoobscura_gi_198472233_ref_XP_0:1.3489509843,Pediculus_humanusA_Pediculus_humanusA:0.1267108292)74:0.0125676572)88:0.0293061916,((Daphnia_pulex.SPS2:0.1324014032,Hyalella_azteca.SPS2:0.2192209064)100:0.0428283132,Lepeophtheirus_salmonis.SPS2:0.0960515698)80:0.0189898245)74:0.0102968393,Catajapyx_aquilonaris.SPS2:0.0979405635)95:0.0372167092,((Tetranychus_urticae.SPS2:0.2504316928,Parasteatoda_tepidariorum.SPS2:0.2713534838)100:0.0696947709,Strigamia_maritima.SPS2:0.1555501458)88:0.0304809482)90:0.0252440950,Priapulus_caudatus.SPS2:0.2762870489)82:0.0229042497,(Capitella_teleta.SPS2:0.0334026007,Helobdella_robusta.SPS1:0.3373779548)100:0.1016642317)87:0.0467874269,(Bflo_SEPHS2.5.selenocysteine:0.0170816699,Blan_SEPHS2.2.selenocysteine:0.0281129991)100:0.3348945537)98:0.1182362971)88:0.1240223381,(((((Botryllus_schlosseri.SPS2:0.0000010000,Bsch_SEPHS2.1.selenocysteine:0.0000010000)100:0.2588239690,Scla_SEPHS2.2.selenocysteine:0.4288966702)85:0.0394400976,Scla_SEPHS2.1.selenocysteine:0.1777571632)82:0.0534609981,Hror_SEPHS2.1.selenocysteine:0.2207075232)100:0.2791991417,(((((Botryllus_schlosseri.SPS1:0.0000020929,Bsch_SEPHS2.3.glycine:0.0415036386)100:0.1461604165,Scla_SEPHS2.4.glycine:0.0681114035)100:0.0560885838,Hror_SEPHS2.5.glycine:0.0893090190)100:0.0548186182,(((Cint_SEPHS2.5.glycine:0.0000022127,Crob_SEPHS2.6.glycine:0.0028605727)100:0.0501522783,Csav_SEPHS2.3.glycine:0.0567351501)100:0.0615577800,(Pmam_SEPHS2.3.glycine:0.1230346332,((Olon_SEPHS2.5.unaligned:0.0984114532,Olon_gold_SEPHS_b:0.0805521940)100:0.0472394441,(OKI_gold_SEPHS_b:0.6668791380,(Oalb_gold_SEPHS_b:0.0301547940,Ovan_gold_SEPHS_b:0.1223349524)95:0.0301541015)99:0.0463558747)100:1.0279403604)99:0.0389982562)99:0.0302799549)100:0.0925506602,((Pege_SEPHS2.5.selenocysteine:0.2803233267,Stho_SEPHS2.1.pseudo:0.1853573380)90:0.0617900139,Tdem_SEPHS2.1.selenocysteine:0.4894095433)99:0.1413693368)72:0.0421143828)86:0.0356304770)100:0.2889898034,(Caenorhabditis_elegans_gi_17543426_ref_NP_502604.1:1.1607178510,Helobdella_robusta.SPS2:0.7474831616)59:0.1124075276)46:0.0352836223,(((Drosophila_persimilis_Drosophila_persimilis:0.3447829353,(Drosophila_melanogaster.SPS2:0.0000020026,(Drosophila_simulans.SPS2:0.0074863085,Drosophila_yakuba.SPS2:0.0606066583)100:0.0279086248)100:0.4150182897)100:0.7030200893,(((Anopheles_gambiae_Anopheles_gambiae:0.0000010000,Anopheles_gambiae.SPS2:0.0000010000)100:0.5167665758,(Culex_pipiens_Culex_pipiens:0.0400653363,Culex_pipiens.SPS2:0.0221563099)100:0.2203442817)81:0.0580467415,Aedes_aegypti.SPS2:0.1272019540)100:0.4615317456)100:0.5254636318,Pediculus_humanus.SPS2:1.2631362042)74:0.1896661245)46:0.0459701149,Rhodnius_prolixus.SPS2:1.8073775451)69:0.0675130524,((((((Oikopleura_dioica.SPS2:0.0000010000,OdB3_gold_SEPHS2:0.0000010000)100:0.0562889256,OSKA_gold_SEPHS2:0.0484669795)98:0.0751880849,OKI_gold_SEPHS2:0.0762942287)100:0.4731466582,((Oalb_SEPHS2.3.selenocysteine:0.5643310563,Ovan_SEPHS2.10.selenocysteine:0.3316346532)99:0.1137746961,Olon_SEPHS2.2.selenocysteine:0.3642114165)91:0.0821009413)78:0.0592040095,Olon_SEPHS2.4.selenocysteine:0.4914317793)100:0.5641031852,Fbor_SEPHS2.1.selenocysteine:1.3867571586)85:0.1580616571)89:0.2135056334,((Leishmania_braziliensis_MHOM_BR_75_M2904_gi_154346488_ref_XP:0.3417129438,(Trypanosoma_brucei_TREU927_gi_71748218_ref_XP_823164.1:0.2534846021,Trypanosoma_cruzi_strain_CL_Brener_gi_71401242_ref_XP_803303:0.3036047501)99:0.1677683633)100:0.9452635837,((sps2_Phytophtora_infestans_2007-2008_sps2_Phytophtora_infest:0.0775174100,sps2_Phytophthora_sojae_2009_2010_sps2_Phytophthora_sojae_20:0.0591663536)100:0.5079917866,sps2_Perkinsus_marinus_2008-2009_sps2_Perkinsus_marinus_2008:2.2221462507)92:0.1716252481)96:0.2288568082)31:0.1169736646,(Dictyostelium_discoideum_gi_1657427_gb_AAB17998.1:1.1921164232,Monosiga_brevicollis_SPSsec_Monosiga_brevicollis_SPSsec:1.1472225060)15:0.0000021524)100:2.0123998408,((Methanococcus_maripaludis_C7_gi_150402078_ref_YP_001329372.1:0.3112525372,Methanococcus_vannielii_SB_gi_150398777_ref_YP_001322544.1:0.1965362358)100:0.2468139480,Methanococcus_aeolicus_Nankai-3_gi_150401153_ref_YP_00132491:0.2823142373)100:1.2243526733)100:2.4706387025,(Marinobacter_aquaeolei_VT8_gi_120554813_ref_YP_959164.1:1.5857257215,Polaromonas_naphthalenivorans_CJ2_gi_121604411_ref_YP_981740:1.1944777678)100:1.3474236260)98:0.2174211231,((Campylobacter_hominis_ATCC_BAA-381_gi_154148991_ref_YP_00140:2.3260173002,gi_212283264_sp_Q9L4E1.2_SELD1_EUBAC_gi_212283264_sp_Q9L4E1.:0.8173547857)98:0.2898750983,gi_190358310_sp_O67139.3_SELD_AQUAE_gi_190358310_sp_O67139.3:2.5697705691)98:0.2022868289)100:1.6367296159)100:3.4962917835,sps2_Plasmodium_gallinaceum_2007-2008_sps2_Plasmodium_gallin:0.2812524611);
 
 
 USER TREES
@@ -309,9 +309,9 @@ See results/trees/lba/SEPHS2.pmsf.orthology_au.trees for trees with branch lengt
 
 Tree      logL    deltaL  bp-RELL    p-KH     p-SH       c-ELW       p-AU
 -------------------------------------------------------------------------
-  1 -33821.49006       0   0.988 +  0.989 +      1 +     0.987 +    0.991 + 
-  2 -33855.90383  34.414  0.0117 - 0.0114 - 0.0121 -    0.0117 -    0.013 - 
-  3 -33876.85943  55.369  0.0007 - 0.0026 - 0.0026 -  0.000788 -  0.00235 - 
+  1 -33763.19293       0   0.982 +  0.984 +      1 +     0.982 +    0.986 + 
+  2 -33797.18601  33.993  0.0138 - 0.0159 - 0.0193 -    0.0144 -   0.0294 - 
+  3 -33818.46002  55.267  0.0039 -  0.005 -  0.005 -   0.00382 -  0.00914 - 
 
 deltaL  : logL difference from the maximal logl in the set.
 bp-RELL : bootstrap proportion using RELL method (Kishino et al. 1990).
@@ -328,7 +328,7 @@ ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/lba/SEPHS2.pmsf.orthology_au.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0867455,0.0397727,0.0438903,0.0525856,0.0232794,0.0424181,0.0582214,0.0856183,0.0228883,0.0630521,0.0986152,0.0547709,0.0359772,0.0321586,0.0461216,0.0513204,0.0563121,0.0101445,0.0196678,0.07644}+G4{0.600819}" --length 451
+--alisim simulated_MSA -t results/trees/lba/SEPHS2.pmsf.orthology_au.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0865843,0.0397938,0.0439136,0.0525444,0.0232687,0.0428318,0.0582292,0.0853644,0.0228314,0.0630855,0.0987364,0.0545927,0.0359272,0.0321757,0.0462151,0.0513245,0.0563189,0.0101498,0.0196783,0.0764344}+G4{0.585724}" --length 448
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -343,7 +343,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Mon Nov  2 19:08:03 2026
-Total CPU time used: 500 seconds (0h:8m:20s)
-Total wall-clock time used: 85.2 seconds (0h:1m:25s)
+Date and time: Tue Nov  3 16:06:14 2026
+Total CPU time used: 14.8 seconds (0h:0m:14s)
+Total wall-clock time used: 2.78 seconds (0h:0m:2s)
 
