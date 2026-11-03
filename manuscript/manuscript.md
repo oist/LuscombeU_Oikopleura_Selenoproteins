@@ -812,12 +812,15 @@ the junction is placed. The first bases of each of these introns repeat the firs
 bases the last bases of the previous exon (one to three bases, shaded in Figure PSTK C), so that the intron can be moved
 across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
 intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
-AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Placed on an AG acceptor, the fourth intron is a TT-AG intron in
-OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same phase, and the third intron a TG-AG, AA-AG and GA-AG
-intron. All are thus introns that end with AG without starting with GT, the second class of *O. dioica* introns after
-GT-AG [@Soo2026]; TT-AG and AT-AG introns are also minor classes of human introns (0.19 and 0.42% in the compilation
-shown by @Soo2026). The third intron is retained in two of the four OSKA2016 transcripts (63 nucleotides, with a stop
-codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame).
+AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Bases repeated at the two ends of an intron are the rule rather
+than the exception: of the 176 gold-standard introns of OKI2018 and OdB3, 151 have at least one and 102 have two or
+three (2.1 on average in the GT-AG introns), because exons often end with AG, as introns do. What is unusual in PSTK is
+not this ambiguity, but that no placement within it gives an intron class. Placed on an AG acceptor, the fourth intron
+is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same phase, and the third intron a TG-AG,
+AA-AG and GA-AG intron. All are thus introns that end with AG without starting with GT, the second class of *O. dioica*
+introns after GT-AG [@Soo2026]; TT-AG and AT-AG introns are also minor classes of human introns (0.19 and 0.42% in the
+compilation shown by @Soo2026). The third intron is retained in two of the four OSKA2016 transcripts (63 nucleotides,
+with a stop codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame).
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
@@ -860,7 +863,10 @@ PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0
 <!-- Panel D and the tree numbers: trees of 2026-11-02, built before the OdB3 PSTK model was set by the curator (commit
 8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf).
 Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
-pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand). -->
+pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand).
+Repeated bases at intron ends (176 introns, 151, 102, 2.1): computed here on the OKI2018 and OdB3 genomes; to replace by
+the counts of results/tables/intron_content.tsv (column repeated_bases, four assemblies) when make intron-content is
+pushed. -->
 
 Figure PSTK. PSTK of appendicularians. A to C (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`). A, gene
 models in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the

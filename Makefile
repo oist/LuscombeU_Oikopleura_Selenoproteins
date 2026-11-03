@@ -364,7 +364,7 @@ reannotation-pages:
 # fragments of O. longicauda, M. erythrocephalus and B. stygius (loci of results/tables/stage2_absence_pstk.candidates.tsv)
 pstk-regions:
 	python3 curation/gene_regions.py --gene PSTK --gold OKI OSKA OdB3 Oalb Ovan --lift KUM=OKI AOM=OSKA Bar2=OdB3 \
-	  --annotation Cint=XP_002120985.2 --contig Olon=SCLD01107789.1:4496-5011 Olon=SCLD01051426.1:5-604 \
+	  --annotation Cint=XP_002120985.2 Crob=XP_002120985.1 --contig Olon=SCLD01107789.1:4496-5011 Olon=SCLD01051426.1:5-604 \
 	  Mery=SCLF01145532.1:2326-2851 Bsty=SCLE01192721.1:1101-1292 --flank 3000 --out results/gene_regions/PSTK
 
 # Content of the introns of the gold-standard models (OKI2018, OSKA2016, OdB3; machinery models of O. albicans):

@@ -2054,3 +2054,14 @@ no earlier step waits for them.
   EEFSEC intron 5, 9 kb: 9). New target make intron-content (curation/intron_content.py): RNAfold and RNAduplex
   z-scores against dinucleotide shuffles (ViennaRNA is in the container, not installable here) and legacy BLASTN
   copies, for the four genomes with gold-standard models (OKI, OSKA, OdB3, Oalb).
+- Ciona full-length cDNAs (2026-11-03; Charles sent seqS.zip, https://ghost.zool.kyoto-u.ac.jp/datas/seqS.zip, from
+  the KH download page): 6,913 sequences of C. robusta (formerly C. intestinalis type A; our Cint genome is C.
+  intestinalis, Roscoff isolate of the RefSeq record). No PSTK clone: tblastn of the C. intestinalis PSTK, best hit
+  E = 0.25 (unrelated); blastn of the C. intestinalis PSTK region hits only the neighbouring genes (91-95% identity).
+  C. robusta RefSeq PSTK (XP_002120985.1) added to make pstk-regions, to read its gene structure. The PDF sent as the
+  Henriet introner paper is Guo et al. 2018 (SecMS, already cited); the paper meant is probably Henriet et al. 2019
+  (Curr Biol 29:3193, doi:10.1016/j.cub.2019.07.092): in F. borealis most old introns were lost and replaced by
+  introns with divergent splice sites (mostly AG-AC, AG-AT), thousands of them with features of a transposon origin
+  (PubMed abstract). Results: sentence added on repeated bases at intron ends (the rule; what is unusual in PSTK is
+  that no placement gives an intron class); numbers from OKI2018 and OdB3 computed here, to replace by those of
+  make intron-content.
