@@ -824,6 +824,34 @@ introns (0.19 and 0.42% in the compilation shown by @Soo2026). The third intron 
 transcripts (63 nucleotides, with a stop codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which
 shift the frame).
 
+In vertebrates and amphioxus, PSTK has five introns at the same alignment columns and in the same phases (RefSeq models
+of human, mouse, the two zebrafish genes and *Branchiostoma lanceolatum*; `make pstk-introns`,
+`results/tables/pstk_intron_columns.tsv`), the structure of the gene in the chordate ancestor, whereas none of the six
+other tunicates with a RefSeq model has an intron in PSTK (*C. intestinalis*, *C. robusta*, *Phallusia mammillata*,
+*Styela clava*, *Botryllus schlosseri* and *Thalia democratica*); the *Ciona* models are supported by transcripts over
+their whole length (RNA-seq for *C. intestinalis*, ESTs for *C. robusta* in the Ghost database [@Satou2022]). No
+appendicularian intron lies at the column of a chordate intron: the nearest, the second and third *O. dioica* introns,
+lie seven and six columns from the second chordate intron, in a region aligned without gaps. The tunicate ancestor
+therefore had an intronless PSTK, and the introns of appendicularians were gained in their lineages.
+
+The other appendicularians agree with this (regions of `make pstk-regions`). *O. vanhoeffeni* PSTK is one open reading
+frame of 248 codons aligned along the whole *O. dioica* protein, and the PSTK of *O. longicauda*, *M. erythrocephalus*
+and *B. stygius* have introns at other positions than the *O. dioica* introns (tblastn with the OdB3 protein, junctions
+placed by protein similarity, no transcripts): in *O. longicauda*, an intron of about 70 nucleotides, in phase 0, five
+alignment columns before the second *O. dioica* intron; in *M. erythrocephalus* and *B. stygius*, introns near residues
+23 and 92 of the OdB3 protein, and in both species an intron in phase 1 near residue 136, which the two giant larvaceans
+may share. *O. albicans* PSTK has two introns, of 389 and 2,001 nucleotides, four and seven alignment columns away from
+the third and fourth *O. dioica* introns, in another phase for the first: introns gained in its own lineage, as the
+intronless ancestral state predicts. The prediction read into the last intron and missed the last exon, which a tblastn
+search with the C-terminal region of the *O. vanhoeffeni* protein found 2 kb downstream (E = 10^-5^); the curator added
+it to the model (243 residues). Placed by the similarity of the protein to those of *O. dioica* and *O. vanhoeffeni*,
+this intron has no placement in the intron classes either, but no transcript tests it. A perfect inverted repeat of 12
+nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
+both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
+elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
+insertion of a transposon.<!-- Copies of this intron in the O. albicans genome: from make intron-content
+(results/tables/intron_content.tsv), to add. -->
+
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
 discards but which match the PSTK of other appendicularians more closely than its relative KTI12. To test these
@@ -832,31 +860,21 @@ KTI12. This supported the loci of *O. longicauda* and *M. erythrocephalus* (38 a
 and the PSTK transcripts of the three *O. dioica* transcriptomes (66 to 84 bits), and left that of *B. stygius*
 ambiguous (24 bits), like the divergent PSTK of *O. vanhoeffeni* (13 bits), which the tree places in the PSTK family
 (Figure PSTK D); in *F. borealis* it found no PSTK-like sequence at all. PSTK is thus supported in seven of the nine
-genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly.
-
-Outside *O. dioica*, the introns of PSTK differ (regions of `make pstk-regions`). *O. vanhoeffeni* PSTK is one open
-reading frame of 248 codons aligned along the whole *O. dioica* protein, the two *O. longicauda* fragments align without
-interruption over residues 12 to 225 of the OdB3 protein (tblastn), the fragments of *M. erythrocephalus* and *B.
-stygius* are interrupted at other positions, and *Ciona* PSTK has no intron: the RefSeq model of *C. intestinalis* is a
-single exon covered by RNA-seq alignments over its whole length, and so is the curated KY21 model of *C. robusta*
-(KY21.Chr1.237.v1.ND1-1), which ESTs cover in the Ghost database [@Satou2022]. *O. albicans* PSTK has an intron of 389
-nucleotides near the position of the third *O. dioica* intron but in another phase, and a last intron of 2,001
-nucleotides within ten residues of the position of the fourth in the alignment. The prediction read into this last
-intron and missed the last exon, which a tblastn search with the C-terminal region of the *O. vanhoeffeni* protein found
-2 kb downstream (E = 10^-5^); the curator added it to the model (243 residues). Placed by the similarity of the protein
-to those of *O. dioica* and *O. vanhoeffeni*, this intron has no placement in the intron classes either, but no
-transcript tests it. A perfect inverted repeat of 12 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT),
-and the same six nucleotides (AGAAAT) are found at both ends: the arrangement of the introns of *F. borealis* that arose
-from miniature inverted-repeat transposable elements, with their terminal inverted repeats and target-site duplications
-[@Henriet2019].<!-- Copies of this intron in the O. albicans genome: from make intron-content
-(results/tables/intron_content.tsv), to add. -->
+genomes, ambiguous in *B. stygius*, and possibly missing from the *F. borealis* assembly. Because the gene had no intron
+in the tunicate ancestor and has few in appendicularians (above), a complete PSTK can lie on a short contig, and loci of
+the fragmented assemblies that align along the protein are acceptable evidence of the gene. We use them for presence
+only, and do not count copies. In *O. longicauda*, a second locus, on a contig of 604 nucleotides, has no intron over
+residues 12 to 198 but two stop codons in frame, and is 45% identical to the other locus and 37 to 42% to the PSTK of
+the other *Oikopleura* species: a pseudogene, or contamination by an unsequenced species. In *O. vanhoeffeni*, the
+second locus, predicted as a pseudogene, lies 9.5 kb from the gene on the same contig and is 83% identical to it.
 
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
 each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The appendicularian PSTK are
 PSTK and not KTI12: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
 dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted as a pseudogene) formed a
-clade (100%), apart from the other tunicates, which formed their own clade (98 to 100%). In every analysis, the
+clade (100%)<!-- To check when the trees are rerun: the same tree with one leaf per appendicularian species (one O.
+dioica assembly, without the O. vanhoeffeni pseudogene locus), so that related leaves do not drive the topology. -->, apart from the other tunicates, which formed their own clade (98 to 100%). In every analysis, the
 appendicularian clade grouped with the PSTK of the insect-gut fungi *Smittium* and *Zancudomyces*, which also lie on
 long branches (76% in the maximum-likelihood tree, 50% under C20, 85% with PMSF, 65 to 82% after site removal); without
 these fungi, it branched as the sister of all other PSTK (94%). Two long branches grouped together is the pattern
@@ -1296,6 +1314,41 @@ whose species-specific peptides would in turn confirm it. Finally, selenoprotein
 as shown in cultured cells [@Guo2018], and may depend on stage and sex, so that the choice of material matters as much
 as the depth of the analysis.
 
+## Introns gained in PSTK, with unusual splice sites
+
+> **Provisional paragraphs (2026-11-03).**
+
+PSTK lost the five introns of the chordate ancestor in an ancestor of tunicates, and appendicularian lineages gained new
+ones: four in an ancestor of the three *O. dioica* species, at positions where *O. albicans* has none, and two in *O.
+albicans*, one of them with the inverted repeats and duplicated ends of a transposon insertion. The loss of all the
+introns of a gene fits its replacement by a copy reverse-transcribed from its mRNA, the mechanism proposed for intron
+losses in *O. dioica* [@Denoeud2010]; whether the tunicate PSTK lies at the place of the chordate gene, which synteny
+would show, we did not examine. The *O. dioica* introns were gained between the separation of *O. dioica* from *O.
+albicans* and the separation of the three *O. dioica* species; without a dated phylogeny of appendicularians, these
+bounds cannot be turned into years.
+
+The unusual splice sites of the *O. dioica* PSTK introns are thus those of introns gained in this lineage. New introns
+take the ends that the event that created them provided: in *Fritillaria borealis*, introns derived from transposons are
+mostly neither GT-AG nor GC-AG [@Henriet2019], and introners take one splice site from the duplicated target site
+[@Huff2016], so that unusual ends are expected of young introns more than of old ones. This does not choose between
+annotations, which the transcripts, the assemblies of other individuals and the comparison of proteins do, but it
+removes a reason to doubt the sites that the transcripts show. Since the three species separated, these introns kept
+being spliced while their first bases changed (for the fourth intron, TT-AG in OKI2018 and OSKA2016 and AT-AG in OdB3;
+for the third, TG-AG, AA-AG and GA-AG), none of them became a GT-AG intron, and the interior of the fourth intron was
+replaced in the OKI2018 lineage. Such introns fit what is known of the larvacean splicing machinery: human cells do not
+splice the nearly canonical introns of *O. dioica* [@Henriet2019], and divergent U2AF subunits and changes in the m6A
+modification of U1 and U6 snRNA accompany non-canonical splicing in *F. borealis* [@Soo2026]. In the PSTK introns, the
+bases that are kept are a run of three guanines starting three to five nucleotides into the intron (TTTGGGTT and
+ATCGGGTT in the fourth intron, GCAGGG, AAGGGTT and GAGGGTT in the third), while the first two bases vary; whether such
+runs help the recognition of donor sites without GT in *O. dioica* could be tested on the introns supported by RNA-seq
+reads across the genome.
+
+For the annotation of appendicularian genomes, gene-model tools that require GT-AG or GC-AG introns, or that place
+junctions on these sites whenever the alignment allows it, can misplace or skip such introns, as the prediction of the
+OdB3 PSTK did; transcript alignments without splice-site preference, followed by an explicit choice among the equivalent
+placements of each junction, avoid this, and the assemblies of other individuals tell unusual sites from assembly
+errors.
+
 ## Limitations
 
 > **Provisional paragraph (2026-10-31).**
@@ -1452,7 +1505,13 @@ placements that leave the spliced sequence unchanged were listed with their dinu
 (`figures/intron_placements.py`). The PSTK exons of the other species were located by tblastn with the OdB3 protein, and
 the last exon of *O. albicans* with the C-terminal region of the *O. vanhoeffeni* protein; its junction was placed where
 the protein of the spliced chain had the highest sum of local alignment scores to the OdB3 and *O. vanhoeffeni*
-proteins.
+proteins. Intron positions across chordates were read from the RefSeq models of PSTK (human, mouse, zebrafish, *B.
+lanceolatum*, *C. intestinalis*, *C. robusta*, *P. mammillata*, *S. clava*, *B. schlosseri*, and the *T. democratica*
+transcript found by a tblastn search of the RefSeq transcripts with the *C. intestinalis* protein) and from the
+gold-standard models, each intron being placed in its protein with its phase (`make pstk-introns`,
+`curation/intron_positions.py`); the proteins, with nine PSTK of other animals, were aligned with MAFFT L-INS-i
+[@Katoh2013], and each intron was given the column of the residue that follows or contains it
+(`curation/intron_columns.py`).
 
 ## Appendicularian profiles of the selenocysteine machinery
 
