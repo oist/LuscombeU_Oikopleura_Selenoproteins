@@ -2130,3 +2130,13 @@ no earlier step waits for them.
   they are (no re-test of the B. stygius margin with the spliced protein, no override for O. longicauda). Optional,
   only after the first complete brush-up of the manuscript: longer unpublished O. longicauda scaffolds may become
   available; until then, work without them.
+- make intron-content (run 13b50c5; 283 introns: OKI 102, OSKA 84, OdB3 74, Oalb 23). Repeated bases at both ends,
+  260 O. dioica introns: 0..5+: 36, 38, 88, 60, 17, 21 (224 with at least one, 148 with two or three; mean 2.11 for the
+  201 GT-AG introns) -> Results updated. PSTK: no copies of the O. dioica introns; fourth intron of OSKA2016 and OdB3:
+  ends pair (RNAduplex z -5.5, -5.8; fold z -2.2, -2.6), OKI2018 not (z -0.8). O. albicans: 20 of 23 machinery introns
+  have copies (19 with >= 10 loci), the PSTK last intron 8,927 loci (52% covered), ends z -4.1, the strongest of the
+  O. albicans introns scored. General pattern: non-GT-AG introns pair their ends more (16 of 20 introns with ends z <=
+  -3 are non-GT-AG vs 41 of 237; median -1.7 vs 0.3; in each assembly: MW p 6.5e-9, 5.4e-7, 8.9e-4; not independent
+  across assemblies) -> provisional Discussion paragraph; genome-wide test with RNA-seq-supported introns proposed.
+  The O. albicans EEFSEC model has five introns with odd sites (GT-TG, AT-AG, AA-AG, TT-AG, AT-TT): to review with
+  EEFSEC.

@@ -813,16 +813,20 @@ bases the last bases of the previous exon (one to three bases, shaded in Figure 
 across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
 intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
 AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Bases repeated at the two ends of an intron are the rule rather
-than the exception: of the 176 gold-standard introns of OKI2018 and OdB3, 151 have at least one and 102 have two or
-three (2.1 on average in the GT-AG introns), because exons often end with AG, as introns do. What is unusual in PSTK is
-not this ambiguity, but that no placement within it gives an intron class. Placed on an AG acceptor, the fourth intron
-is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same phase, and the third intron a TG-AG,
-AA-AG and GA-AG intron. All end with AG without starting with GT, as does the second class of *O. dioica* introns after
-GT-AG [@Soo2026], but only the GA-AG intron belongs to the nearly canonical G(non-T)/AG introns, an important minority
-in oikopleurid genomes that human cells do not splice [@Henriet2019]; TT-AG and AT-AG introns are minor classes of human
-introns (0.19 and 0.42% in the compilation shown by @Soo2026). The third intron is retained in two of the four OSKA2016
-transcripts (63 nucleotides, with a stop codon in the frame of the protein) and in both OdB3 ESTs (58 nucleotides, which
-shift the frame).
+than the exception: of the 260 gold-standard introns of OKI2018, OSKA2016 and OdB3, 224 have at least one and 148 have
+two or three (2.1 on average in the 201 GT-AG introns; `make intron-content`), because exons often end with AG, as
+introns do. What is unusual in PSTK is not this ambiguity, but that no placement within it gives an intron class. Placed
+on an AG acceptor, the fourth intron is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same
+phase, and the third intron a TG-AG, AA-AG and GA-AG intron. All end with AG without starting with GT, as does the
+second class of *O. dioica* introns after GT-AG [@Soo2026], but only the GA-AG intron belongs to the nearly canonical
+G(non-T)/AG introns, an important minority in oikopleurid genomes that human cells do not splice [@Henriet2019]; TT-AG
+and AT-AG introns are minor classes of human introns (0.19 and 0.42% in the compilation shown by @Soo2026). The third
+intron is retained in two of the four OSKA2016 transcripts (63 nucleotides, with a stop codon in the frame of the
+protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame). In OSKA2016 and OdB3, the first and last 25
+nucleotides of the fourth intron can pair: the energy of their duplex is lower than in dinucleotide-shuffled introns (z
+= -5.5 and -5.8), the pairing that would bring the two splice sites together being among the eight strongest of the 257
+gold-standard introns of *O. dioica* scored; the OKI2018 intron, whose interior differs, has no such pairing (z = -0.8),
+so that it is not needed to splice the intron.
 
 In vertebrates and amphioxus, PSTK has five introns at the same alignment columns and in the same phases (RefSeq models
 of human, mouse, the two zebrafish genes and *Branchiostoma lanceolatum*; `make pstk-introns`,
@@ -849,8 +853,10 @@ this intron has no placement in the intron classes either, but no transcript tes
 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
 both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
-insertion of a transposon.<!-- Copies of this intron in the O. albicans genome: from make intron-content
-(results/tables/intron_content.tsv), to add. -->
+insertion of a transposon. Like 19 of the 23 introns of the machinery models of *O. albicans*, it shares sequence with
+thousands of other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
+not single it out; its two ends, however, pair more than those of shuffled sequences (z = -4.1), more than in any other
+*O. albicans* intron scored.
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
@@ -890,9 +896,7 @@ PMSF), and neither rejected a grouping with the other tunicates (AU tests, p = 0
 8840a27); to update after the next run of make machinery-phylogeny, machinery-lba and machinery-domains(-pmsf).
 Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
 pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand).
-Repeated bases at intron ends (176 introns, 151, 102, 2.1): computed here on the OKI2018 and OdB3 genomes; to replace by
-the counts of results/tables/intron_content.tsv (column repeated_bases, four assemblies) when make intron-content is
-pushed. -->
+Repeated bases, pairing of intron ends and copies: results/tables/intron_content.tsv (make intron-content, run 13b50c5). -->
 
 Figure PSTK. PSTK of appendicularians. A to C (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`). A, gene
 models in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
@@ -1343,6 +1347,14 @@ ATCGGGTT in the fourth intron, GCAGGG, AAGGGTT and GAGGGTT in the third), while 
 runs help the recognition of donor sites without GT in *O. dioica* could be tested on the introns supported by RNA-seq
 reads across the genome.
 
+Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG: 16 of the
+20 introns whose ends pair with z at most -3 are not GT-AG, against 41 of the other 237 (median z -1.7 for the non-GT-AG
+introns and 0.3 for the GT-AG introns, in each of the three assemblies; the same introns are counted in the three
+assemblies, so these counts are not independent; `results/tables/intron_content.tsv`). Terminal inverted repeats mark
+the transposon-derived introns of *F. borealis* [@Henriet2019], and the last intron of *O. albicans* PSTK; whether
+paired ends are the remains of such an origin, or help the splicing of introns whose sites are weak, could be tested on
+all the introns supported by RNA-seq reads in the *O. dioica* genomes.
+
 For the annotation of appendicularian genomes, gene-model tools that require GT-AG or GC-AG introns, or that place
 junctions on these sites whenever the alignment allows it, can misplace or skip such introns, as the prediction of the
 OdB3 PSTK did; transcript alignments without splice-site preference, followed by an explicit choice among the equivalent
@@ -1511,7 +1523,13 @@ transcript found by a tblastn search of the RefSeq transcripts with the *C. inte
 gold-standard models, each intron being placed in its protein with its phase (`make pstk-introns`,
 `curation/intron_positions.py`); the proteins, with nine PSTK of other animals, were aligned with MAFFT L-INS-i
 [@Katoh2013], and each intron was given the column of the residue that follows or contains it
-(`curation/intron_columns.py`).
+(`curation/intron_columns.py`). For every intron of the gold-standard models of OKI2018, OSKA2016, OdB3 and *O.
+albicans* (`make intron-content`, `curation/intron_content.py`), we counted the bases repeated at its two ends, computed
+the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides) and the energy of the duplex between its
+first and last 25 nucleotides (RNAduplex; ViennaRNA 2.7.2 [@Lorenz2011]), each compared with 100 shuffled copies of the
+intron that keep its dinucleotide composition [@Altschul1985] (z-scores), and counted its copies elsewhere in its genome
+(BLASTN, legacy BLAST 2.2.26, E at most 10^-5^, hits of at least 40 nucleotides outside the intron, loci closer than 1
+kb merged).
 
 ## Appendicularian profiles of the selenocysteine machinery
 
