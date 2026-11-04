@@ -2257,3 +2257,9 @@ no earlier step waits for them.
   Pfam, UniProt, Stašuk et al. 2026 review, Zenodo record of OKI2018_I69 with the Trinity transcriptome, Soo et al.
   2026); last [REF] placeholder replaced by a pointer to the Results; species names in titles protected from title
   case. Details: manuscript/overlap_check.md. Open: SelenoDB 2.0 use (cite or drop), uncited entries for the Discussion.
+- Deferred (2026-11-04): OpenAlex round 4, targeted at the machinery sections written after round 3. Works citing
+  Sherrer et al. 2008 and Mariotti et al. 2019 (PSTK; selenocysteine machinery in Harpellales), Dai et al. 2022 and
+  Kiledjian et al. 2022 (SECISBP2L outside vertebrates), Mariotti et al. 2015 without the tunicate filter (SEPHS
+  duplications); topic searches since 2015: Harpellales selenocysteine, Kickxellomycotina selenoprotein, PSTK
+  long-branch attraction, selenophosphate synthetase duplication, eEFSec evolution, TRNAU1AP/SECp43 loss. Script to
+  write on request (openalex_round4.sh, outside the repository, as for round 3).
