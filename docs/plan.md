@@ -2365,3 +2365,15 @@ no earlier step waits for them.
   rest; Moneuplotes (ciliate) with the stramenopiles (77). Figure PSTK D now shows the tree with eukaryotes and archaea
   added (PMSF); simplified_tree.py and machinery_clade_supports.py root on the middle of the outgroup stem (Bio.Phylo
   made the base of a clade outgroup a trifurcating root, which split KTI12 into two tips; supports unchanged).
+- PSTK enriched trees without the dolphin (Deigo, commits 10a6d40 and 3662128; 141 and 148 leaves): appendicularian
+  clade 100 in all four. Eukaryotes added: ML, with two diatoms, Nitzschia and Fistulifera (72; then the ciliate
+  Moneuplotes, dinoflagellates and oomycetes); PMSF, with the Harpellales (44). Archaea added: eukaryotic PSTK a clade
+  (99 ML, 98 PMSF); appendicularians with Gnathostoma and Paramicrosporidium (91, 88), whose terminal branches are the
+  two longest of the eukaryotic PSTK in all four trees (2.0-3.3 substitutions per site; appendicularian stem 1.1-1.5).
+  Removing one mammalian sequence moved the appendicularian clade from the base of the PSTK (78) to the diatoms (72):
+  the position follows the sampling. Text, Methods and panel D updated; the a680eb3 numbers kept in a comment.
+- make intron-content rerun with per-intron seeds (Deigo, commit 5313acd): only mfe_shuffled_mean, mfe_z and ends_z
+  changed. PSTK fourth intron ends_z OSKA2016 -6.06, OdB3 -6.08 (ranks 7 and 6 of 276), OKI2018 -0.71; O. albicans
+  PSTK intron 2 -3.25, next SEPSECS intron 3 -3.21 (the text now says "as much as", not "more than"). The same
+  O. albicans intron gave -4.1, -3.43 and -3.25 in three runs of 100 shuffles: z-scores vary by up to about 0.9
+  between runs; more shuffles (--shuffles) would narrow this if a z-score has to carry weight.

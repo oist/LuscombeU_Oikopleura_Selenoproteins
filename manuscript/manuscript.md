@@ -866,8 +866,8 @@ them too). No OdB3 EST uses the acceptor of the model, which rests on the simila
 ESTs were not among the transcripts of the gold-standard script, which takes only those that hold the anchor codon
 of the model (here inside the 36 codons). In OSKA2016 and OdB3, the first and last 25
 nucleotides of the fourth intron can pair: the energy of their duplex is lower than in dinucleotide-shuffled introns (z
-= -5.5 and -5.8), the pairing that would bring the two splice sites together being among the eight strongest of the 257
-gold-standard introns of *O. dioica* scored; the OKI2018 intron, whose interior differs, has no such pairing (z = -0.8),
+= -6.1 in both), the pairing that would bring the two splice sites together being among the seven strongest of the 276
+gold-standard introns of *O. dioica* scored; the OKI2018 intron, whose interior differs, has no such pairing (z = -0.7),
 so that it is not needed to splice the intron.
 
 In vertebrates and amphioxus, PSTK has five introns at the same alignment columns and in the same phases (RefSeq models
@@ -897,11 +897,11 @@ both ends: the arrangement of the introns of *F. borealis* that arose from minia
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
 insertion of a transposon. Like 20 of the 24 introns of the machinery models of *O. albicans*, it shares sequence with
 at least ten other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
-not single it out; its two ends, however, pair more than those of shuffled sequences (z = -4.1), more than in any other
-*O. albicans* intron scored. <!-- z-scores of this paragraph and of the PSTK fourth intron (z = -5.5 and -5.8, "eight
-strongest of the 257") to update after the next make intron-content: the shuffles are now seeded per intron
-(2026-11-04); with the shared generator, adding the SEPHS_b and SEPSECS models moved them (Deigo run ccaebc0: OSKA2016
--4.55, OdB3 -6.12, ranks 9 and 6 of 276; O. albicans -3.43, tied with SEPSECS intron 1). -->
+not single it out; its two ends, however, pair more than those of shuffled sequences (z = -3.3), as much as those of the
+most paired of the 20 other *O. albicans* introns scored (z = -3.2). <!-- z-scores of this paragraph and of the PSTK
+fourth intron: Deigo run 5313acd of make intron-content, shuffles seeded per intron (OSKA2016 -6.06, OdB3 -6.08, ranks
+7 and 6 of 276; OKI2018 -0.71; O. albicans PSTK intron 2 -3.25, SEPSECS intron 3 -3.21). Earlier runs with a shared
+generator: -5.5/-5.8 and -4.1 (13b50c5), -4.55/-6.12 and -3.43 (ccaebc0). -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles
@@ -934,13 +934,16 @@ the appendicularian clade kept this position (94%, 92% under C20). Without KTI12
 with the PSTK of *Smittium* and *Zancudomyces* (72%), the other long branch of the tree. With 60 more eukaryotic PSTK,
 of genera absent from the tree whose PSTK were the closest to the appendicularian proteins in searches of the NCBI
 protein database (insects, oomycetes, diatoms, dinoflagellates, green algae and other lineages), the appendicularian
-clade branched again as the sister of all other PSTK in the maximum-likelihood tree (78%) and, with PMSF, grouped with
-the PSTK of the nematode *Gnathostoma spinigerum* and of *Paramicrosporidium saccamoebae*, an endoparasite of amoebae
-related to fungi (78%), then with the Harpellales (68%): the longest branches of that tree after its own. With seven
-archaeal PSTK also added, the eukaryotic PSTK, the appendicularian ones included, formed a clade (87%, 94% with PMSF),
-within which the appendicularian clade grouped again with *Gnathostoma* and *Paramicrosporidium* (73%, 61%; Figure
-PSTK D). <!-- Supports of the run a680eb3, whose eukaryotic set also held a dolphin PSTK (Aethalodelphis, filed under
-the insects by mistake; it grouped with the mammals, 100%): to confirm after the rerun of make pstk-enriched. --> A long branch next to the
+clade grouped with the PSTK of two diatoms, *Nitzschia* and *Fistulifera*, in the maximum-likelihood tree (72%), and
+with the Harpellales with PMSF (44%). With seven archaeal PSTK also added, the eukaryotic PSTK, the appendicularian
+ones included, formed a clade (99%, 98% with PMSF), within which the appendicularian clade grouped with the PSTK of
+the nematode *Gnathostoma spinigerum* and of *Paramicrosporidium saccamoebae*, an endoparasite of amoebae related to
+fungi (91%, 88%; Figure PSTK D), whose terminal branches are the longest of the eukaryotic PSTK in these trees. The sister group of the
+appendicularian clade thus changed with the sequences sampled. <!-- Run 3662128 (Deigo, 2026-11-04). The first run,
+a680eb3, whose eukaryotic set also held a dolphin PSTK (Aethalodelphis, filed under the insects by mistake), placed
+the appendicularian clade as the sister of all other PSTK (78%) and, with PMSF, with Gnathostoma and Paramicrosporidium
+(78%); with the archaeal PSTK, with these two again (73%, 61%), the eukaryotic PSTK forming a clade (87%, 94%). -->
+A long branch next to the
 outgroup, or next to another long branch, is the position expected from long-branch attraction [@Bergsten2005], and fast-evolving lineages such as nematodes and
 insects branch nearer the base than expected in other trees of the selenocysteine machinery [@Mariotti2019]; a tree grouping the appendicularians with the other
 tunicates was not rejected (AU test, p = 0.088). The position of the appendicularian PSTK within the family is
@@ -951,12 +954,13 @@ other tunicates (AU tests, p = 0.11 to 0.42).
 
 ![Figure PSTK](../figures/machinery_PSTK.png)
 
-<!-- Panel D and the tree numbers: trees of commit c7865cd (make machinery-phylogeny, machinery-lba,
-machinery-domains(-pmsf) and pstk-one-leaf, with the curated OdB3 and O. albicans PSTK models); supports not in
-Table LBA or Table DOMAINS from results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports).
+<!-- Tree numbers: trees of commit c7865cd (make machinery-phylogeny, machinery-lba, machinery-domains(-pmsf) and
+pstk-one-leaf, with the curated OdB3 and O. albicans PSTK models), and of commit 3662128 (make pstk-enriched; panel D:
+results/trees/pstk_enriched_archaea/pstk.pmsf.treefile); supports not in Table LBA or Table DOMAINS from
+results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports).
 Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
 pstk-regions (commit 7bcea33). To revisit after Charles's check of the RNA-seq reads (docs/plan.md, checks by hand).
-Repeated bases, pairing of intron ends and copies: results/tables/intron_content.tsv (make intron-content, run 13b50c5). -->
+Repeated bases, pairing of intron ends and copies: results/tables/intron_content.tsv (make intron-content, run 5313acd). -->
 
 Figure PSTK. PSTK of appendicularians. A to C (`figures/machinery_PSTK.pdf`, `make machinery-reannotation`). A, gene
 models in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
