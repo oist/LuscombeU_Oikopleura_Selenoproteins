@@ -21,8 +21,9 @@ is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocystein
 (EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014; @Stasuk2026]. Selenocysteine is
 synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to
 selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS), using selenophosphate made by
-selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. SEPHS2 is itself a selenoprotein in vertebrates and many other animals
-[@Mariotti2015]. This machinery (Figure SCHEME) is expected in any genome that encodes selenoproteins.
+selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. Archaea follow the same route, whereas bacteria have neither PSTK
+nor SEPSECS: their selenocysteine synthase, SelA, converts seryl-tRNA-Sec directly [@Xu2006; @Sherrer2008]. SEPHS2
+is itself a selenoprotein in vertebrates and many other animals [@Mariotti2015]. This machinery (Figure SCHEME) is expected in any genome that encodes selenoproteins.
 
 ![Schematic of the selenocysteine machinery](../figures/machinery_scheme.svg)
 
@@ -1719,12 +1720,14 @@ proteins of the insect-gut fungi *Smittium* and *Zancudomyces*; (4) for PSTK, wi
 species (the OdB3 model for *O. dioica*, without the *O. vanhoeffeni* pseudogene locus), under the selected model and
 under C20; (5) for PSTK, without the KTI12 outgroup (unrooted); and (6) for PSTK, with more eukaryotic and with
 archaeal PSTK (`stage2/pstk_enrichment.py`, `make pstk-enriched`): from the cluster representatives found by BLASTP
-searches of ClusteredNR with the OKI2018 protein (all organisms, Eukaryota, Opisthokonta and Archaea) and by a
+searches of ClusteredNR with the OKI2018 protein (Eukaryota, Opisthokonta and Archaea; the search of all organisms,
+which returned mostly bacterial and archaeal AAA family ATPases and adenylyl-sulfate kinases, was not used) and by a
 PSI-BLAST search (`curation/pstk_blast`), the eukaryotic sequences whose best BLASTP hit among the sequences of the
 tree was a PSTK rather than a KTI12 (at least 50 bits), of 200 to 450 residues and not named partial, from genera
 absent from the tree and not vertebrates, one per genus (the longest), and the archaeal sequences named PSTK by NCBI,
 one per genus (archaeal PSTK are about as close to KTI12 as to the eukaryotic PSTK), were added to the sequences of the
-tree, which was rebuilt as above, under the selected model and with PMSF, rooted on KTI12. In each tree, we read as unrooted bipartitions the
+tree (bacterial sequences were left out, as bacteria have no PSTK), which was rebuilt as above, under the selected
+model and with PMSF, rooted on KTI12. In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
 (for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.
