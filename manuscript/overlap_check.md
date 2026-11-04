@@ -78,3 +78,33 @@ works were taken from PubMed.
   review of TXNL1 (Wu et al., Front Cell Dev Biol, doi:10.3389/fcell.2026.1876585), not cited.
 - Not found by title: the "ancient origin" SECIS paper of Chapple et al. and the PITH domain paper of Scott et al.
   2005.
+
+## Fourth round (PubMed, 2026-11-04)
+
+PubMed searches by entry date: selenoprotein and machinery terms (selenoproteome, selenocysteine, SECIS element,
+SECISBP2, selenophosphate synthetase, PSTK, SEPSECS, EEFSEC, tRNA-Sec) in titles or abstracts together with evolution,
+phylogeny, genome, annotation, recoding or UGA, entered 2026-10-01 to 2026-11-04 (one work: a crustacean thioredoxin
+glutathione reductase, not cited); appendicularian, larvacean, tunicate or *Ciona* with genome, gene, phylogeny or
+transcriptome terms, entered 2026-10-20 to 2026-11-04 (one work on *Ciona* Hox2, not relevant); *Oikopleura*,
+appendicularian, larvacean or *Fritillaria*, entered since 2026-10-01 (ten works, all on the plant genus
+*Fritillaria*). Still no prior report of appendicularian selenoproteins. Metadata from PubMed.
+
+- Added: Grabherr et al. 2011 (Trinity, for the two Trinity transcriptomes); Blum et al. 2025 (InterPro),
+  Paysan-Lafosse et al. 2025 (Pfam) and UniProt Consortium 2025 (domain boundaries of the human proteins); Stašuk et
+  al. 2026 (Cold Spring Harb Perspect Biol, review of selenocysteine incorporation), cited with the SECIS–SECISBP2–EEFSEC
+  sentence of the Introduction; the Zenodo record of OKI2018_I69 (`Bliznina2026data`, version 4, 2026-10-19, title and
+  creator from the record page; it holds `Trinity.fasta.gz`, the OKI2018 transcriptome). Soo et al. 2026 completed
+  (issue, PMID, PMCID).
+- The tools of the old list "References to add" (Rfam, Infernal, SECISearch3, miniprot, minimap2, Nextflow, nf-core,
+  MultiQC) were already cited.
+- Operon genes merged into one gene model: a PubMed search (operon, trans-splicing or spliced leader, with gene model,
+  annotation, chimeric, fused or merged) gave five works, none a published example of such a misannotation (Calvelo et
+  al. 2023 describe a cestode locus processed either as one gene or as two genes of an operon). The [REF] placeholder
+  of the Introduction now points to the selenoprotein examples of the Results.
+- Species names in titles of references.bib written `\textit{Genus {species}}`, so that the epithet keeps its lower
+  case in title-case styles (pandoc and citeproc otherwise print "Oikopleura Dioica").
+- Also found, not cited: Peiter, Rother and Krzycki 2026 (Cold Spring Harb Perspect Biol, pyrrolysine and
+  selenocysteine in archaea).
+- Still open: SelenoDB 2.0 (Romagné et al. 2014, `Romagne2014`) is in references.bib but not cited; the manuscript notes
+  say it was used for the chordate comparison, which the analysis code does not record. Eighteen entries of
+  references.bib are not cited yet (works kept for the Discussion).

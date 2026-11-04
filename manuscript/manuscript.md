@@ -18,7 +18,7 @@ which have lost selenoprotein genes or replaced their selenocysteine by cysteine
 @Tico2026review; @Tico2026vertebrates]. Selenocysteine is inserted by a dedicated machinery. In eukaryotes, a stem–loop
 structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS) element,
 is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific elongation factor eEFSec
-(EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014]. Selenocysteine is
+(EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014; @Stasuk2026]. Selenocysteine is
 synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to
 selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS), using selenophosphate made by
 selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. SEPHS2 is itself a selenoprotein in vertebrates and many other animals
@@ -79,7 +79,8 @@ with its SECIS element [@Mariotti2015]. <!-- TODO: confirm by a full-text screen
 Secmarker, Baclaocos 2019, Trenz 2021, Esposito 2021). -->
 
 *O. dioica* adds difficulties to the annotation of these genes. Like other tunicates, it transcribes many genes as
-operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; @Satou2006]; annotation pipelines can merge the genes of an operon into a single gene model [REF: example]. In
+operons, whose transcripts are resolved into individual mRNAs by trans-splicing [@Ganot2004; @Satou2006]; annotation pipelines can merge the genes of an operon into a single gene model (selenoprotein examples in
+Results). In
 addition, part of its introns use non-canonical GA–AG splice sites, which gene predictors model poorly
 [@Denoeud2010]. Selenoprotein genes can also take unexpected forms: in ascidians, the selenophosphate synthetase gene
 produces an alternative isoform that does not carry selenocysteine [@Mariotti2015].
@@ -1434,9 +1435,9 @@ their RefSeq annotations. To test the settings of stage 2 on new assemblies of t
 *O. dioica*, we used the long-read assemblies KUM-M3-7f (Okinawa), AOM-5-5f (Osaka) and Bar2_p4 (Barcelona)
 [@Plessy2024], which have no public gene annotation.
 
-Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity transcriptome assembled
-by Bliznina et al. [-@Bliznina2021] (109,877 sequences; Zenodo, <https://doi.org/10.5281/zenodo.23472675>); for OSKA2016,
-the Trinity assembly of Wang et al. [-@Wang2015] (GEO GSE64421, 86,898 sequences); for OdB3, the cDNA collection of
+Transcript evidence came from one source per *O. dioica* assembly: for OKI2018, the Trinity [@Grabherr2011] transcriptome
+assembled by Bliznina et al. [-@Bliznina2021] (109,877 sequences; file `Trinity.fasta.gz` of the Zenodo record
+@Bliznina2026data); for OSKA2016, the Trinity assembly of Wang et al. [-@Wang2015] (GEO GSE64421, 86,898 sequences); for OdB3, the cDNA collection of
 the genome project (Genoscope, 207,355 sequences: 7,862 clone contigs and 199,493 single reads) [@Denoeud2010],
 also distributed by the now offline OikoBase. All files were retrieved by a script that checks their MD5 sums.
 
@@ -1697,8 +1698,8 @@ IQ-TREE, and path lengths were measured in the maximum-likelihood trees from the
 tunicate and vertebrate SEPHS.
 
 *Domain analysis* (`stage2/machinery_domains.py`). Each trimmed alignment was split in two at a domain boundary of
-the human protein, taken from the InterPro entries of the CATH-Gene3D, SUPERFAMILY and Pfam databases for the UniProt
-sequences: PSTK (Q8IV42), kinase domain (residues 1-263, P-loop NTPase domains at 20-88 and 140-263) and C-terminal
+the human protein, taken from the InterPro entries [@Blum2025] of the CATH-Gene3D, SUPERFAMILY and Pfam [@PaysanLafosse2025] databases
+for the UniProt sequences [@UniProt2025]: PSTK (Q8IV42), kinase domain (residues 1-263, P-loop NTPase domains at 20-88 and 140-263) and C-terminal
 region (264-348); SEPHS2 (Q99611), N-terminal half (1-238, with the AIR synthase-related N-terminal domain, PF00586)
 and C-terminal half (239-448, with the C-terminal domain, PF02769); SECISBP2 (Q96T21), region upstream of the L7Ae
 domain (1-631) and L7Ae domain (632-854, PF01248). The UniProt coordinates were carried to the human sequence of the
@@ -2137,7 +2138,7 @@ The pipeline is available at <https://github.com/oist/LuscombeU_Selenoproteins_P
 stage 1). The analysis, from data download to figures, is at <https://github.com/oist/LuscombeU_Oikopleura_Selenoproteins>;
 its history records the rounds of the loop and the successive versions of this manuscript (Methods, "Use of a large
 language model").
-The OKI2018 Trinity transcriptome is on Zenodo (<https://doi.org/10.5281/zenodo.23472675>).
+The OKI2018 Trinity transcriptome is on Zenodo [@Bliznina2026data].
 The settings recommended for appendicularian genomes (profiles, SECIS model, pipeline configuration, expected
 selenoproteome of *O. dioica*) are described in `stage2/recommended/README.md` of the analysis repository and will be
 deposited on Zenodo. [Other Zenodo DOIs to add: pipeline release, machinery profiles and SECIS models.]
@@ -2302,9 +2303,9 @@ and Data Analysis section of Core Facilities at OIST.
 
 <!--
 Notes for the next pieces
-- References to add: review of selenocysteine insertion; selenocysteine biosynthesis (PSTK, SecS); Rfam; Infernal; SECISearch3; miniprot;
-  minimap2; Nextflow; nf-core; MultiQC; reference-list entry for the Zenodo record of the OKI2018 transcriptome
-  (title and creators to copy from the record).
+- References: all [REF] placeholders filled (bibliography update of 2026-11-04, manuscript/overlap_check.md). No
+  published example of operon genes merged into one gene model was found in four searches; the Introduction points to
+  the selenoprotein examples of the Results (OSKA2016 SEPHS2 and SELENOW pair; genes in the 3' UTR of an upstream model).
 - SelenoDB 2.0 and the Selenoprofiles expectation table were used for the chordate comparison (Ciona gene lists;
   vertebrates); say so in the Methods.
 -->

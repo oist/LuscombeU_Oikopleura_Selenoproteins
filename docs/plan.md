@@ -2252,3 +2252,8 @@ no earlier step waits for them.
   insertion absent from Bar2_p4), SEPHS paragraph, Methods (extra anchors, other-individual proteins), Table MACHINERY.
   Still to do: the trees with the new SEPHS_b proteins (next machinery-phylogeny run), OSKA2016 SEPSECS read-through
   test, the OdB3 EEFSEC insertion (ends, copies), EEFSEC of the other species (O. albicans gaps).
+- Literature, fourth round (2026-11-04; PubMed only, done in the session, no OpenAlex run): no new work on
+  appendicularian selenoproteins since round 3. Seven entries added or completed in references.bib (Trinity, InterPro,
+  Pfam, UniProt, Stašuk et al. 2026 review, Zenodo record of OKI2018_I69 with the Trinity transcriptome, Soo et al.
+  2026); last [REF] placeholder replaced by a pointer to the Results; species names in titles protected from title
+  case. Details: manuscript/overlap_check.md. Open: SelenoDB 2.0 use (cite or drop), uncited entries for the Discussion.
