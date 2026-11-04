@@ -340,6 +340,14 @@ def model_from_chain(blocks, genome, codon0, strand, source, kind, cds_only=Fals
     return m
 
 
+def chain_anchor(blocks, genome, strand, codon0):
+    """Lowest 0-based coordinate of the codon of an exon chain nearest to codon0, codons counted from the first base
+    of the chain on the gene strand, among those whose three bases are contiguous in the genome; None if none."""
+    _, pos = spliced(genome, normalise_blocks(blocks, genome, strand), strand)
+    codons = [min(pos[k:k + 3]) for k in range(0, len(pos) - 2, 3) if max(pos[k:k + 3]) - min(pos[k:k + 3]) == 2]
+    return min(codons, key=lambda c: abs(c - codon0)) if codons else None
+
+
 def transcript_model(aln, tx, genome, codon0, strand):
     """Frame of the TGA read in the transcript sequence, or None when the transcript does not hold the codon as TGA
     in an aligned exon. aln carries the CIGAR after junction placement."""
@@ -880,7 +888,9 @@ def main():
                     "the proteins of the other gold-standard assemblies, to the assembly and transcript proteins where "
                     "they disagree by indels")
     ap.add_argument("--overrides", default="", help="curator's exon chains (genome, gene, exons as 1-based start-end of "
-                    "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates")
+                    "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates; "
+                    "with --anchor sense, a chain that splices out the anchor codon is read from the codon of the chain "
+                    "nearest to it, which the table then reports")
     a = ap.parse_args()
     global SEC
     SEC = a.anchor == "sec"
@@ -1081,6 +1091,14 @@ def main():
             if ov:   # the curator's exon chain replaces the choice among the candidates
                 blocks = [(int(x) - 1, int(y)) for x, y in (b.split("-") for b in ov["exons"].split(";"))]
                 m = model_from_chain(blocks, gs, codon0, strand, "override", "curator", cds_only=True)
+                if (not m or not m["cds"]) and not SEC:
+                    # the chain splices out the sense anchor (a prediction that read an intron as coding): anchor
+                    # on the codon of the chain nearest to it, in the frame of the chain's first base (a chain of
+                    # coding exons from the start codon), and report that codon
+                    alt = chain_anchor(blocks, gs, strand, codon0)
+                    if alt is not None:
+                        m = model_from_chain(blocks, gs, alt, strand, "override", "curator", cds_only=True)
+                        if m and m["cds"]: codon0, r[cc] = alt, str(alt + 1)
                 if not m or not m["cds"]:
                     raise SystemExit(f"{g} {r['gene']}: the curator's exon chain does not hold the anchor codon in a frame")
                 m.update(ctx=True, other_gene_mrna=False, contradicted=False, unsupported_sites=0, moved="-",

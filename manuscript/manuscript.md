@@ -349,9 +349,20 @@ splices the intron uses the same junctions, and assemblies of other individuals 
 section). In OKI2018 SEPHS_b, the unusual intron comes with a 19-nucleotide exon and with 13 bases of the transcripts
 that are missing from the assembly, whereas the assembly of another individual of the same species (KUM-M3-7f) has
 canonical introns there; the protein differs from that of KUM-M3-7f at only nine scattered residues, so that only the
-local exon chain, not the protein, carries the assembly error. In OdB3 EEFSEC, the unusual intron is a 9-kb insertion
-inside an exon that is continuous in OKI2018, OSKA2016 and in another assembly of the same species (Bar2_p4), and that
-the ESTs splice out. The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
+local exon chain, not the protein, carries the assembly error. In OdB3 EEFSEC, the unusual intron (8,982 nucleotides)
+is an insertion inside an exon that is continuous in OKI2018, OSKA2016 and in another assembly of the same species
+(Bar2_p4): a long terminal repeat (LTR) retrotransposon of 8,977 nucleotides, whose two LTRs of 184 nucleotides are
+identical, flanked by a duplication of five bases of the exon (GATAA), which gives the intron its equivalent placements;
+its longest open reading frame (1,244 codons) has a reverse transcriptase motif (YLDD) followed by an integrase-like
+HHCC motif. The EST that joins the two exons can come from an allele without the insertion as well as from a
+transcript that splices it out; the protein is the same. Identical LTRs point to a recent insertion; the OdB3 assembly
+holds another copy over 92% of its length (99.7% identity), two partial copies at contig ends (99.6 and 98.8%) and
+fragments at 18 loci (64 to 94%), Bar2_p4 a complete copy at 97.0% identity on its Y-specific region (sequence YSR),
+and OKI2018 none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In SEPSECS,
+the OSKA2016 model read a 48-nucleotide intron as coding, and the OSKA2016 and OdB3 models took splice sites inside
+another intron (9 and 30 nucleotides read as coding), at two introns that the OKI2018 transcripts splice; AOM-5-5f and Bar2_p4 have the
+same splice sites as OSKA2016 and OdB3, and the curator set the exon chains that splice these introns at the
+homologous sites (480 and 482 residues). The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot); all have start and stop codons, but five lack 47 to 239 N-terminal residues of the OKI2018 protein (the
@@ -1545,7 +1556,8 @@ of the other assemblies, keeping the candidates within 5% of the best score, the
 models; the second pass also took as candidates the protein-to-genome alignments of these proteins (miniprot [@Li2023],
 `curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
 chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
-*O. albicans* PSTK), and the model was read on the genome along that chain. Where the best transcript and the assembly
+*O. albicans* PSTK, OSKA2016 and OdB3 SEPSECS), and the model was read on the genome along that chain, from the codon of
+the chain nearest to the anchor when the chain spliced the anchor out. Where the best transcript and the assembly
 disagreed by indels in the coding sequence, the protein, from the assembly or from the transcript, was the one closer
 to the same protein in the other assemblies, as for the selenoprotein genes; these included the assemblies of other
 individuals of the three species (KUM-M3-7f, AOM-5-5f, Bar2_p4), in which the gold-standard protein of the same species
@@ -1577,6 +1589,12 @@ first and last 25 nucleotides (RNAduplex; ViennaRNA 2.7.2 [@Lorenz2011]), each c
 intron that keep its dinucleotide composition [@Altschul1985] (z-scores), and counted its copies elsewhere in its genome
 (BLASTN, legacy BLAST 2.2.26, E at most 10^-5^, hits of at least 40 nucleotides outside the intron, loci closer than 1
 kb merged).
+The 9-kb intron of OdB3 EEFSEC was compared with the same locus in Bar2_p4 (`make eefsec-insertion`,
+`curation/insertion.py`): exact matches extended from the two flanks into the intron and into the locus without it
+delimit the insertion and the bases duplicated at its two ends; its terminal repeats were found by aligning its first
+and last parts (BLASTN), its open reading frames of at least 150 codons were searched for the catalytic motif of
+reverse transcriptases (YXDD) and an HHCC zinc-binding motif, and its copies were counted in the six *O. dioica*
+assemblies (BLASTN, E at most 10^-20^, hits closer than 1 kb on the same strand merged).
 
 ## Appendicularian profiles of the selenocysteine machinery
 

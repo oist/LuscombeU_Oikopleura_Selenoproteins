@@ -2263,3 +2263,27 @@ no earlier step waits for them.
   duplications); topic searches since 2015: Harpellales selenocysteine, Kickxellomycotina selenoprotein, PSTK
   long-branch attraction, selenophosphate synthetase duplication, eEFSec evolution, TRNAU1AP/SECp43 loss. Script to
   write on request (openalex_round4.sh, outside the repository, as for round 3).
+- Machinery review continued (2026-11-04, local):
+  - SEPSECS: exonerate of the OKI2018 and OdB3 proteins on the OSKA2016 and AOM-5-5f regions splices a 48-nt GT-AG
+    intron (identical in the two assemblies) at the position of the transcript-supported 68-nt GA-AG intron of OKI2018
+    and of the 48-nt intron of OdB3: the OSKA2016 model (projection of OKI2018) read it as 16 codons. A second
+    difference at OKI2018 residue 338 (GC-AG intron of 93 nt in the OKI2018 transcript): OdB3 (and Bar2_p4) and
+    OSKA2016 have a GA donor at the homologous position (GenBank CBY09053.1 uses it in OdB3), but the gold models used
+    a GT donor 30 nt (OdB3) or 6 nt (OSKA2016, with a TAG acceptor 3 nt upstream of the AAG of OdB3) downstream: 10 and
+    3 residues absent from the other assemblies. -> curation/machinery_overrides.tsv: OSKA2016 (480 residues) and
+    OdB3 (482 residues) SEPSECS chains; both translated and checked against model_from_chain on the regions. The OSKA2016
+    anchor codon (858284) lies in the spliced intron: gold_standard.py now re-anchors a curator's chain on its nearest
+    codon (858287), which the table reports (machinery only, --anchor sense).
+  - OdB3 EEFSEC 9-kb intron = LTR retrotransposon insertion (curation/insertion.py, make eefsec-insertion; local run on
+    the NCBI copies of OdB3 and OKI2018): FN653026.1:876894-885870 (8,977 nt) between a duplicated GATAA (empty site in
+    Bar2_p4 Chr1), identical 184-nt LTRs, 8-nt terminal inverted repeat (TATAGAGT), four ORFs of at least 150 codons, the
+    longest (1,244) with YLDD (RT) at 447 then HHCC at 845 (order of Ty3/gypsy and BEL/Pao pol; not classified further:
+    Dfam or Pfam profiles would). Copies: OdB3 FN653017.1 (92% of the length, 99.7%, missing 880 nt after the 5' LTR),
+    two partial copies at contig starts (FN653880.1, FN653296.1), fragments at 18 loci (64-94%); Bar2_p4 YSR complete at
+    97.0%; OKI2018 none at E 1e-20. Polymorphic in the North Atlantic species (absent from Bar2_p4 at EEFSEC); the EST
+    KT0AAA4YE16NM1 may come from an allele without it. The intron stays in the gold standard (the protein is the same)
+    and in the intron-content table (5 repeated bases = the TSD); the GA-TA "intron" is not a splice-site class
+    observation. Manuscript: gold-standard paragraph and Methods updated.
+  - Needs on Deigo: make gold-standard-machinery machinery-regions region-proteins eefsec-insertion intron-content
+    machinery-reannotation-inputs, then locally machinery-table, machinery-reannotation (SEPSECS panel) and the counts of
+    the gold-standard paragraph (models with a new exon chain).

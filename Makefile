@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-introns pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -429,6 +429,14 @@ pstk-intron-columns:
 # the genome (legacy BLASTN), with the PSTK introns marked (minutes to an hour; formats BLAST databases in work/)
 intron-content:
 	python3 curation/intron_content.py --genomes OKI OSKA OdB3 Oalb --focus PSTK --out results/tables/intron_content.tsv
+
+# The 9-kb intron of OdB3 EEFSEC as an insertion: empty site in Bar2_p4 (results/gene_regions/EEFSEC, make
+# machinery-regions), target-site duplication, terminal repeats, reading frames, copies in the six O. dioica
+# assemblies (BLAST databases shared with make intron-content)
+eefsec-insertion:
+	python3 curation/insertion.py --genome OdB3 --intron FN653026.1:876889-885870:+ --empty results/gene_regions/EEFSEC/Bar2.fa \
+	  --copies-in OdB3 Bar2 OKI KUM OSKA AOM \
+	  --out results/tables/eefsec_insertion.tsv --copies results/tables/eefsec_insertion_copies.tsv
 
 # Reannotation panels of the machinery genes (one gene per figure, aligned on the start codon of the gold-standard
 # model, no SECIS), from the machinery gold standard and figures/inputs (figures/machinery_reannotation_inputs.sh,
