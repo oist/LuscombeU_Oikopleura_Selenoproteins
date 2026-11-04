@@ -825,7 +825,8 @@ than that of *Ciona intestinalis* (320 residues), and they are distant from both
 34 and 37% similar residues with them, against 77 and 93% with the OKI2018 and OSKA2016 proteins.
 
 PSTK is an internal gene of an operon in the three assemblies. Its transcripts start with the spliced leader in OKI2018
-and OSKA2016 (the 5′ ends of the OdB3 ESTs are masked) and all end 3 to 11 nucleotides after the stop codon. The start
+and OSKA2016, and so do three OdB3 ESTs in GenBank (FP752340, FP831546, FP830122; the 5′ ends are masked in the EST
+collection used for the models), and all end 3 to 11 nucleotides after the stop codon. The start
 codon of the next gene on the same strand begins 34 to 48 nucleotides after the stop codon, one nucleotide after an AG
 acceptor, a candidate trans-splice site; the transcript ends lie 27 to 35 nucleotides before this acceptor, the spacing
 found between the polyadenylation site of a gene and the trans-splice site of the next gene of its operon (median 31
@@ -857,7 +858,12 @@ second class of *O. dioica* introns after GT-AG [@Soo2026], but only the GA-AG i
 G(non-T)/AG introns, an important minority in oikopleurid genomes that human cells do not splice [@Henriet2019]; TT-AG
 and AT-AG introns are minor classes of human introns (0.19 and 0.42% in the compilation shown by @Soo2026). The third
 intron is retained in two of the four OSKA2016 transcripts (63 nucleotides, with a stop codon in the frame of the
-protein) and in both OdB3 ESTs (58 nucleotides, which shift the frame). In OSKA2016 and OdB3, the first and last 25
+protein) and in three of the five OdB3 ESTs of GenBank (58 nucleotides, which shift the frame); the two others
+(FP831546, FP830122) splice it to an acceptor 108 nucleotides further, which removes in frame 36 codons
+(FVEMRTPAHLCKERNALRSHPVSDHSMAKIIENYE) that the OKI2018 and OSKA2016 transcripts keep (the GenBank model CBY23135.1 lacks
+them too). No OdB3 EST uses the acceptor of the model, which rests on the similarity to OKI2018 and OSKA2016. These two
+ESTs were not among the transcripts of the gold-standard script, which takes only those that hold the anchor codon
+of the model (here inside the 36 codons). In OSKA2016 and OdB3, the first and last 25
 nucleotides of the fourth intron can pair: the energy of their duplex is lower than in dinucleotide-shuffled introns (z
 = -5.5 and -5.8), the pairing that would bring the two splice sites together being among the eight strongest of the 257
 gold-standard introns of *O. dioica* scored; the OKI2018 intron, whose interior differs, has no such pairing (z = -0.8),

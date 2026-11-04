@@ -2327,3 +2327,13 @@ no earlier step waits for them.
   text. The z-scores moved with the added models because the shuffles used one generator for all introns:
   curation/intron_content.py now seeds them per intron (seed, genome, gene, intron); rerun make intron-content on
   Deigo, then update the z-scores of the PSTK section (flagged in a comment).
+- PSTK, OdB3 ESTs of GenBank (2026-11-04; Charles: TBLASTN of the OKI2018 PSTK against the EST division, five KT0AAA
+  ESTs; FASTA pasted). None is a KTI12: all five map to the OdB3 PSTK locus (FN653020.1:777153-778338; BLASTN and
+  minimap2 splice:hq here). FP752340 (and FP708548, FP798389) retain the 58-nt third intron; FP831546 and FP830122
+  splice it to an acceptor 108 nt further (166-nt GA-AG intron), removing in frame 36 codons conserved in OKI2018 and
+  OSKA2016 (as CBY23135.1 does); no EST uses the acceptor of the gold model. FP798389 maps to the same exons (and the
+  retained intron) at 82-85% identity in the coding part and 97% in the 3' UTR, with stop codons: a poor read or a
+  divergent allele, not another gene. FP752340, FP831546 and FP830122 start with the spliced leader. The two splicing
+  ESTs were left out by gold_standard.py because they do not hold the anchor codon (777746, inside the 108 nt): a
+  limit of the sense anchor for alternative isoforms (methods to mention if it matters elsewhere). Text of the PSTK
+  section updated.
