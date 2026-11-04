@@ -2220,7 +2220,12 @@ no earlier step waits for them.
   before the push (results are committed on Deigo while commits arrive from here). Amended the same day: git pull
   --no-rebase (a merge), not --rebase, which refuses to run when other files are modified by a job still running;
   --no-rebase is written out because git stops without it when the two branches have diverged and no pull.rebase
-  setting is configured.
+  setting is configured. Amended again (merge 6e181c6): git pull --no-rebase --no-edit, as without --no-edit git opens
+  an editor for the merge message and the pasted lines that follow the pull are typed into it (the message of 6e181c6
+  holds a line of the editor template; not rewritten, as main is shared).
+- Deigo commit 10a6d40 (enriched PSTK trees without the dolphin) was made while the job was still running: the
+  archaeal PMSF tree is an intermediate without supports, its .iqtree is missing, and the clade supports table is that
+  of 8cdefae (computed here from the trees with the dolphin). To commit when the job has finished.
 - Deigo results of make gold-standard-machinery (OdB3 PSTK UTRs 7 and 3 nt), machinery-regions and panel inputs (commit
   2179055, 2026-11-04). Panels of SBP2, SEPHS_b, SEPSECS, EEFSEC drawn. curation/region_proteins.py (make
   region-proteins, local): exonerate of the gold-standard protein on each lifted or miniprot region ->
