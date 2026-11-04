@@ -6,7 +6,8 @@ The long-branch summary (stage2/machinery_lba.py) records three clades per famil
 trees of a family: maximum likelihood (results/trees/<family>.treefile), C20 (results/trees/C20/), PMSF and site
 removal (results/trees/lba/), the tree without the outgroup long branches (lba/<family>.taxa), the PSTK tree with one
 leaf per appendicularian species (results/trees/pstk_one_leaf/), the PSTK tree without its outgroup
-(results/trees/lba_no_outgroup/, clades only, as it has no root), and the trees of the two parts of the alignment
+(results/trees/lba_no_outgroup/, clades only, as it has no root), the PSTK trees with more eukaryotic and with archaeal
+PSTK (results/trees/pstk_enriched*/, stage2/pstk_enrichment.py), and the trees of the two parts of the alignment
 (results/trees/domains/, selected model and PMSF). Trees missing on disk are skipped, and so are entries whose required leaves (for example the fungi, in the tree
 without them) are absent.
 Three kinds of entries:
@@ -56,6 +57,10 @@ ENTRIES = {
         ("appendicularians with Smittium and Zancudomyces", "clade", OR(T("Appendicularians"), R(FUNGI)), [R(FUNGI)]),
         ("appendicularians", "position", T("Appendicularians")),
         ("Smittium and Zancudomyces", "position", R(FUNGI)),
+        ("archaeal PSTK", "clade", T("Archaea")),
+        ("eukaryotic PSTK (all but the archaeal ones)", "clade", AND(NOT(T("outgroup")), NOT(T("Archaea"))), [T("Archaea")]),
+        ("appendicularians with the archaeal PSTK", "clade", OR(T("Appendicularians"), T("Archaea")), [T("Archaea")]),
+        ("archaeal PSTK", "position", T("Archaea")),
     ],
     "SEPHS2": [
         ("appendicularian selenocysteine SEPHS2", "clade", R(APP_SEC)),
@@ -89,6 +94,9 @@ def trees(fam, root):
     out += [(f"fastest {k} % of sites removed", f"{root}/lba/{fam}.slowfast{k}.treefile") for k in (10, 20, 30, 40)]
     out += [("without Smittium and Zancudomyces (machinery_lba.py --exclude)", f"{root}/lba/{fam}.taxa.treefile"),
             ("without the outgroup (make pstk-no-outgroup)", f"{root}/lba_no_outgroup/{fam}.taxa.treefile")]
+    out += [(f"{k} PSTK added (make pstk-enriched){m}", f"{root}/pstk_enriched{d}/{fam}{x}.treefile")
+            for k, d in (("eukaryotic", ""), ("eukaryotic and archaeal", "_archaea"))
+            for m, x in (("", ""), (", PMSF", ".pmsf"))]
     out += [("one leaf per species", f"{root}/{fam}_one_leaf/{fam}.treefile"),
             ("one leaf per species, C20", f"{root}/{fam}_one_leaf/C20/{fam}.treefile")]
     for p in sorted(os.listdir(f"{root}/domains")) if os.path.isdir(f"{root}/domains") else []:

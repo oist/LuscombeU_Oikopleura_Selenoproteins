@@ -2297,3 +2297,16 @@ no earlier step waits for them.
 - Convention (2026-11-04, Charles): the unit's six-stage RNA-seq is viewable in a public browser but not published in
   a peer-reviewed journal, and its raw reads may not be in the INSDC. The manuscript stays independent of it: browser
   screenshots (on request to Charles) serve only as a check of models built from public data, and are not cited.
+- PSTK tree with more eukaryotic and with archaeal PSTK (2026-11-04; Charles: BLASTP of ClusteredNR with the OKI2018
+  PSTK, all organisms / Eukaryota / Opisthokonta / Archaea, and a PSI-BLAST search; downloads in curation/pstk_blast,
+  searches.tsv). Why few eukaryotic hits in the unrestricted search: the 100 best clusters are prokaryotic P-loop
+  kinases aligned on the kinase half (56-72 bits); every animal PSTK scores less against the OKI2018 protein (local
+  BLASTP: Halocynthia 51, mosquitoes 47-48, vertebrates 33-46, human 33, C. robusta 28 bits), while the archaeal PSTK
+  score 58-65. stage2/pstk_enrichment.py (make pstk-enriched; selection in results/trees/pstk_enriched/selection.tsv):
+  eukaryotic PSTK by best hit among the tree sequences (PSTK vs KTI12, at least 50 bits), 200-450 residues, genera
+  absent from the tree, no vertebrates, one per genus (61 added: insects, oomycetes, diatoms, dinoflagellates, ciliate,
+  green algae, myriapod, crustacean, octopods, flatworm, nematode, Paramicrosporidium); archaeal PSTK by their NCBI name
+  (7, Methanococcales and Methanopyrus; the characterised M. jannaschii PSTK has a KTI12 as best hit, so the best-hit
+  rule cannot classify archaeal sequences). The PSI-BLAST search also drifted to SelB/eEFSec GTPases of archaea (left
+  out by the name rule). Trees aside from the main one (agreed with Charles): pstk_enriched (eukaryotes added) and
+  pstk_enriched_archaea (and archaea), KTI12 root, ML + PMSF; supports in make machinery-clade-supports.
