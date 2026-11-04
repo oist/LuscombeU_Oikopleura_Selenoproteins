@@ -2348,3 +2348,15 @@ no earlier step waits for them.
   Paramicrosporidium (73, 61), the pair sister to the other eukaryotic PSTK (83, 87); Harpellales elsewhere. The higher
   BLAST scores of the archaeal PSTK do not place the appendicularian gene near them: no sign of transfer. Proposed for
   the text: two sentences in the PSTK tree paragraph and Methods item (6), after Charles's agreement.
+- PSTK enriched trees, checks of the non-appendicularian branches (2026-11-04): (1) Aethalodelphis obliquidens
+  (XP_026968655.1) is a dolphin (Pacific white-sided dolphin; its PSTK is 81% identical to the primate proteins and
+  groups with the mammals, 100%), filed under "Other insects" by mistake in config/taxon_groups.tsv: corrected to
+  Mammals, so that make pstk-enriched now leaves it out (60 eukaryotic sequences); the trees must be rerun on Deigo and
+  the numbers of the PSTK paragraph confirmed (flagged in a comment). (2) The termites and cockroach (Zootermopsis,
+  Cryptotermes, Periplaneta) group with Trichinella (77, 84, 93, 90): 30% identity, as to human (29%), branches of
+  median length: unexplained, outside the question. (3) Archaeal PSTK paraphyletic: Methanococcales (100) lower,
+  Methanopyrus next to the eukaryotic PSTK (86, 90). (4) Vertebrates a clade with the dolphin (100); insects not a
+  clade because of the dolphin and the Blattodea; Diptera split into the Nematocera (mosquitoes, sand flies) and the
+  rest; Moneuplotes (ciliate) with the stramenopiles (77). Figure PSTK D now shows the tree with eukaryotes and archaea
+  added (PMSF); simplified_tree.py and machinery_clade_supports.py root on the middle of the outgroup stem (Bio.Phylo
+  made the base of a clade outgroup a trifurcating root, which split KTI12 into two tips; supports unchanged).

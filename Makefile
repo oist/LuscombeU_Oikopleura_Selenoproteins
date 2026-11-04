@@ -461,7 +461,7 @@ machinery-reannotation:
 	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; C. intestinalis: RefSeq" \
 	  $$([ -f figures/inputs/intron_placements_$$g.tsv ] && echo --side-panel figures/inputs/intron_placements_$$g.tsv \
 	  --side-names KUM=KUM-M3-7f AOM=AOM-5-5f Bar2=Bar2_p4) \
-	  $$([ $$g = PSTK ] && echo --tree-panel results/trees/lba/pstk.pmsf.treefile --tree-groups results/trees/pstk.groups.tsv); done
+	  $$([ $$g = PSTK ] && echo --tree-panel results/trees/pstk_enriched_archaea/pstk.pmsf.treefile --tree-groups results/trees/pstk_enriched_archaea/pstk.groups.tsv); done
 
 # Table MACHINERY of the manuscript: census, reciprocal best hits, trees and AU tests (seconds; reads results/ only)
 machinery-table:

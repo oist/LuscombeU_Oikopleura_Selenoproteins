@@ -128,7 +128,11 @@ def rooted(p, fam, tax):
     elif fam == "SEPHS2": out = [x for x in leaves if tax[x.name] in ("Bacteria", "Archaea")]
     else: out = [x for x in leaves if tax[x.name] not in ANIMALS | {"Appendicularians", "Other tunicates", "unclassified",
                                                                        "Choanoflagellates", "Other holozoans"}]
-    if out: t.root_with_outgroup(out if t.is_monophyletic(out) else out[0])
+    if out:   # on an ingroup leaf first, so that a monophyletic outgroup is a clade
+        t.root_with_outgroup(next(x for x in t.get_terminals() if x not in out))
+        m = t.is_monophyletic(out)   # a clade: root on the middle of its stem (Bio.Phylo would make its base a trifurcation)
+        if m: t.root_with_outgroup(m, outgroup_branch_length=(m.branch_length or 0) / 2)
+        else: t.root_with_outgroup(out[0])
     return t
 
 

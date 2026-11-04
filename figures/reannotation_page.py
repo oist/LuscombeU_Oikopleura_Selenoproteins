@@ -704,7 +704,9 @@ def tree_panel(fig, x0, top, width, path, groups, title, taxa="config/taxon_grou
     n, row = len(st.tips_of(root)), 2.6
     legend = wrap("Nodes supported by less than 50% collapsed; ultrafast bootstrap supports of 70% or more shown. Wedges: "
                   "clades of sequences of one group, from their ancestor to the deepest sequence; \u201cunresolved\u201d: "
-                  "sequences of the other groups in one polytomy, drawn as one tip. Full tree: Figure TREES.", width - 1, 4.5)
+                  "sequences of the other groups in one polytomy, drawn as one tip." +
+                  (" Full tree: Figure TREES." if "enriched" not in path else
+                   " Sequences added to the tree of Figure TREES: see Methods."), width - 1, 4.5)
     h = 5.0 + n * row + 4.0 + len(legend) * 2.0 + 1.0
     ax = fig.add_axes([x0 / PAGE_W, (top - h) / PAGE_H, width / PAGE_W, h / PAGE_H])
     ax.set_xlim(0, width); ax.set_ylim(-h, 0); ax.axis("off")
@@ -797,8 +799,11 @@ def main():
                 xc = LEFT + NC * col_w + NC * COL_GAP
                 c_bottom = side_panel(fig, xc, top + 1.0, a.side_width, read_side(a.side_panel), names, a.side_phase)
                 if a.tree_panel:
-                    title = a.tree_title or (f"Simplified tree of {labels.get(d['gene'], d['gene'])}" +
-                                             (" (LG+C60+F+G, PMSF)" if ".pmsf." in a.tree_panel else ""))
+                    added = (", more eukaryotes and archaea" if "pstk_enriched_archaea" in a.tree_panel else
+                             ", more eukaryotes" if "pstk_enriched" in a.tree_panel else "")
+                    title = a.tree_title or (f"Simplified tree of {labels.get(d['gene'], d['gene'])}{added}" +
+                                             ((" (PMSF)" if added else " (LG+C60+F+G, PMSF)") if ".pmsf." in a.tree_panel
+                                              else ""))
                     c_bottom = tree_panel(fig, xc, c_bottom - 4.0, a.side_width, a.tree_panel, a.tree_groups, title)
                 row_bottom = min(row_bottom, c_bottom - 1.0)
                 side_ruler = (xc - COL_GAP / 2, row_top, row_bottom)

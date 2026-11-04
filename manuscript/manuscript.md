@@ -930,7 +930,16 @@ after site removal, and 95% without the PSTK of the insect-gut fungi *Smittium* 
 [@Mariotti2019], which also lie on long branches and branched among the animal proteins, at unresolved positions). With one leaf per appendicularian species (the OdB3 model for
 *O. dioica*, and without the *O. vanhoeffeni* pseudogene locus), so that related leaves do not weigh on the topology,
 the appendicularian clade kept this position (94%, 92% under C20). Without KTI12, the appendicularian clade grouped
-with the PSTK of *Smittium* and *Zancudomyces* (72%), the other long branch of the tree. A long branch next to the
+with the PSTK of *Smittium* and *Zancudomyces* (72%), the other long branch of the tree. With 60 more eukaryotic PSTK,
+of genera absent from the tree whose PSTK were the closest to the appendicularian proteins in searches of the NCBI
+protein database (insects, oomycetes, diatoms, dinoflagellates, green algae and other lineages), the appendicularian
+clade branched again as the sister of all other PSTK in the maximum-likelihood tree (78%) and, with PMSF, grouped with
+the PSTK of the nematode *Gnathostoma spinigerum* and of *Paramicrosporidium saccamoebae*, an endoparasite of amoebae
+related to fungi (78%), then with the Harpellales (68%): the longest branches of that tree after its own. With seven
+archaeal PSTK also added, the eukaryotic PSTK, the appendicularian ones included, formed a clade (87%, 94% with PMSF),
+within which the appendicularian clade grouped again with *Gnathostoma* and *Paramicrosporidium* (73%, 61%; Figure
+PSTK D). <!-- Supports of the run a680eb3, whose eukaryotic set also held a dolphin PSTK (Aethalodelphis, filed under
+the insects by mistake; it grouped with the mammals, 100%): to confirm after the rerun of make pstk-enriched. --> A long branch next to the
 outgroup, or next to another long branch, is the position expected from long-branch attraction [@Bergsten2005], and fast-evolving lineages such as nematodes and
 insects branch nearer the base than expected in other trees of the selenocysteine machinery [@Mariotti2019]; a tree grouping the appendicularians with the other
 tunicates was not rejected (AU test, p = 0.088). The position of the appendicularian PSTK within the family is
@@ -959,10 +968,11 @@ exons carried from the gold standard through a minimap2 alignment of the regions
 ends, across which the intron can be moved without changing the spliced sequence; ticks, the possible intron ends, whose
 dinucleotides are listed on the right from left to right; triangle, the placement named by the gold-standard script;
 blue, the placement on an AG acceptor in phase 1. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
-related kinase KTI12 under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast
-bootstrap replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences
-of one group drawn as wedges, and the sequences of the other groups that branch from one polytomy drawn as one tip;
-the full tree is in Figure TREES.
+related kinase KTI12, with the eukaryotic and archaeal PSTK added to the tree of Figure TREES (Methods, long-branch
+analysis 6), under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast bootstrap
+replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences of one
+group drawn as wedges, tips of one or two sequences named by their genera, and the sequences of the other groups that
+branch from one polytomy drawn as one tip.
 
 ### SECp43
 
@@ -1707,7 +1717,14 @@ bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 4
 maximum-likelihood tree, each reduced alignment being analysed as above; (3) for PSTK, without the long-branched
 proteins of the insect-gut fungi *Smittium* and *Zancudomyces*; (4) for PSTK, with one sequence per appendicularian
 species (the OdB3 model for *O. dioica*, without the *O. vanhoeffeni* pseudogene locus), under the selected model and
-under C20; and (5) for PSTK, without the KTI12 outgroup (unrooted). In each tree, we read as unrooted bipartitions the
+under C20; (5) for PSTK, without the KTI12 outgroup (unrooted); and (6) for PSTK, with more eukaryotic and with
+archaeal PSTK (`stage2/pstk_enrichment.py`, `make pstk-enriched`): from the cluster representatives found by BLASTP
+searches of ClusteredNR with the OKI2018 protein (all organisms, Eukaryota, Opisthokonta and Archaea) and by a
+PSI-BLAST search (`curation/pstk_blast`), the eukaryotic sequences whose best BLASTP hit among the sequences of the
+tree was a PSTK rather than a KTI12 (at least 50 bits), of 200 to 450 residues and not named partial, from genera
+absent from the tree and not vertebrates, one per genus (the longest), and the archaeal sequences named PSTK by NCBI,
+one per genus (archaeal PSTK are about as close to KTI12 as to the eukaryotic PSTK), were added to the sequences of the
+tree, which was rebuilt as above, under the selected model and with PMSF, rooted on KTI12. In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
 (for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.

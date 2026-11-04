@@ -3,8 +3,9 @@
 
 The tree is rooted as in figures/phylogeny_collapsed.py (supports kept on their bipartitions), nodes supported by less
 than --min-support become polytomies, and each leaf gets a display group: the appendicularian species (O. dioica, with
-its assemblies counted), the other tunicates, the vertebrates, the outgroup (KTI12 for PSTK), and "other" for all other
-sequences (other animals, fungi, stramenopiles). Clades whose leaves all share a display group are drawn as one tip
+its assemblies counted), the other tunicates, the vertebrates, the outgroup (KTI12 for PSTK), the archaea, and "other" for
+all other sequences (other animals, fungi, stramenopiles, alveolates, green algae); a tip of one or two sequences of
+the groups "other" or "archaea" is named by their genera. Clades whose leaves all share a display group are drawn as one tip
 with the number of sequences; tips of the group "other" that are siblings in the same polytomy are drawn as one tip
 ("unresolved"), since their branching order is not supported. The tree is drawn as a phylogram: a collapsed tip is a
 wedge from its ancestor to the deepest of its sequences. Supports of at least --show-support are printed.
@@ -22,13 +23,14 @@ VERTEBRATES = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes"
 SPECIES = [(r"^(OKI|OSKA|OdB3)_", "O. dioica"), (r"^Olon_", "O. longicauda"), (r"^Oalb_", "O. albicans"),
            (r"^Ovan_", "O. vanhoeffeni"), (r"^Bsty_", "B. stygius"), (r"^Mery_", "M. erythrocephalus"),
            (r"^Fbor_", "F. borealis")]
-COLOURS = {"appendicularian": "#c0392b", "other tunicates": "#e67e22", "vertebrates": "#2471a3",
+COLOURS = {"appendicularian": "#c0392b", "other tunicates": "#e67e22", "vertebrates": "#2471a3", "archaea": "#5d6d7e",
            "outgroup": "#7f8c8d", "other": "#2c3e50"}
 
 
 def display_group(name, fine):
     """(display group, label) of a leaf."""
     if fine == "outgroup": return "outgroup", None
+    if fine == "Archaea": return "archaea", None
     if fine == "Appendicularians":
         sp = next((s for pat, s in SPECIES if re.search(pat, name)), "appendicularian")
         return "appendicularian", sp
@@ -39,6 +41,8 @@ def display_group(name, fine):
 
 ASSEMBLY = {"OKI": "OKI2018", "OSKA": "OSKA2016", "OdB3": "OdB3"}
 SINGULAR = {"fungi": "fungus", "amphioxus": "amphioxus"}
+NON_ANIMALS = {"Fungi": "fungi", "Stramenopiles": "stramenopiles", "Alveolates": "alveolates",
+               "Green algae": "green algae", "Archaea": "archaea"}
 PLURAL = {"Flies": "insects", "Mosquitoes": "insects", "Other insects": "insects", "Stramenopiles": "stramenopiles",
           "Cephalochordates": "amphioxus", "Brachiopods": "brachiopods", "Flatworms": "flatworms"}
 
@@ -63,7 +67,11 @@ def simplify(treefile, groups_file, taxa_file, min_support=50, outgroup_label="K
     out = [c for c in tree.get_terminals() if fine[c.name] == "outgroup"]
 
     def reroot(t):
-        if out: t.root_with_outgroup(out if t.is_monophyletic(out) else out[0])
+        if out:   # on an ingroup leaf first, so that a monophyletic outgroup is a clade
+            t.root_with_outgroup(next(x for x in t.get_terminals() if x not in out))
+            m = t.is_monophyletic(out)   # a clade: root on the middle of its stem (Bio.Phylo would make its base a trifurcation)
+            if m: t.root_with_outgroup(m, outgroup_branch_length=(m.branch_length or 0) / 2)
+            else: t.root_with_outgroup(out[0])
         else: t.root_at_midpoint()
     reroot_keeping_supports(tree, reroot)
     for c in list(tree.find_clades(order="postorder")):
@@ -89,15 +97,19 @@ def simplify(treefile, groups_file, taxa_file, min_support=50, outgroup_label="K
         if g == "vertebrates":
             human = sorted({re.sub(r"^Human_([A-Za-z0-9]+)_.*", r"\1", x) for x in leaves if x.startswith("Human_")})
             return "", f"vertebrates ({n})" + (f", with human {', '.join(human)}" if human else "")
-        if g == "other":
+        if g in ("other", "archaea"):
             count = collections.Counter(PLURAL.get(fine[x], fine[x].lower()) for x in leaves)
             names = [SINGULAR.get(k_, k_[:-1] if k_.endswith("s") else k_) if count[k_] == 1 else k_ for k_ in count]
             if len(names) > 3:
-                kinds = ["other animals" if any(fine[x] not in ("Fungi", "Stramenopiles") for x in leaves) else None,
-                         "fungi" if any(fine[x] == "Fungi" for x in leaves) else None,
-                         "stramenopiles" if any(fine[x] == "Stramenopiles" for x in leaves) else None]
+                kinds = ["other animals" if any(fine[x] not in NON_ANIMALS for x in leaves) else None] + \
+                        [lab for grp, lab in NON_ANIMALS.items() if any(fine[x] == grp for x in leaves)]
                 names = [k_ for k_ in kinds if k_]
             text = " and ".join([", ".join(names[:-1]), names[-1]]) if len(names) > 1 else names[0]
+            if n <= 2:   # one or two sequences: their genera, then their groups in the same order
+                by = sorted({(re.split(r"[_.]", x)[0], PLURAL.get(fine[x], fine[x].lower())) for x in leaves})
+                kinds = [SINGULAR.get(k_, k_[:-1] if k_.endswith("s") else k_) for _, k_ in by]
+                if len(by) > 1 and len({k_ for _, k_ in by}) == 1: kinds = [by[0][1]]   # two of one group: plural
+                return ", ".join(g_ for g_, _ in by), f" ({', '.join(kinds)})"
             return "", f"{text} ({n})"
         return "", f"{g} ({n})"
 
