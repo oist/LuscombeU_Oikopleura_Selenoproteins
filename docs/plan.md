@@ -2293,5 +2293,7 @@ no earlier step waits for them.
   1940962-1941023; positions read on the screenshot scale agree within a few nt, so the browser XSR coordinates match
   NC_137294.1 here), coverage ends near the 3' end of the model (1941206) and the next gene's coverage starts about
   20 nt later (operon, short 3' UTR). No coverage visible in the third intron (retained in OSKA2016 transcripts and OdB3
-  ESTs). Splice dinucleotides are not tested by coverage (equivalent placements). Not in the manuscript: the data set
-  and whether it is public are to be confirmed with Charles.
+  ESTs). Splice dinucleotides are not tested by coverage (equivalent placements). Not in the manuscript.
+- Convention (2026-11-04, Charles): the unit's six-stage RNA-seq is viewable in a public browser but not published in
+  a peer-reviewed journal, and its raw reads may not be in the INSDC. The manuscript stays independent of it: browser
+  screenshots (on request to Charles) serve only as a check of models built from public data, and are not cited.
