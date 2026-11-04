@@ -2216,8 +2216,11 @@ no earlier step waits for them.
   Harpellales PSTK (72%; then with the other tunicates, flatworm and oomycete, 28%); other tunicates 97%. Two long
   branches together: the position stays unresolved -> sentence in the PSTK paragraph, Methods (5). Possible next test:
   a heterotachy model (IQ-TREE GHOST, +H) for lineage-specific rates.
-- Convention for the Deigo command blocks (2026-11-04, Charles): every block that ends with git push has git pull
-  --rebase right before the push (results are committed on Deigo while commits arrive from here).
+- Convention for the Deigo command blocks (2026-11-04, Charles): every block that ends with git push has a pull right
+  before the push (results are committed on Deigo while commits arrive from here). Amended the same day: git pull
+  --no-rebase (a merge), not --rebase, which refuses to run when other files are modified by a job still running;
+  --no-rebase is written out because git stops without it when the two branches have diverged and no pull.rebase
+  setting is configured.
 - Deigo results of make gold-standard-machinery (OdB3 PSTK UTRs 7 and 3 nt), machinery-regions and panel inputs (commit
   2179055, 2026-11-04). Panels of SBP2, SEPHS_b, SEPSECS, EEFSEC drawn. curation/region_proteins.py (make
   region-proteins, local): exonerate of the gold-standard protein on each lifted or miniprot region ->
