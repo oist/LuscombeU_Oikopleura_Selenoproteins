@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions pstk-regions pstk-one-leaf pstk-no-outgroup pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-introns pstk-intron-columns intron-content machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -190,7 +190,8 @@ MACHINERY_GOLD_GENOMES = OKI OSKA OdB3 Olon Oalb Ovan
 MACHINERY_WORK = work/stage2/gold_standard_machinery
 gold-standard-machinery:
 	python3 curation/machinery_anchors.py --gtf-dir $(SELENO_PREDICTIONS) --genomes $(MACHINERY_GOLD_GENOMES) \
-	  --human data/genomes/Hsap --references curation/machinery_references.faa --out curation/machinery_genes.tsv
+	  --human data/genomes/Hsap --references curation/machinery_references.faa --extra curation/machinery_extra_anchors.tsv \
+	  --out curation/machinery_genes.tsv
 	python3 curation/gold_standard.py --anchor sense --genomes OKI OSKA OdB3 --baseline curation/machinery_genes.tsv \
 	  --stage1 $(SELENO_PREDICTIONS) --references curation/machinery_references.faa --overrides curation/machinery_overrides.tsv \
 	  --out $(MACHINERY_WORK)/first_pass --table $(MACHINERY_WORK)/first_pass.tsv > /dev/null
@@ -199,7 +200,8 @@ gold-standard-machinery:
 	python3 curation/gold_standard.py --anchor sense --genomes $(MACHINERY_GOLD_GENOMES) --baseline curation/machinery_genes.tsv \
 	  --stage1 $(SELENO_PREDICTIONS) --references curation/machinery_references.faa \
 	  --reference-proteins $(MACHINERY_WORK)/first_pass --projections $(MACHINERY_WORK)/projections \
-	  --overrides curation/machinery_overrides.tsv --out $(GOLD_MACHINERY) --table results/tables/gold_standard_machinery.tsv
+	  --overrides curation/machinery_overrides.tsv --other-proteins $(wildcard results/gene_regions/*/proteins.faa) \
+	  --out $(GOLD_MACHINERY) --table results/tables/gold_standard_machinery.tsv
 
 # Step 1 of the plan of 2026-10-24: SECIS scores of the validated selenocysteine hits (seconds; reads results/ only)
 secis-hits:
@@ -401,6 +403,12 @@ machinery-regions:
 	  --protein Olon=OKI Oalb=OKI Ovan=OKI --flank 3000 --out results/gene_regions/SEPSECS
 	python3 curation/gene_regions.py --gene EEFSEC --gold OKI OSKA OdB3 Olon Oalb Ovan --lift KUM=OKI AOM=OSKA Bar2=OdB3 \
 	  --protein Olon=OKI Oalb=OKI Ovan=OKI --flank 3000 --out results/gene_regions/EEFSEC
+
+# Proteins of the machinery genes in the assemblies of other individuals and in the alignments to assemblies without
+# a model (exonerate on the regions of make pstk-regions and machinery-regions); local, minutes. They serve
+# gold-standard-machinery (--other-proteins) to tell assembly errors from transcript errors.
+region-proteins:
+	python3 curation/region_proteins.py --genes PSTK SBP2 SBP2_2 SEPHS_b SEPSECS EEFSEC
 
 # Intron positions of PSTK across chordates, on the coordinates of human PSTK (seconds): RefSeq models of
 # vertebrates, amphioxus and tunicates (proteins of results/trees/pstk.faa; the Thalia democratica transcript found by

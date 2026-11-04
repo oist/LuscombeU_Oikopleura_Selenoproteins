@@ -2218,3 +2218,28 @@ no earlier step waits for them.
   a heterotachy model (IQ-TREE GHOST, +H) for lineage-specific rates.
 - Convention for the Deigo command blocks (2026-11-04, Charles): every block that ends with git push has git pull
   --rebase right before the push (results are committed on Deigo while commits arrive from here).
+- Deigo results of make gold-standard-machinery (OdB3 PSTK UTRs 7 and 3 nt), machinery-regions and panel inputs (commit
+  2179055, 2026-11-04). Panels of SBP2, SEPHS_b, SEPSECS, EEFSEC drawn. curation/region_proteins.py (make
+  region-proteins, local): exonerate of the gold-standard protein on each lifted or miniprot region ->
+  results/gene_regions/<gene>/proteins.{faa,tsv}. Findings:
+  - SEPHS_b (second SEPHS copy) is in all three O. dioica species: complete in OSKA2016 (S5:20010-23579, 81.8%
+    identity to OKI2018), AOM-5-5f, KUM-M3-7f and Bar2_p4; OdB3 locus split by two assembly gaps (100 and 675 N;
+    residues 1-238 aligned before the first). Selenoprofiles predicted it in AOM, Bar2, KUM, OKI2018, not in OSKA2016
+    or OdB3. -> curation/machinery_extra_anchors.tsv (machinery_anchors.py --extra) gives the gold-standard script an
+    anchor in OSKA2016 and OdB3; Table MACHINERY and the SEPHS text to correct after the rerun.
+  - OKI2018 SEPHS_b: the 19-nt exon and the intron with nine placements outside the classes come with 13 transcript
+    bases missing from the assembly; KUM-M3-7f has 12 exons with GT-AG/GA-AG introns there; the OKI2018 protein differs
+    from the KUM-M3-7f protein at 9 scattered residues only (polymorphisms): protein right, local structure an assembly
+    artefact.
+  - SEPSECS: the two OKI2018-specific introns are also in KUM-M3-7f (Okinawa species); the 437-nt first intron of OdB3
+    is also in Bar2_p4. The OSKA2016 read-through of a 48-nt intron is not tested by AOM-5-5f (aligned with the
+    OSKA2016 protein): to test with the OKI2018 or OdB3 protein.
+  - EEFSEC: the 391-nt extra intron of OSKA2016 is in AOM-5-5f (GC-AG, 382 nt); Bar2_p4 has five GT-AG introns and no
+    9-kb intron (OdB3-specific insertion, part of it similar to Bar2 YSR). O. albicans: the region has two assembly gaps;
+    its introns with odd sites (TT-TG, AT-AG, NN-AA) border them.
+  - Charles: when the assembly is broken, take the protein from the transcriptome when possible. gold_standard.py now
+    applies to the machinery genes the rule of the selenoproteins (the protein, assembly or transcript, closer to the
+    same protein in the other assemblies, when they disagree by indels), with --other-proteins adding the proteins of
+    the assemblies of other individuals (KUM, AOM, Bar2; proteins.faa of make region-proteins); the reference score
+    (5% margin) only without any other assembly. Needs make gold-standard-machinery on Deigo, then
+    machinery-reannotation-inputs.

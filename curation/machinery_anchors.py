@@ -21,6 +21,8 @@ selenoprotein genes.
   - Frame: the coding rows of the prediction are joined in transcript order and translated; the frame with the fewest
     stop codons (a terminal stop codon not counted) is used (the first one when tied), and the anchor is the sense
     codon nearest to the middle of that frame whose three bases are contiguous in the genome.
+--extra: rows written by hand with the same columns (curation/machinery_extra_anchors.tsv), for genes that Selenoprofiles
+did not predict in an assembly but that an alignment of the protein of another assembly finds there.
 Output (--out): genome, gene, family, contig, anchor_codon (1-based lowest coordinate of the codon), strand, status
 ("prediction"), context (empty: no context check), prediction, label, protein_length, notes.
 With --human, also the reference proteins of each gene (--references): the human RefSeq proteins of its genes
@@ -139,6 +141,8 @@ def main():
     ap.add_argument("--min-fraction", type=float, default=0.5)
     ap.add_argument("--human", default="", help="directory with the human RefSeq protein.faa.gz and annotation.gff3.gz")
     ap.add_argument("--references", default="curation/machinery_references.faa")
+    ap.add_argument("--extra", default="", help="rows added by hand (same columns), for genes that Selenoprofiles did not "
+                    "predict in an assembly; a row is skipped when the assembly already has the gene")
     a = ap.parse_args()
     if a.human: write_references(a.human, a.references)
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
@@ -182,6 +186,11 @@ def main():
                          "anchor_codon": p0 + 1, "strand": c["strand"], "status": "prediction", "context": "",
                          "prediction": r["prediction"], "label": r["label"], "protein_length": r["protein_length"],
                          "notes": note or "-"})
+    if a.extra and os.path.exists(a.extra):
+        have = {(r["genome"], r["gene"]) for r in rows}
+        for r in csv.DictReader((l for l in open(a.extra) if not l.startswith("#")), delimiter="\t"):
+            if r["genome"] in a.genomes and (r["genome"], r["gene"]) not in have:
+                rows.append({c: r.get(c, "") for c in cols})
     with open(a.out, "w") as o:
         o.write("\t".join(cols) + "\n")
         for r in rows: o.write("\t".join(str(r[c]) for c in cols) + "\n")

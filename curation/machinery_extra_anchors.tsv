@@ -1,0 +1,6 @@
+# Machinery genes without a Selenoprofiles prediction in an assembly, found by aligning the protein of another assembly
+# (curation/gene_regions.py --protein, curation/region_proteins.py); added to curation/machinery_genes.tsv by
+# curation/machinery_anchors.py --extra. anchor_codon: 1-based lowest coordinate of a sense codon of the alignment.
+genome	gene	family	contig	anchor_codon	strand	status	context	prediction	label	protein_length	notes
+OSKA	SEPHS_b	SEPHS_b	S5	23033	-	prediction		miniprot:OKI_SEPHS_b	alignment	634	second SEPHS copy, not predicted by Selenoprofiles; OKI2018 protein aligned over 634 of 635 residues (exonerate, 81.8% identity), codon V of exon 4
+OdB3	SEPHS_b	SEPHS_b	FN653017.1	1971375	+	prediction		miniprot:OKI_SEPHS_b	alignment	238	second SEPHS copy, not predicted by Selenoprofiles; locus split by two assembly gaps (100 and 675 N); OKI2018 protein aligned over residues 1-238 before the first gap (exonerate, 94.8% identity), codon V of exon 3

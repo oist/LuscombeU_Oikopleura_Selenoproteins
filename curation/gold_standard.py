@@ -72,7 +72,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   4. Assembly or transcript. The frame of the TGA is also read in the sequence of each supporting transcript, and
      the best transcript protein is chosen by the same criteria. When its transcript differs from the assembly by
      indels in the coding sequence and the two proteins differ, both are aligned (global, BLOSUM62, free end gaps)
-     to the proteins of the same gene in the other assemblies (assembly and transcript proteins; the transcript
+     to the proteins of the same gene in the other assemblies (assembly and transcript proteins, and, with
+     --other-proteins, the proteins of the assemblies of other individuals or species that have no gold-standard
+     model, which tell an assembly error from a transcript error; the same rule for the machinery genes, --anchor
+     sense, which fall back on the reference score, 5% higher, only without any other assembly; the transcript
      protein is chosen among the transcripts with at most 20 indels against the assembly in the coding sequence, by
      context, stop codon, ATG start, length within 95% of the longest, then the number of transcript proteins it
      contains, length and fewest indels: single-pass ESTs carry frame errors), and their
@@ -872,6 +875,10 @@ def main():
                     help="--anchor sense: directories with <genome>.proteins.faa of a first pass, added to the references "
                     "of each gene for the other genomes")
     ap.add_argument("--projections", default="", help="directory with <genome>.projections.gff (miniprot; candidate models)")
+    ap.add_argument("--other-proteins", nargs="*", default=[], help="proteins of the genes in assemblies without a "
+                    "gold-standard model (FASTA, header gene|assembly|...; curation/region_proteins.py): compared, with "
+                    "the proteins of the other gold-standard assemblies, to the assembly and transcript proteins where "
+                    "they disagree by indels")
     ap.add_argument("--overrides", default="", help="curator's exon chains (genome, gene, exons as 1-based start-end of "
                     "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates")
     a = ap.parse_args()
@@ -1105,6 +1112,10 @@ def main():
     for rec in records:
         for m in (rec["best"], rec["tbest"]):
             if m and m["protein"]: proteins[rec["r"]["gene"]].append((rec["g"], m["protein"]))
+    for faa in a.other_proteins:      # assemblies of other individuals or species (curation/region_proteins.py)
+        for n, sq in read_fasta(faa):
+            f = n.split("|")
+            if len(f) > 1 and sq and f[1] not in a.genomes: proteins[f[0]].append((f[1], sq.replace("*", "")))
     # coding sequences of the selenoprotein genes (pass 1 models; the codon when there is none), to stop UTRs there
     neighbours = collections.defaultdict(Neighbours)
     for rec in records:
@@ -1166,17 +1177,10 @@ def main():
             use_tx = False
             if best is None:
                 use_tx = True
-            elif not SEC:   # genes without selenocysteine: the protein closer to the references
-                if tbest["cds_indels"] and tbest["protein"] != best["protein"]:
-                    use_tx = tbest["hom"] > 1.05 * best["hom"]
-                    if not use_tx:
-                        notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
-                                     f"scores {tbest['hom']:.0f} against the references, the assembly protein "
-                                     f"{best['hom']:.0f}: protein from the assembly")
-                elif tbest["hom"] > 1.05 * best["hom"]:
-                    notes.append(f"{tbest['tx']} encodes a protein closer to the references ({tbest['hom']:.0f} against "
-                                 f"{best['hom']:.0f}) without indel against the assembly (other exon chain)")
             elif tbest["cds_indels"] and tbest["protein"] != best["protein"]:
+                # the transcript and the assembly disagree by indels: the protein closer to the same protein in the
+                # other assemblies (the other gold-standard assemblies, and the assemblies of other individuals given
+                # with --other-proteins), which tells an error of the assembly from one of the transcript
                 others = [p for og, p in proteins[gene] if og != g]
                 counts = [shared_identity(best["protein"], tbest["protein"], p, aligner) for p in others]
                 span = sum(c[2] for c in counts)
@@ -1193,9 +1197,18 @@ def main():
                         notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
                                      f"is less similar to the other assemblies ({id_t:.2f} against {id_g:.2f}): protein "
                                      f"from the assembly")
+                elif not SEC:   # no other assembly: the protein closer to the references
+                    use_tx = tbest["hom"] > 1.05 * best["hom"]
+                    if not use_tx:
+                        notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
+                                     f"scores {tbest['hom']:.0f} against the references, the assembly protein "
+                                     f"{best['hom']:.0f}: protein from the assembly")
                 else:
                     use_tx = effective_length(tbest) > 1.1 * effective_length(best) or \
                         (has_ctx(tbest["protein"]) and not best["ctx"]) or (best["open3"] and not tbest["open3"])
+            elif not SEC and tbest["hom"] > 1.05 * best["hom"]:
+                notes.append(f"{tbest['tx']} encodes a protein closer to the references ({tbest['hom']:.0f} against "
+                             f"{best['hom']:.0f}) without indel against the assembly (other exon chain)")
             elif effective_length(tbest) > 1.1 * effective_length(best):
                 notes.append(f"{tbest['tx']} encodes a longer protein ({len(tbest['protein'])} aa) without indel against "
                              f"the assembly (other exon chain)")
