@@ -2310,3 +2310,6 @@ no earlier step waits for them.
   rule cannot classify archaeal sequences). The PSI-BLAST search also drifted to SelB/eEFSec GTPases of archaea (left
   out by the name rule). Trees aside from the main one (agreed with Charles): pstk_enriched (eukaryotes added) and
   pstk_enriched_archaea (and archaea), KTI12 root, ML + PMSF; supports in make machinery-clade-supports.
+- 2026-11-04 10:13: the local run of make pstk-enriched stopped at 09:28 during ModelFinder (the session container was
+  reclaimed; background jobs do not survive it). The selection, sequence set and alignments are committed; the trees
+  go to Deigo (make pstk-enriched machinery-clade-supports).

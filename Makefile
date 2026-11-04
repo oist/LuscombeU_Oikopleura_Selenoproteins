@@ -135,7 +135,7 @@ machinery-lba:
 # attract it; local, about 15 min on 2 CPUs (needs results/trees/pstk.trimmed and .treefile)
 # PSTK trees with more eukaryotic PSTK and with archaeal PSTK (2026-11-04): sequences of the BLASTP searches of
 # curation/pstk_blast selected by stage2/pstk_enrichment.py (selection.tsv), trees aside from the main one; local,
-# a few hours on 2 CPUs (needs results/trees/pstk.faa and .groups.tsv); then make machinery-clade-supports
+# a few hours: run on Deigo (sbatch, 8 CPUs), not in a session container; then make machinery-clade-supports
 pstk-enriched:
 	rm -rf results/trees/pstk_enriched results/trees/pstk_enriched_archaea
 	python3 stage2/pstk_enrichment.py --out results/trees/pstk_enriched
