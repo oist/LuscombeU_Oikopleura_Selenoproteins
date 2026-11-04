@@ -357,8 +357,9 @@ its longest open reading frame (1,244 codons) has a reverse transcriptase motif 
 HHCC motif. The EST that joins the two exons can come from an allele without the insertion as well as from a
 transcript that splices it out; the protein is the same. Identical LTRs point to a recent insertion; the OdB3 assembly
 holds another copy over 92% of its length (99.7% identity), two partial copies at contig ends (99.6 and 98.8%) and
-fragments at 18 loci (64 to 94%), Bar2_p4 a complete copy at 97.0% identity on its Y-specific region (sequence YSR),
-and OKI2018 none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In SEPSECS,
+fragments at five loci (90 to 94%); Bar2_p4 holds a complete copy (97.0%) and five fragments, all on its Y-specific
+region (sequence YSR); the four assemblies of the two other species (OKI2018, KUM-M3-7f, OSKA2016, AOM-5-5f) have
+none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In SEPSECS,
 the OSKA2016 model read a 48-nucleotide intron as coding, and the OSKA2016 and OdB3 models took splice sites inside
 another intron (9 and 30 nucleotides read as coding), at two introns that the OKI2018 transcripts splice; AOM-5-5f and Bar2_p4 have the
 same splice sites as OSKA2016 and OdB3, and the curator set the exon chains that splice these introns at the
@@ -847,8 +848,8 @@ bases the last bases of the previous exon (one to three bases, shaded in Figure 
 across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
 intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
 AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Bases repeated at the two ends of an intron are the rule rather
-than the exception: of the 260 gold-standard introns of OKI2018, OSKA2016 and OdB3, 224 have at least one and 148 have
-two or three (2.1 on average in the 201 GT-AG introns; `make intron-content`), because exons often end with AG, as
+than the exception: of the 280 gold-standard introns of OKI2018, OSKA2016 and OdB3, 240 have at least one and 159 have
+two or three (2.1 on average in the 217 GT-AG introns; `make intron-content`), because exons often end with AG, as
 introns do. What is unusual in PSTK is not this ambiguity, but that no placement within it gives an intron class. Placed
 on an AG acceptor, the fourth intron is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same
 phase, and the third intron a TG-AG, AA-AG and GA-AG intron. All end with AG without starting with GT, as does the
@@ -887,10 +888,13 @@ this intron has no placement in the intron classes either, but no transcript tes
 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
 both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
-insertion of a transposon. Like 19 of the 23 introns of the machinery models of *O. albicans*, it shares sequence with
-thousands of other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
+insertion of a transposon. Like 20 of the 24 introns of the machinery models of *O. albicans*, it shares sequence with
+at least ten other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
 not single it out; its two ends, however, pair more than those of shuffled sequences (z = -4.1), more than in any other
-*O. albicans* intron scored.
+*O. albicans* intron scored. <!-- z-scores of this paragraph and of the PSTK fourth intron (z = -5.5 and -5.8, "eight
+strongest of the 257") to update after the next make intron-content: the shuffles are now seeded per intron
+(2026-11-04); with the shared generator, adding the SEPHS_b and SEPSECS models moved them (Deigo run ccaebc0: OSKA2016
+-4.55, OdB3 -6.12, ranks 9 and 6 of 276; O. albicans -3.43, tied with SEPSECS intron 1). -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles

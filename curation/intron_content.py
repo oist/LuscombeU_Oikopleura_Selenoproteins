@@ -6,7 +6,9 @@ sequences of the samplesheet (gene strand). For each intron:
   - length, GC fraction, splice sites as named by the model, and the bases repeated at both ends (number of
     placements that leave the spliced sequence unchanged, minus one);
   - mfe (introns up to --max-fold nt): minimum free energy of the intron (RNAfold, ViennaRNA, default parameters), and its z-score against
-    --shuffles dinucleotide-preserving shuffles of the intron (Altschul and Erickson 1985): z < -2 means more
+    --shuffles dinucleotide-preserving shuffles of the intron (Altschul and Erickson 1985; random generator seeded
+    with --seed, the genome, the gene and the intron number, so that the z-scores of an intron do not change when other
+    models are added): z < -2 means more
     structure than expected from the composition;
   - ends: energy of the duplex between the first and the last --end nt of the intron (RNAduplex), a pairing that
     would bring the two splice sites together, and its z-score against the same shuffles;
@@ -115,7 +117,6 @@ def main():
     a = ap.parse_args()
     sheet = {r["sample"]: r for r in csv.DictReader(open(a.samplesheet))}
     os.makedirs(a.work, exist_ok=True)
-    rng = random.Random(a.seed)
     rows = []
     for g in a.genomes:
         ms = collections.OrderedDict()
@@ -149,6 +150,8 @@ def main():
         for r in mine:
             if r["length"] > a.max_fold: continue        # folding of long introns: too slow for the shuffles
             s = r["seq"].replace("T", "U")
+            # shuffles seeded per intron, so that its z-scores do not depend on the other models scored
+            rng = random.Random(f"{a.seed}:{g}:{r['gene']}:{r['intron']}")
             sh = [dinuc_shuffle(s, rng) for _ in range(a.shuffles)]
             e = rnafold([s] + sh)
             r["mfe"] = e[0]; r["mfe_shuffled_mean"], r["mfe_z"] = zscore(e[0], e[1:])

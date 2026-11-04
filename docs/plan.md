@@ -2313,3 +2313,14 @@ no earlier step waits for them.
 - 2026-11-04 10:13: the local run of make pstk-enriched stopped at 09:28 during ModelFinder (the session container was
   reclaimed; background jobs do not survive it). The selection, sequence set and alignments are committed; the trees
   go to Deigo (make pstk-enriched machinery-clade-supports).
+- Deigo results of the SEPSECS/EEFSEC job (commit ccaebc0, 2026-11-04): SEPSECS models read on the curator chains
+  (OSKA2016 480 residues, re-anchored on 858287; OdB3 482); Table MACHINERY and the counts of the gold-standard
+  paragraph unchanged (4 moved introns, 9 new exon chains, 1 public model, 1 other coding sequence); SEPSECS panel
+  redrawn. EEFSEC insertion, copies in the six assemblies: OdB3 3 major copies and 5 fragments (90-94%); Bar2_p4 one
+  complete copy (97.0%) and 5 fragments, all on YSR; none in OKI2018, KUM-M3-7f, OSKA2016, AOM-5-5f. The local run
+  (scratchpad, same OdB3 assembly) had also found 13 fragments at 64-68% identity: the legacy BLAST builds differ
+  (local Debian blast2 vs the container's); the Deigo run is the reference.
+  Intron content: 280 introns in O. dioica now (SEPHS_b of OSKA2016 and OdB3, SEPSECS splits); counts updated in the
+  text. The z-scores moved with the added models because the shuffles used one generator for all introns:
+  curation/intron_content.py now seeds them per intron (seed, genome, gene, intron); rerun make intron-content on
+  Deigo, then update the z-scores of the PSTK section (flagged in a comment).
