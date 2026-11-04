@@ -2337,3 +2337,14 @@ no earlier step waits for them.
   ESTs were left out by gold_standard.py because they do not hold the anchor codon (777746, inside the 108 nt): a
   limit of the sense anchor for alternative isoforms (methods to mention if it matters elsewhere). Text of the PSTK
   section updated.
+- PSTK enriched trees (Deigo, commit a680eb3; results/tables/stage2_machinery_clade_supports.tsv, rows "... PSTK added"):
+  appendicularian clade 100 in all four trees. Eukaryotes added (142 leaves): ML, appendicularians sister to all other
+  PSTK (78); PMSF, appendicularians with Gnathostoma spinigerum and Paramicrosporidium saccamoebae (78), then with the
+  Harpellales (68): the three longest non-appendicularian branches (distance from the base of the eukaryotic PSTK 4.6
+  and 4.9 and 3.9-4.1, against a median of 2.8; appendicularians 3.9-4.7) -> the appendicularians join whichever long
+  branches the sampling offers; no insect or protist PSTK attracts them. Archaea added (149 leaves): eukaryotic PSTK,
+  appendicularians included, form a clade against the archaeal PSTK (87 ML, 94 PMSF); archaeal PSTK paraphyletic
+  (Methanopyrus next to the eukaryotic PSTK, Methanococcales lower); appendicularians again with Gnathostoma and
+  Paramicrosporidium (73, 61), the pair sister to the other eukaryotic PSTK (83, 87); Harpellales elsewhere. The higher
+  BLAST scores of the archaeal PSTK do not place the appendicularian gene near them: no sign of transfer. Proposed for
+  the text: two sentences in the PSTK tree paragraph and Methods item (6), after Charles's agreement.
