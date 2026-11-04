@@ -2391,3 +2391,33 @@ no earlier step waits for them.
   against 12%; PSTK invariant residues (human numbering): G25 L26 P27 G30 K31 (P-loop), D56 K77 R80 D151 D152 R160 N190
   R193 E210, and H274 R281 in the C-terminal region; the PSTK C-terminal region is more basic (K+R median 16% against
   11%).
+- SEPSECS review (2026-11-04, Charles: next gene after PSTK, one by one). Local checks (scratch scripts; gold GFF3,
+  results/gene_regions/SEPSECS, exonerate, MAFFT L-INS-i with human Q9HD40 and C. robusta XP_002120570.1):
+  - O. albicans: the prediction and projection start at an internal methionine (MNDAEVK), 45 residues after the start
+    of the other SEPSECS; exonerate of the first 70 residues of the O. vanhoeffeni protein finds a first exon with ATG
+    (395863-395771, MNILELGEDVGFIPKSHSRVA..., 63% identical), a GC-AG intron of 509 nt and 14 codons upstream of the
+    predicted start (part soft-masked). Curator chain (505 residues). Its last 37 residues (KINKTVEIF...) are the
+    reading frame continued to the next stop codon, unsupported (kept, noted in the evidence).
+  - O. vanhoeffeni: fifth intron TT-AA (from the prediction); exonerate of the OKI2018 and O. albicans proteins moves
+    its acceptor 9 nt upstream to an AG (TT-AG, 755 nt; equivalent placements TA-TT, TT-GT, GT-AA, AG-TA, AA-AT, none
+    in the classes), giving TSMATKVATNYPGRA (OKI2018 TKRVAKNYPGRA). Curator chain (459 residues).
+  - Both chains checked with gold_standard.model_from_chain on the regions (SEC = False). Needs make
+    gold-standard-machinery on Deigo (with intron-content and machinery-reannotation-inputs), then locally
+    machinery-table, machinery-reannotation and the counts of the gold-standard paragraph (O. albicans SEPSECS no longer
+    lacks its N-terminus: four models, not five).
+  - Figure inputs: OSKA2016 gold sites were "?" for the introns of the curator's chain (no OSKA2016 genome given to
+    figures/reannotation_inputs.py, sites taken from the candidate table): OSKA_GENOME added to
+    machinery-reannotation-inputs. Legend source "C. intestinalis: RefSeq" was wrong for SEPSECS and EEFSEC (C. robusta):
+    now "Ciona: RefSeq" (the rows name the species).
+  - Intron positions on the alignment (human residue, phase): the three O. dioica species share seven introns (31/1,
+    132/0, 153/1, 258/0, 297/0, 332/2, 403/2) in all six assemblies; the Okinawa species (OKI2018, KUM-M3-7f) has two
+    more (62/2, 86 nt; 85/1, 75 nt), both GA-AG, absent from OSKA2016, AOM-5-5f, OdB3, Bar2_p4 and from O. longicauda
+    (one intron, 83/1, two columns from 85/1 in a gap-free region: not the same), O. albicans (132/1, 200/1, 258/0,
+    401/1) and O. vanhoeffeni (58/1, 126/2, 158/2, 229/2, 305/1, 401/1) -> gained in the Okinawa lineage. Shared outside
+    O. dioica: 258/0 (O. albicans), 401/1 (O. albicans and O. vanhoeffeni). Donors differ at homologous O. dioica
+    introns: 132/0 and 258/0 GA-AG in the Okinawa species, GT-AG in the other two (no GT-AG placement in OKI2018:
+    figures/intron_placements.py); 332/2 GC-AG in the Okinawa species, GA-AG in the other two. At 258/0 O. albicans has
+    GT-AG: GT -> GA in the Okinawa lineage. OdB3 and Bar2_p4 first intron 423-437 nt against 40-45 (50 copies of part
+    of it in OdB3: an insertion). The 75-nt intron (85/1) is retained in OKI2018 transcript i4. Not in the text yet:
+    to propose to Charles (Results, gold-standard paragraph or a SEPSECS paragraph; Discussion, young introns with
+    unusual sites).

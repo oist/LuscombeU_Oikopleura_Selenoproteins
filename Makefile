@@ -457,14 +457,15 @@ eefsec-insertion:
 # figures/inputs/intron_placements_<gene>.tsv exists (figures/intron_placements.py, from results/gene_regions)
 MACHINERY_FIGURE_GENES = PSTK SBP2 SEPHS_b SEPSECS EEFSEC
 # inputs of the machinery panels (figures/machinery_reannotation_inputs.sh): needs the EBI APIs (ENA, InterPro,
-# dbfetch) and the OKI2018 and OdB3 genomes; minutes. Then make machinery-reannotation (local, seconds)
+# dbfetch) and the OKI2018, OSKA2016 and OdB3 genomes; minutes. Then make machinery-reannotation (local, seconds)
 #   scripts/run_in_container.sh make machinery-reannotation-inputs
 machinery-reannotation-inputs:
-	OKI_GENOME=data/genomes/OKI/genome.fna.gz ODB3_GENOME=data/genomes/OdB3/genome.fna.gz sh figures/machinery_reannotation_inputs.sh
+	OKI_GENOME=data/genomes/OKI/genome.fna.gz OSKA_GENOME=data/genomes/OSKA/genome.fna.gz ODB3_GENOME=data/genomes/OdB3/genome.fna.gz \
+	  sh figures/machinery_reannotation_inputs.sh
 
 machinery-reannotation:
 	for g in $(MACHINERY_FIGURE_GENES); do python3 figures/reannotation_page.py --genes $$g --columns 1 --origin start \
-	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; C. intestinalis: RefSeq" \
+	  --no-secis --gold $(GOLD_MACHINERY) --fit --name machinery_$$g --sources "human: UniProt; Ciona: RefSeq" \
 	  $$([ -f figures/inputs/intron_placements_$$g.tsv ] && echo --side-panel figures/inputs/intron_placements_$$g.tsv \
 	  --side-names KUM=KUM-M3-7f AOM=AOM-5-5f Bar2=Bar2_p4) \
 	  $$([ $$g = PSTK ] && echo --tree-panel results/trees/pstk_enriched_archaea/pstk.pmsf.treefile --tree-groups results/trees/pstk_enriched_archaea/pstk.groups.tsv); done
