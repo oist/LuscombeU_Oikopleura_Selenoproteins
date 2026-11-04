@@ -2377,3 +2377,17 @@ no earlier step waits for them.
   PSTK intron 2 -3.25, next SEPSECS intron 3 -3.21 (the text now says "as much as", not "more than"). The same
   O. albicans intron gave -4.1, -3.43 and -3.25 in three runs of 100 shuffles: z-scores vary by up to about 0.9
   between runs; more shuffles (--shuffles) would narrow this if a z-score has to carry weight.
+- PSTK rate (2026-11-04, Charles: is PSTK fast-evolving, and is it because of its structure?). stage2/pstk_rates.py
+  (make pstk-rates, local): results/tables/pstk_kti12_distances.tsv (PSTK and KTI12 distances between the same
+  chordates in the PSTK trees: whole alignment, kinase domain, C-terminal region, selected model and PMSF) and
+  results/tables/sec_gene_identities.tsv (18 genes with human and Ciona references). PSTK/KTI12 distance ratio 2.1-2.9
+  (Ciona-Phallusia 4.2, human-mouse 1.4), kinase domain 1.5-4.0 (human-mouse 1.0-1.1), C-terminal region 1.6-5.5
+  (human-mouse 2.4); PSTK lowest human-Ciona identity of the 18 genes (30%, median 49%). One sentence in the PSTK
+  section and in Methods. Structure (not in the text): KTI12 has the same P-loop kinase fold and binds tRNA in the same
+  way (Krutyholowa 2019, NAR, doi 10.1093/nar/gkz190; Scherf 2025, NAR, doi 10.1093/nar/gkaf296), so the fold alone does
+  not explain the difference. Scratch counts over the nine chordate proteins (gap-free columns of the domain
+  alignments): kinase domain, invariant 8% for PSTK against 21% for KTI12 (10 and 30% without O. dioica); columns
+  hydrophobic in all nine: 28 for PSTK (1 invariant), 32 for KTI12 (11 invariant); C-terminal region invariant 3%
+  against 12%; PSTK invariant residues (human numbering): G25 L26 P27 G30 K31 (P-loop), D56 K77 R80 D151 D152 R160 N190
+  R193 E210, and H274 R281 in the C-terminal region; the PSTK C-terminal region is more basic (K+R median 16% against
+  11%).

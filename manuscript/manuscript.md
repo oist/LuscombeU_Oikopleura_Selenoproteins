@@ -921,7 +921,13 @@ second locus, predicted as a pseudogene, lies 9.5 kb from the gene on the same c
 
 Human proteins do not identify the appendicularian PSTK: the predictions of *O. dioica* and *O. albicans* had no hit in
 the human proteome, and that of *O. vanhoeffeni* scored 48 bits, whereas the PSTK predicted with the standard profile in
-each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). The appendicularian PSTK are
+each of the ten other tunicates was a reciprocal best hit of human PSTK (55 to 108 bits). PSTK itself evolves fast: in
+the PSTK tree, which holds both families, the PSTK of two chordates are 2.1 to 2.9 times as distant as their KTI12 (4.2
+for *C. intestinalis* and *P. mammillata*; 1.4 for human and mouse, the closest pair), in the kinase domain as in the
+C-terminal region, and of 18 selenoprotein and machinery genes with human and *Ciona* reference proteins, PSTK has the
+lowest identity between the two (30%; median 49%; `make pstk-rates`). The ratio between *C. intestinalis* and *O.
+dioica* (2.4) is that of the other pairs: the appendicularian PSTK combines the fast evolution of the gene with that of
+appendicularian proteins [@Berna2012]. The appendicularian PSTK are
 PSTK and not KTI12, the only protein homologous to PSTK over its whole length, which diverged from it before the
 separation of archaea and eukaryotes [@Sherrer2008]: the two families separated with 100% support in every analysis. The appendicularian proteins (*O.
 dioica*, *O. albicans* and *O. vanhoeffeni*, and a second *O. vanhoeffeni* locus predicted as a pseudogene) formed a
@@ -1607,7 +1613,11 @@ transcript found by a tblastn search of the RefSeq transcripts with the *C. inte
 gold-standard models, each intron being placed in its protein with its phase (`make pstk-introns`,
 `curation/intron_positions.py`); the proteins, with nine PSTK of other animals, were aligned with MAFFT L-INS-i
 [@Katoh2013], and each intron was given the column of the residue that follows or contains it
-(`curation/intron_columns.py`). For every intron of the gold-standard models of OKI2018, OSKA2016, OdB3 and *O.
+(`curation/intron_columns.py`). The rate of PSTK was compared with that of KTI12 by the distances between the two
+proteins of the same pair of chordates in the PSTK trees (sum of branch lengths; whole alignment and its two parts,
+selected model and PMSF), and with that of other genes by the identity of the human and *Ciona* reference proteins of
+the genes of Figure REANNOTATION and of the machinery (global alignments, BLOSUM62; `make pstk-rates`,
+`stage2/pstk_rates.py`). For every intron of the gold-standard models of OKI2018, OSKA2016, OdB3 and *O.
 albicans* (`make intron-content`, `curation/intron_content.py`), we counted the bases repeated at its two ends, computed
 the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides) and the energy of the duplex between its
 first and last 25 nucleotides (RNAduplex; ViennaRNA 2.7.2 [@Lorenz2011]), each compared with 100 shuffled copies of the
