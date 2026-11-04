@@ -10,7 +10,8 @@ Inputs (all in the repository):
 Rows added to the census:
   "SEPHS, second copy": appendicularian SEPHS predictions outside the selenocysteine clade of the maximum-likelihood
   tree and without selenocysteine (the copy that groups with the tunicate glycine forms); a genome has it when such a
-  prediction exists.
+  prediction exists, or when the machinery gold standard has a model of it (SEPHS_b; "found (assembly gaps)" when more
+  than 2% of its protein is read from assembly gaps, a protein left out of the trees).
 The orthology column is written from these results: reciprocal best hits for SEPSECS, EEFSEC and TRNAU1AP; the
 trees and AU tests for PSTK, SEPHS and the SECIS-binding protein. The SECIS-binding protein row is named
 SECISBP2/SECISBP2L (ortholog of the single tunicate protein; its relation to the two vertebrate paralogs is not
@@ -89,6 +90,7 @@ def sephs_second_copy(trees):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--census", default="results/tables/stage2_machinery_census.tsv")
+    ap.add_argument("--gold", default="curation/gold_standard_machinery")
     ap.add_argument("--rbh", default="results/tables/stage2_machinery_rbh.tsv")
     ap.add_argument("--lba", default="results/tables/stage2_machinery_lba.tsv")
     ap.add_argument("--trees", default="results/trees")
@@ -103,6 +105,16 @@ def main():
     def au_values(fam):   # all AU tests of a family, under every model
         return [p_au(r["appendicularian clade"]) for r in lba_rows if r["family"] == fam and r["analysis"].startswith("AU test")]
     second_genomes, gly = sephs_second_copy(a.trees)
+    # the gold-standard second copies (curation/gold_standard_machinery), also those left out of the trees because
+    # their protein holds residues read from assembly gaps
+    gaps = {}
+    for f in glob.glob(f"{a.gold}/*.proteins.faa"):
+        g, name = os.path.basename(f).split(".")[0], None
+        for l in open(f):
+            if l.startswith(">"): name = l[1:].split("|")[0]
+            elif name == "SEPHS_b":
+                second_genomes.add(g)
+                if l.count("X") > 0.02 * len(l.strip()): gaps[g] = l.count("X")
 
     pstk_out = min(int(r["family vs outgroup"]) for k, r in lt["pstk"].items()
                    if not k.startswith("AU") and r["family vs outgroup"].isdigit())
@@ -126,7 +138,8 @@ def main():
         out.append([ROW_NAMES.get(r["gene"], r["gene"]), orthology.get(r["gene"], "")] + [r[g] for g in GENOMES])
         if r["gene"] == "SEPHS2":
             out.append(["SEPHS, second copy", orthology["SEPHS, second copy"]] +
-                       ["found" if g in second_genomes else "not found" for g in GENOMES])
+                       ["found (assembly gaps)" if g in gaps else "found" if g in second_genomes else "not found"
+                        for g in GENOMES])
     header = ["Gene", "Orthology"] + [NAMES[g] for g in GENOMES]
     with open(a.table, "w") as o:
         o.write("\t".join(["gene", "orthology"] + GENOMES) + "\n")

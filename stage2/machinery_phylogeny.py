@@ -46,6 +46,7 @@ CEPHALOCHORDATES = {"Bflo", "Blan"}
 # predictions, which cover only the region of the profile (for example the C-terminal domain of SECIS-binding proteins)
 # groups kept by the core-coverage filter even when partial (the subject of the trees)
 KEEP_PARTIAL = {"appendicularian", "curated", "tunicate"}
+MAX_GAP_RESIDUES = 0.02   # gold-standard proteins with more X (read from assembly gaps) are left out of the trees
 REFSEQ_FAMILIES = {"pstk": ["PSTK", "KTI12"], "SBP2": ["SECISBP2", "SECISBP2L"]}
 # human genes of a related family, added as outgroup
 OUTGROUP_GENES = {"pstk": ["KTI12"], "TXNRD": ["GSR"], "SELENOF": ["SELENOM"]}
@@ -201,6 +202,10 @@ def main():
                     add(f"{g}|{pid.replace('_app', '')}", s, "appendicularian")
         for g in sorted(gold):
             for gene, (_, _, _, _, seq) in sorted(gold[g].items()):
+                nx = seq.upper().count("X")
+                if nx > MAX_GAP_RESIDUES * len(seq):   # residues read from assembly gaps (runs of N)
+                    skipped.append((label(f"{g}|gold_{gene}"), "curated", f"assembly gaps ({nx} of {len(seq)} residues X)"))
+                    continue
                 add(f"{g}|gold_{gene}", seq, "curated")
         if os.path.exists(a.curated):
             for n, s in read_fasta(a.curated):

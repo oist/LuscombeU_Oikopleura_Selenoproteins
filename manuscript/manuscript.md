@@ -337,14 +337,21 @@ are therefore absent, truncated, split or merged in the public annotations.
 
 The same procedure, with the selenocysteine codon replaced by a codon of the machinery prediction and the candidate
 models ranked by their similarity to the human proteins and to the proteins of the other assemblies, gave gene models of
-the machinery genes (`results/tables/gold_standard_machinery.tsv`). Of the 13 models of *O. dioica* (PSTK, SEPSECS,
-EEFSEC and the SECIS-binding protein in each assembly, and the second SEPHS copy in OKI2018), one is the public model
-unchanged (the OdB3 SECIS-binding protein); the others need introns moved (5) or a new exon chain (7). Five models have
-splice sites outside the intron classes of *O. dioica*: PSTK in the three assemblies, at the same intron, with the same
-junctions in every transcript that splices it and the same bases in assemblies of other individuals (see the PSTK
-section), and OKI2018 SEPHS_b and OdB3 EEFSEC, where they may come from transcript or assembly errors. The OKI2018
-SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of 242 residues, also present in
-its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
+the machinery genes (`results/tables/gold_standard_machinery.tsv`). Of the 15 models of *O. dioica* (PSTK, SEPSECS,
+EEFSEC, the SECIS-binding protein and the second SEPHS copy in each assembly), one is the public model unchanged (the
+OdB3 SECIS-binding protein); the others need introns moved (4), a new exon chain (9) or another coding sequence on the
+same exons (1). The second SEPHS copy had no Selenoprofiles prediction in OSKA2016 and OdB3: an alignment of the
+OKI2018 protein found it in both (complete in OSKA2016, 82% identical; split by two assembly gaps in OdB3), and in the
+assemblies of three other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4), and these loci served as anchors. Five models
+have splice sites outside the intron classes of *O. dioica*. In PSTK, in the three assemblies, every transcript that
+splices the intron uses the same junctions, and assemblies of other individuals have the same bases (see the PSTK
+section). In OKI2018 SEPHS_b, the unusual intron comes with a 19-nucleotide exon and with 13 bases of the transcripts
+that are missing from the assembly, whereas the assembly of another individual of the same species (KUM-M3-7f) has
+canonical introns there; the protein differs from that of KUM-M3-7f at only nine scattered residues, so that only the
+local exon chain, not the protein, carries the assembly error. In OdB3 EEFSEC, the unusual intron is a 9-kb insertion
+inside an exon that is continuous in OKI2018, OSKA2016 and in another assembly of the same species (Bar2_p4), and that
+the ESTs splice out. The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
+242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot); all have start and stop codons, but five lack 47 to 239 N-terminal residues of the OKI2018 protein (the
 SECIS-binding proteins of the three species and *O. albicans* SEPSECS), on short contigs or in the divergent N-terminal
@@ -352,8 +359,9 @@ region of the SECIS-binding protein, and the prediction of *O. albicans* PSTK mi
 added (see the PSTK section).
 
 <!-- Machinery gold standard: make gold-standard-machinery (curation/machinery_anchors.py, machinery_projections.py,
-gold_standard.py --anchor sense), fourth run of 2026-11-02 (commit a9bdcd3). Numbers to check at the final version;
-SEPHS_b was not predicted in OSKA2016 and OdB3 (to check: assembly or prediction). -->
+gold_standard.py --anchor sense), run of 2026-11-04 (commit b69bfa8), with the anchors of
+curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
+other species to check at the final version, after the review of their EEFSEC models (assembly gaps in O. albicans). -->
 
 ![Figure REANNOTATION, page 1](../figures/reannotation_page.png)
 ![Figure REANNOTATION, page 2](../figures/reannotation_page2.png)
@@ -950,7 +958,7 @@ ancestor.
 |---|---|---|---|---|---|---|---|---|---|---|
 | tRNA-Sec | not tested (RNA gene) | found | found | found | found (4 loci) | found (2 loci) | found (2 loci) | found | found (2 loci) | found |
 | SEPHS2 | selenocysteine at the catalytic site; outside the tunicate SEPHS in the trees (AU p at most 0.046) | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | not found | partial | selenocysteine |
-| SEPHS, second copy | ortholog of the tunicate glycine form (70 to 100%) | found | not found | not found | found | found | found | not found | not found | not found |
+| SEPHS, second copy | ortholog of the tunicate glycine form (70 to 100%) | found | found | found (assembly gaps) | found | found | found | not found | not found | not found |
 | PSTK | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.088) | found | found | found | fragment | found | found | fragment | fragment | not found |
 | SEPSECS | reciprocal best hit in all nine genomes | found | found | found | found | found | found | found | found | found |
 | EEFSEC | reciprocal best hit; best hit only in *B. stygius* and *M. erythrocephalus* | found | found | found | found | found | found | found | found | found |
@@ -1136,8 +1144,9 @@ that depends on SECISBP2L is required for oligodendrocyte differentiation [@Dai2
 thus the ortholog of the tunicate protein, closest to SECISBP2L by best hits and in most full-length trees, but its
 relationship to the two vertebrate paralogs is not resolved.
 
-Appendicularians have two SEPHS genes. The second copy, found in OKI2018, *O. longicauda*, *O. albicans* and *O.
-vanhoeffeni*, carries a residue other than selenocysteine (alanine or serine where aligned). In every analysis it fell
+Appendicularians have two SEPHS genes. The second copy, found in the three *O. dioica* assemblies (in OSKA2016 and
+OdB3 by aligning the OKI2018 protein; split by assembly gaps in OdB3, whose protein is left out of the trees), in
+*O. longicauda*, *O. albicans* and *O. vanhoeffeni*, carries a residue other than selenocysteine (alanine or serine where aligned). In every analysis it fell
 with the glycine forms of the other tunicates, in a clade supported by 70 to 100%, next to the *Phallusia mammillata*
 protein (38 to 99%); these glycine forms include the *Botryllus schlosseri* protein labelled SPS1 by Mariotti et al.
 [-@Mariotti2015]. The tunicate SEPHS other than the appendicularian selenocysteine copies formed a clade in every
@@ -1185,7 +1194,6 @@ those of amphioxus and protostomes (96%), and the C-terminal half with those of 
 - Reciprocal best hits of the other tunicates: results/tables/stage1_machinery_rbh.tsv (regenerated 2026-10-23,
   make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
   for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
-- The second SEPHS copy was not found in OSKA2016 and OdB3: to check (assembly or prediction).
 - Decision of 2026-10-24 (docs/plan.md): B. stygius, M. erythrocephalus and F. borealis are held out of stage 2 and
   used at the end for the census; at the next rerun, the statements of this section that rely on them (SECp43 loss,
   PSTK fragments, their columns in Table MACHINERY) move to the census section. Bacterial-like sequences: one strict
@@ -1528,13 +1536,22 @@ nucleotides of genome that follow each stop codon, and a table of all candidates
 The machinery genes (PSTK, SEPSECS, EEFSEC, the SECIS-binding protein and the SEPHS copy without selenocysteine) were
 modelled in OKI2018, OSKA2016, OdB3, *O. longicauda*, *O. albicans* and *O. vanhoeffeni* with the same script (`make
 gold-standard-machinery`), the selenocysteine codon replaced by a sense codon in the middle of each prediction of the
-final run (`curation/machinery_anchors.py`). Candidates were ranked first by the sum of the local alignment scores of
+final run (`curation/machinery_anchors.py`), or, for the second SEPHS copy of OSKA2016 and OdB3, which Selenoprofiles
+did not predict, a codon of the alignment of the OKI2018 protein to the assembly (exonerate [@Slater2005];
+`curation/machinery_extra_anchors.tsv`). Candidates were ranked first by the sum of the local alignment scores of
 their proteins (BLOSUM62) to the human proteins of the gene (RefSeq) and, in a second pass, to the first-pass proteins
 of the other assemblies, keeping the candidates within 5% of the best score, then by the criteria of the selenoprotein
 models; the second pass also took as candidates the protein-to-genome alignments of these proteins (miniprot [@Li2023],
 `curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
 chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
-*O. albicans* PSTK), and the model was read on the genome along that chain.
+*O. albicans* PSTK), and the model was read on the genome along that chain. Where the best transcript and the assembly
+disagreed by indels in the coding sequence, the protein, from the assembly or from the transcript, was the one closer
+to the same protein in the other assemblies, as for the selenoprotein genes; these included the assemblies of other
+individuals of the three species (KUM-M3-7f, AOM-5-5f, Bar2_p4), in which the gold-standard protein of the same species
+was aligned to the region of the gene with exonerate (protein2genome; `make machinery-regions region-proteins`,
+`curation/gene_regions.py`, `curation/region_proteins.py`), since an assembly error and a transcript error are told
+apart by an independent assembly. Gold-standard proteins with more than 2% of residues read from assembly gaps were
+left out of the trees.
 
 To check the splice sites of PSTK, its genomic regions (coding span and 3 kb on each side) were extracted from the
 gold-standard assemblies, from *O. albicans*, *O. vanhoeffeni* and *C. intestinalis* (RefSeq gene of XP_002120985.2),

@@ -2243,3 +2243,12 @@ no earlier step waits for them.
     the assemblies of other individuals (KUM, AOM, Bar2; proteins.faa of make region-proteins); the reference score
     (5% margin) only without any other assembly. Needs make gold-standard-machinery on Deigo, then
     machinery-reannotation-inputs.
+- Gold standard rerun (b69bfa8, 2026-11-04): SEPHS_b models in OSKA2016 (12 exons, 620 aa, transcript
+  comp24718_c1_seq1, all introns in the classes) and OdB3 (9 exons, 577 aa, Genoscope model + projection, no EST,
+  34 X from the 100-N gap and 12 residues missing near the first gap); no protein switched to a transcript under the
+  new rule. Trees: gold proteins with > 2% X left out (machinery_phylogeny.py MAX_GAP_RESIDUES); Table MACHINERY reads
+  the second copy from the gold standard too ("found (assembly gaps)" for OdB3). Manuscript: gold-standard machinery
+  paragraph (15 O. dioica models; OKI2018 SEPHS_b odd intron an assembly error, KUM-M3-7f canonical; OdB3 EEFSEC 9-kb
+  insertion absent from Bar2_p4), SEPHS paragraph, Methods (extra anchors, other-individual proteins), Table MACHINERY.
+  Still to do: the trees with the new SEPHS_b proteins (next machinery-phylogeny run), OSKA2016 SEPSECS read-through
+  test, the OdB3 EEFSEC insertion (ends, copies), EEFSEC of the other species (O. albicans gaps).
