@@ -2287,3 +2287,11 @@ no earlier step waits for them.
   - Needs on Deigo: make gold-standard-machinery machinery-regions region-proteins eefsec-insertion intron-content
     machinery-reannotation-inputs, then locally machinery-table, machinery-reannotation (SEPSECS panel) and the counts of
     the gold-standard paragraph (models with a new exon chain).
+- PSTK, RNA-seq check (2026-11-04; Charles, screenshots of the unit's JBrowse, OKI.I69, XSR:1,939,448-1,941,883,
+  six merged developmental-stage RNA-seq tracks: egg, 32-cell, tailbud, hatchling, tailshift, heartbeat): coverage drops
+  to zero at the four introns of the OKI2018 gold model (NC_137294.1 1940382-1940424, 1940555-1940597, 1940636-1940699,
+  1940962-1941023; positions read on the screenshot scale agree within a few nt, so the browser XSR coordinates match
+  NC_137294.1 here), coverage ends near the 3' end of the model (1941206) and the next gene's coverage starts about
+  20 nt later (operon, short 3' UTR). No coverage visible in the third intron (retained in OSKA2016 transcripts and OdB3
+  ESTs). Splice dinucleotides are not tested by coverage (equivalent placements). Not in the manuscript: the data set
+  and whether it is public are to be confirmed with Charles.
