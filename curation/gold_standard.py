@@ -93,7 +93,10 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      assembly protein does not, or has a stop codon when the assembly protein has none). The transcript protein is also used when no
      candidate on the assembly gives a frame. Then the assembly does not encode the protein: the model is the exon
      chain of the transcript with the genome positions of its coding sequence, marked in the GFF3 with the
-     attribute exception (as RefSeq models annotated from transcripts), and protein_source is "transcript".
+     attribute exception (as RefSeq models annotated from transcripts), and protein_source is "transcript". A
+     curator's override "transcript:NAME" (--overrides) makes this choice for one gene: the protein of that transcript
+     (an assembly error in the coding sequence that the rule above does not detect, for example when the prediction
+     splices around the frameshift).
 Reported per gene: the protein context check; introns, the atypical ones (GA-AG, GC-AG, GG-AG) and the other splice
 sites (listed with all their equivalent placements, the one used first, as "CA-TT/AG-TC/GG-CA"; such sites point to
 an alignment, assembly or transcript problem); insertions, deletions and mismatches between
@@ -956,7 +959,8 @@ def main():
     ap.add_argument("--overrides", default="", help="curator's exon chains (genome, gene, exons as 1-based start-end of "
                     "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates; "
                     "with --anchor sense, a chain that splices out the anchor codon is read from the codon of the chain "
-                    "nearest to it, which the table then reports")
+                    "nearest to it, which the table then reports. exons = transcript:NAME instead: the protein of that "
+                    "transcript (model mapped from the transcript)")
     a = ap.parse_args()
     global SEC
     SEC = a.anchor == "sec"
@@ -1165,7 +1169,8 @@ def main():
                 # one of its introns): that codon becomes the gene's anchor, which the table reports
                 codon0, r[cc] = best["anchor"], str(best["anchor"] + 1)
             ov = overrides.get((g, r["gene"]))
-            if ov:   # the curator's exon chain replaces the choice among the candidates
+            tx_pick = ov["exons"].split(":", 1)[1] if ov and ov["exons"].startswith("transcript:") else None
+            if ov and not tx_pick:   # the curator's exon chain replaces the choice among the candidates
                 blocks = [(int(x) - 1, int(y)) for x, y in (b.split("-") for b in ov["exons"].split(";"))]
                 m = model_from_chain(blocks, gs, codon0, strand, "override", "curator", cds_only=True)
                 if (not m or not m["cds"]) and not SEC:
@@ -1194,6 +1199,11 @@ def main():
                 tbest = max(reliable, key=lambda t: (has_ctx(t["protein"]), not t["open3"], t["protein"].startswith("M"),
                                                      effective_length(t) >= 0.95 * top, contained(t), effective_length(t),
                                                      -t["cds_indels"])) if reliable else None
+            if tx_pick:   # the curator's choice of the transcript whose protein the model takes
+                tbest = next((t for t in tx_ok if t["tx"] == tx_pick), None)
+                if tbest is None:
+                    raise SystemExit(f"{g} {r['gene']}: the curator's transcript {tx_pick} does not hold the anchor codon in a frame")
+                if not SEC: tbest["hom"], tbest["hom_ref"] = ref_score(tbest["protein"], r["gene"], g)
             lo_n = min([codon0 - 5000] + [m["blocks"][0][0] for m in usable])     # 5 kb around the codon, or the candidates
             hi_n = max([codon0 + 5000] + [m["blocks"][-1][1] for m in usable])
             near = [(mid, ar) for mid, ar in ann.items() if ar["contig"] == contig and ar["strand"] == strand and
@@ -1201,7 +1211,8 @@ def main():
                     min(x for x, _ in (ar["exons"] or [(x, y + 1) for x, y in ar["cds"]])) < hi_n and
                     max(y for _, y in (ar["exons"] or [(x, y + 1) for x, y in ar["cds"]])) > lo_n]
             records.append({"g": g, "r": r, "tms": tms, "candidates": len(usable), "usable": usable, "near": near,
-                            "best": best, "tbest": tbest, "has_ctx": has_ctx})
+                            "best": best, "tbest": tbest, "has_ctx": has_ctx, "tx_pick": tx_pick,
+                            "tx_evidence": ov["evidence"] if tx_pick else ""})
     # pass 2: assembly or transcript protein, outputs
     proteins = collections.defaultdict(list)
     for rec in records:
@@ -1270,7 +1281,10 @@ def main():
             notes.append(f"exon chain set by the curator: {best['override']}")
         if tbest and not (best is not None and best.get("override")):
             use_tx = False
-            if best is None:
+            if rec["tx_pick"]:
+                use_tx = True
+                notes.append(f"protein from {tbest['tx']}, chosen by the curator: {rec['tx_evidence']}")
+            elif best is None:
                 use_tx = True
             elif tbest["cds_indels"] and tbest["protein"] != best["protein"]:
                 # the transcript and the assembly disagree by indels: the protein closer to the same protein in the
@@ -1290,8 +1304,8 @@ def main():
                                                      effective_length(tbest) > 2 * effective_length(best)))
                     if not use_tx:
                         notes.append(f"{tbest['tx']} differs from the assembly by indels in the coding sequence; its protein "
-                                     f"is less similar to the other assemblies ({id_t:.2f} against {id_g:.2f}): protein "
-                                     f"from the assembly")
+                                     f"is not closer to the other assemblies by more than 0.02 ({id_t:.3f} against "
+                                     f"{id_g:.3f}): protein from the assembly")
                 elif not SEC:   # no other assembly: the protein closer to the references
                     use_tx = tbest["hom"] > 1.05 * best["hom"]
                     if not use_tx:

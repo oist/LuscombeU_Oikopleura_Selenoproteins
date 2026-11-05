@@ -360,7 +360,11 @@ transcript that splices it out; the protein is the same. Identical LTRs point to
 holds another copy over 92% of its length (99.7% identity), two partial copies at contig ends (99.6 and 98.8%) and
 fragments at five loci (90 to 94%); Bar2_p4 holds a complete copy (97.0%) and five fragments, all on its Y-specific
 region (sequence YSR); the four assemblies of the two other species (OKI2018, KUM-M3-7f, OSKA2016, AOM-5-5f) have
-none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In SEPSECS,
+none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In OKI2018 EEFSEC, the assembly
+has a run of five T where the four transcripts and the KUM-M3-7f assembly have six; the prediction splices around the
+frameshift with a 73-nucleotide intron and reads 5 residues where the OSKA2016 and OdB3 proteins have 13, whereas the
+transcripts splice a 50-nucleotide intron at the position of the first intron of OSKA2016 and OdB3; the model takes the
+protein of a transcript (523 residues, the length of the OSKA2016 and OdB3 proteins). In SEPSECS,
 the predictions and the protein alignments of OSKA2016 and OdB3 read parts of two GA-AG introns as coding; the
 OSKA2016 transcripts and the OdB3 ESTs splice them whole (74 and 60 nucleotides), and the models follow them (474 and
 476 residues; the OdB3 model is the GenBank model unchanged). In both species, other transcripts use a donor 34
@@ -370,7 +374,23 @@ taken from them (commit 14314dd); the chains set on 2026-11-04 from protein alig
 at these two introns. --> The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
-(miniprot); all have start and stop codons. The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
+(miniprot), or, for EEFSEC, from alignments of the *O. dioica* proteins (exonerate) set by the curator; all but *O.
+longicauda* EEFSEC have start and stop codons. The EEFSEC predictions of the three species used non-canonical sites
+where the alignments find other junctions: a copy of part of the first exon 3.8 kb upstream joined by a GT-TG intron
+(*O. albicans*), a 36-nucleotide TT-AG intron inside an exon (*O. albicans*), an AC-AG intron 12 nucleotides from a
+GT-AG one (*O. vanhoeffeni*), an AT-TG intron 16 nucleotides from a GT-AG one and a 71-nucleotide CA-AA intron (*O.
+longicauda*). The *O. albicans* and *O. vanhoeffeni* genes hold assembly gaps (2 and 6 residues read from them; in *O.
+albicans*, an intron whose ends lie in a 1,270-nucleotide gap), and the *O. longicauda* contig ends about 50 residues
+before the end of the protein. In *O. longicauda*, after the first 56 residues, 75 nucleotides encode no G3 motif
+(DCPGH) of the GTPase domain, which no frame of the contig encodes, and the frame changes after a run of six A, so that
+the model starts at an internal methionine (384 residues). In both *O. albicans* and *O. vanhoeffeni*, the first intron
+lies after DCPGHGSL, at the same position and phase, with sites outside the intron classes (AT-AG and TG-AG; the GC-AG
+sites 6 nucleotides downstream would add two residues absent from the *O. dioica* and human proteins); no transcript
+data test them. <!-- EEFSEC of the three species and OKI2018: curator rows of 2026-11-05 in
+curation/machinery_overrides.tsv (exonerate protein2genome of the O. dioica gold-standard proteins on
+results/gene_regions/EEFSEC, each junction rescanned by the global alignment score of the whole protein to the OSKA2016
+and OdB3 proteins); the counts of the paragraph (introns moved, new exon chains, other coding sequence) wait for the
+Deigo run. --> The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
 OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
 that protein. The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (see the
 PSTK section) and the first exon of *O. albicans* SEPSECS (31 residues, found by aligning the *O. vanhoeffeni* protein;
@@ -381,7 +401,7 @@ both choose.
 <!-- Machinery gold standard: make gold-standard-machinery (curation/machinery_anchors.py, machinery_projections.py,
 gold_standard.py --anchor sense), run of 2026-11-05 (commit 8aac2be), with the anchors of
 curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
-other species to check at the final version, after the review of their EEFSEC models (assembly gaps in O. albicans). -->
+other species to check at the final version; their EEFSEC models were reviewed on 2026-11-05. -->
 
 ![Figure REANNOTATION, page 1](../figures/reannotation_page.png)
 ![Figure REANNOTATION, page 2](../figures/reannotation_page2.png)
@@ -1622,7 +1642,10 @@ of the other assemblies, keeping the candidates within 5% of the best score, the
 models; the second pass also took as candidates the protein-to-genome alignments of these proteins (miniprot [@Li2023],
 `curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
 chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
-*O. albicans* PSTK, SEPSECS of OSKA2016, OdB3, *O. albicans* and *O. vanhoeffeni*), and the model was read on the genome
+*O. albicans* PSTK, SEPSECS of OSKA2016, OdB3, *O. albicans* and *O. vanhoeffeni*, EEFSEC of *O. longicauda*, *O.
+albicans* and *O. vanhoeffeni*, from exonerate alignments of the *O. dioica* proteins whose junctions were rescanned
+within 30 nucleotides by the global alignment score of the whole protein to the OSKA2016 and OdB3 proteins), and the
+model was read on the genome
 along that chain, from the codon of the chain nearest to the anchor when the chain spliced the anchor out. A transcript
 whose alignment spanned the anchor but held it in an intron (where the prediction had read that intron as coding) was
 anchored on its own aligned codon nearest to the anchor, in the frame whose protein scored best against the reference
@@ -1633,8 +1656,9 @@ to the same protein in the other assemblies, as for the selenoprotein genes; the
 individuals of the three species (KUM-M3-7f, AOM-5-5f, Bar2_p4), in which the gold-standard protein of the same species
 was aligned to the region of the gene with exonerate (protein2genome; `make machinery-regions region-proteins`,
 `curation/gene_regions.py`, `curation/region_proteins.py`), since an assembly error and a transcript error are told
-apart by an independent assembly. Gold-standard proteins with more than 2% of residues read from assembly gaps were
-left out of the trees.
+apart by an independent assembly. In OKI2018 EEFSEC, whose prediction splices around a one-base deletion of the
+assembly so that the rule kept the assembly protein (identity 0.817 against 0.825), the curator chose the transcript
+protein. Gold-standard proteins with more than 2% of residues read from assembly gaps were left out of the trees.
 
 To check the splice sites of PSTK, its genomic regions (coding span and 3 kb on each side) were extracted from the
 gold-standard assemblies, from *O. albicans*, *O. vanhoeffeni* and *C. intestinalis* (RefSeq gene of XP_002120985.2),
@@ -1663,7 +1687,8 @@ selected model and PMSF), and with that of other genes by the identity of the hu
 the genes of Figure REANNOTATION and of the machinery (global alignments, BLOSUM62; `make pstk-rates`,
 `stage2/pstk_rates.py`). For every intron of the gold-standard models of OKI2018, OSKA2016, OdB3 and *O.
 albicans* (`make intron-content`, `curation/intron_content.py`), we counted the bases repeated at its two ends, computed
-the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides) and the energy of the duplex between its
+the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides without assembly gap) and the energy of
+the duplex between its
 first and last 25 nucleotides (RNAduplex; ViennaRNA 2.7.2 [@Lorenz2011]), each compared with 100 shuffled copies of the
 intron that keep its dinucleotide composition [@Altschul1985] (z-scores), and counted its copies elsewhere in its genome
 (BLASTN, legacy BLAST 2.2.26, E at most 10^-5^, hits of at least 40 nucleotides outside the intron, loci closer than 1

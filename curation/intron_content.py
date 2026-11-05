@@ -9,7 +9,7 @@ sequences of the samplesheet (gene strand). For each intron:
     --shuffles dinucleotide-preserving shuffles of the intron (Altschul and Erickson 1985; random generator seeded
     with --seed, the genome, the gene and the intron number, so that the z-scores of an intron do not change when other
     models are added): z < -2 means more
-    structure than expected from the composition;
+    structure than expected from the composition; introns that hold an assembly gap (N) are not folded;
   - ends: energy of the duplex between the first and the last --end nt of the intron (RNAduplex), a pairing that
     would bring the two splice sites together, and its z-score against the same shuffles;
   - copies: BLASTN (legacy BLAST 2.2.26, -e --evalue, no filter) of the intron against its genome: the number of hits of
@@ -149,6 +149,7 @@ def main():
         # structure
         for r in mine:
             if r["length"] > a.max_fold: continue        # folding of long introns: too slow for the shuffles
+            if "N" in r["seq"]: continue                 # an assembly gap in the intron: its sequence and ends are unknown
             s = r["seq"].replace("T", "U")
             # shuffles seeded per intron, so that its z-scores do not depend on the other models scored
             rng = random.Random(f"{a.seed}:{g}:{r['gene']}:{r['intron']}")

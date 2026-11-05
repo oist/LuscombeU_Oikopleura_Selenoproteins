@@ -2488,3 +2488,28 @@ no earlier step waits for them.
   orthology among the appendicularian copies (one locus per genome). Table MACHINERY now has a column "Orthology
   from" (best hits / trees) and the margin to the next human gene in the best-hit rows (Charles: make the two cases
   visible); Table SELENO-ORTHOLOGY unchanged, as every selenoprotein family has a tree.
+- EEFSEC review (2026-11-05, Charles: "move to the next gene"). O. dioica: OSKA2016 (transcript, 523 aa) and OdB3
+  (EST + GenBank, 523 aa, LTR insertion) unchanged. OKI2018: the assembly has TTTTT at NC_137291.1:4721943-4721947,
+  the four transcripts (TRINITY_DN4400 i1, i4, i8, i11) and KUM-M3-7f have TTTTTT; the prediction (515 aa) splices a
+  73-nt GT-AG intron around the frameshift (KILSE for SFLMKSSDPEFDQ); the transcripts splice a 50-nt GT-AG intron at the
+  OSKA2016/OdB3 position and encode 523 aa. The transcript rule kept the assembly (identity 0.825 vs 0.817, margin
+  0.02), and its note said "less similar": reworded ("not closer by more than 0.02", three decimals). New override
+  form "transcript:NAME" in machinery_overrides.tsv (gold_standard.py): OKI EEFSEC takes TRINITY_DN4400_c0_g1_i1 (the
+  T and 24 CDS mismatches; i4 81, i8 41, i11 73). Other species (no transcripts), curator chains from exonerate of the
+  O. dioica proteins, junctions rescanned (curation/junction_rescan.py, make junction-rescan,
+  results/tables/junction_rescan_EEFSEC.tsv): O. albicans 522 aa (first exon of the prediction = copy of part of exon 1
+  3.8 kb upstream with a GT-TG intron; 36-nt TT-AG intron read as coding; AT-AG 647 nt after DCPGHGSL; GA-AG 2,052;
+  last intron across the 1,270-N gap, ends unknown); O. vanhoeffeni 505 aa (TG-AG 1,431 after DCPGHGSL, same position
+  and phase as the O. albicans AT-AG; TA-AG 2,220 at the position and phase of the O. albicans GA-AG; GG-AG 670, the
+  non-class placements score at most 14 more; GT-AG 4,818 instead of AC-AG 4,830; 14-N gap in exon 3, ~20 residues
+  missing); O. longicauda 384 aa, incomplete (contig of 3,357 nt ends ~50 residues before the C-terminus; the
+  prediction read the last intron to a stop and had an AT-TG intron 16 nt from a GT-AG one; after residue 56, 75 nt
+  encode no G3 motif DCPGH, which no frame of the contig encodes, and the frame changes after an A6 run at 1595-1600:
+  model from the internal ATG of IIDMM). Rule used without transcripts: keep a non-class site only when the class
+  sites nearby add or remove residues against all references (first intron of O. albicans and O. vanhoeffeni);
+  otherwise the class site (O. vanhoeffeni third intron). intron_content.py: introns holding N are not folded (the
+  O. albicans gap intron had z-scores computed on 1,270 N). To check on Deigo: the forward-only Olon eEFsec.10/.13
+  locus SCLD01023724.1 (an intact G3 region?) and the SEPSECS extra predictions (Olon SecS.4, Mery SecS.3).
+  Needs: make gold-standard-machinery machinery-regions region-proteins intron-content machinery-reannotation-inputs;
+  then locally intron-map, junction-rescan, the counts of the gold-standard paragraph and of the O. albicans intron
+  comparison (21 other O. albicans introns scored), and the EEFSEC panel.
