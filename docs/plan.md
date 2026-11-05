@@ -2442,3 +2442,22 @@ no earlier step waits for them.
   Transcripts that do not span the anchor (3' ESTs) are still not used. To run on Deigo: make gold-standard-machinery
   intron-content machinery-reannotation-inputs; then check which models change, whether the OSKA2016 and OdB3 SEPSECS
   curator chains are supported, and redraw the panels.
+- Run 3a5bb89 (Deigo, re-anchored transcripts): only SEPSECS changed in substance. OSKA2016: 7 transcripts now
+  (comp20351_c1_seq1-6 and the fragment); OdB3: 17 ESTs. Both contradict the curator chains of 2026-11-04 at two
+  introns: second intron (human residue 132) 74 nt GA-AG in the coding transcripts (OSKA2016 seq2, seq4, seq5; OdB3 4
+  ESTs and GenBank CBY09053.1), the curator chain had 68 nt GT-AG; fourth intron (human 258) 60 nt GA-AG (OSKA2016 all
+  six; OdB3 12 of 13 spanning ESTs, GenBank), the curator chain had 48 nt GT-AG (from exonerate). Other transcripts
+  (OSKA2016 seq1, seq3, seq6; OdB3 4 ESTs) use a donor 34 nt further in the second intron: frameshift. The transcript
+  chains give 474 (OSKA2016) and 476 aa (OdB3 = GenBank unchanged), more similar to OKI2018 and human than the curator
+  chains (global scores 1859/960.5 and 1879/952 against 1837/942.5 and 1857/934). Overrides replaced by these chains.
+  Corrections to the SEPSECS review note above: OSKA2016 and OdB3 have GA-AG at 132/0 and 258/0, like OKI2018, so the
+  "donor changes" there were artefacts of the curator chains; O. albicans has GT-AG at 258/0, so GA at 258 is shared by
+  the three O. dioica species; the remaining donor difference is 332/2 (GC-AG in OKI2018, GA-AG in OSKA2016 and OdB3).
+  The two Okinawa-only introns (62/2, 85/1) stand: the OSKA2016 transcripts have one exon over that region.
+  Also found: the curator chain's UTR came from the longest end-compatible transcript, seq1/seq5, which start 1.2 kb
+  upstream with five exons holding a 225-codon ORF (the upstream gene; ANISEED fused the two genes): 816-nt "5' UTR".
+  gold_standard.py (sense mode): UTR extensions holding an ORF of >= 100 codons are not grafted (utr_orf), so seq4
+  (18 nt before the start codon) gives the 5' UTR. Manuscript: SEPSECS sentence of the gold-standard paragraph and
+  Methods rewritten; counts of that paragraph to update after the rerun (OdB3 SEPSECS now the GenBank model unchanged).
+  To run: make gold-standard-machinery intron-content machinery-reannotation-inputs (O. dioica intron counts and
+  z-score paragraphs to recheck: four introns change length and class).

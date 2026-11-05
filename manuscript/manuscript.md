@@ -361,10 +361,14 @@ holds another copy over 92% of its length (99.7% identity), two partial copies a
 fragments at five loci (90 to 94%); Bar2_p4 holds a complete copy (97.0%) and five fragments, all on its Y-specific
 region (sequence YSR); the four assemblies of the two other species (OKI2018, KUM-M3-7f, OSKA2016, AOM-5-5f) have
 none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py`). In SEPSECS,
-the OSKA2016 model read a 48-nucleotide intron as coding, and the OSKA2016 and OdB3 models took splice sites inside
-another intron (9 and 30 nucleotides read as coding), at two introns that the OKI2018 transcripts splice; AOM-5-5f and Bar2_p4 have the
-same splice sites as OSKA2016 and OdB3, and the curator set the exon chains that splice these introns at the
-homologous sites (480 and 482 residues). The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
+the predictions and the protein alignments of OSKA2016 and OdB3 read parts of two GA-AG introns as coding; the
+OSKA2016 transcripts and the OdB3 ESTs splice them whole (74 and 60 nucleotides), and the models follow them (474 and
+476 residues; the OdB3 model is the GenBank model unchanged). In both species, other transcripts use a donor 34
+nucleotides further in the first of these introns, which shifts the frame. <!-- SEPSECS: run of 2026-11-05 with the
+transcripts re-anchored (gold_standard.py, sense mode) and the curator chains of curation/machinery_overrides.tsv
+taken from them; the chains set on 2026-11-04 from protein alignments (480 and 482 residues) were wrong at these two
+introns. Counts of this paragraph (public models unchanged, introns moved, new exon chains) to update after the rerun.
+--> The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot); all have start and stop codons. The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
@@ -1591,8 +1595,12 @@ of the other assemblies, keeping the candidates within 5% of the best score, the
 models; the second pass also took as candidates the protein-to-genome alignments of these proteins (miniprot [@Li2023],
 `curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
 chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
-*O. albicans* PSTK, OSKA2016 and OdB3 SEPSECS), and the model was read on the genome along that chain, from the codon of
-the chain nearest to the anchor when the chain spliced the anchor out. Where the best transcript and the assembly
+*O. albicans* PSTK, SEPSECS of OSKA2016, OdB3, *O. albicans* and *O. vanhoeffeni*), and the model was read on the genome
+along that chain, from the codon of the chain nearest to the anchor when the chain spliced the anchor out. A transcript
+whose alignment spanned the anchor but held it in an intron (where the prediction had read that intron as coding) was
+anchored on its own aligned codon nearest to the anchor, in the frame whose protein scored best against the reference
+proteins; transcript exons beyond the coding sequence were not taken as UTRs when they held an open reading frame of
+100 codons or more (another gene of an operon transcribed with this one). Where the best transcript and the assembly
 disagreed by indels in the coding sequence, the protein, from the assembly or from the transcript, was the one closer
 to the same protein in the other assemblies, as for the selenoprotein genes; these included the assemblies of other
 individuals of the three species (KUM-M3-7f, AOM-5-5f, Bar2_p4), in which the gold-standard protein of the same species

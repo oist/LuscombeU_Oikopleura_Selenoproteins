@@ -754,22 +754,53 @@ def end_support(m, tms, genome):
     return out
 
 
+UTR_ORF_CODONS = 100   # an open reading frame of this length in a UTR extension is another coding sequence (sense mode)
+
+
+def utr_orf(blocks, c0, c1, side, genome, strand):
+    """Length in codons of the longest open reading frame (ATG to stop, or to the end) of the part of a transcript
+    beyond a chain's first base c0 (side "left") or last base c1 (side "right"), on the gene strand, when it reaches
+    UTR_ORF_CODONS; 0 otherwise."""
+    part = [(a, min(b, c0)) for a, b in blocks if a < c0] if side == "left" else [(max(a, c1), b) for a, b in blocks if b > c1]
+    part = [(a, b) for a, b in part if b > a]
+    if not part: return 0
+    seq, _ = spliced(genome, part, strand)
+    best = 0
+    for f in range(3):
+        cod = [seq[i:i + 3] for i in range(f, len(seq) - 2, 3)]
+        i = 0
+        while i < len(cod):
+            if cod[i] == "ATG":
+                j = i
+                while j < len(cod) and cod[j] not in STOPS: j += 1
+                best = max(best, j - i); i = j
+            i += 1
+    return best if best >= UTR_ORF_CODONS else 0
+
+
 def graft_utrs(m, genome, strand, tms=None):
     """Model of CDS rows (prediction, annotation without exons) extended with the UTR exons of the compatible
     supporting transcripts that reach furthest 5' and 3' (their blocks beyond the ends of the chain); the coding
     sequence is unchanged. For the curator's chains (m["override"]), the transcripts of tms that agree with the chain
     at that end are used instead (end_support)."""
     if not m["cds_only"]: return m
+    c0, c1 = min(a for a, _ in m["blocks"]), max(b for _, b in m["blocks"])
+    # sense mode: a transcript whose extension beyond the chain holds a long open reading frame continues into another
+    # coding sequence (an operon neighbour transcribed with the gene, as in the OSKA2016 SEPSECS transcripts that start
+    # at the upstream gene), whose exons are not UTRs of this gene
+    ok = (lambda t, side: True) if SEC else (lambda t, side: not utr_orf(t["blocks"], c0, c1, side, genome, strand))
     if m.get("override") and tms:
         es = end_support(m, tms, genome)
+        es = {side: [t for t in ts if ok(t, side)] for side, ts in es.items()}
         if not es["left"] and not es["right"]: return m
         left = min(es["left"], key=lambda t: min(a for a, _ in t["blocks"])) if es["left"] else None
         right = max(es["right"], key=lambda t: max(b for _, b in t["blocks"])) if es["right"] else None
     elif m["support"]:
-        left = min(m["support"], key=lambda t: min(a for a, _ in t["blocks"]))
-        right = max(m["support"], key=lambda t: max(b for _, b in t["blocks"]))
+        ls, rs = [t for t in m["support"] if ok(t, "left")], [t for t in m["support"] if ok(t, "right")]
+        left = min(ls, key=lambda t: min(a for a, _ in t["blocks"])) if ls else None
+        right = max(rs, key=lambda t: max(b for _, b in t["blocks"])) if rs else None
+        if not left and not right: return m
     else: return m
-    c0, c1 = min(a for a, _ in m["blocks"]), max(b for _, b in m["blocks"])
     blocks = list(m["blocks"])
     if left: blocks += [(a, min(b, c0)) for a, b in left["blocks"] if a < c0]
     if right: blocks += [(max(a, c1), b) for a, b in right["blocks"] if b > c1]
