@@ -2481,3 +2481,10 @@ no earlier step waits for them.
 - Run 0d19c70 (chimera fix): candidate tables lose the chimeric transcripts (OKI2018 PSTK 3 transcripts, OdB3 SEPSECS
   13 ESTs, OdB3 EEFSEC 5); no model changed (no GFF3 change), so intron content stands. Machinery panels redrawn; the
   PSTK panel is the one of the deck slides again.
+- SEPSECS orthology (2026-11-05, Charles: "does it need an orthology analysis or are the reciprocal best hits
+  unequivocal?"): the forward blastp hits no other human gene (E <= 0.001) in any genome, so best hits settle it; no
+  tree. Not settled by best hits: the two forward-only shorter predictions (Olon SecS.4, 168 aa, 188 bits; Mery SecS.3,
+  100 bits; locus not checked: grep '^>SecS\.' in the Olon and Mery final-run Selenoprofiles FASTA on Deigo) and
+  orthology among the appendicularian copies (one locus per genome). Table MACHINERY now has a column "Orthology
+  from" (best hits / trees) and the margin to the next human gene in the best-hit rows (Charles: make the two cases
+  visible); Table SELENO-ORTHOLOGY unchanged, as every selenoprotein family has a tree.

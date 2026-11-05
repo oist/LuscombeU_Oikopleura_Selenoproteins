@@ -12,8 +12,10 @@ Rows added to the census:
   tree and without selenocysteine (the copy that groups with the tunicate glycine forms); a genome has it when such a
   prediction exists, or when the machinery gold standard has a model of it (SEPHS_b; "found (assembly gaps)" when more
   than 2% of its protein is read from assembly gaps, a protein left out of the trees).
-The orthology column is written from these results: reciprocal best hits for SEPSECS, EEFSEC and TRNAU1AP; the
-trees and AU tests for PSTK, SEPHS and the SECIS-binding protein. The SECIS-binding protein row is named
+The orthology column is written from these results: reciprocal best hits for SEPSECS, EEFSEC and TRNAU1AP, with
+the margin to the next human gene (or "no other human gene hit"); the trees and AU tests for PSTK, SEPHS and the
+SECIS-binding protein. The column "Orthology from" names which of the two the row rests on (decision of 2026-11-05:
+best hits are enough when no other human gene comes close, trees are needed when one does). The SECIS-binding protein row is named
 SECISBP2/SECISBP2L (ortholog of the single tunicate protein; its relation to the two vertebrate paralogs is not
 resolved, decision of 2026-11-02 after the trees on the gold-standard proteins).
 Outputs: --markdown and --table.
@@ -52,8 +54,19 @@ def rbh_statement(rbh, family):
     with_rbh = [g for g in GENOMES if "RBH" in by_genome.get(g, ())]
     forward = [g for g in GENOMES if g not in with_rbh and "forward" in by_genome.get(g, ())]
     if not with_rbh: return "no reciprocal best hit"
-    if len(with_rbh) == 1 and not forward: return f"reciprocal best hit ({NAMES[with_rbh[0]]})"
-    text = "reciprocal best hit in all nine genomes" if len(with_rbh) == len(GENOMES) else "reciprocal best hit"
+    # margin of the reciprocal best hits to the next human gene; "-" when no other human gene is hit
+    nxt = [(r["next_gene"], float(r["margin"])) for r in rbh
+           if r["family"] == family and r["genome"] in with_rbh and r["status"].startswith("RBH")]
+    others = sorted({n for n, _ in nxt if n != "-"})
+    if not others: margin = "no other human gene hit"
+    else:
+        m = [x for n, x in nxt if n != "-"]
+        span = f"{min(m):.0f} bits" if round(min(m)) == round(max(m)) else f"{min(m):.0f} to {max(m):.0f} bits"
+        margin = f"{span} ahead of {', '.join(others)}" + ("" if len(m) == len(nxt) else "; elsewhere no other human gene hit")
+    if len(with_rbh) == 1 and not forward: return f"reciprocal best hit ({NAMES[with_rbh[0]]}; {margin})"
+    words = "zero one two three four five six seven eight nine".split()
+    count = "all nine genomes" if len(with_rbh) == len(GENOMES) else f"{words[len(with_rbh)]} genomes"
+    text = f"reciprocal best hit in {count} ({margin})"
     if forward: text += "; best hit only in " + " and ".join(NAMES[g] for g in forward)
     return text
 
@@ -133,16 +146,18 @@ def main():
     }
     for gene, fam in RBH_FAMILY.items(): orthology[gene] = rbh_statement(rbh, fam)
 
+    source = lambda gene: "-" if gene == "tRNA-Sec" else "best hits" if gene in RBH_FAMILY else "trees"
     out = []
     for r in census:
-        out.append([ROW_NAMES.get(r["gene"], r["gene"]), orthology.get(r["gene"], "")] + [r[g] for g in GENOMES])
+        out.append([ROW_NAMES.get(r["gene"], r["gene"]), source(r["gene"]), orthology.get(r["gene"], "")] +
+                   [r[g] for g in GENOMES])
         if r["gene"] == "SEPHS2":
-            out.append(["SEPHS, second copy", orthology["SEPHS, second copy"]] +
+            out.append(["SEPHS, second copy", source("SEPHS, second copy"), orthology["SEPHS, second copy"]] +
                        ["found (assembly gaps)" if g in gaps else "found" if g in second_genomes else "not found"
                         for g in GENOMES])
-    header = ["Gene", "Orthology"] + [NAMES[g] for g in GENOMES]
+    header = ["Gene", "Orthology from", "Orthology"] + [NAMES[g] for g in GENOMES]
     with open(a.table, "w") as o:
-        o.write("\t".join(["gene", "orthology"] + GENOMES) + "\n")
+        o.write("\t".join(["gene", "orthology_from", "orthology"] + GENOMES) + "\n")
         for r in out: o.write("\t".join(r) + "\n")
     with open(a.markdown, "w") as o:
         o.write("| " + " | ".join(header) + " |\n|" + "---|" * len(header) + "\n")
