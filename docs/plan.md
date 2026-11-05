@@ -2478,3 +2478,6 @@ no earlier step waits for them.
   86 and 75 nt, GA-AG; OKI2018, KUM-M3-7f; spliced in TRINITY_DN6371_c0_g1_i1, the second retained in _i4 with an
   in-frame stop) written as a provisional "SEPSECS" subsection of the machinery Results, one Discussion sentence and a
   Methods sentence, for Charles to keep or drop. The first of them has paired ends (z -4.0).
+- Run 0d19c70 (chimera fix): candidate tables lose the chimeric transcripts (OKI2018 PSTK 3 transcripts, OdB3 SEPSECS
+  13 ESTs, OdB3 EEFSEC 5); no model changed (no GFF3 change), so intron content stands. Machinery panels redrawn; the
+  PSTK panel is the one of the deck slides again.
