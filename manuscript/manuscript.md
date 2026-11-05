@@ -367,13 +367,16 @@ same splice sites as OSKA2016 and OdB3, and the curator set the exon chains that
 homologous sites (480 and 482 residues). The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
-(miniprot); all have start and stop codons, but five lack 47 to 239 N-terminal residues of the OKI2018 protein (the
-SECIS-binding proteins of the three species and *O. albicans* SEPSECS), on short contigs or in the divergent N-terminal
-region of the SECIS-binding protein, and the prediction of *O. albicans* PSTK missed its last exon, which the curator
-added (see the PSTK section).
+(miniprot); all have start and stop codons. The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
+OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
+that protein. The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (see the
+PSTK section) and the first exon of *O. albicans* SEPSECS (31 residues, found by aligning the *O. vanhoeffeni* protein;
+the prediction started at an internal methionine, 45 residues downstream), and moved an acceptor of *O. vanhoeffeni*
+SEPSECS from a TT-AA site to the AG 9 nucleotides upstream, which alignments of the OKI2018 and *O. albicans* proteins
+both choose.
 
 <!-- Machinery gold standard: make gold-standard-machinery (curation/machinery_anchors.py, machinery_projections.py,
-gold_standard.py --anchor sense), run of 2026-11-04 (commit b69bfa8), with the anchors of
+gold_standard.py --anchor sense), run of 2026-11-05 (commit 8aac2be), with the anchors of
 curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
 other species to check at the final version, after the review of their EEFSEC models (assembly gaps in O. albicans). -->
 
@@ -895,13 +898,14 @@ this intron has no placement in the intron classes either, but no transcript tes
 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
 both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
-insertion of a transposon. Like 20 of the 24 introns of the machinery models of *O. albicans*, it shares sequence with
+insertion of a transposon. Like 21 of the 25 introns of the machinery models of *O. albicans*, it shares sequence with
 at least ten other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
-not single it out; its two ends, however, pair more than those of shuffled sequences (z = -3.3), as much as those of the
-most paired of the 20 other *O. albicans* introns scored (z = -3.2). <!-- z-scores of this paragraph and of the PSTK
-fourth intron: Deigo run 5313acd of make intron-content, shuffles seeded per intron (OSKA2016 -6.06, OdB3 -6.08, ranks
-7 and 6 of 276; OKI2018 -0.71; O. albicans PSTK intron 2 -3.25, SEPSECS intron 3 -3.21). Earlier runs with a shared
-generator: -5.5/-5.8 and -4.1 (13b50c5), -4.55/-6.12 and -3.43 (ccaebc0). -->
+not single it out; its two ends, however, pair more than those of shuffled sequences (z = -3.3), about as much as those
+of the most paired of the 21 other *O. albicans* introns scored (z = -3.1). <!-- z-scores of this paragraph and of the
+PSTK fourth intron: shuffles seeded per intron; O. dioica values from Deigo run 5313acd (OSKA2016 -6.06, OdB3 -6.08,
+ranks 7 and 6 of 276; OKI2018 -0.71), O. albicans values from run 8aac2be, after the first exon of O. albicans SEPSECS
+was added (PSTK intron 2 -3.25; SEPSECS intron 4, the former intron 3, -3.11, intron 2 -3.07). Earlier runs with a
+shared generator: -5.5/-5.8 and -4.1 (13b50c5), -4.55/-6.12 and -3.43 (ccaebc0). -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
 fragmented assemblies of *O. longicauda*, *B. stygius* and *M. erythrocephalus*, only as fragments, which Selenoprofiles

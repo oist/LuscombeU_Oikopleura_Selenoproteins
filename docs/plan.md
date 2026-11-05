@@ -2421,3 +2421,10 @@ no earlier step waits for them.
     of it in OdB3: an insertion). The 75-nt intron (85/1) is retained in OKI2018 transcript i4. Not in the text yet:
     to propose to Charles (Results, gold-standard paragraph or a SEPSECS paragraph; Discussion, young introns with
     unusual sites).
+- SEPSECS gold standard rerun (Deigo, commit 8aac2be, 2026-11-05 JST): O. albicans 505 aa (6 exons, GC-AG x2),
+  O. vanhoeffeni 459 aa (7 exons; fifth intron TT-AG, no placement in the classes); O. dioica models unchanged. Panel
+  inputs now read the OSKA2016 splice sites from the genome (the GA-AG intron of the curator's chain is drawn as such);
+  the five machinery panels redrawn ("Ciona: RefSeq"). Manuscript: gold-standard paragraph (the four SECIS-binding
+  proteins align from OKI2018 residues 33 to 240; O. albicans SEPSECS first exon and O. vanhoeffeni acceptor), O. albicans
+  intron counts (21 of 25 with >= 10 copies; most paired other intron z -3.1). Open: Okinawa-specific SEPSECS introns
+  in the text or not (Charles).
