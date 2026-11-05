@@ -2513,3 +2513,17 @@ no earlier step waits for them.
   Needs: make gold-standard-machinery machinery-regions region-proteins intron-content machinery-reannotation-inputs;
   then locally intron-map, junction-rescan, the counts of the gold-standard paragraph and of the O. albicans intron
   comparison (21 other O. albicans introns scored), and the EEFSEC panel.
+- Run 5829a72 read (2026-11-05): EEFSEC models as curated (OKI2018 523 aa from TRINITY_DN4400_c0_g1_i1, fix "change
+  the coding sequence of XP_081629120.1"; Olon 384 aa incomplete; Oalb 522; Ovan 505). Gold-standard counts: introns
+  moved 2, new exon chains 9, other coding sequence on the same exons 2, public models unchanged 2. O. dioica intron
+  content unchanged except repeated bases (243 with at least one, 160 with two or three; OKI2018 EEFSEC intron 1 now
+  the 50-nt intron). EEFSEC panel redrawn (OKI2018 gold model on the transcript chain). intron_map.py: positions of
+  introns in the protein read from the exonerate alignment (vulgar) for the other individuals and for gold models whose
+  protein comes from a transcript (the OKI2018 phases were shifted by the missing T); SEPSECS and PSTK maps unchanged;
+  results/tables/intron_map_EEFSEC.tsv added (O. albicans and O. vanhoeffeni share two intron positions: column 100
+  phase 0, AT-AG and TG-AG; column 155 phase 1, GA-AG and TA-AG). The rule "any N, no folding" of 2000084 left out
+  four O. albicans introns that hold single N or gaps; single N are ambiguous bases: now a gap is a run of 10 N or more,
+  such introns are not folded and their ends (outside the gap) are scored against shuffles of the intron without N.
+  This matters for the O. albicans PSTK last intron of the manuscript (z = -3.3 computed with a 227-N gap shuffled
+  into the controls), and for SBP2 intron 3 (499 N) and SEPHS_b intron 4 (809 N). Needs on Deigo: make intron-content;
+  then the O. albicans sentence (z of the PSTK intron, number of other introns scored).

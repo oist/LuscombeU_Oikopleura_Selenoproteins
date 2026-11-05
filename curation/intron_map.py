@@ -3,13 +3,16 @@
 
 For each gold-standard model of the gene (--gold-dirs, <NAME>.gff3 and <NAME>.proteins.faa; the assemblies of
 --assemblies), the coding exons give the position of each intron in the protein (the residue after which it lies, x,
-and its phase: 0 between codons, 1 or 2 inside codon x + 1), its length and its splice sites, read in the region of
+and its phase: 0 between codons, 1 or 2 inside codon x + 1; when the protein was taken from a transcript because the
+assembly has an indel in the coding sequence, the positions come from the exonerate alignment of that protein to the
+region, as below), its length and its splice sites, read in the region of
 make machinery-regions (results/gene_regions/<gene>/<NAME>.fa, first record): the placement of the model and the
 equivalent placements (the intron moved across the bases repeated at its two ends, which give the same spliced
 sequence; as figures/intron_placements.py). For the assemblies of other individuals (--others NAME=SOURCE), the
 gold-standard protein of SOURCE is aligned to the region of NAME with exonerate (protein2genome, best alignment, introns
 of 20 nt or more), so that their introns are found independently of the source's exon chain; each of these introns is
-moved to its equivalent placement of an intron class nearest to the alignment, when there is one. The proteins of all
+moved to its equivalent placement of an intron class nearest to the alignment, when there is one; the position of
+an intron in the protein is read from the alignment (frameshifts of the assembly do not shift it). The proteins of all
 models and the reference proteins (--references, FASTA: the human protein first) are aligned with MAFFT L-INS-i; each
 intron is placed at the alignment column of residue x + 1 (the residue that follows or contains it), and reported with
 the residue of the first reference at or before that column. Introns of different models at the same column and phase
@@ -54,6 +57,43 @@ def introns_of(exons, gs, to_class=False):
     return out
 
 
+def exonerate_introns(protein, r, to_class=True):
+    """Introns of the best exonerate protein2genome alignment of protein on the region (gene strand), with their
+    position in the protein read from the alignment (vulgar: residues of the query before the intron, and the bases of
+    a codon split by it), so that a frameshift of the assembly inside an exon does not shift the phases of the introns
+    after it: (residue, phase, length, site, placements), as introns_of; with to_class, each intron is first moved to
+    its equivalent placement of an intron class nearest to the alignment."""
+    with tempfile.TemporaryDirectory() as d:
+        open(f"{d}/q.fa", "w").write(f">q\n{protein}\n"); open(f"{d}/t.fa", "w").write(f">t\n{r['gs']}\n")
+        out = subprocess.run(["exonerate", "--model", "protein2genome", "--bestn", "1", "--showalignment", "no",
+                              "--showvulgar", "yes", "--minintron", "20", "--maxintron", "20000",
+                              f"{d}/q.fa", f"{d}/t.fa"], capture_output=True, text=True, check=True).stdout
+    v = next((l.split() for l in out.splitlines() if l.startswith("vulgar:")), None)
+    if v is None: return []
+    if v[8] != "+": raise SystemExit("exonerate alignment not on the gene strand of the region")
+    q, t, split, res = int(v[2]), int(v[6]), 0, []
+    ops = v[10:]
+    for i in range(0, len(ops), 3):
+        op, ql, tl = ops[i], int(ops[i + 1]), int(ops[i + 2])
+        if op == "5": donor, cds_pos = t, 3 * q + split
+        if op == "3": res.append((cds_pos, donor, t + tl))
+        if op == "S":
+            if split == 0 and ql == 0: split = tl          # bases of a codon before the intron
+            else: q += ql; split = 0                        # the rest of the codon after it
+        elif op in "MCG":
+            q += ql
+        t += tl
+    gs, out = r["gs"], []
+    for cds_pos, b1, a2 in res:
+        k = 0
+        if to_class:
+            cls = [kk for kk, site in placements(gs, b1, a2) if site in CLASSES]
+            if cls: k = min(cls, key=lambda kk: (abs(kk), kk))
+        b, a = b1 + k, a2 + k
+        out.append(((cds_pos + k) // 3, (cds_pos + k) % 3, a - b, gs[b:b + 2] + "-" + gs[a - 2:a], placements(gs, b, a)))
+    return out
+
+
 def exonerate_exons(protein, r):
     """Coding exons (gene-strand intervals of r["gs"]) of the best exonerate protein2genome alignment of protein."""
     with tempfile.TemporaryDirectory() as d:
@@ -89,7 +129,10 @@ def main():
         r = region(rpath)
         ex = gold_exons(f"{gdir}/{g}.gff3", gene, r)
         prot = next(s for n, s in read_fasta(f"{gdir}/{g}.proteins.faa").items() if n.startswith(gene + "|")).rstrip("*")
-        models[g] = ("gold standard", introns_of(ex, r["gs"]))
+        if translate("".join(r["gs"][x:y] for x, y in ex)).rstrip("*") == prot:
+            models[g] = ("gold standard", introns_of(ex, r["gs"]))
+        else:   # protein from a transcript (the assembly has an indel in the coding sequence): positions from exonerate
+            models[g] = ("gold standard, protein from a transcript, positions by exonerate", exonerate_introns(prot, r))
         proteins[g] = prot
     for spec in a.others:
         name, src = spec.split("=")
@@ -99,7 +142,7 @@ def main():
         ex = exonerate_exons(proteins[src], r)
         if not ex: continue
         prot = translate("".join(r["gs"][x:y] for x, y in ex))
-        models[name] = (f"exonerate of the {src} protein", introns_of(ex, r["gs"], to_class=True))
+        models[name] = (f"exonerate of the {src} protein", exonerate_introns(proteins[src], r))
         proteins[name] = prot.rstrip("*")
     refs = a.references or f"figures/inputs/reannotation_{gene}.fa"
     ref = [(n.split()[0].replace(" ", "_"), s.replace("*", "")) for n, s in read_fasta(refs).items()

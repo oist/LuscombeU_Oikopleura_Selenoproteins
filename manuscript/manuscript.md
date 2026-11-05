@@ -341,8 +341,8 @@ The same procedure, with the selenocysteine codon replaced by a codon of the mac
 models ranked by their similarity to the human proteins and to the proteins of the other assemblies, gave gene models of
 the machinery genes (`results/tables/gold_standard_machinery.tsv`). Of the 15 models of *O. dioica* (PSTK, SEPSECS,
 EEFSEC, the SECIS-binding protein and the second SEPHS copy in each assembly), two are the public models unchanged (the
-OdB3 SECIS-binding protein and SEPSECS); the others need introns moved (3), a new exon chain (9) or another coding
-sequence on the same exons (1). The second SEPHS copy had no Selenoprofiles prediction in OSKA2016 and OdB3: an alignment of the
+OdB3 SECIS-binding protein and SEPSECS); the others need introns moved (2), a new exon chain (9) or another coding
+sequence on the same exons (2). The second SEPHS copy had no Selenoprofiles prediction in OSKA2016 and OdB3: an alignment of the
 OKI2018 protein found it in both (complete in OSKA2016, 82% identical; split by two assembly gaps in OdB3), and in the
 assemblies of three other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4), and these loci served as anchors. Five models
 have splice sites outside the intron classes of *O. dioica*. In PSTK, in the three assemblies, every transcript that
@@ -389,8 +389,7 @@ sites 6 nucleotides downstream would add two residues absent from the *O. dioica
 data test them. <!-- EEFSEC of the three species and OKI2018: curator rows of 2026-11-05 in
 curation/machinery_overrides.tsv (exonerate protein2genome of the O. dioica gold-standard proteins on
 results/gene_regions/EEFSEC, each junction rescanned by the global alignment score of the whole protein to the OSKA2016
-and OdB3 proteins); the counts of the paragraph (introns moved, new exon chains, other coding sequence) wait for the
-Deigo run. --> The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
+and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
 OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
 that protein. The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (see the
 PSTK section) and the first exon of *O. albicans* SEPSECS (31 residues, found by aligning the *O. vanhoeffeni* protein;
@@ -399,7 +398,7 @@ SEPSECS from a TT-AA site to the AG 9 nucleotides upstream, which alignments of 
 both choose.
 
 <!-- Machinery gold standard: make gold-standard-machinery (curation/machinery_anchors.py, machinery_projections.py,
-gold_standard.py --anchor sense), run of 2026-11-05 (commit 8aac2be), with the anchors of
+gold_standard.py --anchor sense), run of 2026-11-05 (commit 5829a72), with the anchors of
 curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
 other species to check at the final version; their EEFSEC models were reviewed on 2026-11-05. -->
 
@@ -876,7 +875,7 @@ bases the last bases of the previous exon (one to three bases, shaded in Figure 
 across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
 intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
 AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Bases repeated at the two ends of an intron are the rule rather
-than the exception: of the 280 gold-standard introns of OKI2018, OSKA2016 and OdB3, 242 have at least one and 159 have
+than the exception: of the 280 gold-standard introns of OKI2018, OSKA2016 and OdB3, 243 have at least one and 160 have
 two or three (2.2 on average in the 213 GT-AG introns; `make intron-content`), because exons often end with AG, as
 introns do. What is unusual in PSTK is not this ambiguity, but that no placement within it gives an intron class. Placed
 on an AG acceptor, the fourth intron is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same
@@ -921,13 +920,13 @@ this intron has no placement in the intron classes either, but no transcript tes
 nucleotides lies near its two ends (ATGGGATATTAT ... ATAATATCCCAT), and the same six nucleotides (AGAAAT) are found at
 both ends: the arrangement of the introns of *F. borealis* that arose from miniature inverted-repeat transposable
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
-insertion of a transposon. Like 21 of the 25 introns of the machinery models of *O. albicans*, it shares sequence with
+insertion of a transposon. Like 20 of the 23 introns of the machinery models of *O. albicans*, it shares sequence with
 at least ten other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
 not single it out; its two ends, however, pair more than those of shuffled sequences (z = -3.3), about as much as those
 of the most paired of the 21 other *O. albicans* introns scored (z = -3.1). <!-- z-scores of this paragraph and of the
 PSTK fourth intron: shuffles seeded per intron; O. dioica values from Deigo run 5313acd (OSKA2016 -6.06, OdB3 -6.08,
 ranks 7 and 6 of 276; OKI2018 -0.71), O. albicans values from run 8aac2be, after the first exon of O. albicans SEPSECS
-was added (PSTK intron 2 -3.25; SEPSECS intron 4, the former intron 3, -3.11, intron 2 -3.07). Earlier runs with a
+was added (PSTK intron 2 -3.25; SEPSECS intron 4, the former intron 3, -3.11, intron 2 -3.07). This PSTK intron holds a gap of 227 N in the assembly, which those shuffles moved into the ends of the controls: to be replaced by the run with shuffles of the intron without its N (intron_content.py of 2026-11-05), as the count of O. albicans introns scored. Earlier runs with a
 shared generator: -5.5/-5.8 and -4.1 (13b50c5), -4.55/-6.12 and -3.43 (ccaebc0). -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the
@@ -1687,10 +1686,11 @@ selected model and PMSF), and with that of other genes by the identity of the hu
 the genes of Figure REANNOTATION and of the machinery (global alignments, BLOSUM62; `make pstk-rates`,
 `stage2/pstk_rates.py`). For every intron of the gold-standard models of OKI2018, OSKA2016, OdB3 and *O.
 albicans* (`make intron-content`, `curation/intron_content.py`), we counted the bases repeated at its two ends, computed
-the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides without assembly gap) and the energy of
-the duplex between its
+the minimum free energy of its fold (RNAfold, introns up to 2,500 nucleotides) and the energy of the duplex between its
 first and last 25 nucleotides (RNAduplex; ViennaRNA 2.7.2 [@Lorenz2011]), each compared with 100 shuffled copies of the
-intron that keep its dinucleotide composition [@Altschul1985] (z-scores), and counted its copies elsewhere in its genome
+intron that keep its dinucleotide composition [@Altschul1985] (z-scores; an intron that holds an assembly gap, a run
+of 10 N or more, was not folded, and its ends, when outside the gap, were compared with shuffles of the intron without
+its N), and counted its copies elsewhere in its genome
 (BLASTN, legacy BLAST 2.2.26, E at most 10^-5^, hits of at least 40 nucleotides outside the intron, loci closer than 1
 kb merged).
 The 9-kb intron of OdB3 EEFSEC was compared with the same locus in Bar2_p4 (`make eefsec-insertion`,

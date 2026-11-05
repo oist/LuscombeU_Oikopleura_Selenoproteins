@@ -9,7 +9,9 @@ sequences of the samplesheet (gene strand). For each intron:
     --shuffles dinucleotide-preserving shuffles of the intron (Altschul and Erickson 1985; random generator seeded
     with --seed, the genome, the gene and the intron number, so that the z-scores of an intron do not change when other
     models are added): z < -2 means more
-    structure than expected from the composition; introns that hold an assembly gap (N) are not folded;
+    structure than expected from the composition; introns that hold an assembly gap (a run of 10 N or more; single N
+    are ambiguous bases, frequent in the O. albicans assembly) are not folded, and their ends, when outside the
+    gap, are compared with shuffles of the intron without its N;
   - ends: energy of the duplex between the first and the last --end nt of the intron (RNAduplex), a pairing that
     would bring the two splice sites together, and its z-score against the same shuffles;
   - copies: BLASTN (legacy BLAST 2.2.26, -e --evalue, no filter) of the intron against its genome: the number of hits of
@@ -149,14 +151,19 @@ def main():
         # structure
         for r in mine:
             if r["length"] > a.max_fold: continue        # folding of long introns: too slow for the shuffles
-            if "N" in r["seq"]: continue                 # an assembly gap in the intron: its sequence and ends are unknown
             s = r["seq"].replace("T", "U")
+            n = min(a.end, len(s) // 2)
+            # an assembly gap (a run of 10 N or more): the fold of the intron is unknown; the pairing of its ends is
+            # scored when they lie outside the gap, against shuffles of the intron without its N (shuffled N would
+            # fall into the ends of the controls and weaken their pairing)
+            gap = "N" * 10 in s
+            if gap and ("N" in s[:n] or "N" in s[-n:]): continue
             # shuffles seeded per intron, so that its z-scores do not depend on the other models scored
             rng = random.Random(f"{a.seed}:{g}:{r['gene']}:{r['intron']}")
-            sh = [dinuc_shuffle(s, rng) for _ in range(a.shuffles)]
-            e = rnafold([s] + sh)
-            r["mfe"] = e[0]; r["mfe_shuffled_mean"], r["mfe_z"] = zscore(e[0], e[1:])
-            n = min(a.end, len(s) // 2)
+            sh = [dinuc_shuffle(s.replace("N", "") if gap else s, rng) for _ in range(a.shuffles)]
+            if not gap:
+                e = rnafold([s] + sh)
+                r["mfe"] = e[0]; r["mfe_shuffled_mean"], r["mfe_z"] = zscore(e[0], e[1:])
             d = rnaduplex([(s[:n], s[-n:])] + [(x[:n], x[-n:]) for x in sh])
             r["ends_energy"] = d[0]; _, r["ends_z"] = zscore(d[0], d[1:])
         # copies in the genome
