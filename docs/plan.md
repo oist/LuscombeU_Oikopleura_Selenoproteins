@@ -2428,3 +2428,17 @@ no earlier step waits for them.
   proteins align from OKI2018 residues 33 to 240; O. albicans SEPSECS first exon and O. vanhoeffeni acceptor), O. albicans
   intron counts (21 of 25 with >= 10 copies; most paired other intron z -3.1). Open: Okinawa-specific SEPSECS introns
   in the text or not (Charles).
+- Transcripts left out of the machinery models (2026-11-05, Charles: no OSKA2016 or OdB3 transcript in the SEPSECS
+  panel). gold_standard.py takes a transcript only when an aligned exon holds the anchor codon; for the machinery genes
+  the anchor is a codon of the prediction, and when the prediction read an intron as coding the anchor falls in that
+  intron of the transcripts. Cached alignments (work/stage2/gold_standard/*.transcripts.paf, Deigo; the machinery run
+  uses the default --work) over the SEPSECS coding span: OSKA2016 comp20351_c1_seq1-6 (1.4-2.3 kb, spanning the whole
+  gene, seq4 and seq6 ending 18 nt upstream of the start codon) besides the 103-nt comp35239_c0_seq1 drawn so far; OdB3
+  24 ESTs (KT0AAA..., several spanning the anchor, others the 3' part only). The same rule had left out the two OdB3
+  PSTK ESTs with the alternative acceptor. Change (sense mode only): reanchored_transcript() anchors such a transcript
+  on its aligned codon nearest to the anchor, in the frame whose protein scores best against the reference proteins;
+  transcript chains carry that anchor; when one is chosen, its codon becomes the gene's anchor (as for the curator's
+  chains). Tested on synthetic genes (both strands; anchor in a 48-nt intron). Selenocysteine mode unchanged.
+  Transcripts that do not span the anchor (3' ESTs) are still not used. To run on Deigo: make gold-standard-machinery
+  intron-content machinery-reannotation-inputs; then check which models change, whether the OSKA2016 and OdB3 SEPSECS
+  curator chains are supported, and redraw the panels.

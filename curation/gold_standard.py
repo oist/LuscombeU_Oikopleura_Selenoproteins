@@ -7,7 +7,11 @@ no selenocysteine: the codon of each gene is then a sense codon of the machinery
 (curation/machinery_genes.tsv, written by curation/machinery_anchors.py), read as an ordinary codon; the context
 check is skipped (empty context), the GFF3 has no transl_except, and the annotation status and fix are worded for a
 codon without selenocysteine ("codon inside the coding sequence, in frame"; "none" when the annotated coding sequence
-is the model's). Everything below that refers to the TGA applies to that codon.
+is the model's). Everything below that refers to the TGA applies to that codon, except that a transcript whose
+alignment spans the codon but holds it in an intron (the prediction read that intron as coding) is anchored on its
+own aligned codon nearest to it, in the frame whose protein is closest to the reference proteins
+(reanchored_transcript; added 2026-11-05, when the OSKA2016 SEPSECS transcripts and the OdB3 SEPSECS ESTs were found to
+be left out); when such a transcript's chain is chosen, its codon becomes the gene's anchor in the table.
 
 For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   1. Transcripts. The transcripts of the assembly (stage1/samplesheet.csv: the OKI2018 Trinity transcriptome, the
@@ -381,6 +385,29 @@ def transcript_model(aln, tx, genome, codon0, strand):
         m["cds_indels"] = m["cds_inserted"] + m["cds_deleted"]
         if stop is not None: m["stop_genome"] = gpos[-1]
     return m
+
+
+def reanchored_transcript(aln, tx, genome, codon0, strand, score):
+    """Sense mode (--anchor sense): model of a transcript whose alignment spans the anchor codon but holds it in an
+    intron or a deletion, as when the prediction that gave the anchor read that intron as coding. The transcript is
+    anchored on its aligned codon nearest to the anchor, in each of the three frames, and the frame whose protein
+    scores best (score(protein): the summed alignment score to the reference proteins of the gene) is kept, with its
+    codon (0-based start, the lowest genome position) in tm["anchor"]; None when no frame gives a protein."""
+    g2q = walk(aln)["g2q"]
+    whole = lambda p: all(g2q.get(p + i) == g2q[p] + i for i in (1, 2))
+    aligned = [p for p in g2q if whole(p)]
+    if not aligned: return None
+    p0 = min(aligned, key=lambda p: (abs(p - codon0), p))
+    best = None
+    for p in (p0, p0 + 1, p0 + 2):
+        if p not in g2q or not whole(p): continue
+        tm = transcript_model(aln, tx, genome, p, strand)
+        if not tm or not tm["protein"]: continue
+        s = score(tm["protein"])
+        if best is None or s > best[0]: best = (s, p, tm)
+    if best is None: return None
+    best[2]["anchor"] = best[1]
+    return best[2]
 
 
 def context_check(context):
@@ -965,11 +992,17 @@ def main():
                 fwd = txseq[x["q"]] if x["strand"] == "+" else rc(txseq[x["q"]])
                 cg, moved = refine_junctions(x, fwd, gs, strand, a.window)
                 tm = transcript_model(dict(x, cigar=cg), txseq[x["q"]], gs, codon0, strand)
+                if tm is None and not SEC:
+                    # sense anchor in an intron of the transcript (the prediction that gave the anchor read that
+                    # intron as coding): the transcript is anchored on its own aligned codon nearest to the anchor
+                    tm = reanchored_transcript(dict(x, cigar=cg), txseq[x["q"]], gs, codon0, strand,
+                                               lambda p, gene=r["gene"], g=g: ref_score(p, gene, g)[0])
                 if tm: tm["moved"] = moved; tms.append(tm)
             # candidate models on the assembly
             cands = []
             for tm in tms:
-                m = model_from_chain(tm["blocks"], gs, codon0, strand, tm["tx"], "transcript")
+                m = model_from_chain(tm["blocks"], gs, tm.get("anchor", codon0), strand, tm["tx"], "transcript")
+                if m and "anchor" in tm: m["anchor"] = tm["anchor"]
                 if m: m["moved"] = tm["moved"]; cands.append(m)
             for mid, ar in ann.items():
                 if ar["contig"] != contig or ar["strand"] != strand: continue
@@ -1043,8 +1076,9 @@ def main():
                     if max(b for _, b in oblocks) <= t0 or min(a for a, _ in oblocks) >= t1: continue
                     blocks = extend_chain(tm["blocks"], oblocks)
                     if not blocks: continue
-                    m = model_from_chain(blocks, gs, codon0, strand, f"{tm['tx']}+{src}", f"transcript+{kind}")
+                    m = model_from_chain(blocks, gs, tm.get("anchor", codon0), strand, f"{tm['tx']}+{src}", f"transcript+{kind}")
                     if not m or tuple(m["blocks"]) in seen: continue
+                    if "anchor" in tm: m["anchor"] = tm["anchor"]
                     if own and own["cds"] and m.get("cds_genome") == own.get("cds_genome"): continue
                     seen.add(tuple(m["blocks"])); m["moved"] = tm["moved"]; m["base_tx"] = tm; m["base"] = own
                     cands.append(m)
@@ -1087,6 +1121,10 @@ def main():
                                   effective_length(m), not m["other_gene_mrna"], m["kind"] == "annotation", len(m["utr3"]))
                 best = max(usable, key=rank)
                 for m in usable: m["rank"] = rank(m)
+            if best is not None and best.get("anchor", codon0) != codon0:
+                # sense mode: the chosen chain is that of a transcript anchored on its own codon (the anchor lies in
+                # one of its introns): that codon becomes the gene's anchor, which the table reports
+                codon0, r[cc] = best["anchor"], str(best["anchor"] + 1)
             ov = overrides.get((g, r["gene"]))
             if ov:   # the curator's exon chain replaces the choice among the candidates
                 blocks = [(int(x) - 1, int(y)) for x, y in (b.split("-") for b in ov["exons"].split(";"))]
