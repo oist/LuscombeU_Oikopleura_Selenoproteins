@@ -340,9 +340,9 @@ are therefore absent, truncated, split or merged in the public annotations.
 The same procedure, with the selenocysteine codon replaced by a codon of the machinery prediction and the candidate
 models ranked by their similarity to the human proteins and to the proteins of the other assemblies, gave gene models of
 the machinery genes (`results/tables/gold_standard_machinery.tsv`). Of the 15 models of *O. dioica* (PSTK, SEPSECS,
-EEFSEC, the SECIS-binding protein and the second SEPHS copy in each assembly), one is the public model unchanged (the
-OdB3 SECIS-binding protein); the others need introns moved (4), a new exon chain (9) or another coding sequence on the
-same exons (1). The second SEPHS copy had no Selenoprofiles prediction in OSKA2016 and OdB3: an alignment of the
+EEFSEC, the SECIS-binding protein and the second SEPHS copy in each assembly), two are the public models unchanged (the
+OdB3 SECIS-binding protein and SEPSECS); the others need introns moved (3), a new exon chain (9) or another coding
+sequence on the same exons (1). The second SEPHS copy had no Selenoprofiles prediction in OSKA2016 and OdB3: an alignment of the
 OKI2018 protein found it in both (complete in OSKA2016, 82% identical; split by two assembly gaps in OdB3), and in the
 assemblies of three other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4), and these loci served as anchors. Five models
 have splice sites outside the intron classes of *O. dioica*. In PSTK, in the three assemblies, every transcript that
@@ -366,9 +366,8 @@ OSKA2016 transcripts and the OdB3 ESTs splice them whole (74 and 60 nucleotides)
 476 residues; the OdB3 model is the GenBank model unchanged). In both species, other transcripts use a donor 34
 nucleotides further in the first of these introns, which shifts the frame. <!-- SEPSECS: run of 2026-11-05 with the
 transcripts re-anchored (gold_standard.py, sense mode) and the curator chains of curation/machinery_overrides.tsv
-taken from them; the chains set on 2026-11-04 from protein alignments (480 and 482 residues) were wrong at these two
-introns. Counts of this paragraph (public models unchanged, introns moved, new exon chains) to update after the rerun.
---> The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
+taken from them (commit 14314dd); the chains set on 2026-11-04 from protein alignments (480 and 482 residues) were wrong
+at these two introns. --> The OKI2018 SEPHS_b protein (635 residues) carries, after its SEPHS part, a C-terminal extension of
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot); all have start and stop codons. The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
