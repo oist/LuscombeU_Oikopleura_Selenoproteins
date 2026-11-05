@@ -11,7 +11,8 @@ is the model's). Everything below that refers to the TGA applies to that codon, 
 alignment spans the codon but holds it in an intron (the prediction read that intron as coding) is anchored on its
 own aligned codon nearest to it, in the frame whose protein is closest to the reference proteins
 (reanchored_transcript; added 2026-11-05, when the OSKA2016 SEPSECS transcripts and the OdB3 SEPSECS ESTs were found to
-be left out); when such a transcript's chain is chosen, its codon becomes the gene's anchor in the table.
+be left out; not when that intron is longer than MAX_REANCHOR_INTRON, which marks a chimeric alignment); when
+such a transcript's chain is chosen, its codon becomes the gene's anchor in the table.
 
 For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
   1. Transcripts. The transcripts of the assembly (stage1/samplesheet.csv: the OKI2018 Trinity transcriptome, the
@@ -387,13 +388,20 @@ def transcript_model(aln, tx, genome, codon0, strand):
     return m
 
 
+MAX_REANCHOR_INTRON = 10000   # longer than any gold-standard intron (the 9-kb insertion of OdB3 EEFSEC included)
+
+
 def reanchored_transcript(aln, tx, genome, codon0, strand, score):
     """Sense mode (--anchor sense): model of a transcript whose alignment spans the anchor codon but holds it in an
     intron or a deletion, as when the prediction that gave the anchor read that intron as coding. The transcript is
     anchored on its aligned codon nearest to the anchor, in each of the three frames, and the frame whose protein
     scores best (score(protein): the summed alignment score to the reference proteins of the gene) is kept, with its
     codon (0-based start, the lowest genome position) in tm["anchor"]; None when no frame gives a protein."""
-    g2q = walk(aln)["g2q"]
+    w = walk(aln)
+    # an intron of more than MAX_REANCHOR_INTRON nt across the anchor is a chimeric alignment (a transcript of another
+    # locus joined across the gene), not a transcript of the gene: no model
+    if any(a <= codon0 < b and b - a > MAX_REANCHOR_INTRON for a, b in w["introns"]): return None
+    g2q = w["g2q"]
     whole = lambda p: all(g2q.get(p + i) == g2q[p] + i for i in (1, 2))
     aligned = [p for p in g2q if whole(p)]
     if not aligned: return None

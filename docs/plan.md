@@ -2463,3 +2463,18 @@ no earlier step waits for them.
   Methods rewritten; counts of that paragraph to update after the rerun (OdB3 SEPSECS now the GenBank model unchanged).
   To run: make gold-standard-machinery intron-content machinery-reannotation-inputs (O. dioica intron counts and
   z-score paragraphs to recheck: four introns change length and class).
+- Run 14314dd/394af42 read (2026-11-05): OSKA2016 SEPSECS 474 aa (3 supporting transcripts, 5' UTR 18 nt), OdB3
+  SEPSECS 476 aa = GenBank CBY09053.1 unchanged; O. dioica machinery counts: 2 public models unchanged (OdB3 SBP2,
+  SEPSECS), 3 with introns moved, 9 new exon chains, 1 other CDS. Intron content: 242 of 280 introns with repeated end
+  bases, 159 with two or three, GT-AG 213 (mean 2.2); ends z <= -3: 25 introns, 21 not GT-AG (others 44 of 251);
+  PSTK fourth intron ranks 6 and 7 of 276 unchanged. Text updated.
+- Re-anchoring regression found on the panels: chimeric alignments with an intron of 31-198 kb across the anchor were
+  re-anchored (OKI2018 PSTK TRINITY_DN4827_c0_g1_i9, an empty row in panel A; OdB3 EEFSEC KT0AAA326YG07RM1, which
+  pushed a real EST out of the panel; five OdB3 SEPSECS ESTs). gold_standard.py: no re-anchoring across an intron longer
+  than MAX_REANCHOR_INTRON = 10,000 nt (the longest gold-standard intron is the 8,982-nt OdB3 EEFSEC insertion). Needs
+  make gold-standard-machinery machinery-reannotation-inputs; the PSTK slides of the deck were made from the panel
+  before re-anchoring, which these rules give back for PSTK.
+- SEPSECS intron map (curation/intron_map.py, make intron-map; also PSTK): the Okinawa-only introns (human 63/2 and 86/1,
+  86 and 75 nt, GA-AG; OKI2018, KUM-M3-7f; spliced in TRINITY_DN6371_c0_g1_i1, the second retained in _i4 with an
+  in-frame stop) written as a provisional "SEPSECS" subsection of the machinery Results, one Discussion sentence and a
+  Methods sentence, for Charles to keep or drop. The first of them has paired ends (z -4.0).

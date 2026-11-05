@@ -856,8 +856,8 @@ bases the last bases of the previous exon (one to three bases, shaded in Figure 
 across them without changing the spliced sequence, and each placement reads other dinucleotides; when none of them is an
 intron class, the gold-standard script keeps the placement nearest to the alignment, which for the fourth intron reads
 AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3. Bases repeated at the two ends of an intron are the rule rather
-than the exception: of the 280 gold-standard introns of OKI2018, OSKA2016 and OdB3, 240 have at least one and 159 have
-two or three (2.1 on average in the 217 GT-AG introns; `make intron-content`), because exons often end with AG, as
+than the exception: of the 280 gold-standard introns of OKI2018, OSKA2016 and OdB3, 242 have at least one and 159 have
+two or three (2.2 on average in the 213 GT-AG introns; `make intron-content`), because exons often end with AG, as
 introns do. What is unusual in PSTK is not this ambiguity, but that no placement within it gives an intron class. Placed
 on an AG acceptor, the fourth intron is a TT-AG intron in OKI2018 and OSKA2016 and an AT-AG intron in OdB3, in the same
 phase, and the third intron a TG-AG, AA-AG and GA-AG intron. All end with AG without starting with GT, as does the
@@ -991,6 +991,29 @@ analysis 6), under LG+C60+F+G with posterior mean site frequencies, rooted on KT
 replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences of one
 group drawn as wedges, tips of one or two sequences named by their genera, and the sequences of the other groups that
 branch from one polytomy drawn as one tip.
+
+### SEPSECS
+
+<!-- Provisional (2026-11-05), for Charles's review: keep or drop. Intron map: make intron-map
+(curation/intron_map.py, results/tables/intron_map_SEPSECS.tsv), on the gold-standard models of run 14314dd. -->
+
+The three *O. dioica* species share seven SEPSECS introns, at the same alignment columns and in the same phases in
+their six assemblies, and the Okinawa species has two more (`make intron-map`, `results/tables/intron_map_SEPSECS.tsv`).
+These two introns, of 86 and 75 nucleotides, near residues 63 and 86 of the human protein, are both GA-AG. They are in
+OKI2018 and in KUM-M3-7f, another individual of the species, and the OKI2018 transcript TRINITY_DN6371_c0_g1_i1
+splices both (another transcript, TRINITY_DN6371_c0_g1_i4, retains the second, which puts a stop codon in frame). In
+OSKA2016 and OdB3 the same stretch is one exon, in the assemblies, in the six OSKA2016 transcripts and the OdB3 ESTs
+that cover it, and in AOM-5-5f and Bar2_p4. *O. longicauda*, *O. albicans* and *O. vanhoeffeni* have no intron at
+these columns (the nearest, an *O. longicauda* intron, lies two columns from the second, in a region aligned without
+gaps). The two introns were therefore most likely gained in the Okinawa lineage after it separated from the other two
+species. The ends of the first pair more than those of shuffled introns (z = -4.0).
+
+The seven shared introns also differ from those of the other oikopleurids: only one lies at the column and in the
+phase of an *O. albicans* intron (near human residue 259; GA-AG in *O. dioica*, GT-AG in *O. albicans*), none at an
+intron of *O. longicauda* or *O. vanhoeffeni*, and *O. albicans* and *O. vanhoeffeni* share one other. Within
+*O. dioica*, the donor of one shared intron is GC in the Okinawa species and GA in the other two, and the first intron
+is 423 and 437 nucleotides long in the North Atlantic assemblies (OdB3, Bar2_p4), against 40 to 45 in the four others,
+part of it being repeated at 50 other loci of OdB3.
 
 ### SECp43
 
@@ -1421,7 +1444,9 @@ bounds cannot be turned into years.
 The unusual splice sites of the *O. dioica* PSTK introns are thus those of introns gained in this lineage. New introns
 take the ends that the event that created them provided: in *Fritillaria borealis*, introns derived from transposons are
 mostly neither GT-AG nor GC-AG [@Henriet2019], and introners take one splice site from the duplicated target site
-[@Huff2016], so that unusual ends are expected of young introns more than of old ones. This does not choose between
+[@Huff2016], so that unusual ends are expected of young introns more than of old ones. SEPSECS gives younger examples
+still: its two introns found only in the Okinawa species, gained after the three *O. dioica* species separated, are
+both GA-AG, a class of about 9% of *O. dioica* introns [@Denoeud2010]. This does not choose between
 annotations, which the transcripts, the assemblies of other individuals and the comparison of proteins do, but it
 removes a reason to doubt the sites that the transcripts show. Since the three species separated, these introns kept
 being spliced while their first bases changed (for the fourth intron, TT-AG in OKI2018 and OSKA2016 and AT-AG in OdB3;
@@ -1434,10 +1459,10 @@ ATCGGGTT in the fourth intron, GCAGGG, AAGGGTT and GAGGGTT in the third), while 
 runs help the recognition of donor sites without GT in *O. dioica* could be tested on the introns supported by RNA-seq
 reads across the genome.
 
-Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG: 16 of the
-20 introns whose ends pair with z at most -3 are not GT-AG, against 41 of the other 237 (median z -1.7 for the non-GT-AG
-introns and 0.3 for the GT-AG introns, in each of the three assemblies; the same introns are counted in the three
-assemblies, so these counts are not independent; `results/tables/intron_content.tsv`). Terminal inverted repeats mark
+Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG: 21 of the
+25 introns whose ends pair with z at most -3 are not GT-AG, against 44 of the other 251 (median z -1.6 for the non-GT-AG
+introns and 0.2 for the GT-AG introns; -1.4 to -1.7 and 0.1 to 0.2 in each of the three assemblies; the same introns
+are counted in the three assemblies, so these counts are not independent; `results/tables/intron_content.tsv`). Terminal inverted repeats mark
 the transposon-derived introns of *F. borealis* [@Henriet2019], and the last intron of *O. albicans* PSTK; whether
 paired ends are the remains of such an origin, or help the splicing of introns whose sites are weak, could be tested on
 all the introns supported by RNA-seq reads in the *O. dioica* genomes.
@@ -1624,7 +1649,12 @@ transcript found by a tblastn search of the RefSeq transcripts with the *C. inte
 gold-standard models, each intron being placed in its protein with its phase (`make pstk-introns`,
 `curation/intron_positions.py`); the proteins, with nine PSTK of other animals, were aligned with MAFFT L-INS-i
 [@Katoh2013], and each intron was given the column of the residue that follows or contains it
-(`curation/intron_columns.py`). The rate of PSTK was compared with that of KTI12 by the distances between the two
+(`curation/intron_columns.py`). The intron positions of SEPSECS and PSTK in the appendicularian models were compared
+on a MAFFT L-INS-i alignment of their proteins with the human and *Ciona* proteins (`make intron-map`,
+`curation/intron_map.py`): the introns of the gold-standard models, and those of the assemblies of other individuals,
+found by aligning the gold-standard protein of the same species to the region with exonerate and moved to an
+equivalent placement of an intron class when there was one, each at the column of the residue that follows or
+contains it. The rate of PSTK was compared with that of KTI12 by the distances between the two
 proteins of the same pair of chordates in the PSTK trees (sum of branch lengths; whole alignment and its two parts,
 selected model and PMSF), and with that of other genes by the identity of the human and *Ciona* reference proteins of
 the genes of Figure REANNOTATION and of the machinery (global alignments, BLOSUM62; `make pstk-rates`,

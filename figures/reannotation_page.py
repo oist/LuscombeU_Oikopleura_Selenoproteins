@@ -207,7 +207,7 @@ def notes(d):
         elif d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
         if d["tx"].get(g):
             n, k = d["tx_count"].get(g, 0), len(d["tx"][g])
-            text += (f" Transcripts (top to bottom; {k} of the {n} that hold the anchor codon, most introns first): "
+            text += (f" Transcripts (top to bottom; {k} of the {n} aligned across the anchor codon, most introns first): "
                      if n > k else " Transcripts (top to bottom): ") + ", ".join(short(t) for t in d["tx"][g]) + "."
         out.append((NAMES[g], text))
     if d["par"]:
