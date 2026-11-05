@@ -2222,7 +2222,9 @@ no earlier step waits for them.
   --no-rebase is written out because git stops without it when the two branches have diverged and no pull.rebase
   setting is configured. Amended again (merge 6e181c6): git pull --no-rebase --no-edit, as without --no-edit git opens
   an editor for the merge message and the pasted lines that follow the pull are typed into it (the message of 6e181c6
-  holds a line of the editor template; not rewritten, as main is shared).
+  holds a line of the editor template; not rewritten, as main is shared). Amended (2026-11-05, after two commits made
+  while the job was still running, 10a6d40 and 14314dd): the "when finished" blocks commit only when sacct reports the
+  job COMPLETED (if ... then git add ... git push; else echo; fi; no exit, which would close the SSH session).
 - Deigo commit 10a6d40 (enriched PSTK trees without the dolphin) was made while the job was still running: the
   archaeal PMSF tree is an intermediate without supports, its .iqtree is missing, and the clade supports table is that
   of 8cdefae (computed here from the trees with the dolphin). To commit when the job has finished.
