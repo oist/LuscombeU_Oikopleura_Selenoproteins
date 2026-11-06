@@ -687,7 +687,8 @@ SELENOS clade with the *O. dioica* genes; no SECIS element was found in the 2,00
 *O. albicans* gene lies on a contig of 547 kb. Several genes have more copies in these assemblies than in *O. dioica*:
 DIO_PAR has six loci in *O. longicauda* and five in *O. albicans*, GPX_PAR eight in *O. longicauda*, and SELENOW_chr2
 five in *O. longicauda* and four in *O. vanhoeffeni*. These assemblies are fragmented (N50 of 2.4 kb for *O.
-longicauda*) and may keep both haplotypes, as OdB3 does, so these numbers are upper bounds. The other *Oikopleura*
+longicauda*) and may keep both haplotypes, as OdB3 does, and the *O. longicauda* sample was a mixture of two (sub-)species
+before sequencing [@Naville2019], so these numbers are upper bounds. The other *Oikopleura*
 species thus share most of the selenoproteome of *O. dioica*, without TXNL1.b, with copy numbers that their assemblies
 leave uncertain.
 
@@ -1083,7 +1084,10 @@ Orthology from: "best hits" when the reciprocal best hits against the human prot
 other human gene comes close (margin to the next human gene, or no other human gene hit); "trees" when a human paralog
 or a related family scores close to the expected gene, and the maximum-likelihood trees and their long-branch analyses
 decide, with bootstrap supports or AU tests (see text). The orthology column is provisional. Several copies in an
-assembly may reflect duplicated haplotypes or contamination [@Pichon2019].
+assembly may reflect duplicated haplotypes or contamination [@Pichon2019]; the *O. longicauda* sample was a mixture of
+two (sub-)species [@Naville2019], and its second loci of SEPSECS, EEFSEC and the SECIS-binding protein are 73%, 54 to
+67% and 76% identical to the first (local alignments), as distant as the SECIS-binding proteins of *O. albicans* and
+*O. vanhoeffeni* (76%).
 
 ## Orthology of the selenoprotein genes and of the machinery
 
@@ -1534,7 +1538,8 @@ it is the OKI2018_I69 assembly of Bliznina et al. [-@Bliznina2021], I69 being th
 individual, and we use the NCBI name for consistency with the database. The six other appendicularian genomes are
 those of *Oikopleura longicauda* (GCA_004367895.1), *Oikopleura albicans* (GCA_004367875.1), *Oikopleura vanhoeffeni*
 (GCA_004367855.1), *Bathochordaeus stygius* (GCA_004367955.1), *Mesochordaeus erythrocephalus* (GCA_004367975.1) and
-*Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation. As non-target genomes
+*Fritillaria borealis* (GCA_004368075.1) [@Naville2019]; they have no public gene annotation, and the *O.
+longicauda* sample was a mixture of two (sub-)species [@Naville2019]. As non-target genomes
 for SECIS models, we used four other tunicates: *Ciona intestinalis* (GCF_018327825.1), *Ciona savignyi*
 (GCA_054131345.1), *Styela clava* (GCF_964204865.1) and *Thalia democratica* (GCF_965202585.1). These tunicates,
 with *Ciona robusta* (KH assembly, GCF_000224145.3, the genome of the published *Ciona* selenoproteome, formerly named

@@ -2583,3 +2583,20 @@ no earlier step waits for them.
   locus has a copy at a distance between species: the O. longicauda assembly may hold DNA of a second species (test:
   a second mitochondrial genome in the assembly, or read coverage of the two copies). Questions for Charles: how far
   to curate N-terminal exons without protein support; the O. longicauda question.
+- O. longicauda mixture (2026-11-06, Charles): no need to prove contamination; Naville et al. 2019 excluded O.
+  longicauda from their duplication analysis "due to the mixture of two (sub-) species prior to sequencing". Cited in
+  the Results (copy numbers), the Table MACHINERY legend (with the identities of the second loci) and the Methods.
+- SBP2, correction of the survey above: exonerate of whole O. dioica proteins against the genome aligned only the
+  C-terminal part, but the gold proteins themselves, aligned to OdB3 (local, BLOSUM62), show: O. albicans 617 aa
+  covers OdB3 28-611, with 54% and 43% identity over OdB3 1-100 and 101-200 (the N-terminal exons, behind the
+  15.4-kb intron, are homologous); O. longicauda SBP2 (487 aa) starts at OdB3 202, SBP2_2 (534 aa) at OdB3 105, O.
+  vanhoeffeni (422 aa) at OdB3 201: these three models lack the N-terminus rather than carrying unsupported exons
+  (their "complete" flag only means a start codon). Identity to OdB3 by window: 201-300 49-63%, 301-500 71-78%,
+  501-620 38-50% (O. dioica species 75-100% throughout). The O. dioica N-terminus (OdB3 1-230) finds nothing in
+  the O. longicauda and O. vanhoeffeni regions (exonerate, --percent 20), but the O. albicans N-terminus (1-200)
+  does: O. vanhoeffeni five exons up to 10 kb upstream of the model's start (score 424; miniprot had aligned OdB3
+  39-611 over SCLH01001760.1:12556-49622), O. longicauda locus 1 three exons within 2 kb upstream (249), locus 2
+  four exons overlapping and upstream of the model's first exons (229). The predictions and projections, seeded
+  with O. dioica proteins, missed the N-terminal exons where the O. dioica N-terminus is too divergent. Option:
+  curator chains from exonerate of the O. albicans protein (N-terminus) and of the O. dioica proteins (rest), with
+  junction rescans, as for EEFSEC.
