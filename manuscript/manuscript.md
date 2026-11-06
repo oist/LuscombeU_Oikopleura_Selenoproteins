@@ -922,11 +922,14 @@ both ends: the arrangement of the introns of *F. borealis* that arose from minia
 elements, with their terminal inverted repeats and target-site duplications [@Henriet2019], and that of a gain by the
 insertion of a transposon. Like 20 of the 23 introns of the machinery models of *O. albicans*, it shares sequence with
 at least ten other loci of its genome (8,927 loci, over 52% of its length; BLASTN, E at most 10^-5^), so that copies do
-not single it out; its two ends, however, pair more than those of shuffled sequences (z = -3.3), about as much as those
-of the most paired of the 21 other *O. albicans* introns scored (z = -3.1). <!-- z-scores of this paragraph and of the
+not single it out; its two ends, which lie outside an assembly gap of 227 nucleotides, however pair more than those of
+shuffled sequences (z = -3.2), about as much as those of the most paired of the 19 other *O. albicans* introns scored
+(z = -3.1). <!-- z-scores of this paragraph and of the
 PSTK fourth intron: shuffles seeded per intron; O. dioica values from Deigo run 5313acd (OSKA2016 -6.06, OdB3 -6.08,
-ranks 7 and 6 of 276; OKI2018 -0.71), O. albicans values from run 8aac2be, after the first exon of O. albicans SEPSECS
-was added (PSTK intron 2 -3.25; SEPSECS intron 4, the former intron 3, -3.11, intron 2 -3.07). This PSTK intron holds a gap of 227 N in the assembly, which those shuffles moved into the ends of the controls: to be replaced by the run with shuffles of the intron without its N (intron_content.py of 2026-11-05), as the count of O. albicans introns scored. Earlier runs with a
+ranks 7 and 6 of 276; OKI2018 -0.71), O. albicans values from run 12b9bd9 (2026-11-06): PSTK intron 2 -3.21, against
+shuffles of the intron without its 227 N (-3.25 in run 8aac2be, with the N shuffled into the controls); SEPSECS intron
+4 -3.11, intron 2 -3.07; 20 O. albicans introns scored of 23 (three longer than 2,500 nt or with a gap at an end).
+Earlier runs with a
 shared generator: -5.5/-5.8 and -4.1 (13b50c5), -4.55/-6.12 and -3.43 (ccaebc0). -->
 
 PSTK needed more evidence outside *O. dioica*. In *O. albicans* and *O. vanhoeffeni* it was predicted as a gene; in the

@@ -2527,3 +2527,7 @@ no earlier step waits for them.
   This matters for the O. albicans PSTK last intron of the manuscript (z = -3.3 computed with a 227-N gap shuffled
   into the controls), and for SBP2 intron 3 (499 N) and SEPHS_b intron 4 (809 N). Needs on Deigo: make intron-content;
   then the O. albicans sentence (z of the PSTK intron, number of other introns scored).
+- Run 12b9bd9 (2026-11-06, intron content with gaps as runs of 10 N): four O. albicans introns scored again. PSTK
+  intron 2 ends z = -3.21 against shuffles without its 227 N (-3.25 before, with N in the controls): the manuscript
+  value becomes -3.2; 19 other O. albicans introns scored, the most paired SEPSECS intron 4 (-3.11). SBP2 intron 3
+  -1.52, SEPHS_b intron 4 0.92, EEFSEC intron 2 -2.42 (fold z -6.38). O. dioica values unchanged.
