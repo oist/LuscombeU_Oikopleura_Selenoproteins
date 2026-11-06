@@ -2569,3 +2569,17 @@ no earlier step waits for them.
   citation). Manuscript: one paragraph-internal passage after the OKI2018 EEFSEC model, and a Methods sentence.
   Still open: the O. longicauda second copies of SEPSECS and EEFSEC (mark in Table MACHINERY? caveat "duplications
   or another species"?).
+- SBP2 review started (2026-11-06). O. dioica: OKI2018 (TRINITY_DN5140 i2, 658 aa) and OSKA2016 (comp4911_c0_seq1,
+  617 aa) on transcript chains, OdB3 GenBank CBY19450.1 unchanged (620 aa); panel consistent. Other species: exonerate
+  of the three O. dioica proteins aligns only their C-terminal 400 residues (from residue 196-253) to the regions; the
+  N-terminal exons of the gold models come from predictions and projections without protein support: O. albicans
+  first intron 15,393 nt across N runs of 993, 364 and 14, third intron across a 499-N gap; O. vanhoeffeni first
+  intron 18,148 nt across a 336-N gap, where exonerate finds an extra exon (11417-11540 of the region) with a
+  frameshift. Junctions to rescan: O. longicauda locus 1 (GT-AC intron of 304 nt; GT-AG 1,663 against GC-AC 1,669),
+  locus 2 (GT-AA intron of 1,084 nt; GT-AG 39 against CT-AT 54), O. albicans last exons (39-nt GT-AG intron read as
+  coding by the gold model, which ends 120 nt further). Identities of the gold proteins: O. longicauda SBP2 against
+  SBP2_2 76% over 428 residues, as O. albicans against O. vanhoeffeni (76%); O. dioica species 89-97%; O. dioica
+  against the others 53-64%. With SEPSECS (73%) and EEFSEC (54-67%), each machinery gene with a second O. longicauda
+  locus has a copy at a distance between species: the O. longicauda assembly may hold DNA of a second species (test:
+  a second mitochondrial genome in the assembly, or read coverage of the two copies). Questions for Charles: how far
+  to curate N-terminal exons without protein support; the O. longicauda question.
