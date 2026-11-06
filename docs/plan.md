@@ -2531,3 +2531,24 @@ no earlier step waits for them.
   intron 2 ends z = -3.21 against shuffles without its 227 N (-3.25 before, with N in the controls): the manuscript
   value becomes -3.2; 19 other O. albicans introns scored, the most paired SEPSECS intron 4 (-3.11). SBP2 intron 3
   -1.52, SEPHS_b intron 4 0.92, EEFSEC intron 2 -2.42 (fold z -6.38). O. dioica values unchanged.
+- Extra predictions (2026-11-06, headers and proteins pasted by Charles from the final Selenoprofiles FASTA).
+  SEPSECS: M. erythrocephalus SecS.2 (SCLF01000556.1) and SecS.3 (SCLF01628385.1) cover consecutive, non-overlapping
+  parts of the protein (N-terminal half, C-terminal part; 73-76% identical to B. stygius): one gene on two contigs.
+  O. longicauda SecS.4 (SCLD01096139.1, 4 exons, 178 aa) is 73% identical to SecS.2 over 159 residues and 66-69% to
+  the other species: a second copy, not a haplotype. EEFSEC, O. longicauda: copy A = eEFsec.3 (main contig, no G3
+  motif) + eEFsec.25 (SCLD01131464.1, 95% over 81 residues, carries the C-terminus beyond the main contig end); copy B
+  = eEFsec.13 (SCLD01041527.1) + eEFsec.15 (SCLD01136779.1) + eEFsec.7 (SCLD01023724.1), 100% identical in their
+  overlaps, with the G3 motif DCPGHGSL, and probably eEFsec.10 (SCLD01140017.1, C-terminal, 65-68% to copy A); copy B
+  is 54-67% identical to copy A and 55-64% to the other species. With the SECIS-binding protein (two loci), three
+  machinery genes have a second, divergent locus in the O. longicauda assembly: duplications or DNA of another
+  species; not haplotypes. Identities: local alignments, BLOSUM62 (scratch script, not in the repository).
+- OKI2018 EEFSEC transcripts (Charles: "the number and distribution of mismatches ... is fishy"): 17-52 mismatches/kb
+  (median 46) against 0-14 for the OKI2018 transcripts of the other machinery genes; the four Trinity "isoforms"
+  differ from each other at 15-64 positions. KUM-M3-7f differs from the OKI2018 assembly at 98 of 1,570 coding bases
+  (62.5/kb; 1.5-20/kb for PSTK, SBP2, SEPHS_b, SEPSECS), 83 at third codon positions, 84 synonymous codons and 7
+  amino-acid changes; 44 of the 90 transcript mismatch positions are OKI-KUM differences. Region-wide (lift, 8 kb
+  with flanks): 36% matching columns OKI-KUM and 50% OSKA-AOM, against 66-94% for the other genes. Reading: divergent
+  haplotypes of EEFSEC in the Okinawa population (old alleles under purifying selection), grouped as isoforms by
+  Trinity; not assembly errors (substitutions) and not a paralog (one locus per assembly). OdB3 ESTs 12-24/kb, as
+  for the other OdB3 genes. To decide: a sentence in the manuscript; whether the divergence is a local peak (OKI-KUM
+  pairgenomealign around NC_137291.1:4.72 Mb).
