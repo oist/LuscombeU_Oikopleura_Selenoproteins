@@ -364,7 +364,18 @@ none (BLASTN, E at most 10^-20^; `make eefsec-insertion`, `curation/insertion.py
 has a run of five T where the four transcripts and the KUM-M3-7f assembly have six; the prediction splices around the
 frameshift with a 73-nucleotide intron and reads 5 residues where the OSKA2016 and OdB3 proteins have 13, whereas the
 transcripts splice a 50-nucleotide intron at the position of the first intron of OSKA2016 and OdB3; the model takes the
-protein of a transcript (523 residues, the length of the OSKA2016 and OdB3 proteins). In SEPSECS,
+protein of a transcript (523 residues, the length of the OSKA2016 and OdB3 proteins). These transcripts differ from the
+assembly at 17 to 52 positions per kb, and from each other, against at most 14 for the OKI2018 transcripts of the other
+machinery genes: of five machinery genes, EEFSEC has the most divergent coding sequences between the two individuals of
+each species, at third codon positions 16% between OKI2018 and KUM-M3-7f (0.3 to 5% for the other four genes), 6% and
+5% within the two other species (0.3 to 4.5%), with few amino-acid changes (1 to 2%; `make cds-divergence`). The
+transcripts thus carry other haplotypes of a gene whose alleles diverge more than usual in the Okinawa species; with
+two individuals per species, a single gene can diverge this much by chance, so this does not by itself point to
+selection or to a rearrangement. <!-- results/tables/cds_divergence.tsv (curation/cds_divergence.py, 2026-11-06):
+codons through the gold-standard protein of each species aligned with exonerate; between North Pacific and North
+Atlantic, EEFSEC third positions 31%, second of the five genes (13 to 39%). Mismatch rates per kb from the transcript
+rows of figures/inputs/reannotation_<gene>.tsv. Tests noted in docs/plan.md: divergence in windows along
+NC_137291.1 (OKI2018 against KUM-M3-7f), population data. --> In SEPSECS,
 the predictions and the protein alignments of OSKA2016 and OdB3 read parts of two GA-AG introns as coding; the
 OSKA2016 transcripts and the OdB3 ESTs splice them whole (74 and 60 nucleotides), and the models follow them (474 and
 476 residues; the OdB3 model is the GenBank model unchanged). In both species, other transcripts use a donor 34
@@ -1661,6 +1672,11 @@ was aligned to the region of the gene with exonerate (protein2genome; `make mach
 apart by an independent assembly. In OKI2018 EEFSEC, whose prediction splices around a one-base deletion of the
 assembly so that the rule kept the assembly protein (identity 0.817 against 0.825), the curator chose the transcript
 protein. Gold-standard proteins with more than 2% of residues read from assembly gaps were left out of the trees.
+To compare the coding sequences of the two individuals of each species (OKI2018 and KUM-M3-7f, OSKA2016 and AOM-5-5f,
+OdB3 and Bar2_p4), the gold-standard protein of the species was aligned to the gene region of both assemblies
+(exonerate protein2genome), which gives the codon of each residue in each assembly; codons at frameshifts, in
+alignment gaps or with N were left out, and the proteins of two species were matched by a global alignment (BLOSUM62)
+(`curation/cds_divergence.py`).
 
 To check the splice sites of PSTK, its genomic regions (coding span and 3 kb on each side) were extracted from the
 gold-standard assemblies, from *O. albicans*, *O. vanhoeffeni* and *C. intestinalis* (RefSeq gene of XP_002120985.2),

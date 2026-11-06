@@ -2552,3 +2552,20 @@ no earlier step waits for them.
   Trinity; not assembly errors (substitutions) and not a paralog (one locus per assembly). OdB3 ESTs 12-24/kb, as
   for the other OdB3 genes. To decide: a sentence in the manuscript; whether the divergence is a local peak (OKI-KUM
   pairgenomealign around NC_137291.1:4.72 Mb).
+- EEFSEC haplotypes (2026-11-06, Charles: "Is that an interesting biological observation?" then "keep it in the
+  plan and briefly mention it in the manuscript"). make cds-divergence (curation/cds_divergence.py,
+  results/tables/cds_divergence.tsv): codons through the gold protein of each species aligned with exonerate to the
+  regions of both individuals. Third codon positions within species, EEFSEC against the four other machinery genes:
+  OKI2018-KUM-M3-7f 16.1% (0.3-5.4%), OSKA2016-AOM-5-5f 5.9% (2.3-4.5%), OdB3-Bar2_p4 5.2% (0.3-1.2%); amino acids
+  1.3-2.3%. Between species: North Pacific-North Atlantic 31.4% (13-39% for the others, EEFSEC second of five);
+  Okinawa against the others 47-50% (saturated, as for all genes); KUM-M3-7f and OKI2018 equally distant from the
+  other species (no introgression from them). Reading given to Charles: old divergent alleles; explanations
+  balancing selection (no known reason for EEFSEC), suppressed recombination (an inversion polymorphism, which would
+  make it a genome-structure result), introgression from an unsampled lineage. Caveat written in the manuscript: with
+  two individuals per species, the coalescence time of one locus varies widely, so one gene in five can diverge this
+  much by chance. Tests that would decide: (1) divergence OKI2018-KUM-M3-7f in windows along NC_137291.1 around
+  4.72 Mb from the pairgenomealign alignment, and whether a raised block coincides with a structural difference; (2)
+  diversity and frequency spectrum at the locus in the unit's Ryukyu resequencing data (unpublished: a check, not a
+  citation). Manuscript: one paragraph-internal passage after the OKI2018 EEFSEC model, and a Methods sentence.
+  Still open: the O. longicauda second copies of SEPSECS and EEFSEC (mark in Table MACHINERY? caveat "duplications
+  or another species"?).
