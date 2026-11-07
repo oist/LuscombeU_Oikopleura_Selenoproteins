@@ -1572,7 +1572,10 @@ were then placed by moving each intron within 8 nucleotides to the position of l
 move), the number of mismatches
 between transcript and genome plus a splice-site cost of log10(f(GT-AG)/f(site))/2, with the intron frequencies of the
 *O. dioica* reference annotation (GT-AG 87.6%, GA-AG 9%, GC-AG 2.7%, GG-AG 0.7%, other sites taken as 0.1%)
-[@Denoeud2010], the factor 2 being the log10 cost of a mismatch at 1% divergence. A transcript supported the gene when
+[@Denoeud2010], the factor 2 being the log10 cost of a mismatch at 1% divergence. Among placements outside these
+classes that the data cannot tell apart, an AG acceptor was preferred: all *O. dioica* intron classes end with AG,
+introns ending with AG without starting with GT are its second most frequent class, and *O. dioica* lacks the new
+paralogs that may let *F. borealis* tolerate acceptors other than AG [@Soo2026]. A transcript supported the gene when
 an aligned exon held the codon as TGA. Candidate models were the exon chains of the supporting transcripts, of the
 annotated mRNAs and of the stage 1 Selenoprofiles predictions holding the codon, and the transcript chains extended
 with the exons of overlapping annotated or predicted models beyond their ends, and, where the annotation split a

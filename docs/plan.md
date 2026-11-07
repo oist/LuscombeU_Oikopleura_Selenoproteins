@@ -2731,3 +2731,22 @@ no earlier step waits for them.
   72-88%); UniProt E4X036 (CBY23134.1): "RRM domain-containing protein", RRM CPEB family by automatic annotation
   (InterPro CPEB signatures); which CPEB not checked. Previous gene: XP_081641987.1, S10.g09826.01, CBY23136.1, not
   identified. Name them in the text only once checked.
+- Splice-site convention (2026-11-07, Charles: "let's standardise on AG"): among equivalent placements outside the O.
+  dioica intron classes, curation/gold_standard.py now prefers an AG acceptor (site cost lowered by 0.01, a tie-break
+  below any mismatch), then the smallest move; curation/intron_map.py (to_class) does the same. Rationale: all O.
+  dioica intron classes end with AG; introns ending with AG without starting with GT are its second class (Soo et al.
+  2026, Figure 2E); F. borealis has new paralogs that may let it tolerate non-AG sites, and O. dioica does not have
+  them (Charles, from Soo et al. 2026). General mechanism (PubMed): first AG after the branch point by scanning (Smith
+  et al. 1989, doi:10.1038/342243a0), U2AF35 binds the AG (Wu et al. 1999, doi:10.1038/45590; Zorio and Blumenthal
+  1999, doi:10.1038/45597), G+1 and the last G interact in exon ligation (Parker and Siliciano 1993,
+  doi:10.1038/361660a0); counterpoint: F. borealis new introns are most often AG/AC or AG/AT (Henriet et al. 2019,
+  doi:10.1016/j.cub.2019.07.092), and the leftmost placements of the PSTK fourth intron start with AG (AG-AA, AG-AC,
+  AG-TC). Methods sentence added (manuscript, transcript alignment and junction placement). Introns expected to move
+  (other_splice_sites of results/tables/gold_standard*.tsv, used placement first): OKI GPX_chr1a CT-AC -> TG-AG; OSKA
+  GPX_chr1b CT-TA -> TA-AG; OSKA SELENOO AG-CG -> AA-AG; OKI SEPHS_b CA-GT -> TC-AG; OKI PSTK intron 4 AG-AA -> TT-AG;
+  OSKA PSTK intron 4 TT-GT -> TT-AG; OdB3 EEFSEC GA-TA -> AT-AG. Proteins unchanged (same spliced sequences), hence
+  trees and profiles unchanged. To rerun on Deigo: gold-standard, gold-standard-machinery, pstk-regions,
+  machinery-regions, intron-content (z of the PSTK fourth intron in OSKA2016 may change), intron-presence,
+  intron-pairing, pstk-introns, figure inputs; then figures. Open question for Charles: stage2-benchmark counts
+  "introns exact" by coordinates, so OKI GPX_chr1a, now exact in the eval and final runs, would become inexact;
+  proposed: count equivalent placements as the same intron (the data cannot tell them apart).

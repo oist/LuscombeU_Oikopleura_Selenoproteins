@@ -24,8 +24,12 @@ For each curated selenocysteine codon (curation/baseline_sec_genes.tsv):
      +/- --window nt to the placement of lowest cost, the number of mismatches between transcript and genome in the
      window plus the cost of the splice site, log10(f(GT-AG) / f(site)) / 2 with the frequencies above (other sites
      taken as 0.1%), 2 being the log10 cost of a mismatch at about 1% divergence (GA-AG 0.49, GC-AG 0.76, GG-AG
-     1.05, other sites 1.47), then the smallest move. Every exon chain is also moved, among the placements that
-     give the same spliced sequence, to the most frequent class. O. dioica introns are short (peak at 40-44 nt, some
+     1.05, other sites 1.47, lowered by 0.01 for an AG acceptor so that, among placements outside the classes,
+     an AG acceptor is preferred), then the smallest move. Every exon chain is also moved, among the placements that
+     give the same spliced sequence, to the most frequent class, else to an AG acceptor. The AG preference is a
+     convention for placements that the data cannot tell apart: all O. dioica intron classes end with AG, introns
+     ending with AG without starting with GT are its second class (Soo et al. 2026), and O. dioica lacks the new
+     paralogs that may let F. borealis tolerate other acceptors (Soo et al. 2026; decision of 2026-11-07). O. dioica introns are short (peak at 40-44 nt, some
      below 35 nt; Denoeud et al. 2010, figure S22); minimap2 -x splice:hq aligns introns of 20 nt or more as
      introns and shorter ones as deletions (tested with minimap2 2.26), so deletions of 10 nt or more that have an
      equivalent placement on one of these sites are reported as possible introns. A
@@ -129,6 +133,13 @@ OTHER_SITES = 0.1
 MISMATCH_LOG10 = 2.0   # log10 cost of a mismatch at about 1% divergence between transcript and assembly
 SITE_COST = {k: math.log10(INTRON_CLASSES["GT-AG"] / f) / MISMATCH_LOG10 for k, f in INTRON_CLASSES.items()}
 OTHER_COST = math.log10(INTRON_CLASSES["GT-AG"] / OTHER_SITES) / MISMATCH_LOG10
+AG_TIE = 0.01   # cost removed for a site outside the classes that ends with AG: a tie-break, below any mismatch (1)
+
+
+def site_cost(s):
+    """Cost of a splice site: the intron classes by their frequency, other sites OTHER_COST, minus AG_TIE when they
+    end with AG (convention for placements that the data cannot tell apart; see the module documentation)."""
+    return SITE_COST[s] if s in SITE_COST else OTHER_COST - (AG_TIE if s.endswith("-AG") else 0.0)
 END_TOLERANCE = 10
 TIE_SCORE_MARGIN = 20   # BLOSUM62 score units (half bits): about 10 bits
 MERGE_END, MERGE_GAP = 30, 300   # annotated models split at the codon: end after the codon, distance to the next model
@@ -198,7 +209,8 @@ def equivalent_sites(genome, a, b, strand, limit=50):
 
 def normalise_blocks(blocks, genome, strand):
     """Exon chain with each intron moved, among the placements that give the same spliced sequence, to the most
-    frequent intron class of O. dioica (GT-AG, GA-AG, GC-AG, GG-AG), then to the smallest move. Touching or
+    frequent intron class of O. dioica (GT-AG, GA-AG, GC-AG, GG-AG), else to an AG acceptor, then to the smallest
+    move. Touching or
     overlapping blocks are merged first (the OdB3 annotation splits exons at the selenocysteine codon)."""
     b = []
     for x, y in sorted(blocks):
@@ -211,7 +223,7 @@ def normalise_blocks(blocks, genome, strand):
         while left < b[i][1] - b[i][0] - 1 and genome[a - 1 - left] == genome[e - 1 - left]: left += 1
         right = 0
         while right < b[i + 1][1] - b[i + 1][0] - 1 and genome[a + right] == genome[e + right]: right += 1
-        k = min((SITE_COST.get(site(genome, a + k, e + k, strand), OTHER_COST), abs(k), k) for k in range(-left, right + 1))[2]
+        k = min((site_cost(site(genome, a + k, e + k, strand)), abs(k), k) for k in range(-left, right + 1))[2]
         b[i][1] += k; b[i + 1][0] += k
     return [tuple(x) for x in b]
 
@@ -228,7 +240,7 @@ def parse_cigar(cg):
 def refine_junctions(aln, fwd, genome, strand, window):
     """CIGAR with each intron moved within +/- window nt to the placement of lowest cost: mismatches between the
     transcript (fwd: in the orientation of the genome forward strand) and the genome in the window, plus the cost of
-    its splice site (SITE_COST, OTHER_COST), then the smallest move; and the number of moves."""
+    its splice site (site_cost), then the smallest move; and the number of moves."""
     ops = parse_cigar(aln["cigar"])
     q = aln["qs"] if aln["strand"] == "+" else aln["qlen"] - aln["qe"]
     t = aln["ts"]
@@ -242,7 +254,7 @@ def refine_junctions(aln, fwd, genome, strand, window):
                 for k in range(-w, w + 1):
                     mm = sum(fwd[x].upper() != genome[(t + x - q) if x < q + k else (t + n + x - q)].upper()
                              for x in range(q - w, q + w))
-                    key = (mm + SITE_COST.get(site(genome, t + k, t + k + n, strand), OTHER_COST), abs(k), k)
+                    key = (mm + site_cost(site(genome, t + k, t + k + n, strand)), abs(k), k)
                     if best is None or key < best: best = key
                 k = best[2]
                 if k:

@@ -39,12 +39,14 @@ def read_fasta(path):
 
 def introns_of(exons, gs, to_class=False):
     """Introns of a chain of gene-strand intervals [a, b) of gs: (residue, phase, length, site, placements). With
-    to_class, each intron is first moved to its equivalent placement of an intron class nearest to the alignment
-    (for exonerate chains, whose placement among the equivalent ones is arbitrary)."""
+    to_class, each intron is first moved to its equivalent placement of an intron class nearest to the alignment,
+    else to the nearest one on an AG acceptor, as in curation/gold_standard.py (for exonerate chains, whose
+    placement among the equivalent ones is arbitrary)."""
     ex = [list(e) for e in exons]
     if to_class:
         for i in range(len(ex) - 1):
-            cls = [k for k, site in placements(gs, ex[i][1], ex[i + 1][0]) if site in CLASSES]
+            pl = placements(gs, ex[i][1], ex[i + 1][0])
+            cls = [k for k, site in pl if site in CLASSES] or [k for k, site in pl if site.endswith("-AG")]
             if cls:
                 k = min(cls, key=lambda k: (abs(k), k))
                 ex[i][1] += k; ex[i + 1][0] += k
@@ -62,7 +64,7 @@ def exonerate_introns(protein, r, to_class=True):
     position in the protein read from the alignment (vulgar: residues of the query before the intron, and the bases of
     a codon split by it), so that a frameshift of the assembly inside an exon does not shift the phases of the introns
     after it: (residue, phase, length, site, placements), as introns_of; with to_class, each intron is first moved to
-    its equivalent placement of an intron class nearest to the alignment."""
+    its equivalent placement of an intron class nearest to the alignment, else to the nearest on an AG acceptor."""
     with tempfile.TemporaryDirectory() as d:
         open(f"{d}/q.fa", "w").write(f">q\n{protein}\n"); open(f"{d}/t.fa", "w").write(f">t\n{r['gs']}\n")
         out = subprocess.run(["exonerate", "--model", "protein2genome", "--bestn", "1", "--showalignment", "no",
@@ -87,7 +89,8 @@ def exonerate_introns(protein, r, to_class=True):
     for cds_pos, b1, a2 in res:
         k = 0
         if to_class:
-            cls = [kk for kk, site in placements(gs, b1, a2) if site in CLASSES]
+            pl = placements(gs, b1, a2)
+            cls = [kk for kk, site in pl if site in CLASSES] or [kk for kk, site in pl if site.endswith("-AG")]
             if cls: k = min(cls, key=lambda kk: (abs(kk), kk))
         b, a = b1 + k, a2 + k
         out.append(((cds_pos + k) // 3, (cds_pos + k) % 3, a - b, gs[b:b + 2] + "-" + gs[a - 2:a], placements(gs, b, a)))
