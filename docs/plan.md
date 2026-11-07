@@ -2658,3 +2658,26 @@ no earlier step waits for them.
   207 and 296 nt apart. HSPs give no phase or sites and place junctions within the protein overlaps (up to 21
   residues). The paragraph "The other appendicularians agree with this" overstates positions and phases for these
   three species: to reword or drop (Charles to decide).
+  CORRECTED the same day (next item): the "intronless HSP" holds a 66-nt insertion with two stops, and the 13-nt
+  step implies a ~70-nt intron; the figure above does not draw insertions inside HSPs.
+- PSTK intron scheme (2026-11-07, Charles: "Is the insertion in the cephalochordate sequence not fishy? Also, the plot
+  is hard to read, can you try something more intuitive"; manuscript not changed, Charles is rewording):
+  1) B. lanceolatum XP_066278120.1 (382 aa) has two insertions relative to human: an acidic one ending at its first
+  intron (LERPEEDEGEDNNGDQ, in a loop whose length varies among metazoan PSTK: Xenopus, Acanthaster, Orbicella have
+  insertions there) and a C-terminal extension (GPQPGEEQEGHMSSCSSLTDMDSPTEVEV...). Not an artefact of one annotation:
+  the B. belcheri protein (UniProt A0A6P4YDZ1, RefSeq LOC109462956, another assembly) has both, 382 aa, 90.5% identical
+  overall, 16/17 and 50/56 in the two insertions. B. floridae: only a 106-aa C-terminal fragment in UniProt
+  (A0A9J7KZ98), which is why no B. floridae PSTK is in the trees. 2) make pstk-intron-scheme
+  (figures/pstk_intron_scheme.py; figures/pstk_intron_scheme.{pdf,png,svg}, results/tables/pstk_intron_scheme.tsv):
+  genes drawn as exons on human residues, groups with identical structures on one row. Panel B re-reads the tblastn
+  HSPs with their alignments (in-HSP insertions, stops) and places the best class-site intron at each junction by the
+  score of the spliced protein. Results: one junction is supported in three species, after O. vanhoeffeni K76
+  (HLK|SMRH; OdB3 R81|S82), phase 0, GT-AG: O. longicauda SCLD01107789.1 70 nt, M. erythrocephalus 48 nt (retained
+  in an HSP with two stops), B. stygius 270 nt (a stop just before SMRH); about five residues before O. dioica intron
+  b (2), not 92 as the manuscript says for OdB3. O. longicauda SCLD01051426.1 (604 nt) instead has a 66-nt GG-AG
+  intron in phase 2 inside the W codon of SMRHFW, the position, phase and sites of O. dioica intron b (OSKA2016,
+  OdB3): the two O. longicauda loci differ (two (sub-)species in the assembly, or two genes). M. erythrocephalus: a
+  second junction after residue 22 (GT-AG, 85 nt, phase 2); nothing after residue 132 at E <= 1e-3 with this query,
+  so the manuscript's phase-1 intron near 136 in this species is not seen here. B. stygius 130-136: no class-site
+  placement. O. longicauda 18|27 (1,410 nt) rests on an 18-residue HSP of E 1e-3. Old figure pstk_structures kept
+  for now (superseded).
