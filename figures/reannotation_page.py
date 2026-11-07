@@ -653,15 +653,16 @@ ORDINAL = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "six
 
 def side_panel(fig, x0, top, width, blocks, names, phase):
     """Panel C: equivalent placements of introns (figures/intron_placements.py), one block per intron, one row per
-    assembly: the gene-strand window around the two ends, cased for the leftmost placement (exon lowercase grey,
-    intron uppercase black: at the donor end the intron starts with the repeated bases, at the acceptor end the next
-    exon does), the bases repeated at both ends shaded. The rows of a block are aligned on the codons: the ends of
+    assembly: the gene-strand window around the two ends, cased for the placement named by the gold-standard script
+    (exon lowercase grey, intron uppercase black), the bases repeated at both ends shaded. The rows of a block are
+    aligned on the codons: the ends of
     the placement on an AG acceptor in the given phase (else of the placement named by the gold-standard script) are in
     the same columns, so that the codons of all rows are in register; very light vertical lines separate the codons.
     The cut points (the ellipsis) are aligned in the whole panel (intron bases trimmed), and the exon flanks are trimmed
     to whole codons, at the acceptor end to the shortest flank of the block. Below the rows that translate alike, one
-    line of amino acids, each under the middle base of its codon (for the codon split by the intron, on the side that
-    holds two of its bases; the spliced sequence, hence the translation, is the same for every placement). On the
+    line of amino acids, each under the middle base of its codon in the frame of that same placement (for the codon
+    split by the intron, on the side that holds two of its bases; the spliced sequence, hence the translation, is the
+    same for every placement). On the
     right, the dinucleotides of every placement, from left to right, that on an AG acceptor in the given phase in blue,
     a triangle under the one named by the gold-standard script (gold-standard rows only). Returns the bottom of the
     panel (mm from the bottom of the page)."""
@@ -678,6 +679,7 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
         ref = next(((k, ph) for k, dn, ph in r["pl"] if dn.endswith("-AG") and ph == phase), None) or \
             next((k, ph) for k, dn, ph in r["pl"] if k == int(r["named_k"]))
         r["shift"], r["ph_ref"] = ref[0] - k0, ref[1]
+        r["named"] = int(r["named_k"]) - k0              # repeated bases on the exon side of the named donor
     # columns (in characters from the start of each part): C, end of the reference donor exon; D, start of the
     # reference acceptor exon
     geo = {}
@@ -695,9 +697,9 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
             c_amb = C - sh                                      # first shaded base, donor end
             lp_col = c_amb - len(lp)
             r_amb = D - sh                                      # first shaded base, acceptor end
-            exon = [("L", lp_col + i, b) for i, b in enumerate(lp)] + \
-                   [("R", r_amb + i, b) for i, b in enumerate((ra + rq).lower())]
-            keep = (len(lp) - r["ph0"]) % 3
+            exon = [("L", lp_col + i, b) for i, b in enumerate(lp + la[:sh].lower())] + \
+                   [("R", r_amb + sh + i, b) for i, b in enumerate((ra[sh:] + rq).lower())]
+            keep = (len(lp) + sh - r["ph_ref"]) % 3
             cods = [exon[i:i + 3] for i in range(keep, len(exon) - 2, 3)]
             r["geo"] = dict(lp=lp, la=la, lq=lq, rp=rp, ra=ra, rq=rq, a=a, c_amb=c_amb, lp_col=lp_col, keep=keep,
                             r_amb=r_amb, cods=cods)
@@ -715,13 +717,14 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
         for k, r in enumerate(rows):
             r["aa_line"] = k == len(rows) - 1 or rows[k + 1]["aa"] != r["aa"]
     wright = max(r["geo"]["r_end"] + 1 for r in rows_all)
-    legend = wrap("Gene strand, cased for the leftmost placement: lowercase grey, exon; uppercase, intron. Shaded: bases "
+    legend = wrap("Gene strand, cased for the placement named by the gold-standard script (\u25b2): lowercase grey, exon; "
+                  "uppercase, intron. Shaded: bases "
                   "found at both ends, across which the intron can be moved without changing the spliced sequence. Rows "
                   f"aligned on the codons of the placement on an AG acceptor (phase {phase}, blue), light lines between "
                   "codons; exon flanks trimmed to whole codons. Letters: amino acids under the middle base of each codon "
-                  "(the codon split by the intron on the side holding two of its bases), one line under the rows that "
-                  "translate alike. Right: dinucleotides of each placement, from left to right; \u25b2: placement named "
-                  "by the gold-standard script. Rows in italics: test assemblies (other individuals of the same "
+                  "of that placement (the codon split by the intron on the side holding two of its bases), one line under "
+                  "the rows that translate alike. Right: dinucleotides of each placement, from left to right. Rows in "
+                  "italics: test assemblies (other individuals of the same "
                   "species), exons carried from the gold standard.", width - 1, 4.5)
     h = 5.0 + len(blocks) * 4.0 + len(rows_all) * RH + sum(r["aa_line"] for r in rows_all) * AH + 1.5 + len(legend) * 2.0
     ax = fig.add_axes([x0 / PAGE_W, (top - h) / PAGE_H, width / PAGE_W, h / PAGE_H])
@@ -745,11 +748,14 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
             gold = r["source"] == "gold standard"
             ax.text(lab_w - 1.5, y, names.get(r["assembly"], r["assembly"]), fontsize=5, ha="right", va="center",
                     style="normal" if gold else "italic", color="black" if gold else "0.35")
+            n = r["named"]
             left = [(g["lp_col"] + i, b) for i, b in enumerate(g["lp"]) if i >= g["keep"]] + \
-                   [(g["c_amb"] + i, b.upper()) for i, b in enumerate(g["la"] + g["lq"]) if g["c_amb"] + i < W]
+                   [(g["c_amb"] + i, b.lower() if i < n else b.upper()) for i, b in enumerate(g["la"] + g["lq"])
+                    if g["c_amb"] + i < W]
             nrp = g["r_amb"]                                    # intron bases shown at the acceptor end
             right = [(i, b.upper()) for i, b in enumerate(g["rp"][len(g["rp"]) - nrp:])] + \
-                    [(g["r_amb"] + i, b.lower()) for i, b in enumerate(g["ra"] + g["rq"]) if g["r_amb"] + i <= g["r_end"]]
+                    [(g["r_amb"] + i, b.upper() if i < n else b.lower()) for i, b in enumerate(g["ra"] + g["rq"])
+                     if g["r_amb"] + i <= g["r_end"]]
             for side, amb0 in (("L", g["c_amb"]), ("R", g["r_amb"])):
                 ax.add_patch(Rectangle((X(side, amb0) - 0.05, y - 0.95), g["a"] * CW + 0.1, 1.9, facecolor="#e4e4e4",
                                        edgecolor="none", zorder=1))
