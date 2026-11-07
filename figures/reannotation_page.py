@@ -30,7 +30,9 @@ and its protein below the gold-standard proteins. When the inputs carry supporti
 aligned and placed by step 2, splice sites coloured as for the models), with their differences to the assembly:
 bases of the transcript missing from the assembly (triangle above the track, with their number when more than one),
 bases of the assembly missing from the transcript (open box, at least 0.6 mm wide) and mismatches (thin ticks); their
-names are listed in the paragraph. With --side-panel (a table of figures/intron_placements.py), the first gene gets
+names are listed in the paragraph; transcripts that start with the spliced leader (--sl-table: gene, assembly,
+transcript, evidence; curation/spliced_leader_transcripts.tsv) are marked "SL" at their 5' end and "(SL)" in the
+paragraph, where the table's transcripts that are not drawn are also named. With --side-panel (a table of figures/intron_placements.py), the first gene gets
 panel letters (A: gene models, B: proteins) and a panel C on its right: the equivalent placements of introns, one row
 per assembly. Output: <out>/<name>.{pdf,svg,png}.
 """
@@ -54,6 +56,7 @@ PARALOG = "0.1"                            # paralog of the gene (public model a
 ORIGIN = "sec"                             # x origin of the gene models (--origin)
 ORIGIN_LABEL = {"sec": "TGA", "start": "ATG"}
 TX = "#2c7a7b"                             # supporting transcripts
+SLC = "#b7410e"                            # spliced-leader mark of a transcript
 TX_GAP = 1.5                               # distance between transcript tracks (mm)
 DIFF = "#c53030"                           # insertions and deletions of a transcript against the assembly
 NO_SECIS = False                           # --no-secis
@@ -95,7 +98,10 @@ def short(name): return name.replace("Oidioi.CG.OSKA2016.", "").replace("rna-", 
 def load(gene, a):
     rows = list(csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.tsv"), delimiter="\t"))
     d = {"gene": gene, "seqs": rf.read_fasta(f"{a.inputs}/reannotation_{gene}.fa"), "public": collections.defaultdict(dict),
-         "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict(), "tx": {}, "tx_count": {}}
+         "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict(), "tx": {}, "tx_count": {}, "sl": {}}
+    if a.sl_table and os.path.exists(a.sl_table):
+        for r in csv.DictReader(open(a.sl_table), delimiter="\t"):
+            if r["gene"] == gene: d["sl"].setdefault(r["assembly"], collections.OrderedDict())[r["transcript"]] = r["evidence"]
     for r in rows:
         if r["kind"] == "public": d["public"][r["assembly"]].setdefault(r["name"], {})[r["field"]] = r["value"]
         elif r["kind"] == "gold": (d["gold_sites"] if r["field"] == "sites" else d["gold_notes"])[r["assembly"]] = r["value"]
@@ -207,8 +213,13 @@ def notes(d):
         elif d["gold_notes"].get(g): text += f" Gold standard: {d['gold_notes'][g]}."
         if d["tx"].get(g):
             n, k = d["tx_count"].get(g, 0), len(d["tx"][g])
+            sl = d["sl"].get(g, {})
             text += (f" Transcripts (top to bottom; {k} of the {n} aligned across the anchor codon, most introns first): "
-                     if n > k else " Transcripts (top to bottom): ") + ", ".join(short(t) for t in d["tx"][g]) + "."
+                     if n > k else " Transcripts (top to bottom): ") + \
+                ", ".join(short(t) + (" (SL)" if t in sl else "") for t in d["tx"][g]) + "."
+            extra = [t for t in sl if t not in d["tx"][g]]
+            if extra:
+                text += f" Also starting with the SL, not drawn: {', '.join(extra)}."
         out.append((NAMES[g], text))
     if d["par"]:
         lbl = next(iter(d["par"].values())).get("label", "paralog")
@@ -333,6 +344,11 @@ def draw_models(ax, d, tracks, col_w):
             drawn = draw_model(ax, yy, e, [], x, TX, sites=rf.site_map(e, m.get("sites", "")), clip=(lo, hi))
             mark_breaks(ax, d, yy, drawn, ntmm)
             inside = lambda p: lo <= x(p) <= hi
+            if name in d["sl"].get(g, {}):               # 5' end: the leftmost drawn point in gene orientation
+                x5 = min(x(p) for b in e for p in b)
+                if lo <= x5 <= hi:
+                    ax.plot([x5, x5], [yy - 0.7, yy + 0.7], color=SLC, lw=0.6, zorder=5, solid_capstyle="butt")
+                    ax.text(x5 - 0.6 * ntmm, yy, "SL", fontsize=4, color=SLC, ha="right", va="center", fontweight="bold")
             for v in filter(None, m.get("mismatches", "").split(";")):
                 if inside(int(v)): ax.plot([x(int(v))] * 2, [yy - 0.45, yy + 0.45], color="0.15", lw=0.3, zorder=4)
             for v in filter(None, m.get("insertions", "").split(";")):
@@ -530,7 +546,7 @@ def draw_proteins(ax, d, refs_y, gold_y, par_y, col_w, fig):
     ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
-def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False):
+def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False, sl=False):
     """Key at the bottom of the page (or below the genes, its top at top mm): items one after the other, a new line
     when the page width is reached; one group for the gene models, one for the proteins. Returns its height and its
     bottom (mm)."""
@@ -578,6 +594,11 @@ def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False):
                    (lambda ax, cx, y: (ax.add_patch(Rectangle((cx, y - UTR_H / 2), 7, UTR_H, facecolor=TX, edgecolor="none")),
                                        [ax.plot([cx + v] * 2, [y - 0.45, y + 0.45], color="0.15", lw=0.3) for v in (2, 3.2, 5)]),
                     "mismatches", "black")]
+        if sl:
+            models += [(lambda ax, cx, y: (ax.add_patch(Rectangle((cx + 2.5, y - UTR_H / 2), 4.5, UTR_H, facecolor=TX, edgecolor="none")),
+                                           ax.plot([cx + 2.5] * 2, [y - 0.7, y + 0.7], color=SLC, lw=0.6),
+                                           ax.text(cx + 2.1, y, "SL", fontsize=4, color=SLC, ha="right", va="center", fontweight="bold")),
+                        "transcript that starts with the spliced leader", "black")]
     if paralog:
         models.insert(3, (lambda ax, cx, y: exon(ax, cx, y, PARALOG),
                           f"{paralog} (public model; aligned on its codon aligned to the selenocysteine)", "black"))
@@ -598,7 +619,7 @@ def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False):
                 (None, sources, "black")]
     lines, line, cx = [], [], 0
     split = 5 if paralog else 4
-    ntx = 4 if transcripts else 0
+    ntx = (5 if sl else 4) if transcripts else 0
     groups = (models[:split], models[split:len(models) - ntx], models[len(models) - ntx:], introns, proteins)
     for group in (g_ for g_ in groups if g_):
         for f, text, col in group:
@@ -740,6 +761,8 @@ def main():
                     help="x origin: the selenocysteine TGA (sec) or the start codon of the gold-standard model (start; genes "
                     "without selenocysteine, such as the machinery genes of curation/gold_standard_machinery)")
     ap.add_argument("--no-secis", action="store_true", help="do not search or draw SECIS elements")
+    ap.add_argument("--sl-table", default="curation/spliced_leader_transcripts.tsv",
+                    help="transcripts that start with the spliced leader (gene, assembly, transcript, evidence)")
     ap.add_argument("--side-panel", default="", help="table of figures/intron_placements.py: panel C on the right of the "
                     "first gene, with panel letters A (gene models) and B (proteins)")
     ap.add_argument("--side-width", type=float, default=72.0, help="width of the side panel (mm)")
@@ -843,7 +866,8 @@ def main():
         top = min(axN_bottom, row_bottom + 1.0) - 6
     plabel = next((next(iter(d["par"].values())).get("label", "paralog") for d in genes if d["par"]), None)
     key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel,
-                            transcripts=any(d["tx"] for d in genes))
+                            transcripts=any(d["tx"] for d in genes),
+                            sl=any(t in d["sl"].get(g, {}) for d in genes for g in d["tx"] for t in d["tx"][g]))
     # thin rulers: between rows of genes and above the key, and between the columns of each row
     from matplotlib.lines import Line2D
     rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)

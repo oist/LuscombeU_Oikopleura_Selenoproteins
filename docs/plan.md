@@ -155,6 +155,20 @@ no earlier step waits for them.
 
 ## Manuscript style
 
+- Work pattern for section rewrites (2026-11-07, Charles; to repeat for the next sections): Charles sends a strongly
+  simplified replacement of a whole section. (1) Check it against the current text and the data, and list the errors.
+  (2) Rephrase and reorder it to remove redundant words and put the main point first (Charles finds long descriptive
+  texts hard to read); keep exact counts and sources in an HTML comment inside the section rather than in the text.
+  (3) Present the version (and any figure change) before committing; apply his answers. (4) Commit with a message that
+  says the text is derived from his whole-section replacement paragraph and quotes that paragraph. (5) Keep the removed
+  text verbatim in manuscript/removed_text/<section>.md, with an index of the extra analyses it records (make targets,
+  tables) and of the statements later work superseded: a record of what was done and a stock of supplementary
+  material that can be prepared quickly (manuscript/removed_text/README.md). (6) Fix references elsewhere in the
+  manuscript that pointed to removed details.
+- Terms: "test assemblies" for KUM-M3-7f, AOM-5-5f and Bar2_p4 (already defined in the Results and the Methods;
+  "control" is taken by the positive controls and the vertebrate genomes; "validation" by the rounds of hit validation
+  and the validated predictions). To change when that section is reworded: "the test assembly OdB3" in the machinery
+  introduction, which means held out from the profiles.
 - Write "selenocysteine" when the amino acid is meant alone; keep "Sec" only inside names (tRNA-Sec, eEFSec, SecS)
   and in the first definition, "selenocysteine (Sec)".
 - Give the gene symbol (human HGNC symbol) at the first mention of each gene, and the full name at the first mention
@@ -2017,6 +2031,10 @@ no earlier step waits for them.
 
 ## Checks by hand (Charles)
 
+- KTI12 of O. dioica (2026-11-07): browser screenshot of the OKI2018 RefSeq model XP_081641927.1 (coordinates from
+  data/genomes/OKI/annotation.gff3.gz). The protein looks complete (277 residues, like the other chordate KTI12 of
+  265-278; aligned over its whole length at 32-38% identity to each of them; MPL start and the kinase motifs), unlike
+  the PSTK models; exon chain and transcript support not checked.
 - PSTK: look at the locus in the genome browser with the RNA-seq reads loaded (OKI2018 NC_137294.1:1940248-1941206,
   OSKA2016 S10:1355815-1356898): split reads at the third and fourth introns (number, exact junctions, other
   junctions nearby), retention of the third intron, and, if genomic reads are loaded, the assembly bases at the splice
@@ -2696,3 +2714,20 @@ no earlier step waits for them.
   preference). Reruns on Deigo: make pstk-trees, then pstk-one-leaf, pstk-lba-domains, pstk-side-trees, then
   pstk-summaries (regenerates the tree figures and tables; Figure PSTK panel D, from pstk_enriched_archaea, and the
   manuscript numbers to update after Charles's reword).
+- PSTK section rewritten (2026-11-07) from Charles's whole-section replacement paragraph (quoted in the commit); removed
+  text in manuscript/removed_text/PSTK.md. Errors corrected in his draft: spliced-leader starts are supported by
+  transcripts in all three assemblies (OdB3: GenBank ESTs; FP752340 is the drawn EST KT0AAA259YN02RM1, ENA record), 3'
+  ends observed (only the polyadenylation site inferred), third intron in a class (GA-AG) in OdB3, "control" ->
+  "test assemblies", repeated end bases are common (243/280 introns), ten other tunicates in the study (six with a
+  PSTK model; number left out of the text), trees recover the appendicularian clade and the PSTK/KTI12 split but not
+  its position; O. longicauda and the giant larvaceans left out of the paragraph (Charles: redundant with the known
+  phylogeny; no change to the conclusion). Figure PSTK: "SL" marks on transcripts that start with the spliced leader
+  (curation/spliced_leader_transcripts.tsv; figures/reannotation_page.py --sl-table). Dangling reference fixed: the
+  O. albicans PSTK last exon is now described where the curation of the machinery models is listed.
+- TODO, flanking genes (2026-11-07, Charles: useful to the curious reader and when browsing genomes; when time allows):
+  identify the genes before and after each machinery gene in the three O. dioica assemblies. PSTK so far: next gene
+  XP_081641984.1 (OKI2018), the downstream part of the ANISEED model S10.g09825.01 (OSKA2016), CBY23134.1 (OdB3) are
+  the same gene (the first three exons of the OKI2018 protein match the OSKA2016 and OdB3 regions after PSTK, tblastn
+  72-88%); UniProt E4X036 (CBY23134.1): "RRM domain-containing protein", RRM CPEB family by automatic annotation
+  (InterPro CPEB signatures); which CPEB not checked. Previous gene: XP_081641987.1, S10.g09826.01, CBY23136.1, not
+  identified. Name them in the text only once checked.
