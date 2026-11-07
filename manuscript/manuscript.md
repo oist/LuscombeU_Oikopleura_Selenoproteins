@@ -1666,7 +1666,7 @@ models; the second pass also took as candidates the protein-to-genome alignments
 `curation/machinery_projections.py`), alone or joined to predicted or transcript exons. Where no candidate held the exon
 chain supported by the evidence, the curator gave it, with the evidence (`curation/machinery_overrides.tsv`: OdB3 and
 *O. albicans* PSTK, SEPSECS of OSKA2016, OdB3, *O. albicans* and *O. vanhoeffeni*, EEFSEC of *O. longicauda*, *O.
-albicans* and *O. vanhoeffeni*, from exonerate alignments of the *O. dioica* proteins whose junctions were rescanned
+albicans* and *O. vanhoeffeni* and SEPHS_b of *O. vanhoeffeni* (ended at the donor that the prediction read through), from exonerate alignments of the *O. dioica* proteins whose junctions were rescanned
 within 30 nucleotides by the global alignment score of the whole protein to the OSKA2016 and OdB3 proteins), and the
 model was read on the genome
 along that chain, from the codon of the chain nearest to the anchor when the chain spliced the anchor out. A transcript

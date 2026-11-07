@@ -2625,3 +2625,6 @@ no earlier step waits for them.
   no C-terminal extension found in its region (exonerate of the O. albicans, OSKA2016 and OKI2018 extensions); three
   more O. longicauda SEPHS_b loci (miniprot scores 1028, 486, 446 against 1114: the mixture). O. albicans 628 aa with
   a weakly similar extension (23-35%).
+- O. vanhoeffeni SEPHS_b: the model's last 7 residues (VRYFSYE) are read through a GT donor into the intron (after
+  LPREQ); the remaining 355 nt of the contig encode none of the rest: curator chain ending at the donor
+  (machinery_overrides.tsv), 327 aa, incomplete (open 3'). Effective at the next gold-standard run.
