@@ -386,7 +386,7 @@ at these two introns. --> The OKI2018 SEPHS_b protein (635 residues) carries, af
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot), or, for EEFSEC, from alignments of the *O. dioica* proteins (exonerate) set by the curator; all but *O.
-longicauda* EEFSEC have start and stop codons. The EEFSEC predictions of the three species used non-canonical sites
+longicauda* EEFSEC have start and stop codons, although three SECIS-binding proteins start downstream of the start of the others (below). The EEFSEC predictions of the three species used non-canonical sites
 where the alignments find other junctions: a copy of part of the first exon 3.8 kb upstream joined by a GT-TG intron
 (*O. albicans*), a 36-nucleotide TT-AG intron inside an exon (*O. albicans*), an AC-AG intron 12 nucleotides from a
 GT-AG one (*O. vanhoeffeni*), an AT-TG intron 16 nucleotides from a GT-AG one and a 71-nucleotide CA-AA intron (*O.
@@ -402,7 +402,12 @@ curation/machinery_overrides.tsv (exonerate protein2genome of the O. dioica gold
 results/gene_regions/EEFSEC, each junction rescanned by the global alignment score of the whole protein to the OSKA2016
 and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
 OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
-that protein. The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (see the
+that protein. Only the *O. albicans* protein covers the N-terminal region of the *O. dioica* proteins (from the residue
+aligned to OdB3 28, 43 to 54% identical over OdB3 residues 1 to 200); the two *O. longicauda* proteins and the *O.
+vanhoeffeni* protein start at residues aligned to OdB3 202, 105 and 201, and are marked N-terminally incomplete: the
+*O. albicans* N-terminus, aligned to their regions, finds three to five more exons upstream (up to 10 kb away), which
+the predictions, seeded with *O. dioica* proteins, missed, and which were not curated
+(`curation/machinery_incomplete.tsv`). The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (see the
 PSTK section) and the first exon of *O. albicans* SEPSECS (31 residues, found by aligning the *O. vanhoeffeni* protein;
 the prediction started at an internal methionine, 45 residues downstream), and moved an acceptor of *O. vanhoeffeni*
 SEPSECS from a TT-AA site to the AG 9 nucleotides upstream, which alignments of the OKI2018 and *O. albicans* proteins

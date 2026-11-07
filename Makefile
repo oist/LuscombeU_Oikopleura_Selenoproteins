@@ -190,7 +190,8 @@ gold-standard:
 # candidates ranked by similarity to the human proteins; the transcript alignments of gold-standard are reused); miniprot
 # alignments of the human proteins and of the first-pass proteins on the six genomes (curation/machinery_projections.py);
 # the final pass on the six genomes, with these alignments as candidate models and the first-pass proteins of the other
-# genomes added to the references; exon chains of curation/machinery_overrides.tsv set by the curator (minutes)
+# genomes added to the references; exon chains of curation/machinery_overrides.tsv set by the curator, models of
+# curation/machinery_incomplete.tsv marked incomplete (minutes)
 #   sbatch -p compute --cpus-per-task=8 --mem=16G --time=2:00:00 scripts/run_in_container.sh make gold-standard-machinery
 GOLD_MACHINERY = curation/gold_standard_machinery
 MACHINERY_GOLD_GENOMES = OKI OSKA OdB3 Olon Oalb Ovan
@@ -207,7 +208,8 @@ gold-standard-machinery:
 	python3 curation/gold_standard.py --anchor sense --genomes $(MACHINERY_GOLD_GENOMES) --baseline curation/machinery_genes.tsv \
 	  --stage1 $(SELENO_PREDICTIONS) --references curation/machinery_references.faa \
 	  --reference-proteins $(MACHINERY_WORK)/first_pass --projections $(MACHINERY_WORK)/projections \
-	  --overrides curation/machinery_overrides.tsv --other-proteins $(wildcard results/gene_regions/*/proteins.faa) \
+	  --overrides curation/machinery_overrides.tsv --incomplete curation/machinery_incomplete.tsv \
+	  --other-proteins $(wildcard results/gene_regions/*/proteins.faa) \
 	  --out $(GOLD_MACHINERY) --table results/tables/gold_standard_machinery.tsv
 
 # Step 1 of the plan of 2026-10-24: SECIS scores of the validated selenocysteine hits (seconds; reads results/ only)

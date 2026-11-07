@@ -956,6 +956,9 @@ def main():
                     "gold-standard model (FASTA, header gene|assembly|...; curation/region_proteins.py): compared, with "
                     "the proteins of the other gold-standard assemblies, to the assembly and transcript proteins where "
                     "they disagree by indels")
+    ap.add_argument("--incomplete", default="", help="models marked incomplete by the curator (genome, gene, end: N or "
+                    "C, evidence): complete = no in the table and the protein header, and the evidence in the notes; "
+                    "the model itself is unchanged")
     ap.add_argument("--overrides", default="", help="curator's exon chains (genome, gene, exons as 1-based start-end of "
                     "the coding exons, evidence): the model of the gene is read on this chain, whatever the candidates; "
                     "with --anchor sense, a chain that splices out the anchor codon is read from the codon of the chain "
@@ -1000,6 +1003,10 @@ def main():
     if a.overrides and os.path.exists(a.overrides):
         for r in csv.DictReader((l for l in open(a.overrides) if not l.startswith("#")), delimiter="\t"):
             overrides[(r["genome"], r["gene"])] = r
+    incomplete = {}
+    if a.incomplete and os.path.exists(a.incomplete):
+        for r in csv.DictReader((l for l in open(a.incomplete) if not l.startswith("#")), delimiter="\t"):
+            incomplete[(r["genome"], r["gene"])] = r
     # pass 1: candidate models of each gene
     records, genomes, annotations = [], {}, {}
     for g in a.genomes:
@@ -1369,11 +1376,16 @@ def main():
         status, ids, over = annotation_status(annotations[g], contig, strand, codon0, lo_cds, hi_cds)
         fix = annotation_fix(best, over, gs)
         if source != "genome": fix += "; the assembly does not encode the protein of the transcripts"
+        complete = "yes" if protein.startswith("M") and not best["open3"] else "no"
+        inc = incomplete.get((g, gene))
+        if inc:   # an end that the model misses (exons beyond it found by protein alignment, not curated)
+            complete = "no"
+            notes.append(f"{inc['end']}-terminus missing (curator): {inc['evidence']}")
         row.update({"evidence": f"{best['kind']}:{best['source']}", "supporting_transcripts": len(best["support"]),
                     "protein_length": len(protein), "protein_source": source,
                     "identity_assembly_protein": f"{id_g:.3f}" if id_g != "" else "",
                     "identity_transcript_protein": f"{id_t:.3f}" if id_t != "" else "",
-                    "complete": "yes" if protein.startswith("M") and not best["open3"] else "no",
+                    "complete": complete,
                     "start_in_transcripts": ("yes" if any(a <= best["cds_genome"][0] < b for tm in best["support"]
                                                           for a, b in tm["blocks"]) else "no") if best["support"] else "-",
                     "upstream_stop": ("no" if best["open5"] else "yes") if not best["cds_only"] else "-",
@@ -1397,7 +1409,7 @@ def main():
         o = out[g]
         o["gff"] += ["\t".join(map(str, x)) for x in gff_lines(g, gene, contig, strand, best, (codon0, codon0 + 2) if SEC else None)]
         o["prot"].append(f">{gene}|{g}|{best['kind']}:{best['source']}|protein_source={source}|"
-                         f"complete={'yes' if protein.startswith('M') and not best['open3'] else 'no'}\n{protein}\n")
+                         f"complete={complete}\n{protein}\n")
         if best["utr3"]:
             o["utr"].append(f">{gene}|{g}|{best['kind']}:{best['source']}|{len(best['utr3'])} nt\n{best['utr3']}\n")
         # genomic sequence after the stop codon (or after the end of an open frame)

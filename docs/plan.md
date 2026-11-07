@@ -2600,3 +2600,9 @@ no earlier step waits for them.
   with O. dioica proteins, missed the N-terminal exons where the O. dioica N-terminus is too divergent. Option:
   curator chains from exonerate of the O. albicans protein (N-terminus) and of the O. dioica proteins (rest), with
   junction rescans, as for EEFSEC.
+- SBP2 decision (2026-11-07, Charles: "Let's mark them incomplete and move to the next gene"): O. longicauda SBP2,
+  SBP2_2 and O. vanhoeffeni SBP2 marked N-terminally incomplete (curation/machinery_incomplete.tsv, new option
+  gold_standard.py --incomplete: complete = no and the evidence in the notes; models unchanged); takes effect at the
+  next Deigo run of make gold-standard-machinery. Manuscript: Results sentence after the SECIS-binding protein
+  sentence. O. albicans SBP2 kept as is (its N-terminus aligns to O. dioica). Junction rescans of the C-terminal
+  parts (GT-AC, GT-AA, the 39-nt intron of O. albicans) not done.
