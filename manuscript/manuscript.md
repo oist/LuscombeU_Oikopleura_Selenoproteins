@@ -949,11 +949,12 @@ the assembly; SL, transcripts that start with the spliced leader (OdB3: from the
 FP752340, whose 5′ end is masked in the EST collection used). B, reference and gold-standard proteins, as in Figure
 REANNOTATION. C, equivalent placements of the third
 and fourth introns (`figures/intron_placements.py`): the gene-strand sequence at both ends of each intron in the
-gold-standard assemblies and in the assemblies of other individuals of the same species (KUM-M3-7f, AOM-5-5f, Bar2_p4;
-exons carried from the gold standard through a minimap2 alignment of the regions); shaded, the bases repeated at both
-ends, across which the intron can be moved without changing the spliced sequence; ticks, the possible intron ends, whose
-dinucleotides are listed on the right from left to right; triangle, the placement named by the gold-standard script;
-blue, the placement on an AG acceptor in phase 1. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
+gold-standard assemblies and in the test assemblies of the same species (KUM-M3-7f, AOM-5-5f, Bar2_p4; exons carried
+from the gold standard through a minimap2 alignment of the regions); shaded, the bases repeated at both ends, across
+which the intron can be moved without changing the spliced sequence; below, the amino acids of the complete exon codons
+and, under the ellipsis, of the codon split by the intron, in the reading frame of the placement on an AG acceptor in
+phase 1; right, the dinucleotides of the possible placements from left to right, the placement on an AG acceptor in
+blue, a triangle under the placement named by the gold-standard script. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
 related kinase KTI12, with the eukaryotic and archaeal PSTK added to the tree of Figure TREES (Methods, long-branch
 analysis 6), under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast bootstrap
 replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences of one
