@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-introns pstk-rates intron-map junction-rescan cds-divergence pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -444,6 +444,11 @@ intron-map:
 
 # Junctions of the curator's EEFSEC chains of the species without transcripts, rescanned against the OSKA2016 and OdB3
 # proteins (seconds; evidence of curation/machinery_overrides.tsv; needs make machinery-regions)
+# Presence of each O. dioica gold-standard intron in the assembly of another individual of the same species
+# (KUM-M3-7f, AOM-5-5f, Bar2_p4): introns that are insertions absent from the other assembly (minutes; genomes)
+intron-presence:
+	python3 curation/intron_presence.py --introns results/tables/intron_content.tsv --out results/tables/intron_presence.tsv
+
 # Coding divergence between the two individuals of each O. dioica species, codon by codon (seconds; needs make
 # machinery-regions)
 cds-divergence:

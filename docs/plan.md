@@ -2606,3 +2606,22 @@ no earlier step waits for them.
   next Deigo run of make gold-standard-machinery. Manuscript: Results sentence after the SECIS-binding protein
   sentence. O. albicans SBP2 kept as is (its N-terminus aligns to O. dioica). Junction rescans of the C-terminal
   parts (GT-AC, GT-AA, the 39-nt intron of O. albicans) not done.
+- SEPHS_b review started (2026-11-07). OKI2018 intron 3 (200 nt, CA-GT, 8 repeated bases, fold z -8.95, ends z -4.2,
+  21 loci at 93% identity) is absent from KUM-M3-7f, where the two exons are contiguous; its last bases repeat the end
+  of the upstream exon (CCACCAGT): an insertion with a target-site duplication (MITE-like: short, folded, repeated),
+  which the OKI2018 transcripts span (the 19-nt "exon" before it is the duplicated site). As for the OdB3 EEFSEC LTR,
+  the transcripts can come from alleles without it, or splice it out; the protein is the same (KUM lift 635 aa). It is
+  one of the 25 O. dioica introns whose ends pair with z <= -3 (and of the 21 not GT-AG). Other members of the 25 look
+  alike (OKI GPX_chr1a 2: CT-AC, 9 repeated bases, 21 loci, fold z -10.4; OSKA GPX_chr1b 2: CT-TA, 8, 26 loci; OdB3
+  SELENOS 2: GT-AG, 10, 66 loci; OSKA GPX_chr1a 2: GA-AG, 7): new check curation/intron_presence.py (make
+  intron-presence, results/tables/intron_presence.tsv): every O. dioica gold intron searched in the other individual's
+  assembly (joined exons against donor and acceptor junctions, BLASTN). Tested on the machinery regions: absent =
+  OKI2018 SEPHS_b 3 and OdB3 EEFSEC 5 (the LTR); not found = OKI2018 EEFSEC 3 and 4 (divergent haplotype), OSKA2016
+  EEFSEC 5, OdB3 SEPHS_b 4. Then: recount the Discussion statistic (21 of 25) without the insertions.
+  Other SEPHS_b points: OdB3 model 52/28/40% identical to OSKA2016 over residues 201-500 (95-98% elsewhere): locus
+  split by assembly gaps (100 and 675 N) and duplicated within FN653017.1 (five introns with 96-100% copies 5 kb away);
+  already left out of the trees; Bar2_p4 has a complete copy (miniprot 1-635, 12 exons). O. vanhoeffeni 334 aa runs
+  off the contig (CDS ends at position 332): C-terminally incomplete. O. longicauda 424 aa ends with the SEPHS domain;
+  no C-terminal extension found in its region (exonerate of the O. albicans, OSKA2016 and OKI2018 extensions); three
+  more O. longicauda SEPHS_b loci (miniprot scores 1028, 486, 446 against 1114: the mixture). O. albicans 628 aa with
+  a weakly similar extension (23-35%).
