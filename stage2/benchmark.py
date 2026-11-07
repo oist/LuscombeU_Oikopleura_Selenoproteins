@@ -12,7 +12,10 @@ coordinate) is looked up:
 - locus: when the codon is missed, the labels of the Selenoprofiles predictions that overlap the reference coding
   sequence on the same strand (locus found, Sec codon missed);
 - structure, for references with a gene model and a Selenoprofiles prediction at the codon: introns of the
-  prediction identical to those of the reference (exact), and the fractions of reference coding bases covered by the
+  prediction identical to those of the reference (exact; an intron moved across bases repeated at its two ends, which
+  gives the same spliced sequence, counts as the same intron: each intron is shifted to its leftmost equivalent
+  placement on the genome of the run, read from --samplesheet; introns_exact_coordinates keeps the comparison of
+  coordinates), and the fractions of reference coding bases covered by the
   prediction (sensitivity) and of predicted coding bases inside the reference (precision); the terminal stop codon
   is ignored on both sides;
 - secis: the best SECIS score in the 3' sequence of the prediction (reported by the pipeline only above the threshold
@@ -24,7 +27,7 @@ status). Sec sites of a run (selenocysteine label or miniprot) at no reference c
 are listed as other sites, for every genome of the run, including those without reference (held-out genomes).
 Outputs: --genes (one row per run, genome and reference gene), --summary (one row per run and genome), --other.
 """
-import argparse, collections, csv, os, re, sys
+import argparse, collections, csv, gzip, os, re, sys
 
 RUNS = ["stage1=work/stage1/pipeline", "default=work/stage2/pipeline/default", "eval=work/stage2/pipeline/eval",
         "eval_miniprot=work/stage2/pipeline/eval_miniprot", "loo_OKI=work/stage2/pipeline/loo_OKI",
@@ -47,6 +50,36 @@ def segments(text):
 
 def introns(cds):
     return {(a[1], b[0]) for a, b in zip(cds, cds[1:]) if b[0] - a[1] > 1}
+
+
+def leftmost(intron_set, seq):
+    """Introns (end of the exon before, start of the exon after; 1-based) moved to their leftmost equivalent
+    placement: while the last exon base before the intron equals its last base, the intron moves one base left."""
+    out = set()
+    for a, b in intron_set:
+        while a > 1 and seq[a - 1].upper() == seq[b - 2].upper(): a -= 1; b -= 1
+        out.add((a, b))
+    return out
+
+
+def genome_paths(samplesheets):
+    paths = {}
+    for s in samplesheets:
+        if os.path.exists(s):
+            for r in csv.DictReader(open(s)): paths.setdefault(r["sample"], r["fasta"])
+    return paths
+
+
+def read_contigs(path, names):
+    out, name, buf = {}, None, []
+    with (gzip.open(path, "rt") if path.endswith(".gz") else open(path)) as fh:
+        for l in fh:
+            if l.startswith(">"):
+                if name in names: out[name] = "".join(buf)
+                name, buf = l[1:].split()[0], []
+            elif name in names: buf.append(l.strip())
+    if name in names: out[name] = "".join(buf)
+    return out
 
 
 def bases(cds):
@@ -102,10 +135,20 @@ def main():
     ap.add_argument("--genes", default="results/tables/stage2_benchmark_genes.tsv")
     ap.add_argument("--summary", default="results/tables/stage2_benchmark_summary.tsv")
     ap.add_argument("--other", default="results/tables/stage2_benchmark_other_sites.tsv")
+    ap.add_argument("--samplesheet", nargs="+", default=["stage1/samplesheet.csv", "stage2/run/samplesheet_final.csv"],
+                    help="genome FASTA of each genome (sample, fasta), to compare introns up to equivalent placements")
     a = ap.parse_args()
     truth = collections.defaultdict(list)
     for r in csv.DictReader(open(a.truth), delimiter="\t"):
         if r["sec_start"]: truth[r["genome"]].append(r)
+    paths, seqs = genome_paths(a.samplesheet), {}
+
+    def contig_seq(g, contig):   # loaded once per genome, for the contigs of its references
+        if g not in seqs:
+            names = {r["contig"] for r in truth.get(g, [])}
+            seqs[g] = read_contigs(paths[g], names) if g in paths and os.path.exists(paths[g]) else {}
+            if not seqs[g]: print(f"{g}: no genome sequence; introns compared by coordinates", file=sys.stderr)
+        return seqs[g].get(contig)
     gene_rows, summary, other = [], [], []
     for spec in a.runs:
         run, d = spec.split("=", 1)
@@ -132,7 +175,8 @@ def main():
                        "sec_selenoprofiles": label if sp_id != "." else "", "sec_miniprot": "yes" if mp else "no",
                        "prediction": sp_id if sp_id != "." else "", "family": fam,
                        "same_family": ("yes" if fam == r["profile"] else "no") if fam else "",
-                       "locus": "", "introns_exact": "", "cds_sensitivity": "", "cds_precision": "",
+                       "locus": "", "introns_exact": "", "introns_exact_coordinates": "", "cds_sensitivity": "",
+                       "cds_precision": "",
                        "secis": s.get("secis_score", "") if s and s.get("secis_score") not in (".", None) else ""}
                 ref_cds = segments(r["cds"])
                 if preds is not None and ref_cds and not r["status"].startswith(("partial", "disrupted", "codon")):
@@ -145,7 +189,11 @@ def main():
                         pc = strip_stop(preds[sp_id], r["strand"])
                         rc_ = strip_stop(ref_cds, r["strand"])
                         bp, br = bases(pc), bases(rc_)
-                        row["introns_exact"] = "yes" if introns(pc) == introns(rc_) else "no"
+                        ip, ir = introns(pc), introns(rc_)
+                        row["introns_exact_coordinates"] = "yes" if ip == ir else "no"
+                        seq = contig_seq(g, r["contig"]) if ip != ir else None
+                        if seq: ip, ir = leftmost(ip, seq), leftmost(ir, seq)
+                        row["introns_exact"] = "yes" if ip == ir else "no"
                         row["cds_sensitivity"] = f"{len(bp & br) / len(br):.3f}"
                         row["cds_precision"] = f"{len(bp & br) / len(bp):.3f}" if bp else ""
                 gene_rows.append(row)
