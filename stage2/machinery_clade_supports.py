@@ -80,9 +80,9 @@ ENTRIES = {
         ("appendicularians (with F. borealis) and other tunicates", "clade", T("Appendicularians", "Other tunicates"),
          [R("^Fbor_")]),
         ("tunicates and human SECISBP2L", "mrca", OR(T("Other tunicates"), R("^Human_SECISBP2L"))),
-        ("tunicates and amphioxus", "mrca", OR(T("Other tunicates"), R("^(Bflo|Blan)_"))),
+        ("tunicates and amphioxus", "mrca", OR(T("Other tunicates"), R("^(Bflo|Blan|Bbel)_"))),
         ("human SECISBP2 and SECISBP2L", "mrca", R("^Human_SECISBP2")),
-        ("human SECISBP2L, amphioxus and echinoderm", "mrca", OR(R("^Human_SECISBP2L"), R("^(Bflo|Blan)_"), T("Echinoderms"))),
+        ("human SECISBP2L, amphioxus and echinoderm", "mrca", OR(R("^Human_SECISBP2L"), R("^(Bflo|Blan|Bbel)_"), T("Echinoderms"))),
         ("F. borealis", "position", R("^Fbor_")),
     ],
 }

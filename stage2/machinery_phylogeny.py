@@ -20,7 +20,10 @@ Sequences: the profile sequences (optionally at most --max-per-group per taxonom
 predictions of the other tunicates, cephalochordates and vertebrates, the stage 2 predictions of the appendicularians
 (appendicularian profiles), and the curated transcript proteins. For PSTK and the SECIS-binding proteins, which have no
 selenocysteine, the RefSeq proteins of a genome (best human hit PSTK or KTI12, SECISBP2 or SECISBP2L; longest
-isoform per gene) replace its predictions, which cover only the region of the profile. Predictions
+isoform per gene) replace its predictions, which cover only the region of the profile. Proteins of species without a
+genome in the samplesheet are added from --extra-proteins (headers family|genome code|name; 2026-11-07: the PSTK of
+B. belcheri and the full-length PSTK of B. floridae, whose RefSeq protein on the B. floridae genome is a 106-residue
+fragment, taken from the B. floridae haplotype of the RefSeq annotation of a B. floridae x B. japonicum assembly). Predictions
 shorter than --min-fraction of the median profile length are left out (fragments make trees unstable).
 Curation, recorded in <out>/<family>.removed.tsv: the stage 1 predictions of the human genome are replaced by the
 human RefSeq proteins of the family; identical sequences are kept once (genome-derived names preferred); after a first
@@ -41,7 +44,7 @@ from taxonomy import load_taxa, classify         # taxonomic group of a sequence
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
 TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho"}
 VERTEBRATES = {"Hsap", "Mmus", "Drer"}
-CEPHALOCHORDATES = {"Bflo", "Blan"}
+CEPHALOCHORDATES = {"Bflo", "Blan", "Bbel"}
 # families without selenocysteine: their RefSeq proteins, when a genome has them, replace the Selenoprofiles
 # predictions, which cover only the region of the profile (for example the C-terminal domain of SECIS-binding proteins)
 # groups kept by the core-coverage filter even when partial (the subject of the trees)
@@ -87,6 +90,8 @@ def main():
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
     ap.add_argument("--stage2", default="work/stage2/machinery_test")
     ap.add_argument("--curated", default="curation/machinery_proteins.faa")
+    ap.add_argument("--extra-proteins", default="curation/cephalochordate_proteins.faa",
+                    help="proteins of other species (headers family|genome code|name), grouped by genome code")
     ap.add_argument("--gold", nargs="*", default=[], help="gold-standard directories (<genome>.gff3, "
                     "<genome>.proteins.faa; for example curation/gold_standard and curation/gold_standard_machinery): "
                     "in --gold-genomes, the predictions that overlap a gold-standard gene of the family are replaced "
@@ -173,6 +178,10 @@ def main():
                     add(f"{g}|RefSeq_{gene}_{pid}", seq, "outgroup" if gene in OUTGROUP_GENES.get(fam, []) else kind(g))
                 if prots: replaced.add(g)
             if replaced: print(fam, "RefSeq proteins instead of predictions for", " ".join(sorted(replaced)), flush=True)
+        if a.extra_proteins and os.path.exists(a.extra_proteins):
+            for n, s in read_fasta(a.extra_proteins):
+                f = n.split()[0].split("|")
+                if f[0] == fam: add(f"{f[1]}|{f[2]}", s, kind(f[1]))
         for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in TUNICATES | VERTEBRATES | CEPHALOCHORDATES or g in replaced: continue

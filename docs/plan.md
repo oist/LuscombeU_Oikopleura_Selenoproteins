@@ -2681,3 +2681,18 @@ no earlier step waits for them.
   so the manuscript's phase-1 intron near 136 in this species is not seen here. B. stygius 130-136: no class-site
   placement. O. longicauda 18|27 (1,410 nt) rests on an 18-residue HSP of E 1e-3. Old figure pstk_structures kept
   for now (superseded).
+- Cephalochordates in the PSTK trees (2026-11-07, Charles: "How about adding cephalochordates to the trees?", with a
+  BLASTP of the B. lanceolatum PSTK against nr: B. lanceolatum, B. belcheri, B. floridae x B. belcheri and B. floridae
+  x B. japonicum assemblies, B. floridae fragment). The PSTK trees had one amphioxus: the B. floridae RefSeq PSTK
+  (XP_035673001.1, 106 aa) is removed by the core-coverage filter (31%). Added (curation/cephalochordate_proteins.faa,
+  stage2/machinery_phylogeny.py --extra-proteins, PSTK family only): B. floridae XP_078587131.1, from the RefSeq
+  annotation of the B. floridae x B. japonicum assembly, B. floridae haplotype (identical to residues 3-99 of the
+  B. floridae fragment; 91% to the B. belcheri proteins; haplotype species of the hybrid assemblies from Charles),
+  and B. belcheri XP_019615146.1 (genome record; the B. floridae x B. belcheri protein XP_078668518.1 is 99.7%
+  identical to it). Not added: B. japonicum XP_078586109.1 (254 aa, 96-97% to B. belcheri), the GenBank B. belcheri
+  and B. lanceolatum records (same species). Expected effect small: Branchiostoma PSTK are 88-91% identical, a
+  short-branch clade. Other families keep two amphioxus genomes (no B. belcheri genome in the samplesheet).
+  Asymmetron lucayanum (unannotated chromosome-level assembly at NGDC, GWHFWAV00000000.1) not added (Charles: no
+  preference). Reruns on Deigo: make pstk-trees, then pstk-one-leaf, pstk-lba-domains, pstk-side-trees, then
+  pstk-summaries (regenerates the tree figures and tables; Figure PSTK panel D, from pstk_enriched_archaea, and the
+  manuscript numbers to update after Charles's reword).
