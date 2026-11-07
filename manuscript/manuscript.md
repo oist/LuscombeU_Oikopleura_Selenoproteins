@@ -317,6 +317,19 @@ sites), and OKI2018 GPX_chr1a and OSKA2016 GPX_chr1b (1 site each). About one in
 non-canonical, close to the fraction in the reference annotation, and four genes keep a GA-AG intron in the three
 species.
 
+Six introns of the *O. dioica* gold standard (selenoproteins and machinery) are absent from the assembly of another
+individual of the same species (KUM-M3-7f, AOM-5-5f or Bar2_p4), which has the two exons contiguous (`make
+intron-presence`; 27 short introns or divergent loci could not be tested either way). Five are insertions: the long
+terminal repeat retrotransposon of OdB3 EEFSEC (see below), and four introns of 200 to 1,043 nucleotides, OKI2018
+GPX_chr1a and SEPHS_b, OSKA2016 GPX_chr1b and OdB3 SELENOS, which have 8 to 10 bases repeated at their two ends
+(a duplicated target site), have 21 to 66 copies in their genome, and fold more than shuffled sequences of the same composition (z
+-7.2 to -10.4). Four of the ten models with splice sites outside the intron classes owe them to these insertions
+(OKI2018 GPX_chr1a and SEPHS_b, OSKA2016 GPX_chr1b, OdB3 EEFSEC). The transcripts that join their exons can come from
+alleles without the insertion as well as from transcripts that splice it out; the proteins are the same. The sixth is
+a GT-AG intron of 41 nucleotides in OKI2018 GPX_PAR, absent from the KUM-M3-7f locus that matches its exons, which may
+be another copy of the gene. <!-- results/tables/intron_presence.tsv (curation/intron_presence.py, Deigo run of
+2026-11-07, commit 22bdeaf); copies and folds from results/tables/intron_content.tsv. -->
+
 The public annotations rarely give the selenoproteins (Figures REANNOTATION and CANDIDATES). Of the 59 models, three have the
 selenocysteine declared by the public annotation, all in RefSeq (OKI2018 DIO_PAR, GPX_PAR and SELENOF), and in DIO_PAR one intron lies 11
 nucleotides away from the GA-AG intron supported by the transcripts. In two more RefSeq models (GPX_chr1a and
@@ -347,10 +360,7 @@ OKI2018 protein found it in both (complete in OSKA2016, 82% identical; split by 
 assemblies of three other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4), and these loci served as anchors. Five models
 have splice sites outside the intron classes of *O. dioica*. In PSTK, in the three assemblies, every transcript that
 splices the intron uses the same junctions, and assemblies of other individuals have the same bases (see the PSTK
-section). In OKI2018 SEPHS_b, the unusual intron comes with a 19-nucleotide exon and with 13 bases of the transcripts
-that are missing from the assembly, whereas the assembly of another individual of the same species (KUM-M3-7f) has
-canonical introns there; the protein differs from that of KUM-M3-7f at only nine scattered residues, so that only the
-local exon chain, not the protein, carries the assembly error. In OdB3 EEFSEC, the unusual intron (8,982 nucleotides)
+section). In OKI2018 SEPHS_b, the unusual intron is one of the insertions described above (200 nucleotides): its last eight bases repeat the end of the 19-nucleotide "exon" before it (CCACCAGT), KUM-M3-7f has the two exons contiguous, and the transcripts join them. In OdB3 EEFSEC, the unusual intron (8,982 nucleotides)
 is an insertion inside an exon that is continuous in OKI2018, OSKA2016 and in another assembly of the same species
 (Bar2_p4): a long terminal repeat (LTR) retrotransposon of 8,977 nucleotides, whose two LTRs of 184 nucleotides are
 identical, flanked by a duplication of five bases of the exon (GATAA), which gives the intron its equivalent placements;
@@ -908,8 +918,8 @@ them too). No OdB3 EST uses the acceptor of the model, which rests on the simila
 ESTs were not among the transcripts of the gold-standard script, which takes only those that hold the anchor codon
 of the model (here inside the 36 codons). In OSKA2016 and OdB3, the first and last 25
 nucleotides of the fourth intron can pair: the energy of their duplex is lower than in dinucleotide-shuffled introns (z
-= -6.1 in both), the pairing that would bring the two splice sites together being among the seven strongest of the 276
-gold-standard introns of *O. dioica* scored; the OKI2018 intron, whose interior differs, has no such pairing (z = -0.7),
+= -6.1 in both), the pairing that would bring the two splice sites together being among the four strongest of the 271
+gold-standard introns of *O. dioica* scored that are not insertions (see the gold-standard section); the OKI2018 intron, whose interior differs, has no such pairing (z = -0.7),
 so that it is not needed to splice the intron.
 
 In vertebrates and amphioxus, PSTK has five introns at the same alignment columns and in the same phases (RefSeq models
@@ -943,7 +953,7 @@ not single it out; its two ends, which lie outside an assembly gap of 227 nucleo
 shuffled sequences (z = -3.2), about as much as those of the most paired of the 19 other *O. albicans* introns scored
 (z = -3.1). <!-- z-scores of this paragraph and of the
 PSTK fourth intron: shuffles seeded per intron; O. dioica values from Deigo run 5313acd (OSKA2016 -6.06, OdB3 -6.08,
-ranks 7 and 6 of 276; OKI2018 -0.71), O. albicans values from run 12b9bd9 (2026-11-06): PSTK intron 2 -3.21, against
+ranks 7 and 6 of 276, 4 and 3 of the 271 that are not insertions, curation/intron_pairing.py; OKI2018 -0.71), O. albicans values from run 12b9bd9 (2026-11-06): PSTK intron 2 -3.21, against
 shuffles of the intron without its 227 N (-3.25 in run 8aac2be, with the N shuffled into the controls); SEPSECS intron
 4 -3.11, intron 2 -3.07; 20 O. albicans introns scored of 23 (three longer than 2,500 nt or with a gap at an end).
 Earlier runs with a
@@ -1504,13 +1514,20 @@ ATCGGGTT in the fourth intron, GCAGGG, AAGGGTT and GAGGGTT in the third), while 
 runs help the recognition of donor sites without GT in *O. dioica* could be tested on the introns supported by RNA-seq
 reads across the genome.
 
-Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG: 21 of the
-25 introns whose ends pair with z at most -3 are not GT-AG, against 44 of the other 251 (median z -1.6 for the non-GT-AG
-introns and 0.2 for the GT-AG introns; -1.4 to -1.7 and 0.1 to 0.2 in each of the three assemblies; the same introns
-are counted in the three assemblies, so these counts are not independent; `results/tables/intron_content.tsv`). Terminal inverted repeats mark
+Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG. Four of
+the 25 introns whose ends pair with z at most -3 are insertions that the assembly of another individual lacks (see
+Results); without the five insertions scored, 18 of the 21 introns whose ends pair with z at most -3 are not GT-AG,
+against 44 of the other 250 (median z -1.5 for the non-GT-AG introns and 0.2 for the GT-AG introns; -1.3 to -1.5 and
+0.1 to 0.3 in each of the three assemblies; the same introns are counted in the three assemblies, so these counts are
+not independent; `make intron-pairing`). The insertions themselves have what is expected of the start of a transposon
+intron: duplicated target sites, which give them equivalent placements and splice sites outside the intron classes,
+paired ends and many copies; that they are absent from another individual dates them to within the species. Whether
+their transcripts splice them out, which would make them new introns, as introners are from their insertion [@Huff2016], or come
+from alleles without them, the transcripts do not tell, as both give the same sequence. Terminal inverted repeats mark
 the transposon-derived introns of *F. borealis* [@Henriet2019], and the last intron of *O. albicans* PSTK; whether
 paired ends are the remains of such an origin, or help the splicing of introns whose sites are weak, could be tested on
-all the introns supported by RNA-seq reads in the *O. dioica* genomes.
+all the introns supported by RNA-seq reads in the *O. dioica* genomes. <!-- curation/intron_pairing.py
+(results/tables/intron_pairing.tsv); with the insertions: 21 of 25 against 44 of 251, medians -1.6 and 0.2. -->
 
 For the annotation of appendicularian genomes, gene-model tools that require GT-AG or GC-AG introns, or that place
 junctions on these sites whenever the alignment allows it, can misplace or skip such introns, as the prediction of the
@@ -1721,7 +1738,12 @@ intron that keep its dinucleotide composition [@Altschul1985] (z-scores; an intr
 of 10 N or more, was not folded, and its ends, when outside the gap, were compared with shuffles of the intron without
 its N), and counted its copies elsewhere in its genome
 (BLASTN, legacy BLAST 2.2.26, E at most 10^-5^, hits of at least 40 nucleotides outside the intron, loci closer than 1
-kb merged).
+kb merged). Each *O. dioica* intron was searched in the assembly of another individual of the same species
+(KUM-M3-7f, AOM-5-5f, Bar2_p4; `make intron-presence`, `curation/intron_presence.py`): the 40 nucleotides of each exon
+joined, and the donor and acceptor junctions (40 nucleotides of exon and 40 of intron), as BLASTN queries (E at most
+10^-5^); a query counted as found when an alignment of at least 85% identity covered 30 nucleotides on each side of its
+junction, and an intron was called absent when the joined exons were found and neither junction was. The counts of
+paired ends with and without these introns come from `make intron-pairing` (`curation/intron_pairing.py`).
 The 9-kb intron of OdB3 EEFSEC was compared with the same locus in Bar2_p4 (`make eefsec-insertion`,
 `curation/insertion.py`): exact matches extended from the two flanks into the intron and into the locus without it
 delimit the insertion and the bases duplicated at its two ends; its terminal repeats were found by aligning its first

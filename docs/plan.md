@@ -2628,3 +2628,15 @@ no earlier step waits for them.
 - O. vanhoeffeni SEPHS_b: the model's last 7 residues (VRYFSYE) are read through a GT donor into the intron (after
   LPREQ); the remaining 355 nt of the contig encode none of the rest: curator chain ending at the donor
   (machinery_overrides.tsv), 327 aa, incomplete (open 3'). Effective at the next gold-standard run.
+- Run 22bdeaf (2026-11-07): machinery gold standard with the incomplete marks and the O. vanhoeffeni SEPHS_b chain;
+  make intron-presence on the 280 O. dioica introns: 247 present, 27 not found (short introns, short exons, divergent
+  loci such as OKI2018 EEFSEC), 6 absent from the other individual's assembly: OdB3 EEFSEC 5 (the LTR), OKI2018
+  GPX_chr1a 2 (495 nt, CT-AC, 9 repeated bases, 21 loci, fold z -10.4), OKI2018 SEPHS_b 3 (200, CA-GT, 8, 21, -9.0),
+  OSKA2016 GPX_chr1b 2 (796, CT-TA, 8, 26, -7.4), OdB3 SELENOS 2 (1,043, GT-AG, 10, 66, -7.2): insertions with a
+  duplicated target site; and OKI2018 GPX_PAR 2 (41 nt, GT-AG, 4 repeated bases, no copy), absent from the KUM-M3-7f
+  locus that matches its exons (another copy of the gene? not checked). make intron-pairing
+  (curation/intron_pairing.py, results/tables/intron_pairing.tsv): without the five scored absent introns, 18 of 21
+  introns with ends z <= -3 are not GT-AG, against 44 of 250 (medians -1.48 and 0.23); with them 21 of 25 against 44
+  of 251. PSTK fourth intron ranks 4 and 3 of 271 instead of 7 and 6 of 276. Manuscript: Results paragraph on the
+  insertions after the intron classes, SEPHS_b sentence rewritten (insertion, not assembly error), Discussion statistic
+  and the insertions as possible starts of transposon introns, Methods.
