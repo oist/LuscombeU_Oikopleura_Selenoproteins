@@ -655,14 +655,16 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
     """Panel C: equivalent placements of introns (figures/intron_placements.py), one block per intron, one row per
     assembly: the gene-strand window around the two ends, cased for the leftmost placement (exon lowercase grey,
     intron uppercase black: at the donor end the intron starts with the repeated bases, at the acceptor end the next
-    exon does), the bases repeated at both ends shaded; both ends of the intron in the same columns in every row (the
-    first shaded base), with as many intron bases at the donor end as keep the cut point (the ellipsis) aligned; exon
-    flanks trimmed to whole codons, at the acceptor end to as many codons as the shortest flank of the block. Below the
-    rows that translate alike, one line of amino acids, each under the first base of its codon (the codon split by the
-    intron included; the spliced sequence, hence the translation, is the same for every placement). On the right, the
-    dinucleotides of every placement, from left to right, that on an AG acceptor in the given phase in blue, a
-    triangle under the one named by the gold-standard script (gold-standard rows only). Returns the bottom of the panel
-    (mm from the bottom of the page)."""
+    exon does), the bases repeated at both ends shaded. The rows of a block are aligned on the codons: the ends of
+    the placement on an AG acceptor in the given phase (else of the placement named by the gold-standard script) are in
+    the same columns, so that the codons of all rows are in register; very light vertical lines separate the codons.
+    The cut points (the ellipsis) are aligned in the whole panel (intron bases trimmed), and the exon flanks are trimmed
+    to whole codons, at the acceptor end to the shortest flank of the block. Below the rows that translate alike, one
+    line of amino acids, each under the middle base of its codon (for the codon split by the intron, on the side that
+    holds two of its bases; the spliced sequence, hence the translation, is the same for every placement). On the
+    right, the dinucleotides of every placement, from left to right, that on an AG acceptor in the given phase in blue,
+    a triangle under the one named by the gold-standard script (gold-standard rows only). Returns the bottom of the
+    panel (mm from the bottom of the page)."""
     RH, AH, CW, FS = 3.0, 1.9, 1.0, 4.8             # row height, amino-acid line, character advance (mm), font (pt)
     mono = dict(family="DejaVu Sans Mono", fontsize=FS)
     aa = dict(family="DejaVu Sans Mono", fontsize=FS - 0.6, color="#1f4e79")
@@ -671,64 +673,90 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
     rows_all = [r for v in blocks.values() for r in v]
     for r in rows_all:
         r["parts"] = [split(x) for x in r["window"].split(" ... ")]
-        r["ph0"] = next(ph for k, dn, ph in r["pl"] if k == min(k for k, _, _ in r["pl"]))
-    a_min = min(len(r["parts"][0][1]) for r in rows_all)
-    flank = min(min(len(r["parts"][0][2]), len(r["parts"][1][0])) for r in rows_all)   # intron bases available
-    nlp = max(len(r["parts"][0][0]) for r in rows_all)          # column of the donor end
+        k0 = min(k for k, _, _ in r["pl"])
+        r["ph0"] = next(ph for k, dn, ph in r["pl"] if k == k0)
+        ref = next(((k, ph) for k, dn, ph in r["pl"] if dn.endswith("-AG") and ph == phase), None) or \
+            next((k, ph) for k, dn, ph in r["pl"] if k == int(r["named_k"]))
+        r["shift"], r["ph_ref"] = ref[0] - k0, ref[1]
+    # columns (in characters from the start of each part): C, end of the reference donor exon; D, start of the
+    # reference acceptor exon
+    geo = {}
     for intron, rows in blocks.items():
-        ncod = min((len(r["parts"][1][1] + r["parts"][1][2]) - (3 - r["ph0"]) % 3) // 3 for r in rows)
+        ms = max(r["shift"] for r in rows)
+        C = max(len(r["parts"][0][0]) for r in rows) + ms
+        D = min(len(r["parts"][1][0]) + r["shift"] for r in rows)
+        geo[intron] = (C, D)
+    W = min(geo[i][0] - r["shift"] + len(r["parts"][0][1]) + len(r["parts"][0][2]) for i, rows in blocks.items() for r in rows)
+    for intron, rows in blocks.items():
+        C, D = geo[intron]
         for r in rows:
             (lp, la, lq), (rp, ra, rq) = r["parts"]
-            a, ph0 = len(la), r["ph0"]
-            e = len(lp) - ph0                                   # first base of the codon split by the intron
-            keep = e % 3                                        # exon bases before the first whole codon: blank
-            left = " " * (nlp - len(lp) + keep) + lp[keep:] + la.upper() + lq[:flank + a_min - a].upper()
-            st = (3 - ph0) % 3                                  # acceptor-end bases that end the split codon
-            rex = (ra + rq).lower()[:st + 3 * ncod]
-            right = rp[len(rp) - flank:].upper() + rex
-            off = nlp - len(lp)
-            r["show"] = (left, nlp, a, right, flank)
-            cod = [(off + i, rf_translate(lp[i:i + 3])) for i in range(keep, e - 2, 3)]
-            if ph0: cod.append((off + e, rf_translate(lp[e:] + rex[:st])))
-            r["aa"] = (tuple(cod), tuple((flank + st + 3 * j, rf_translate(rex[st + 3 * j:st + 3 * j + 3]))
-                                         for j in range(ncod)))
-        for k, r in enumerate(rows):                            # one line under each run of rows that translate alike
+            a, sh = len(la), r["shift"]
+            c_amb = C - sh                                      # first shaded base, donor end
+            lp_col = c_amb - len(lp)
+            r_amb = D - sh                                      # first shaded base, acceptor end
+            exon = [("L", lp_col + i, b) for i, b in enumerate(lp)] + \
+                   [("R", r_amb + i, b) for i, b in enumerate((ra + rq).lower())]
+            keep = (len(lp) - r["ph0"]) % 3
+            cods = [exon[i:i + 3] for i in range(keep, len(exon) - 2, 3)]
+            r["geo"] = dict(lp=lp, la=la, lq=lq, rp=rp, ra=ra, rq=rq, a=a, c_amb=c_amb, lp_col=lp_col, keep=keep,
+                            r_amb=r_amb, cods=cods)
+        r_end = min(max(c[-1][1] for c in r["geo"]["cods"] if c[-1][0] == "R") for r in rows)   # last right column
+        for r in rows:
+            g = r["geo"]
+            g["cods"] = [c for c in g["cods"] if not (c[-1][0] == "R" and c[-1][1] > r_end)]
+            g["r_end"] = r_end
+            letters = []
+            for c in g["cods"]:
+                side = "L" if sum(p == "L" for p, _, _ in c) >= 2 else "R"
+                col = c[1][1] if c[1][0] == side else next(x for p, x, _ in c if p == side)
+                letters.append((side, col, rf_translate("".join(b for _, _, b in c))))
+            r["aa"] = tuple(letters)
+        for k, r in enumerate(rows):
             r["aa_line"] = k == len(rows) - 1 or rows[k + 1]["aa"] != r["aa"]
-    wleft = max(len(r["show"][0]) for r in rows_all)
-    wright = max(len(r["show"][3]) for r in rows_all)
+    wright = max(r["geo"]["r_end"] + 1 for r in rows_all)
     legend = wrap("Gene strand, cased for the leftmost placement: lowercase grey, exon; uppercase, intron. Shaded: bases "
-                  "found at both ends, across which the intron can be moved without changing the spliced sequence. "
-                  "Letters: amino acids under the first base of each codon (the codon split by the intron included), "
-                  "one line under the rows that translate alike; exon flanks trimmed to whole codons. Right: "
-                  f"dinucleotides of each placement, from left to right; blue: placement on an AG acceptor (phase {phase}); "
-                  "\u25b2: placement named by the gold-standard script. Rows in italics: test assemblies (other "
-                  "individuals of the same species), exons carried from the gold standard.", width - 1, 4.5)
+                  "found at both ends, across which the intron can be moved without changing the spliced sequence. Rows "
+                  f"aligned on the codons of the placement on an AG acceptor (phase {phase}, blue), light lines between "
+                  "codons; exon flanks trimmed to whole codons. Letters: amino acids under the middle base of each codon "
+                  "(the codon split by the intron on the side holding two of its bases), one line under the rows that "
+                  "translate alike. Right: dinucleotides of each placement, from left to right; \u25b2: placement named "
+                  "by the gold-standard script. Rows in italics: test assemblies (other individuals of the same "
+                  "species), exons carried from the gold standard.", width - 1, 4.5)
     h = 5.0 + len(blocks) * 4.0 + len(rows_all) * RH + sum(r["aa_line"] for r in rows_all) * AH + 1.5 + len(legend) * 2.0
     ax = fig.add_axes([x0 / PAGE_W, (top - h) / PAGE_H, width / PAGE_W, h / PAGE_H])
     ax.set_xlim(0, width); ax.set_ylim(-h, 0); ax.axis("off")
     ax.text(0, -1.2, "C", fontsize=8, fontweight="bold", va="top")
     ax.text(5, -1.4, "Equivalent placements of introns", fontsize=5.5, va="top")
-    x_right = lab_w + wleft * CW + 2.5
+    x_right = lab_w + W * CW + 2.5
     x_ell = x_right - 1.25
     x_dn = x_right + wright * CW + 1.5
+    X = lambda side, col: (lab_w if side == "L" else x_right) + col * CW
     y = -5.0
     for intron, rows in blocks.items():
+        C, D = geo[intron]
         y -= 2.6
         ax.text(0, y, f"{ORDINAL.get(intron, str(intron))} intron".capitalize(), fontsize=5.5, fontweight="bold", va="center")
         y -= 1.4
+        y_top = y
         for r in rows:
             y -= RH / 2
+            g = r["geo"]
             gold = r["source"] == "gold standard"
             ax.text(lab_w - 1.5, y, names.get(r["assembly"], r["assembly"]), fontsize=5, ha="right", va="center",
                     style="normal" if gold else "italic", color="black" if gold else "0.35")
-            left, amb_l, a, right, amb_r = r["show"]
-            for xs, seq, amb0 in ((lab_w, left, amb_l), (x_right, right, amb_r)):
-                ax.add_patch(Rectangle((xs + amb0 * CW - 0.05, y - 0.95), a * CW + 0.1, 1.9, facecolor="#e4e4e4",
+            left = [(g["lp_col"] + i, b) for i, b in enumerate(g["lp"]) if i >= g["keep"]] + \
+                   [(g["c_amb"] + i, b.upper()) for i, b in enumerate(g["la"] + g["lq"]) if g["c_amb"] + i < W]
+            nrp = g["r_amb"]                                    # intron bases shown at the acceptor end
+            right = [(i, b.upper()) for i, b in enumerate(g["rp"][len(g["rp"]) - nrp:])] + \
+                    [(g["r_amb"] + i, b.lower()) for i, b in enumerate(g["ra"] + g["rq"]) if g["r_amb"] + i <= g["r_end"]]
+            for side, amb0 in (("L", g["c_amb"]), ("R", g["r_amb"])):
+                ax.add_patch(Rectangle((X(side, amb0) - 0.05, y - 0.95), g["a"] * CW + 0.1, 1.9, facecolor="#e4e4e4",
                                        edgecolor="none", zorder=1))
-                for i, c in enumerate(seq):
-                    if c != " ":
-                        ax.text(xs + (i + 0.5) * CW, y, c, ha="center", va="center",
-                                color="0.55" if c.islower() else "black", zorder=3, **mono)
+            for side, seq in (("L", left), ("R", right)):
+                for col, c in seq:
+                    ax.text(X(side, col) + CW / 2, y, c, ha="center", va="center",
+                            color="0.55" if c.islower() else "black", zorder=3, **mono)
             ax.text(x_ell, y, "\u2026", ha="center", va="center", fontsize=FS, color="0.4")
             xp = x_dn
             for k, dn, ph in r["pl"]:
@@ -742,10 +770,17 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
             y -= RH / 2
             if r["aa_line"]:
                 ya = y - AH / 2 + 0.4
-                lcod, rcod = r["aa"]
-                for i, t in lcod: ax.text(lab_w + (i + 0.5) * CW, ya, t, ha="center", va="center", **aa)
-                for i, t in rcod: ax.text(x_right + (i + 0.5) * CW, ya, t, ha="center", va="center", **aa)
+                for side, col, t in r["aa"]:
+                    ax.text(X(side, col) + CW / 2, ya, t, ha="center", va="center", **aa)
                 y -= AH
+        if len({r["ph_ref"] for r in rows}) == 1:               # codon boundaries, in register in the whole block
+            ph = rows[0]["ph_ref"]
+            first = max(r["geo"]["lp_col"] + r["geo"]["keep"] for r in rows)
+            r_end = rows[0]["geo"]["r_end"]
+            lines = [("L", c) for c in range(C - ph, first, -3)] + \
+                    [("R", c) for c in range(D + (3 - ph) % 3, r_end + 1, 3)]
+            for side, col in lines:
+                ax.plot([X(side, col)] * 2, [y_top - 0.2, y + 0.4], color="0.85", lw=0.3, zorder=0)
     y -= 1.5
     for l in legend:
         y -= 2.0
