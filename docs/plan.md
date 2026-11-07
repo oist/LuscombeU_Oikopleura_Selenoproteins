@@ -2644,3 +2644,17 @@ no earlier step waits for them.
   paragraph referring to them ... even if we may remove or aggregate some later"): Figures EEFSEC, SBP2, SEPHS_b after
   the machinery gold-standard paragraphs, Figure SEPSECS at the end of the SEPSECS subsection (Figure PSTK was already
   in the PSTK section), provisional captions and references in the text.
+- PSTK intron-exon structures (2026-11-07, Charles: "do not change the PSTK figure, but plot me all intron-exon
+  structures ... 1) do vertebrates have the same intron-exon structure as dioica, and 2) do the longicauda and
+  *chordaeus have data good enough to be discussed"): make pstk-structures (figures/pstk_structures.py,
+  figures/pstk_structures.{pdf,png,svg}, results/tables/pstk_structures.tsv; not in the manuscript). 1) No: human,
+  mouse, the two zebrafish genes and B. lanceolatum share five introns (phases 0, 1, 2, 0, 1); five other tunicates
+  have none (T. democratica not drawn: no protein here); the O. dioica introns (four, same columns in the six
+  assemblies) are elsewhere, introns 2 and 3 about five columns on either side of the second chordate intron. 2) Weak:
+  tblastn of the O. vanhoeffeni protein (28-41% identity): O. longicauda two loci, SCLD01051426.1 (604 nt) one
+  intronless HSP 12-195; SCLD01107789.1 HSPs 1-18 (E 1e-3), 27-82 and 67-217, 1,428 nt then 13 nt apart (the 13-nt
+  step, with the protein overlapping, is a frame change, not an intron); no ~70-nt intron as the manuscript says. M.
+  erythrocephalus 1-22 and 19-132, 73 nt apart, nothing after 132 at E <= 1e-3. B. stygius 24-96, 75-136, 130-203,
+  207 and 296 nt apart. HSPs give no phase or sites and place junctions within the protein overlaps (up to 21
+  residues). The paragraph "The other appendicularians agree with this" overstates positions and phases for these
+  three species: to reword or drop (Charles to decide).
