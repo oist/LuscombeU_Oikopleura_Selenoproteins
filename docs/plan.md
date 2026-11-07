@@ -2640,3 +2640,7 @@ no earlier step waits for them.
   of 251. PSTK fourth intron ranks 4 and 3 of 271 instead of 7 and 6 of 276. Manuscript: Results paragraph on the
   insertions after the intron classes, SEPHS_b sentence rewritten (insertion, not assembly error), Discussion statistic
   and the insertions as possible starts of transposon introns, Methods.
+- Figures for review (2026-11-07, Charles: "make the figures for each investigated machinery gene visible near the
+  paragraph referring to them ... even if we may remove or aggregate some later"): Figures EEFSEC, SBP2, SEPHS_b after
+  the machinery gold-standard paragraphs, Figure SEPSECS at the end of the SEPSECS subsection (Figure PSTK was already
+  in the PSTK section), provisional captions and references in the text.

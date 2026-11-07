@@ -360,7 +360,7 @@ OKI2018 protein found it in both (complete in OSKA2016, 82% identical; split by 
 assemblies of three other individuals (KUM-M3-7f, AOM-5-5f, Bar2_p4), and these loci served as anchors. Five models
 have splice sites outside the intron classes of *O. dioica*. In PSTK, in the three assemblies, every transcript that
 splices the intron uses the same junctions, and assemblies of other individuals have the same bases (see the PSTK
-section). In OKI2018 SEPHS_b, the unusual intron is one of the insertions described above (200 nucleotides): its last eight bases repeat the end of the 19-nucleotide "exon" before it (CCACCAGT), KUM-M3-7f has the two exons contiguous, and the transcripts join them. In OdB3 EEFSEC, the unusual intron (8,982 nucleotides)
+section). In OKI2018 SEPHS_b (Figure SEPHS_b), the unusual intron is one of the insertions described above (200 nucleotides): its last eight bases repeat the end of the 19-nucleotide "exon" before it (CCACCAGT), KUM-M3-7f has the two exons contiguous, and the transcripts join them. In OdB3 EEFSEC (Figure EEFSEC), the unusual intron (8,982 nucleotides)
 is an insertion inside an exon that is continuous in OKI2018, OSKA2016 and in another assembly of the same species
 (Bar2_p4): a long terminal repeat (LTR) retrotransposon of 8,977 nucleotides, whose two LTRs of 184 nucleotides are
 identical, flanked by a duplication of five bases of the exon (GATAA), which gives the intron its equivalent placements;
@@ -385,7 +385,7 @@ selection or to a rearrangement. <!-- results/tables/cds_divergence.tsv (curatio
 codons through the gold-standard protein of each species aligned with exonerate; between North Pacific and North
 Atlantic, EEFSEC third positions 31%, second of the five genes (13 to 39%). Mismatch rates per kb from the transcript
 rows of figures/inputs/reannotation_<gene>.tsv. Tests noted in docs/plan.md: divergence in windows along
-NC_137291.1 (OKI2018 against KUM-M3-7f), population data. --> In SEPSECS,
+NC_137291.1 (OKI2018 against KUM-M3-7f), population data. --> In SEPSECS (Figure SEPSECS),
 the predictions and the protein alignments of OSKA2016 and OdB3 read parts of two GA-AG introns as coding; the
 OSKA2016 transcripts and the OdB3 ESTs splice them whole (74 and 60 nucleotides), and the models follow them (474 and
 476 residues; the OdB3 model is the GenBank model unchanged). In both species, other transcripts use a donor 34
@@ -410,7 +410,7 @@ sites 6 nucleotides downstream would add two residues absent from the *O. dioica
 data test them. <!-- EEFSEC of the three species and OKI2018: curator rows of 2026-11-05 in
 curation/machinery_overrides.tsv (exonerate protein2genome of the O. dioica gold-standard proteins on
 results/gene_regions/EEFSEC, each junction rescanned by the global alignment score of the whole protein to the OSKA2016
-and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The four SECIS-binding proteins (two loci in *O. longicauda*) align to the
+and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The four SECIS-binding proteins (two loci in *O. longicauda*; Figure SBP2 for *O. dioica*) align to the
 OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
 that protein. Only the *O. albicans* protein covers the N-terminal region of the *O. dioica* proteins (from the residue
 aligned to OdB3 28, 43 to 54% identical over OdB3 residues 1 to 200); the two *O. longicauda* proteins and the *O.
@@ -427,6 +427,33 @@ both choose.
 gold_standard.py --anchor sense), run of 2026-11-05 (commit 5829a72), with the anchors of
 curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
 other species to check at the final version; their EEFSEC models were reviewed on 2026-11-05. -->
+
+<!-- Figures EEFSEC, SBP2 and SEPHS_b: provisional (2026-11-07), placed here for Charles's review of the machinery
+genes; they may be removed or aggregated later. Panels drawn by make machinery-reannotation (figures/reannotation_page.py
+on figures/inputs/reannotation_<gene>.tsv): EEFSEC from run 5829a72, SBP2 and SEPHS_b from run 0d19c70; the later
+runs changed only models of other species, which the panels do not draw. -->
+
+![Figure EEFSEC](../figures/machinery_EEFSEC.png)
+
+Figure EEFSEC (provisional; `figures/machinery_EEFSEC.pdf`, `make machinery-reannotation`). EEFSEC in the three *O.
+dioica* assemblies, drawn as Figure PSTK A and B. Top, public models, gold-standard models and supporting transcripts
+with their splice sites and their differences to the assembly. OKI2018: the gold-standard model follows the
+transcripts (first intron of 50 nucleotides, at the position of the first intron of OSKA2016 and OdB3), whose many
+mismatches come from other haplotypes (see text). OdB3: the long intron is the LTR retrotransposon inserted in an exon.
+Bottom, reference and gold-standard proteins.
+
+![Figure SBP2](../figures/machinery_SBP2.png)
+
+Figure SBP2 (provisional; `figures/machinery_SBP2.pdf`). The SECIS-binding protein in the three *O. dioica*
+assemblies, drawn as Figure EEFSEC. The models of *O. longicauda* (two loci), *O. albicans* and *O. vanhoeffeni*,
+discussed in the text, are not drawn.
+
+![Figure SEPHS_b](../figures/machinery_SEPHS_b.png)
+
+Figure SEPHS_b (provisional; `figures/machinery_SEPHS_b.pdf`). The second SEPHS copy in the three *O. dioica*
+assemblies, drawn as Figure EEFSEC. OKI2018: the intron with other splice sites (black) after the 19-nucleotide exon is
+an insertion that KUM-M3-7f lacks (see text). OdB3: the locus is split by two assembly gaps; its protein is left out of
+the trees.
 
 ![Figure REANNOTATION, page 1](../figures/reannotation_page.png)
 ![Figure REANNOTATION, page 2](../figures/reannotation_page2.png)
@@ -1047,7 +1074,8 @@ branch from one polytomy drawn as one tip.
 (curation/intron_map.py, results/tables/intron_map_SEPSECS.tsv), on the gold-standard models of run 14314dd. -->
 
 The three *O. dioica* species share seven SEPSECS introns, at the same alignment columns and in the same phases in
-their six assemblies, and the Okinawa species has two more (`make intron-map`, `results/tables/intron_map_SEPSECS.tsv`).
+their six assemblies, and the Okinawa species has two more (Figure SEPSECS; `make intron-map`,
+`results/tables/intron_map_SEPSECS.tsv`).
 These two introns, of 86 and 75 nucleotides, near residues 63 and 86 of the human protein, are both GA-AG. They are in
 OKI2018 and in KUM-M3-7f, another individual of the species, and the OKI2018 transcript TRINITY_DN6371_c0_g1_i1
 splices both (another transcript, TRINITY_DN6371_c0_g1_i4, retains the second, which puts a stop codon in frame). In
@@ -1063,6 +1091,13 @@ intron of *O. longicauda* or *O. vanhoeffeni*, and *O. albicans* and *O. vanhoef
 *O. dioica*, the donor of one shared intron is GC in the Okinawa species and GA in the other two, and the first intron
 is 423 and 437 nucleotides long in the North Atlantic assemblies (OdB3, Bar2_p4), against 40 to 45 in the four others,
 part of it being repeated at 50 other loci of OdB3.
+
+![Figure SEPSECS](../figures/machinery_SEPSECS.png)
+
+Figure SEPSECS (provisional; `figures/machinery_SEPSECS.pdf`, panel of run 0d19c70). SEPSECS in the three *O. dioica*
+assemblies, drawn as Figure EEFSEC. OKI2018: the second and third introns (GA-AG, 86 and 75 nucleotides) are those of
+the Okinawa species only; OSKA2016 and OdB3 have one exon there. OdB3: the second EST uses the donor 34 nucleotides
+further in the first of the two GA-AG introns.
 
 ### SECp43
 
