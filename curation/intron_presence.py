@@ -10,7 +10,8 @@ the intron is a polymorphic insertion, the other assembly can have the two exons
 For each intron of --introns (results/tables/intron_content.tsv: genome, gene, intron, contig, start, end, strand), three
 queries are built from the genome of its assembly, on the gene strand: the junction without the intron (--flank nt of
 each exon, joined), the donor junction (exon and intron start) and the acceptor junction (intron end and exon); each is
-searched in the genome of the other individual (--pairs; BLASTN, E at most 1e-5). A query is found across its junction
+searched in the genome of the other individual (--pairs; legacy BLASTN 2.2.26 as in curation/intron_content.py, no
+filter, E at most 1e-5; databases <NAME>.genome.fa in --work, shared with make intron-content). A query is found across its junction
 when an HSP of at least --identity % covers three quarters of the flank on both sides of the junction point (so that
 the bases repeated at the two ends of an intron do not make a joined query match an intron junction). Status: "present" (a
 donor or acceptor junction found, the joined exons not), "absent" (the joined exons found contiguous, no intron
@@ -48,7 +49,7 @@ def main():
     ap.add_argument("--genome", nargs="*", default=[], help="NAME=FASTA, overriding the samplesheets")
     ap.add_argument("--flank", type=int, default=40)
     ap.add_argument("--identity", type=float, default=85.0)
-    ap.add_argument("--work", default="work/intron_presence")
+    ap.add_argument("--work", default="work/intron_content")
     ap.add_argument("--out", default="results/tables/intron_presence.tsv")
     a = ap.parse_args()
     paths = {}
@@ -65,13 +66,12 @@ def main():
         mine = [r for r in introns if r["genome"] == g]
         if not mine: continue
         seqs = read_fasta(paths[g], keep={r["contig"] for r in mine})
-        db = os.path.join(a.work, other)
+        db = os.path.join(a.work, f"{other}.genome.fa")
         if not os.path.exists(db + ".nsq") and not os.path.exists(db + ".00.nsq"):
-            plain = db + ".fa"
-            with open(plain, "w") as o:
+            with open(db, "w") as o:
                 for n, s in read_fasta(paths[other]).items(): o.write(f">{n}\n{s}\n")
-            subprocess.run(["makeblastdb", "-dbtype", "nucl", "-in", plain, "-out", db], check=True, capture_output=True)
-            os.remove(plain)
+            subprocess.run(["formatdb", "-i", os.path.basename(db), "-p", "F", "-o", "F"], check=True, cwd=a.work,
+                           stdout=subprocess.DEVNULL)
         queries = {}
         for r in mine:
             c, s0, e0 = r["contig"], int(r["start"]), int(r["end"])   # 1-based intron coordinates
@@ -84,13 +84,12 @@ def main():
             queries[key + "|acceptor"] = intron[-F:] + right
         with tempfile.TemporaryDirectory() as d:
             open(f"{d}/q.fa", "w").write("".join(f">{k}\n{v}\n" for k, v in queries.items()))
-            out = subprocess.run(["blastn", "-task", "blastn", "-query", f"{d}/q.fa", "-db", db, "-evalue", "1e-5",
-                                  "-max_target_seqs", "10", "-max_hsps", "5", "-outfmt",
-                                  "6 qseqid sseqid pident length qstart qend sstart send evalue bitscore"],
-                                 capture_output=True, text=True, check=True).stdout
+            out = subprocess.run(["blastall", "-p", "blastn", "-d", db, "-i", f"{d}/q.fa", "-e", "1e-5", "-F", "F",
+                                  "-m", "8", "-b", "10", "-v", "10"], capture_output=True, text=True, check=True).stdout
         found = {}
         for l in out.splitlines():
-            q, sid, pid, ln, qs, qe, ss, se = l.split("\t")[:8]
+            f = l.split("\t")   # -m 8: query, subject, identity, length, mismatches, gaps, qstart, qend, sstart, send, ...
+            q, sid, pid, qs, qe, ss, se = f[0], f[1], f[2], f[6], f[7], f[8], f[9]
             if float(pid) < a.identity or int(qs) > F - q4 + 1 or int(qe) < F + q4: continue
             if q not in found or float(pid) > found[q][1]:
                 found[q] = (f"{sid}:{min(int(ss), int(se))}-{max(int(ss), int(se))}", float(pid))
