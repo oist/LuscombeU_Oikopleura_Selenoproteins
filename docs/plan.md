@@ -2750,3 +2750,19 @@ no earlier step waits for them.
   intron-pairing, pstk-introns, figure inputs; then figures. Open question for Charles: stage2-benchmark counts
   "introns exact" by coordinates, so OKI GPX_chr1a, now exact in the eval and final runs, would become inexact;
   proposed: count equivalent placements as the same intron (the data cannot tell them apart).
+- PSTK trees with three amphioxus PSTK (Deigo jobs 52746360-52746364, commit fa286f8, 2026-11-07): B. floridae
+  (hybrid haplotype) and B. belcheri kept, the B. floridae RefSeq fragment removed (31% of the core columns); 83
+  sequences, 421 sites, LG+F+I+R6. Appendicularian clade 100% everywhere; appendicularians as sister of all other
+  PSTK: ML 86 -> 91, C20 68 -> 92, PMSF 46 -> 94, site removal 79/72/83/78 (was 80/76/89/92), without the Harpellales
+  94 (95), one leaf per species 99/98 (94/92), kinase domain 92/93 (89/78); AU test with the other tunicates p = 0.088
+  -> 0.246. Without KTI12: with Smittium and Zancudomyces 95% (72). Eukaryotes added: ML with one stramenopile 56%
+  (two diatoms 72), PMSF sister of all other PSTK 59% (Harpellales 44). Archaea added: eukaryotic PSTK 94/96% (99/98);
+  appendicularians with an alveolate 40% (ML), with Gnathostoma and Paramicrosporidium 85% (PMSF; 88). C-terminal
+  domain: with fly proteins 80/67% (47/61). Domain AU tests with the other tunicates 0.17-0.33 (PSTK). Manuscript
+  updated: Table MACHINERY (AU p = 0.25), "two amphioxus species (three for PSTK)", domain ranges (89 to 100%; p = 0.17
+  to 0.60), Methods sizes of the alignments (also SEPHS 115/448 and SECIS-binding 78/456, LG+I+R5, and the domain
+  alignments, which were stale), Methods sentence on the two added Branchiostoma PSTK, provenance comments; Figure PSTK
+  panel D redrawn from the new archaeal tree. The rewritten PSTK section quotes no support value; its statements hold.
+- Benchmark (2026-11-07, Charles agreed): stage2/benchmark.py counts introns as identical up to equivalent placements
+  (leftmost placement on the genome of the run); introns_exact_coordinates keeps the old comparison. The metric is not
+  quoted in the manuscript. Rerun with make stage2-truth stage2-benchmark after the gold-standard rerun.

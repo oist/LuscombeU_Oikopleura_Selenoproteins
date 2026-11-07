@@ -928,13 +928,13 @@ bases: 243 of the 280 gold-standard introns (make intron-content). Pairing of th
 OSKA2016 and OdB3 (run 5313acd). Intronless tunicates: the RefSeq models of C. intestinalis, C. robusta, P. mammillata,
 S. clava, B. schlosseri and T. democratica (make pstk-introns). O. albicans intron: the second (2,001 nt, AA-AG on an AG
 acceptor), inverted repeat ATGGGATATTAT ... ATAATATCCCAT, AGAAAT at both ends. KTI12 in the trees: human, the RefSeq
-proteomes, O. dioica XP_081641927.1 and UniRef50 entries. Trees: commits c7865cd and 3662128, before the B. floridae and
-B. belcheri PSTK were added. -->
+proteomes, O. dioica XP_081641927.1 and UniRef50 entries. Trees: Deigo run fa286f8 (2026-11-07), with the B. floridae
+and B. belcheri PSTK; the supports in the removed text (commits c7865cd and 3662128) predate them. -->
 
 ![Figure PSTK](../figures/machinery_PSTK.png)
 
-<!-- Tree numbers: trees of commit c7865cd (make machinery-phylogeny, machinery-lba, machinery-domains(-pmsf) and
-pstk-one-leaf, with the curated OdB3 and O. albicans PSTK models), and of commit 3662128 (make pstk-enriched; panel D:
+<!-- Tree numbers: PSTK trees of Deigo run fa286f8 (2026-11-07; make pstk-trees, pstk-one-leaf, pstk-lba-domains,
+pstk-side-trees, pstk-summaries, with the B. floridae and B. belcheri PSTK; panel D:
 results/trees/pstk_enriched_archaea/pstk.pmsf.treefile); supports not in Table LBA or Table DOMAINS from
 results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports).
 Panels A to C: run 850caba of make gold-standard-machinery (OdB3 last intron at the EST site) and the regions of make
@@ -1011,7 +1011,7 @@ ancestor.
 | tRNA-Sec | - | not tested (RNA gene) | found | found | found | found (4 loci) | found (2 loci) | found (2 loci) | found | found (2 loci) | found |
 | SEPHS2 | trees | selenocysteine at the catalytic site; outside the tunicate SEPHS in the trees (AU p at most 0.046) | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | selenocysteine | not found | partial | selenocysteine |
 | SEPHS, second copy | trees | ortholog of the tunicate glycine form (70 to 100%) | found | found | found (assembly gaps) | found | found | found | not found | not found | not found |
-| PSTK | trees | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.088) | found | found | found | fragment | found | found | fragment | fragment | not found |
+| PSTK | trees | PSTK, not KTI12 (100%); position within PSTK unresolved (AU p = 0.25) | found | found | found | fragment | found | found | fragment | fragment | not found |
 | SEPSECS | best hits | reciprocal best hit in all nine genomes (no other human gene hit) | found | found | found | found | found | found | found | found | found |
 | EEFSEC | best hits | reciprocal best hit in seven genomes (154 to 266 bits ahead of TUFM); best hit only in *B. stygius* and *M. erythrocephalus* | found | found | found | found | found | found | found | found | found |
 | SECISBP2/SECISBP2L | trees | ortholog of the tunicate protein (89%, C60 99%); relation to SECISBP2 and SECISBP2L unresolved | found | found | found | found | found | found | found | found | found |
@@ -1169,7 +1169,8 @@ SECISBP2 and SECISBP2L for the SECIS-binding proteins. The appendicularian seque
 the three *O. dioica* assemblies and of *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, and the predictions of the
 final run for *F. borealis* and for the loci without a gold-standard model (among them the selenocysteine SEPHS2 of the
 three other *Oikopleura* species); *B. stygius* and *M. erythrocephalus* were left out. To place the appendicularians
-among tunicates, the trees include ten other tunicates, seven ascidians and three salps, and two amphioxus species.
+among tunicates, the trees include ten other tunicates, seven ascidians and three salps, and two amphioxus species
+(three for PSTK).
 Appendicularian proteins evolve fast, those of *O. dioica* about twice as fast as those of *Ciona* [@Berna2012], which
 exposes their position in trees to long-branch attraction [@Bergsten2005]. We therefore reanalysed each tree under a
 site-heterogeneous model (LG+C60 with posterior mean site frequencies, PMSF) [@Wang2017], after removing the
@@ -1222,10 +1223,10 @@ divergent ortholog of the tunicate selenocysteine copy whose signal these models
 lineage. In both cases it is a selenocysteine SEPHS2, by the residue at its catalytic site [@Mariotti2015].
 
 Trees of each half of the alignments, split at a domain boundary of the human protein (Table DOMAINS), recovered the
-appendicularian clades of PSTK and of the SECIS-binding protein in both halves (91 to 100% under the selected model and
+appendicularian clades of PSTK and of the SECIS-binding protein in both halves (89 to 100% under the selected model and
 with PMSF), and the selenocysteine SEPHS2 clade in the N-terminal half (100%); in the C-terminal half, the oikopleurid
 selenocysteine SEPHS2 grouped with the *F. borealis* protein (83% under both models). Neither half rejected a grouping
-of the appendicularian PSTK or SECIS-binding protein with the other tunicates (AU tests, p = 0.11 to 0.60 under the two
+of the appendicularian PSTK or SECIS-binding protein with the other tunicates (AU tests, p = 0.17 to 0.60 under the two
 models). For SEPHS, the C-terminal half rejected the placement of the selenocysteine clade inside the clade of all
 tunicate SEPHS and at the position of an ortholog under both models (p = 0.004 to 0.047), whereas the N-terminal half
 rejected only the position of an ortholog, and only under PMSF (p = 0.041). For the SECIS-binding protein, the L7Ae
@@ -1248,7 +1249,8 @@ those of amphioxus and protostomes (96%), and the C-terminal half with those of 
   machinery-domains-pmsf): results/tables/stage2_machinery_domains_pmsf.tsv, stage2_machinery_domain_conflicts_pmsf.tsv
   and figures/phylogeny_<family>_collapsed_domain_<domain>_pmsf.pdf. Supports quoted in this section that are not in
   Table LBA or Table DOMAINS: results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports), from
-  the trees of commit c7865cd (2026-11-03).
+  the trees of commit c7865cd (2026-11-03) for SEPHS and the SECIS-binding proteins, of Deigo run fa286f8
+  (2026-11-07, three amphioxus PSTK) for PSTK.
 - Reciprocal best hits of the other tunicates: results/tables/stage1_machinery_rbh.tsv (regenerated 2026-10-23,
   make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
   for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
@@ -1750,7 +1752,11 @@ analysis, *Botryllus schlosseri* (GCF_051294905.1), *Phallusia mammillata* (GCF_
 with the original settings, like the other stage 1 genomes. For PSTK and the SECIS-binding proteins, which have no
 selenocysteine, the RefSeq proteins of a genome replaced its predictions, which cover only the region of the profile:
 for each gene whose proteins had PSTK or KTI12 (respectively SECISBP2 or SECISBP2L) as best human hit (blastp,
-E-value at most 10^-5^), the longest isoform. Predictions shorter than half the median length of the profile
+E-value at most 10^-5^), the longest isoform. The RefSeq PSTK of *B. floridae* is a fragment of 106 residues, left
+out by the coverage filter below; the PSTK tree therefore also included two Branchiostoma proteins from RefSeq
+annotations of other assemblies: that of *Branchiostoma belcheri* (XP_019615146.1) and that of the *B. floridae*
+haplotype of a *B. floridae* × *Branchiostoma japonicum* assembly (XP_078587131.1, identical to residues 3 to 99 of
+the *B. floridae* fragment). Predictions shorter than half the median length of the profile
 sequences were left out (a fifth for the SECIS-binding proteins, whose tunicate predictions often cover only the
 C-terminal domain). The PSTK tree included KTI12, which diverged from PSTK before the separation of archaea and eukaryotes
 [@Sherrer2008], as outgroup: the human and *O. dioica* proteins, the KTI12 of the
@@ -1773,8 +1779,8 @@ ClipKIT 2.14.0 in gappy mode [@Steenwyk2020], which removed the columns with at 
 found in a few sequences only, such as retained introns or rare isoforms (at least 50% gaps for the SECIS-binding
 proteins). Trees were inferred with IQ-TREE 2.3.6 [@Minh2020], with ModelFinder [@Kalyaanamoorthy2017] restricted to
 the LG, WAG and JTT matrices and 1,000 ultrafast bootstrap replicates [@Hoang2017]. The alignments had 83 sequences
-and 419 sites for PSTK (selected model LG+F+I+R5), 117 and 454 for SEPHS (LG+R6) and 81 and 444 for the
-SECIS-binding proteins (LG+I+R6). PSTK and SEPHS were also analysed under LG+C20+F+G [@Le2008]. In the
+and 421 sites for PSTK (selected model LG+F+I+R6), 115 and 448 for SEPHS (LG+R6) and 78 and 456 for the
+SECIS-binding proteins (LG+I+R5). PSTK and SEPHS were also analysed under LG+C20+F+G [@Le2008]. In the
 display trees, nodes with less than 50% support were collapsed into polytomies and clades of a single taxonomic
 group were drawn as one tip, except for appendicularians, other tunicates and cephalochordates; supports were kept on
 their bipartitions when the trees were rerooted.
@@ -1820,9 +1826,9 @@ and C-terminal half (239-448, with the C-terminal domain, PF02769); SECISBP2 (Q9
 domain (1-631) and L7Ae domain (632-854, PF01248). The UniProt coordinates were carried to the human sequence of the
 alignment by a global pairwise alignment (Biopython, BLOSUM62), and each column was assigned to the domain of the
 human residue it holds, or of the last human residue before it. Sequences with residues in less than 30% of the
-columns of either part were left out (one PSTK, one SEPHS and five SECIS-binding proteins), so that both parts were
-analysed on the same sequences (PSTK 82 sequences, 294 and 125 columns; SEPHS 116, 234 and 220; SECIS-binding
-proteins 76, 253 and 191). For each part, a tree was inferred as above, constrained trees were searched as in the
+columns of either part were left out (one SEPHS and six SECIS-binding proteins), so that both parts were analysed
+on the same sequences (PSTK 83 sequences, 298 and 123 columns; SEPHS 114, 226 and 222; SECIS-binding proteins 72, 276
+and 180). For each part, a tree was inferred as above, constrained trees were searched as in the
 long-branch analyses, and AU tests compared, on the data of that part, the trees of both parts, the full-length tree
 pruned to the same sequences and the constrained trees. Clades with ultrafast bootstrap support of at least 95%, and
 of at least 90%, in the tree of one part were tested for compatibility with the clades so supported in the tree of
