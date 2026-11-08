@@ -31,7 +31,8 @@ aligned and placed by step 2, splice sites coloured as for the models), with the
 bases of the transcript missing from the assembly (triangle above the track, with their number when more than one),
 bases of the assembly missing from the transcript (open box, at least 0.6 mm wide) and mismatches (thin ticks); their
 names are listed in the paragraph; transcripts that start with the spliced leader (--sl-table, one or more tables:
-gene, assembly, transcript, evidence, and optionally sl, rows with sl "none" or "not found in the file" ignored;
+gene, assembly, transcript, evidence, and optionally sl; rows with sl "none" or "not found in the file" ignored, and
+transcripts with sl "upstream gene" in any table, whose SL is that of an upstream gene of the operon, never marked;
 curation/spliced_leader_transcripts.tsv, read by hand or from GenBank records, and results/tables/sl_transcripts.tsv,
 make sl-transcripts) are marked "SL" at their 5' end and "(SL)" in the paragraph, where the tables' transcripts that
 are not drawn are also named. With --side-panel (a table of figures/intron_placements.py), the first gene gets
@@ -101,11 +102,13 @@ def load(gene, a):
     rows = list(csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.tsv"), delimiter="\t"))
     d = {"gene": gene, "seqs": rf.read_fasta(f"{a.inputs}/reannotation_{gene}.fa"), "public": collections.defaultdict(dict),
          "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict(), "tx": {}, "tx_count": {}, "sl": {}}
-    for path in a.sl_table:
-        if not os.path.exists(path): continue
-        for r in csv.DictReader(open(path), delimiter="\t"):
-            if r["gene"] != gene or r.get("sl", "sense") in ("none", "not found in the file"): continue
-            d["sl"].setdefault(r["assembly"], collections.OrderedDict()).setdefault(r["transcript"], r["evidence"])
+    sl_rows = [r for path in a.sl_table if os.path.exists(path)
+               for r in csv.DictReader(open(path), delimiter="\t") if r["gene"] == gene]
+    upstream = {(r["assembly"], r["transcript"]) for r in sl_rows if r.get("sl") == "upstream gene"}
+    for r in sl_rows:
+        if r.get("sl", "yes") in ("none", "not found in the file", "upstream gene"): continue
+        if (r["assembly"], r["transcript"]) in upstream: continue
+        d["sl"].setdefault(r["assembly"], collections.OrderedDict()).setdefault(r["transcript"], r["evidence"])
     for r in rows:
         if r["kind"] == "public": d["public"][r["assembly"]].setdefault(r["name"], {})[r["field"]] = r["value"]
         elif r["kind"] == "gold": (d["gold_sites"] if r["field"] == "sites" else d["gold_notes"])[r["assembly"]] = r["value"]

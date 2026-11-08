@@ -2799,3 +2799,15 @@ no earlier step waits for them.
   OdB3 SEPSECS ESTs do not reach the start codon; OdB3 EEFSEC ESTs KT0AAA399YH18RM1 and KT0AAA400YK11RM1 start 6 nt
   before it (5' ends masked in the collection: GenBank records to read). After the run: figures, captions of Figures
   EEFSEC and SEPSECS.
+- make sl-transcripts (Deigo job 52756781, commit 005636d): PSTK as curated by hand (OKI2018 i1, i3; OSKA2016 seq1,
+  seq5), a check of the script. SL in EEFSEC OKI2018 (4 of 4 drawn) and OSKA2016 (1 of 1); SEPSECS OKI2018 i1, i4;
+  SEPHS_b OKI2018 i7, i4, i3 and OSKA2016 seq1 (now marked in Figure SEPHS_b too); SBP2 none. Transcript bases before
+  the start codon: 0 to 43, except OSKA2016 SEPSECS (816 to 885): those four transcripts start with the SL, then an ORF
+  of 225 codons (MTEEFVCPTKEESF...; on the genome sequence along the transcript exons) that ends 135 nt before the
+  SEPSECS start codon (stop at S8:859399): read-through transcripts of an operon whose SL belongs to the upstream gene
+  (the ANISEED model merges that region with SEPSECS; the OKI2018 RefSeq model XP_081641266.1 also spans the upstream
+  region into SEPSECS). Recorded as sl "upstream gene" in curation/spliced_leader_transcripts.tsv (new column sl) and
+  not marked; noted in the caption. OdB3: the drawn ESTs that reach the start codon have masked 5' ends (all N): EEFSEC
+  KT0AAA399YH18RM1 and KT0AAA400YK11RM1 (start 3 nt before the gold-standard mRNA start) need their GenBank records
+  (accessions not found from here: ENA rate-limited, NCBI E-utilities refused); SEPSECS ESTs do not reach the start
+  codon. Upstream ORF of OSKA2016 SEPSECS not identified (kinase-like motifs; to check with the flanking genes TODO).

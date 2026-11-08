@@ -439,8 +439,10 @@ Figure EEFSEC (provisional; `figures/machinery_EEFSEC.pdf`, `make machinery-rean
 dioica* assemblies, drawn as Figure PSTK A and B. Top, public models, gold-standard models and supporting transcripts
 with their splice sites and their differences to the assembly. OKI2018: the gold-standard model follows the
 transcripts (first intron of 50 nucleotides, at the position of the first intron of OSKA2016 and OdB3), whose many
-mismatches come from other haplotypes (see text). OdB3: the long intron is the LTR retrotransposon inserted in an exon.
-Bottom, reference and gold-standard proteins.
+mismatches come from other haplotypes (see text). OdB3: the long intron is the LTR retrotransposon inserted in an exon;
+the two ESTs that reach the start codon have their 5′ ends masked in the EST collection used, so their spliced leader
+is not tested. Bottom,
+reference and gold-standard proteins.
 
 ![Figure SBP2](../figures/machinery_SBP2.png)
 
@@ -948,8 +950,9 @@ Figure PSTK. PSTK of appendicularians. A to C (`figures/machinery_PSTK.pdf`, `ma
 models in the three *O. dioica* assemblies, drawn as in Figure REANNOTATION but aligned on the start codon of the
 gold-standard model; below each gold-standard model, the supporting transcripts (up to four, those with most introns
 first: transcript assemblies for OKI2018 and OSKA2016, ESTs for OdB3) with their splice sites and their differences to
-the assembly; SL, transcripts that start with the spliced leader (OdB3: from the GenBank record of the EST,
-FP752340, whose 5′ end is masked in the EST collection used). B, reference and gold-standard proteins, as in Figure
+the assembly; SL, transcripts that start with the spliced leader, by the criterion of the operon analysis (Methods,
+Operons; `make sl-transcripts`; OdB3: from the GenBank record of the EST, FP752340, whose 5′ end is masked in the EST
+collection used). B, reference and gold-standard proteins, as in Figure
 REANNOTATION. C, equivalent placements of the third
 and fourth introns (`figures/intron_placements.py`): the gene-strand sequence at both ends of each intron in the
 gold-standard assemblies and in the test assemblies of the same species (KUM-M3-7f, AOM-5-5f, Bar2_p4; exons carried
@@ -983,8 +986,10 @@ two more, both GA-AG (Figure SEPSECS).
 
 Figure SEPSECS (`figures/machinery_SEPSECS.pdf`, panel of run 0d19c70). SEPSECS in the three *O. dioica*
 assemblies, drawn as Figure EEFSEC. OKI2018: the second and third introns (GA-AG, 86 and 75 nucleotides) are those of
-the Okinawa species only; OSKA2016 and OdB3 have one exon there. OdB3: the second EST uses the donor 34 nucleotides
-further in the first of the two GA-AG introns.
+the Okinawa species only; OSKA2016 and OdB3 have one exon there. OSKA2016: the transcripts start with the spliced leader
+followed by an open reading frame of 225 codons that ends 135 nucleotides before the start codon, so that their
+spliced leader is that of an upstream gene of an operon, read through into SEPSECS (not marked SL). OdB3: the second
+EST uses the donor 34 nucleotides further in the first of the two GA-AG introns; no EST reaches the start codon.
 
 ### SECp43
 
