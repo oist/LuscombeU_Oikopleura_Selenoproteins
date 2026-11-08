@@ -30,9 +30,11 @@ and its protein below the gold-standard proteins. When the inputs carry supporti
 aligned and placed by step 2, splice sites coloured as for the models), with their differences to the assembly:
 bases of the transcript missing from the assembly (triangle above the track, with their number when more than one),
 bases of the assembly missing from the transcript (open box, at least 0.6 mm wide) and mismatches (thin ticks); their
-names are listed in the paragraph; transcripts that start with the spliced leader (--sl-table: gene, assembly,
-transcript, evidence; curation/spliced_leader_transcripts.tsv) are marked "SL" at their 5' end and "(SL)" in the
-paragraph, where the table's transcripts that are not drawn are also named. With --side-panel (a table of figures/intron_placements.py), the first gene gets
+names are listed in the paragraph; transcripts that start with the spliced leader (--sl-table, one or more tables:
+gene, assembly, transcript, evidence, and optionally sl, rows with sl "none" or "not found in the file" ignored;
+curation/spliced_leader_transcripts.tsv, read by hand or from GenBank records, and results/tables/sl_transcripts.tsv,
+make sl-transcripts) are marked "SL" at their 5' end and "(SL)" in the paragraph, where the tables' transcripts that
+are not drawn are also named. With --side-panel (a table of figures/intron_placements.py), the first gene gets
 panel letters (A: gene models, B: proteins) and a panel C on its right: the equivalent placements of introns, one row
 per assembly. Output: <out>/<name>.{pdf,svg,png}.
 """
@@ -99,9 +101,11 @@ def load(gene, a):
     rows = list(csv.DictReader(open(f"{a.inputs}/reannotation_{gene}.tsv"), delimiter="\t"))
     d = {"gene": gene, "seqs": rf.read_fasta(f"{a.inputs}/reannotation_{gene}.fa"), "public": collections.defaultdict(dict),
          "gold_notes": {}, "gold_sites": {}, "refs": collections.OrderedDict(), "tx": {}, "tx_count": {}, "sl": {}}
-    if a.sl_table and os.path.exists(a.sl_table):
-        for r in csv.DictReader(open(a.sl_table), delimiter="\t"):
-            if r["gene"] == gene: d["sl"].setdefault(r["assembly"], collections.OrderedDict())[r["transcript"]] = r["evidence"]
+    for path in a.sl_table:
+        if not os.path.exists(path): continue
+        for r in csv.DictReader(open(path), delimiter="\t"):
+            if r["gene"] != gene or r.get("sl", "sense") in ("none", "not found in the file"): continue
+            d["sl"].setdefault(r["assembly"], collections.OrderedDict()).setdefault(r["transcript"], r["evidence"])
     for r in rows:
         if r["kind"] == "public": d["public"][r["assembly"]].setdefault(r["name"], {})[r["field"]] = r["value"]
         elif r["kind"] == "gold": (d["gold_sites"] if r["field"] == "sites" else d["gold_notes"])[r["assembly"]] = r["value"]
@@ -848,8 +852,10 @@ def main():
                     help="x origin: the selenocysteine TGA (sec) or the start codon of the gold-standard model (start; genes "
                     "without selenocysteine, such as the machinery genes of curation/gold_standard_machinery)")
     ap.add_argument("--no-secis", action="store_true", help="do not search or draw SECIS elements")
-    ap.add_argument("--sl-table", default="curation/spliced_leader_transcripts.tsv",
-                    help="transcripts that start with the spliced leader (gene, assembly, transcript, evidence)")
+    ap.add_argument("--sl-table", nargs="*",
+                    default=["curation/spliced_leader_transcripts.tsv", "results/tables/sl_transcripts.tsv"],
+                    help="tables of transcripts that start with the spliced leader (gene, assembly, transcript, evidence, "
+                    "optionally sl); missing files are skipped")
     ap.add_argument("--side-panel", default="", help="table of figures/intron_placements.py: panel C on the right of the "
                     "first gene, with panel letters A (gene models) and B (proteins)")
     ap.add_argument("--side-width", type=float, default=72.0, help="width of the side panel (mm)")

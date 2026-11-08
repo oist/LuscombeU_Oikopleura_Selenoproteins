@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs sl-transcripts machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -532,6 +532,12 @@ MACHINERY_FIGURE_GENES = PSTK SBP2 SEPHS_b SEPSECS EEFSEC
 machinery-reannotation-inputs:
 	OKI_GENOME=data/genomes/OKI/genome.fna.gz OSKA_GENOME=data/genomes/OSKA/genome.fna.gz ODB3_GENOME=data/genomes/OdB3/genome.fna.gz \
 	  sh figures/machinery_reannotation_inputs.sh
+
+# Spliced leader at the 5' end of the transcripts drawn in the machinery panels (seconds; reads the transcript files of
+# stage1/samplesheet.csv): results/tables/sl_transcripts.tsv, read by make machinery-reannotation ("SL" marks)
+#   scripts/run_in_container.sh make sl-transcripts
+sl-transcripts:
+	python3 curation/sl_transcripts.py --genes $(MACHINERY_FIGURE_GENES) --out results/tables/sl_transcripts.tsv
 
 machinery-reannotation:
 	for g in $(MACHINERY_FIGURE_GENES); do python3 figures/reannotation_page.py --genes $$g --columns 1 --origin start \

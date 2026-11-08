@@ -2786,3 +2786,16 @@ no earlier step waits for them.
   forgot the introduction): brush up the one-clause role of each machinery gene across the Results (PSTK "phosphorylates
   Ser on the tRNA-Sec"; SEPSECS "loads selenium on the tRNA", strictly: converts phosphoseryl-tRNA-Sec to
   selenocysteinyl-tRNA-Sec with selenophosphate; EEFSEC, SEPHS, SECIS-binding protein, SECp43 to match).
+- SL marks in Figures SEPSECS and EEFSEC (2026-11-08, Charles: add them as in Figure PSTK). The transcript sequences
+  are only on Deigo, so a script replaces the reading by hand: curation/sl_transcripts.py (make sl-transcripts) reads
+  the transcripts drawn in each machinery figure (figures/inputs/reannotation_<gene>.tsv) from the transcript files of
+  the samplesheet and applies the SL criterion of make operons (GATTGTCTAACAG, at most one mismatch, within 80 nt of
+  the 5' end, either orientation); results/tables/sl_transcripts.tsv, with the masked bases at both ends (OdB3 cDNA
+  collection) and the first and last 50 bases. figures/reannotation_page.py --sl-table now takes several tables
+  (curated table and the make sl-transcripts table, rows with sl "none" skipped). Run for all five machinery figure
+  genes; PSTK serves as a check against the curated rows (OKI2018 i1, i3; OSKA2016 seq1, seq5). Expected from the
+  drawn exons: OKI2018 EEFSEC and SEPSECS transcripts start 3 and 15 nt before the start codon; OSKA2016 EEFSEC 6 nt;
+  OSKA2016 SEPSECS transcripts extend 550-680 nt upstream of the start codon (upstream gene or first exon, to read);
+  OdB3 SEPSECS ESTs do not reach the start codon; OdB3 EEFSEC ESTs KT0AAA399YH18RM1 and KT0AAA400YK11RM1 start 6 nt
+  before it (5' ends masked in the collection: GenBank records to read). After the run: figures, captions of Figures
+  EEFSEC and SEPSECS.
