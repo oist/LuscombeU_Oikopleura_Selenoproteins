@@ -653,7 +653,7 @@ ORDINAL = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "six
 
 def side_panel(fig, x0, top, width, blocks, names, phase):
     """Panel C: equivalent placements of introns (figures/intron_placements.py), one block per intron, one row per
-    assembly: the gene-strand window around the two ends, cased for the placement named by the gold-standard script
+    assembly: the gene-strand window around the two ends, cased for the placement of the gold-standard model
     (exon lowercase grey, intron uppercase black), the bases repeated at both ends shaded. The rows of a block are
     aligned on the codons: the ends of
     the placement on an AG acceptor in the given phase (else of the placement named by the gold-standard script) are in
@@ -664,9 +664,10 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
     split by the intron, on the side that holds two of its bases; the spliced sequence, hence the translation, is the
     same for every placement). On the
     right, the dinucleotides of every placement, from left to right, that on an AG acceptor in the given phase in blue,
-    a triangle under the one named by the gold-standard script (gold-standard rows only). Returns the bottom of the
+    a triangle under the placement of the gold-standard model only where it is not that one (gold-standard rows;
+    since the AG convention of the gold standard, never in PSTK). Returns the bottom of the
     panel (mm from the bottom of the page)."""
-    RH, AH, CW, FS = 3.0, 1.9, 1.0, 4.8             # row height, amino-acid line, character advance (mm), font (pt)
+    RH, AH, CW, FS = 2.4, 1.8, 1.0, 4.8             # row height, amino-acid line, character advance (mm), font (pt)
     mono = dict(family="DejaVu Sans Mono", fontsize=FS)
     aa = dict(family="DejaVu Sans Mono", fontsize=FS - 0.6, color="#1f4e79")
     lab_w = 14.0
@@ -717,8 +718,10 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
         for k, r in enumerate(rows):
             r["aa_line"] = k == len(rows) - 1 or rows[k + 1]["aa"] != r["aa"]
     wright = max(r["geo"]["r_end"] + 1 for r in rows_all)
-    legend = wrap("Gene strand, cased for the placement named by the gold-standard script (\u25b2): lowercase grey, exon; "
-                  "uppercase, intron. Shaded: bases "
+    other = any(r["source"] == "gold standard" and r["named"] != r["shift"] for r in rows_all)
+    legend = wrap("Gene strand, cased for the placement of the gold-standard model" +
+                  (" (\u25b2 where it is not the blue one)" if other else ", on an AG acceptor (blue)") +
+                  ": lowercase grey, exon; uppercase, intron. Shaded: bases "
                   "found at both ends, across which the intron can be moved without changing the spliced sequence. Rows "
                   f"aligned on the codons of the placement on an AG acceptor (phase {phase}, blue), light lines between "
                   "codons; exon flanks trimmed to whole codons. Letters: amino acids under the middle base of each codon "
@@ -757,7 +760,7 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
                     [(g["r_amb"] + i, b.upper() if i < n else b.lower()) for i, b in enumerate(g["ra"] + g["rq"])
                      if g["r_amb"] + i <= g["r_end"]]
             for side, amb0 in (("L", g["c_amb"]), ("R", g["r_amb"])):
-                ax.add_patch(Rectangle((X(side, amb0) - 0.05, y - 0.95), g["a"] * CW + 0.1, 1.9, facecolor="#e4e4e4",
+                ax.add_patch(Rectangle((X(side, amb0) - 0.05, y - 0.85), g["a"] * CW + 0.1, 1.7, facecolor="#e4e4e4",
                                        edgecolor="none", zorder=1))
             for side, seq in (("L", left), ("R", right)):
                 for col, c in seq:
@@ -770,7 +773,7 @@ def side_panel(fig, x0, top, width, blocks, names, phase):
                 wdn = width_mm(dn, 4.5, "bold" if ag else "normal")
                 ax.text(xp, y, dn, fontsize=4.5, va="center", color=GOLD if ag else "black",
                         fontweight="bold" if ag else "normal")
-                if gold and k == int(r["named_k"]):
+                if gold and k == int(r["named_k"]) and r["named"] != r["shift"]:
                     ax.plot([xp + wdn / 2], [y - 1.25], marker="^", ms=1.4, color="black", mew=0, zorder=5)
                 xp += wdn + 1.0
             y -= RH / 2

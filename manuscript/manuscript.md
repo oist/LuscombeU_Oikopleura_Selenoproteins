@@ -950,13 +950,13 @@ FP752340, whose 5′ end is masked in the EST collection used). B, reference and
 REANNOTATION. C, equivalent placements of the third
 and fourth introns (`figures/intron_placements.py`): the gene-strand sequence at both ends of each intron in the
 gold-standard assemblies and in the test assemblies of the same species (KUM-M3-7f, AOM-5-5f, Bar2_p4; exons carried
-from the gold standard through a minimap2 alignment of the regions), cased for the placement named by the
-gold-standard script (lowercase, exon; uppercase, intron); shaded, the bases repeated at both ends, across which the intron can be moved without
+from the gold standard through a minimap2 alignment of the regions), cased for the placement of the gold-standard
+models, on an AG acceptor (lowercase, exon; uppercase, intron); shaded, the bases repeated at both ends, across which the intron can be moved without
 changing the spliced sequence; rows aligned on the codons of the placement on an AG acceptor in phase 1, with light
 lines between codons (exon flanks trimmed to whole codons); below the rows that translate alike, the amino acids under
 the middle base of each codon of that placement, that of the codon split by the intron on the side holding two of its
 bases (the translation is the same for every placement); right, the dinucleotides of the possible placements from left to right, the placement on an AG acceptor in
-blue, a triangle under the placement named by the gold-standard script. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
+blue. D (`figures/simplified_tree.py`), simplified tree of PSTK and of the
 related kinase KTI12, with the eukaryotic and archaeal PSTK added to the tree of Figure TREES (Methods, long-branch
 analysis 6), under LG+C60+F+G with posterior mean site frequencies, rooted on KTI12, with 1,000 ultrafast bootstrap
 replicates (nodes supported by less than 50% collapsed, supports of 70% or more shown): clades of sequences of one

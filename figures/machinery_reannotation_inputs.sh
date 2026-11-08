@@ -17,8 +17,8 @@ run --gene PSTK --embl FN653020.1 --reference "human=Q8IV42" \
     --note "OKI:XP_081642556.1=first three exons only; reads on into the third intron (110 codons, 98 of them as in the gold standard)" \
            "OSKA:Oidioi.CG.OSKA2016.S10.g09825.01.t=starts in the fourth exon and continues past the stop codon into seven exons downstream (604 codons)" \
            "OdB3:CBY23135.1=same first three exons; other first site of the fourth exon, and no last exon (178 codons)" \
-    --gold-note "OKI=third and fourth introns with splice sites outside the intron classes (TG-AG, AG-AA), as in the three supporting transcripts" \
-                "OSKA=third and fourth introns with splice sites outside the intron classes (AA-AG, TT-GT), as in the supporting transcripts; the third intron is retained in two of them" \
+    --gold-note "OKI=third and fourth introns with splice sites outside the intron classes (TG-AG, TT-AG), as in the three supporting transcripts" \
+                "OSKA=third and fourth introns with splice sites outside the intron classes (AA-AG, TT-AG), as in the supporting transcripts; the third intron is retained in two of them" \
                 "OdB3=exon chain set by the curator: the GenBank exons 1 to 3, the acceptor of the third intron (GA-AG; retained in both ESTs) from the prediction, and the last intron of the ESTs (AT-AG)"
 
 # Genes under review (2026-11-03): public models, gold-standard models and supporting transcripts; notes to add after
