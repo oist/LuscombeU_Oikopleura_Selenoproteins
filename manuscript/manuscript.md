@@ -893,31 +893,34 @@ thus found throughout the appendicularians wherever the assembly allows.
 
 ### PSTK
 
-PSTK has five coding exons in the three *O. dioica* assemblies, and the three public annotations need correction
-(Figure PSTK A). It is an internal gene of an operon. Its transcripts start with the spliced leader in each assembly
-(SL in Figure PSTK A) and end 3 to 11 nucleotides after the stop codon; the next gene starts 34 to 48 nucleotides after
-it, one nucleotide after a candidate trans-splice site. The proteins (241 to 246 residues) are about 100 residues
-shorter than human PSTK (348) and 75 shorter than *Ciona intestinalis* PSTK (320), and distant from both (Figure PSTK
-B).
+PSTK, which phosphorylates Ser on the tRNA-Sec, needs corrections in the three public annotations, which mishandle
+its position as an internal gene of an operon and pick wrong splice sites (Figure PSTK A). Corrected, its transcripts
+start with the spliced leader and end 3 to 11 nucleotides after the stop codon, and it has five coding exons in the
+three *O. dioica* assemblies; the next gene starts 34 to 48 nucleotides after the stop codon, past a candidate
+trans-splice site. The proteins are about 100 and 75 residues shorter than human and *Ciona intestinalis* PSTK,
+respectively (Figure PSTK B). They have diverged so much that human proteins do not find them as reciprocal best hits
+and trees do not resolve their position among animal PSTK. Trees rooted on KTI12, the family closest to PSTK
+[@Sherrer2008], *O. dioica* KTI12 included, nevertheless place them among PSTK and, with archaeal PSTK added, among
+eukaryotic PSTK (Figure PSTK D).
 
 The third and fourth introns mostly have splice sites outside the intron classes of *O. dioica*. These are not
 assembly errors: the transcripts splice them at the same junctions, and the test assemblies have the same intron ends
 (Figure PSTK C). As in most *O. dioica* introns, bases repeated at both ends leave the exact junction undetermined, but
 no possible placement gives an intron class (Figure PSTK C). In OSKA2016 and OdB3, the first and last 25 nucleotides
-of the fourth intron can pair, more than those of shuffled introns.
-
-These introns were gained in appendicularians. Vertebrates and amphioxus share five introns at other positions,
-whereas other tunicates and *O. vanhoeffeni* have none: the tunicate ancestor probably had an intronless gene. One *O.
-albicans* intron may come from a transposon: a perfect 12-nucleotide inverted repeat lies near its ends, as in the
-non-canonical introns of *F. borealis* derived from miniature inverted-repeat transposable elements [@Henriet2019].
-
-The appendicularian PSTK has diverged so much that human proteins do not find it as a reciprocal best hit and trees do
-not resolve its position among animal PSTK. Trees rooted on KTI12, the family closest to PSTK [@Sherrer2008], *O.
-dioica* KTI12 included, still place it among PSTK and, with archaeal PSTK added, among eukaryotic PSTK (Figure PSTK D).
-<!-- Section rewritten on 2026-11-07 from a replacement paragraph by Charles; the removed text, with an index of the
-extra analyses behind it and of the statements that later work superseded: manuscript/removed_text/PSTK.md.
-Sources and exact counts. Spliced leader: curation/spliced_leader_transcripts.tsv (OKI2018 two of the three drawn
-transcripts, OSKA2016 two of four, OdB3 the GenBank ESTs FP752340 = KT0AAA259YN02RM1, FP831546 and FP830122). Transcript
+of the fourth intron can pair, more than those of shuffled introns. The *O. dioica* introns were gained in
+appendicularians: vertebrates and amphioxus share five introns at other positions, whereas other tunicates and *O.
+vanhoeffeni* have none, so the tunicate ancestor probably had an intronless gene. One *O. albicans* intron may come
+from a transposon: a perfect 12-nucleotide inverted repeat lies near its ends, as in the non-canonical introns of *F.
+borealis* derived from miniature inverted-repeat transposable elements [@Henriet2019].
+<!-- Section rewritten on 2026-11-07 and 2026-11-08 from replacement paragraphs by Charles; the removed text, with an
+index of the extra analyses behind it and of the statements that later work superseded: manuscript/removed_text/PSTK.md.
+Sources and exact counts. Proteins: 241 to 246 residues; human PSTK 348 (UniProt Q8IV42), C. intestinalis 320
+(XP_002120985.2), with which the OdB3 protein has 34 and 37% similar residues (Figure PSTK B).
+Public models: RefSeq OKI2018 has the first three exons and reads into the third intron; ANISEED OSKA2016 starts in the
+fourth exon and continues into the next gene; GenBank OdB3 has another acceptor for the fourth exon and no last exon
+(Figure PSTK A).
+Role of PSTK and SEPSECS in one clause: to brush up with the other machinery genes (docs/plan.md). Spliced leader:
+curation/spliced_leader_transcripts.tsv (OKI2018 two of the three drawn transcripts, OSKA2016 two of four, OdB3 the GenBank ESTs FP752340 = KT0AAA259YN02RM1, FP831546 and FP830122). Transcript
 ends and next gene on the same strand: XP_081641984.1 (OKI2018), the downstream part of the ANISEED model S10.g09825.01
 (OSKA2016), CBY23134.1 (OdB3; UniProt E4X036, RRM CPEB family by automatic annotation; the first three exons of the
 OKI2018 protein match the OSKA2016 and OdB3 regions after PSTK, tblastn 72-88%; to check, docs/plan.md); previous gene
@@ -965,31 +968,20 @@ branch from one polytomy drawn as one tip.
 
 ### SEPSECS
 
-<!-- Provisional (2026-11-05), for Charles's review: keep or drop. Intron map: make intron-map
-(curation/intron_map.py, results/tables/intron_map_SEPSECS.tsv), on the gold-standard models of run 14314dd. -->
+<!-- Section rewritten on 2026-11-08 from a replacement paragraph by Charles; the removed text, with an index of the
+extra analyses behind it: manuscript/removed_text/SEPSECS.md. Sources: Table MACHINERY (make machinery-table: reciprocal
+best hit in all nine genomes, no other human gene hit); make intron-map (results/tables/intron_map_SEPSECS.tsv): seven
+introns at the same alignment columns and in the same phases in the six O. dioica assemblies; the two introns of the
+Okinawa species (86 and 75 nt, near human residues 63 and 86) in OKI2018 and KUM-M3-7f, spliced by the OKI2018
+transcript TRINITY_DN6371_c0_g1_i1. -->
 
-The three *O. dioica* species share seven SEPSECS introns, at the same alignment columns and in the same phases in
-their six assemblies, and the Okinawa species has two more (Figure SEPSECS; `make intron-map`,
-`results/tables/intron_map_SEPSECS.tsv`).
-These two introns, of 86 and 75 nucleotides, near residues 63 and 86 of the human protein, are both GA-AG. They are in
-OKI2018 and in KUM-M3-7f, another individual of the species, and the OKI2018 transcript TRINITY_DN6371_c0_g1_i1
-splices both (another transcript, TRINITY_DN6371_c0_g1_i4, retains the second, which puts a stop codon in frame). In
-OSKA2016 and OdB3 the same stretch is one exon, in the assemblies, in the six OSKA2016 transcripts and the OdB3 ESTs
-that cover it, and in AOM-5-5f and Bar2_p4. *O. longicauda*, *O. albicans* and *O. vanhoeffeni* have no intron at
-these columns (the nearest, an *O. longicauda* intron, lies two columns from the second, in a region aligned without
-gaps). The two introns were therefore most likely gained in the Okinawa lineage after it separated from the other two
-species. The ends of the first pair more than those of shuffled introns (z = -4.0).
-
-The seven shared introns also differ from those of the other oikopleurids: only one lies at the column and in the
-phase of an *O. albicans* intron (near human residue 259; GA-AG in *O. dioica*, GT-AG in *O. albicans*), none at an
-intron of *O. longicauda* or *O. vanhoeffeni*, and *O. albicans* and *O. vanhoeffeni* share one other. Within
-*O. dioica*, the donor of one shared intron is GC in the Okinawa species and GA in the other two, and the first intron
-is 423 and 437 nucleotides long in the North Atlantic assemblies (OdB3, Bar2_p4), against 40 to 45 in the four others,
-part of it being repeated at 50 other loci of OdB3.
+SEPSECS, which loads selenium on the tRNA, is conserved enough that reciprocal best hits with human proteins identify
+it without ambiguity (Table MACHINERY). The three *O. dioica* species share seven introns, and the Okinawa species has
+two more, both GA-AG (Figure SEPSECS).
 
 ![Figure SEPSECS](../figures/machinery_SEPSECS.png)
 
-Figure SEPSECS (provisional; `figures/machinery_SEPSECS.pdf`, panel of run 0d19c70). SEPSECS in the three *O. dioica*
+Figure SEPSECS (`figures/machinery_SEPSECS.pdf`, panel of run 0d19c70). SEPSECS in the three *O. dioica*
 assemblies, drawn as Figure EEFSEC. OKI2018: the second and third introns (GA-AG, 86 and 75 nucleotides) are those of
 the Okinawa species only; OSKA2016 and OdB3 have one exon there. OdB3: the second EST uses the donor 34 nucleotides
 further in the first of the two GA-AG introns.
@@ -1433,7 +1425,10 @@ take the ends that the event that created them provided: in *Fritillaria boreali
 mostly neither GT-AG nor GC-AG [@Henriet2019], and introners take one splice site from the duplicated target site
 [@Huff2016], so that unusual ends are expected of young introns more than of old ones. SEPSECS gives younger examples
 still: its two introns found only in the Okinawa species, gained after the three *O. dioica* species separated, are
-both GA-AG, a class of about 9% of *O. dioica* introns [@Denoeud2010]. This does not choose between
+both GA-AG, a class of about 9% of *O. dioica* introns [@Denoeud2010]. <!-- Evidence for the gain, removed from the
+SEPSECS subsection on 2026-11-08 (manuscript/removed_text/SEPSECS.md): one exon there in OSKA2016 and OdB3 (assemblies,
+six OSKA2016 transcripts, OdB3 ESTs) and in AOM-5-5f and Bar2_p4; no intron at these columns in O. longicauda, O.
+albicans or O. vanhoeffeni (make intron-map). --> This does not choose between
 annotations, which the transcripts, the assemblies of other individuals and the comparison of proteins do, but it
 removes a reason to doubt the sites that the transcripts show. Since the three species separated, these introns kept
 being spliced while their first bases changed (for the fourth intron, TT-AG in OKI2018 and OSKA2016 and AT-AG in OdB3;

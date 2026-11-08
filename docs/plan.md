@@ -2776,3 +2776,13 @@ no earlier step waits for them.
   (OdB3). Figures regenerated locally (reannotation pages, machinery EEFSEC, PSTK, SEPHS_b; panel C now shows the AG
   placement in the three species for both introns); intron_map, pstk_intron_columns redone;
   results/trees/pstk_introns.aln restored (deleted by the rm of make machinery-phylogeny in c7865cd).
+- PSTK and SEPSECS sections simplified again (2026-11-08) from Charles's replacement paragraphs (quoted in the commit);
+  removed text appended to manuscript/removed_text/PSTK.md and in manuscript/removed_text/SEPSECS.md. Corrections to
+  his draft: "starts from a trans-splicing site" -> the transcripts start with the spliced leader; "reciprocal
+  comparisons with other chordates" -> reciprocal best hits with human proteins (Table MACHINERY); "These introns" ->
+  "The O. dioica introns" (the preceding sentence is about the fourth intron only). Evidence for the gain of the two
+  Okinawa SEPSECS introns, now absent from the Results, kept as a comment in the Discussion paragraph that relies on it.
+- TODO, role descriptions (2026-11-08, Charles: deferred; the paragraphs should not be dry for a reader who skipped or
+  forgot the introduction): brush up the one-clause role of each machinery gene across the Results (PSTK "phosphorylates
+  Ser on the tRNA-Sec"; SEPSECS "loads selenium on the tRNA", strictly: converts phosphoseryl-tRNA-Sec to
+  selenocysteinyl-tRNA-Sec with selenophosphate; EEFSEC, SEPHS, SECIS-binding protein, SECp43 to match).

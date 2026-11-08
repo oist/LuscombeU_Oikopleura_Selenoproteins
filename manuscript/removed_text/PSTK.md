@@ -202,3 +202,33 @@ to 100% under the selected model and with PMSF); the kinase domain placed it as 
 with PMSF), the C-terminal region next to fly proteins (47%, 61% with PMSF), and neither rejected a grouping with the
 other tunicates (AU tests, p = 0.11 to 0.42).
 
+
+## Version of 2026-11-07, replaced on 2026-11-08
+
+Replaced by a shorter version derived from new replacement paragraphs by Charles (see the commit that added this
+section). Nothing in it is superseded. The details it held beyond the new text are now in the provenance comment of
+the section (protein lengths of 241 to 246 residues, against 348 for human and 320 for *C. intestinalis* PSTK; 34 and
+37% similar residues) or in the removed text above (the next gene starting one nucleotide after the candidate
+trans-splice site). Verbatim:
+
+PSTK has five coding exons in the three *O. dioica* assemblies, and the three public annotations need correction
+(Figure PSTK A). It is an internal gene of an operon. Its transcripts start with the spliced leader in each assembly
+(SL in Figure PSTK A) and end 3 to 11 nucleotides after the stop codon; the next gene starts 34 to 48 nucleotides after
+it, one nucleotide after a candidate trans-splice site. The proteins (241 to 246 residues) are about 100 residues
+shorter than human PSTK (348) and 75 shorter than *Ciona intestinalis* PSTK (320), and distant from both (Figure PSTK
+B).
+
+The third and fourth introns mostly have splice sites outside the intron classes of *O. dioica*. These are not
+assembly errors: the transcripts splice them at the same junctions, and the test assemblies have the same intron ends
+(Figure PSTK C). As in most *O. dioica* introns, bases repeated at both ends leave the exact junction undetermined, but
+no possible placement gives an intron class (Figure PSTK C). In OSKA2016 and OdB3, the first and last 25 nucleotides
+of the fourth intron can pair, more than those of shuffled introns.
+
+These introns were gained in appendicularians. Vertebrates and amphioxus share five introns at other positions,
+whereas other tunicates and *O. vanhoeffeni* have none: the tunicate ancestor probably had an intronless gene. One *O.
+albicans* intron may come from a transposon: a perfect 12-nucleotide inverted repeat lies near its ends, as in the
+non-canonical introns of *F. borealis* derived from miniature inverted-repeat transposable elements [@Henriet2019].
+
+The appendicularian PSTK has diverged so much that human proteins do not find it as a reciprocal best hit and trees do
+not resolve its position among animal PSTK. Trees rooted on KTI12, the family closest to PSTK [@Sherrer2008], *O.
+dioica* KTI12 included, still place it among PSTK and, with archaeal PSTK added, among eukaryotic PSTK (Figure PSTK D).
