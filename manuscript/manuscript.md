@@ -323,7 +323,7 @@ intron-presence`; 27 short introns or divergent loci could not be tested either 
 terminal repeat retrotransposon of OdB3 EEFSEC (see below), and four introns of 200 to 1,043 nucleotides, OKI2018
 GPX_chr1a and SEPHS_b, OSKA2016 GPX_chr1b and OdB3 SELENOS, which have 8 to 10 bases repeated at their two ends
 (a duplicated target site), have 21 to 66 copies in their genome, and fold more than shuffled sequences of the same composition (z
--7.2 to -10.4). Four of the ten models with splice sites outside the intron classes owe them to these insertions
+-7.2 to -10.3). Four of the ten models with splice sites outside the intron classes owe them to these insertions
 (OKI2018 GPX_chr1a and SEPHS_b, OSKA2016 GPX_chr1b, OdB3 EEFSEC). The transcripts that join their exons can come from
 alleles without the insertion as well as from transcripts that splice it out; the proteins are the same. The sixth is
 a GT-AG intron of 41 nucleotides in OKI2018 GPX_PAR, absent from the KUM-M3-7f locus that matches its exons, which may
@@ -924,8 +924,8 @@ OKI2018 protein match the OSKA2016 and OdB3 regions after PSTK, tblastn 72-88%; 
 on the same strand 134 to 143 nt upstream: XP_081641987.1, S10.g09826.01, CBY23136.1. Splice sites outside the intron
 classes: the third intron in OKI2018 and OSKA2016 (TG-AG, AA-AG when placed on an AG acceptor; GA-AG, a class, in OdB3)
 and the fourth intron in all three (TT-AG, TT-AG, AT-AG). Test assemblies: KUM-M3-7f, AOM-5-5f, Bar2_p4. Repeated end
-bases: 243 of the 280 gold-standard introns (make intron-content). Pairing of the fourth intron ends: z = -6.1 in
-OSKA2016 and OdB3 (run 5313acd). Intronless tunicates: the RefSeq models of C. intestinalis, C. robusta, P. mammillata,
+bases: 243 of the 280 gold-standard introns (make intron-content). Pairing of the fourth intron ends: z = -5.3 in
+OSKA2016 and -6.1 in OdB3 (run f16a589, AG convention). Intronless tunicates: the RefSeq models of C. intestinalis, C. robusta, P. mammillata,
 S. clava, B. schlosseri and T. democratica (make pstk-introns). O. albicans intron: the second (2,001 nt, AA-AG on an AG
 acceptor), inverted repeat ATGGGATATTAT ... ATAATATCCCAT, AGAAAT at both ends. KTI12 in the trees: human, the RefSeq
 proteomes, O. dioica XP_081641927.1 and UniRef50 entries. Trees: Deigo run fa286f8 (2026-11-07), with the B. floridae
@@ -1447,9 +1447,9 @@ runs help the recognition of donor sites without GT in *O. dioica* could be test
 reads across the genome.
 
 Across the gold-standard introns of *O. dioica*, the two ends pair more often in introns that are not GT-AG. Four of
-the 25 introns whose ends pair with z at most -3 are insertions that the assembly of another individual lacks (see
-Results); without the five insertions scored, 18 of the 21 introns whose ends pair with z at most -3 are not GT-AG,
-against 44 of the other 250 (median z -1.5 for the non-GT-AG introns and 0.2 for the GT-AG introns; -1.3 to -1.5 and
+the 24 introns whose ends pair with z at most -3 are insertions that the assembly of another individual lacks (see
+Results); without the five insertions scored, 17 of the 20 introns whose ends pair with z at most -3 are not GT-AG,
+against 45 of the other 251 (median z -1.5 for the non-GT-AG introns and 0.2 for the GT-AG introns; -1.3 to -1.5 and
 0.1 to 0.3 in each of the three assemblies; the same introns are counted in the three assemblies, so these counts are
 not independent; `make intron-pairing`). The insertions themselves have what is expected of the start of a transposon
 intron: duplicated target sites, which give them equivalent placements and splice sites outside the intron classes,
@@ -1459,7 +1459,8 @@ from alleles without them, the transcripts do not tell, as both give the same se
 the transposon-derived introns of *F. borealis* [@Henriet2019], and the last intron of *O. albicans* PSTK; whether
 paired ends are the remains of such an origin, or help the splicing of introns whose sites are weak, could be tested on
 all the introns supported by RNA-seq reads in the *O. dioica* genomes. <!-- curation/intron_pairing.py
-(results/tables/intron_pairing.tsv); with the insertions: 21 of 25 against 44 of 251, medians -1.6 and 0.2. -->
+(results/tables/intron_pairing.tsv, Deigo run f16a589 with the AG convention); with the insertions: 20 of 24 against 45 of
+252, medians -1.6 and 0.2. -->
 
 For the annotation of appendicularian genomes, gene-model tools that require GT-AG or GC-AG introns, or that place
 junctions on these sites whenever the alignment allows it, can misplace or skip such introns, as the prediction of the

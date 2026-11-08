@@ -46,6 +46,9 @@ trees, before Figure PSTK.
   three species, after OdB3 residue 81 (R81|S82), not near 92; M. erythrocephalus has no HSP beyond residue 132 of the
   O. vanhoeffeni protein, so its intron near 136 is not seen; M. erythrocephalus also has an intron after residue 22
   of the O. vanhoeffeni protein (GT-AG, 85 nt, phase 2).
+- Placements of the fourth intron ("AG-AA in OKI2018, TT-GT in OSKA2016 and AT-AG in OdB3") and the pairing of its
+  ends (z = -6.1 in OSKA2016): with the AG convention of 2026-11-07, the gold standard places it on the AG acceptor in
+  the three species (TT-AG, TT-AG, AT-AG, phase 1), and the OSKA2016 ends pair with z = -5.3 (run f16a589).
 - Tree supports: from commits c7865cd and 3662128, before B. floridae and B. belcheri PSTK were added to the trees
   (make pstk-trees and the following targets, 2026-11-07).
 

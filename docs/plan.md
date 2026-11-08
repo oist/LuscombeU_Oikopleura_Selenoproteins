@@ -2766,3 +2766,13 @@ no earlier step waits for them.
 - Benchmark (2026-11-07, Charles agreed): stage2/benchmark.py counts introns as identical up to equivalent placements
   (leftmost placement on the genome of the run); introns_exact_coordinates keeps the old comparison. The metric is not
   quoted in the manuscript. Rerun with make stage2-truth stage2-benchmark after the gold-standard rerun.
+- AG convention rerun (Deigo job 52747642, commit f16a589, 2026-11-08): the seven expected introns moved, no other.
+  Benchmark: introns_exact +1 for OSKA and OdB3 in the eval, eval_miniprot, loo and final runs (equivalent placements
+  now counted as the same intron); found counts unchanged. Pairing of intron ends depends on the placement: OSKA
+  SELENOO intron 4 z -3.65 -> -2.72 (AG-CG -> AA-AG), OSKA PSTK intron 4 -6.06 -> -5.29, OKI GPX_chr1a -7.25 -> -5.53,
+  OSKA GPX_chr1b -7.38 -> -8.39, OKI SEPHS_b -4.20 -> -4.74. Manuscript updated: Discussion 17 of 20 against 45 of 251
+  (was 18 of 21 against 44 of 250), 24 introns with z <= -3 (25), comment with the insertions 20 of 24 against 45 of
+  252; Results folding z of the insertions -7.2 to -10.3 (-10.4); PSTK section comment z = -5.3 (OSKA2016) and -6.1
+  (OdB3). Figures regenerated locally (reannotation pages, machinery EEFSEC, PSTK, SEPHS_b; panel C now shows the AG
+  placement in the three species for both introns); intron_map, pstk_intron_columns redone;
+  results/trees/pstk_introns.aln restored (deleted by the rm of make machinery-phylogeny in c7865cd).
