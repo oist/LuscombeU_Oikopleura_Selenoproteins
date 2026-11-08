@@ -52,3 +52,22 @@ intron of *O. longicauda* or *O. vanhoeffeni*, and *O. albicans* and *O. vanhoef
 *O. dioica*, the donor of one shared intron is GC in the Okinawa species and GA in the other two, and the first intron
 is 423 and 437 nucleotides long in the North Atlantic assemblies (OdB3, Bar2_p4), against 40 to 45 in the four others,
 part of it being repeated at 50 other loci of OdB3.
+
+## Version of 2026-11-08 (first), replaced on 2026-11-08
+
+Merged with EEFSEC into "SEPSECS and EEFSEC" from a second replacement paragraph by Charles. Nothing superseded;
+the Okinawa intron counts and sources are kept in the comment of the new subsection. Verbatim:
+
+### SEPSECS
+
+<!-- Section rewritten on 2026-11-08 from a replacement paragraph by Charles; the removed text, with an index of the
+extra analyses behind it: manuscript/removed_text/SEPSECS.md. Sources: Table MACHINERY (make machinery-table: reciprocal
+best hit in all nine genomes, no other human gene hit); make intron-map (results/tables/intron_map_SEPSECS.tsv): seven
+introns at the same alignment columns and in the same phases in the six O. dioica assemblies; the two introns of the
+Okinawa species (86 and 75 nt, near human residues 63 and 86) in OKI2018 and KUM-M3-7f, spliced by the OKI2018
+transcript TRINITY_DN6371_c0_g1_i1. -->
+
+SEPSECS, which loads selenium on the tRNA, is conserved enough that reciprocal best hits with human proteins identify
+it without ambiguity (Table MACHINERY). The three *O. dioica* species share seven introns, and the Okinawa species has
+two more, both GA-AG (Figure SEPSECS).
+

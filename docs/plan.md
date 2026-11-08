@@ -2811,3 +2811,31 @@ no earlier step waits for them.
   KT0AAA399YH18RM1 and KT0AAA400YK11RM1 (start 3 nt before the gold-standard mRNA start) need their GenBank records
   (accessions not found from here: ENA rate-limited, NCBI E-utilities refused); SEPSECS ESTs do not reach the start
   codon. Upstream ORF of OSKA2016 SEPSECS not identified (kinase-like motifs; to check with the flanking genes TODO).
+- SEPSECS and EEFSEC merged into one machinery subsection (2026-11-08, Charles's replacement paragraph; answers: RBH
+  claim kept for the O. dioica assemblies, B. stygius and M. erythrocephalus being contig assemblies; "an intron found
+  only in this species"; frameshift mark on the gene model; amino-acid impact of the haplotype differences). Charles is
+  merging the gold-standard and census sections for the machinery: for now the EEFSEC text of the gold-standard section
+  moved to the census (pointer left), with Figure EEFSEC; the SEPSECS curation sentence and the EEFSEC models of the
+  other species stay in the gold-standard section until his next pass. Removed text: manuscript/removed_text/EEFSEC.md,
+  SEPSECS.md.
+- Amino-acid impact of the OKI2018 EEFSEC haplotypes (2026-11-08, by hand): mismatch positions of the four drawn
+  transcripts (figures/inputs/reannotation_EEFSEC.tsv) placed on the codons of the gold-standard CDS (offset +1 after
+  the base missing at NC_137291.1:4721943): 24 to 81 in the CDS (15 to 52 per kb), 75 to 88% at third positions, 3 to
+  10 codons changed at the first or second position (an upper bound of the residues changed, the bases of the
+  transcripts being absent from the inputs); for TRINITY_DN4400_c0_g1_i1, whose protein the model takes, the assembly
+  CDS (results/gene_regions/EEFSEC/OKI.fa) with one base restored at 4721943 encodes a 523-residue protein differing at
+  3 residues (V254R, D428N, N429G, assembly->transcript). Whole-alignment rates per kb (17 to 52; at most 14 for the
+  other OKI2018 machinery transcripts) as before. Not a make target; to script if kept in the final text.
+- Figure frameshift marks (2026-11-08, Charles: on the gene model, not only on the transcripts): figures/
+  reannotation_page.py marks, on a gold-standard model whose protein comes from a transcript (proteins.faa
+  protein_source=transcript), the insertions and deletions of that transcript inside the CDS (triangle, open box), when
+  the transcript is drawn; key entry added when used. Only OKI2018 EEFSEC qualifies among the drawn panels; the
+  selenoprotein pages draw no transcripts, so their transcript-protein models (OKI2018 SELENOS, SELENOO, DIO_chr1,
+  OSKA2016 SELENOW_PAR, OdB3 DIO_PAR, GPX_PAR) get no mark: to do if wanted (the input rows would need the indels of
+  the model's transcript).
+- TODO, final Selenoprofiles profiles (Charles, 2026-11-08: use the corrected sequence; can wait for the next rebuild):
+  stage2/build_profiles.py takes the stage 1 predictions for the machinery families (and curation/machinery_proteins.faa),
+  not the machinery gold standard; OKI2018 eEFSec in the profiles is the prediction that lacks 8 residues. At the next
+  stage 2 rebuild, replace the machinery predictions of the gold-standard assemblies by curation/gold_standard_machinery
+  proteins (profile names: pstk, SecS, eEFsec, SBP2; SEPHS_b has no selenocysteine and the SEPHS2 profile takes the
+  selenocysteine form: decide), then rerun the evaluation and final stage 2 runs.

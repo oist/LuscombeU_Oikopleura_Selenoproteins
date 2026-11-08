@@ -35,7 +35,9 @@ gene, assembly, transcript, evidence, and optionally sl; rows with sl "none" or 
 transcripts with sl "upstream gene" in any table, whose SL is that of an upstream gene of the operon, never marked;
 curation/spliced_leader_transcripts.tsv, read by hand or from GenBank records, and results/tables/sl_transcripts.tsv,
 make sl-transcripts) are marked "SL" at their 5' end and "(SL)" in the paragraph, where the tables' transcripts that
-are not drawn are also named. With --side-panel (a table of figures/intron_placements.py), the first gene gets
+are not drawn are also named. A gold-standard model whose protein comes from a transcript (protein_source=transcript in
+the proteins.faa header) carries that transcript's insertions (triangle) and deletions (open box) inside the coding
+sequence, which mark where the assembly does not encode the protein (frameshift), when the transcript is drawn. With --side-panel (a table of figures/intron_placements.py), the first gene gets
 panel letters (A: gene models, B: proteins) and a panel C on its right: the equivalent placements of introns, one row
 per assembly. Output: <out>/<name>.{pdf,svg,png}.
 """
@@ -121,11 +123,15 @@ def load(gene, a):
             if r["field"] == "domain": x["domains"].append(r["value"])
             else: x[r["field"]] = r["value"]
     d["gold"] = {g: rf.gold_model(f"{a.gold}/{g}.gff3", gene) for g in GENOMES}
-    d["gprot"] = {}
+    d["gprot"], d["gfrom_tx"] = {}, {}
     for g in GENOMES:
         name = None
         for l in open(f"{a.gold}/{g}.proteins.faa"):
-            if l.startswith(">"): name = l[1:].split("|")[0]
+            if l.startswith(">"):
+                f = l[1:].strip().split("|")
+                name = f[0]
+                if name == gene and "protein_source=transcript" in f and f[2].startswith("transcript:"):
+                    d["gfrom_tx"][g] = f[2].split(":", 1)[1]   # protein of this transcript: the assembly does not encode it
             elif name == gene: d["gprot"][g] = l.strip()
     d["secis"] = {} if a.no_secis else rf.secis_hits(a.cm, a.gold, gene)
     if a.origin == "start":   # the start codon of the gold-standard model as origin (genes without selenocysteine)
@@ -304,6 +310,40 @@ def layout_models(genes):
     return tracks, -y + 0.4
 
 
+def gold_shifts(d, g):
+    """Differences between the assembly and the transcript whose protein the gold-standard model takes, inside the
+    coding sequence: (insertions [(position, bases of the transcript missing from the assembly)], deletions [(first,
+    last) bases of the assembly missing from the transcript]). Empty when the model takes the assembly protein; a
+    warning when its transcript is not among the drawn ones."""
+    cache = d.setdefault("shifts", {})
+    if g in cache: return cache[g]
+    name, cache[g] = d["gfrom_tx"].get(g), ([], [])
+    m = d["tx"].get(g, {}).get(name) if name else None
+    if name and m is None and d["tx"].get(g):     # pages without transcripts: nothing to say
+        print(f"warning: {d['gene']} {g}: transcript {name} of the gold-standard protein not drawn, no frameshift marks",
+              file=sys.stderr)
+    if m is None: return cache[g]
+    cds = d["gold"][g][2]
+    within = lambda p: any(a <= p <= b for a, b in cds)
+    ins = [tuple(map(int, v.split(":"))) for v in filter(None, m.get("insertions", "").split(";"))]
+    dels = [tuple(map(int, v.split("-"))) for v in filter(None, m.get("deletions", "").split(";"))]
+    cache[g] = ([(p, n) for p, n in ins if within(p)], [(a0, a1) for a0, a1 in dels if within(a0) or within(a1)])
+    return cache[g]
+
+
+def mark_frameshifts(ax, d, g, y, cds, x, ntmm):
+    """On a gold-standard model that takes the protein of a transcript, where the assembly lacks bases of that
+    transcript (triangle above the model) or has bases that it lacks (open box), as on the transcripts."""
+    ins, dels = gold_shifts(d, g)
+    for pos, n in ins:
+        ax.plot([x(pos)], [y + CDS_H / 2 + 0.45], marker="v", ms=2.2, color=DIFF, mew=0, zorder=6)
+        if n > 1: ax.text(x(pos) + 0.6 * ntmm, y + CDS_H / 2 + 0.45, str(n), fontsize=3.5, color=DIFF, va="center")
+    for a0, a1 in dels:
+        w = max(abs(x(a1) - x(a0)) + 1, 0.6 * ntmm)
+        ax.add_patch(Rectangle((min(x(a0), x(a1)) - (w - abs(x(a1) - x(a0)) - 1) / 2, y - CDS_H / 2 - 0.1), w, CDS_H + 0.2,
+                               facecolor="white", edgecolor=DIFF, lw=0.4, zorder=6))
+
+
 def draw_models(ax, d, tracks, col_w):
     X0, X1 = d["X0"], d["X1"]
     ntmm = (X1 - X0) / col_w                      # nt per mm
@@ -337,6 +377,7 @@ def draw_models(ax, d, tracks, col_w):
                 ax.text(xl, t["pub"] + 1.0, "abcdefgh"[k], fontsize=5, fontweight="bold", color=col, ha="center", va="bottom")
         drawn = draw_model(ax, t["gold"], ex, cds, x, GOLD, sites=rf.site_map(ex, d["gold_sites"].get(g, "")))
         mark_breaks(ax, d, t["gold"], drawn, ntmm)
+        mark_frameshifts(ax, d, g, t["gold"], cds, x, ntmm)
         end = d["span"][g][1]
         if g in d["secis"]:
             f0, f1, bits = d["secis"][g]
@@ -553,7 +594,7 @@ def draw_proteins(ax, d, refs_y, gold_y, par_y, col_w, fig):
     ax.set_xlabel(f"residue of the {axis_name} protein", fontsize=5, labelpad=1)
 
 
-def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False, sl=False):
+def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False, sl=False, shifts=(False, False)):
     """Key at the bottom of the page (or below the genes, its top at top mm): items one after the other, a new line
     when the page width is reached; one group for the gene models, one for the proteins. Returns its height and its
     bottom (mm)."""
@@ -587,6 +628,16 @@ def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False, sl=
                "number of exons beyond the drawn region", "black"),
               (lambda ax, cx, y: ax.text(cx + 6, y, "a b", fontsize=5, fontweight="bold", color=PUBLIC, va="center", ha="right"),
                "public models of the same row, as named in the paragraph", "black")]
+    split = 4
+    if any(shifts):   # gold-standard models that take the protein of a transcript the assembly does not encode
+        glyphs = [lambda ax, cx, y: ax.plot([cx + 4.75], [y + CDS_H / 2 + 0.45], marker="v", ms=2.2, color=DIFF, mew=0)] if shifts[0] else []
+        glyphs += [lambda ax, cx, y: ax.add_patch(Rectangle((cx + 5.5, y - CDS_H / 2 - 0.1), 1, CDS_H + 0.2, facecolor="white",
+                                                            edgecolor=DIFF, lw=0.4))] if shifts[1] else []
+        what = " and ".join((["bases of the transcript missing from the assembly"] if shifts[0] else []) +
+                            (["bases of the assembly missing from the transcript"] if shifts[1] else []))
+        models.insert(3, (lambda ax, cx, y: (exon(ax, cx, y, GOLD), [f(ax, cx, y) for f in glyphs]),
+                          f"gold-standard model with the protein of a transcript: {what} (frameshift)", "black"))
+        split += 1
     if NO_SECIS:   # genes without selenocysteine: no SECIS entry; the selenocysteine circle is not used either
         models = [m for m in models if not m[1].startswith("best SECIS hit")]
     if transcripts:
@@ -625,7 +676,7 @@ def key(fig, used_sites, sources, top=None, paralog=None, transcripts=False, sl=
                  f"% similar residues to the {rf.NAMES[SIM_TO]} protein (BLOSUM62 > 0; global alignment, aligned part)", "black"),
                 (None, sources, "black")]
     lines, line, cx = [], [], 0
-    split = 5 if paralog else 4
+    split += 1 if paralog else 0
     ntx = (5 if sl else 4) if transcripts else 0
     groups = (models[:split], models[split:len(models) - ntx], models[len(models) - ntx:], introns, proteins)
     for group in (g_ for g_ in groups if g_):
@@ -963,7 +1014,9 @@ def main():
     plabel = next((next(iter(d["par"].values())).get("label", "paralog") for d in genes if d["par"]), None)
     key_h, key_bottom = key(fig, used, a.sources, top=top - 1 if a.fit else None, paralog=plabel,
                             transcripts=any(d["tx"] for d in genes),
-                            sl=any(t in d["sl"].get(g, {}) for d in genes for g in d["tx"] for t in d["tx"][g]))
+                            sl=any(t in d["sl"].get(g, {}) for d in genes for g in d["tx"] for t in d["tx"][g]),
+                            shifts=(any(gold_shifts(d, g)[0] for d in genes for g in d["x"]),
+                                    any(gold_shifts(d, g)[1] for d in genes for g in d["x"])))
     # thin rulers: between rows of genes and above the key, and between the columns of each row
     from matplotlib.lines import Line2D
     rule = dict(color="0.8", lw=0.4, transform=fig.transFigure)
