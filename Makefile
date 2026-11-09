@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs sl-transcripts machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries sbp2-trees sbp2-lba-domains sbp2-summaries pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs sl-transcripts machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries sbp2-trees sbp2-lba-domains sbp2-summaries sbp2-figures pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -200,6 +200,15 @@ sbp2-summaries:
 	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
 	$(MAKE) machinery-clade-supports
 	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
+
+# SECIS-binding protein figures again (seconds), after a change of the drawing code only (2026-11-10: rooting on the
+# outgroup as a clade): maximum-likelihood and PMSF collapsed trees and the domain trees, SECIS-binding proteins only
+sbp2-figures:
+	python3 figures/phylogeny_collapsed.py --families SBP2
+	python3 figures/phylogeny_collapsed.py --families SBP2 --trees results/trees/lba --tree-suffix .pmsf --suffix _pmsf \
+	  --model-label "LG+C60+F+G (PMSF)"
+	$(MAKE) machinery-domain-figures DOMAIN_TREES="SBP2:upstream_of_L7Ae SBP2:L7Ae"
+	$(MAKE) machinery-domain-figures DOMAIN_TREES="SBP2:upstream_of_L7Ae SBP2:L7Ae" DOMAIN_SUFFIX=.pmsf
 
 pstk-no-outgroup:
 	rm -rf results/trees/lba_no_outgroup
