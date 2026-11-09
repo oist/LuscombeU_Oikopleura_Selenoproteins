@@ -173,9 +173,10 @@ pstk-lba-domains:
 pstk-side-trees: pstk-no-outgroup pstk-enriched
 
 pstk-summaries:
-	$(MAKE) machinery-lba-figures machinery-table machinery-domain-figures
+	$(MAKE) machinery-lba-figures machinery-domain-figures
 	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
 	$(MAKE) machinery-clade-supports pstk-rates
+	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
 
 # SECIS-binding protein analyses again after a change of its sequence set only (2026-11-09: deuterostome set rooted on
 # protostomes, SBP2_TREE_OPTS). The SBP2 outputs of each analysis are removed; the scripts keep the finished analyses
@@ -195,9 +196,10 @@ sbp2-lba-domains:
 	  --conflicts results/tables/stage2_machinery_domain_conflicts_pmsf.tsv
 
 sbp2-summaries:
-	$(MAKE) machinery-lba-figures machinery-table machinery-domain-figures
+	$(MAKE) machinery-lba-figures machinery-domain-figures
 	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
 	$(MAKE) machinery-clade-supports
+	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
 
 pstk-no-outgroup:
 	rm -rf results/trees/lba_no_outgroup

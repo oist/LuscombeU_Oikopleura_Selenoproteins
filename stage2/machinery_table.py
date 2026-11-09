@@ -16,11 +16,22 @@ The orthology column is written from these results: reciprocal best hits for SEP
 the margin to the next human gene (or "no other human gene hit"); the trees and AU tests for PSTK, SEPHS and the
 SECIS-binding protein. The column "Orthology from" names which of the two the row rests on (decision of 2026-11-05:
 best hits are enough when no other human gene comes close, trees are needed when one does). The SECIS-binding protein row is named
-SECISBP2/SECISBP2L (ortholog of the single tunicate protein; its relation to the two vertebrate paralogs is not
-resolved, decision of 2026-11-02 after the trees on the gold-standard proteins).
+SECISBP2/SECISBP2L (ortholog of the single tunicate protein, decision of 2026-11-02 after the trees on the
+gold-standard proteins; since the deuterostome tree of 2026-11-10, the tunicate proteins are the sister group of the
+vertebrate SECISBP2 and SECISBP2L, with the supports of that clade read from --clade-supports, the output of make
+machinery-clade-supports, when present).
 Outputs: --markdown and --table.
 """
 import argparse, collections, csv, glob, os, re, sys
+
+
+def tunicates_vertebrates(path):
+    """Supports (maximum likelihood, PMSF) of the clade of tunicate and vertebrate SECIS-binding proteins, or None."""
+    if not os.path.exists(path): return None
+    v = {r["tree"]: r["support"] for r in csv.DictReader(open(path), delimiter="\t")
+         if r["family"] == "SBP2" and r["entry"] == "tunicate and vertebrate proteins"}
+    ml, pmsf = v.get("maximum likelihood", ""), v.get("PMSF", "")
+    return (ml, pmsf) if ml.isdigit() and pmsf.isdigit() else None
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import machinery_lba as lba   # taxon assignment, tree reading, appendicularian clade
@@ -107,6 +118,7 @@ def main():
     ap.add_argument("--rbh", default="results/tables/stage2_machinery_rbh.tsv")
     ap.add_argument("--lba", default="results/tables/stage2_machinery_lba.tsv")
     ap.add_argument("--trees", default="results/trees")
+    ap.add_argument("--clade-supports", default="results/tables/stage2_machinery_clade_supports.tsv")
     ap.add_argument("--markdown", default="results/tables/stage2_machinery_table.md")
     ap.add_argument("--table", default="results/tables/stage2_machinery_table.tsv")
     a = ap.parse_args()
@@ -141,8 +153,9 @@ def main():
                 f"(AU p = {fmt_p(au_values('pstk')[0])})",
         "SECISBP2": f"ortholog of the tunicate protein "
                     f"({lt['SBP2']['reference']['appendicularians+tunicates']}%, "
-                    f"C60 {lt['SBP2']['PMSF LG+C60+F+G']['appendicularians+tunicates']}%); relation to SECISBP2 and "
-                    f"SECISBP2L unresolved",
+                    f"C60 {lt['SBP2']['PMSF LG+C60+F+G']['appendicularians+tunicates']}%), "
+                    + (f"which is the sister group of vertebrate SECISBP2 and SECISBP2L ({tv[0]}%, C60 {tv[1]}%)"
+                       if (tv := tunicates_vertebrates(a.clade_supports)) else "relation to SECISBP2 and SECISBP2L unresolved"),
     }
     for gene, fam in RBH_FAMILY.items(): orthology[gene] = rbh_statement(rbh, fam)
 

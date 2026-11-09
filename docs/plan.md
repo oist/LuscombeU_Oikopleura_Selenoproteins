@@ -2857,3 +2857,16 @@ no earlier step waits for them.
   (long branch), hence molluscs and annelids only. No SECISBP2 (non-L) of shark, frog or bird in the set (not in the
   BLASTP results); echinoderms: Acanthaster only; no hemichordate. Deigo: make sbp2-trees, sbp2-lba-domains,
   sbp2-summaries; then text (Results, Methods, Table MACHINERY row, Figure TREES) to simplify.
+- SECIS-binding protein tree, deuterostome set (Deigo run f2ea142, jobs 52870487-9): 51 sequences, 881 sites, JTT+R5.
+  Supports (ML / PMSF / site removal 10-40%): appendicularians + other tunicates 64 / 93 / 88-97; tunicates +
+  vertebrates 66 / 97 / 89-98; vertebrate clade 100 / 100 / 99-100; jawed SECISBP2 with lamprey LOC116950782 + hagfish
+  H1 98 / 97; jawed SECISBP2L with Petromyzon XP_032837153.2 72 / 89; L. planeri XP_078478270.1 (LOW QUALITY, 56%
+  identical to zebrafish SECISBP2) with zebrafish SECISBP2 100; hagfish H2 unplaced (45, 48). Domains (43 sequences,
+  563 and 318 columns): L7Ae gives the full-length topology (78, PMSF 96); upstream region puts the tunicates with
+  SECISBP2 and four cyclostome proteins (83, 74); no conflict at 90/95% except within amphioxus; neither part rejects
+  the full-length tree (p 0.10-0.36). Text rewritten (Results paragraph, domains, Methods, Table MACHINERY row via
+  stage2/machinery_table.py --clade-supports, census sentence, Figure TREES caption roots); removed text
+  manuscript/removed_text/SECIS_binding_tree.md. Rooting of the collapsed and full tree figures: on an ingroup leaf
+  first, then on the outgroup if it is a clade (the PMSF figure of f2ea142 roots on Aplysia alone); figures to
+  regenerate on Deigo (local matplotlib renders another font): make machinery-lba-figures, python3
+  figures/phylogeny_collapsed.py --families SBP2, make machinery-domain-figures (both suffixes).

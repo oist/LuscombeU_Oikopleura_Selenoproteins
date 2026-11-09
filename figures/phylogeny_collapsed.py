@@ -79,7 +79,10 @@ def draw(fam, a, taxa):
                  ("Green algae", "Red algae", "Stramenopiles", "Cryptophytes", "Amoebozoans", "Heteroloboseans")]
     def reroot(t):
         try:
-            if out: t.root_with_outgroup(out if t.is_monophyletic(out) else out[0])
+            if out:   # on an ingroup leaf first, so that an outgroup that is a clade of the unrooted tree is one here
+                t.root_with_outgroup(next(x for x in t.get_terminals() if x not in out))
+                m = t.is_monophyletic(out)
+                t.root_with_outgroup(m if m else out[0])
             elif fam == "SBP2" and nonanimal: t.root_with_outgroup(nonanimal if t.is_monophyletic(nonanimal) else nonanimal[0])
             elif prok and t.is_monophyletic(prok): t.root_with_outgroup(prok)
             else: t.root_at_midpoint()
