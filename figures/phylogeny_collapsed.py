@@ -25,7 +25,8 @@ REFERENCE = {"pstk": {"outgroup": r"^KTI12_|^Human_KTI12", "named": r"^Human_PST
 BANDS = {"outgroup": ("#d5d8dc", "related family (outgroup)"), "paralog": ("#e8daef", "paralog of the named gene"),
          "named": ("#d4efdf", "clade of the human gene that names the family")}
 COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Cephalochordates": "#117a65", "Mammals": "#2471a3", "Birds": "#2471a3",
-           "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d"}
+           "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d",
+           "Cartilaginous fishes": "#2471a3", "Jawless fishes": "#2471a3"}
 
 
 def leaf_group(name, groups, taxa):
@@ -69,8 +70,9 @@ def draw(fam, a, taxa):
     members = {}
     refs = REFERENCE.get(fam, {})
     cat = {c.name: next((k for k, pat in refs.items() if re.search(pat, c.name)), None) for c in tree.get_terminals()}
-    # rooting, as in stage2/machinery_phylogeny.py and the analyses: outgroup for PSTK, non-animal sequences for the
-    # SECIS-binding proteins, midpoint for SEPHS
+    # rooting, as in stage2/machinery_phylogeny.py and the analyses: outgroup for PSTK and the SECIS-binding proteins
+    # (KTI12; mollusc and annelid proteins since 2026-11-09), non-animal sequences for the SECIS-binding proteins
+    # without outgroup, prokaryotic proteins or midpoint for SEPHS
     out = [c for c in tree.get_terminals() if grp[c.name] == "outgroup"]
     prok = [c for c in tree.get_terminals() if grp[c.name] in ("Bacteria", "Archaea")]
     nonanimal = [c for c in tree.get_terminals() if grp[c.name] in
@@ -105,7 +107,8 @@ def draw(fam, a, taxa):
                                 if t.name.startswith("Human_")})
                 clade.clades = []
                 clade.name = (f"{g} ({n})" if g != "outgroup" else
-                              f"KTI12, outgroup ({n})" if fam == "pstk" else f"outgroup ({n})") + \
+                              f"KTI12, outgroup ({n})" if fam == "pstk" else
+                              f"molluscs and annelids, outgroup ({n})" if fam == "SBP2" else f"outgroup ({n})") + \
                              (f", with human {', '.join(human)}" if human else "")
                 cat[clade.name] = "outgroup" if "outgroup" in cats else next(iter(cats), None)
                 members[clade.name] = member_names
@@ -135,7 +138,8 @@ def draw(fam, a, taxa):
     tips = tree.get_terminals()
     # extend the paralog and named-gene bands to the largest clade around the human tip that holds only vertebrate
     # tips (or unclassified accessions), so that the band covers the vertebrate clade of that gene
-    vert = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "unclassified"}
+    vert = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe-finned fishes", "Cartilaginous fishes",
+            "Jawless fishes", "unclassified"}
     for tip in list(tips):
         k = cat.get(tip.name)
         if k not in ("paralog", "named") or not tip.name.startswith(grp.get(tip.name, "") or "?"):

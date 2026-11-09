@@ -21,10 +21,15 @@ predictions of the other tunicates, cephalochordates and vertebrates, the stage 
 (appendicularian profiles), and the curated transcript proteins. For PSTK and the SECIS-binding proteins, which have no
 selenocysteine, the RefSeq proteins of a genome (best human hit PSTK or KTI12, SECISBP2 or SECISBP2L; longest
 isoform per gene) replace its predictions, which cover only the region of the profile. Proteins of species without a
-genome in the samplesheet are added from --extra-proteins (headers family|genome code|name; 2026-11-07: the PSTK of
-B. belcheri and the full-length PSTK of B. floridae, whose RefSeq protein on the B. floridae genome is a 106-residue
-fragment, taken from the B. floridae haplotype of the RefSeq annotation of a B. floridae x B. japonicum assembly). Predictions
-shorter than --min-fraction of the median profile length are left out (fragments make trees unstable).
+genome in the samplesheet are added from --extra-proteins (headers family|genome code or Genus_species|name;
+2026-11-07: the PSTK of B. belcheri and the full-length PSTK of B. floridae, whose RefSeq protein on the B. floridae
+genome is a 106-residue fragment, taken from the B. floridae haplotype of the RefSeq annotation of a B. floridae x B.
+japonicum assembly; 2026-11-09: SECIS-binding proteins of five more ascidians, B. belcheri, a shark, a frog, a bird,
+lampreys and hagfishes, from BLASTP searches by Charles). Predictions shorter than --min-fraction of the median profile
+length are left out (fragments make trees unstable). --keep-groups restricts the profile sequences to some taxonomic
+groups (config/taxon_groups.tsv; the others, unclassified accessions included, are left out and recorded), and
+--outgroup-groups marks the profile sequences of some groups as outgroup, on which the trees are rooted (2026-11-09:
+the SECIS-binding proteins of deuterostomes, rooted on those of molluscs and annelids).
 Curation, recorded in <out>/<family>.removed.tsv: the stage 1 predictions of the human genome are replaced by the
 human RefSeq proteins of the family; identical sequences are kept once (genome-derived names preferred); after a first
 alignment, sequences covering less than --min-core of the core columns (columns where at least half of the sequences
@@ -42,7 +47,8 @@ from machinery_rbh import SELENOPROTEIN_GENES   # human genes of each selenoprot
 from taxonomy import load_taxa, classify         # taxonomic group of a sequence name
 
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
-TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho"}
+TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho",
+             "Ceum", "Aasp", "Atur", "Amen", "Clep"}   # the last five: proteins of --extra-proteins only (no genome)
 VERTEBRATES = {"Hsap", "Mmus", "Drer"}
 CEPHALOCHORDATES = {"Bflo", "Blan", "Bbel"}
 # families without selenocysteine: their RefSeq proteins, when a genome has them, replace the Selenoprofiles
@@ -90,8 +96,13 @@ def main():
     ap.add_argument("--stage1", default="work/stage1/pipeline/selenoprofiles")
     ap.add_argument("--stage2", default="work/stage2/machinery_test")
     ap.add_argument("--curated", default="curation/machinery_proteins.faa")
-    ap.add_argument("--extra-proteins", default="curation/cephalochordate_proteins.faa",
-                    help="proteins of other species (headers family|genome code|name), grouped by genome code")
+    ap.add_argument("--extra-proteins", default="curation/extra_tree_proteins.faa",
+                    help="proteins of other species (headers family|genome code or Genus_species|name), grouped by "
+                    "genome code or genus")
+    ap.add_argument("--keep-groups", nargs="*", default=[],
+                    help="taxonomic groups whose profile sequences are kept (default: all)")
+    ap.add_argument("--outgroup-groups", nargs="*", default=[],
+                    help="taxonomic groups whose profile sequences are the outgroup (rooting)")
     ap.add_argument("--gold", nargs="*", default=[], help="gold-standard directories (<genome>.gff3, "
                     "<genome>.proteins.faa; for example curation/gold_standard and curation/gold_standard_machinery): "
                     "in --gold-genomes, the predictions that overlap a gold-standard gene of the family are replaced "
@@ -149,15 +160,17 @@ def main():
         prof = list(read_fasta(f"{a.profiles}/{fam}.fa"))
         med = statistics.median(len(clean(s.replace("-", ""))) for _, s in prof)
         taxa = load_taxa(a.taxa)
-        per_group = {}
+        per_group, profile_out = {}, []
         for n, s in sorted(prof, key=lambda x: -len(clean(x[1].replace("-", "")))):   # longest first
             sp = re.search(r"\[([^\]]+)\]", n)
             name = f"{(sp.group(1) if sp else n.split()[0])}|{n.split()[0]}"
             grp = classify(name, taxa)
+            if a.keep_groups and grp not in a.keep_groups:
+                profile_out.append((label(name), "profile", f"taxonomic group {grp} outside --keep-groups")); continue
             if a.max_per_group and grp != "unclassified":
                 if per_group.get(grp, 0) >= a.max_per_group: continue
                 per_group[grp] = per_group.get(grp, 0) + 1
-            add(name, s.replace("-", ""), "profile")
+            add(name, s.replace("-", ""), "outgroup" if grp in a.outgroup_groups else "profile")
         if os.path.exists(a.references):
             per_type = {}
             for n, s in sorted(read_fasta(a.references), key=lambda x: -len(x[1])):
@@ -168,7 +181,7 @@ def main():
                     if per_type.get(key, 0) >= a.max_per_group: continue
                     per_type[key] = per_type.get(key, 0) + 1
                 add(f[1], s, "reference")
-        skipped = []
+        skipped = list(profile_out)
         kind = lambda g: "tunicate" if g in TUNICATES else "cephalochordate" if g in CEPHALOCHORDATES else "vertebrate"
         replaced = set()
         if fam in REFSEQ_FAMILIES:

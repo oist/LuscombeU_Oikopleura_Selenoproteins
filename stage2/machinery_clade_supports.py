@@ -15,8 +15,9 @@ Three kinds of entries:
   mrca      smallest clade of the rooted tree that holds these leaves: its size, its support and its composition;
   position  for leaves that form a clade in the rooted tree: support of its parent node and composition of its
             sister group (the parent minus the clade).
-Trees are rooted as in figures/phylogeny_collapsed.py (KTI12 for PSTK, prokaryotic proteins for SEPHS, non-animal
-proteins for the SECIS-binding proteins); supports are those of the bipartitions, so rerooting does not move them.
+Trees are rooted as in figures/phylogeny_collapsed.py (on the outgroup: KTI12 for PSTK, mollusc and annelid proteins
+for the SECIS-binding proteins since 2026-11-09; prokaryotic proteins for SEPHS; non-animal proteins for a tree without
+outgroup); supports are those of the bipartitions, so rerooting does not move them.
 Compositions count leaves by taxonomic group (as in stage2/machinery_lba.py).
 Output (--out, TSV): family, tree, entry, kind, leaves, support, composition.
 """
@@ -28,6 +29,10 @@ from taxonomy import load_taxa, ANIMALS      # noqa: E402
 
 APP_SEC = r"^(OdB3|OSKA|OKI)_gold_SEPHS2$|^Oikopleura_dioica\.SPS2|^(Oalb|Ovan|Olon)_SEPHS2\.\d+\.selenocysteine"
 FUNGI = r"Smittium|Zancudomyces"
+VERT = ("Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe-finned fishes", "Cartilaginous fishes",
+        "Jawless fishes")
+GNATHO_SBP2 = r"^(Human|Mmus_RefSeq|Drer_RefSeq)_SECISBP2_"    # the vertebrate RefSeq proteins of each paralog
+GNATHO_SBP2L = r"^(Human|Mmus_RefSeq|Drer_RefSeq)_SECISBP2L_"
 
 
 def T(*groups):
@@ -79,10 +84,13 @@ ENTRIES = {
         ("oikopleurid proteins and other tunicates", "clade", OR(R("_gold_SBP2"), T("Other tunicates"))),
         ("appendicularians (with F. borealis) and other tunicates", "clade", T("Appendicularians", "Other tunicates"),
          [R("^Fbor_")]),
-        ("tunicates and human SECISBP2L", "mrca", OR(T("Other tunicates"), R("^Human_SECISBP2L"))),
-        ("tunicates and amphioxus", "mrca", OR(T("Other tunicates"), R("^(Bflo|Blan|Bbel)_"))),
+        ("vertebrate proteins (SECISBP2, SECISBP2L and cyclostome proteins)", "clade", T(*VERT)),
+        ("tunicate and vertebrate proteins", "clade", T("Appendicularians", "Other tunicates", *VERT)),
+        ("deuterostome proteins (all but the outgroup)", "clade", NOT(T("outgroup")), [T("outgroup")]),
+        ("vertebrate SECISBP2 (mouse, zebrafish, human)", "mrca", R(GNATHO_SBP2)),
+        ("vertebrate SECISBP2L (mouse, zebrafish, human)", "mrca", R(GNATHO_SBP2L)),
         ("human SECISBP2 and SECISBP2L", "mrca", R("^Human_SECISBP2")),
-        ("human SECISBP2L, amphioxus and echinoderm", "mrca", OR(R("^Human_SECISBP2L"), R("^(Bflo|Blan|Bbel)_"), T("Echinoderms"))),
+        ("tunicate proteins", "position", T("Appendicularians", "Other tunicates")),
         ("F. borealis", "position", R("^Fbor_")),
     ],
 }
@@ -124,7 +132,7 @@ def composition(leaves, tax):
 def rooted(p, fam, tax):
     t = read_tree(p)
     leaves = t.get_terminals()
-    if fam == "pstk": out = [x for x in leaves if tax[x.name] == "outgroup"]
+    if fam == "pstk" or any(tax[x.name] == "outgroup" for x in leaves): out = [x for x in leaves if tax[x.name] == "outgroup"]
     elif fam == "SEPHS2": out = [x for x in leaves if tax[x.name] in ("Bacteria", "Archaea")]
     else: out = [x for x in leaves if tax[x.name] not in ANIMALS | {"Appendicularians", "Other tunicates", "unclassified",
                                                                        "Choanoflagellates", "Other holozoans"}]

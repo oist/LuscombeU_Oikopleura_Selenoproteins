@@ -5,7 +5,7 @@ GENOMES_BASELINE := OKI OSKA OdB3
 GENOMES_COMPARISON := Olon Oalb Ovan Bsty Mery Fbor
 GENOMES_NONTARGET := Cint Csav Scla Tdem
 
-.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs sl-transcripts machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
+.PHONY: all fetch stage1 curation secis secis-stage1 secis-model secis-stage2 stage1-figures machinery machinery-profiles machinery-test machinery-fragments machinery-census machinery-absence machinery-rbh gold-standard-machinery machinery-phylogeny machinery-lba machinery-lba-figures machinery-table machinery-clade-supports machinery-reannotation machinery-reannotation-inputs sl-transcripts machinery-regions region-proteins pstk-regions pstk-one-leaf pstk-no-outgroup pstk-enriched pstk-trees pstk-lba-domains pstk-side-trees pstk-summaries sbp2-trees sbp2-lba-domains sbp2-summaries pstk-introns pstk-rates intron-map junction-rescan cds-divergence intron-presence intron-pairing pstk-structures pstk-intron-scheme pstk-intron-columns intron-content eefsec-insertion machinery-scheme reannotation-pages gold-standard secis-hits secis-v2 secis-scan uga-screen secis-description secis-orphans candidate-genes txnl1-homologs txnl1-paralogs txnl1-introns sec-positions tandem-stops selenoprotein-rbh selenoprotein-phylogeny selenoprotein-pmsf selenoprotein-au selenoprotein-orthology selenoprotein-table selenoprotein-absence stage2-inputs stage2-truth stage2-benchmark stage2-diagnose selenok-diagnose selenoi-regions selenok-regions selenok-models stage2-release-profiles selenoi-secis operons operons-figure human-uniprot operon-proteins operon-search operon-partners miniprot-junctions miniprot-junctions-pipeline miniprot-junctions-v011-table ms-peptides selenoi-junction stage2-bundle stage2-collect census-contigs census machinery-domains machinery-domains-pmsf machinery-domain-figures check clean
 all: stage1 curation secis
 
 fetch:
@@ -98,10 +98,18 @@ machinery-rbh:
 # The scripts use SLURM_CPUS_PER_TASK threads.
 # Starts afresh: the trees in results/trees (committed provisional versions) are removed first; within one run the
 # script resumes from the IQ-TREE checkpoints.
+# SECIS-binding proteins (2026-11-09): deuterostome proteins only, rooted on mollusc and annelid proteins, with the
+# proteins of curation/extra_tree_proteins.faa (more ascidians, a third amphioxus, shark, frog, bird, lampreys and
+# hagfishes: BLASTP searches by Charles); the profile sequences of other groups (non-animals, ecdysozoans, flatworms,
+# unclassified accessions) are left out (recorded in results/trees/SBP2.removed.tsv)
+SBP2_TREE_OPTS = --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5 \
+  --keep-groups Mammals Birds Reptiles Amphibians "Ray-finned fishes" "Lobe-finned fishes" "Cartilaginous fishes" \
+  "Jawless fishes" Cephalochordates "Other tunicates" Appendicularians Echinoderms Hemichordates Molluscs Annelids \
+  Brachiopods --outgroup-groups Molluscs Annelids Brachiopods
 machinery-phylogeny:
 	rm -rf results/trees/C20 && rm -f results/trees/*.aln results/trees/*.trimmed results/trees/*.treefile results/trees/*.iqtree results/trees/*.ckp.gz results/trees/*.log
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 $(MACHINERY_TREE_INPUTS)
-	python3 stage2/machinery_phylogeny.py --families SBP2 --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5 $(MACHINERY_TREE_INPUTS)
+	python3 stage2/machinery_phylogeny.py --families SBP2 $(SBP2_TREE_OPTS) $(MACHINERY_TREE_INPUTS)
 	mkdir -p results/trees/C20 && cp results/trees/pstk.trimmed results/trees/SEPHS2.trimmed results/trees/C20/ 2>/dev/null || true
 	python3 stage2/machinery_phylogeny.py --families pstk SEPHS2 --max-per-group 3 --model LG+C20+F+G --out results/trees/C20 --figures results/trees/C20 $(MACHINERY_TREE_INPUTS)
 	python3 figures/phylogeny_collapsed.py
@@ -141,7 +149,7 @@ pstk-enriched:
 	python3 stage2/pstk_enrichment.py --out results/trees/pstk_enriched
 
 # PSTK analyses again after a change of the PSTK sequence set only (2026-11-07: PSTK of B. floridae and B. belcheri
-# added from curation/cephalochordate_proteins.faa, see stage2/machinery_phylogeny.py --extra-proteins). The PSTK
+# added from curation/extra_tree_proteins.faa, see stage2/machinery_phylogeny.py --extra-proteins). The PSTK
 # outputs of each analysis are removed; the scripts keep the finished analyses of SEPHS2 and SBP2, so the tables stay
 # complete. On Deigo: pstk-trees (hours), then pstk-one-leaf, pstk-lba-domains (a day or more) and pstk-side-trees
 # in parallel, then pstk-summaries (minutes).
@@ -168,6 +176,28 @@ pstk-summaries:
 	$(MAKE) machinery-lba-figures machinery-table machinery-domain-figures
 	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
 	$(MAKE) machinery-clade-supports pstk-rates
+
+# SECIS-binding protein analyses again after a change of its sequence set only (2026-11-09: deuterostome set rooted on
+# protostomes, SBP2_TREE_OPTS). The SBP2 outputs of each analysis are removed; the scripts keep the finished analyses
+# of PSTK and SEPHS2. On Deigo: sbp2-trees (an hour or two), then sbp2-lba-domains (a day or more), then
+# sbp2-summaries (minutes).
+sbp2-trees:
+	rm -f results/trees/SBP2.aln results/trees/SBP2.trimmed results/trees/SBP2.treefile results/trees/SBP2.iqtree \
+	  results/trees/SBP2.ckp.gz results/trees/SBP2.log
+	python3 stage2/machinery_phylogeny.py --families SBP2 $(SBP2_TREE_OPTS) $(MACHINERY_TREE_INPUTS)
+	python3 figures/phylogeny_collapsed.py --families SBP2
+
+sbp2-lba-domains:
+	rm -f results/trees/lba/SBP2.* results/trees/domains/SBP2.*
+	python3 stage2/machinery_lba.py
+	python3 stage2/machinery_domains.py
+	python3 stage2/machinery_domains.py --pmsf --table results/tables/stage2_machinery_domains_pmsf.tsv \
+	  --conflicts results/tables/stage2_machinery_domain_conflicts_pmsf.tsv
+
+sbp2-summaries:
+	$(MAKE) machinery-lba-figures machinery-table machinery-domain-figures
+	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
+	$(MAKE) machinery-clade-supports
 
 pstk-no-outgroup:
 	rm -rf results/trees/lba_no_outgroup

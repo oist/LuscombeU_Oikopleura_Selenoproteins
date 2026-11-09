@@ -2839,3 +2839,21 @@ no earlier step waits for them.
   stage 2 rebuild, replace the machinery predictions of the gold-standard assemblies by curation/gold_standard_machinery
   proteins (profile names: pstk, SecS, eEFsec, SBP2; SEPHS_b has no selenocysteine and the SEPHS2 profile takes the
   selenocysteine form: decide), then rerun the evaluation and final stage 2 runs.
+- SECIS-binding protein tree redesigned (2026-11-09; Charles: "Let's fix the tree to simplify the figure and text",
+  with BLASTP results of SECISBP2L proteins of tunicates and vertebrates, amphioxus, and cyclostomes). Deuterostome
+  proteins only, rooted on mollusc and annelid proteins (machinery_phylogeny.py --keep-groups, --outgroup-groups;
+  Makefile SBP2_TREE_OPTS), with curation/extra_tree_proteins.faa (renamed from cephalochordate_proteins.faa): five
+  more ascidians (Corella eumyota, Ascidiella aspersa, Aplidium turbinatum, Ascidia mentula, Clavelina lepadiformis),
+  B. belcheri, Mustelus asterias, Xenopus laevis and Gavia stellata SECISBP2L, and seven cyclostome proteins (one
+  per gene and species, clustered by all-against-all BLASTP: lamprey gene A = Petromyzon LOC116950782 with its
+  orthologs in Lampetra and Lethenteron; lamprey B = L. planeri XP_078478270.1; lamprey C = Petromyzon
+  XP_032837153.2; hagfish H1 = Myxine LOC137431572 / Eptatretus LOC147030032; hagfish H2 = Myxine LOC137424249 /
+  Eptatretus LOC147024609; best human hits ambiguous, 0 to 60 bits apart). Unclassified profile accessions (KFP45696,
+  KGL74119: probably bird proteins; EEN47354: B. floridae fragment) are left out with the non-animal, ecdysozoan and
+  flatworm sequences. Local prototype (MAFFT L-INS-i, ClipKIT gappy 0.5, 53 sequences, 872 columns, LG+F+R5, 1000
+  ultrafast bootstraps; scratchpad, not committed): tunicates 96, appendicularians 80 (84 with F. borealis),
+  vertebrates with cyclostomes 99, tunicates + vertebrates 97, SECISBP2 with lamprey A, B and hagfish H1 98, SECISBP2L
+  with hagfish H2 and lamprey C 49; with the tick protein (Ixodes) in the outgroup, it entered the deuterostome clade
+  (long branch), hence molluscs and annelids only. No SECISBP2 (non-L) of shark, frog or bird in the set (not in the
+  BLASTP results); echinoderms: Acanthaster only; no hemichordate. Deigo: make sbp2-trees, sbp2-lba-domains,
+  sbp2-summaries; then text (Results, Methods, Table MACHINERY row, Figure TREES) to simplify.
