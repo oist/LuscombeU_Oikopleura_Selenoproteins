@@ -1172,7 +1172,9 @@ or SEPHS2 (nor PSTK, above).
 
 For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from: the
 related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS, and human
-SECISBP2 and SECISBP2L for the SECIS-binding proteins. The appendicularian sequences are the gold-standard proteins of
+SECISBP2 and SECISBP2L for the SECIS-binding proteins. Like all trees of this study, they take the published phylogeny
+of the reference sequences as given and ask where the appendicularian sequences fall in it (Methods). The
+appendicularian sequences are the gold-standard proteins of
 the three *O. dioica* assemblies and of *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, and the predictions of the
 final run for *F. borealis* and for the loci without a gold-standard model (among them the selenocysteine SEPHS2 of the
 three other *Oikopleura* species); *B. stygius* and *M. erythrocephalus* were left out. To place the appendicularians
@@ -1202,10 +1204,9 @@ as tunicates are of vertebrates, and vertebrate SECISBP2 and SECISBP2L form one 
 full-length analysis) that also holds cyclostome proteins: a lamprey protein and its hagfish orthologs are the sister
 group of the SECISBP2 of jawed vertebrates (98%, 97%), and a second lamprey protein that of their SECISBP2L (72%, 89%);
 a partial *Lampetra planeri* protein groups with zebrafish SECISBP2, and two other hagfish proteins have no stable
-position. The two vertebrate paralogs thus come from a duplication after vertebrates diverged from tunicates and before
-cyclostomes and jawed vertebrates diverged, in line with the early vertebrate duplication proposed by Donovan and
-Copeland [-@Donovan2009], and the appendicularian protein is the ortholog of the single protein of the other tunicates
-and a co-ortholog of both vertebrate paralogs. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish
+position. The tree thus recovers the duplication of SECISBP2 and SECISBP2L in early vertebrates [@Donovan2009], and
+places the appendicularian protein as the ortholog of the single protein of the other tunicates and a co-ortholog of
+both vertebrate paralogs. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish
 embryos without Sbp2 still make a subset of selenoproteins, and only the loss of both genes abolishes their synthesis
 [@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for oligodendrocyte
 differentiation [@Dai2022].
@@ -1756,7 +1757,12 @@ between its score and that of the best hit to another gene gave a margin, and ma
 ambiguous. The best human protein was then searched in the appendicularian genome with tblastn (E-value at most
 10^-3^); the hit was reciprocal when its best locus overlapped the prediction.
 
-*Trees.* Each tree combined the sequences of the Selenoprofiles profile (at most three per taxonomic group, the
+*Trees.* All trees of this study take the published phylogeny of the other organisms and gene families as given and
+ask where the appendicularian sequences fall in it. Reference sequences were chosen to represent the known lineages
+and paralogs, and where a tree did not recover a published relationship among them, sequences were added or left out
+until it did (for example, the SECIS-binding protein tree below). Relationships among reference sequences are thus
+not results; the positions of the appendicularian sequences are.
+Each tree combined the sequences of the Selenoprofiles profile (at most three per taxonomic group, the
 longest kept); the stage 1 predictions in the other tunicates, in two cephalochordates and in the vertebrate controls;
 the predictions of the appendicularian profiles in the nine appendicularian genomes; and the proteins reconstructed
 from *O. dioica* transcripts. The other tunicates were the six analysed in stage 1 and four genomes added for this

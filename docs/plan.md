@@ -2870,3 +2870,9 @@ no earlier step waits for them.
   first, then on the outgroup if it is a clade (the PMSF figure of f2ea142 roots on Aplysia alone); figures to
   regenerate on Deigo (local matplotlib renders another font): make machinery-lba-figures, python3
   figures/phylogeny_collapsed.py --families SBP2, make machinery-domain-figures (both suffixes).
+- Tree sampling principle stated (2026-11-10, Charles: "we are not challenging the existing phylogeny and when needed
+  we pick sequences until we recover the published relationship, so that the main question and result is where the
+  appendicularian sequences sit there"): Methods, Orthology of the machinery genes, start of *Trees.* (applies to the
+  selenoprotein trees through "The methods of the machinery were applied"); one sentence in the Results before the
+  machinery trees; the SECIS-binding protein paragraph now says the tree "recovers" the early vertebrate duplication
+  instead of presenting its timing as a result.
