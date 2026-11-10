@@ -2876,3 +2876,13 @@ no earlier step waits for them.
   selenoprotein trees through "The methods of the machinery were applied"); one sentence in the Results before the
   machinery trees; the SECIS-binding protein paragraph now says the tree "recovers" the early vertebrate duplication
   instead of presenting its timing as a result.
+- SECIS-binding protein naming (2026-11-10, Charles: the SECISBP2/SECISBP2L split is vertebrate-specific; OK for four
+  points): (1) the census names the appendicularian gene SECISBP2/2L after Stolfi et al. 2015 (a tunicate gene
+  orthologous to several human paralogs is named after all of them; "-like" discouraged); (2) Table MACHINERY row and
+  Figure SBP2 caption use SECISBP2/2L (stage2/machinery_table.py ROW_NAMES); (3) tree figures drop the best human hit
+  from the labels of invertebrate SECIS-binding proteins (stage2/taxonomy.py display_label, used by
+  figures/phylogeny_collapsed.py and the full-tree drawing of stage2/machinery_phylogeny.py, which gained --draw-only;
+  sequence names in the result files unchanged); Figure TREES caption says so; (4) SBP2 kept in file names and model
+  identifiers. figures/machinery_scheme.py keeps "SECISBP2/SECISBP2L" (Introduction, human genes). Figures to redraw on
+  Deigo (make sbp2-figures; local matplotlib 3.11 renders another font than the container's 3.10.6, and installing
+  3.10.6 here was not allowed).

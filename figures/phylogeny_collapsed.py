@@ -14,7 +14,7 @@ proteins, to show which sequences are partial. The trees and alignments themselv
 import argparse, copy, os, re, sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "stage2"))
-from taxonomy import load_taxa, classify   # noqa: E402
+from taxonomy import load_taxa, classify, display_label   # noqa: E402
 
 KEEP = {"Appendicularians", "Other tunicates", "Cephalochordates"}
 # Highlighted references: the related family used as outgroup, the paralogs that the appendicularian proteins could be
@@ -124,6 +124,7 @@ def draw(fam, a, taxa):
 
     def short(name):
         g = grp.get(name, "")
+        name = display_label(name, fam, g)
         if g in KEEP: return re.sub(r"\.(homologue|selenocysteine|glycine|alanine|serine|unaligned|pseudo)$", r" (\1)",
                                     name.replace("|", " ").replace("_curated", " curated"))
         return name if "(" in name else name.split("|")[0][:40]

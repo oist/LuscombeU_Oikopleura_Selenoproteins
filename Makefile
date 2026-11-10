@@ -202,8 +202,10 @@ sbp2-summaries:
 	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
 
 # SECIS-binding protein figures again (seconds), after a change of the drawing code only (2026-11-10: rooting on the
-# outgroup as a clade): maximum-likelihood and PMSF collapsed trees and the domain trees, SECIS-binding proteins only
+# outgroup as a clade; best human hit dropped from the labels of invertebrate proteins): full and collapsed
+# maximum-likelihood tree, PMSF collapsed tree and the domain trees, SECIS-binding proteins only
 sbp2-figures:
+	python3 stage2/machinery_phylogeny.py --families SBP2 --draw-only
 	python3 figures/phylogeny_collapsed.py --families SBP2
 	python3 figures/phylogeny_collapsed.py --families SBP2 --trees results/trees/lba --tree-suffix .pmsf --suffix _pmsf \
 	  --model-label "LG+C60+F+G (PMSF)"

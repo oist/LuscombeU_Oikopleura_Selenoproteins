@@ -24,6 +24,19 @@ ANIMALS = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "L
            "Placozoans"}
 
 
+VERTEBRATES = {"Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe-finned fishes",
+               "Cartilaginous fishes", "Jawless fishes"}
+
+
+def display_label(name, fam, group):
+    """Tip label for the tree figures. In the SECIS-binding protein trees, the best human hit (SECISBP2 or SECISBP2L)
+    is dropped from the labels of invertebrate proteins: the two genes arose by a duplication in vertebrates, so that
+    an invertebrate protein is a co-ortholog of both (decision of 2026-11-10)."""
+    if fam == "SBP2" and group not in VERTEBRATES and group != "unclassified":
+        return re.sub(r"_SECISBP2L?_", "_", name)
+    return name
+
+
 def load_taxa(path):
     """genus (or genome code) -> taxonomic group, from config/taxon_groups.tsv"""
     taxa = {}

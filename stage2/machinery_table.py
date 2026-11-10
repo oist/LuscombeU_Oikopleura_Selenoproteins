@@ -16,7 +16,8 @@ The orthology column is written from these results: reciprocal best hits for SEP
 the margin to the next human gene (or "no other human gene hit"); the trees and AU tests for PSTK, SEPHS and the
 SECIS-binding protein. The column "Orthology from" names which of the two the row rests on (decision of 2026-11-05:
 best hits are enough when no other human gene comes close, trees are needed when one does). The SECIS-binding protein row is named
-SECISBP2/SECISBP2L (ortholog of the single tunicate protein, decision of 2026-11-02 after the trees on the
+SECISBP2/2L (2026-11-10, after the tunicate nomenclature guidelines, Stolfi et al. 2015: a tunicate gene orthologous to
+several human paralogs is named after all of them; earlier SECISBP2/SECISBP2L) (ortholog of the single tunicate protein, decision of 2026-11-02 after the trees on the
 gold-standard proteins; since the deuterostome tree of 2026-11-10, the tunicate proteins are the sister group of the
 vertebrate SECISBP2 and SECISBP2L, with the supports of that clade read from --clade-supports, the output of make
 machinery-clade-supports, when present).
@@ -41,7 +42,7 @@ NAMES = {"OKI": "*O. dioica* OKI2018", "OSKA": "*O. dioica* OSKA2016", "OdB3": "
          "Olon": "*O. longicauda*", "Oalb": "*O. albicans*", "Ovan": "*O. vanhoeffeni*", "Bsty": "*B. stygius*",
          "Mery": "*M. erythrocephalus*", "Fbor": "*F. borealis*"}
 RBH_FAMILY = {"SEPSECS": "SecS", "EEFSEC": "eEFsec", "TRNAU1AP": "secp43"}
-ROW_NAMES = {"SECISBP2": "SECISBP2/SECISBP2L", "TRNAU1AP": "TRNAU1AP (associated factor)"}
+ROW_NAMES = {"SECISBP2": "SECISBP2/2L", "TRNAU1AP": "TRNAU1AP (associated factor)"}
 
 
 def rows(path):

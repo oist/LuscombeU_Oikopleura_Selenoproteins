@@ -44,7 +44,7 @@ import argparse, glob, gzip, os, re, statistics, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from machinery_rbh import SELENOPROTEIN_GENES   # human genes of each selenoprotein family
-from taxonomy import load_taxa, classify         # taxonomic group of a sequence name
+from taxonomy import load_taxa, classify, display_label   # taxonomic group of a sequence name; tip labels
 
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
 TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho",
@@ -120,6 +120,8 @@ def main():
                     help="keep at most this many profile sequences per taxonomic group (config/taxon_groups.tsv); 0: all")
     ap.add_argument("--taxa", default="config/taxon_groups.tsv")
     ap.add_argument("--collect-only", action="store_true", help="write the sequence sets and stop (no alignment, no tree)")
+    ap.add_argument("--draw-only", action="store_true",
+                    help="redraw the figures of the existing trees (<out>/<family>.treefile and .groups.tsv) and stop")
     ap.add_argument("--outgroups", default="curation/machinery_outgroups.faa")
     ap.add_argument("--human", default="data/genomes/Hsap")
     ap.add_argument("--min-fraction", type=float, default=0.5)
@@ -138,6 +140,11 @@ def main():
     a = ap.parse_args()
     os.makedirs(a.figures, exist_ok=True)
     os.makedirs(a.out, exist_ok=True)
+    if a.draw_only:
+        for fam in a.families:
+            groups = dict(l.rstrip("\n").split("\t")[:2] for l in open(f"{a.out}/{fam}.groups.tsv"))
+            draw(f"{a.out}/{fam}.treefile", groups, fam, a.figures, a.formats)
+        return
     gene_of = {}
     with gzip.open(f"{a.human}/annotation.gff3.gz", "rt") as fh:
         for l in fh:
@@ -312,7 +319,8 @@ def draw(treefile, groups, fam, figdir, formats=("png", "pdf")):
     tree.ladderize()
     n = len(tree.get_terminals())
     fig, ax = plt.subplots(figsize=(10, max(6, 0.16 * n)))
-    Phylo.draw(tree, axes=ax, do_show=False, label_func=lambda c: c.name[:45] if c.is_terminal() else None,
+    Phylo.draw(tree, axes=ax, do_show=False,
+               label_func=lambda c: display_label(c.name, fam, classify(c.name, taxa))[:45] if c.is_terminal() else None,
                label_colors=lambda lab: COLOURS.get(next((groups[k] for k in groups if k[:45] == lab), "profile"), "#2c3e50"),
                branch_labels=lambda c: f"{c.confidence:.0f}" if c.confidence is not None and c.confidence >= 70 and
                not c.is_terminal() else "")
