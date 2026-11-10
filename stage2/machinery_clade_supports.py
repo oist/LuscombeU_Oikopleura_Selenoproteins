@@ -34,6 +34,8 @@ VERT = ("Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe
 GNATHO_SBP2 = r"_SECISBP2_"    # vertebrate RefSeq proteins named after each paralog (human, mouse, zebrafish and,
 GNATHO_SBP2L = r"_SECISBP2L_"  # since 2026-11-10, chicken, frog and coelacanth; with T(*VERT), as tunicate names
                                # carry the best human hit)
+CYCLO_A = r"LOC116950782|LOC137431572|LOC147030032"   # lamprey gene and its hagfish orthologs (extra_tree_proteins.faa)
+CYCLO_H2 = r"LOC137424249|LOC147024609"               # the second hagfish gene
 
 
 def T(*groups):
@@ -91,6 +93,12 @@ ENTRIES = {
         ("vertebrate SECISBP2 (proteins named SECISBP2)", "mrca", AND(T(*VERT), R(GNATHO_SBP2))),
         ("vertebrate SECISBP2L (proteins named SECISBP2L)", "mrca", AND(T(*VERT), R(GNATHO_SBP2L))),
         ("hemichordates and echinoderms", "clade", T("Hemichordates", "Echinoderms")),
+        ("chordate proteins (amphioxus, tunicates, vertebrates)", "clade",
+         T("Cephalochordates", "Appendicularians", "Other tunicates", *VERT)),
+        ("vertebrate SECISBP2 with lamprey LOC116950782 and hagfish LOC137431572, LOC147030032", "mrca",
+         OR(AND(T(*VERT), R(GNATHO_SBP2)), R(CYCLO_A))),
+        ("vertebrate SECISBP2L with hagfish LOC137424249, LOC147024609", "mrca",
+         OR(AND(T(*VERT), R(GNATHO_SBP2L)), R(CYCLO_H2))),
         ("human SECISBP2 and SECISBP2L", "mrca", R("^Human_SECISBP2")),
         ("tunicate proteins", "position", T("Appendicularians", "Other tunicates")),
         ("F. borealis", "position", R("^Fbor_")),

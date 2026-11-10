@@ -2913,3 +2913,18 @@ no earlier step waits for them.
   echinoderms 100; amphioxus groups with hemichordates and echinoderms (72) instead of with tunicates and vertebrates
   (the published chordate clade). Deigo: make sbp2-trees, sbp2-lba-domains, sbp2-summaries; then the text (Results,
   Methods sampling and counts, Table MACHINERY numbers, F. borealis and partial lamprey sentences).
+- SECIS-binding protein trees without truncated proteins (Deigo run a98ee1f, jobs 52954560-2): 51 sequences, 989
+  sites, JTT+F+R5. Supports (ML / PMSF / site removal 10-40%): oikopleurids 100 / 100; with other tunicates 97 / 99 /
+  96-98; tunicates + vertebrates 91 / 96 / 92-98; chordates (amphioxus, tunicates, vertebrates) 76 / 79 / 80-88 (the
+  local JTT+R5 preview had amphioxus with the ambulacrarians at 72: not reproduced); hemichordates + echinoderms 100
+  everywhere; vertebrates 99-100; jawed SECISBP2 with lamprey LOC116950782 + hagfish H1 98 / 99; jawed SECISBP2L with
+  hagfish H2 91 / 91. Domains (49 sequences: O. longicauda SBP2 and O. vanhoeffeni left out; 623 and 366 columns):
+  L7Ae gives the full-length topology (90 / 94) and does not reject the full-length tree (p 0.17-0.35); in the
+  upstream region the vertebrates are not a clade and the tunicates branch first among deuterostomes (PMSF: with
+  hagfish H2, 44), and that region rejects the full-length tree (p 0.046; 0.017 and 0.024 under PMSF); grouping with
+  the other tunicates not rejected (p 0.56-0.60). Conflicts at 95%: within amphioxus and within oikopleurids (O.
+  albicans with O. dioica upstream, 98; with O. longicauda SBP2_2 in L7Ae, 98). New clade-support entries (chordates;
+  each jawed paralog with its cyclostome proteins), rerun locally (make machinery-clade-supports, trees only). Text
+  updated (Results sampling sentence and paragraph, domain paragraph, notes, Methods set, partial-sequence rule,
+  alignment and domain sizes, Table MACHINERY row from results/tables/stage2_machinery_table.md); replaced text
+  appended to manuscript/removed_text/SECIS_binding_tree.md.
