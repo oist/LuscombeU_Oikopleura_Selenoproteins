@@ -403,16 +403,11 @@ gold_standard.py --anchor sense), run of 2026-11-05 (commit 5829a72), with the a
 curation/machinery_extra_anchors.tsv and the proteins of the other individuals (make region-proteins). Numbers of the
 other species to check at the final version; their EEFSEC models were reviewed on 2026-11-05. -->
 
-<!-- Figures SBP2 and SEPHS_b: provisional (2026-11-07), placed here for Charles's review of the machinery genes;
-they may be removed or aggregated later. Panels drawn by make machinery-reannotation (figures/reannotation_page.py on
+<!-- Figure SEPHS_b: provisional (2026-11-07), placed here for Charles's review of the machinery genes; it may be
+removed or aggregated later. Panels drawn by make machinery-reannotation (figures/reannotation_page.py on
 figures/inputs/reannotation_<gene>.tsv), from run 0d19c70; the later runs changed only models of other species, which
-the panels do not draw. Figure EEFSEC moved to the SEPSECS and EEFSEC section (2026-11-08). -->
-
-![Figure SBP2](../figures/machinery_SBP2.png)
-
-Figure SBP2 (provisional; `figures/machinery_SBP2.pdf`). The SECIS-binding protein (SECISBP2/2L) in the three *O. dioica*
-assemblies, drawn as Figure PSTK A and B. The models of *O. longicauda* (two loci), *O. albicans* and *O. vanhoeffeni*,
-discussed in the text, are not drawn.
+the panels do not draw. Figure EEFSEC moved to the SEPSECS and EEFSEC section (2026-11-08), Figure SBP2 to the
+SECISBP2/2L section (2026-11-10). -->
 
 ![Figure SEPHS_b](../figures/machinery_SEPHS_b.png)
 
@@ -841,7 +836,7 @@ Table CENSUS-FAMILIES. Selenoprotein loci per family: appendicularians from the 
 counted), other genomes from stage 1 (original settings, all loci, no screen). Vertebrate counts include
 multiple selenocysteine codons of SELENOP more than 30 nucleotides apart and processed pseudogenes.
 
-## The selenocysteine machinery of appendicularians
+## Reannotation of the selenocysteine machinery of appendicularians
 
 With the standard profiles, Selenoprofiles did not find PSTK in any of the three *O. dioica* assemblies, although its
 transcripts are expressed, and did not call the selenocysteine codon of SEPHS2. We therefore extended each profile of
@@ -1002,6 +997,34 @@ transcripts (first intron of 50 nucleotides, at the position of the first intron
 mismatches come from other haplotypes. OdB3: the long intron is the LTR retrotransposon inserted in an exon; the two
 ESTs that reach the start codon have their 5′ ends masked in the EST collection used, so their spliced leader is not
 tested.
+
+### SECISBP2/2L
+
+The SECIS-binding protein needs only small corrections to its public annotations (Figure SBP2): the OdB3 GenBank
+model is unchanged, the OKI2018 RefSeq model needs one intron moved, and the OSKA2016 ANISEED model one intron added
+(GC-AG, present in the two other annotations) and one moved. The moved intron is the third; every transcript that
+splices it uses a GA (OKI2018, OdB3) or GG (OSKA2016) donor site instead of GT. The tree of the SECIS-binding proteins
+recovers the duplication of SECISBP2 and SECISBP2L in early vertebrates [@Donovan2009], and confirms the
+appendicularian protein as their co-ortholog (Figure TREES). <!-- Annotations (results/tables/gold_standard_machinery.tsv,
+figures/inputs/reannotation_SBP2.tsv): OKI2018 RefSeq XP_081641373.1 places the third intron 11 nucleotides away at
+both ends (junctions CT-AC), so that residues 242-244 differ (658 residues in both); OSKA2016 ANISEED
+S1.g00233.01.t lacks the second intron (GC-AG, 126 nucleotides, S1:625838-625963) and has the donor of the third 30
+nucleotides away (GT instead of GG), hence 669 residues (from its coding coordinates) instead of 617; OdB3 GenBank
+CBY19450.1 is the gold standard (620 residues). Transcripts spanning the third intron: 3 of 3 in OKI2018, 2 of 2 in
+OSKA2016, 2 of 3 ESTs in OdB3, all with the GA or GG donor; those spanning the second intron all splice it (GC-AG).
+Tree (Deigo run a98ee1f; results/tables/stage2_machinery_lba.tsv, stage2_machinery_clade_supports.tsv; maximum
+likelihood / PMSF, then after removal of 10 to 40% of the sites): oikopleurid clade 100 / 100; with the other
+tunicates 97 / 99, 96-98; tunicates with vertebrates 91 / 96, 92-98 (the sister group of the vertebrate proteins, as
+tunicates are of vertebrates); amphioxus with tunicates and vertebrates 76 / 79, 80-88; hemichordates with
+echinoderms 100 everywhere; vertebrate SECISBP2 and SECISBP2L 99-100; lamprey LOC116950782 with hagfish LOC137431572
+and LOC147030032 as sister group of jawed SECISBP2 98 / 99; hagfish LOC137424249 and LOC147024609 as sister group of
+jawed SECISBP2L 91 / 91. -->
+
+![Figure SBP2](../figures/machinery_SBP2.png)
+
+Figure SBP2 (provisional; `figures/machinery_SBP2.pdf`). The SECIS-binding protein (SECISBP2/2L) in the three *O. dioica*
+assemblies, drawn as Figure PSTK A and B. The models of *O. longicauda* (two loci), *O. albicans* and *O. vanhoeffeni*,
+discussed in the text, are not drawn.
 
 ### SECp43
 
@@ -1164,31 +1187,7 @@ Selenoprofiles predicts homologs of its profile families, not necessarily orthol
 therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Table
 MACHINERY). SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes and hit no other human protein
 (E ≤ 0.001); eEFSec proteins were reciprocal best hits of human EEFSEC in seven, 154 to 266 bits ahead of the next human
-gene, TUFM. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP, 60 bits ahead of NCL. The SECIS-binding
-proteins of all nine genomes were closer to human SECISBP2L than to SECISBP2, by 2 to 38 bits (a second, shorter
-prediction in *B. stygius* and *M. erythrocephalus* was closer to SECISBP2, by 6.5 and 11.5 bits), as were those of nine
-of the ten other tunicates and of the two amphioxus species; the *Halocynthia roretzi* protein was closer to SECISBP2 by
-1 bit. The selenocysteine SEPHS hit human SEPHS1 and SEPHS2 within 13 bits of each other; best hits do not separate
-these paralogs outside mammals [@Mariotti2015]. Best hits thus assign SecS and eEFSec, but not the SECIS-binding protein
-or SEPHS2 (nor PSTK, above).
-
-For these three families, we built maximum-likelihood trees that include the proteins they must be told apart from: the
-related kinase KTI12 for PSTK, the SPS1- and SPS2-type proteins of Mariotti et al. [-@Mariotti2015] for SEPHS, and human
-SECISBP2 and SECISBP2L for the SECIS-binding proteins. Like all trees of this study, they take the published phylogeny
-of the reference sequences as given and ask where the appendicularian sequences fall in it (Methods). The
-appendicularian sequences are the gold-standard proteins of
-the three *O. dioica* assemblies and of *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, and the predictions of the
-final run for *F. borealis* and for the loci without a gold-standard model (among them the selenocysteine SEPHS2 of the
-three other *Oikopleura* species); *B. stygius* and *M. erythrocephalus* were left out. To place the appendicularians
-among tunicates, the trees include ten other tunicates, seven ascidians and three salps, and two amphioxus species; the
-PSTK tree adds a third amphioxus species, and the tree of the SECIS-binding proteins, restricted to deuterostomes and
-to full-length proteins, has eleven other tunicates (ten ascidians and one salp), three amphioxus species,
-hemichordates, echinoderms and both vertebrate paralogs, with cyclostome proteins (Methods).
-Appendicularian proteins evolve fast, those of *O. dioica* about twice as fast as those of *Ciona* [@Berna2012], which
-exposes their position in trees to long-branch attraction [@Bergsten2005]. We therefore reanalysed each tree under a
-site-heterogeneous model (LG+C60 with posterior mean site frequencies, PMSF) [@Wang2017], after removing the
-fastest-evolving sites, and with approximately unbiased (AU) tests of alternative positions (Table LBA; Figure TREES,
-PMSF trees).
+gene, TUFM. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP, 60 bits ahead of NCL.
 
 ![Figure TREES, SEPHS](../figures/phylogeny_SEPHS2_collapsed_pmsf.png)
 ![Figure TREES, PSTK](../figures/phylogeny_pstk_collapsed_pmsf.png)
@@ -1199,21 +1198,6 @@ under LG+C60+F+G with posterior mean site frequencies, with 1,000 ultrafast boot
 taxonomic group. Roots: KTI12 for PSTK, prokaryotic proteins for SEPHS, mollusc and annelid proteins for the
 SECIS-binding proteins (deuterostome proteins only). In the tree of the SECIS-binding proteins, the labels of
 invertebrate proteins omit their best human hit, as they are co-orthologs of both vertebrate genes.
-
-In the tree of the SECIS-binding proteins, rooted on mollusc and annelid proteins (Figure TREES), the oikopleurid
-proteins form a clade (100% in the maximum-likelihood tree and with PMSF) that groups with the proteins of the other
-tunicates (97%, 99%; 96 to 98% after removal of 10 to 40% of the sites). The tunicate proteins are the sister group of
-the vertebrate proteins (91%, 96%; 92 to 98%), as tunicates are of vertebrates, and the tree recovers the other
-relationships of the deuterostomes sampled: amphioxus with tunicates and vertebrates (76%, 79%; 80 to 88%), and
-hemichordates with echinoderms (100% in every full-length analysis). Vertebrate SECISBP2 and SECISBP2L form one clade
-(99 to 100%) that also holds cyclostome proteins: a lamprey protein and its hagfish orthologs are the sister group of
-the SECISBP2 of jawed vertebrates (98%, 99%), and two other hagfish proteins that of their SECISBP2L (91%, 91%). The
-tree thus recovers the duplication of SECISBP2 and SECISBP2L in early vertebrates [@Donovan2009], and
-places the appendicularian protein as the ortholog of the single protein of the other tunicates and a co-ortholog of
-both vertebrate paralogs. Vertebrate SECISBP2L also supports selenoprotein synthesis: zebrafish
-embryos without Sbp2 still make a subset of selenoproteins, and only the loss of both genes abolishes their synthesis
-[@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for oligodendrocyte
-differentiation [@Dai2022].
 
 Appendicularians have two SEPHS genes. The second copy, found in the three *O. dioica* assemblies (in OSKA2016 and
 OdB3 by aligning the OKI2018 protein; split by assembly gaps in OdB3, whose protein is left out of the trees), in
@@ -1263,12 +1247,10 @@ those of amphioxus and protostomes (96%), and the C-terminal half with those of 
   Table LBA or Table DOMAINS: results/tables/stage2_machinery_clade_supports.tsv (make machinery-clade-supports), from
   the trees of commit c7865cd (2026-11-03) for SEPHS, of Deigo run fa286f8 (2026-11-07, three amphioxus PSTK) for
   PSTK, and of Deigo run a98ee1f (2026-11-10, deuterostome set rooted on molluscs and annelids, without truncated
-  proteins) for the SECIS-binding proteins. Cyclostome proteins of the SECIS-binding protein tree
-  (curation/extra_tree_proteins.faa): lamprey LOC116950782 (Petromyzon) with hagfish LOC137431572 (Myxine) and
-  LOC147030032 (Eptatretus), sister to jawed SECISBP2 (entry "vertebrate SECISBP2 with lamprey LOC116950782 ...");
-  hagfish LOC137424249 and LOC147024609, sister to jawed SECISBP2L (entry "vertebrate SECISBP2L with hagfish ...").
-  Upstream region of the L7Ae domain: tunicate clade sister to all other deuterostome proteins (maximum likelihood) or
-  to the two LOC137424249/LOC147024609 hagfish proteins (PMSF, 44%) (entry "tunicate proteins", position).
+  proteins) for the SECIS-binding proteins. Upstream region of the L7Ae domain of the SECIS-binding proteins: tunicate
+  clade sister to all other deuterostome proteins (maximum likelihood) or to the hagfish LOC137424249/LOC147024609
+  proteins (PMSF, 44%) (entry "tunicate proteins", position). Supports of the full-length tree of the SECIS-binding
+  proteins: comment of the SECISBP2/2L section.
 - Reciprocal best hits of the other tunicates: results/tables/stage1_machinery_rbh.tsv (regenerated 2026-10-23,
   make machinery-rbh); the stage 1 predictions of the standard profiles. SEPHS of the other tunicates: best hit SEPHS1
   for most copies, SEPHS2 within 5 bits for the selenocysteine copies of B. schlosseri and S. clava.
@@ -1769,10 +1751,15 @@ ask where the appendicularian sequences fall in it. Reference sequences were cho
 and paralogs, and where a tree did not recover a published relationship among them, sequences were added or left out
 until it did (for example, the SECIS-binding protein tree below). Relationships among reference sequences are thus
 not results; the positions of the appendicularian sequences are.
-Each tree combined the sequences of the Selenoprofiles profile (at most three per taxonomic group, the
+PSTK, SEPHS and the SECIS-binding proteins, whose best human hits did not settle their orthology (Table MACHINERY),
+were placed in trees with the proteins they must be told apart from (KTI12, the SPS1 and SPS2 types, SECISBP2 and
+SECISBP2L; below). Each tree combined the sequences of the Selenoprofiles profile (at most three per taxonomic group, the
 longest kept); the stage 1 predictions in the other tunicates, in two cephalochordates and in the vertebrate controls;
-the predictions of the appendicularian profiles in the nine appendicularian genomes; and the proteins reconstructed
-from *O. dioica* transcripts. The other tunicates were the six analysed in stage 1 and four genomes added for this
+the gold-standard proteins of the three *O. dioica* assemblies and of *O. longicauda*, *O. albicans* and *O.
+vanhoeffeni*; and the predictions of the final stage 2 run for *F. borealis* and for the loci without a gold-standard
+model (among them the selenocysteine SEPHS2 of the three other *Oikopleura* species), *B. stygius* and *M.
+erythrocephalus* being left out. The other tunicates, seven ascidians and three salps, were the six analysed in stage
+1 and four genomes added for this
 analysis, *Botryllus schlosseri* (GCF_051294905.1), *Phallusia mammillata* (GCF_965637545.1), *Pegea* sp.
 (GCA_034620365.1) and *Salpa thompsoni* (GCA_047495815.1); the cephalochordates were *Branchiostoma floridae*
 (GCF_000003815.2) and *Branchiostoma lanceolatum* (GCF_035083965.1). These six genomes were run through the pipeline
@@ -1825,7 +1812,9 @@ display trees, nodes with less than 50% support were collapsed into polytomies a
 group were drawn as one tip, except for appendicularians, other tunicates and cephalochordates; supports were kept on
 their bipartitions when the trees were rerooted.
 
-*Long-branch analyses.* Each tree was reanalysed (1) under LG+C60+F+G with posterior mean site frequencies (PMSF)
+*Long-branch analyses.* Appendicularian proteins evolve fast, those of *O. dioica* about twice as fast as those of
+*Ciona* [@Berna2012], which exposes their position in trees to long-branch attraction [@Bergsten2005]. Each tree was
+therefore reanalysed (1) under LG+C60+F+G with posterior mean site frequencies (PMSF)
 [@Le2008; @Wang2017], with the maximum-likelihood tree as guide tree and 1,000 ultrafast
 bootstrap replicates; (2) after removal of the fastest-evolving 10, 20, 30 and 40% of the sites [@Brinkmann1999], ranked by their empirical Bayesian rates (IQ-TREE `-wsr`) under the selected model on the
 maximum-likelihood tree, each reduced alignment being analysed as above; (3) for PSTK, without the long-branched
@@ -1843,7 +1832,8 @@ tree (bacterial sequences were left out, as bacteria have no PSTK), which was re
 model and with PMSF, rooted on KTI12. In each tree, we read as unrooted bipartitions the
 support of the appendicularian clade (the largest clade of appendicularian sequences in the maximum-likelihood tree,
 followed with the same sequences in every analysis), of that clade with the other tunicate proteins of the same form
-(for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12.
+(for SEPHS, the selenocysteine copies, the glycine forms being left out), and, for PSTK, of the family against KTI12
+(Table LBA).
 The other clades cited in the text were read in the same way from every tree, including those of the domain analysis
 below; the position of a clade is the support of its parent node and the composition of its sister group, in the tree
 rooted as in the figures (`stage2/machinery_clade_supports.py`, `results/tables/stage2_machinery_clade_supports.tsv`).

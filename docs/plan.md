@@ -2928,3 +2928,12 @@ no earlier step waits for them.
   updated (Results sampling sentence and paragraph, domain paragraph, notes, Methods set, partial-sequence rule,
   alignment and domain sizes, Table MACHINERY row from results/tables/stage2_machinery_table.md); replaced text
   appended to manuscript/removed_text/SECIS_binding_tree.md.
+- SECISBP2/2L section (2026-11-10, Charles's batch of simplifications): section renamed "Reannotation of the
+  selenocysteine machinery of appendicularians"; new subsection SECISBP2/2L before SECp43 with Figure SBP2 (moved from
+  the gold-standard section), derived from his replacement paragraph and corrected (the GC-AG intron is added only in
+  OSKA2016; the OdB3 GenBank model is unchanged; the other change is the third intron, GA or GG donor, moved in
+  OKI2018 RefSeq and OSKA2016 ANISEED); best-hit sentences on SECIS-binding proteins and SEPHS and the SECIS-binding
+  protein tree paragraph removed; tree introduction blended into the Methods (Trees, Long-branch analyses); removed
+  text in manuscript/removed_text/SECISBP2_section.md. Open questions to Charles: a bridge sentence before Figure
+  TREES; Kiledjian2022 and Dai2022 now uncited; move the paragraph on the SECIS-binding proteins of the other species
+  from the gold-standard section; the census paragraphs and SECp43 under a "Reannotation" heading.
