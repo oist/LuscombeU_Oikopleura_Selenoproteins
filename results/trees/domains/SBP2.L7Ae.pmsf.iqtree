@@ -32,11 +32,11 @@ https://doi.org/10.1093/molbev/msx281
 SEQUENCE ALIGNMENT
 ------------------
 
-Input data: 43 sequences with 318 amino-acid sites
-Number of constant sites: 34 (= 10.6918% of all sites)
-Number of invariant (constant or ambiguous constant) sites: 34 (= 10.6918% of all sites)
-Number of parsimony informative sites: 275
-Number of distinct site patterns: 311
+Input data: 49 sequences with 366 amino-acid sites
+Number of constant sites: 34 (= 9.28962% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 34 (= 9.28962% of all sites)
+Number of parsimony informative sites: 326
+Number of distinct site patterns: 359
 
 SUBSTITUTION PROCESS
 --------------------
@@ -46,228 +46,252 @@ Model of substitution: LG+SSF+F+G4
 State frequencies: (site specific frequencies)
 
 Model of rate heterogeneity: Gamma with 4 categories
-Gamma shape alpha: 0.4870
+Gamma shape alpha: 0.4808
 
  Category  Relative_rate  Proportion
-  1         0.0310         0.2500
-  2         0.2434         0.2500
-  3         0.8106         0.2500
-  4         2.9150         0.2500
+  1         0.0299         0.2500
+  2         0.2392         0.2500
+  3         0.8058         0.2500
+  4         2.9251         0.2500
 Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
 
 MAXIMUM LIKELIHOOD TREE
 -----------------------
 
-Log-likelihood of the tree: -12835.1663 (s.e. 403.8293)
-Unconstrained log-likelihood (without tree): -1822.1050
-Number of free parameters (#branches + #model parameters): 103
-Akaike information criterion (AIC) score: 25876.3325
-Corrected Akaike information criterion (AICc) score: 25976.4447
-Bayesian information criterion (BIC) score: 26263.8238
+Log-likelihood of the tree: -17687.0386 (s.e. 488.4071)
+Unconstrained log-likelihood (without tree): -2150.1365
+Number of free parameters (#branches + #model parameters): 115
+Akaike information criterion (AIC) score: 35604.0772
+Corrected Akaike information criterion (AICc) score: 35710.7972
+Bayesian information criterion (BIC) score: 36052.8800
 
-Total tree length (sum of branch lengths): 32.2842
-Sum of internal branch lengths: 18.8028 (58.2416% of tree length)
+Total tree length (sum of branch lengths): 36.8977
+Sum of internal branch lengths: 20.0411 (54.3153% of tree length)
 
 NOTE: Tree is UNROOTED although outgroup taxon 'Aplysia_californica_XP_012941628.1' is drawn at root
 Numbers in parentheses are  ultrafast bootstrap support (%)
 
-+------------Aplysia_californica_XP_012941628.1
++---------Aplysia_californica_XP_012941628.1
 |
-|     +-----Crassostrea_gigas_EKC30124.1
+|     +----Crassostrea_gigas_EKC30124.1
 |  +--| (98)
 |  |  +---Octopus_bimaculoides_KOF78133.1
-+--| (98)
-|  +-------Capitella_teleta_ELU11469.1
++--| (99)
+|  +-----Capitella_teleta_ELU11469.1
 |
-|  +-----------Acanthaster_planci_XP_022100524.1
-+--| (98)
-   |                       +--Ophiophagus_hannah_ETE66291.1
-   |                    +--| (93)
-   |                    |  |        +--Mmus_RefSeq_SECISBP2L_NP_808276.2
-   |                    |  |     +--| (100)
-   |                    |  |     |  +--Human_SECISBP2L_NP_001180418.1
-   |                    |  |  +--| (68)
-   |                    |  |  |  +--Gavia_stellata_RefSeq_SECISBP2L_XP_059680107.1
-   |                    |  +--| (91)
-   |                    |     +--Xenopus_laevis_RefSeq_SECISBP2L_XP_041442721.1
-   |                 +--| (64)
-   |                 |  +--Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1
-   |             +---| (97)
-   |             |   |  +--Tetraodon_nigroviridis_CAF99852.1
-   |             |   +--| (98)
-   |             |      +--Drer_RefSeq_SECISBP2L_XP_068071091.1
-   |          +--| (65)
-   |          |  |                                +--Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1
-   |          |  +--------------------------------| (100)
-   |          |                                   +**Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1
-   |      +---| (99)
-   |      |   |              +----Chelonia_mydas_EMP36289.1
-   |      |   |          +---| (96)
-   |      |   |          |   |        +--Myotis_davidii_ELK38163.1
-   |      |   |          |   +--------| (99)
-   |      |   |          |            |  +--Mmus_RefSeq_SECISBP2_NP_083555.1
-   |      |   |          |            +--| (98)
-   |      |   |          |               +--Human_SECISBP2_NP_076982.3
-   |      |   |  +-------| (100)
-   |      |   |  |       |         +--Drer_RefSeq_SECISBP2_XP_068077667.1
-   |      |   |  |       +---------| (100)
-   |      |   |  |                 +-------Lampetra_planeri_RefSeq_LOWQ_XP_078478270.1
-   |      |   +--| (92)
-   |      |      |            +----------Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2
-   |      |      +------------| (100)
-   |      |                   |                          +--Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2
-   |      |                   +--------------------------| (100)
-   |      |                                              +--Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1
-   |  +---| (96)
-   |  |   |            +--------Bsch_RefSeq_SECISBP2L_XP_080176725.1
-   |  |   |       +----| (100)
-   |  |   |       |    +--Scla_RefSeq_SECISBP2L_XP_039256732.2
-   |  |   |  +----| (92)
-   |  |   |  |    |                 +**Cint_RefSeq_SECISBP2L_XP_078482116.1
-   |  |   |  |    |        +--------| (100)
-   |  |   |  |    |        |        +--Crob_RefSeq_SECISBP2L_XP_026689529.1
-   |  |   |  |    |     +--| (46)
-   |  |   |  |    |     |  +---Ceum_RefSeq_SECISBP2L_XP_082430522.1
-   |  |   |  |    |  +--| (25)
-   |  |   |  |    |  |  |  +-------------Tdem_RefSeq_SECISBP2L_XP_082804045.1
-   |  |   |  |    |  |  +--| (73)
-   |  |   |  |    |  |     |  +---Atur_RefSeq_SECISBP2L_XP_082454464.1
-   |  |   |  |    |  |     +--| (91)
-   |  |   |  |    |  |        +---Clep_RefSeq_SECISBP2L_XP_076808270.1
-   |  |   |  |    +--| (48)
-   |  |   |  |       |     +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
-   |  |   |  |       |  +--| (100)
-   |  |   |  |       |  |  +--Amen_RefSeq_SECISBP2L_XP_082849143.1
-   |  |   |  |       +--| (93)
-   |  |   |  |          +--Aasp_RefSeq_SECISBP2L_XP_083240643.1
-   |  |   +--| (91)
-   |  |      |                                  +--OKI_gold_SBP2
-   |  |      |                          +-------| (96)
-   |  |      |                          |       |  +--OSKA_gold_SBP2
-   |  |      |                          |       +--| (94)
-   |  |      |                          |          +--OdB3_gold_SBP2
-   |  |      +--------------------------| (100)
-   |  |                                 |   +------Oalb_gold_SBP2
-   |  |                                 +---| (97)
-   |  |                                     +------Olon_gold_SBP2_2
-   +--| (49)
-      |             +--Bflo_RefSeq_SECISBP2L_XP_035670302.1
-      |          +--| (97)
-      |          |  +--Bbel_RefSeq_SECISBP2L_XP_019622383.1
-      +----------| (100)
-                 +**Blan_RefSeq_SECISBP2L_XP_066269754.1
-
-Tree in newick format:
-
-(Aplysia_californica_XP_012941628.1:1.1392523651,((Crassostrea_gigas_EKC30124.1:0.5487438910,Octopus_bimaculoides_KOF78133.1:0.3927186079)98:0.0806321085,Capitella_teleta_ELU11469.1:0.6859096277)98:0.1426247058,(Acanthaster_planci_XP_022100524.1:1.0932624280,(((((((Ophiophagus_hannah_ETE66291.1:0.0217099464,(((Mmus_RefSeq_SECISBP2L_NP_808276.2:0.1012962510,Human_SECISBP2L_NP_001180418.1:0.0144166639)100:0.0745243017,Gavia_stellata_RefSeq_SECISBP2L_XP_059680107.1:0.0492870782)68:0.0178054261,Xenopus_laevis_RefSeq_SECISBP2L_XP_041442721.1:0.2356052994)91:0.0324587036)93:0.0794333545,Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1:0.1855322434)64:0.0243339896,(Tetraodon_nigroviridis_CAF99852.1:0.1245580192,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.1804168015)98:0.0926654600)97:0.3419144738,(Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1:0.0652827146,Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1:0.0000026325)100:2.8779310190)65:0.0186686759,(((Chelonia_mydas_EMP36289.1:0.4798330668,(Myotis_davidii_ELK38163.1:0.0519951317,(Mmus_RefSeq_SECISBP2_NP_083555.1:0.2283460397,Human_SECISBP2_NP_076982.3:0.2195336070)98:0.1256864349)99:0.8418240357)96:0.3957722030,(Drer_RefSeq_SECISBP2_XP_068077667.1:0.2068280813,Lampetra_planeri_RefSeq_LOWQ_XP_078478270.1:0.7534087402)100:0.8665262155)100:0.7042856306,(Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2:0.9994889068,(Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2:0.0285702382,Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1:0.1405007482)100:2.3302182300)100:1.1679888790)92:0.2739629468)99:0.3753952467,(((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.8085695403,Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2820432328)100:0.4495416572,((((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0000020324,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0380797311)100:0.8253018463,Ceum_RefSeq_SECISBP2L_XP_082430522.1:0.3432885682)46:0.0514287520,(Tdem_RefSeq_SECISBP2L_XP_082804045.1:1.1895757559,(Atur_RefSeq_SECISBP2L_XP_082454464.1:0.4000164627,Clep_RefSeq_SECISBP2L_XP_076808270.1:0.3717202191)91:0.0586982677)73:0.0980184889)25:0.0592533697,((Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.1537822376,Amen_RefSeq_SECISBP2L_XP_082849143.1:0.2129380261)100:0.1437124518,Aasp_RefSeq_SECISBP2L_XP_083240643.1:0.2535333563)93:0.1124902893)48:0.1244194528)92:0.4573720952,((OKI_gold_SBP2:0.0697141101,(OSKA_gold_SBP2:0.0440696669,OdB3_gold_SBP2:0.0074304568)94:0.0808992149)96:0.6829530394,(Oalb_gold_SBP2:0.6297723415,Olon_gold_SBP2_2:0.6759834133)97:0.3505966563)100:2.3726728070)91:0.3130743632)96:0.3614791016,((Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0096940395,Bbel_RefSeq_SECISBP2L_XP_019622383.1:0.0424088987)97:0.0132326714,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0022473219)100:0.9478920772)49:0.1305781514)98:0.3045790095);
-
-CONSENSUS TREE
---------------
-
-Consensus tree is constructed from 1000 bootstrap trees
-Log-likelihood of consensus tree: -12835.434859
-Robinson-Foulds distance between ML tree and consensus tree: 2
-
-Branches with support >0.000000% are kept (extended consensus)
-Branch lengths are optimized by maximum likelihood on original alignment
-Numbers in parentheses are bootstrap supports (%)
-
-+------------Aplysia_californica_XP_012941628.1
-|
-|     +-----Crassostrea_gigas_EKC30124.1
-|  +--| (98)
-|  |  +---Octopus_bimaculoides_KOF78133.1
-+--| (98)
-|  +-------Capitella_teleta_ELU11469.1
-|
-|     +-----------Acanthaster_planci_XP_022100524.1
-|  +--| (50)
-|  |  |             +--Bflo_RefSeq_SECISBP2L_XP_035670302.1
-|  |  |          +--| (97)
-|  |  |          |  +--Bbel_RefSeq_SECISBP2L_XP_019622383.1
-|  |  +----------| (100)
-|  |             +--Blan_RefSeq_SECISBP2L_XP_066269754.1
-+--| (98)
-   |                    +--Ophiophagus_hannah_ETE66291.1
-   |                 +--| (93)
-   |                 |  |        +--Mmus_RefSeq_SECISBP2L_NP_808276.2
-   |                 |  |     +--| (100)
-   |                 |  |     |  +--Human_SECISBP2L_NP_001180418.1
-   |                 |  |  +--| (68)
-   |                 |  |  |  +--Gavia_stellata_RefSeq_SECISBP2L_XP_059680107.1
-   |                 |  +--| (91)
-   |                 |     +--Xenopus_laevis_RefSeq_SECISBP2L_XP_041442721.1
-   |              +--| (64)
+|        +----Acanthaster_planci_XP_022100524.1
+|  +-----| (100)
+|  |     |     +---Saccoglossus_kowalevskii_RefSeq_XP_085350664.1
+|  |     |  +--| (100)
+|  |     |  |  +--Ptychodera_flava_RefSeq_XP_070547288.1
+|  |     +--| (87)
+|  |        |  +---Strongylocentrotus_purpuratus_RefSeq_XP_030855964.1
+|  |        +--| (86)
+|  |           +-----Anneissia_japonica_RefSeq_XP_033127285.1
++--| (99)
+   |                          +--Ophiophagus_hannah_ETE66291.1
+   |                       +--| (85)
+   |                       |  |     +--Mmus_RefSeq_SECISBP2L_NP_808276.2
+   |                       |  |  +--| (99)
+   |                       |  |  |  +--Human_SECISBP2L_NP_001180418.1
+   |                       |  +--| (85)
+   |                       |     +--Gallus_gallus_RefSeq_SECISBP2L_XP_046754992.1
+   |                    +--| (98)
+   |                    |  +--Xenopus_tropicalis_RefSeq_SECISBP2L_NP_001164297.1
+   |                 +--| (98)
+   |                 |  +--Latimeria_chalumnae_RefSeq_SECISBP2L_XP_005998368.1
+   |              +--| (91)
    |              |  +--Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1
    |           +--| (97)
    |           |  |  +--Tetraodon_nigroviridis_CAF99852.1
    |           |  +--| (98)
    |           |     +--Drer_RefSeq_SECISBP2L_XP_068071091.1
-   |        +--| (65)
-   |        |  |                                 +--Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1
-   |        |  +---------------------------------| (100)
-   |        |                                    +--Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1
-   |    +---| (99)
-   |    |   |              +----Chelonia_mydas_EMP36289.1
-   |    |   |          +---| (96)
-   |    |   |          |   |         +--Myotis_davidii_ELK38163.1
-   |    |   |          |   +---------| (99)
-   |    |   |          |             |  +--Mmus_RefSeq_SECISBP2_NP_083555.1
-   |    |   |          |             +--| (98)
-   |    |   |          |                +--Human_SECISBP2_NP_076982.3
-   |    |   |  +-------| (100)
-   |    |   |  |       |         +--Drer_RefSeq_SECISBP2_XP_068077667.1
-   |    |   |  |       +---------| (100)
-   |    |   |  |                 +--------Lampetra_planeri_RefSeq_LOWQ_XP_078478270.1
-   |    |   +--| (92)
-   |    |      |            +----------Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2
-   |    |      +------------| (100)
-   |    |                   |                          +--Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2
-   |    |                   +--------------------------| (100)
-   |    |                                              +--Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1
-   +----| (96)
-        |            +--------Bsch_RefSeq_SECISBP2L_XP_080176725.1
-        |       +----| (100)
-        |       |    +--Scla_RefSeq_SECISBP2L_XP_039256732.2
-        |  +----| (92)
-        |  |    |                 +--Cint_RefSeq_SECISBP2L_XP_078482116.1
-        |  |    |        +--------| (100)
-        |  |    |        |        +--Crob_RefSeq_SECISBP2L_XP_026689529.1
-        |  |    |     +--| (46)
-        |  |    |     |  +---Ceum_RefSeq_SECISBP2L_XP_082430522.1
-        |  |    |  +--| (25)
-        |  |    |  |  |  +-------------Tdem_RefSeq_SECISBP2L_XP_082804045.1
-        |  |    |  |  +--| (73)
-        |  |    |  |     |  +---Atur_RefSeq_SECISBP2L_XP_082454464.1
-        |  |    |  |     +--| (91)
-        |  |    |  |        +---Clep_RefSeq_SECISBP2L_XP_076808270.1
-        |  |    +--| (48)
-        |  |       |     +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
-        |  |       |  +--| (100)
-        |  |       |  |  +--Amen_RefSeq_SECISBP2L_XP_082849143.1
-        |  |       +--| (93)
-        |  |          +--Aasp_RefSeq_SECISBP2L_XP_083240643.1
-        +--| (91)
-           |                                   +--OKI_gold_SBP2
-           |                           +-------| (96)
-           |                           |       |  +--OSKA_gold_SBP2
-           |                           |       +--| (94)
-           |                           |          +--OdB3_gold_SBP2
-           +---------------------------| (100)
-                                       |   +------Oalb_gold_SBP2
-                                       +---| (97)
-                                           +-------Olon_gold_SBP2_2
+   |        +--| (90)
+   |        |  |                       +--Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1
+   |        |  +-----------------------| (100)
+   |        |                          +--Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1
+   |     +--| (100)
+   |     |  |                     +--Chelonia_mydas_EMP36289.1
+   |     |  |                  +--| (99)
+   |     |  |                  |  +---Gallus_gallus_RefSeq_SECISBP2_XP_040512279.1
+   |     |  |               +--| (80)
+   |     |  |               |  +------Latimeria_chalumnae_RefSeq_SECISBP2_XP_064412058.1
+   |     |  |            +--| (92)
+   |     |  |            |  |        +--Mmus_RefSeq_SECISBP2_NP_083555.1
+   |     |  |            |  |  +-----| (100)
+   |     |  |            |  |  |     +--Human_SECISBP2_NP_076982.3
+   |     |  |            |  +--| (93)
+   |     |  |            |     +------Xenopus_tropicalis_RefSeq_SECISBP2_NP_001090731.1
+   |     |  |  +---------| (100)
+   |     |  |  |         +-----------Drer_RefSeq_SECISBP2_XP_068077667.1
+   |     |  +--| (92)
+   |     |     |            +-----------Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2
+   |     |     +------------| (99)
+   |     |                  |                              +--Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2
+   |     |                  +------------------------------| (100)
+   |     |                                                 +--Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1
+   |  +--| (94)
+   |  |  |                    +------Bsch_RefSeq_SECISBP2L_XP_080176725.1
+   |  |  |              +-----| (100)
+   |  |  |              |     +--Scla_RefSeq_SECISBP2L_XP_039256732.2
+   |  |  |           +--| (48)
+   |  |  |           |  |     +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
+   |  |  |           |  |  +--| (100)
+   |  |  |           |  |  |  +--Amen_RefSeq_SECISBP2L_XP_082849143.1
+   |  |  |           |  +--| (96)
+   |  |  |           |     +--Aasp_RefSeq_SECISBP2L_XP_083240643.1
+   |  |  |        +--| (26)
+   |  |  |        |  |         +--Cint_RefSeq_SECISBP2L_XP_078482116.1
+   |  |  |        |  |  +------| (100)
+   |  |  |        |  |  |      +--Crob_RefSeq_SECISBP2L_XP_026689529.1
+   |  |  |        |  +--| (35)
+   |  |  |        |     |  +-----------Tdem_RefSeq_SECISBP2L_XP_082804045.1
+   |  |  |        |     +--| (50)
+   |  |  |        |        |  +--Atur_RefSeq_SECISBP2L_XP_082454464.1
+   |  |  |        |        +--| (89)
+   |  |  |        |           +---Clep_RefSeq_SECISBP2L_XP_076808270.1
+   |  |  |  +-----| (97)
+   |  |  |  |     +--Ceum_RefSeq_SECISBP2L_XP_082430522.1
+   |  |  +--| (90)
+   |  |     |                                +--OKI_gold_SBP2
+   |  |     |                             +--| (84)
+   |  |     |                             |  +--OSKA_gold_SBP2
+   |  |     |                      +------| (100)
+   |  |     |                      |      +**OdB3_gold_SBP2
+   |  |     +----------------------| (100)
+   |  |                            |  +-----Oalb_gold_SBP2
+   |  |                            +--| (96)
+   |  |                               +------Olon_gold_SBP2_2
+   +--| (92)
+      |           +--Bflo_RefSeq_SECISBP2L_XP_035670302.1
+      |        +--| (99)
+      |        |  +--Bbel_RefSeq_SECISBP2L_XP_019622383.1
+      +--------| (100)
+               +--Blan_RefSeq_SECISBP2L_XP_066269754.1
+
+Tree in newick format:
+
+(Aplysia_californica_XP_012941628.1:1.0004567654,((Crassostrea_gigas_EKC30124.1:0.4980722156,Octopus_bimaculoides_KOF78133.1:0.4892471129)98:0.0933628949,Capitella_teleta_ELU11469.1:0.6204577435)99:0.2152625168,((Acanthaster_planci_XP_022100524.1:0.5477034481,((Saccoglossus_kowalevskii_RefSeq_XP_085350664.1:0.4138234828,Ptychodera_flava_RefSeq_XP_070547288.1:0.2668945260)100:0.3583993269,(Strongylocentrotus_purpuratus_RefSeq_XP_030855964.1:0.4746726354,Anneissia_japonica_RefSeq_XP_033127285.1:0.6852131643)86:0.1266328211)87:0.1357938853)100:0.6125192289,(((((((((Ophiophagus_hannah_ETE66291.1:0.0624299873,((Mmus_RefSeq_SECISBP2L_NP_808276.2:0.1017040149,Human_SECISBP2L_NP_001180418.1:0.0235730396)99:0.0461832515,Gallus_gallus_RefSeq_SECISBP2L_XP_046754992.1:0.0688285679)85:0.0190323150)85:0.0248086772,Xenopus_tropicalis_RefSeq_SECISBP2L_NP_001164297.1:0.1915856935)98:0.0447636055,Latimeria_chalumnae_RefSeq_SECISBP2L_XP_005998368.1:0.0715309718)98:0.0736272635,Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1:0.1809895089)91:0.0570363523,(Tetraodon_nigroviridis_CAF99852.1:0.1358293618,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.2306039194)98:0.0852891060)97:0.2405287859,(Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1:0.0154554420,Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1:0.0500689428)100:2.4191636760)90:0.1730856275,(((((Chelonia_mydas_EMP36289.1:0.1405866281,Gallus_gallus_RefSeq_SECISBP2_XP_040512279.1:0.4650963139)99:0.2746685493,Latimeria_chalumnae_RefSeq_SECISBP2_XP_064412058.1:0.7847291429)80:0.0994783199,((Mmus_RefSeq_SECISBP2_NP_083555.1:0.1498272701,Human_SECISBP2_NP_076982.3:0.1741231765)100:0.6512990814,Xenopus_tropicalis_RefSeq_SECISBP2_NP_001090731.1:0.7801289911)93:0.0470436879)92:0.2039377053,Drer_RefSeq_SECISBP2_XP_068077667.1:1.1932040057)100:1.0534808510,(Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2:1.2050340249,(Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2:0.1067202690,Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1:0.1116758465)100:3.0864090780)99:1.3625094020)92:0.2207039532)100:0.3859946891,(((((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.7581589384,Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2760769497)100:0.6641025869,((Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.1300923154,Amen_RefSeq_SECISBP2L_XP_082849143.1:0.2122754555)100:0.1713836156,Aasp_RefSeq_SECISBP2L_XP_083240643.1:0.2356080708)96:0.0724306543)48:0.1019189754,((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0048548596,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0278232212)100:0.7738407559,(Tdem_RefSeq_SECISBP2L_XP_082804045.1:1.2513633115,(Atur_RefSeq_SECISBP2L_XP_082454464.1:0.3345624440,Clep_RefSeq_SECISBP2L_XP_076808270.1:0.4023182564)89:0.0356454269)50:0.1302731538)35:0.0334471265)26:0.0624804911,Ceum_RefSeq_SECISBP2L_XP_082430522.1:0.3173543619)97:0.6597026172,(((OKI_gold_SBP2:0.1502990951,OSKA_gold_SBP2:0.0414908830)84:0.0073402750,OdB3_gold_SBP2:0.0000023505)100:0.6998291595,(Oalb_gold_SBP2:0.6287098207,Olon_gold_SBP2_2:0.7559785266)96:0.3400173335)100:2.2927660890)90:0.1763929851)94:0.2481609575,((Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0261263746,Bbel_RefSeq_SECISBP2L_XP_019622383.1:0.0499761062)99:0.0203851353,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0132446945)100:0.9665111181)92:0.1921378631)99:0.2813121072);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -17687.037332
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++---------Aplysia_californica_XP_012941628.1
+|
+|     +----Crassostrea_gigas_EKC30124.1
+|  +--| (98)
+|  |  +---Octopus_bimaculoides_KOF78133.1
++--| (99)
+|  +-----Capitella_teleta_ELU11469.1
+|
+|        +----Acanthaster_planci_XP_022100524.1
+|  +-----| (100)
+|  |     |     +---Saccoglossus_kowalevskii_RefSeq_XP_085350664.1
+|  |     |  +--| (100)
+|  |     |  |  +--Ptychodera_flava_RefSeq_XP_070547288.1
+|  |     +--| (87)
+|  |        |  +---Strongylocentrotus_purpuratus_RefSeq_XP_030855964.1
+|  |        +--| (86)
+|  |           +-----Anneissia_japonica_RefSeq_XP_033127285.1
++--| (99)
+   |                          +--Ophiophagus_hannah_ETE66291.1
+   |                       +--| (85)
+   |                       |  |     +--Mmus_RefSeq_SECISBP2L_NP_808276.2
+   |                       |  |  +--| (99)
+   |                       |  |  |  +--Human_SECISBP2L_NP_001180418.1
+   |                       |  +--| (85)
+   |                       |     +--Gallus_gallus_RefSeq_SECISBP2L_XP_046754992.1
+   |                    +--| (98)
+   |                    |  +--Xenopus_tropicalis_RefSeq_SECISBP2L_NP_001164297.1
+   |                 +--| (98)
+   |                 |  +--Latimeria_chalumnae_RefSeq_SECISBP2L_XP_005998368.1
+   |              +--| (91)
+   |              |  +--Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1
+   |           +--| (97)
+   |           |  |  +--Tetraodon_nigroviridis_CAF99852.1
+   |           |  +--| (98)
+   |           |     +--Drer_RefSeq_SECISBP2L_XP_068071091.1
+   |        +--| (90)
+   |        |  |                       +--Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1
+   |        |  +-----------------------| (100)
+   |        |                          +--Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1
+   |     +--| (100)
+   |     |  |                     +--Chelonia_mydas_EMP36289.1
+   |     |  |                  +--| (99)
+   |     |  |                  |  +---Gallus_gallus_RefSeq_SECISBP2_XP_040512279.1
+   |     |  |               +--| (80)
+   |     |  |               |  +------Latimeria_chalumnae_RefSeq_SECISBP2_XP_064412058.1
+   |     |  |            +--| (92)
+   |     |  |            |  |        +--Mmus_RefSeq_SECISBP2_NP_083555.1
+   |     |  |            |  |  +-----| (100)
+   |     |  |            |  |  |     +--Human_SECISBP2_NP_076982.3
+   |     |  |            |  +--| (93)
+   |     |  |            |     +------Xenopus_tropicalis_RefSeq_SECISBP2_NP_001090731.1
+   |     |  |  +---------| (100)
+   |     |  |  |         +-----------Drer_RefSeq_SECISBP2_XP_068077667.1
+   |     |  +--| (92)
+   |     |     |            +-----------Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2
+   |     |     +------------| (99)
+   |     |                  |                              +--Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2
+   |     |                  +------------------------------| (100)
+   |     |                                                 +--Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1
+   |  +--| (94)
+   |  |  |                    +------Bsch_RefSeq_SECISBP2L_XP_080176725.1
+   |  |  |              +-----| (100)
+   |  |  |              |     +--Scla_RefSeq_SECISBP2L_XP_039256732.2
+   |  |  |           +--| (48)
+   |  |  |           |  |     +--Pmam_RefSeq_SECISBP2L_XP_079949835.1
+   |  |  |           |  |  +--| (100)
+   |  |  |           |  |  |  +--Amen_RefSeq_SECISBP2L_XP_082849143.1
+   |  |  |           |  +--| (96)
+   |  |  |           |     +--Aasp_RefSeq_SECISBP2L_XP_083240643.1
+   |  |  |        +--| (26)
+   |  |  |        |  |         +--Cint_RefSeq_SECISBP2L_XP_078482116.1
+   |  |  |        |  |  +------| (100)
+   |  |  |        |  |  |      +--Crob_RefSeq_SECISBP2L_XP_026689529.1
+   |  |  |        |  +--| (35)
+   |  |  |        |     |  +-----------Tdem_RefSeq_SECISBP2L_XP_082804045.1
+   |  |  |        |     +--| (50)
+   |  |  |        |        |  +--Atur_RefSeq_SECISBP2L_XP_082454464.1
+   |  |  |        |        +--| (89)
+   |  |  |        |           +---Clep_RefSeq_SECISBP2L_XP_076808270.1
+   |  |  |  +-----| (97)
+   |  |  |  |     +--Ceum_RefSeq_SECISBP2L_XP_082430522.1
+   |  |  +--| (90)
+   |  |     |                                +--OKI_gold_SBP2
+   |  |     |                             +--| (84)
+   |  |     |                             |  +--OSKA_gold_SBP2
+   |  |     |                      +------| (100)
+   |  |     |                      |      +--OdB3_gold_SBP2
+   |  |     +----------------------| (100)
+   |  |                            |  +-----Oalb_gold_SBP2
+   |  |                            +--| (96)
+   |  |                               +------Olon_gold_SBP2_2
+   +--| (92)
+      |           +--Bflo_RefSeq_SECISBP2L_XP_035670302.1
+      |        +--| (99)
+      |        |  +--Bbel_RefSeq_SECISBP2L_XP_019622383.1
+      +--------| (100)
+               +--Blan_RefSeq_SECISBP2L_XP_066269754.1
 
 
 Consensus tree in newick format: 
 
-(Aplysia_californica_XP_012941628.1:1.1369341012,((Crassostrea_gigas_EKC30124.1:0.5493093851,Octopus_bimaculoides_KOF78133.1:0.3930690576)98:0.0780118522,Capitella_teleta_ELU11469.1:0.6837874780)98:0.1452390409,((Acanthaster_planci_XP_022100524.1:1.0382937211,((Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0096966486,Bbel_RefSeq_SECISBP2L_XP_019622383.1:0.0424088787)97:0.0130000389,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0024808938)100:0.9534409947)50:0.1131048023,((((((Ophiophagus_hannah_ETE66291.1:0.0216850986,(((Mmus_RefSeq_SECISBP2L_NP_808276.2:0.1013127022,Human_SECISBP2L_NP_001180418.1:0.0144492934)100:0.0745704680,Gavia_stellata_RefSeq_SECISBP2L_XP_059680107.1:0.0492716166)68:0.0178151412,Xenopus_laevis_RefSeq_SECISBP2L_XP_041442721.1:0.2356914185)91:0.0325358414)93:0.0791331573,Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1:0.1858672301)64:0.0254077773,(Tetraodon_nigroviridis_CAF99852.1:0.1245851116,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.1804704700)98:0.0919899818)97:0.3255528253,(Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1:0.0653072566,Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1:0.0000026504)100:2.8948689528)65:0.0204960732,(((Chelonia_mydas_EMP36289.1:0.4794971708,(Myotis_davidii_ELK38163.1:0.0519047428,(Mmus_RefSeq_SECISBP2_NP_083555.1:0.2283857374,Human_SECISBP2_NP_076982.3:0.2195334738)98:0.1257498576)99:0.8389443457)96:0.3980533251,(Drer_RefSeq_SECISBP2_XP_068077667.1:0.2064720434,Lampetra_planeri_RefSeq_LOWQ_XP_078478270.1:0.7543556545)100:0.8621298158)100:0.7039628610,(Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2:1.0009123418,(Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2:0.0291489029,Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1:0.1397582302)100:2.3228598749)100:1.1693205945)92:0.2796297215)99:0.3902943847,(((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.8099201702,Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2817430653)100:0.4519524159,((((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0000026007,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0381029542)100:0.8255098721,Ceum_RefSeq_SECISBP2L_XP_082430522.1:0.3431720785)46:0.0516231647,(Tdem_RefSeq_SECISBP2L_XP_082804045.1:1.1887708877,(Atur_RefSeq_SECISBP2L_XP_082454464.1:0.3997033512,Clep_RefSeq_SECISBP2L_XP_076808270.1:0.3716780372)91:0.0585952075)73:0.0979865804)25:0.0584579431,((Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.1540178633,Amen_RefSeq_SECISBP2L_XP_082849143.1:0.2131204547)100:0.1433909221,Aasp_RefSeq_SECISBP2L_XP_083240643.1:0.2542877576)93:0.1136085325)48:0.1224204437)92:0.4555992912,((OKI_gold_SBP2:0.0698994993,(OSKA_gold_SBP2:0.0441034962,OdB3_gold_SBP2:0.0074439878)94:0.0808280524)96:0.6767293480,(Oalb_gold_SBP2:0.6301174842,Olon_gold_SBP2_2:0.6754901915)97:0.3571199291)100:2.3759157714)91:0.3077772719)96:0.4195013741)98:0.2998367184);
+(Aplysia_californica_XP_012941628.1:0.9994631009,((Crassostrea_gigas_EKC30124.1:0.4977367587,Octopus_bimaculoides_KOF78133.1:0.4887304236)98:0.0932958041,Capitella_teleta_ELU11469.1:0.6199171685)99:0.2151998876,((Acanthaster_planci_XP_022100524.1:0.5473715883,((Saccoglossus_kowalevskii_RefSeq_XP_085350664.1:0.4134691453,Ptychodera_flava_RefSeq_XP_070547288.1:0.2666403764)100:0.3580854398,(Strongylocentrotus_purpuratus_RefSeq_XP_030855964.1:0.4742659185,Anneissia_japonica_RefSeq_XP_033127285.1:0.6846565914)86:0.1265897840)87:0.1356285269)100:0.6120256368,(((((((((Ophiophagus_hannah_ETE66291.1:0.0623840976,((Mmus_RefSeq_SECISBP2L_NP_808276.2:0.1016174181,Human_SECISBP2L_NP_001180418.1:0.0235523755)99:0.0461399365,Gallus_gallus_RefSeq_SECISBP2L_XP_046754992.1:0.0687738343)85:0.0190128041)85:0.0247988718,Xenopus_tropicalis_RefSeq_SECISBP2L_NP_001164297.1:0.1913934009)98:0.0447151709,Latimeria_chalumnae_RefSeq_SECISBP2L_XP_005998368.1:0.0714635234)98:0.0735394903,Mustelus_asterias_RefSeq_SECISBP2L_XP_078097525.1:0.1808375169)91:0.0571450985,(Tetraodon_nigroviridis_CAF99852.1:0.1356966634,Drer_RefSeq_SECISBP2L_XP_068071091.1:0.2303900093)98:0.0850222329)97:0.2395632682,(Myxine_glutinosa_RefSeq_LOC137424249_XP_078632098.1:0.0108672619,Eptatretus_burgeri_RefSeq_LOC147024609_XP_085740792.1:0.0545468584)100:2.4167985114)90:0.1733642875,(((((Chelonia_mydas_EMP36289.1:0.1406152058,Gallus_gallus_RefSeq_SECISBP2_XP_040512279.1:0.4645096093)99:0.2743459446,Latimeria_chalumnae_RefSeq_SECISBP2_XP_064412058.1:0.7839400531)80:0.0994095123,((Mmus_RefSeq_SECISBP2_NP_083555.1:0.1497026360,Human_SECISBP2_NP_076982.3:0.1739295369)100:0.6506733719,Xenopus_tropicalis_RefSeq_SECISBP2_NP_001090731.1:0.7792859140)93:0.0470931615)92:0.2038108224,Drer_RefSeq_SECISBP2_XP_068077667.1:1.1918080244)100:1.0511117632,(Petromyzon_marinus_RefSeq_LOC116950782_XP_032824734.2:1.2019504353,(Myxine_glutinosa_RefSeq_LOC137431572_XP_067979138.2:0.1099130831,Eptatretus_burgeri_RefSeq_LOC147030032_XP_085729825.1:0.1080843788)100:3.0840400683)99:1.3623157133)92:0.2218111338)100:0.3860509723,(((((Bsch_RefSeq_SECISBP2L_XP_080176725.1:0.7576522488,Scla_RefSeq_SECISBP2L_XP_039256732.2:0.2758212929)100:0.6636109362,((Pmam_RefSeq_SECISBP2L_XP_079949835.1:0.1300029516,Amen_RefSeq_SECISBP2L_XP_082849143.1:0.2121425160)100:0.1712508274,Aasp_RefSeq_SECISBP2L_XP_083240643.1:0.2354750171)96:0.0724183255)48:0.1017847957,((Cint_RefSeq_SECISBP2L_XP_078482116.1:0.0049229356,Crob_RefSeq_SECISBP2L_XP_026689529.1:0.0277411940)100:0.7732290039,(Tdem_RefSeq_SECISBP2L_XP_082804045.1:1.2501386403,(Atur_RefSeq_SECISBP2L_XP_082454464.1:0.3343304573,Clep_RefSeq_SECISBP2L_XP_076808270.1:0.4020308346)89:0.0354193965)50:0.1304616620)35:0.0334627840)26:0.0624406322,Ceum_RefSeq_SECISBP2L_XP_082430522.1:0.3171260855)97:0.6586942728,(((OKI_gold_SBP2:0.1501725406,OSKA_gold_SBP2:0.0414202216)84:0.0073879173,OdB3_gold_SBP2:0.0000022051)100:0.6988183528,(Oalb_gold_SBP2:0.6282886433,Olon_gold_SBP2_2:0.7554507383)96:0.3404753401)100:2.2906272422)90:0.1767368750)94:0.2479332903,((Bflo_RefSeq_SECISBP2L_XP_035670302.1:0.0261072247,Bbel_RefSeq_SECISBP2L_XP_019622383.1:0.0499367422)99:0.0205314316,Blan_RefSeq_SECISBP2L_XP_066269754.1:0.0130375723)100:0.9659769688)92:0.1920051639)99:0.2811573986);
 
 ALISIM COMMAND
 --------------
 To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
 
---alisim simulated_MSA -t results/trees/domains/SBP2.L7Ae.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0692475,0.0546471,0.0387953,0.0591523,0.024028,0.0514767,0.0971133,0.0518104,0.0208577,0.0487235,0.0886868,0.0706658,0.0251126,0.0229434,0.0378775,0.0886868,0.0453863,0.00617387,0.0207742,0.0778408}+G4{0.48703}" --length 318
+--alisim simulated_MSA -t results/trees/domains/SBP2.L7Ae.pmsf.treefile -m "LG+SSF{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}+F{0.0689701,0.0525203,0.038647,0.0644778,0.0236507,0.0486886,0.107155,0.0529167,0.0206778,0.0466407,0.0837022,0.069961,0.0217348,0.0210742,0.0384488,0.0906388,0.0482262,0.00587965,0.0206118,0.0753782}+G4{0.480832}" --length 366
 
 To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
 
@@ -282,7 +306,7 @@ For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
 TIME STAMP
 ----------
 
-Date and time: Mon Nov  9 23:24:43 2026
-Total CPU time used: 431.474602 seconds (0h:7m:11s)
-Total wall-clock time used: 55.53670364 seconds (0h:0m:55s)
+Date and time: Tue Nov 10 16:35:25 2026
+Total CPU time used: 437.925406 seconds (0h:7m:17s)
+Total wall-clock time used: 57.7341545 seconds (0h:0m:57s)
 
