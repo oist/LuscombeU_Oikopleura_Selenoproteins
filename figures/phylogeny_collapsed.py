@@ -27,7 +27,7 @@ BANDS = {"outgroup": ("#d5d8dc", "related family (outgroup)"), "paralog": ("#e8d
 COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Cephalochordates": "#117a65", "Mammals": "#2471a3", "Birds": "#2471a3",
            "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d",
            "Cartilaginous fishes": "#2471a3", "Jawless fishes": "#2471a3", "Lobe-finned fishes": "#2471a3"}
-TITLES = {"SBP2": "SECIS-binding proteins"}   # figure titles (default: the family name)
+TITLES = {"pstk": "PSTK", "SEPHS2": "SEPHS", "SBP2": "SECIS-binding proteins"}   # figure titles
 
 
 def leaf_group(name, groups, taxa):

@@ -199,6 +199,8 @@ sbp2-lba-domains:
 
 sbp2-summaries:
 	$(MAKE) machinery-lba-figures machinery-domain-figures
+	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2   # same drawing code for every family (2026-11-10)
+	python3 figures/phylogeny_collapsed.py --families pstk SEPHS2 --trees results/trees/C20 --figures results/trees/C20
 	$(MAKE) machinery-domain-figures DOMAIN_SUFFIX=.pmsf
 	$(MAKE) machinery-clade-supports
 	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
