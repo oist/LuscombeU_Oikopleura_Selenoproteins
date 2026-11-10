@@ -100,8 +100,10 @@ machinery-rbh:
 # script resumes from the IQ-TREE checkpoints.
 # SECIS-binding proteins (2026-11-09): deuterostome proteins only, rooted on mollusc and annelid proteins, with the
 # proteins of curation/extra_tree_proteins.faa (more ascidians, a third amphioxus, shark, frog, bird, lampreys and
-# hagfishes: BLASTP searches by Charles); the profile sequences of other groups (non-animals, ecdysozoans, flatworms,
-# unclassified accessions) are left out (recorded in results/trees/SBP2.removed.tsv)
+# hagfishes: BLASTP searches by Charles; 2026-11-10: both paralogs of chicken, Xenopus tropicalis and coelacanth, two
+# hemichordates, two echinoderms); the profile sequences of other groups (non-animals, ecdysozoans, flatworms,
+# unclassified accessions) and the truncated proteins of curation/tree_exclusions.tsv are left out (recorded in
+# results/trees/SBP2.removed.tsv)
 SBP2_TREE_OPTS = --max-per-group 3 --min-fraction 0.2 --clipkit-mode gappy --clipkit-gaps 0.5 \
   --keep-groups Mammals Birds Reptiles Amphibians "Ray-finned fishes" "Lobe-finned fishes" "Cartilaginous fishes" \
   "Jawless fishes" Cephalochordates "Other tunicates" Appendicularians Echinoderms Hemichordates Molluscs Annelids \
@@ -179,7 +181,7 @@ pstk-summaries:
 	$(MAKE) machinery-table   # after the clade supports, which give its SECIS-binding protein row
 
 # SECIS-binding protein analyses again after a change of its sequence set only (2026-11-09: deuterostome set rooted on
-# protostomes, SBP2_TREE_OPTS). The SBP2 outputs of each analysis are removed; the scripts keep the finished analyses
+# protostomes, SBP2_TREE_OPTS; 2026-11-10: truncated proteins removed, full-length ones added). The SBP2 outputs of each analysis are removed; the scripts keep the finished analyses
 # of PSTK and SEPHS2. On Deigo: sbp2-trees (an hour or two), then sbp2-lba-domains (a day or more), then
 # sbp2-summaries (minutes).
 sbp2-trees:

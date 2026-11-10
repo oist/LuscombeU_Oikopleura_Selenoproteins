@@ -26,7 +26,8 @@ BANDS = {"outgroup": ("#d5d8dc", "related family (outgroup)"), "paralog": ("#e8d
          "named": ("#d4efdf", "clade of the human gene that names the family")}
 COLOURS = {"Appendicularians": "#c0392b", "Other tunicates": "#e67e22", "Cephalochordates": "#117a65", "Mammals": "#2471a3", "Birds": "#2471a3",
            "Reptiles": "#2471a3", "Amphibians": "#2471a3", "Ray-finned fishes": "#2471a3", "outgroup": "#7f8c8d",
-           "Cartilaginous fishes": "#2471a3", "Jawless fishes": "#2471a3"}
+           "Cartilaginous fishes": "#2471a3", "Jawless fishes": "#2471a3", "Lobe-finned fishes": "#2471a3"}
+TITLES = {"SBP2": "SECIS-binding proteins"}   # figure titles (default: the family name)
 
 
 def leaf_group(name, groups, taxa):
@@ -82,7 +83,8 @@ def draw(fam, a, taxa):
             if out:   # on an ingroup leaf first, so that an outgroup that is a clade of the unrooted tree is one here
                 t.root_with_outgroup(next(x for x in t.get_terminals() if x not in out))
                 m = t.is_monophyletic(out)
-                t.root_with_outgroup(m if m else out[0])
+                if m: t.root_with_outgroup(m, outgroup_branch_length=(m.branch_length or 0) / 2)   # bifurcating root
+                else: t.root_with_outgroup(out[0])
             elif fam == "SBP2" and nonanimal: t.root_with_outgroup(nonanimal if t.is_monophyletic(nonanimal) else nonanimal[0])
             elif prok and t.is_monophyletic(prok): t.root_with_outgroup(prok)
             else: t.root_at_midpoint()
@@ -127,7 +129,9 @@ def draw(fam, a, taxa):
         name = display_label(name, fam, g)
         if g in KEEP: return re.sub(r"\.(homologue|selenocysteine|glycine|alanine|serine|unaligned|pseudo)$", r" (\1)",
                                     name.replace("|", " ").replace("_curated", " curated"))
-        return name if "(" in name else name.split("|")[0][:40]
+        if "(" in name: return name
+        # other leaves: underscores as spaces, except in accessions (XP_...), without the word RefSeq
+        return re.sub(r"_(?!\d)", " ", name.split("|")[0].replace("_RefSeq_", "_"))[:48]
     n = len(tree.get_terminals())
     fig, ax = plt.subplots(figsize=(9, max(4, 0.22 * n)))
     Phylo.draw(tree, axes=ax, do_show=False, label_func=lambda c: short(c.name) if c.is_terminal() else None,
@@ -164,7 +168,7 @@ def draw(fam, a, taxa):
                         bbox_to_anchor=(0.01, 0.0), ncol=len(used), fontsize=6, frameon=False)
     ax.set_yticks([]); ax.set_ylabel("")
     model = f", {a.model_label}" if a.model_label else ""
-    ax.set_title(f"{fam}{model}\ngroups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
+    ax.set_title(f"{TITLES.get(fam, fam)}{model}\ngroups of one taxon collapsed; nodes with ultrafast bootstrap < {a.min_support:.0f} "
                  f"collapsed; supports >= 70 shown", fontsize=8)
     fig.tight_layout(rect=(0, bottom, 0.88, 1))
     for ext in a.formats: fig.savefig(f"{a.figures}/phylogeny_{fam}_collapsed{a.suffix}.{ext}", dpi=200)

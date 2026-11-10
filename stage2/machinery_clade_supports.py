@@ -31,8 +31,9 @@ APP_SEC = r"^(OdB3|OSKA|OKI)_gold_SEPHS2$|^Oikopleura_dioica\.SPS2|^(Oalb|Ovan|O
 FUNGI = r"Smittium|Zancudomyces"
 VERT = ("Mammals", "Birds", "Reptiles", "Amphibians", "Ray-finned fishes", "Lobe-finned fishes", "Cartilaginous fishes",
         "Jawless fishes")
-GNATHO_SBP2 = r"^(Human|Mmus_RefSeq|Drer_RefSeq)_SECISBP2_"    # the vertebrate RefSeq proteins of each paralog
-GNATHO_SBP2L = r"^(Human|Mmus_RefSeq|Drer_RefSeq)_SECISBP2L_"
+GNATHO_SBP2 = r"_SECISBP2_"    # vertebrate RefSeq proteins named after each paralog (human, mouse, zebrafish and,
+GNATHO_SBP2L = r"_SECISBP2L_"  # since 2026-11-10, chicken, frog and coelacanth; with T(*VERT), as tunicate names
+                               # carry the best human hit)
 
 
 def T(*groups):
@@ -87,8 +88,9 @@ ENTRIES = {
         ("vertebrate proteins (SECISBP2, SECISBP2L and cyclostome proteins)", "clade", T(*VERT)),
         ("tunicate and vertebrate proteins", "clade", T("Appendicularians", "Other tunicates", *VERT)),
         ("deuterostome proteins (all but the outgroup)", "clade", NOT(T("outgroup")), [T("outgroup")]),
-        ("vertebrate SECISBP2 (mouse, zebrafish, human)", "mrca", R(GNATHO_SBP2)),
-        ("vertebrate SECISBP2L (mouse, zebrafish, human)", "mrca", R(GNATHO_SBP2L)),
+        ("vertebrate SECISBP2 (proteins named SECISBP2)", "mrca", AND(T(*VERT), R(GNATHO_SBP2))),
+        ("vertebrate SECISBP2L (proteins named SECISBP2L)", "mrca", AND(T(*VERT), R(GNATHO_SBP2L))),
+        ("hemichordates and echinoderms", "clade", T("Hemichordates", "Echinoderms")),
         ("human SECISBP2 and SECISBP2L", "mrca", R("^Human_SECISBP2")),
         ("tunicate proteins", "position", T("Appendicularians", "Other tunicates")),
         ("F. borealis", "position", R("^Fbor_")),

@@ -1,0 +1,9 @@
+# Sequences left out of the machinery trees by name (stage2/machinery_phylogeny.py --exclusions). The pattern is a
+# Python regular expression searched in the final sequence name; the reason is written to
+# results/trees/<family>.removed.tsv. Decision of 2026-11-10 (Charles): proteins that are obviously truncated, judged
+# from their length, distract the reader and are left out, except the gold-standard appendicularian proteins, which are
+# the subject of the trees. Lengths are those of results/trees/SBP2.faa of commit 88521fd.
+family	pattern	reason
+SBP2	^Fbor_	partial prediction (Selenoprofiles, 128 residues; no gold-standard model for F. borealis)
+SBP2	^(Csav|Hror|Pege|Stho)_	partial prediction of a genome without RefSeq proteins (Selenoprofiles, profile region only; 188 to 273 residues)
+SBP2	^Myotis_davidii_ELK38163	partial protein (591 residues; the mammalian RefSeq SECISBP2 and SECISBP2L have 854 to 1101)

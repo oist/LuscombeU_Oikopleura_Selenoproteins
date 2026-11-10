@@ -25,13 +25,18 @@ genome in the samplesheet are added from --extra-proteins (headers family|genome
 2026-11-07: the PSTK of B. belcheri and the full-length PSTK of B. floridae, whose RefSeq protein on the B. floridae
 genome is a 106-residue fragment, taken from the B. floridae haplotype of the RefSeq annotation of a B. floridae x B.
 japonicum assembly; 2026-11-09: SECIS-binding proteins of five more ascidians, B. belcheri, a shark, a frog, a bird,
-lampreys and hagfishes, from BLASTP searches by Charles). Predictions shorter than --min-fraction of the median profile
+lampreys and hagfishes, from BLASTP searches by Charles; 2026-11-10: both paralogs of a bird, a frog and the
+coelacanth, two hemichordates and two echinoderms, from BLASTP searches by Charles restricted to one taxon each, and
+the partial lamprey proteins removed). Extra proteins of hemichordates and echinoderms are in group "profile", like
+the profile sequences of these animals. Predictions shorter than --min-fraction of the median profile
 length are left out (fragments make trees unstable). --keep-groups restricts the profile sequences to some taxonomic
 groups (config/taxon_groups.tsv; the others, unclassified accessions included, are left out and recorded), and
 --outgroup-groups marks the profile sequences of some groups as outgroup, on which the trees are rooted (2026-11-09:
 the SECIS-binding proteins of deuterostomes, rooted on those of molluscs and annelids).
 Curation, recorded in <out>/<family>.removed.tsv: the stage 1 predictions of the human genome are replaced by the
-human RefSeq proteins of the family; identical sequences are kept once (genome-derived names preferred); after a first
+human RefSeq proteins of the family; sequences matching a pattern of --exclusions (curation/tree_exclusions.tsv, for
+example truncated proteins) are left out with the reason of the table; identical sequences are kept once
+(genome-derived names preferred); after a first
 alignment, sequences covering less than --min-core of the core columns (columns where at least half of the sequences
 have a residue) are removed and the rest realigned, except appendicularian, curated and tunicate sequences, which are
 the subject of the trees and are kept even when partial.
@@ -45,6 +50,7 @@ import argparse, glob, gzip, os, re, statistics, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from machinery_rbh import SELENOPROTEIN_GENES   # human genes of each selenoprotein family
 from taxonomy import load_taxa, classify, display_label   # taxonomic group of a sequence name; tip labels
+from taxonomy import VERTEBRATES as TAXON_VERTEBRATES     # vertebrate groups of config/taxon_groups.tsv
 
 APPENDICULARIANS = {"OKI", "OSKA", "OdB3", "Olon", "Oalb", "Ovan", "Bsty", "Mery", "Fbor"}
 TUNICATES = {"Cint", "Crob", "Csav", "Hror", "Scla", "Tdem", "Bsch", "Pmam", "Pege", "Stho",
@@ -85,6 +91,13 @@ def read_fasta(path):
 def clean(s): return re.sub(r"[^A-Za-z]", "", s).upper().replace("U", "X")
 
 
+def read_exclusions(path):
+    """Rows (family, pattern, reason) of the exclusion table; none when the file is missing."""
+    if not path or not os.path.exists(path): return []
+    rows = [l.rstrip("\n").split("\t") for l in open(path) if l.strip() and not l.startswith("#")]
+    return [tuple(r[:3]) for r in rows[1:] if len(r) >= 3]
+
+
 def label(s): return re.sub(r"[^A-Za-z0-9_.-]+", "_", s).strip("_")[:60]
 
 
@@ -113,6 +126,9 @@ def main():
     ap.add_argument("--gold-genomes", nargs="*", default=["OKI", "OSKA", "OdB3"])
     ap.add_argument("--exclude-sequences", nargs="*", default=[],
                     help="regular expressions: sequences whose (final) name matches one are left out (recorded in removed.tsv)")
+    ap.add_argument("--exclusions", default="curation/tree_exclusions.tsv",
+                    help="table family, pattern, reason: sequences of the family whose name matches the pattern are "
+                    "left out, with the reason recorded in removed.tsv (for example truncated proteins)")
     ap.add_argument("--references", default="curation/mariotti2015_sps.faa",
                     help="labelled reference proteins, header <family>|<label>|<source>")
     ap.add_argument("--genomes", default="data/genomes", help="RefSeq proteins and annotations of the genomes")
@@ -201,7 +217,12 @@ def main():
         if a.extra_proteins and os.path.exists(a.extra_proteins):
             for n, s in read_fasta(a.extra_proteins):
                 f = n.split()[0].split("|")
-                if f[0] == fam: add(f"{f[1]}|{f[2]}", s, kind(f[1]))
+                if f[0] != fam: continue
+                # genome codes: tunicate, cephalochordate or vertebrate; species names: vertebrate, or "profile" for
+                # other animals (hemichordates, echinoderms), as their profile sequences
+                k = kind(f[1]) if f[1] in TUNICATES | CEPHALOCHORDATES | VERTEBRATES or \
+                    classify(f[1], taxa) in TAXON_VERTEBRATES else "profile"
+                add(f"{f[1]}|{f[2]}", s, k)
         for faa in sorted(glob.glob(f"{a.stage1}/*.selenoprofiles.faa")):
             g = os.path.basename(faa).split(".")[0]
             if g not in TUNICATES | VERTEBRATES | CEPHALOCHORDATES or g in replaced: continue
@@ -266,6 +287,10 @@ def main():
             pat = next((x for x in a.exclude_sequences if re.search(x, n)), None)   # with one leaf per species
             if pat:
                 skipped.append((n, groups[n], f"left out by name (--exclude-sequences {pat})")); seqs.pop(n); groups.pop(n)
+        for f, pat, why in read_exclusions(a.exclusions):   # curated exclusions with their reason
+            if f != fam: continue
+            for n in [x for x in seqs if re.search(pat, x)]:
+                skipped.append((n, groups[n], f"{why} ({os.path.basename(a.exclusions)})")); seqs.pop(n); groups.pop(n)
         base = f"{a.out}/{fam}"
         removed = skipped + deduplicate(seqs, groups)
         write_set(base, seqs, groups, removed)
@@ -310,7 +335,8 @@ def draw(treefile, groups, fam, figdir, formats=("png", "pdf")):
             if out:   # on an ingroup leaf first, so that an outgroup that is a clade of the unrooted tree is one here
                 t.root_with_outgroup(next(x for x in t.get_terminals() if x not in out))
                 m = t.is_monophyletic(out)
-                t.root_with_outgroup(m if m else out[0])
+                if m: t.root_with_outgroup(m, outgroup_branch_length=(m.branch_length or 0) / 2)   # bifurcating root
+                else: t.root_with_outgroup(out[0])
             elif prok and t.is_monophyletic(prok): t.root_with_outgroup(prok)
             else: t.root_at_midpoint()
         except Exception:

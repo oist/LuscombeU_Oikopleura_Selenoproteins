@@ -2886,3 +2886,30 @@ no earlier step waits for them.
   identifiers. figures/machinery_scheme.py keeps "SECISBP2/SECISBP2L" (Introduction, human genes). Figures to redraw on
   Deigo (make sbp2-figures; local matplotlib 3.11 renders another font than the container's 3.10.6, and installing
   3.10.6 here was not allowed).
+- SECIS-binding protein set without truncated proteins (2026-11-10; Charles: "There are a few sequences that are
+  obviously truncated, judging from their length. They may be a distraction for the reader. Can we remove them?",
+  then BLASTP searches with the Ciona protein restricted to one taxon each: Hyperoartia, Myxini, Chondrichthyes,
+  Xenopus, Gallus, Hemichordata, Thaliacea, Echinodermata, Latimeria). Removed, with reasons in
+  curation/tree_exclusions.tsv (new; stage2/machinery_phylogeny.py --exclusions, reason written to removed.tsv): the
+  Selenoprofiles predictions of F. borealis (128 residues) and of the four tunicates without RefSeq proteins (C.
+  savignyi, H. roretzi, Pegea, S. thompsoni; 188-273 residues, profile region only), Myotis davidii ELK38163.1 (591;
+  mammalian SECISBP2 854-858); deleted from curation/extra_tree_proteins.faa: L. planeri XP_078478270.1 (490, LOW
+  QUALITY) and Petromyzon XP_032837153.2 (565; no full-length protein of that lamprey gene in the Hyperoartia
+  results), and X. laevis and Gavia SECISBP2L (replaced by species with both paralogs). Added: chicken, X.
+  tropicalis and coelacanth SECISBP2 and SECISBP2L (longest isoform per gene, or RefSeq NP), Saccoglossus
+  kowalevskii, Ptychodera flava (first hemichordates), Strongylocentrotus purpuratus and the crinoid Anneissia
+  japonica. Length is not a truncation criterion for SECISBP2: X. tropicalis SECISBP2 is the RefSeq NP_001090731.1
+  with 561 residues (X. laevis 558), zebrafish 637, chicken 929. Chondrichthyes: the 100 hits are all SECISBP2L
+  isoforms (search limit reached; a shark SECISBP2 may exist below it). Extra proteins of hemichordates and
+  echinoderms get group "profile" (machinery_phylogeny.py; before, every species-named extra protein was "vertebrate").
+  machinery_clade_supports.py: vertebrate SECISBP2 / SECISBP2L entries take every vertebrate protein named after the
+  paralog; new entry hemichordates and echinoderms. Figures: root on the middle of the outgroup stem (the outgroup was
+  drawn as a trifurcation, Aplysia apart), title "SECIS-binding proteins", labels of leaves outside the tunicates and
+  amphioxus without "RefSeq" and with spaces (figures/phylogeny_collapsed.py; also applies to the PSTK and SEPHS
+  figures when redrawn). Local preview (scratchpad; MAFFT L-INS-i, ClipKIT gappy 0.5, 51 sequences, 998 columns,
+  JTT+R5, 1000 ultrafast bootstraps; the core filter would keep X. tropicalis SECISBP2 at 52% of core columns):
+  oikopleurids 100, tunicates 99, tunicates + vertebrates 95, vertebrates 100, jawed SECISBP2 with lamprey
+  LOC116950782 and hagfish H1 100, jawed SECISBP2L with hagfish H2 88, each jawed paralog 100, hemichordates +
+  echinoderms 100; amphioxus groups with hemichordates and echinoderms (72) instead of with tunicates and vertebrates
+  (the published chordate clade). Deigo: make sbp2-trees, sbp2-lba-domains, sbp2-summaries; then the text (Results,
+  Methods sampling and counts, Table MACHINERY numbers, F. borealis and partial lamprey sentences).
