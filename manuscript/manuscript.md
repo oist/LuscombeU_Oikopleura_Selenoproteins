@@ -18,7 +18,11 @@ which have lost selenoprotein genes or replaced their selenocysteine by cysteine
 @Tico2026review; @Tico2026vertebrates]. Selenocysteine is inserted by a dedicated machinery. In eukaryotes, a stem–loop
 structure in the 3′ untranslated region of selenoprotein mRNAs, the selenocysteine insertion sequence (SECIS) element,
 is bound by SECIS-binding protein 2 (SECISBP2), which recruits the selenocysteine-specific elongation factor eEFSec
-(EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014; @Stasuk2026]. Selenocysteine is
+(EEFSEC) and the selenocysteine-charged tRNA-Sec to the UGA codon [@Copeland2003; @Labunskyy2014; @Stasuk2026]. Vertebrates
+have a second SECIS-binding protein, SECISBP2L, from a duplication in early vertebrates [@Donovan2009], which also
+supports selenoprotein synthesis: zebrafish embryos without Sbp2 still make a subset of selenoproteins, and only the loss of both genes
+abolishes their synthesis [@Kiledjian2022], and selenoprotein synthesis that depends on SECISBP2L is required for
+oligodendrocyte differentiation [@Dai2022]. Selenocysteine is
 synthesised on its tRNA: seryl-tRNA-Sec is phosphorylated by O-phosphoseryl-tRNA-Sec kinase (PSTK), then converted to
 selenocysteinyl-tRNA-Sec by selenocysteine synthase (SecS, encoded by SEPSECS), using selenophosphate made by
 selenophosphate synthetase 2 (SEPHS2) [@Xu2006]. Archaea follow the same route, whereas bacteria have neither PSTK
@@ -371,7 +375,7 @@ at these two introns. --> The OKI2018 SEPHS_b protein (635 residues) carries, af
 242 residues, also present in its RefSeq model. In *O. longicauda*, *O. albicans* and *O. vanhoeffeni*, which have no transcript data, the 15 models
 come from the predictions, alone or joined to the exons of protein-to-genome alignments of the *O. dioica* proteins
 (miniprot), or, for EEFSEC, from alignments of the *O. dioica* proteins (exonerate) set by the curator; all but *O.
-longicauda* EEFSEC have start and stop codons, although three SECIS-binding proteins start downstream of the start of the others (below). The EEFSEC predictions of the three species used non-canonical sites
+longicauda* EEFSEC have start and stop codons, although three SECIS-binding proteins start downstream of the start of the others (see the SECISBP2/2L section). The EEFSEC predictions of the three species used non-canonical sites
 where the alignments find other junctions: a copy of part of the first exon 3.8 kb upstream joined by a GT-TG intron
 (*O. albicans*), a 36-nucleotide TT-AG intron inside an exon (*O. albicans*), an AC-AG intron 12 nucleotides from a
 GT-AG one (*O. vanhoeffeni*), an AT-TG intron 16 nucleotides from a GT-AG one and a 71-nucleotide CA-AA intron (*O.
@@ -385,14 +389,7 @@ sites 6 nucleotides downstream would add two residues absent from the *O. dioica
 data test them. <!-- EEFSEC of the three species and OKI2018: curator rows of 2026-11-05 in
 curation/machinery_overrides.tsv (exonerate protein2genome of the O. dioica gold-standard proteins on
 results/gene_regions/EEFSEC, each junction rescanned by the global alignment score of the whole protein to the OSKA2016
-and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The four SECIS-binding proteins (two loci in *O. longicauda*; Figure SBP2 for *O. dioica*) align to the
-OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
-that protein. Only the *O. albicans* protein covers the N-terminal region of the *O. dioica* proteins (from the residue
-aligned to OdB3 28, 43 to 54% identical over OdB3 residues 1 to 200); the two *O. longicauda* proteins and the *O.
-vanhoeffeni* protein start at residues aligned to OdB3 202, 105 and 201, and are marked N-terminally incomplete: the
-*O. albicans* N-terminus, aligned to their regions, finds three to five more exons upstream (up to 10 kb away), which
-the predictions, seeded with *O. dioica* proteins, missed, and which were not curated
-(`curation/machinery_incomplete.tsv`). The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (2 kb
+and OdB3 proteins); Deigo run of 2026-11-05 (commit 5829a72), which gave the counts of the paragraph. --> The curator added two exons that the predictions missed, the last exon of *O. albicans* PSTK (2 kb
 downstream, found by tblastn with the C-terminal region of the *O. vanhoeffeni* protein) and the first exon of *O. albicans* SEPSECS (31 residues, found by aligning the *O. vanhoeffeni* protein;
 the prediction started at an internal methionine, 45 residues downstream), and moved an acceptor of *O. vanhoeffeni*
 SEPSECS from a TT-AA site to the AG 9 nucleotides upstream, which alignments of the OKI2018 and *O. albicans* proteins
@@ -1000,10 +997,10 @@ tested.
 
 ### SECISBP2/2L
 
-The SECIS-binding protein needs only small corrections to its public annotations (Figure SBP2): the OdB3 GenBank
-model is unchanged, the OKI2018 RefSeq model needs one intron moved, and the OSKA2016 ANISEED model one intron added
-(GC-AG, present in the two other annotations) and one moved. The moved intron is the third; every transcript that
-splices it uses a GA (OKI2018, OdB3) or GG (OSKA2016) donor site instead of GT. The tree of the SECIS-binding proteins
+The public annotations of the SECIS-binding protein need only minor corrections (Figure SBP2). The OdB3 GenBank
+model is identical to the gold standard. The OSKA2016 ANISEED model lacks a GC-AG intron that the two other
+annotations have, and the OKI2018 and OSKA2016 models place the junctions of the third intron elsewhere than the
+transcripts, which use a GA or GG donor site. The tree of the SECIS-binding proteins
 recovers the duplication of SECISBP2 and SECISBP2L in early vertebrates [@Donovan2009], and confirms the
 appendicularian protein as their co-ortholog (Figure TREES). <!-- Annotations (results/tables/gold_standard_machinery.tsv,
 figures/inputs/reannotation_SBP2.tsv): OKI2018 RefSeq XP_081641373.1 places the third intron 11 nucleotides away at
@@ -1019,6 +1016,15 @@ tunicates are of vertebrates); amphioxus with tunicates and vertebrates 76 / 79,
 echinoderms 100 everywhere; vertebrate SECISBP2 and SECISBP2L 99-100; lamprey LOC116950782 with hagfish LOC137431572
 and LOC147030032 as sister group of jawed SECISBP2 98 / 99; hagfish LOC137424249 and LOC147024609 as sister group of
 jawed SECISBP2L 91 / 91. -->
+
+In the other appendicularians, the four SECIS-binding proteins (two loci in *O. longicauda*) align to the
+OKI2018 protein only from a residue between 33 and 240, on short contigs or in the divergent N-terminal region of
+that protein. Only the *O. albicans* protein covers the N-terminal region of the *O. dioica* proteins (from the residue
+aligned to OdB3 28, 43 to 54% identical over OdB3 residues 1 to 200); the two *O. longicauda* proteins and the *O.
+vanhoeffeni* protein start at residues aligned to OdB3 202, 105 and 201, and are marked N-terminally incomplete: the
+*O. albicans* N-terminus, aligned to their regions, finds three to five more exons upstream (up to 10 kb away), which
+the predictions, seeded with *O. dioica* proteins, missed, and which were not curated
+(`curation/machinery_incomplete.tsv`).
 
 ![Figure SBP2](../figures/machinery_SBP2.png)
 
@@ -1187,7 +1193,8 @@ Selenoprofiles predicts homologs of its profile families, not necessarily orthol
 therefore compared each appendicularian machinery protein with the human proteome (reciprocal best hits; Table
 MACHINERY). SecS proteins were reciprocal best hits of human SEPSECS in all nine genomes and hit no other human protein
 (E ≤ 0.001); eEFSec proteins were reciprocal best hits of human EEFSEC in seven, 154 to 266 bits ahead of the next human
-gene, TUFM. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP, 60 bits ahead of NCL.
+gene, TUFM. The SECp43 of *F. borealis* was a reciprocal best hit of TRNAU1AP, 60 bits ahead of NCL. PSTK, SEPHS and the
+SECIS-binding protein, whose best hits do not settle their orthology, were placed in trees (Figure TREES; Methods).
 
 ![Figure TREES, SEPHS](../figures/phylogeny_SEPHS2_collapsed_pmsf.png)
 ![Figure TREES, PSTK](../figures/phylogeny_pstk_collapsed_pmsf.png)

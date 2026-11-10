@@ -17,7 +17,8 @@ early vertebrates [@Donovan2009], and confirms the appendicularian protein as th
 - Best hits of the selenocysteine SEPHS (SEPHS1 and SEPHS2 within 13 bits) and the statement that best hits do not
   separate these paralogs outside mammals [@Mariotti2015].
 - The supports of the SECIS-binding protein tree: kept in the HTML comment of the SECISBP2/2L section.
-- The function of vertebrate SECISBP2L in selenoprotein synthesis [@Kiledjian2022; @Dai2022] (now uncited).
+- The function of vertebrate SECISBP2L in selenoprotein synthesis [@Kiledjian2022; @Dai2022]: moved to the
+  Introduction (Charles, 2026-11-10: general education for the readers).
 - The sampling sentence of the trees (ten other tunicates, three amphioxus for PSTK, the SECIS-binding protein set):
   now in the Methods (Orthology of the machinery genes, Trees), with the reason for the long-branch analyses.
 

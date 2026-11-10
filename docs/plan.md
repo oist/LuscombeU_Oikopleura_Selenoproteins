@@ -2934,6 +2934,8 @@ no earlier step waits for them.
   OSKA2016; the OdB3 GenBank model is unchanged; the other change is the third intron, GA or GG donor, moved in
   OKI2018 RefSeq and OSKA2016 ANISEED); best-hit sentences on SECIS-binding proteins and SEPHS and the SECIS-binding
   protein tree paragraph removed; tree introduction blended into the Methods (Trees, Long-branch analyses); removed
-  text in manuscript/removed_text/SECISBP2_section.md. Open questions to Charles: a bridge sentence before Figure
-  TREES; Kiledjian2022 and Dai2022 now uncited; move the paragraph on the SECIS-binding proteins of the other species
-  from the gold-standard section; the census paragraphs and SECp43 under a "Reannotation" heading.
+  text in manuscript/removed_text/SECISBP2_section.md. Charles's answers (2026-11-10): bridge sentence before Figure
+  TREES added; Kiledjian2022 and Dai2022 moved to the Introduction (SECISBP2L, with the duplication of Donovan2009);
+  paragraph on the SECIS-binding proteins of the other species moved from the gold-standard section to the
+  SECISBP2/2L section; first paragraph reworded (no "adjustment of few other junctions"). Pending (Charles, later):
+  the census paragraphs and SECp43 under the "Reannotation" heading.
