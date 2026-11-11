@@ -1041,8 +1041,16 @@ cells [@Zhang2026]. We therefore report it separately. SECp43 was found only in 
 profile found it in all other tunicates and in the vertebrates. The same search, applied to the eight oikopleurid
 genomes and the three *O. dioica* transcriptomes, found only proteins at most 6 bits closer to SECp43 than to TIA1-like
 RNA-binding proteins, whereas the SECp43 proteins of the other genomes were 65 to 434 bits closer, and it recovered the
-SECp43 of *F. borealis*. SECp43 is therefore absent from the Oikopleuridae, and was most parsimoniously lost in their
-ancestor.
+SECp43 of *F. borealis*. A PSI-BLAST search of the NCBI proteins of tunicates returned SECp43 in ten ascidians and the
+salp *Thalia democratica*, and 28 *O. dioica* proteins (from its public annotations), each 94 to 610 bits closer to an
+RNA-binding protein of another family (poly(A)-binding, ELAV-like, splicing factor 3B subunit 4 and others) than to
+any tunicate SECp43, whereas the tunicate SECp43 were 115 to 434 bits closer to the SECp43 of another species. SECp43
+is therefore absent from the Oikopleuridae, and was most parsimoniously lost in their ancestor. <!-- PSI-BLAST:
+curation/trnau1ap_blast (search by Charles, received 2026-11-11), stage2/trnau1ap_psiblast.py, make trnau1ap-psiblast,
+results/tables/trnau1ap_psiblast.tsv (local run of 2026-11-11 with the legacy_blast wrapper of BLAST+; best score of an
+O. dioica protein against a tunicate SECp43 75 bits; SECp43 of the other species 193 to 514 bits). Only O. dioica has
+public appendicularian proteins: the search does not test the other appendicularians, nor genes absent from the
+annotations, which the genome and transcriptome searches above cover. -->
 
 | Gene | Orthology from | Orthology | *O. dioica* OKI2018 | *O. dioica* OSKA2016 | *O. dioica* OdB3 | *O. longicauda* | *O. albicans* | *O. vanhoeffeni* | *B. stygius* | *M. erythrocephalus* | *F. borealis* |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -1728,6 +1736,14 @@ genomes) and with proteins of related families: TIA1-like RNA-binding proteins f
 database for SECp43, KTI12 for PSTK. The margin, the score of the best hit to the gene minus that of the best hit to
 the related family, classified the candidate as supported (at least 30 bits), ambiguous (10 to 30 bits) or a related
 protein. The stage 1 predictions of the gene, scored in the same way, served as positive controls.
+For SECp43, the proteins of a PSI-BLAST search of the NCBI proteins of tunicates (Tunicata) [@Altschul1997], run on
+the NCBI web site [TO COMPLETE: query, database, number of iterations, inclusion threshold]
+(`curation/trnau1ap_blast`), were tested in the same spirit: proteins named SECp43 ("tRNA selenocysteine
+1-associated protein") were labelled as such, and unnamed or uncharacterised proteins took the label of their best
+blastp hit among the named proteins of other species; each *O. dioica* protein was then compared by blastp with the
+proteins of the other species, and the margin was the score of its best hit to another protein minus that of its best
+hit to a SECp43. The SECp43 of the other species, compared in the same way, served as positive controls
+(`stage2/trnau1ap_psiblast.py`, `make trnau1ap-psiblast`).
 
 The same test was applied to the selenoprotein families predicted in other tunicates but in no appendicularian
 (SELENON, SELENOH, MSRB, FrnE, SELENOL and SELENOI). The queries and references were the selenocysteine forms

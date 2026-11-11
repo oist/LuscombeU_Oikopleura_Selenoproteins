@@ -2939,3 +2939,11 @@ no earlier step waits for them.
   paragraph on the SECIS-binding proteins of the other species moved from the gold-standard section to the
   SECISBP2/2L section; first paragraph reworded (no "adjustment of few other junctions"). Pending (Charles, later):
   the census paragraphs and SECp43 under the "Reannotation" heading.
+- SECp43 PSI-BLAST (2026-11-11; Charles: "a last-resort Psi-BLAST that I made for TRNAU1AP on tunicates"; "Yes please
+  mention it"): sequences in curation/trnau1ap_blast/psiblast.fa (query, database, iterations, inclusion threshold not
+  recorded; asked); stage2/trnau1ap_psiblast.py (make trnau1ap-psiblast, local, results/tables/trnau1ap_psiblast.tsv):
+  26 SECp43 of 11 species (unnamed Clavelina CAK8691488.1 labelled by its best named hit); the 28 O. dioica proteins
+  are 94 to 610 bits closer to another RNA-recognition-motif protein than to SECp43 (best SECp43 score 75 bits);
+  controls 115 to 434 bits closer to SECp43. Run here with the legacy_blast wrapper of BLAST+ (the container has the
+  original legacy BLAST: scores may change slightly on Deigo). Text: one sentence in the SECp43 section, Methods
+  paragraph in Absence tests with a [TO COMPLETE] placeholder for the search parameters.
